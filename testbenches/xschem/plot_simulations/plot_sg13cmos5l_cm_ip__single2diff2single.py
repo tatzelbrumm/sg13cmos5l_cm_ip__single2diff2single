@@ -45,7 +45,7 @@ def main():
     # ------------------------------------------------------------------
     # 1. Load ngspice transient simulation data
     # ------------------------------------------------------------------
-    ngspice_file = data_dir / "sg13cmos5l_chipalooza_analog_project_tb_tran.txt"
+    ngspice_file = data_dir / "sg13cmos5l_cm_ip__single2diff2single_tb_tran.txt"
 
     time = ng.loadngspicecol(str(ngspice_file), "time")
     uio_in_0 = ng.loadngspicecol(str(ngspice_file), "v(uio_in_0)")
@@ -85,9 +85,9 @@ def main():
     # ------------------------------------------------------------------
     # 3. Export transient figures and CSV
     # ------------------------------------------------------------------
-    fig1.savefig(str(figures_dir / "sg13cmos5l_chipalooza_analog_project_tb_tran.svg"), bbox_inches='tight')
-    fig1.savefig(str(figures_dir / "sg13cmos5l_chipalooza_analog_project_tb_tran.pdf"), bbox_inches='tight')
-    np.savetxt(str(figures_dir / "sg13cmos5l_chipalooza_analog_project_tb_tran.csv"),
+    fig1.savefig(str(figures_dir / "sg13cmos5l_cm_ip__single2diff2single_tb_tran.svg"), bbox_inches='tight')
+    fig1.savefig(str(figures_dir / "sg13cmos5l_cm_ip__single2diff2single_tb_tran.pdf"), bbox_inches='tight')
+    np.savetxt(str(figures_dir / "sg13cmos5l_cm_ip__single2diff2single_tb_tran.csv"),
                np.column_stack((time_ms, uio_in_0, analog_0, analog_1, analog_2)), comments="",
                header="time_ms,uio_in_0,analog_0,analog_1,analog_2", delimiter=",")
 

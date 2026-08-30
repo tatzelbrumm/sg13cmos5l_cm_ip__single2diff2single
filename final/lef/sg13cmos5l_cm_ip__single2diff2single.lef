@@ -2,9 +2,9 @@ VERSION 5.7 ;
   NOWIREEXTENSIONATPIN ON ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
-MACRO sg13cmos5l_chipalooza_analog_project
+MACRO sg13cmos5l_cm_ip__single2diff2single
   CLASS BLOCK ;
-  FOREIGN sg13cmos5l_chipalooza_analog_project ;
+  FOREIGN sg13cmos5l_cm_ip__single2diff2single ;
   ORIGIN 0.000 0.000 ;
   SIZE 200.000 BY 200.000 ;
   PIN analog_0
@@ -332,6 +332,6 @@ MACRO sg13cmos5l_chipalooza_analog_project
         RECT 111.210 180.230 111.790 194.690 ;
         RECT 117.210 180.230 133.670 194.690 ;
   END
-END sg13cmos5l_chipalooza_analog_project
+END sg13cmos5l_cm_ip__single2diff2single
 END LIBRARY
 

@@ -1,6 +1,9 @@
-# Chipalooza Analog Project (ihp-sg13cmos5l)
+# Single-to-Differential-to-Single Converter (ihp-sg13cmos5l)
 
-(c) 2026 Tim Edwards and Simon Dorrer
+(c) 2026 Christoph Maier
+
+Derived from the *Chipalooza Analog Project* template,
+(c) 2026 Tim Edwards and Simon Dorrer — see [`LICENSE`](LICENSE).
 
 > [!IMPORTANT]
 > This repository requires the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container with tag `2026.08` or later.
@@ -12,21 +15,21 @@
 > New to this flow? Start with the [**ihp-sg13cmos5l AMS chip design tutorial**](https://iic-jku.github.io/ihp-sg13cmos5l-ams-chip-template/index.html). This project follows the same analog flow and directory conventions, so the tutorial applies here as well.
 
 <p align="center">
-  <a href="render/img/sg13cmos5l_chipalooza_analog_project_white.png">
-    <img src="render/img/sg13cmos5l_chipalooza_analog_project_white.png" alt="Render of the ihp-sg13cmos5l sg13cmos5l_chipalooza_analog_project `tiny` layout (200um x 200um)" width=70%>
+  <a href="render/img/sg13cmos5l_cm_ip__single2diff2single_white.png">
+    <img src="render/img/sg13cmos5l_cm_ip__single2diff2single_white.png" alt="Render of the ihp-sg13cmos5l sg13cmos5l_cm_ip__single2diff2single `tiny` layout (200um x 200um)" width=70%>
   </a>
   <br>
-  <em>Render of the ihp-sg13cmos5l sg13cmos5l_chipalooza_analog_project `tiny` layout (200um x 200um).</em>
+  <em>Render of the ihp-sg13cmos5l sg13cmos5l_cm_ip__single2diff2single `tiny` layout (200um x 200um).</em>
 </p>
 
-This is the analog-on-top example project for Chipalooza 2026: the top level `sg13cmos5l_chipalooza_analog_project` is drawn **by hand** in KLayout, based on one of the floorplan templates in `floorplan/`. It uses a **recursive macro structure**: the top level embeds the [`inverter`](macros/inverter/README.md) sub-macro, which shows the complete analog design flow (schematic → simulation → layout → DRC/LVS/PEX → post-layout simulation → characterization). For **mixed-signal (AMS)** submissions the digital [`counter`](macros/counter/README.md) sub-macro is shipped alongside it, which shows the complete digital flow (RTL → lint → RTL simulation → FPGA → LibreLane hardening → PEX → gate-level and mixed-signal simulation).
+This is an analog-on-top project for Chipalooza 2026: the top level `sg13cmos5l_cm_ip__single2diff2single` is drawn **by hand** in KLayout, based on one of the floorplan templates in `floorplan/`. It uses a **recursive macro structure**: the top level embeds the [`inverter`](macros/inverter/README.md) sub-macro, which shows the complete analog design flow (schematic → simulation → layout → DRC/LVS/PEX → post-layout simulation → characterization). For **mixed-signal (AMS)** submissions the digital [`counter`](macros/counter/README.md) sub-macro is shipped alongside it, which shows the complete digital flow (RTL → lint → RTL simulation → FPGA → LibreLane hardening → PEX → gate-level and mixed-signal simulation).
 
 The whole flow runs inside the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container, which ships every tool it needs: Xschem, ngspice, Magic, Netgen, KLayout, CACE, LibreLane, Verilator, Icarus Verilog, cocotb, Yosys, and the `sak-*` helper scripts.
 
 > [!IMPORTANT]
-> You must rename `sg13cmos5l_chipalooza_analog_project` to a unique name and fill in [`submission.yaml`](submission.yaml) in the repository root before you submit. `top-cell` there has to match `TOP` in the [`Makefile`](Makefile).
+> The top cell has been renamed from the template's `sg13cmos5l_chipalooza_analog_project` to `sg13cmos5l_cm_ip__single2diff2single`. Fill in the remaining `TODO` fields of [`submission.yaml`](submission.yaml) before you submit. `top-cell` there has to match `TOP` in the [`Makefile`](Makefile).
 
-[`submission.yaml`](submission.yaml) describes the submission and is what the precheck reads. It is filled in for this example and carries these fields:
+[`submission.yaml`](submission.yaml) describes the submission and is what the precheck reads. It carries these fields:
 
 | Field | Meaning |
 | --- | --- |
@@ -52,12 +55,12 @@ They are produced by `make build-top`, so run it once before submitting.
 > [!WARNING]
 > The precheck this template descends from rejects `analog-pins` greater than `0` unless `slot-size` is `small`, even though a `tiny` analog floorplan template is shipped and this example uses it (`tiny` with three analog pins). Confirm the rule with the organizers before you rely on a tiny analog slot.
 
-To rename the project, change `TOP` in the [`Makefile`](Makefile) — every target derives its file names from it, so nothing else in the Makefile has to be touched — and rename the files that carry the name:
+To rename the project again later, change `TOP` in the [`Makefile`](Makefile) — every target derives its file names from it, so nothing else in the Makefile has to be touched — and rename the files that carry the name:
 
-- `layout/sg13cmos5l_chipalooza_analog_project.gds`, `.klay.gds` and `.klay.klib`, **and the top cell inside both GDS files** (open in KLayout, rename the cell, save). The DRC, LVS and PEX targets pass the file name as the cell name, so the two must match.
-- `schematic/xschem/sg13cmos5l_chipalooza_analog_project.sch` and `.sym` (`_pex.sym` is regenerated by `symbol-pex`)
-- `testbenches/xschem/sg13cmos5l_chipalooza_analog_project_tb_tran.sch`
-- `testbenches/xschem/plot_simulations/plot_sg13cmos5l_chipalooza_analog_project.py`
+- `layout/sg13cmos5l_cm_ip__single2diff2single.gds`, `.klay.gds` and `.klay.klib`, **and the top cell inside both GDS files** (open in KLayout, rename the cell, save). The DRC, LVS and PEX targets pass the file name as the cell name, so the two must match.
+- `schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch` and `.sym` (`_pex.sym` is regenerated by `symbol-pex`)
+- `testbenches/xschem/sg13cmos5l_cm_ip__single2diff2single_tb_tran.sch`
+- `testbenches/xschem/plot_simulations/plot_sg13cmos5l_cm_ip__single2diff2single.py`
 
 Then search and replace the remaining occurrences inside those files — Xschem schematics and the plot script are plain text. The ones that matter are the DUT symbol instances and the `.include` of the PEX netlist in the testbench, and the raw file names in the plot script. Finally set `top-cell` in [`submission.yaml`](submission.yaml) to the same name.
 
@@ -68,25 +71,25 @@ Then search and replace the remaining occurrences inside those files — Xschem 
 <summary>Show Directory Structure</summary>
 
 ```text
-📁 sg13cmos5l_chipalooza_analog_project/
+📁 sg13cmos5l_cm_ip__single2diff2single/
 ├─ 📁 final/
 │  ├─ 📁 gds/
-│  │  └─ sg13cmos5l_chipalooza_analog_project.gds
+│  │  └─ sg13cmos5l_cm_ip__single2diff2single.gds
 │  ├─ 📁 lef/
-│  │  └─ sg13cmos5l_chipalooza_analog_project.lef
+│  │  └─ sg13cmos5l_cm_ip__single2diff2single.lef
 │  ├─ 📁 lib/
-│  │  └─ sg13cmos5l_chipalooza_analog_project.lib
+│  │  └─ sg13cmos5l_cm_ip__single2diff2single.lib
 │  └─ 📁 vh/
-│     └─ sg13cmos5l_chipalooza_analog_project.vh
+│     └─ sg13cmos5l_cm_ip__single2diff2single.vh
 ├─ 📁 floorplan/
 │  ├─ chipalooza_template_small.gds          # 500µm × 200µm slot
 │  ├─ chipalooza_template_small_analog.gds   # 500µm × 200µm slot + 3 analog pins
 │  ├─ chipalooza_template_tiny.gds           # 200µm × 200µm slot
 │  └─ chipalooza_template_tiny_analog.gds    # 200µm × 200µm slot + 3 analog pins
 ├─ 📁 layout/
-│  ├─ sg13cmos5l_chipalooza_analog_project.gds          # exported tapeout GDS (read by every build and sign-off target)
-│  ├─ sg13cmos5l_chipalooza_analog_project.klay.gds     # KLayout editing source (live PCells + library references)
-│  └─ sg13cmos5l_chipalooza_analog_project.klay.klib    # library binding of the .klay.gds to macros/inverter/layout/inverter.gds
+│  ├─ sg13cmos5l_cm_ip__single2diff2single.gds          # exported tapeout GDS (read by every build and sign-off target)
+│  ├─ sg13cmos5l_cm_ip__single2diff2single.klay.gds     # KLayout editing source (live PCells + library references)
+│  └─ sg13cmos5l_cm_ip__single2diff2single.klay.klib    # library binding of the .klay.gds to macros/inverter/layout/inverter.gds
 ├─ 📁 macros/
 │  ├─ 📁 counter/                            # digital example sub-macro for AMS designs (own Makefile & README)
 │  └─ 📁 inverter/                           # analog example sub-macro (own Makefile & README)
@@ -101,13 +104,13 @@ Then search and replace the remaining occurrences inside those files — Xschem 
 │     └─ *.spice                             # Xschem SPICE netlists (Magic + Netgen LVS)
 ├─ 📁 render/
 │  └─ 📁 img/
-│     ├─ sg13cmos5l_chipalooza_analog_project_black.png
-│     └─ sg13cmos5l_chipalooza_analog_project_white.png
+│     ├─ sg13cmos5l_cm_ip__single2diff2single_black.png
+│     └─ sg13cmos5l_cm_ip__single2diff2single_white.png
 ├─ 📁 schematic/
 │  └─ 📁 xschem/
-│     ├─ sg13cmos5l_chipalooza_analog_project.sch
-│     ├─ sg13cmos5l_chipalooza_analog_project.sym
-│     ├─ sg13cmos5l_chipalooza_analog_project_pex.sym
+│     ├─ sg13cmos5l_cm_ip__single2diff2single.sch
+│     ├─ sg13cmos5l_cm_ip__single2diff2single.sym
+│     ├─ sg13cmos5l_cm_ip__single2diff2single_pex.sym
 │     └─ xschemrc
 ├─ 📁 scripts/
 │  ├─ check_boundary.py
@@ -118,8 +121,8 @@ Then search and replace the remaining occurrences inside those files — Xschem 
 │     │  ├─ 📁 data/
 │     │  ├─ 📁 figures/
 │     │  ├─ ngspice2python.py
-│     │  └─ plot_sg13cmos5l_chipalooza_analog_project.py
-│     ├─ sg13cmos5l_chipalooza_analog_project_tb_tran.sch
+│     │  └─ plot_sg13cmos5l_cm_ip__single2diff2single.py
+│     ├─ sg13cmos5l_cm_ip__single2diff2single_tb_tran.sch
 │     └─ xschemrc
 ├─ 📁 verification/
 │  ├─ 📁 drc/
@@ -140,7 +143,7 @@ Then search and replace the remaining occurrences inside those files — Xschem 
 
 This project embeds two sub-macros in `macros/`, and each level has its own Makefile with the same targets:
 
-- **Top level (`sg13cmos5l_chipalooza_analog_project`)** — the hand-drawn submission macro. Its layout instantiates the `inverter` cells. Its Makefile verifies and builds the **top cell only** (`CELL` defaults to `sg13cmos5l_chipalooza_analog_project`).
+- **Top level (`sg13cmos5l_cm_ip__single2diff2single`)** — the hand-drawn submission macro. Its layout instantiates the `inverter` cells. Its Makefile verifies and builds the **top cell only** (`CELL` defaults to `sg13cmos5l_cm_ip__single2diff2single`).
 - **Analog sub-macro ([`macros/inverter/`](macros/inverter/README.md))** — the complete flow reference for the unit `inverter` cell (`TOP = inverter`), including sizing notebooks and CACE characterization.
 - **Digital sub-macro ([`macros/counter/`](macros/counter/README.md))** — the digital counterpart for **mixed-signal (AMS)** designs (`TOP = counter_top`). Its RTL is linted (Verilator), simulated (Icarus Verilog and cocotb), emulated on an FPGA and hardened into a placeable macro with LibreLane, which runs the Magic and KLayout DRC and the Netgen LVS as part of the flow. [`generate-xspice`](macros/counter/README.md#generate-xspice-file) turns the hardened netlist into an XSPICE model, so the digital block can be simulated together with analog circuitry in an Xschem testbench.
 
@@ -155,7 +158,7 @@ Every macro follows the same principle, and the simulations always run last, so 
 **Build order matters**: if you modify a sub-macro, run its own flow first (`make -C macros/inverter all` or `make -C macros/counter all`, or equivalently `make build-inverter` / `make build-counter` from here), then rebuild the top level. The top-level `make all` does this automatically by running `build-macros` before verifying and building the top cell. You can also remove the sub-macros entirely and draw everything flat in the top-level layout (not recommended).
 
 > [!TIP]
-> The example top level shipped here is **analog only**: it instantiates the `inverter` and leaves the `counter` unused, so nothing but `build-macros` touches it. To go mixed-signal, build the digital macro once with `make build-counter`, add its hardened GDS `macros/counter/final/gds/counter_top.gds` as a second library entry in [`layout/sg13cmos5l_chipalooza_analog_project.klay.klib`](layout/sg13cmos5l_chipalooza_analog_project.klay.klib) next to the `inverter` binding, place the `counter_top` cell in the top-level layout and re-export the tapeout GDS. `counter_top.sym` is already visible in a top-level Xschem session, see [Xschem Configuration](#xschem-configuration).
+> The example top level shipped here is **analog only**: it instantiates the `inverter` and leaves the `counter` unused, so nothing but `build-macros` touches it. To go mixed-signal, build the digital macro once with `make build-counter`, add its hardened GDS `macros/counter/final/gds/counter_top.gds` as a second library entry in [`layout/sg13cmos5l_cm_ip__single2diff2single.klay.klib`](layout/sg13cmos5l_cm_ip__single2diff2single.klay.klib) next to the `inverter` binding, place the `counter_top` cell in the top-level layout and re-export the tapeout GDS. `counter_top.sym` is already visible in a top-level Xschem session, see [Xschem Configuration](#xschem-configuration).
 
 
 ## Floorplan Templates
@@ -173,10 +176,10 @@ Start your top-level layout from one of the GDS templates in `floorplan/`. They 
 
 ## Layout Sources and the Exported Tapeout GDS
 
-`layout/sg13cmos5l_chipalooza_analog_project.klay.gds` is the source of truth. It is the KLayout editing source: it references the PDK PCells and pulls the `inverter` cell in as a library through `layout/sg13cmos5l_chipalooza_analog_project.klay.klib`, so every device is still live and editable. `layout/sg13cmos5l_chipalooza_analog_project.gds` is exported from it with `File > Export Layout For Tapeout`, which resolves every PCell and library reference into a static cell, and it is what every build and sign-off target reads.
+`layout/sg13cmos5l_cm_ip__single2diff2single.klay.gds` is the source of truth. It is the KLayout editing source: it references the PDK PCells and pulls the `inverter` cell in as a library through `layout/sg13cmos5l_cm_ip__single2diff2single.klay.klib`, so every device is still live and editable. `layout/sg13cmos5l_cm_ip__single2diff2single.gds` is exported from it with `File > Export Layout For Tapeout`, which resolves every PCell and library reference into a static cell, and it is what every build and sign-off target reads.
 
 > [!IMPORTANT]
-> Re-export after every layout change and never hand-edit `layout/sg13cmos5l_chipalooza_analog_project.gds`. Keeping the two in step by editing both is how they drift apart, and the drift is invisible because the sign-off targets only look at the exported file.
+> Re-export after every layout change and never hand-edit `layout/sg13cmos5l_cm_ip__single2diff2single.gds`. Keeping the two in step by editing both is how they drift apart, and the drift is invisible because the sign-off targets only look at the exported file.
 
 The export re-evaluates the PCells against the **installed** PDK, so device geometry can change even though nobody touched the editing source. A layout carried over from another PDK revision or from a different template therefore has to be re-exported under the target PDK and re-checked, not copied. Re-run DRC, LVS and PEX after every export.
 
@@ -187,7 +190,7 @@ The Makefile's `_GDS_EXT` variable picks `.gds` when it exists and falls back to
 To edit the layout, start KLayout in edit mode on the editing source from inside the container:
 
 ```sh
-klayout -e layout/sg13cmos5l_chipalooza_analog_project.klay.gds
+klayout -e layout/sg13cmos5l_cm_ip__single2diff2single.klay.gds
 ```
 
 or use [`make open`](#open-the-design-files), which opens a file browser with one button per design file and starts the right tool in the file's own directory.
@@ -232,7 +235,7 @@ macros/inverter/verification/cace/templates/xschemrc
 └─ source macros/inverter/schematic/xschem/xschemrc
 ```
 
-Each schematic folder puts itself and its sibling testbenches folder on the library path, and each testbenches folder does the reverse. The top level therefore sees all six schematic and testbench folders, which is what lets `sg13cmos5l_chipalooza_analog_project.sch` instantiate `inverter.sym` and `counter_top.sym`, and what lets you open a macro testbench from a top-level session. The macro files do not source each other or the top level, so a macro can be opened and simulated on its own.
+Each schematic folder puts itself and its sibling testbenches folder on the library path, and each testbenches folder does the reverse. The top level therefore sees all six schematic and testbench folders, which is what lets `sg13cmos5l_cm_ip__single2diff2single.sch` instantiate `inverter.sym` and `counter_top.sym`, and what lets you open a macro testbench from a top-level session. The macro files do not source each other or the top level, so a macro can be opened and simulated on its own.
 
 Add a further sub-macro to the top level by sourcing its `schematic/xschem/xschemrc` from [`schematic/xschem/xschemrc`](schematic/xschem/xschemrc), next to the `inverter` and `counter` lines.
 
@@ -285,7 +288,7 @@ Only two Python helpers are kept in [`scripts/`](scripts/), because they are spe
 
 ## Makefile Targets
 
-The Makefile is identical in structure to the inverter sub-macro's (same variables, same targets) with `TOP = sg13cmos5l_chipalooza_analog_project` — see [`macros/inverter/README.md`](macros/inverter/README.md) for the full reference of every target, every parameter (`CELL`, `EXT_MODE`, `THRESHOLD`, `MINRES`, `MINDELAY`, `DRC_LEVEL`, `EV_PRECISION`, `TB`, `SCRIPT`, `OPEN_ARGS`) and every DRC level and PEX mode. In short:
+The Makefile is identical in structure to the inverter sub-macro's (same variables, same targets) with `TOP = sg13cmos5l_cm_ip__single2diff2single` — see [`macros/inverter/README.md`](macros/inverter/README.md) for the full reference of every target, every parameter (`CELL`, `EXT_MODE`, `THRESHOLD`, `MINRES`, `MINDELAY`, `DRC_LEVEL`, `EV_PRECISION`, `TB`, `SCRIPT`, `OPEN_ARGS`) and every DRC level and PEX mode. In short:
 
 ```sh
 make                                     # help: all targets and variables
@@ -346,14 +349,14 @@ The sub-macros have no such target: the box is only needed by the cell the chip 
 
 ### Differences to the Sub-Macro
 
-- `sim-all` runs only the top-level testbenches (currently `sg13cmos5l_chipalooza_analog_project_tb_tran`). The testbench simulates the schematic by default and includes the extracted PEX netlist by swapping the DUT to the `_pex` symbol for a post-layout run. That symbol, `schematic/xschem/<CELL>_pex.sym`, is built by the `symbol-pex` target, which `klayout-pex` and `magic-pex` run automatically before every extraction. The inverter's own testbenches and CACE characterization live in `macros/inverter/`, the counter's gate-level and mixed-signal testbenches in `macros/counter/`, and there is no `sim-cace` at this level.
+- `sim-all` runs only the top-level testbenches (currently `sg13cmos5l_cm_ip__single2diff2single_tb_tran`). The testbench simulates the schematic by default and includes the extracted PEX netlist by swapping the DUT to the `_pex` symbol for a post-layout run. That symbol, `schematic/xschem/<CELL>_pex.sym`, is built by the `symbol-pex` target, which `klayout-pex` and `magic-pex` run automatically before every extraction. The inverter's own testbenches and CACE characterization live in `macros/inverter/`, the counter's gate-level and mixed-signal testbenches in `macros/counter/`, and there is no `sim-cace` at this level.
 - `klayout-verify-all`/`magic-verify-all` verify the top cell only — the inverter cells are covered by `build-macros`/`build-inverter` (or run the sub-macro's own `make`), and the counter is signed off inside its LibreLane flow by `build-macros`/`build-counter`.
 - `build-top` additionally runs `check-boundary` first, see above.
 - `make all` first runs `build-macros`, so the sub-macros are verified, built and simulated before the top cell.
 - `clean` deletes only the top level's generated files (`final/`, `netlist/`, `render/img/`, the DRC/LVS reports, and the simulation outputs). `clean-macros` runs `make clean` in every sub-macro, and `clean-all` combines both, mirroring `build-macros`/`all`.
 
 > [!NOTE]
-> The top-level testbench `.include`s the extracted PEX netlist `netlist/pex/sg13cmos5l_chipalooza_analog_project_magic_pex_3.spice`, and `make verilog` reads its pin list from a PEX netlist as well. Directly after `make clean`, run `make magic-pex` (or the full `make all`) once before `make sim-xschem`, `make sim-all` or `make build-top`, otherwise the include fails.
+> The top-level testbench `.include`s the extracted PEX netlist `netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice`, and `make verilog` reads its pin list from a PEX netlist as well. Directly after `make clean`, run `make magic-pex` (or the full `make all`) once before `make sim-xschem`, `make sim-all` or `make build-top`, otherwise the include fails.
 
 > [!WARNING]
 > Most of the generated outputs are committed in this repository, so `make clean` leaves a large deletion set in `git status`. Run `git restore .` to get them back if you did not mean to remove them.

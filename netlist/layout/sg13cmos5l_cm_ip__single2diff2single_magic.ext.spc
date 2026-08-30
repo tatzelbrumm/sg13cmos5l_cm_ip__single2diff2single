@@ -1,6 +1,6 @@
-* NGSPICE file created from sg13cmos5l_chipalooza_analog_project.ext - technology: ihp-sg13cmos5l
+* NGSPICE file created from sg13cmos5l_cm_ip__single2diff2single.ext - technology: ihp-sg13cmos5l
 
-.subckt sg13cmos5l_chipalooza_analog_project analog_0 analog_1 analog_2 clk ena rst_n
+.subckt sg13cmos5l_cm_ip__single2diff2single analog_0 analog_1 analog_2 clk ena rst_n
 + ui_in[0] ui_in[1] ui_in[2] ui_in[3] ui_in[4] ui_in[5] ui_in[6] ui_in[7] uio_in[0]
 + uio_in[1] uio_in[2] uio_in[3] uio_in[4] uio_in[5] uio_in[6] uio_in[7] uio_oe[0]
 + uio_oe[1] uio_oe[2] uio_oe[3] uio_oe[4] uio_oe[5] uio_oe[6] uio_oe[7] uio_out[0]

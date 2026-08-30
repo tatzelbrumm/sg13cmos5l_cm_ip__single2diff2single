@@ -8,7 +8,7 @@
   <em>Render of the ihp-sg13cmos5l inverter layout.</em>
 </p>
 
-This is the analog example **sub-macro** of the Chipalooza analog project template: the unit `inverter` cell with its complete flow (schematic → simulation → layout → DRC/LVS/PEX → post-layout simulation → characterization). The hand-drawn top level that embeds it, including the chip-level power straps and the PR boundary, lives one directory up in [`sg13cmos5l_chipalooza_analog_project`](../../README.md).
+This is the analog example **sub-macro** of the Chipalooza analog project template: the unit `inverter` cell with its complete flow (schematic → simulation → layout → DRC/LVS/PEX → post-layout simulation → characterization). The hand-drawn top level that embeds it, including the chip-level power straps and the PR boundary, lives one directory up in [`sg13cmos5l_cm_ip__single2diff2single`](../../README.md).
 
 Everything here runs inside the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container, which ships every tool this macro needs: Xschem, ngspice, Magic, Netgen, KLayout, CACE, and the `sak-*` helper scripts.
 
@@ -279,7 +279,7 @@ make build-top
 ```
 
 > [!NOTE]
-> Unlike the [top level](../../README.md#pr-boundary-check), this macro has no `check-boundary` step. The PR boundary box on layer 189 is only needed by the cell the chip flow places, which is `sg13cmos5l_chipalooza_analog_project`, not the `inverter` cells inside it.
+> Unlike the [top level](../../README.md#pr-boundary-check), this macro has no `check-boundary` step. The PR boundary box on layer 189 is only needed by the cell the chip flow places, which is `sg13cmos5l_cm_ip__single2diff2single`, not the `inverter` cells inside it.
 
 
 ### Export LEF
@@ -593,7 +593,7 @@ make all
 
 ## Start a New Analog Macro from This Template
 
-The inverter is meant to be the starting point for a new analog sub-macro of `sg13cmos5l_chipalooza_analog_project`. It already carries the full analog flow: Xschem schematic and symbol, three testbenches, the KLayout layout, DRC, LVS and PEX, the LEF, Liberty and Verilog stub export, CACE characterization, and the plotting scripts.
+The inverter is meant to be the starting point for a new analog sub-macro of `sg13cmos5l_cm_ip__single2diff2single`. It already carries the full analog flow: Xschem schematic and symbol, three testbenches, the KLayout layout, DRC, LVS and PEX, the LEF, Liberty and Verilog stub export, CACE characterization, and the plotting scripts.
 
 1. Copy the folder, for example to `macros/amp`.
 2. Run `make clean` in the new folder so that no output of the inverter is left behind.
@@ -603,7 +603,7 @@ The inverter is meant to be the starting point for a new analog sub-macro of `sg
 6. Rename the CACE files `verification/cace/inverter.yaml`, `verification/cace/templates/inverter_tb_ac.sch` and `verification/cace/scripts/inverter_tb_ac.{py,csv}`, and set `name:` in the yaml.
 7. Rename the plotting scripts in `testbenches/xschem/plot_simulations/`. The sizing notebook `scripts/sizing/sizing_inverter.ipynb` and the figures next to it are specific to the inverter, so adapt or delete them.
 8. Search and replace the remaining `inverter` references inside the renamed files. Xschem schematics, the CACE yaml and the plot scripts are all plain text. The ones that matter are the `inverter.sym` instances in the testbenches, the `.include` of the PEX netlist, the `template:` and `script:` keys in the CACE yaml, and the raw file names in the plot scripts.
-9. Register the macro at the top level: add a `build-<name>` target called from `build-macros` and a `clean-<name>` target called from `clean-macros` in the [top-level `Makefile`](../../Makefile), source the macro's `schematic/xschem/xschemrc` from [`schematic/xschem/xschemrc`](../../schematic/xschem/xschemrc) so its symbols resolve, and instantiate the macro in the top-level layout and in `schematic/xschem/sg13cmos5l_chipalooza_analog_project.sch`.
+9. Register the macro at the top level: add a `build-<name>` target called from `build-macros` and a `clean-<name>` target called from `clean-macros` in the [top-level `Makefile`](../../Makefile), source the macro's `schematic/xschem/xschemrc` from [`schematic/xschem/xschemrc`](../../schematic/xschem/xschemrc) so its symbols resolve, and instantiate the macro in the top-level layout and in `schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch`.
 
 For a new macro named `amp`, the mechanical part looks as follows:
 

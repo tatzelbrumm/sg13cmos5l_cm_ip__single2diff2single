@@ -152,7 +152,7 @@ N 780 -700 780 -500 {lab=uio_in_0}
 C {devices/code_shown.sym} 20 -1450 0 0 {name=NGSPICE
 only_toplevel=true 
 value="
-.include ../../../netlist/pex/sg13cmos5l_chipalooza_analog_project_magic_pex_3.spice
+.include ../../../netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice
 .param VPWR=1.5
 .csparam VPWR=VPWR
 .param VAPWR=1.5
@@ -311,11 +311,11 @@ C {devices/lab_pin.sym} 1100 -1160 3 1 {name=l15 sig_type=std_logic lab=VAPWR}
 C {devices/vsource.sym} 780 -470 0 1 {name=vpulse spice_ignore=False value="pulse(0 \{VPWR\} 0 10n 10n 500u 1m)"
 }
 C {noconn.sym} 880 -880 2 1 {name=l16}
-C {sg13cmos5l_chipalooza_analog_project.sym} 2720 -1080 0 0 {name=x2
+C {sg13cmos5l_cm_ip__single2diff2single.sym} 2720 -1080 0 0 {name=x2
 spice_ignore=true}
-C {sg13cmos5l_chipalooza_analog_project_pex.sym} 2720 -360 0 0 {name=x3
+C {sg13cmos5l_cm_ip__single2diff2single_pex.sym} 2720 -360 0 0 {name=x3
 spice_ignore=true}
-C {sg13cmos5l_chipalooza_analog_project.sym} 1080 -800 0 0 {name=x1
+C {sg13cmos5l_cm_ip__single2diff2single.sym} 1080 -800 0 0 {name=x1
 }
 C {devices/launcher.sym} 1740 -1590 0 0 {name=h2
 descr="Simulate" 
