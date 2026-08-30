@@ -201,7 +201,7 @@ Cell sg13cmos5l_cm_ip__single2diff2single (1) disconnected node: uo_out[2]
 Cell sg13cmos5l_cm_ip__single2diff2single (1) disconnected node: uo_out[1]
 Cell sg13cmos5l_cm_ip__single2diff2single (1) disconnected node: uo_out[0]
 Subcircuit summary:
-Circuit 1: sg13cmos5l_chipalooza_analog_pr |Circuit 2: sg13cmos5l_chipalooza_analog_pr 
+Circuit 1: sg13cmos5l_cm_ip__single2diff2s |Circuit 2: sg13cmos5l_cm_ip__single2diff2s 
 -------------------------------------------|-------------------------------------------
 sg13_lv_pmos (46->5)                       |sg13_lv_pmos (6->5)                        
 sg13_lv_nmos (44->3)                       |sg13_lv_nmos (4->3)                        
@@ -233,7 +233,7 @@ sg13_lv_pmos:85 vs. sg13_lv_pmos:M2:
 Property mm_ok in circuit2 has no matching property in circuit1
 
 Subcircuit pins:
-Circuit 1: sg13cmos5l_chipalooza_analog_pr |Circuit 2: sg13cmos5l_chipalooza_analog_pr 
+Circuit 1: sg13cmos5l_cm_ip__single2diff2s |Circuit 2: sg13cmos5l_cm_ip__single2diff2s 
 -------------------------------------------|-------------------------------------------
 VPWR                                       |VPWR                                       
 ui_in[0]                                   |ui_in[0]                                   
