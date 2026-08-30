@@ -36,6 +36,10 @@ DRC_LEVEL ?= macro
 # Override with: make <target> EV_PRECISION=<digits>
 EV_PRECISION ?= 5
 
+# CACE netlist source: schematic, layout, pex, rcx or best (cace -s; default: pex)
+# Override with: make <target> CACE_SOURCE=<schematic|layout|pex|rcx|best>
+CACE_SOURCE ?= pex
+
 # Preferred GDS extension: use .gds when available for the CELL, otherwise .klay.gds
 # Resolved per CELL (CELL defaults to TOP), so cells can mix .gds and .klay.gds within one macro.
 # All DRC, LVS and PEX targets (KLayout and Magic) work with either .gds or .klay.gds.
@@ -119,22 +123,23 @@ sim-cace: ## Run CACE simulations and collect result plots
 	cd $(CACE_DIR) && \
 	mkdir -p results/inverter && \
 	\
-	cace inverter.yaml -p ac_mm_params && \
+	cace inverter.yaml -s schematic -p ac_mm_params && \
 	cp _runs/RUN_*/parameters/ac_mm_params/Adc_ol_dB_mm.png results/inverter/ && \
 	cp _runs/RUN_*/parameters/ac_mm_params/fcu_mm.png results/inverter/ && \
 	rm -rf _runs/RUN_* && \
 	\
-	cace inverter.yaml -p ac_mc_params && \
+	cace inverter.yaml -s $(CACE_SOURCE) -p ac_mc_params && \
 	cp _runs/RUN_*/parameters/ac_mc_params/Adc_ol_dB_mc.png results/inverter/ && \
 	cp _runs/RUN_*/parameters/ac_mc_params/fcu_mc.png results/inverter/ && \
 	rm -rf _runs/RUN_* && \
 	\
-	cace inverter.yaml -p ac_params && \
+	cace inverter.yaml -s $(CACE_SOURCE) -p ac_params && \
 	cp _runs/RUN_*/parameters/ac_params/Adc_ol_dB_vs_vdd.png results/inverter/ && \
 	cp _runs/RUN_*/parameters/ac_params/fcu_vs_vdd.png results/inverter/ && \
-	rm -rf _runs/RUN_* && \
-	\
-	rm -rf _runs _docs netlist
+	rm -rf _runs _docs
+#	rm -rf _runs _docs netlist
+# NOTE: cace/netlist is kept as an extraction cache, so CACE re-extracts only
+# when the layout changes. It is gitignored; "make clean" still removes it.
 .PHONY: sim-cace
 
 sim-all: ## Simulate the macro
