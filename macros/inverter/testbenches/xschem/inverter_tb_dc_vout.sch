@@ -152,11 +152,11 @@ C {devices/gnd.sym} 1220 -760 0 0 {name=l5 lab=GND}
 C {devices/gnd.sym} 1320 -760 0 0 {name=l6 lab=GND}
 C {devices/vsource.sym} 960 -810 0 0 {name=Vgsp value=0
 }
-C {inverter.sym} 1080 -860 0 0 {name=x1
+C {inverter_pex.sym} 1080 -860 0 0 {name=x1
 }
 C {inverter.sym} 1080 -1280 0 0 {name=x2
 spice_ignore=true}
-C {inverter_pex.sym} 1320 -1280 0 0 {name=x3
+C {inverter.sym} 1320 -1280 0 0 {name=x3
 spice_ignore=true}
 C {devices/launcher.sym} 1720 -1340 0 0 {name=h2
 descr="Simulate" 

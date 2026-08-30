@@ -178,10 +178,10 @@ m=1
 spice_ignore=true}
 C {devices/gnd.sym} 1260 -740 0 0 {name=l5 lab=GND}
 C {devices/gnd.sym} 1360 -740 0 0 {name=l6 lab=GND}
-C {inverter.sym} 1120 -840 0 0 {name=x1}
+C {inverter_pex.sym} 1120 -840 0 0 {name=x1}
 C {inverter.sym} 1120 -1260 0 0 {name=x2
 spice_ignore=true}
-C {inverter_pex.sym} 1360 -1260 0 0 {name=x3
+C {inverter.sym} 1360 -1260 0 0 {name=x3
 spice_ignore=true}
 C {devices/code_shown.sym} 1640 -1370 0 0 {name=SAVE only_toplevel=true
 format="tcleval( @value )"
