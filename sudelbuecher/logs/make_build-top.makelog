@@ -1,0 +1,93 @@
+/foss/designs/sg13cmos5l_cm_ip__single2diff2single > make build-top
+make check-boundary
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+python3 scripts/check_boundary.py layout/sg13cmos5l_cm_ip__single2diff2single.gds sg13cmos5l_cm_ip__single2diff2single
+[INFO] Checking the PR boundary of sg13cmos5l_cm_ip__single2diff2single in layout/sg13cmos5l_cm_ip__single2diff2single.gds ...
+[INFO] 1 shape(s) on layer 189/4, 200.000 um x 200.000 um.
+[INFO] PR boundary check passed.
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make lef
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+rm -rf final/lef
+mkdir -p final/lef
+printf '%s\n' \
+	'gds read layout/sg13cmos5l_cm_ip__single2diff2single.gds' \
+	'load sg13cmos5l_cm_ip__single2diff2single' \
+	'lef write final/lef/sg13cmos5l_cm_ip__single2diff2single.lef -hide -pinonly 2um' | \
+	magic -dnull -noconsole \
+	-rcfile /foss/pdks/ihp-sg13cmos5l/libs.tech/magic/ihp-sg13cmos5l.magicrc
+
+Magic 8.3 revision 681 - Compiled on Tue Aug 25 11:50:23 AM CEST 2026.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology ihp-sg13cmos5l ...
+2 Magic internal units = 1 Lambda
+Input style sg13cmos5l(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    pblock pbase sealcont difffill sealvia1 sealvia2 sealvia3 sealvia4 seal glass thruvia inductor 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading ihp-sg13cmos5l Device Generator Menu ...
+Using technology "ihp-sg13cmos5l", version 1.0.0
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "via_stack$9".
+Reading "via_stack$8".
+Reading "via_stack$7".
+Reading "via_stack$6".
+Reading "via_stack$5".
+Reading "via_stack$4".
+Reading "via_stack$3".
+Reading "via_stack$2".
+Reading "via_stack$1".
+Reading "via_stack".
+Reading "nmos".
+Reading "pmos".
+Reading "pmos$3".
+Reading "inverter".
+Reading "via_stack$13".
+Reading "via_stack$10".
+Reading "Via$3".
+Reading "Via$2".
+Reading "Via$1".
+Reading "Via".
+Reading "sg13cmos5l_cm_ip__single2diff2single".
+Generating LEF output final/lef/sg13cmos5l_cm_ip__single2diff2single.lef for cell sg13cmos5l_cm_ip__single2diff2single:
+Diagnostic:  Write LEF header for cell sg13cmos5l_cm_ip__single2diff2single
+Diagnostic:  Writing LEF output for cell sg13cmos5l_cm_ip__single2diff2single
+Diagnostic:  Scale value is 0.005000
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make lib
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+rm -rf final/lib
+mkdir -p final/lib
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make verilog
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+rm -rf final/vh
+mkdir -p final/vh
+Reading pins from netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice...
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make copy-gds
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+rm -rf final/gds
+mkdir -p final/gds
+cp layout/sg13cmos5l_cm_ip__single2diff2single.gds final/gds/sg13cmos5l_cm_ip__single2diff2single.gds
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make render-gds
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+rm -rf render/img/
+mkdir -p render/img/
+sak-render.py -t ihp-sg13cmos5l -w 2048 -s 4 -o render/img/sg13cmos5l_cm_ip__single2diff2single layout/sg13cmos5l_cm_ip__single2diff2single.gds
+[INFO] Rendering cell 'sg13cmos5l_cm_ip__single2diff2single' of layout/sg13cmos5l_cm_ip__single2diff2single.gds (181.68 x 200.00 um, ihp-sg13cmos5l).
+[INFO] Written render/img/sg13cmos5l_cm_ip__single2diff2single_white.png (2048x2255 pixels, white background).
+[INFO] Written render/img/sg13cmos5l_cm_ip__single2diff2single_black.png (2048x2255 pixels, black background).
+[DONE] Bye!
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+

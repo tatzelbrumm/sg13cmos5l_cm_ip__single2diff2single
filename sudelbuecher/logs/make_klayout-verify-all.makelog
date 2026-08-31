@@ -1,0 +1,87 @@
+/foss/designs/sg13cmos5l_cm_ip__single2diff2single > make klayout-verify-all
+make klayout-verify CELL=sg13cmos5l_cm_ip__single2diff2single
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make klayout-drc CELL=sg13cmos5l_cm_ip__single2diff2single
+make[2]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+mkdir -p verification/drc
+sak-drc.sh -d -k -l macro -w verification/drc layout/sg13cmos5l_cm_ip__single2diff2single.gds
+[INFO] DEBUG is enabled!
+[INFO] flag -k is set.
+[INFO] flag -l is set to <macro>.
+[INFO] flag -w is set to <verification/drc>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using layout file <layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] Running DRC of <layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] Results are put into </foss/designs/sg13cmos5l_cm_ip__single2diff2single/verification/drc>.
+[INFO] Launching KLayout DRC...
+---
+[INFO] KLayout DRC is clean!
+---
+CONGRATULATIONS! No DRC errors in <sg13cmos5l_cm_ip__single2diff2single> found!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |    \_____/    |
+   \             /
+    '.         .'
+      '-.....-'
+---
+[DONE] Bye!
+make[2]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make klayout-lvs CELL=sg13cmos5l_cm_ip__single2diff2single
+make[2]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make klayout-lvs-netlist CELL=sg13cmos5l_cm_ip__single2diff2single
+make[3]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+mkdir -p netlist/schematic
+xschem -s -r -x -q --rcfile schematic/xschem/xschemrc --command ' \
+	set spiceprefix 1; \
+	set lvs_netlist 1; \
+	set top_is_subckt 1; \
+	set lvs_ignore 1; \
+	set ev_precision 5; \
+	set netlist_dir netlist/schematic; \
+	xschem set netlist_name [file tail [file rootname [xschem get current_name]]]_klayout.cdl; \
+	xschem netlist \
+' schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch
+Using run time directory XSCHEM_SHAREDIR = /foss/tools/xschem/share/xschem
+Sourcing /foss/tools/xschem/share/xschem/xschemrc init file
+Sourcing schematic/xschem/xschemrc init file
+MODELS_NGSPICE: /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models
+MODELS_XYCE: /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/models
+SG13G2_MODELS_VACASK: /foss/pdks/ihp-sg13cmos5l/libs.tech/vacask/models
+Netlist mode: <default>
+Sourced library init file /foss/tools/xschem/share/doc/xschem/analyses/lib_init.tcl
+
+make[3]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+mkdir -p verification/lvs
+mkdir -p netlist/layout
+sak-lvs.sh -d -k -w verification/lvs -s netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_klayout.cdl -l layout/sg13cmos5l_cm_ip__single2diff2single.gds -c sg13cmos5l_cm_ip__single2diff2single
+[INFO] DEBUG is enabled!
+[INFO] flag -k is set.
+[INFO] flag -w is set to <verification/lvs>.
+[INFO] flag -s is set to <netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_klayout.cdl>.
+[INFO] flag -l is set to <layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] flag -c is set to <sg13cmos5l_cm_ip__single2diff2single>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using SPICE/CDL netlist file </foss/designs/sg13cmos5l_cm_ip__single2diff2single/netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_klayout.cdl>.
+[INFO] Using layout file </foss/designs/sg13cmos5l_cm_ip__single2diff2single/layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] Running LVS of </foss/designs/sg13cmos5l_cm_ip__single2diff2single/layout/sg13cmos5l_cm_ip__single2diff2single.gds> vs </foss/designs/sg13cmos5l_cm_ip__single2diff2single/netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_klayout.cdl>.
+[INFO] Run KLayout LVS...
+---
+[INFO] KLayout LVS is OK, schematic/netlist and layout match!
+---
+CONGRATULATIONS! LVS is OK, schematic/netlist and layout match!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |    \_____/    |
+   \             /
+    '.         .'
+      '-.....-'
+---
+[DONE] Bye!
+mv verification/lvs/sg13cmos5l_cm_ip__single2diff2single.klayout.lvs/sg13cmos5l_cm_ip__single2diff2single_extracted.cir netlist/layout/sg13cmos5l_cm_ip__single2diff2single_klayout.cir
+make[2]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'

@@ -1,0 +1,90 @@
+make: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter'
+mkdir -p netlist/pex
+make symbol-pex CELL=inverter
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter'
+Wrote schematic/xschem/inverter_pex.sym (copy of inverter.sym with type=primitive).
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter'
+sak-pex.sh -d -m 3 -n inverter_pex -t 10000 -r 1000 -y 1 -w netlist/pex layout/inverter.gds
+[INFO] DEBUG is enabled!
+[INFO] flag -m is set to <3>.
+[INFO] flag -n is set to <inverter_pex>.
+[INFO] flag -t is set to <10000>.
+[INFO] flag -r is set to <1000>.
+[INFO] flag -y is set to <1>.
+[INFO] flag -w is set to <netlist/pex>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using layout file <layout/inverter.gds>.
+[INFO] GDS mode is selected.
+[INFO] Running PEX of <layout/inverter.gds>.
+[INFO] Results are put into </foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter/netlist/pex>.
+
+Magic 8.3 revision 681 - Compiled on Tue Aug 25 11:50:23 AM CEST 2026.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology ihp-sg13cmos5l ...
+2 Magic internal units = 1 Lambda
+Input style sg13cmos5l(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    pblock pbase sealcont difffill sealvia1 sealvia2 sealvia3 sealvia4 seal glass thruvia inductor 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading ihp-sg13cmos5l Device Generator Menu ...
+Loading "/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter/netlist/pex/pex_inverter.tcl" from command line.
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "$$$CONTEXT_INFO$$$".
+Reading "via_stack$7".
+Reading "via_stack".
+Reading "via_stack$5".
+Reading "via_stack$8".
+Reading "via_stack$11".
+Reading "via_stack$12".
+Reading "via_stack$15".
+Reading "pmos".
+Reading "nmos".
+Reading "via_stack$21".
+Reading "via_stack$13".
+Reading "via_stack$16".
+Reading "inverter".
+Extracting inverter_pex into /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter/netlist/pex/inverter_pex.ext:
+Processing inverter_pex
+inverter_pex: 4 warnings
+Processing cell inverter_pex for resistance extraction.
+Extracting VSS
+Extracting vin
+Extracting vout
+Total Nets: 4
+Nets extracted: 3 (0.750000)
+Nets output: 1 (0.250000)
+Total of 4 warnings.
+exttospice finished.
+[INFO] PEX (full-RC) done, the extracted SPICE netlist is </foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter/netlist/pex/inverter.pex.spice>.
+[DONE] Bye!
+mv netlist/pex/inverter.pex.spice netlist/pex/inverter_magic_pex_3.spice
+rm -f netlist/pex/pex_inverter.tcl
+Reordering pins in inverter_magic_pex_3.spice to match inverter_pex.sym...
+Symbol file:  schematic/xschem/inverter_pex.sym
+Netlist file: netlist/pex/inverter_magic_pex_3.spice
+Subcircuit:   inverter_pex
+Format:       spice
+Match mode:   name (identical)
+Sym pins:     4
+Netlist pins: 4
+
+Pin mapping (sym -> netlist):
+  VDD                       -> VDD                       *REORDERED*
+  vin                       -> vin                       *REORDERED*
+  vout                      -> vout                      *REORDERED*
+  VSS                       -> VSS                       *REORDERED*
+
+Reordered netlist written to: netlist/pex/inverter_magic_pex_3.spice
+python3 scripts/check_pex_ports.py netlist/pex/inverter_magic_pex_3.spice
+[INFO] Checking PEX netlist ports in netlist/pex/inverter_magic_pex_3.spice ...
+[INFO] All ports are connected.
+make: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter'
