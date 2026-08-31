@@ -1,0 +1,214 @@
+make: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter'
+cd verification/cace && \
+mkdir -p results/inverter && \
+\
+cace inverter.yaml -s schematic -p ac_mm_params && \
+cp _runs/RUN_*/parameters/ac_mm_params/Adc_ol_dB_mm.png results/inverter/ && \
+cp _runs/RUN_*/parameters/ac_mm_params/fcu_mm.png results/inverter/ && \
+rm -rf _runs/RUN_* && \
+\
+cace inverter.yaml -s pex -p ac_mc_params && \
+cp _runs/RUN_*/parameters/ac_mc_params/Adc_ol_dB_mc.png results/inverter/ && \
+cp _runs/RUN_*/parameters/ac_mc_params/fcu_mc.png results/inverter/ && \
+rm -rf _runs/RUN_* && \
+\
+cace inverter.yaml -s pex -p ac_params && \
+cp _runs/RUN_*/parameters/ac_params/Adc_ol_dB_vs_vdd.png results/inverter/ && \
+cp _runs/RUN_*/parameters/ac_params/fcu_vs_vdd.png results/inverter/ && \
+rm -rf _runs _docs
+[19:49:46] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
+[19:49:46] INFO     Working directory set to '..'                                                           parameter_manager.py:153
+                    ('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter').                                         
+[19:49:46] INFO     Starting a new run with tag 'RUN_2026-08-30_19-49-46'.                                  parameter_manager.py:624
+[19:49:46] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
+[19:49:46] INFO     Running parameters: ac_mm_params                                                                 cace_cli.py:327
+[19:49:46] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
+─────────────────────────────────────────────────────── Started ac_mm_params ───────────────────────────────────────────────────────
+[19:49:46] INFO     Parameter ac_mm_params: Generating simulation files…                                    parameter_ngspice.py:211
+[19:49:46] INFO     Collating results using condition "iterations"                                          parameter_ngspice.py:314
+[19:50:32] INFO     Parameter ac_mm_params: Running simulations…                                            parameter_ngspice.py:564
+[19:50:41] INFO     Parameter ac_mm_params: Collecting results…                                             parameter_ngspice.py:663
+[19:50:41] INFO     Running user-defined script 'cace/scripts/inverter_tb_ac.py'…                           parameter_ngspice.py:748
+[19:50:41] INFO     Parameter ac_mm_params: Saving simulation summary as                                    parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-08-30_19-49-46/parameters/ac_mm_params/simulation_summary.md'…                             
+                                                Simulation Summary for ac_mm_params                                                 
+
+                                                                                                                                    
+ run                 iterations                Adc_ol_dB                      fcu           Adc_ol_dB_arr                   fcu_arr 
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ run_0    [1.000, 2.000, 3.000,         [31.284, 31.339,   [2.912e+06, 2.897e+06,        [31.284, 31.339,    [2.912e+06, 2.897e+06, 
+                             …]               30.993, …]            3.004e+06, …]              30.993, …]             3.004e+06, …] 
+                                                                                                                                    
+[19:50:41] INFO     Parameter ac_mm_params: Plotting Adc_ol_dB_mm to                                                parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-49-46/parameters/ac_mm_params'…                                                   
+[19:50:41] INFO     Parameter ac_mm_params: Plotting fcu_mm to                                                      parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-49-46/parameters/ac_mm_params'…                                                   
+───────────────────────────────────────────────── Completed ac_mm_params: Pass ✅ ──────────────────────────────────────────────────
+
+[19:50:41] INFO     Done with CACE simulations and evaluations in 0:00:55.                                           cace_cli.py:371
+                                                     CACE Summary for inverter                                                      
+
+netlist source: schematic                                                                                                           
+
+                                                                                                                                    
+ Parameter           Tool     Result      Min Limit       Min Value  Typ Target       Typ Value  Max Limit       Max Value  Status  
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ Open-loop dc gain   ngspice  Adc_ol_dB        3 dB                ​         any                ​        any                ​  Skip 🟧 
+ Upper -3dB cut-off  ngspice  fcu        1000000 Hz                ​         any                ​        any                ​  Skip 🟧 
+ frequency                                                                                                                          
+ Open-loop dc gain   ngspice  Adc_ol_dB        3 dB                ​         any                ​        any                ​  Skip 🟧 
+ - Monte Carlo                                                                                                                      
+ Upper -3dB cut-off  ngspice  fcu        1000000 Hz                ​         any                ​        any                ​  Skip 🟧 
+ frequency - Monte                                                                                                                  
+ Carlo                                                                                                                              
+ Open-loop dc gain   ngspice  Adc_ol_dB        3 dB       29.970 dB         any       31.296 dB        any       32.096 dB  Pass ✅ 
+ - Mismatch                                                                                                                         
+ Upper -3dB cut-off  ngspice  fcu        1000000 Hz  2657720.000 Hz         any  2902820.000 Hz        any  3364770.000 Hz  Pass ✅ 
+ frequency -                                                                                                                        
+ Mismatch                                                                                                                           
+                                                                                                                                    
+[19:50:41] INFO     Generating documentation in 'cace/_docs'                                                parameter_manager.py:255
+[19:50:45] ERROR    Subprocess exited with error code 1                                                                common.py:689
+[19:50:45] ERROR    Error output generated by subprocess:                                                              common.py:693
+[19:50:45] ERROR    ERROR: RuntimeError: Unable to open file:                                                          common.py:695
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech//sg13g2.lyp (errno=2) in                                       
+                    LayoutViewBase.load_layer_props                                                                                 
+[19:50:45] ERROR      klayout_script.py:34                                                                             common.py:695
+[19:50:46] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
+[19:50:46] INFO     Working directory set to '..'                                                           parameter_manager.py:153
+                    ('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter').                                         
+[19:50:46] INFO     Starting a new run with tag 'RUN_2026-08-30_19-50-46'.                                  parameter_manager.py:624
+[19:50:46] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
+[19:50:46] INFO     Running parameters: ac_mc_params                                                                 cace_cli.py:327
+[19:50:46] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
+[19:50:46] INFO     Skipping extraction of pex netlist. Up to date.                                           cace_regenerate.py:408
+[19:50:46] INFO     Skipping extraction of layout netlist. Up to date.                                        cace_regenerate.py:408
+─────────────────────────────────────────────────────── Started ac_mc_params ───────────────────────────────────────────────────────
+[19:50:46] INFO     Parameter ac_mc_params: Generating simulation files…                                    parameter_ngspice.py:211
+[19:50:46] INFO     Collating results using condition "iterations"                                          parameter_ngspice.py:314
+[19:51:35] INFO     Parameter ac_mc_params: Running simulations…                                            parameter_ngspice.py:564
+[19:52:11] INFO     Parameter ac_mc_params: Collecting results…                                             parameter_ngspice.py:663
+[19:52:11] INFO     Running user-defined script 'cace/scripts/inverter_tb_ac.py'…                           parameter_ngspice.py:748
+[19:52:11] INFO     Parameter ac_mc_params: Saving simulation summary as                                    parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-08-30_19-50-46/parameters/ac_mc_params/simulation_summary.md'…                             
+                                                Simulation Summary for ac_mc_params                                                 
+
+                                                                                                                                    
+ run                 iterations                Adc_ol_dB                      fcu           Adc_ol_dB_arr                   fcu_arr 
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ run_0    [1.000, 2.000, 3.000,         [32.333, 15.694,   [2.758e+06, 1.492e+07,        [32.333, 15.694,    [2.758e+06, 1.492e+07, 
+                             …]               16.842, …]            1.408e+07, …]              16.842, …]             1.408e+07, …] 
+                                                                                                                                    
+[19:52:11] INFO     Parameter ac_mc_params: Plotting Adc_ol_dB_mc to                                                parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-50-46/parameters/ac_mc_params'…                                                   
+[19:52:11] INFO     Parameter ac_mc_params: Plotting fcu_mc to                                                      parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-50-46/parameters/ac_mc_params'…                                                   
+───────────────────────────────────────────────── Completed ac_mc_params: Pass ✅ ──────────────────────────────────────────────────
+
+[19:52:12] INFO     Done with CACE simulations and evaluations in 0:01:25.                                           cace_cli.py:371
+                                                     CACE Summary for inverter                                                      
+
+netlist source: pex                                                                                                                 
+
+                                                                                                                                    
+ Parameter          Tool     Result      Min Limit       Min Value  Typ Target       Typ Value  Max Limit        Max Value  Status  
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ Open-loop dc gain  ngspice  Adc_ol_dB        3 dB                ​         any                ​        any                 ​  Skip 🟧 
+ Upper -3dB         ngspice  fcu        1000000 Hz                ​         any                ​        any                 ​  Skip 🟧 
+ cut-off frequency                                                                                                                  
+ Open-loop dc gain  ngspice  Adc_ol_dB        3 dB        4.161 dB         any       22.937 dB        any        33.871 dB  Pass ✅ 
+ - Monte Carlo                                                                                                                      
+ Upper -3dB         ngspice  fcu        1000000 Hz  2081470.000 Hz         any  7149180.000 Hz        any  42267500.000 Hz  Pass ✅ 
+ cut-off frequency                                                                                                                  
+ - Monte Carlo                                                                                                                      
+ Open-loop dc gain  ngspice  Adc_ol_dB        3 dB                ​         any                ​        any                 ​  Skip 🟧 
+ - Mismatch                                                                                                                         
+ Upper -3dB         ngspice  fcu        1000000 Hz                ​         any                ​        any                 ​  Skip 🟧 
+ cut-off frequency                                                                                                                  
+ - Mismatch                                                                                                                         
+                                                                                                                                    
+[19:52:12] INFO     Generating documentation in 'cace/_docs'                                                parameter_manager.py:255
+[19:52:16] ERROR    Subprocess exited with error code 1                                                                common.py:689
+[19:52:16] ERROR    Error output generated by subprocess:                                                              common.py:693
+[19:52:16] ERROR    ERROR: RuntimeError: Unable to open file:                                                          common.py:695
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech//sg13g2.lyp (errno=2) in                                       
+                    LayoutViewBase.load_layer_props                                                                                 
+[19:52:16] ERROR      klayout_script.py:34                                                                             common.py:695
+[19:52:17] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
+[19:52:17] INFO     Working directory set to '..'                                                           parameter_manager.py:153
+                    ('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter').                                         
+[19:52:17] INFO     Starting a new run with tag 'RUN_2026-08-30_19-52-17'.                                  parameter_manager.py:624
+[19:52:17] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
+[19:52:17] INFO     Running parameters: ac_params                                                                    cace_cli.py:327
+[19:52:17] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
+[19:52:17] INFO     Skipping extraction of pex netlist. Up to date.                                           cace_regenerate.py:408
+[19:52:17] INFO     Skipping extraction of layout netlist. Up to date.                                        cace_regenerate.py:408
+──────────────────────────────────────────────────────── Started ac_params ─────────────────────────────────────────────────────────
+[19:52:17] INFO     Parameter ac_params: Generating simulation files…                                       parameter_ngspice.py:211
+[19:52:19] INFO     Parameter ac_params: Running simulations…                                               parameter_ngspice.py:564
+[19:52:20] INFO     Parameter ac_params: Collecting results…                                                parameter_ngspice.py:663
+[19:52:20] INFO     Parameter ac_params: Saving simulation summary as                                       parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params/simulation_summary.md'…                                
+                                                  Simulation Summary for ac_params                                                  
+
+                                         
+ run    corner_mos  Adc_ol_dB        fcu 
+ ─────────────────────────────────────── 
+ run_0          ss     31.707  2.413e+06 
+ run_1          sf     13.165  1.967e+07 
+ run_2          tt     31.329  2.881e+06 
+ run_3          fs     10.839  2.471e+07 
+ run_4          ff     32.155  2.974e+06 
+                                         
+[19:52:20] INFO     Parameter ac_params: Plotting Adc_ol_dB_vs_vdd to                                               parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+[19:52:20] INFO     Parameter ac_params: Plotting Adc_ol_dB_vs_vcm to                                               parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+[19:52:20] INFO     Parameter ac_params: Plotting Adc_ol_dB_vs_corner_mos to                                        parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+[19:52:20] INFO     Parameter ac_params: Plotting Adc_ol_dB_vs_temp to                                              parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+[19:52:20] INFO     Parameter ac_params: Plotting Adc_ol_dB_vs_cload to                                             parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+[19:52:20] INFO     Parameter ac_params: Plotting fcu_vs_vdd to                                                     parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+[19:52:20] INFO     Parameter ac_params: Plotting fcu_vs_vcm to                                                     parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+[19:52:21] INFO     Parameter ac_params: Plotting fcu_vs_corner_mos to                                              parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+[19:52:21] INFO     Parameter ac_params: Plotting fcu_vs_temp to                                                    parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+[19:52:21] INFO     Parameter ac_params: Plotting fcu_vs_cload to                                                   parameter.py:929
+                    'cace/_runs/RUN_2026-08-30_19-52-17/parameters/ac_params'…                                                      
+─────────────────────────────────────────────────── Completed ac_params: Pass ✅ ───────────────────────────────────────────────────
+
+[19:52:21] INFO     Done with CACE simulations and evaluations in 0:00:04.                                           cace_cli.py:371
+                                                     CACE Summary for inverter                                                      
+
+netlist source: pex                                                                                                                 
+
+                                                                                                                                    
+ Parameter          Tool     Result      Min Limit       Min Value  Typ Target       Typ Value  Max Limit        Max Value  Status  
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ Open-loop dc gain  ngspice  Adc_ol_dB        3 dB       10.839 dB         any       31.329 dB        any        32.155 dB  Pass ✅ 
+ Upper -3dB         ngspice  fcu        1000000 Hz  2412570.000 Hz         any  2973780.000 Hz        any  24707300.000 Hz  Pass ✅ 
+ cut-off frequency                                                                                                                  
+ Open-loop dc gain  ngspice  Adc_ol_dB        3 dB                ​         any                ​        any                 ​  Skip 🟧 
+ - Monte Carlo                                                                                                                      
+ Upper -3dB         ngspice  fcu        1000000 Hz                ​         any                ​        any                 ​  Skip 🟧 
+ cut-off frequency                                                                                                                  
+ - Monte Carlo                                                                                                                      
+ Open-loop dc gain  ngspice  Adc_ol_dB        3 dB                ​         any                ​        any                 ​  Skip 🟧 
+ - Mismatch                                                                                                                         
+ Upper -3dB         ngspice  fcu        1000000 Hz                ​         any                ​        any                 ​  Skip 🟧 
+ cut-off frequency                                                                                                                  
+ - Mismatch                                                                                                                         
+                                                                                                                                    
+[19:52:21] INFO     Generating documentation in 'cace/_docs'                                                parameter_manager.py:255
+[19:52:25] ERROR    Subprocess exited with error code 1                                                                common.py:689
+[19:52:25] ERROR    Error output generated by subprocess:                                                              common.py:693
+[19:52:25] ERROR    ERROR: RuntimeError: Unable to open file:                                                          common.py:695
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech//sg13g2.lyp (errno=2) in                                       
+                    LayoutViewBase.load_layer_props                                                                                 
+[19:52:25] ERROR      klayout_script.py:34                                                                             common.py:695
+make: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inverter'
