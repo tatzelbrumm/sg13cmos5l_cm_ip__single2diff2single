@@ -80,6 +80,12 @@
    </categories>
   </category>
  <category>
+   <name>LU.b</name>
+   <description>7.2. LU.b : Max. space from any portion of N+Activ inside PWell to an pSD-PWell tie is 20.0 um</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
    <name>AFil.c1</name>
    <description>5.6. AFil.c1 Min. Activ:filler space to Activ is 0.42 um</description>
    <categories>
@@ -100,12 +106,6 @@
   <category>
    <name>AFil.j</name>
    <description>5.6. AFil.j Min. nSD:block and SalBlock enclosure of Activ:filler inside PWell:block is 0.25 um</description>
-   <categories>
-   </categories>
-  </category>
- <category>
-   <name>LU.b</name>
-   <description>7.2. LU.b : Max. space from any portion of N+Activ inside PWell to an pSD-PWell tie is 20.0 um</description>
    <categories>
    </categories>
   </category>
@@ -326,42 +326,6 @@
    </categories>
   </category>
  <category>
-   <name>LBE.a</name>
-   <description>9.1. LBE.a: Min. LBE width: 100.0 µm</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>LBE.b</name>
-   <description>9.1. LBE.b: Max. LBE width: 1500.0 µm.</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>LBE.b1</name>
-   <description>9.1. LBE.b1: Max. LBE area (µm²): 250000.0 .um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>LBE.c</name>
-   <description>9.1. LBE.c: Min. LBE space or notch: 100.0 µm</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>LBE.d</name>
-   <description>9.1. LBE.d: Min. LBE space to inner edge of EdgeSeal: 150.0 µm</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>LBE.h</name>
-   <description>9.1. LBE.h: No LBE ring allowed.</description>
-   <categories>
-   </categories>
-  </category>
- <category>
    <name>V2.a</name>
    <description>5.20. V2.a : Min. and max. Via2 width: 0.19 um</description>
    <categories>
@@ -446,14 +410,38 @@
    </categories>
   </category>
  <category>
-   <name>TM1.a</name>
-   <description>5.22. TM1.a: Min. TopMetal1 width: 1.64 μm.</description>
+   <name>LBE.a</name>
+   <description>9.1. LBE.a: Min. LBE width: 100.0 µm</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>TM1.b</name>
-   <description>5.22. TM1.b: Min. TopMetal1 (drawing + filler) space or notch: 1.64 μm.</description>
+   <name>LBE.b</name>
+   <description>9.1. LBE.b: Max. LBE width: 1500.0 µm.</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>LBE.b1</name>
+   <description>9.1. LBE.b1: Max. LBE area (µm²): 250000.0 .um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>LBE.c</name>
+   <description>9.1. LBE.c: Min. LBE space or notch: 100.0 µm</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>LBE.d</name>
+   <description>9.1. LBE.d: Min. LBE space to inner edge of EdgeSeal: 150.0 µm</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>LBE.h</name>
+   <description>9.1. LBE.h: No LBE ring allowed.</description>
    <categories>
    </categories>
   </category>
@@ -508,6 +496,18 @@
   <category>
    <name>M1.i</name>
    <description>5.16. M1.i Min. space of Metal1 lines of which at least one is bent by 45-degree is 0.22 um</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
+   <name>TM1.a</name>
+   <description>5.22. TM1.a: Min. TopMetal1 width: 1.64 μm.</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>TM1.b</name>
+   <description>5.22. TM1.b: Min. TopMetal1 (drawing + filler) space or notch: 1.64 μm.</description>
    <categories>
    </categories>
   </category>
