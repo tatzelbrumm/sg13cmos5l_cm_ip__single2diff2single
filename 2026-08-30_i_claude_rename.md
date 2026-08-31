@@ -1008,25 +1008,523 @@ The two axes:
 
 ---
 
+---
+
+## 49 — User
+
+*[uploaded `sim-all.err`, `sim-all.out`]*
+
+> I ran make sim-all. Looking good? What did I simulate, what didn't I simulate?
+
+## 50 — Assistant
+
+Clean run. The best signal isn't in the logs — `git status` came back with nothing but `sudelbuecher/`. The regenerated `plot_simulations/data/*_tb_tran.txt` is byte-identical to the committed reference. Same simulation, same numbers, after the rename. Also `xschem save` rewrote the `.sch` identically, so the earlier warning about a dirtied testbench didn't materialise.
+
+The four stderr warnings are the four `plot` commands in the `.control` block — `plot` doesn't exist in batch ngspice. Expected, and why `sim-view-xschem` is a separate target.
+
+**Simulated:** one testbench, `<TOP>_tb_tran` (`sim-all` is just `sim-xschem TB=$(TOP)_tb_tran`). `op` → 1 row, `analog_0` at 0.75 V = `Vcm`. `tran 1u 4m` → 4287 rows, converged. Stimulus `vsine analog_0 sin(0.75 10m 1k)` and `vpulse uio_in_0 pulse(0 1.5 … 1m)`. The DUT was the **schematic**, `x1`.
+
+**Not simulated:** post-layout — `x2` and `x3` both carry `spice_ignore=true`, so the PEX netlist is `.include`d but never instantiated. Also: the inverter's own three testbenches, its CACE characterization, `macros/counter/`, and `sim-view-xschem` (figures still at 14:44 while data was refreshed at 17:30).
+
+**One number not to trust:** `adm_db = 2.236788e+00` is `20·log10(vout_peak / vin_peak)` — a ratio of absolute peaks **including the 0.75 V DC offset**, not a small-signal gain. Input amplitude is 10 mV, so `vin_pp` = 20 mV; against `vout_pp` = 645 mV the actual gain is ≈32× ≈ **30 dB**. Template quirk, inherited.
+
+---
+
+## 51 — User
+
+> sim-view-xschem worked nicely, see git log.
+> Now for the inverter's own three testbenches and the CACE characterization. How do I activate and test them (or how do you activate them for me?)
+
+## 52 — Assistant
+
+Nothing to activate — the targets already exist. And I can't run them: no PDK, no Magic/ngspice/CACE in my sandbox.
+
+```sh
+make -C macros/inverter sim-all
+```
+
+```make
+sim-all:
+	$(MAKE) sim-xschem TB=inverter_tb_ac_ol
+	$(MAKE) sim-xschem TB=inverter_tb_tran
+	$(MAKE) sim-xschem TB=inverter_tb_dc_vout
+	$(MAKE) sim-cace
+```
+
+The top-level `sim-all` has no `sim-cace`; that only exists in the sub-macro. Prerequisites are met — all three testbenches `.include ../../../netlist/pex/inverter_magic_pex_3.spice`, committed from the template, so they run cold.
+
+Individually: `make sim-xschem TB=inverter_tb_ac_ol` / `_tran` / `_dc_vout`, `make sim-view-xschem`, `make sim-cace`.
+
+**Budget real time for CACE:** `ac_params` (corners `[ss, sf, tt, fs, ff]`), `ac_mc_params` (process MC, up to 200 iterations), `ac_mm_params` (mismatch MC, up to 200). It is also destructive by design — copies two PNGs per set, then `rm -rf _runs/RUN_*`, finally `rm -rf _runs _docs netlist`. Six PNGs survive in `verification/cace/results/inverter/`, and those are committed.
+
+**Same PEX caveat:** all three inverter testbenches have `x1` (schematic) live, `x2`/`x3` `spice_ignore=true`. Another pre-layout run. `inverter_tb_ac_ol` is the one worth doing post-layout — parasitics move exactly the DC gain and unity-gain frequency it measures.
+
+---
+
+## 53 — User
+
+> how do i extract parameters ... or did I already do that?
+
+## 54 — User *(mid-turn)*
+
+> oops i mean parasitics not parameters
+
+## 55 — Assistant
+
+**Top cell: already done.** `magic-verify-all` includes `magic-pex`; timestamp 16:22, your run — `netlist/pex/<TOP>_magic_pex_3.spice` (38 KB) and `.pex.log`. `sak-pex.sh -m 3 -t 10000 -r 1000 -y 1`, full-RC, ports checked. `symbol-pex` also built `<TOP>_pex.sym`.
+
+**Inverter: not done.** `macros/inverter/netlist/pex/inverter_magic_pex_3.spice` is 14:44 — your clone time, straight from the template.
+
+```sh
+make -C macros/inverter magic-pex
+```
+
+Modes: `EXT_MODE=1` C-decoupled, `2` C-coupled, `3` full RC (default), tuned by `THRESHOLD`/`MINRES`/`MINDELAY`.
+
+**The thing worth doing:** you have top-cell parasitics and have never simulated with them. Every testbench has `spice_ignore=true` on the `_pex` instance.
+
+---
+
+## 56 — User
+
+> what's the -C option?
+
+## 57 — Assistant
+
+GNU make's `--directory`. `make -C macros/inverter magic-pex` ≡ `(cd macros/inverter && make magic-pex)` without moving your own shell. It's also where the `make[1]: Entering directory` lines come from. Your own Makefile uses it:
+
+```make
+build-inverter:
+	@$(MAKE) -C $(MACROS_DIR)/inverter all
+```
+
+---
+
+## 58 — User
+
+> does klayout parasitic extraction exist yet?
+
+## 59 — Assistant
+
+Yes, `make klayout-pex` exists — but it's deliberately **not** wired into `klayout-verify`:
+
+```make
+klayout-verify:
+	$(MAKE) klayout-drc CELL=$(CELL)
+	$(MAKE) klayout-lvs CELL=$(CELL)
+#	$(MAKE) klayout-pex CELL=$(CELL)     ← commented out
+```
+
+Not KLayout's own engine — it shells out to **`kpex`** with `--magic --magic_mode`, so Magic still extracts underneath. The native `--2.5D` / `--mode` lines are commented out.
+
+| `EXT_MODE` | Magic | KPEX |
+|---|---|---|
+| 1 | C-decoupled | **not supported** — warns, falls back to CC |
+| 2 | C-coupled | CC |
+| 3 | full RC | RC |
+
+Output `netlist/pex/<CELL>_klayout_pex_<EXT_MODE>.spice`, distinct from the Magic one, with the same post-processing (`sed` rename to `<CELL>_pex`, `sak-pin-reorder.py`, `check_pex_ports.py`). Its real use is cross-checking, the way you already have two DRC and two LVS engines.
+
+---
+
+## 60 — User
+
+> ok are the pex results recreated after the rename already?
+
+## 61 — Assistant
+
+Top cell yes, everything else no.
+
+| Artifact | Timestamp | Regenerated? |
+|---|---|---|
+| `netlist/pex/<TOP>_magic_pex_3.spice` | **16:22** | yes |
+| `netlist/pex/<TOP>.pex.log` | **16:22** | yes |
+| `schematic/xschem/<TOP>_pex.sym` | **16:22** | yes |
+| `macros/inverter/netlist/pex/inverter_magic_pex_3.spice` | 14:44 | no — template |
+| `macros/counter/netlist/pex/counter_top_magic_pex_3.spice` | 14:44 | no — template |
+| `netlist/pex/<TOP>_klayout_pex_3.spice` | — | never run |
+
+Doesn't matter for the rename's correctness — the inverter was never renamed, and the top-level extraction read the layout fresh, flattening the inverter geometry into it.
+
+---
+
+## 62 — User
+
+> ok how do i activate x2 and x3 of the inverter?
+
+## 63 — Assistant
+
+You don't — and I owe you a correction, because I told you earlier to move `spice_ignore` from `x3` to `x1`. That would have broken the simulation.
+
+**`x2` and `x3` are unwired spares.** In `inverter_tb_ac_ol.sch`, `x1` sits at `1120 -840` with wires on every pin. `x2` and `x3` are parked at `y = -1260` with **zero** wires and zero labels nearby. Same at the top level. Clearing their `spice_ignore` gives you floating instances.
+
+**Swap the symbol on `x1` instead.** `symbol-pex` generates `_pex.sym` from the original, so pin geometry is byte-identical — verified for both `inverter` and the top cell:
+
+```diff
+-C {inverter.sym} 1120 -840 0 0 {name=x1}
++C {inverter_pex.sym} 1120 -840 0 0 {name=x1}
+```
+
+Better done in the GUI, since `sim-xschem` runs `xschem save`. Keep the edit uncommitted or on a branch — swapping `x1` permanently makes the pre-layout run the awkward one.
+
+---
+
+## 64 — User
+
+> I ran make -C macros/inverter sim-all.
+> Look at the output files in sudelbuecher. What did I simulate, what didn't I? And did I simulate Monte Carlo?
+
+## 65 — Assistant
+
+You swapped `x1` to `inverter_pex.sym` in all three testbenches (and parked the schematic symbol at `x3`).
+
+**Simulated — post-layout:** `inverter_tb_ac_ol` (op + ac, 1112 rows), `inverter_tb_tran` (op + tran, 5295), `inverter_tb_dc_vout` (op + dc, 1501). Your own 17:55 extraction, not the template's.
+
+**Monte Carlo — yes, twice.**
+
+`ac_mm_params`, mismatch: Adc 29.970 / 31.296 / 32.096 dB, fcu 2.658 / 2.903 / 3.365 MHz. Pass.
+`ac_mc_params`, process (`tt_stat`): Adc **4.161** / 22.937 / 33.871 dB, fcu 2.091 / 7.183 / 42.467 MHz. Pass.
+`ac_params`, corners `[ss, sf, tt, fs, ff]`: Adc 10.839 / 31.329 / 32.155 dB. Pass.
+
+Mismatch barely moves the gain; **process spreads it from 4.2 to 33.9 dB** — 1.2 dB of margin against the 3 dB floor.
+
+**Not simulated:** CACE ran pre-layout — all three summaries say `netlist source: schematic`. Plots not regenerated (`data/*.txt` updated, `figures/` untouched). Four CACE plots generated then discarded (`vs_vcm`, `vs_corner_mos`, `vs_temp`, `fcu_vs_cload`). Counter untouched.
+
+**The six CACE PNGs came back byte-identical** to the committed ones — CACE's Monte Carlo is deterministically seeded.
+
+---
+
+## 66 — User
+
+> In which file would I need to tell CACE to use the extracted schematics?
+
+## 67 — Assistant
+
+Two files, and the second is the one actually missing.
+
+**1. `inverter.yaml`.** `paths:` has no layout entry. CACE's `get_layout_path()` looks for `paths["magic"]` → `<name>.mag`, else `paths["layout"]` → `<name>.gds`. Neither exists, so it returns `None`. Add `layout: ../layout`.
+
+**2. `macros/inverter/Makefile`,** the `sim-cace` recipe: add `-s pex`. `-s`/`--source` accepts `schematic`, `layout`, `pex`, `rcx`, `best` (default `best`).
+
+**Why it silently said "schematic":** `best` means "full R-C extracted if the layout is available, else schematic". It *tried* for extracted, failed to locate a layout, and fell back quietly.
+
+CACE extracts for itself into `cace/netlist/<source>/`; it will not reuse `sak-pex.sh` output.
+
+---
+
+## 68 — User
+
+> Where precisely in macros/inverter/Makefile?
+> *[pasted the `sim-cace` recipe]*
+
+## 69 — Assistant
+
+Three call sites: **lines 122, 127, 132**. Use a variable, matching the file's style.
+
+Near line 37, after `EV_PRECISION`:
+
+```make
+# CACE netlist source: schematic, layout, pex, rcx or best (cace -s; default: pex)
+# Override with: make <target> CACE_SOURCE=<schematic|layout|pex|rcx|best>
+CACE_SOURCE ?= pex
+```
+
+Then on each of the three: `cace inverter.yaml -s $(CACE_SOURCE) -p <set> && \`.
+
+**Also line 137,** `rm -rf _runs _docs netlist`: that `netlist` is CACE's per-source extraction cache. Deleting it forces a fresh Magic extraction on every `sim-cace`, three times per invocation. CACE handles staleness itself (`check_layout_out_of_date`, logs `Skipping extraction… Up to date`). Drop `netlist` from the line; it's gitignored and `make clean` still removes it.
+
+None of this does anything until `paths:` gains `layout: ../layout`.
+
+---
+
+## 70 — User
+
+> check whether I made the necessary changes, and which git branch I'm in.
+
+## 71 — Assistant
+
+**Branch: `inverter_pex`** — local only, no upstream, one commit ahead of `i_claude`. All four changes in, uncommitted: `paths: layout: ../layout`; `CACE_SOURCE ?= pex` (lines 40–41); `-s $(CACE_SOURCE)` on lines 126/131/136; `rm -rf _runs _docs` with the old line commented at 141.
+
+```
+* ad09f82  sim-all with schematics hand edited to use inverter_pex   ← inverter_pex (HEAD)
+* 692ee56  magic-pex re-run locally                                  ← i_claude, origin/i_claude
+* 7eb861a  plots redrawn
+* dd78933  magic-verify-all
+* cf2bfef  klayout-verify-all
+* 743c8a8  the rename
+* baf9173  Initial commit                                            ← main, generated_deleted
+```
+
+Good call putting the DUT swap on its own branch — `i_claude` still holds the pre-layout inverter reference.
+
+---
+
+## 72 — User
+
+> Barf?
+> *[`make -C macros/inverter sim-cace` → `/bin/sh: 19: Syntax error: end of file unexpected`]*
+
+## 73 — Assistant
+
+Not barf — a `#` inside a backslash continuation. Make glues lines 139–141 into **one** shell command:
+
+```sh
+rm -rf _runs/RUN_* &&  \  # rm -rf _runs _docs netlist
+```
+
+The `#` is a *shell* comment, so everything after it vanishes — including the command the `&&` was waiting for. Dangling `&&` at end of input.
+
+*[fixed: dropped the `&& \` from the last chain link, deleted the stray `\`, moved the note to make comments at column 0 after the recipe. `make -n sim-cace` exits 0.]*
+
+The rule: inside a recipe, `#` means whatever the **shell** thinks it means. Make only treats `#` as its own comment when the line starts at column 0 and isn't swallowed by a preceding `\`.
+
+---
+
+## 74 — User
+
+> You INSERTED a line. What does it do?
+> Shouldn't we delete it altogether?
+
+## 75 — Assistant
+
+**What I inserted: three comment lines.** Zero runtime effect. That's the net +1.
+
+**The `rm -rf _runs/RUN_*` at 139 I didn't insert** — it was already in the template; I only detached it from the `&&` chain, which made its uselessness visible. And it is useless: line 140 does `rm -rf _runs`, removing the whole directory including every `RUN_*`.
+
+The other two are **not** redundant — lines 129 and 134 clear the run directory *between* parameter sets so the next `cp _runs/RUN_*/parameters/…` glob matches exactly one directory. Line 139 has no `cp` after it.
+
+*[deleted line 139; the recipe now ends as one unbroken `&&` chain, so a failure leaves `_runs/` behind for inspection. `make -n` exits 0. Net vs the commit: 10 insertions, 6 deletions.]*
+
+---
+
+## 76 — User
+
+> Now I inserted the commented out line again, so that it doesn't mess things up.
+
+## 77 — Assistant
+
+That one's safe. `make -n sim-cace` exits 0, and the recipe the shell receives ends cleanly at `rm -rf _runs _docs`.
+
+Why it works now: the line above has **no trailing backslash**, so the recipe ends there. Your `#` then starts at column 0, making it a *make* comment — dropped before the shell sees it.
+
+```
+	… && \
+#	old line          ← swallowed by the continuation: shell comment, chain breaks
+```
+```
+	… no backslash
+#	old line          ← make comment: dropped entirely
+```
+
+Same three characters, opposite outcomes. The trailing backslash on the line above is the whole story.
+
+---
+
+## 78 — User
+
+> I'm getting ERROR messages in the .out file. Safe to ignore, or serious?
+> And where do the results end up, anyhow? I'm suffering from MAJOR skill skip here.
+
+## 79 — Assistant
+
+Safe to ignore — but the run has a real problem the errors aren't telling you about.
+
+**The ERROR lines:**
+
+```
+RuntimeError: Unable to open file:
+/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech//sg13g2.lyp (errno=2)
+in LayoutViewBase.load_layer_props
+```
+
+KLayout looking for a layer-properties file named **`sg13g2`** inside the **`ihp-sg13cmos5l`** PDK — wrong PDK name, a leftover from the sibling `ihp-sg13g2` process. It happens right after `Generating documentation in 'cace/_docs'`: the layout thumbnail for CACE's datasheet, in a directory the recipe deletes. Three occurrences, one per `cace` call. No measurement touched.
+
+**Your cache change worked:** `Extracting pex netlist from layout…` once at 19:10, then `Skipping extraction… Up to date` twice. All three summaries say `netlist source: pex`.
+
+**Where the results go:**
+
+| Location | Contents | Survives? |
+|---|---|---|
+| stdout | the `CACE Summary` tables | only in your `.out` |
+| `verification/cace/results/inverter/*.png` | 6 plots | ✅ committed |
+| `cace/_runs/RUN_*/parameters/<param>/` | `simulation_summary.md`, plots, raw sims | ❌ `rm -rf _runs` |
+| `cace/_docs/` | generated datasheet | ❌ `rm -rf _docs` |
+| `cace/netlist/{schematic,pex,layout}/` | extracted netlists | ✅ now kept |
+
+**The thing worth attention** — mismatch MC, schematic vs pex:
+
+| | Min | Typ | Max |
+|---|---|---|---|
+| schematic | 29.970 | 31.296 | 32.096 dB |
+| **pex** | **31.329** | **31.329** | **31.329 dB** |
+
+Min = typ = max. **The mismatch spread collapsed to zero.** Post-layout mismatch numbers here are not wrong, they're *vacuous*.
+
+Process MC and corners survive and behave correctly: DC gain identical schematic vs pex, fcu consistently ~0.5% lower. Parasitic capacitance shouldn't touch DC gain and should shave bandwidth — exactly what appears.
+
+---
+
+## 80 — User
+
+> Would I need to define a schematic with transistor models that support random parameter variations? Are such models available? Are they included in the template?
+
+## 81 — Assistant
+
+**You already have them, they already work, and nothing needs defining.**
+
+The CACE testbench template pulls them in by name:
+
+```spice
+.lib cornerMOSlv.lib mos_{corner_mos}
+.lib cornerMOShv.lib mos_{corner_mos}
+.lib cornerRES.lib   res_{corner_r}
+```
+
+| Parameter set | `corner_mos` | `corner_r` |
+|---|---|---|
+| `ac_params` | `tt`, `ss`, `sf`, `fs`, `ff` | typical |
+| `ac_mc_params` | **`tt_stat`** | `stat` |
+| `ac_mm_params` | **`tt_mismatch`** | `typ_mismatch` |
+
+`ss_mismatch`, `ff_mismatch`, `sf_mismatch` sit commented out at lines 304–306. IHP's own statistical libraries, shipped with the PDK.
+
+**Why the extracted netlist can't do it.** Schematic:
+
+```spice
+XM1 vout vin VSS VSS sg13_lv_nmos w=20.0u l=1.0u ng=20 m=1 mm_ok=1
+```
+
+| Netlist | devices | `mm_ok` |
+|---|---|---|
+| `cace/netlist/schematic/inverter.spice` | 4 | **4** |
+| `cace/netlist/pex/inverter.spice` | 46 | **0** |
+
+Extracted devices come out as bare geometry, no `mm_ok`. And 46 devices, not 4 — Magic splits each multi-finger transistor into individual fingers, so `ng=20` becomes twenty `w=1u` devices; per-finger random draws would average out and understate mismatch anyway.
+
+This is what netgen was flagging all along with `Property mm_ok in circuit2 has no matching property in circuit1`.
+
+**So:** mismatch and process MC → schematic; parasitic effects → pex. Otherwise the committed `Adc_ol_dB_mm.png` is a flat line masquerading as a mismatch distribution — the most dangerous kind of wrong result, because it looks like a pass.
+
+---
+
+## 82 — User
+
+> did I fix it?
+
+## 83 — Assistant
+
+Yes. `ac_mm_params` and `ac_mc_params` pinned to `schematic`, `ac_params` on `$(CACE_SOURCE)` = `pex`. Recipe parses.
+
+One reconsideration: `ac_mc_params` is **process** MC, not mismatch, and it *did* survive extraction — the pex run gave a genuine 4.161 / 22.937 / 33.871 dB spread with fcu correctly lower. Only mismatch is structurally broken. Pinning both to schematic is defensible and simpler to explain; keeping `ac_mc_params` on pex preserves the one statistical result that worked.
+
+> **Final state (adopted after this exchange):** only `ac_mm_params` is pinned
+> to `schematic`; `ac_mc_params` and `ac_params` both run on `$(CACE_SOURCE)`.
+> That keeps mismatch meaningful and keeps process MC post-layout.
+>
+> ```make
+> cace inverter.yaml -s schematic       -p ac_mm_params
+> cace inverter.yaml -s $(CACE_SOURCE)  -p ac_mc_params
+> cace inverter.yaml -s $(CACE_SOURCE)  -p ac_params
+> ```
+
+Follow-ups: update the line-39 comment, which now governs `ac_mc_params` and `ac_params` but not `ac_mm_params`; and rerun to overwrite `Adc_ol_dB_mm.png` / `fcu_mm.png`, currently the collapsed distributions.
+
+---
+
+## 84 — User
+
+> I also want to see the data sheets, for diagnostics.
+
+## 85 — Assistant
+
+The datasheet is `_docs/inverter.md`, and the recipe deletes it. For diagnostics, bypass make:
+
+```sh
+cd macros/inverter/verification/cace
+cace inverter.yaml -s schematic -p ac_mm_params
+```
+
+Nothing gets cleaned up:
+
+```
+_docs/inverter.md                  ← the datasheet
+_docs/inverter_symbol.svg
+_docs/inverter_schematic.svg
+_docs/inverter_klayout.svg         ← this is the one that throws the sg13g2.lyp error
+_runs/RUN_<timestamp>/parameters/ac_mm_params/
+    simulation_summary.md          ← per-iteration detail
+    Adc_ol_dB_mm.png, fcu_mm.png
+```
+
+`simulation_summary.md` is what you want for the mismatch question — results per iteration, so a collapsed distribution shows as identical rows rather than something inferred from min=typ=max. Both dirs are gitignored.
+
+`_docs/inverter.md` is **regenerated and overwritten on every `cace` call**, and with `-p <set>` only that set has results — so a full `make sim-cace` leaves a datasheet showing only `ac_params`.
+
+Repeatable from make, avoiding the dangling-`&&` trap by expanding to `true` rather than nothing:
+
+```make
+KEEP_CACE ?=
+	$(if $(KEEP_CACE),true,rm -rf _runs _docs)
+```
+
+The between-set `rm -rf _runs/RUN_*` still has to run either way, so even with `KEEP_CACE=1` you keep only the last set's run directory.
+
+---
+
+## 86 — User
+
+> update the verbatim chat log.
+
+## 87 — Assistant
+
+*[this file]*
+
+---
+
 ## Open items at end of session
 
-- [ ] Decide `sudelbuecher/` strategy — leaning: non-orphan branch off `i_claude` in a worktree (§46)
-- [ ] Commit the magic run: `netlist/pex/*_magic_pex_3.spice`, `netlist/schematic/*_magic.spice`, `verification/lvs/*.lvs.out`
-- [ ] `make build-inverter` and `make sim-all` — neither the inverter's own flow nor any simulation has run (§40)
+- [ ] Rerun `sim-cace` to overwrite `Adc_ol_dB_mm.png` / `fcu_mm.png` — currently the collapsed post-layout distributions
+- [ ] Update the `CACE_SOURCE` comment at line 39: it governs `ac_mc_params` and `ac_params`, but `ac_mm_params` is pinned to `schematic`
+- [ ] Commit the `inverter_pex` branch work (Makefile + `inverter.yaml` uncommitted); decide whether to push it
+- [ ] Decide whether the swapped-to-`_pex` testbenches are the state to keep on `i_claude`
+- [ ] `sudelbuecher/` strategy — leaning: non-orphan branch off `i_claude` in a worktree (§46)
+- [ ] `make -C macros/inverter sim-view-xschem` — inverter figures still from the template
+- [ ] Top-level post-layout run: swap `x1` to `<TOP>_pex.sym` in `<TOP>_tb_tran.sch`
 - [ ] Re-open `layout/*.klay.gds` in KLayout, eyeball it, re-export the tapeout GDS
 - [ ] Confirm the `from_template` tag reached origin: `git ls-remote --tags origin`
-- [ ] `git branch -d generated_deleted` once `from_template` is pushed (both point at `baf9173`)
-- [ ] Fill the `TODO` fields in `submission.yaml`; revisit `analog-pins: 3` once the real circuit exists
+- [ ] `git branch -d generated_deleted` once `from_template` is pushed
+- [ ] Fill the `TODO` fields in `submission.yaml`; revisit `analog-pins: 3`
 - [ ] Replace the inherited inverter example with the actual single→diff→single circuit
-- [ ] Move `magic-verify-all.out` / `.err` into `sudelbuecher/logs/` if logs will accumulate
+- [ ] Counter macro: never built or simulated here
 - [ ] Optional: `docker image rm hpretl/iic-osic-tools:2026.04` (~25 GB)
 
 ## Findings worth keeping
 
+**The rename**
+
 - Old and new top-cell names are both **36 characters**, which is why the GDS cell name could be byte-patched in place without touching record lengths.
 - `make check-boundary` is the cheapest validator of a rename: it fails if no cell matches `TOP`.
-- `sim-xschem` runs `xschem save` and therefore dirties the testbench `.sch` even on success.
-- Full-RC PEX output is **not** reproducible run-to-run — parasitic `R`/`C` element numbering changes. Never treat its diff as a regression signal.
-- Netgen's "property errors" (`mm_ok`) on the inverter NMOS devices are **inherited from the template**, present at identical line numbers in the committed reference.
-- `git worktree add --orphan` needs **Git ≥ 2.42**; the git here is 2.34.1. Plumbing fallback: `git mktree </dev/null` → `git commit-tree` → `git branch`.
 - `git clean -xdf` deletes files listed in `.git/info/exclude`.
+- `git worktree add --orphan` needs **Git ≥ 2.42**; the git here is 2.34.1. Plumbing fallback: `git mktree </dev/null` → `git commit-tree` → `git branch`.
+
+**Simulation**
+
+- `sim-xschem` runs `xschem save` and can dirty the testbench `.sch` even on success — it did for the inverter, did not at the top level.
+- `x2`/`x3` in every testbench are **unwired spares**. To go post-layout, change `x1`'s symbol to `<CELL>_pex.sym` at the same coordinates; `symbol-pex` guarantees identical pin geometry. Do not clear their `spice_ignore`.
+- The template's `adm_db` divides absolute peaks including DC offset. The real small-signal gain is `vout_pp / vin_pp` ≈ 30 dB, not 2.24 dB.
+- Full-RC PEX output is **not** reproducible run-to-run — parasitic `R`/`C` numbering changes. Never treat its diff as a regression signal.
+- CACE's Monte Carlo **is** deterministically seeded — its result PNGs reproduce byte-for-byte.
+
+**CACE and statistical models**
+
+- `-s`/`--source` accepts `schematic`, `layout`, `pex`, `rcx`, `best`. Default `best` silently falls back to schematic when `paths:` has no `layout:` key.
+- Statistical models are IHP's own, already wired up: `.lib cornerMOSlv.lib mos_{corner_mos}` with `tt_stat` (process) and `tt_mismatch` (mismatch).
+- **Mismatch MC is meaningless on an extracted netlist; process MC is not.** Process MC (`tt_stat`) survives extraction intact — only mismatch (`tt_mismatch`) collapses. `mm_ok=1` appears on all 4 schematic devices and on none of the 46 extracted ones, and Magic splits `ng=20` into twenty separate fingers. Run mismatch on the schematic; run parasitics on pex.
+- Netgen's `mm_ok` property errors were never noise — they were this, visible two steps earlier.
+- CACE's `_docs/inverter.md` datasheet is overwritten by every `cace` call and deleted by `sim-cace`. Run `cace` by hand for diagnostics.
+- The `sg13g2.lyp` KLayout error is cosmetic: wrong PDK name in the datasheet's layout thumbnail, after all numbers are computed.
+
+**Make**
+
+- `#` inside a `\`-continued recipe is a *shell* comment and eats the rest of the `&&` chain. Comments are safe only at column 0 with no preceding backslash.
+- `make -C <dir>` is `--directory`; the source of the `Entering directory` lines.
