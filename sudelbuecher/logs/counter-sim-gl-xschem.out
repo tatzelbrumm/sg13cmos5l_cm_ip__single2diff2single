@@ -1,0 +1,73 @@
+mkdir -p testbenches/xschem/simulations
+mkdir -p testbenches/xschem/plot_simulations/data
+cd testbenches/xschem && xschem -r -x -q --rcfile xschemrc --command ' \
+	xschem set netlist_type spice; \
+	set netlist_dir /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter/testbenches/xschem/simulations; \
+	xschem save; \
+	write_data [save_params] /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter/testbenches/xschem/simulations/counter_top_tb_tran.save; \
+	xschem netlist \
+' counter_top_tb_tran.sch
+Netlist mode: <default>
+Sourced library init file /foss/tools/xschem/share/doc/xschem/analyses/lib_init.tcl
+
+cd testbenches/xschem/simulations && ngspice -b counter_top_tb_tran.spice
+
+Note: No compatibility mode selected!
+
+
+Circuit: ** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter/testbenches/xschem/counter_top_tb_tran.sch
+
+Reducing trtol to 1 for xspice 'A' devices
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using KLU as Direct Linear Solver
+ Reference value :  0.00000e+00
+No. of Data Rows : 1
+binary raw file "counter_top_tb_tran.raw"
+Reducing trtol to 1 for xspice 'A' devices
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using KLU as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vdd                                        1.5
+clock                                        0
+reset_n                                      0
+enable                                     1.5
+b0                                           0
+b1                                           0
+b2                                           0
+b3                                           0
+b4                                           0
+b5                                           0
+b6                                           0
+b7                                           0
+bit0                                         0
+bit1                                         0
+bit2                                         0
+bit3                                         0
+bit4                                         0
+bit5                                         0
+bit6                                         0
+bit7                                         0
+ven#branch                            -1.5e-14
+vrst#branch                                  0
+vclk#branch                                  0
+vdd#branch                            -1.5e-14
+a.x1.ad2a8#branch_1_0                        0
+a.x1.ad2a7#branch_1_0                        0
+a.x1.ad2a6#branch_1_0                        0
+a.x1.ad2a5#branch_1_0                        0
+a.x1.ad2a4#branch_1_0                        0
+a.x1.ad2a3#branch_1_0                        0
+a.x1.ad2a2#branch_1_0                        0
+a.x1.ad2a1#branch_1_0                        0
+
+ Reference value :  8.84000e-06
+No. of Data Rows : 18006
+binary raw file "counter_top_tb_tran.raw"
+Note: Simulation executed from .control section 

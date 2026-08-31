@@ -1,0 +1,14 @@
+make lint-verilog CELL=counter
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter'
+verilator --lint-only -I"rtl" rtl/constants.sv rtl/counter.sv
+- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev v5.050
+- Verilator: Built from 0.046 MB sources in 2 modules, into 0.008 MB in 3 C++ files needing 0.000 MB
+- Verilator: Walltime 0.070 s (elab=0.014, cvt=0.030, bld=0.000); cpu 0.021 s on 1 threads; allocated 32.613 MB
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter'
+make lint-verilog
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter'
+verilator --lint-only -I"rtl" rtl/constants.sv rtl/counter.sv rtl/counter_top.sv
+- V e r i l a t i o n   R e p o r t: Verilator 5.050 2026-07-01 rev v5.050
+- Verilator: Built from 0.061 MB sources in 3 modules, into 0.008 MB in 3 C++ files needing 0.000 MB
+- Verilator: Walltime 0.012 s (elab=0.002, cvt=0.005, bld=0.000); cpu 0.010 s on 1 threads; allocated 32.621 MB
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter'
