@@ -720,13 +720,313 @@ Two things that make it low-stakes: everything is committed, so `git restore .` 
 
 ---
 
+---
+
+## 35 — User
+
+> I want to make magic-verify-all with tee for both stdout and stderr into separate files. Remind me of the appendix to the make magic-verify-all command
+
+## 36 — Assistant
+
+```sh
+make magic-verify-all > >(tee magic-verify.out) 2> >(tee magic-verify.err >&2)
+```
+
+Bash process substitution. Both streams still go to your terminal, each also lands in its own file.
+
+**Why this form and not a pipe:** `$?` stays make's exit code. The pipe variant (`| tee`) gives you tee's status instead, so you'd need `set -o pipefail` or `${PIPESTATUS[0]}`.
+
+**One quirk:** the `tee`s are async, so a few trailing lines can land after your prompt returns. Harmless, briefly confusing.
+
+If you want a combined log too, plus timestamps in the filename:
+
+```sh
+L=sudelbuecher/logs/$(date +%F_%H%M)_magic-verify
+mkdir -p sudelbuecher/logs
+make magic-verify-all > >(tee "$L.out") 2> >(tee "$L.err" >&2)
+```
+
+Given `magic-verify-all` runs DRC + LVS + PEX, expect it to take a while and expect stderr to be noisy without being fatal — Magic and Netgen chatter there routinely. Judge by the exit code and the reports under `verification/`, not by stderr being non-empty.
+
+---
+
+## 37 — User
+
+> make magic-verify-all > >(tee sudelbuecher/magic-verify-all.out) 2> >(tee sudelbuecher/magic-verify-all.err >&2)
+>
+> Do the output files look good? Any trouble?
+
+## 38 — Assistant
+
+Files look fine. The command worked exactly as intended — clean split, nothing lost.
+
+### Verdicts, all green
+
+```
+[INFO] Magic DRC is clean!          CONGRATULATIONS! No DRC errors
+[INFO] Magic+Netgen LVS is OK       Final result: Circuits match uniquely.
+[INFO] All ports are connected.     (PEX, EXT_MODE=3)
+```
+
+DRC → LVS → PEX all ran, 228 lines, ASCII smiley and all.
+
+### The .err is not trouble
+
+380 bytes, six lines, all Xschem announcing where it found its `xschemrc` and model paths. Informational chatter on stderr — exactly what I said to expect. Nothing failed.
+
+### The one thing to look at
+
+`Netlists match uniquely with property errors` — `Property mm_ok in circuit2 has no matching property in circuit1`, on the inverter's NMOS devices.
+
+**It's inherited, not yours.** The committed reference from the template says the identical thing at the identical line numbers (213, 291–295). Netgen's final verdict is still "match uniquely", so it's the mismatch-flag property surviving into the layout netlist but not the schematic netlist. Pre-existing template noise.
+
+### Regression check
+
+You committed the klayout run as `cf2bfef`. Of the three files this magic run changed:
+
+- **`.lvs.out`** — 4 lines, all `chipalooza_analog_pr` → `cm_ip__single2diff2s` in netgen's truncated column headers. Pure rename.
+- **`_magic.spice`** — 6 lines, the same stale `/foss/designs/chipalooza_analog_project/` paths correcting themselves.
+- **`_magic_pex_3.spice`** — 1345 lines. Looks alarming; isn't. Full-RC extraction renumbers parasitic `R`/`C` elements and their node names on every run. Not deterministic, not a regression.
+
+So: nothing structural, same as the klayout run. Commit it.
+
+One nit — those two logs are sitting loose in `sudelbuecher/`, not the `logs/` subdir I suggested. Doesn't matter unless you plan to accumulate them.
+
+---
+
+## 39 — User
+
+> I'll take care of these later. Anyhow, which design has been analyzed so far. Only the inverters or also the counter?
+
+## 40 — Assistant
+
+**Only the top cell — which contains inverters. The counter was not touched at all.**
+
+Zero occurrences of "counter" in either log.
+
+### What was actually analyzed
+
+`magic-verify-all` runs with `CELL ?= $(TOP)`, so it verified exactly one cell: `sg13cmos5l_cm_ip__single2diff2single`, as a whole. The GDS contains only the top cell, `inverter`, `nmos`/`pmos` devices and via stacks — no counter geometry anywhere. Netgen resolved two inverter instances (`inverter:3`, `inverter:4`).
+
+So the inverters were checked *as instantiated inside the top cell*, not on their own terms. The inverter's own sub-macro flow (its testbenches, CACE characterization, its own DRC/LVS/PEX) hasn't run either — `macros/inverter/final/` holds artifacts committed from the template, not from your machine.
+
+### The counter
+
+`macros/counter/` is fully populated in the tree but `macros/counter/final/` doesn't exist — never built here. Nothing reaches it except `build-counter`, `build-macros`, or `make all`.
+
+That's also by design: the shipped example is analog-only. It instantiates the inverter and leaves the counter unused. Going mixed-signal would mean building the counter, adding its hardened GDS as a second library entry in the `.klib`, placing `counter_top` in the layout, and re-exporting.
+
+### Coverage so far
+
+| | Checked |
+|---|---|
+| Top cell (KLayout DRC+LVS, Magic DRC+LVS+PEX) | yes |
+| Inverter, inside the top cell | yes, as instances |
+| Inverter, own flow (`build-inverter`) | no |
+| Counter | no |
+| Simulation (`sim-all`) | no |
+
+For the rename you care about, that's the coverage that matters — the renamed things are all top-level. If you want the rest: `make build-inverter`, then `make sim-all`.
+
+---
+
+## 41 — User
+
+> explain the ../sudelbuecher-wt in git worktree add --orphan -b sudelbuecher ../sudelbuecher-wt
+
+## 42 — Assistant
+
+It's just the **directory where the second working tree gets checked out**. `git worktree add <path> [<branch>]` — `<path>` is a filesystem location, `-wt` is my naming convention for "worktree", nothing magic.
+
+```
+~/EDA/
+├─ sg13cmos5l_cm_ip__single2diff2single/   ← main worktree, branch i_claude
+│  └─ .git/                                 ← the one and only object store
+└─ sudelbuecher-wt/                        ← second worktree, branch sudelbuecher
+   └─ .git                                  ← a *file*, pointing back into the above
+```
+
+One repository, one remote, two checkouts. `sudelbuecher-wt/.git` is a text file containing a path, not a directory.
+
+**Why `../` and not inside the repo:** a worktree nested in the main worktree shows up as untracked content — which reintroduces the exact `?? sudelbuecher/` noise you're trying to get rid of.
+
+**Relevant to your container:** `../` from the repo *is* `~/EDA` = your `$DESIGNS`. So it'd appear inside the container at `/foss/designs/sudelbuecher-wt`, a sibling of the project. Convenient or clutter, your call.
+
+### Two things that make this maybe-not-for-you
+
+**Your git is too old.** `git worktree add --orphan` arrived in **Git 2.42**; the git operating on your repo is **2.34.1** and has no `--orphan` flag. Verified recipe for older git — creates a genuinely parentless branch without disturbing your main worktree:
+
+```sh
+tree=$(git mktree </dev/null)
+commit=$(git commit-tree "$tree" -m "sudelbuecher: start")
+git branch sudelbuecher "$commit"
+git worktree add ../sudelbuecher-wt sudelbuecher
+```
+
+I tested that; it yields a branch with `parents=[]` and an empty checkout.
+
+**It moves your notes out of the project.** They'd live at `~/EDA/sudelbuecher-wt/`, not `<repo>/sudelbuecher/`. You said "that's what that directory is for" — if you mean the directory *inside* the repo, then the worktree is the wrong tool and `.git/info/exclude` is the right one:
+
+```sh
+echo '/sudelbuecher/' >> .git/info/exclude
+```
+
+Files stay exactly where they are, `git status` goes quiet, nothing is imposed on anyone cloning the submission. The cost is that they're not versioned.
+
+Undo either way: `git worktree remove ../sudelbuecher-wt`.
+
+---
+
+## 43 — User
+
+> I seem to recall that I can just create an orphan branch with branch, checkout, add, and commit.
+
+## 44 — Assistant
+
+You're right, and it works — I just tested it. But there's a consequence worth seeing before you commit to it.
+
+```sh
+git switch --orphan sudelbuecher    # empty index, no parent
+git add sudelbuecher
+git commit -m "sudelbuecher: rename session"
+git switch i_claude
+```
+
+Neat detail: your `sudelbuecher/` is currently **untracked**, and `switch --orphan` doesn't touch untracked files. So it survives the switch and is sitting right there to `git add`.
+
+### The catch
+
+```
+$ git switch main
+$ ls -A
+.git  tracked.txt          ← sudelbuecher/ is GONE
+```
+
+Once the notes are tracked on the orphan branch, switching away **removes them from disk**. They only exist while `sudelbuecher` is checked out. For a Sudelbuch — something you want open to scribble in *while* working on `i_claude` — that's backwards.
+
+That's precisely the problem `git worktree` solves: both branches checked out at once, in two directories.
+
+### Two flags, not the same
+
+- **`git switch --orphan foo`** (≥ 2.23) — empties index and working tree. What you want.
+- **`git checkout --orphan foo`** (ancient) — keeps everything *staged*. Your first commit would carry the entire repo. Needs `git rm -rf .` first.
+
+Also: `switch --orphan` needs a clean tree, and you currently have three modified files from the magic run.
+
+### Choosing
+
+| | Notes visible while on `i_claude` | Versioned | Pushable |
+|---|---|---|---|
+| `.git/info/exclude` | yes | no | no |
+| orphan branch alone | **no** | yes | yes |
+| orphan + worktree | yes | yes | yes |
+
+The worktree isn't a different mechanism — it's the same orphan branch, just checked out somewhere it can stay put.
+
+---
+
+## 45 — User
+
+> i want to use the sudelbuecher as staging area for additions to the main repository branches. what are the possible pitfalls for either solution (provided i can make the worktree function at all)?
+
+## 46 — Assistant
+
+If the purpose is **staging for later promotion**, then orphan-ness is working against you. Worth saying before the pitfall lists.
+
+An orphan branch shares no history with `i_claude`. Every promotion is therefore a content copy, not a merge — git's actual machinery for "draft here, land there" is a plain topic branch. If you want a staging area, `git worktree add ../sudelbuecher-wt -b sudelbuecher i_claude` (branched *from* `i_claude`, not orphan) gives you real merges, real cherry-picks, real conflict resolution. The only thing you lose is that notes commits appear in the branch's history — which for a staging area is the point.
+
+### Pitfalls: `.git/info/exclude`
+
+**`git clean -xdf` eats them.** Tested: `Would remove sudelbuecher/`. Ignored files are exactly what `-x` targets. You already run `make clean` routinely and the README trains you to reach for cleanup commands. This is the one that will actually bite.
+
+**`git add` refuses.** Tested — promotion needs `git add -f`. Mild friction, arguably a safety feature.
+
+**No backup, no history, no second machine.** Not in the clone, not on the remote. Disk dies, notes die.
+
+**Invisible.** Nothing reminds you the directory exists or that it has uncommitted thinking in it.
+
+### Pitfalls: orphan branch, no worktree
+
+**Notes vanish while you work.** Established. Fatal for a staging area you consult *during* the work.
+
+**Clean tree required to switch.** You have three modified files right now. Every promotion becomes commit-or-stash, switch, copy, switch back.
+
+**`git merge --allow-unrelated-histories` is the trap.** It welds the entire note history into the submission branch permanently, and every future merge drags notes along. Once pushed, ugly to undo. Use `git checkout sudelbuecher -- <path>` or cherry-pick instead.
+
+**Cherry-pick does work**, including the root commit — I tested it, no flags needed. But you're moving content, not history; the note's context stays behind.
+
+**It's not hidden.** Shows in `git branch -a`, `git log --all`, and GitHub's branch dropdown. Public repo means public scratch notes.
+
+### Pitfalls: orphan + worktree
+
+Everything above except the vanishing, plus:
+
+**Wrong-directory edits.** Two checkouts of the same repo. Easy to edit the copy you didn't mean to.
+
+**Stale metadata.** Move or `rm -rf` the worktree directory by hand and `.git/worktrees/` keeps a dangling entry until `git worktree prune`.
+
+**Doesn't survive cloning.** Clone the repo elsewhere and you get the branch, not the worktree. Re-add manually.
+
+**Outside your backup scope.** `~/EDA/sudelbuecher-wt` is a sibling — anything backing up the project directory misses it.
+
+**Deleting the main repo orphans it.**
+
+### Two that apply whatever you pick
+
+**Repo bloat is permanent.** If a draft with a stray GDS or PNG gets committed and later removed, git keeps the blob forever. In a tapeout repo that matters.
+
+**SPDX.** Promoted files need headers to satisfy a REUSE lint, since the repo carries them throughout.
+
+### Suggestion
+
+Drop `--orphan`. Branch `sudelbuecher` from `i_claude` in a worktree — you get a visible, versioned, pushable staging area where promotion is `git merge`, which is the operation you're actually describing.
+
+---
+
+## 47 — User
+
+> Messy. Update the verbatim chat export and dependent subdirectories. I staged the old versions. If I don't want to git commit, but update the staged versions in the staging area, but then git restore the updated files instead of committing, how do I do this?
+
+## 48 — Assistant
+
+*[updated this file and `ref/references.md`; answered the index question — see below]*
+
+**Re-stage:** `git add sudelbuecher/` again. `git add` always overwrites the index entry with current working-tree content, so running it a second time simply replaces the old staged version.
+
+**Then restore from the index:** `git restore sudelbuecher/` — with no `--source`, `git restore` takes content *from the index*, so this discards working-tree edits and returns the files to whatever is staged.
+
+The two axes:
+
+| Command | Index | Working tree |
+|---|---|---|
+| `git add <p>` | ← worktree | unchanged |
+| `git restore <p>` | unchanged | ← index |
+| `git restore --staged <p>` | ← HEAD | unchanged |
+| `git restore --staged --worktree <p>` | ← HEAD | ← HEAD |
+
+**Warning: the index is not a save point.** Content staged but never committed is reachable only through the index. A `git reset`, a bad `git restore --staged`, or an eventual `git gc` can drop it with no reflog entry to recover from. If the intent is "keep a version without committing", use `git stash` — it makes real commits — or just commit on the `sudelbuecher` branch, which is what the branch is for.
+
+---
+
 ## Open items at end of session
 
-- [ ] `make klayout-verify-all`, `make magic-verify-all`, `make build-top`, `make sim-all`, then `git diff --stat`
+- [ ] Decide `sudelbuecher/` strategy — leaning: non-orphan branch off `i_claude` in a worktree (§46)
+- [ ] Commit the magic run: `netlist/pex/*_magic_pex_3.spice`, `netlist/schematic/*_magic.spice`, `verification/lvs/*.lvs.out`
+- [ ] `make build-inverter` and `make sim-all` — neither the inverter's own flow nor any simulation has run (§40)
 - [ ] Re-open `layout/*.klay.gds` in KLayout, eyeball it, re-export the tapeout GDS
-- [ ] Decide how to version `sudelbuecher/` — `.git/info/exclude`, `.gitignore`, orphan branch, or separate repo (see §16)
 - [ ] Confirm the `from_template` tag reached origin: `git ls-remote --tags origin`
 - [ ] `git branch -d generated_deleted` once `from_template` is pushed (both point at `baf9173`)
 - [ ] Fill the `TODO` fields in `submission.yaml`; revisit `analog-pins: 3` once the real circuit exists
 - [ ] Replace the inherited inverter example with the actual single→diff→single circuit
+- [ ] Move `magic-verify-all.out` / `.err` into `sudelbuecher/logs/` if logs will accumulate
 - [ ] Optional: `docker image rm hpretl/iic-osic-tools:2026.04` (~25 GB)
+
+## Findings worth keeping
+
+- Old and new top-cell names are both **36 characters**, which is why the GDS cell name could be byte-patched in place without touching record lengths.
+- `make check-boundary` is the cheapest validator of a rename: it fails if no cell matches `TOP`.
+- `sim-xschem` runs `xschem save` and therefore dirties the testbench `.sch` even on success.
+- Full-RC PEX output is **not** reproducible run-to-run — parasitic `R`/`C` element numbering changes. Never treat its diff as a regression signal.
+- Netgen's "property errors" (`mm_ok`) on the inverter NMOS devices are **inherited from the template**, present at identical line numbers in the committed reference.
+- `git worktree add --orphan` needs **Git ≥ 2.42**; the git here is 2.34.1. Plumbing fallback: `git mktree </dev/null` → `git commit-tree` → `git branch`.
+- `git clean -xdf` deletes files listed in `.git/info/exclude`.
