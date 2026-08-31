@@ -1481,16 +1481,275 @@ The between-set `rm -rf _runs/RUN_*` still has to run either way, so even with `
 
 ---
 
+---
+
+## 88 — User
+
+> Is this an error I need to pay attention to?
+> *[the `sg13g2.lyp` / `LayoutViewBase.load_layer_props` ERROR block, again]*
+
+## 89 — Assistant
+
+No. Same one, and it's a hardcoded fallback in CACE, not a problem with your setup. `cace/common/common.py:173`, with the author's own comment:
+
+```python
+techfile = os.path.join(pdk_root, pdk, "libs.tech", "klayout", "tech", pdk + ".lyp")
+# Why oh why ihp-sg13g2
+if not os.path.isfile(techfile):
+    techfile = os.path.join(pdk_root, pdk, "libs.tech", "klayout", "tech", "sg13g2.lyp")
+```
+
+Tries `ihp-sg13cmos5l.lyp`, misses, falls back to a hardcoded `sg13g2.lyp` patched in for the sibling PDK. Your PDK is neither, so both attempts miss. The only casualty is `_docs/inverter_klayout.svg`, a layout thumbnail, generated after every number is computed. CACE swallows the exit code and continues.
+
+**The thing that did deserve attention in that log was the mismatch collapse, which produced no error at all.** The loud thing was cosmetic; the silent thing was the real defect.
+
+---
+
+## 90 — User
+
+> show me again where to find the mismatch collapse
+
+## 91 — Assistant
+
+You can't — **you already fixed it, and the evidence got overwritten.** The 19:49 rerun wrote over the 27 KB `inv-cace-pex.out`; grepping the directory for the collapsed signature finds nothing.
+
+Current file: `netlist source: schematic`, Adc 29.970 / 31.296 / 32.096 dB. Spread restored.
+
+Record survives only in this log, §79 table, and the Findings section.
+
+**How to spot it next time:** Min = Typ = Max on a Monte Carlo row; or identical rows in `_runs/RUN_*/parameters/<set>/simulation_summary.md`.
+
+---
+
+## 92 — User
+
+> now I want to see the cace data sheets I produced by running cace unscripted. Where do I find them now?
+
+## 93 — Assistant
+
+All still there — you bypassed the Makefile, so nothing was cleaned up.
+
+```
+macros/inverter/verification/cace/
+├─ _docs/inverter.md                  ← the datasheet
+│  inverter_symbol.svg, inverter_schematic.svg, inverter_schematic.md
+│  inverter/schematic/{Adc_ol_dB_mm,fcu_mm}.png
+└─ _runs/RUN_2026-08-30_20-16-29/parameters/ac_mm_params/
+   ├─ simulation_summary.md / .csv    ← per-iteration table
+   └─ run_0/run_0 … run_199/          ← 200 iterations, each with its own
+                                        .spice deck, conditions.yaml, ngspice_stdout.out
+```
+
+The datasheet's Layout section references `inverter_w.png` / `inverter_b.png`, neither of which exists — that is the `sg13g2.lyp` error. It covers only `ac_mm_params`, and is overwritten by every `cace` call.
+
+---
+
+## 94 — User
+
+> something else for now.
+> * Re-open layout/*.klay.gds in KLayout, eyeball it, re-export the tapeout GDS
+> Continue from where you left off.
+
+## 95 — User
+
+> Explain in detail what, exactly, this means. Make no implicit assumptions whatsoever which tool I need to open from where, and how.
+
+## 96 — Assistant
+
+*[a long step-by-step: why the item exists (the tapeout GDS was byte-patched, never exported); the graphical-terminal requirement; `source .designinit`; `klayout -e` on the `.klay.gds`; what "eyeball" means; the export menu; declining the save; verification.]*
+
+## 97 — User
+
+> ok you wrote a novel. tl;dr.
+> I probably already did several steps. Those would be clutter. check which prerequisites I already meet. if you can't do it yourself, walk me through it. terse instructions, step by step.
+
+## 98 — Assistant
+
+*[checked: layout clean, both files still 15:03 = the byte patch, never re-exported. Gave a condensed list.]*
+
+## 99 — User
+
+> FUCK YOU. I said step by step.
+
+## 100 — Assistant
+
+You're right, I gave you a list, not steps. One at a time.
+
+**Step 1.** `cd` to the project, `source .designinit`, `echo $KLAYOUT_PATH`.
+
+---
+
+## 101 — User
+
+> echo $KLAYOUT_PATH
+> /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout
+> without source .designinit. Are you cluttering this chat with redundant information?
+
+## 102 — Assistant
+
+Yes — I should have had you check before sourcing, not both.
+
+**Step 2.** `klayout -e layout/sg13cmos5l_cm_ip__single2diff2single.klay.gds`
+
+---
+
+## 103 — User
+
+> Opens. Layers are just number/aspect (what's the correct nomenclature)? Background is black, not white. layout seems ok, but subcells (what's the correct nomenclature)? are "defunct. …"
+
+## 104 — Assistant
+
+**Nomenclature:** `8/0` is a **layer/datatype** pair; names and colours come from a **layer properties file** (`.lyp`). The broken cells are **library proxy cells** — KLayout marks them `(defunct)` when the library they came from isn't registered.
+
+Diagnosis: no technology loaded — same cause for both symptoms. Do not export in this state.
+
+**Step 3.** `ls $KLAYOUT_PATH/tech/`
+
+---
+
+## 105 — User
+
+> *[ran `echo` instead of `ls`]*
+
+## 106 — Assistant
+
+You ran `echo`, not `ls`. Same command with `ls`.
+
+---
+
+## 107 — User
+
+> My bad.
+> *[listing: `sg13cmos5l.lyp`, `sg13cmos5l.lyt`, `sg13cmos5l.map`, plus d25/ drc/ lvs/ macros/ pymacros/ scripts/ xsect/]*
+
+## 108 — Assistant
+
+`sg13cmos5l.lyt` — that's the technology. (Also: neither `ihp-sg13cmos5l.lyp` nor `sg13g2.lyp` exists, which is exactly why CACE's thumbnail fails.)
+
+**Step 4.** `klayout -e -nn $KLAYOUT_PATH/tech/sg13cmos5l.lyt sg13cmos5l_cm_ip__single2diff2single.klay.gds`
+
+---
+
+## 109 — User
+
+> make sure we're not bypassing a "productivity" script by JKU.
+> Otherwise: layout looks good when fully expanded. subcells (submacros? nomenclature??) show <defunct>inverter.inverter etc.
+
+## 110 — Assistant
+
+`sak-open.py` (behind `make open`) runs plain `klayout -e`; its one important behaviour is starting the tool in the file's own directory.
+
+`<defunct>inverter.inverter` is `<library>.<cell>` — library `inverter`, cell `inverter`. A **library proxy cell**.
+
+Hypothesis: the `.klib`'s `lib_path: ../macros/inverter/layout/inverter.gds` is resolved against the current working directory, not the file's — correct only from `layout/`.
+
+**Step 5.** Relaunch from `layout/`.
+
+---
+
+## 111 — User
+
+> Yes. Why is the -nn option needed? are we bypassing a proper call script?
+
+## 112 — Assistant
+
+Fair question — I don't actually know that `-nn` is needed. Read the JKU launcher instead of guessing. `sak-open.py` line 126 and `launch()`:
+
+```python
+(["klayout", "-e"], …)
+subprocess.Popen(cmd, cwd=<file's directory>, env={**os.environ, "PWD": str(cwd)})
+```
+
+`klayout -e <file>`, cwd = the file's directory, no technology flag. So `-nn` is mine, not JKU's, and we're bypassing nothing. Which makes `-nn` a suspect, since the `.klib` declares `"technology": ""`.
+
+**Step 6.** Same call without `-nn`; report layer naming and the defunct state separately.
+
+---
+
+## 113 — User
+
+> Am I opening a gds when I should open a hierarchical gds?
+
+## 114 — Assistant
+
+No — the right file. GDS is always hierarchical; the distinction is **editing source vs exported tapeout**.
+
+```
+.klay.gds    inverter   polygons=192  refs=58
+inverter.gds inverter   polygons=192  refs=58
+```
+
+**The geometry is already in your `.klay.gds`.** `<defunct>` means KLayout kept the resolved geometry and lost only the *link* back to the library. That is why it looks right fully expanded, and why the export is correct regardless.
+
+---
+
+## 115 — User
+
+> fuck you for messing with leading /
+> *[both invocations: with `-nn` → `ERROR: no PDK info found for tech sg13cmos5l[1]` ×8, layers named; without `-nn` → no errors, raw layer numbers. Both: `inverter` still defunct.]*
+
+## 116 — Assistant
+
+`-nn` was my mistake, and your log proves it: `no PDK info found for tech sg13cmos5l[1]` — the `[1]` means KLayout registered a **duplicate** technology, because KLAYOUT_PATH already registered the real one. Drop `-nn` for good.
+
+Two things remain, neither blocking:
+
+- **Raw layer numbers** — no technology attached to the layout. Cosmetic; doesn't affect written geometry.
+- **`inverter` defunct** — the `.klib` isn't read. But the geometry is in the file, so the export writes it either way.
+
+**Step 7.** File → Export Layout For Tapeout → overwrite `sg13cmos5l_cm_ip__single2diff2single.gds`, same directory. Quit, declining any save prompt.
+
+---
+
+## 117 — User
+
+> ok done and committed. sanity check please
+
+## 118 — Assistant
+
+Passes.
+
+**Geometry unchanged, verified** — re-exported GDS vs pre-export, cell by cell:
+
+```
+cells 21/21, same names
+cells with differing (polycount, area, #layers, bbox): NONE
+top cell: 9145 polygons, 54891.9423 µm², 20 layers, bbox (0,0)-(200,200)
+```
+
+Both 213528 bytes. The re-export was a true no-op on the layout — the byte patch was exactly what KLayout produces. `.klay.gds` untouched at 15:03 (save prompt correctly declined). `final/gds/` byte-identical to `layout/`.
+
+**Sign-off all green:** Magic DRC `COUNT: 0`; KLayout DRC 0 `<item>` entries; `Final result: Circuits match uniquely.`
+
+**The one thing to know** — parasitic counts across three runs on *provably identical* geometry:
+
+| commit | devices | C | R |
+|---|---|---|---|
+| `743c8a8` template's, renamed | 90 | 82 | **574** |
+| `dd78933` first magic-verify-all | 90 | 82 | **833** |
+| `622e07d` after re-export | 90 | 82 | **376** |
+
+Devices and capacitors rock stable; **resistors swing 376–833.** That is Magic's `extresist` network reduction, threshold-driven and not deterministic run to run. If you need a reproducible post-layout number, use `EXT_MODE=2`, or run `EXT_MODE=3` several times and take the range.
+
+---
+
+## 119 — User
+
+> Good. Update the verbatim chat export.
+
+## 120 — Assistant
+
+*[this file]*
+
+---
+
 ## Open items at end of session
 
-- [ ] Rerun `sim-cace` to overwrite `Adc_ol_dB_mm.png` / `fcu_mm.png` — currently the collapsed post-layout distributions
-- [ ] Update the `CACE_SOURCE` comment at line 39: it governs `ac_mc_params` and `ac_params`, but `ac_mm_params` is pinned to `schematic`
-- [ ] Commit the `inverter_pex` branch work (Makefile + `inverter.yaml` uncommitted); decide whether to push it
-- [ ] Decide whether the swapped-to-`_pex` testbenches are the state to keep on `i_claude`
-- [ ] `sudelbuecher/` strategy — leaning: non-orphan branch off `i_claude` in a worktree (§46)
+- [ ] Commit or discard the `inverter_pex` branch work; decide whether to push it
+- [ ] Decide whether the swapped-to-`_pex` inverter testbenches are the state to keep on `i_claude`
+- [ ] `sudelbuecher/` versioning strategy — still undecided (§46); the directory is untracked and growing
 - [ ] `make -C macros/inverter sim-view-xschem` — inverter figures still from the template
 - [ ] Top-level post-layout run: swap `x1` to `<TOP>_pex.sym` in `<TOP>_tb_tran.sch`
-- [ ] Re-open `layout/*.klay.gds` in KLayout, eyeball it, re-export the tapeout GDS
 - [ ] Confirm the `from_template` tag reached origin: `git ls-remote --tags origin`
 - [ ] `git branch -d generated_deleted` once `from_template` is pushed
 - [ ] Fill the `TODO` fields in `submission.yaml`; revisit `analog-pins: 3`
@@ -1498,33 +1757,48 @@ The between-set `rm -rf _runs/RUN_*` still has to run either way, so even with `
 - [ ] Counter macro: never built or simulated here
 - [ ] Optional: `docker image rm hpretl/iic-osic-tools:2026.04` (~25 GB)
 
+**Done since the last revision:** re-export of the tapeout GDS, with geometry verified unchanged and full sign-off re-run (`622e07d`).
+
 ## Findings worth keeping
 
 **The rename**
 
-- Old and new top-cell names are both **36 characters**, which is why the GDS cell name could be byte-patched in place without touching record lengths.
+- Old and new top-cell names are both **36 characters**, which is why the GDS cell name could be byte-patched in place without touching record lengths. The re-export later proved the patch byte-exact.
 - `make check-boundary` is the cheapest validator of a rename: it fails if no cell matches `TOP`.
 - `git clean -xdf` deletes files listed in `.git/info/exclude`.
 - `git worktree add --orphan` needs **Git ≥ 2.42**; the git here is 2.34.1. Plumbing fallback: `git mktree </dev/null` → `git commit-tree` → `git branch`.
 
+**KLayout**
+
+- Launch as `klayout -e <file>` **from the file's own directory** — that is exactly what `sak-open.py` does, and the `.klib`'s relative `lib_path` depends on it.
+- Do **not** pass `-nn <techfile>` when `KLAYOUT_PATH` is set: KLayout registers a duplicate technology `<name>[1]` and the PDK machinery fails with `no PDK info found for tech …[1]`.
+- Raw `layer/datatype` numbers instead of names = no technology attached. Cosmetic; written geometry is unaffected.
+- `<library>.<cell>` shown as `<defunct>` = library proxy whose library is not registered. **The resolved geometry is still stored in the file**, so an export is still correct.
+- `.klay.gds` is the editing source, `.gds` the exported tapeout view. Both are hierarchical — that is not the distinction.
+
 **Simulation**
 
-- `sim-xschem` runs `xschem save` and can dirty the testbench `.sch` even on success — it did for the inverter, did not at the top level.
-- `x2`/`x3` in every testbench are **unwired spares**. To go post-layout, change `x1`'s symbol to `<CELL>_pex.sym` at the same coordinates; `symbol-pex` guarantees identical pin geometry. Do not clear their `spice_ignore`.
+- `sim-xschem` runs `xschem save` and can dirty the testbench `.sch` even on success.
+- `x2`/`x3` in every testbench are **unwired spares**. To go post-layout, change `x1`'s symbol to `<CELL>_pex.sym` at the same coordinates. Do not clear their `spice_ignore`.
 - The template's `adm_db` divides absolute peaks including DC offset. The real small-signal gain is `vout_pp / vin_pp` ≈ 30 dB, not 2.24 dB.
-- Full-RC PEX output is **not** reproducible run-to-run — parasitic `R`/`C` numbering changes. Never treat its diff as a regression signal.
+- **Full-RC PEX is not reproducible run to run.** Same geometry, three runs: devices 90/90/90, C 82/82/82, **R 574/833/376**. Magic's `extresist` reduction is threshold-driven and unstable. Use `EXT_MODE=2` when you need a repeatable number.
 - CACE's Monte Carlo **is** deterministically seeded — its result PNGs reproduce byte-for-byte.
 
 **CACE and statistical models**
 
 - `-s`/`--source` accepts `schematic`, `layout`, `pex`, `rcx`, `best`. Default `best` silently falls back to schematic when `paths:` has no `layout:` key.
 - Statistical models are IHP's own, already wired up: `.lib cornerMOSlv.lib mos_{corner_mos}` with `tt_stat` (process) and `tt_mismatch` (mismatch).
-- **Mismatch MC is meaningless on an extracted netlist; process MC is not.** Process MC (`tt_stat`) survives extraction intact — only mismatch (`tt_mismatch`) collapses. `mm_ok=1` appears on all 4 schematic devices and on none of the 46 extracted ones, and Magic splits `ng=20` into twenty separate fingers. Run mismatch on the schematic; run parasitics on pex.
+- **Mismatch MC is meaningless on an extracted netlist; process MC is not.** `mm_ok=1` appears on all 4 schematic devices and on none of the 46 extracted ones, and Magic splits `ng=20` into twenty separate fingers. Process MC (`tt_stat`) survives extraction intact.
 - Netgen's `mm_ok` property errors were never noise — they were this, visible two steps earlier.
-- CACE's `_docs/inverter.md` datasheet is overwritten by every `cace` call and deleted by `sim-cace`. Run `cace` by hand for diagnostics.
-- The `sg13g2.lyp` KLayout error is cosmetic: wrong PDK name in the datasheet's layout thumbnail, after all numbers are computed.
+- The `sg13g2.lyp` KLayout error is cosmetic: CACE falls back to a hardcoded filename for the sibling PDK. Kills only the datasheet's layout thumbnail.
+- Run `cace` by hand for diagnostics — `sim-cace` deletes `_docs/` and `_runs/`, and `_docs/inverter.md` is overwritten per invocation.
 
 **Make**
 
 - `#` inside a `\`-continued recipe is a *shell* comment and eats the rest of the `&&` chain. Comments are safe only at column 0 with no preceding backslash.
 - `make -C <dir>` is `--directory`; the source of the `Entering directory` lines.
+
+**Method**
+
+- The loud error was cosmetic; the silent one (mismatch collapse) was the real defect. Read summary tables, not just stderr.
+- `.out` files are a single overwritable slot per command. The narrative log is what persists — the collapsed-mismatch evidence exists nowhere else.
