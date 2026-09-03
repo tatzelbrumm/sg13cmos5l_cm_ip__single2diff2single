@@ -1,0 +1,34 @@
+# MANIFEST of sudelbuecher/logs/ — provenance of the tee'd run logs.
+# On-disk mtimes were lost to a branch switch on 2026-09-03; git stores no mtimes.
+# original_mtime is reconstructed from the session record; the other columns come from git.
+#
+file	branch	original_mtime	bytes	originating_commit	commit_date	command
+i_claude_rename.gitlog	i_claude	2026-08-30 15:15	4620	743c8a8	2026-08-30 15:19	git status  (pre-commit staging state of the rename)
+make_klayout-verify-all.makelog	i_claude	2026-08-30 16:15	4366	cf2bfef	2026-08-30 16:18	make klayout-verify-all
+magic-verify-all.out	i_claude	2026-08-30 16:22	12116	dd78933	2026-08-30 16:27	make magic-verify-all
+magic-verify-all.err	i_claude	2026-08-30 16:22	380	dd78933	2026-08-30 16:27	make magic-verify-all
+make_build-top.makelog	i_claude	2026-08-30 17:26	4359	7eb861a	2026-08-30 17:39	make build-top
+sim-all.out	i_claude	2026-08-30 17:30	4591	7eb861a	2026-08-30 17:39	make sim-all
+sim-all.err	i_claude	2026-08-30 17:30	803	7eb861a	2026-08-30 17:39	make sim-all
+sim-view-xschem.out	i_claude	2026-08-30 17:37	102	7eb861a	2026-08-30 17:39	make sim-view-xschem
+sim-view-xschem.err	i_claude	2026-08-30 17:37	0	7eb861a	2026-08-30 17:39	make sim-view-xschem
+inverter_magic_pex.out	i_claude	2026-08-30 17:55	3937	692ee56	2026-08-30 17:56	make -C macros/inverter magic-pex
+inverter_magic_pex.err	i_claude	2026-08-30 17:55	0	692ee56	2026-08-30 17:56	make -C macros/inverter magic-pex
+inv-sim-all.err	inverter_pex	2026-08-30 18:22	1749	1104af4	2026-08-30 18:32	make -C macros/inverter sim-all   (x1 swapped to inverter_pex.sym)
+inv-sim-all.out	inverter_pex	2026-08-30 18:23	38713	1104af4	2026-08-30 18:32	make -C macros/inverter sim-all   (x1 swapped to inverter_pex.sym)
+inv-cace-pex.err	inverter_pex	2026-08-30 19:49	0	a0a1f05	2026-08-30 20:07	make -C macros/inverter sim-cace  (-s pex; rerun after pinning ac_mm_params to schematic)
+inv-cace-pex.out	inverter_pex	2026-08-30 19:52	27318	a0a1f05	2026-08-30 20:07	make -C macros/inverter sim-cace  (-s pex; rerun after pinning ac_mm_params to schematic)
+counter-lint.out	counter_digital	2026-08-31 21:14	1150	87b798a	2026-08-31 21:25	make lint-verilog-all
+counter-lint.err	counter_digital	2026-08-31 21:14	0	87b798a	2026-08-31 21:25	make lint-verilog-all
+counter-sim-rtl-verilog.out	counter_digital	2026-08-31 21:15	399	87b798a	2026-08-31 21:25	make sim-rtl-verilog
+counter-sim-rtl-verilog.err	counter_digital	2026-08-31 21:15	0	87b798a	2026-08-31 21:25	make sim-rtl-verilog
+counter-sim-rtl-cocotb.out	counter_digital	2026-08-31 21:16	4384	87b798a	2026-08-31 21:25	make sim-rtl-cocotb
+counter-sim-rtl-cocotb.err	counter_digital	2026-08-31 21:16	0	87b798a	2026-08-31 21:25	make sim-rtl-cocotb
+counter-build-top.err	counter_digital	2026-08-31 21:18	0	87b798a	2026-08-31 21:25	make build-top  (LibreLane)
+counter-build-top.out.gz	counter_digital	2026-08-31 21:20	51050	87b798a	2026-08-31 21:25	make build-top  (LibreLane); gzipped from 799144 B
+counter-magic-pex.out	counter_digital	2026-08-31 21:29	5054	7f247f6	2026-08-31 21:53	make magic-pex
+counter-magic-pex.err	counter_digital	2026-08-31 21:29	0	7f247f6	2026-08-31 21:53	make magic-pex
+counter-sim-gl-cocotb.out	counter_digital	2026-08-31 21:33	4389	7f247f6	2026-08-31 21:53	make sim-gl-cocotb
+counter-sim-gl-cocotb.err	counter_digital	2026-08-31 21:33	10092	7f247f6	2026-08-31 21:53	make sim-gl-cocotb
+counter-sim-gl-xschem.out	counter_digital	2026-08-31 21:35	3049	7f247f6	2026-08-31 21:53	make sim-gl-xschem
+counter-sim-gl-xschem.err	counter_digital	2026-08-31 21:35	583	7f247f6	2026-08-31 21:53	make sim-gl-xschem
