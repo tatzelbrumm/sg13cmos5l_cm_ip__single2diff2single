@@ -1,0 +1,6 @@
+iverilog -g2012 -DSIM -o testbenches/verilog/test_counter_top rtl/constants.sv rtl/counter.sv rtl/counter_top.sv testbenches/verilog/counter_top_tb.sv
+cd testbenches/verilog && vvp test_counter_top
+VCD info: dumpfile counter_top_tb.vcd opened for output.
+PASS: simulation complete.
+testbenches/verilog/counter_top_tb.sv:69: $finish called at 5700000 (1ps)
+rm -f testbenches/verilog/test_counter_top

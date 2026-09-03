@@ -1,0 +1,36 @@
+On branch i_claude
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   Makefile
+	modified:   README.md
+	renamed:    final/gds/sg13cmos5l_chipalooza_analog_project.gds -> final/gds/sg13cmos5l_cm_ip__single2diff2single.gds
+	renamed:    final/lef/sg13cmos5l_chipalooza_analog_project.lef -> final/lef/sg13cmos5l_cm_ip__single2diff2single.lef
+	renamed:    final/lib/sg13cmos5l_chipalooza_analog_project.lib -> final/lib/sg13cmos5l_cm_ip__single2diff2single.lib
+	renamed:    final/vh/sg13cmos5l_chipalooza_analog_project.vh -> final/vh/sg13cmos5l_cm_ip__single2diff2single.vh
+	renamed:    layout/sg13cmos5l_chipalooza_analog_project.gds -> layout/sg13cmos5l_cm_ip__single2diff2single.gds
+	renamed:    layout/sg13cmos5l_chipalooza_analog_project.klay.gds -> layout/sg13cmos5l_cm_ip__single2diff2single.klay.gds
+	renamed:    layout/sg13cmos5l_chipalooza_analog_project.klay.klib -> layout/sg13cmos5l_cm_ip__single2diff2single.klay.klib
+	modified:   macros/inverter/README.md
+	renamed:    netlist/layout/sg13cmos5l_chipalooza_analog_project_klayout.cir -> netlist/layout/sg13cmos5l_cm_ip__single2diff2single_klayout.cir
+	renamed:    netlist/layout/sg13cmos5l_chipalooza_analog_project_magic.ext.spc -> netlist/layout/sg13cmos5l_cm_ip__single2diff2single_magic.ext.spc
+	renamed:    netlist/pex/sg13cmos5l_chipalooza_analog_project_magic_pex_3.spice -> netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice
+	renamed:    netlist/schematic/sg13cmos5l_chipalooza_analog_project_klayout.cdl -> netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_klayout.cdl
+	renamed:    netlist/schematic/sg13cmos5l_chipalooza_analog_project_magic.spice -> netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_magic.spice
+	renamed:    render/img/sg13cmos5l_chipalooza_analog_project_black.png -> render/img/sg13cmos5l_cm_ip__single2diff2single_black.png
+	renamed:    render/img/sg13cmos5l_chipalooza_analog_project_white.png -> render/img/sg13cmos5l_cm_ip__single2diff2single_white.png
+	renamed:    schematic/xschem/sg13cmos5l_chipalooza_analog_project.sch -> schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch
+	renamed:    schematic/xschem/sg13cmos5l_chipalooza_analog_project.sym -> schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sym
+	renamed:    schematic/xschem/sg13cmos5l_chipalooza_analog_project_pex.sym -> schematic/xschem/sg13cmos5l_cm_ip__single2diff2single_pex.sym
+	modified:   submission.yaml
+	renamed:    testbenches/xschem/plot_simulations/data/sg13cmos5l_chipalooza_analog_project_tb_tran.txt -> testbenches/xschem/plot_simulations/data/sg13cmos5l_cm_ip__single2diff2single_tb_tran.txt
+	renamed:    testbenches/xschem/plot_simulations/figures/sg13cmos5l_chipalooza_analog_project_tb_tran.csv -> testbenches/xschem/plot_simulations/figures/sg13cmos5l_cm_ip__single2diff2single_tb_tran.csv
+	renamed:    testbenches/xschem/plot_simulations/figures/sg13cmos5l_chipalooza_analog_project_tb_tran.pdf -> testbenches/xschem/plot_simulations/figures/sg13cmos5l_cm_ip__single2diff2single_tb_tran.pdf
+	renamed:    testbenches/xschem/plot_simulations/figures/sg13cmos5l_chipalooza_analog_project_tb_tran.svg -> testbenches/xschem/plot_simulations/figures/sg13cmos5l_cm_ip__single2diff2single_tb_tran.svg
+	renamed:    testbenches/xschem/plot_simulations/plot_sg13cmos5l_chipalooza_analog_project.py -> testbenches/xschem/plot_simulations/plot_sg13cmos5l_cm_ip__single2diff2single.py
+	renamed:    testbenches/xschem/sg13cmos5l_chipalooza_analog_project_tb_tran.sch -> testbenches/xschem/sg13cmos5l_cm_ip__single2diff2single_tb_tran.sch
+	renamed:    verification/drc/sg13cmos5l_chipalooza_analog_project.klayout.drc/sg13cmos5l_chipalooza_analog_project_sg13cmos5l_chipalooza_analog_project_full.lyrdb -> verification/drc/sg13cmos5l_cm_ip__single2diff2single.klayout.drc/sg13cmos5l_cm_ip__single2diff2single_sg13cmos5l_cm_ip__single2diff2single_full.lyrdb
+	renamed:    verification/drc/sg13cmos5l_chipalooza_analog_project.magic.drc/sg13cmos5l_chipalooza_analog_project.magic.drc.rpt -> verification/drc/sg13cmos5l_cm_ip__single2diff2single.magic.drc/sg13cmos5l_cm_ip__single2diff2single.magic.drc.rpt
+	deleted:    verification/lvs/sg13cmos5l_chipalooza_analog_project.magic.lvs/sg13cmos5l_chipalooza_analog_project.lvs.out
+	renamed:    verification/lvs/sg13cmos5l_chipalooza_analog_project.klayout.lvs/sg13cmos5l_chipalooza_analog_project.lvsdb -> verification/lvs/sg13cmos5l_cm_ip__single2diff2single.klayout.lvs/sg13cmos5l_cm_ip__single2diff2single.lvsdb
+	new file:   verification/lvs/sg13cmos5l_cm_ip__single2diff2single.magic.lvs/sg13cmos5l_cm_ip__single2diff2single.lvs.out
+

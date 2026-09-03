@@ -1,0 +1,58 @@
+make sim-xschem TB=sg13cmos5l_cm_ip__single2diff2single_tb_tran
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+mkdir -p testbenches/xschem/simulations
+mkdir -p testbenches/xschem/plot_simulations/data
+cd testbenches/xschem && xschem -r -x -q --rcfile xschemrc --command ' \
+	xschem set netlist_type spice; \
+	set netlist_dir /foss/designs/sg13cmos5l_cm_ip__single2diff2single/testbenches/xschem/simulations; \
+	xschem save; \
+	write_data [save_params] /foss/designs/sg13cmos5l_cm_ip__single2diff2single/testbenches/xschem/simulations/sg13cmos5l_cm_ip__single2diff2single_tb_tran.save; \
+	xschem netlist \
+' sg13cmos5l_cm_ip__single2diff2single_tb_tran.sch
+Netlist mode: <default>
+Sourced library init file /foss/tools/xschem/share/doc/xschem/analyses/lib_init.tcl
+
+cd testbenches/xschem/simulations && ngspice -b sg13cmos5l_cm_ip__single2diff2single_tb_tran.spice
+
+Note: No compatibility mode selected!
+
+
+Circuit: ** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/testbenches/xschem/sg13cmos5l_cm_ip__single2diff2single_tb_tran.sch
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using KLU as Direct Linear Solver
+
+No. of Data Rows : 1
+binary raw file "sg13cmos5l_cm_ip__single2diff2single_tb_tran.raw"
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using KLU as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vpwr                                       1.5
+analog_0                                  0.75
+analog_1                               0.53718
+analog_2                                   1.5
+vapwr                                      1.5
+uio_in_0                                     0
+vpulse#branch                      2.36606e-08
+vapwr#branch                      -0.000778505
+vsine#branch                       3.77752e-10
+vpwr#branch                       -4.04214e-11
+
+ Reference value :  2.00000e-10 Reference value :  4.59829e-06 Reference value :  7.85983e-05 Reference value :  1.46598e-04 Reference value :  2.18598e-04 Reference value :  2.91598e-04 Reference value :  3.61598e-04 Reference value :  4.28598e-04 Reference value :  4.96598e-04 Reference value :  5.34841e-04 Reference value :  6.12841e-04 Reference value :  6.18841e-04 Reference value :  6.61841e-04 Reference value :  7.41841e-04 Reference value :  7.90841e-04 Reference value :  8.70841e-04 Reference value :  9.16841e-04 Reference value :  9.79841e-04 Reference value :  9.89841e-04 Reference value :  9.99420e-04 Reference value :  1.02756e-03 Reference value :  1.09856e-03 Reference value :  1.16356e-03 Reference value :  1.23156e-03 Reference value :  1.30156e-03 Reference value :  1.37656e-03 Reference value :  1.45156e-03 Reference value :  1.50025e-03 Reference value :  1.52384e-03 Reference value :  1.55784e-03 Reference value :  1.63184e-03 Reference value :  1.69784e-03 Reference value :  1.76584e-03 Reference value :  1.84084e-03 Reference value :  1.88884e-03 Reference value :  1.93984e-03 Reference value :  2.00001e-03 Reference value :  2.03456e-03 Reference value :  2.10756e-03 Reference value :  2.18156e-03 Reference value :  2.25856e-03 Reference value :  2.32556e-03 Reference value :  2.40756e-03 Reference value :  2.44356e-03 Reference value :  2.50002e-03 Reference value :  2.55484e-03 Reference value :  2.62684e-03 Reference value :  2.69484e-03 Reference value :  2.76484e-03 Reference value :  2.84284e-03 Reference value :  2.91684e-03 Reference value :  2.98884e-03 Reference value :  3.00856e-03 Reference value :  3.07856e-03 Reference value :  3.14956e-03 Reference value :  3.22256e-03 Reference value :  3.30056e-03 Reference value :  3.37256e-03 Reference value :  3.44356e-03 Reference value :  3.50002e-03 Reference value :  3.56184e-03 Reference value :  3.62384e-03 Reference value :  3.68884e-03 Reference value :  3.76284e-03 Reference value :  3.81284e-03 Reference value :  3.87984e-03 Reference value :  3.94884e-03
+No. of Data Rows : 4287
+binary raw file "sg13cmos5l_cm_ip__single2diff2single_tb_tran.raw"
+vin_peak            =  7.60000e-01 at=  2.49598e-04
+vout_peak           =  9.83225e-01 at=  7.49841e-04
+adm_db = 2.236788e+00
+vout_pp_max         =  9.83225e-01 at=  7.49841e-04
+vout_pp_min         =  3.38254e-01 at=  2.49598e-04
+vout_pp = 6.449710e-01
+Note: Simulation executed from .control section 
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'

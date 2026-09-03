@@ -1,0 +1,1 @@
+SHOW_PLOTS=1 python3 testbenches/xschem/plot_simulations/plot_sg13cmos5l_cm_ip__single2diff2single.py

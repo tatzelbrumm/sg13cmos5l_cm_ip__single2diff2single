@@ -1,0 +1,228 @@
+make magic-verify CELL=sg13cmos5l_cm_ip__single2diff2single
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make magic-drc CELL=sg13cmos5l_cm_ip__single2diff2single
+make[2]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+mkdir -p verification/drc
+sak-drc.sh -d -m -f "*" -w verification/drc layout/sg13cmos5l_cm_ip__single2diff2single.gds
+[INFO] DEBUG is enabled!
+[INFO] flag -m is set.
+[INFO] flag -f is set to <*>.
+[INFO] flag -w is set to <verification/drc>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using layout file <layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] Running DRC of <layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] Results are put into </foss/designs/sg13cmos5l_cm_ip__single2diff2single/verification/drc>.
+[INFO] Launching Magic DRC...
+[INFO] Magic runs DRC on the .gds file.
+---
+[INFO] Magic DRC is clean!
+---
+CONGRATULATIONS! No DRC errors in <sg13cmos5l_cm_ip__single2diff2single> found!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |    \_____/    |
+   \             /
+    '.         .'
+      '-.....-'
+---
+[DONE] Bye!
+make[2]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make magic-lvs CELL=sg13cmos5l_cm_ip__single2diff2single
+make[2]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+mkdir -p verification/lvs
+mkdir -p netlist/layout
+make magic-lvs-netlist CELL=sg13cmos5l_cm_ip__single2diff2single
+make[3]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+mkdir -p netlist/schematic
+xschem -s -r -x -q --rcfile schematic/xschem/xschemrc --command ' \
+	set spiceprefix 1; \
+	set lvs_netlist 0; \
+	set top_is_subckt 1; \
+	set lvs_ignore 1; \
+	set ev_precision 5; \
+	set netlist_dir netlist/schematic; \
+	xschem set netlist_name [file tail [file rootname [xschem get current_name]]]_magic.spice; \
+	xschem netlist \
+' schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch
+Netlist mode: <default>
+Sourced library init file /foss/tools/xschem/share/doc/xschem/analyses/lib_init.tcl
+
+make[3]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+sak-lvs.sh -d -w verification/lvs -s netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_magic.spice -l layout/sg13cmos5l_cm_ip__single2diff2single.gds -c sg13cmos5l_cm_ip__single2diff2single
+[INFO] DEBUG is enabled!
+[INFO] flag -w is set to <verification/lvs>.
+[INFO] flag -s is set to <netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_magic.spice>.
+[INFO] flag -l is set to <layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] flag -c is set to <sg13cmos5l_cm_ip__single2diff2single>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using SPICE/CDL netlist file </foss/designs/sg13cmos5l_cm_ip__single2diff2single/netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_magic.spice>.
+[INFO] Using layout file </foss/designs/sg13cmos5l_cm_ip__single2diff2single/layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] Running LVS of </foss/designs/sg13cmos5l_cm_ip__single2diff2single/layout/sg13cmos5l_cm_ip__single2diff2single.gds> vs </foss/designs/sg13cmos5l_cm_ip__single2diff2single/netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_magic.spice>.
+[INFO] Using SPICE/CDL netlist </foss/designs/sg13cmos5l_cm_ip__single2diff2single/netlist/schematic/sg13cmos5l_cm_ip__single2diff2single_magic.spice>...
+[INFO] Extracting netlist from layout </foss/designs/sg13cmos5l_cm_ip__single2diff2single/layout/sg13cmos5l_cm_ip__single2diff2single.gds>...
+[INFO] Run netgen...
+---
+[INFO] Magic+Netgen LVS is OK, schematic/netlist and layout match!
+---
+CONGRATULATIONS! LVS is OK, schematic/netlist and layout match!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |    \_____/    |
+   \             /
+    '.         .'
+      '-.....-'
+---
+[DONE] Bye!
+mv verification/lvs/sg13cmos5l_cm_ip__single2diff2single.magic.lvs/sg13cmos5l_cm_ip__single2diff2single.ext.spc netlist/layout/sg13cmos5l_cm_ip__single2diff2single_magic.ext.spc
+make[2]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make magic-pex CELL=sg13cmos5l_cm_ip__single2diff2single
+make[2]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+mkdir -p netlist/pex
+make symbol-pex CELL=sg13cmos5l_cm_ip__single2diff2single
+make[3]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+Wrote schematic/xschem/sg13cmos5l_cm_ip__single2diff2single_pex.sym (copy of sg13cmos5l_cm_ip__single2diff2single.sym with type=primitive).
+make[3]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+sak-pex.sh -d -m 3 -n sg13cmos5l_cm_ip__single2diff2single_pex -t 10000 -r 1000 -y 1 -w netlist/pex layout/sg13cmos5l_cm_ip__single2diff2single.gds
+[INFO] DEBUG is enabled!
+[INFO] flag -m is set to <3>.
+[INFO] flag -n is set to <sg13cmos5l_cm_ip__single2diff2single_pex>.
+[INFO] flag -t is set to <10000>.
+[INFO] flag -r is set to <1000>.
+[INFO] flag -y is set to <1>.
+[INFO] flag -w is set to <netlist/pex>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using layout file <layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] GDS mode is selected.
+[INFO] Running PEX of <layout/sg13cmos5l_cm_ip__single2diff2single.gds>.
+[INFO] Results are put into </foss/designs/sg13cmos5l_cm_ip__single2diff2single/netlist/pex>.
+
+Magic 8.3 revision 681 - Compiled on Tue Aug 25 11:50:23 AM CEST 2026.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology ihp-sg13cmos5l ...
+2 Magic internal units = 1 Lambda
+Input style sg13cmos5l(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    pblock pbase sealcont difffill sealvia1 sealvia2 sealvia3 sealvia4 seal glass thruvia inductor 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading ihp-sg13cmos5l Device Generator Menu ...
+Loading "/foss/designs/sg13cmos5l_cm_ip__single2diff2single/netlist/pex/pex_sg13cmos5l_cm_ip__single2diff2single.tcl" from command line.
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "via_stack$9".
+Reading "via_stack$8".
+Reading "via_stack$7".
+Reading "via_stack$6".
+Reading "via_stack$5".
+Reading "via_stack$4".
+Reading "via_stack$3".
+Reading "via_stack$2".
+Reading "via_stack$1".
+Reading "via_stack".
+Reading "nmos".
+Reading "pmos".
+Reading "pmos$3".
+Reading "inverter".
+Reading "via_stack$13".
+Reading "via_stack$10".
+Reading "Via$3".
+Reading "Via$2".
+Reading "Via$1".
+Reading "Via".
+Reading "sg13cmos5l_cm_ip__single2diff2single".
+Extracting sg13cmos5l_cm_ip__single2diff2single_pex into /foss/designs/sg13cmos5l_cm_ip__single2diff2single/netlist/pex/sg13cmos5l_cm_ip__single2diff2single_pex.ext:
+Processing sg13cmos5l_cm_ip__single2diff2single_pex
+sg13cmos5l_cm_ip__single2diff2single_pex: 10 warnings
+Processing cell sg13cmos5l_cm_ip__single2diff2single_pex for resistance extraction.
+Extracting VGND
+Extracting VAPWR
+Extracting ui_in[0]
+Extracting analog_2
+Extracting analog_0
+Extracting analog_1
+Total Nets: 49
+Nets extracted: 6 (0.122449)
+Nets output: 2 (0.040816)
+Total of 10 warnings.
+exttospice finished.
+[INFO] PEX (full-RC) done, the extracted SPICE netlist is </foss/designs/sg13cmos5l_cm_ip__single2diff2single/netlist/pex/sg13cmos5l_cm_ip__single2diff2single.pex.spice>.
+[DONE] Bye!
+mv netlist/pex/sg13cmos5l_cm_ip__single2diff2single.pex.spice netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice
+rm -f netlist/pex/pex_sg13cmos5l_cm_ip__single2diff2single.tcl
+Reordering pins in sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice to match sg13cmos5l_cm_ip__single2diff2single_pex.sym...
+Symbol file:  schematic/xschem/sg13cmos5l_cm_ip__single2diff2single_pex.sym
+Netlist file: netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice
+Subcircuit:   sg13cmos5l_cm_ip__single2diff2single_pex
+Format:       spice
+Match mode:   name (identical)
+Sym pins:     49
+Netlist pins: 49
+
+Pin mapping (sym -> netlist):
+  VPWR                      -> VPWR                      *REORDERED*
+  VAPWR                     -> VAPWR                     *REORDERED*
+  VGND                      -> VGND                      *REORDERED*
+  rst_n                     -> rst_n                     *REORDERED*
+  clk                       -> clk                       *REORDERED*
+  ena                       -> ena                       *REORDERED*
+  uio_in[7]                 -> uio_in[7]                 *REORDERED*
+  uio_in[6]                 -> uio_in[6]                 *REORDERED*
+  uio_in[5]                 -> uio_in[5]                 *REORDERED*
+  uio_in[4]                 -> uio_in[4]                 *REORDERED*
+  uio_in[3]                 -> uio_in[3]                 *REORDERED*
+  uio_in[2]                 -> uio_in[2]                 *REORDERED*
+  uio_in[1]                 -> uio_in[1]                 *REORDERED*
+  uio_in[0]                 -> uio_in[0]                 *REORDERED*
+  ui_in[7]                  -> ui_in[7]                  *REORDERED*
+  ui_in[6]                  -> ui_in[6]                  *REORDERED*
+  ui_in[5]                  -> ui_in[5]                  *REORDERED*
+  ui_in[4]                  -> ui_in[4]                  *REORDERED*
+  ui_in[3]                  -> ui_in[3]                  *REORDERED*
+  ui_in[2]                  -> ui_in[2]                  *REORDERED*
+  ui_in[1]                  -> ui_in[1]                  *REORDERED*
+  ui_in[0]                  -> ui_in[0]                  *REORDERED*
+  uio_oe[7]                 -> uio_oe[7]                 *REORDERED*
+  uio_oe[6]                 -> uio_oe[6]                 *REORDERED*
+  uio_oe[5]                 -> uio_oe[5]                 *REORDERED*
+  uio_oe[4]                 -> uio_oe[4]                 *REORDERED*
+  uio_oe[3]                 -> uio_oe[3]                 *REORDERED*
+  uio_oe[2]                 -> uio_oe[2]                 *REORDERED*
+  uio_oe[1]                 -> uio_oe[1]                 *REORDERED*
+  uio_oe[0]                 -> uio_oe[0]                 *REORDERED*
+  uio_out[7]                -> uio_out[7]                *REORDERED*
+  uio_out[6]                -> uio_out[6]                *REORDERED*
+  uio_out[5]                -> uio_out[5]                *REORDERED*
+  uio_out[4]                -> uio_out[4]                *REORDERED*
+  uio_out[3]                -> uio_out[3]                *REORDERED*
+  uio_out[2]                -> uio_out[2]                *REORDERED*
+  uio_out[1]                -> uio_out[1]                *REORDERED*
+  uio_out[0]                -> uio_out[0]                *REORDERED*
+  uo_out[7]                 -> uo_out[7]                 *REORDERED*
+  uo_out[6]                 -> uo_out[6]                 *REORDERED*
+  uo_out[5]                 -> uo_out[5]                 *REORDERED*
+  uo_out[4]                 -> uo_out[4]                 *REORDERED*
+  uo_out[3]                 -> uo_out[3]                 *REORDERED*
+  uo_out[2]                 -> uo_out[2]                 *REORDERED*
+  uo_out[1]                 -> uo_out[1]                 *REORDERED*
+  uo_out[0]                 -> uo_out[0]                 *REORDERED*
+  analog_2                  -> analog_2                  *REORDERED*
+  analog_1                  -> analog_1                  *REORDERED*
+  analog_0                  -> analog_0                  *REORDERED*
+
+Reordered netlist written to: netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice
+python3 scripts/check_pex_ports.py netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice
+[INFO] Checking PEX netlist ports in netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice ...
+[INFO] All ports are connected.
+make[2]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single'

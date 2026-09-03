@@ -1,0 +1,42 @@
+Using run time directory XSCHEM_SHAREDIR = /foss/tools/xschem/share/xschem
+Sourcing /foss/tools/xschem/share/xschem/xschemrc init file
+Sourcing xschemrc init file
+MODELS_NGSPICE: /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models
+MODELS_XYCE: /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/models
+SG13G2_MODELS_VACASK: /foss/pdks/ihp-sg13cmos5l/libs.tech/vacask/models
+
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+
+
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+
+
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+
+Using run time directory XSCHEM_SHAREDIR = /foss/tools/xschem/share/xschem
+Sourcing /foss/tools/xschem/share/xschem/xschemrc init file
+Sourcing xschemrc init file
+MODELS_NGSPICE: /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models
+MODELS_XYCE: /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/models
+SG13G2_MODELS_VACASK: /foss/pdks/ihp-sg13cmos5l/libs.tech/vacask/models
+
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+
+
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+
+Using run time directory XSCHEM_SHAREDIR = /foss/tools/xschem/share/xschem
+Sourcing /foss/tools/xschem/share/xschem/xschemrc init file
+Sourcing xschemrc init file
+MODELS_NGSPICE: /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models
+MODELS_XYCE: /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/models
+SG13G2_MODELS_VACASK: /foss/pdks/ihp-sg13cmos5l/libs.tech/vacask/models
+
+Warning: command 'plot' is not available during batch simulation, ignored!
+    You may use Gnuplot instead.
+

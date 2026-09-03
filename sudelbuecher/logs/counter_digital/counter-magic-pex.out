@@ -1,0 +1,111 @@
+mkdir -p netlist/pex
+make symbol-pex CELL=counter_top
+make[1]: Entering directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter'
+Wrote schematic/xschem/counter_top_pex.sym (copy of counter_top.sym with type=primitive).
+make[1]: Leaving directory '/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter'
+sak-pex.sh -d -m 3 -n counter_top_pex -t 10000 -r 1000 -y 1 -w netlist/pex final/gds/counter_top.gds
+[INFO] DEBUG is enabled!
+[INFO] flag -m is set to <3>.
+[INFO] flag -n is set to <counter_top_pex>.
+[INFO] flag -t is set to <10000>.
+[INFO] flag -r is set to <1000>.
+[INFO] flag -y is set to <1>.
+[INFO] flag -w is set to <netlist/pex>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using layout file <final/gds/counter_top.gds>.
+[INFO] GDS mode is selected.
+[INFO] Running PEX of <final/gds/counter_top.gds>.
+[INFO] Results are put into </foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter/netlist/pex>.
+
+Magic 8.3 revision 681 - Compiled on Tue Aug 25 11:50:23 AM CEST 2026.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology ihp-sg13cmos5l ...
+2 Magic internal units = 1 Lambda
+Input style sg13cmos5l(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    pblock pbase sealcont difffill sealvia1 sealvia2 sealvia3 sealvia4 seal glass thruvia inductor 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading ihp-sg13cmos5l Device Generator Menu ...
+Loading "/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter/netlist/pex/pex_counter_top.tcl" from command line.
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "VIA_Via1_XY".
+Reading "VIA_Via2_YX".
+Reading "VIA_Via1_YY".
+Reading "VIA_via1_2_1000_440_1_2_410_410".
+Reading "VIA_via2_3_1000_440_1_2_410_410".
+Reading "VIA_via3_4_1000_440_1_2_410_410".
+Reading "sg13cmos5l_dlygate4sd3_1".
+Reading "sg13cmos5l_buf_1".
+Reading "sg13cmos5l_buf_8".
+Reading "sg13cmos5l_tiehi".
+CIF file read warning: CIF style sg13cmos5l(): units rescaled by factor of 5 / 1
+Reading "sg13cmos5l_dfrbpq_1".
+Reading "sg13cmos5l_and2_1".
+Reading "sg13cmos5l_xor2_1".
+Reading "sg13cmos5l_nand3_1".
+Reading "sg13cmos5l_nand2_1".
+Reading "sg13cmos5l_a21oi_1".
+Reading "sg13cmos5l_or3_1".
+Reading "sg13cmos5l_o21ai_1".
+Reading "sg13cmos5l_nor2_1".
+Reading "sg13cmos5l_xnor2_1".
+Reading "sg13cmos5l_buf_4".
+Reading "sg13cmos5l_nand4_1".
+Reading "sg13cmos5l_inv_1".
+Reading "sg13cmos5l_fill_2".
+Reading "sg13cmos5l_fill_1".
+Reading "sg13cmos5l_decap_4".
+Reading "sg13cmos5l_decap_8".
+Reading "counter_top".
+Extracting counter_top_pex into /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter/netlist/pex/counter_top_pex.ext:
+Processing counter_top_pex
+counter_top_pex: 3616 warnings
+Processing cell counter_top_pex for resistance extraction.
+Extracting VSS
+Extracting VDD
+Total Nets: 401
+Nets extracted: 2 (0.004988)
+Nets output: 1 (0.002494)
+Total of 3616 warnings.
+exttospice finished.
+[INFO] PEX (full-RC) done, the extracted SPICE netlist is </foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/counter/netlist/pex/counter_top.pex.spice>.
+[DONE] Bye!
+mv netlist/pex/counter_top.pex.spice netlist/pex/counter_top_magic_pex_3.spice
+rm -f netlist/pex/pex_counter_top.tcl
+Reordering pins in counter_top_magic_pex_3.spice to match counter_top_pex.sym...
+Symbol file:  schematic/xschem/counter_top_pex.sym
+Netlist file: netlist/pex/counter_top_magic_pex_3.spice
+Subcircuit:   counter_top_pex
+Format:       spice
+Match mode:   name (sim_pinname)
+Sym pins:     13
+Netlist pins: 13
+
+Pin mapping (sym -> netlist):
+  VDD                       -> VDD                       *REORDERED*
+  VSS                       -> VSS                       *REORDERED*
+  di_clock                  -> clock_i                   *REORDERED*
+  di_reset_n                -> reset_n_i                 *REORDERED*
+  di_enable                 -> enable_i                  *REORDERED*
+  do_b[0]                   -> counter_value_o[0]        *REORDERED*
+  do_b[1]                   -> counter_value_o[1]        *REORDERED*
+  do_b[2]                   -> counter_value_o[2]        *REORDERED*
+  do_b[3]                   -> counter_value_o[3]        *REORDERED*
+  do_b[4]                   -> counter_value_o[4]        *REORDERED*
+  do_b[5]                   -> counter_value_o[5]        *REORDERED*
+  do_b[6]                   -> counter_value_o[6]        *REORDERED*
+  do_b[7]                   -> counter_value_o[7]        *REORDERED*
+
+Reordered netlist written to: netlist/pex/counter_top_magic_pex_3.spice
+python3 scripts/check_pex_ports.py netlist/pex/counter_top_magic_pex_3.spice
+[INFO] Checking PEX netlist ports in netlist/pex/counter_top_magic_pex_3.spice ...
+[INFO] All ports are connected.
