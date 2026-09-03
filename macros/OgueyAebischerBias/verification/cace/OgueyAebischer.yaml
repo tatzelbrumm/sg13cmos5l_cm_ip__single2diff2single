@@ -1,0 +1,58 @@
+name:           <cell_name>
+description:    <one-line description>
+PDK:            <pdk_identifier>
+cace_format:    5.2
+
+authorship:
+  designer:         <your name>
+  email:            <your email>
+  creation_date:    <date>
+  license:          Apache 2.0
+
+paths:
+  root:             ..
+  schematic:        xschem
+  netlist:          cace/netlist
+  documentation:    cace/_docs
+  runs:             _runs
+
+pins:
+  <pin_name>:
+    description: <text>
+    type: power|ground|signal|digital
+    direction: input|output|inout
+    # Vmin / Vmax / Imin / Imax as needed
+
+default_conditions:
+  <condition_name>:
+    description: <text>
+    display: <short label>
+    unit: <unit>
+    typical: <value>
+
+parameters:
+  <parameter_block_name>:
+    spec:
+      <result_name>:
+        display: <label>
+        description: <text>
+        unit: <unit>
+        minimum: { value: <value>|any }
+        typical:  { value: <value>|any }
+        maximum: { value: <value>|any }
+    tool:
+      ngspice:
+        template: <testbench>.sch
+        format: ascii
+        suffix: .data
+        variables: [<result_name>, ...]
+    plot:
+      <plot_name>:
+        type: xyplot|histogram|semilogx|semilogy|loglog
+        xaxis: <condition_or_variable>
+        yaxis: <result_name>
+        limits: auto
+    conditions:
+      corner:
+        enumerate: [ss, sf, tt, fs, ff]
+      # other swept conditions here
