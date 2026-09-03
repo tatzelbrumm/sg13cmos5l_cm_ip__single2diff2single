@@ -42,7 +42,7 @@ DESIGNS="$HOME/EDA" DOCKER_TAG=2026.08 CONTAINER_NAME=iic-osic-tools-2026-08-sw 
 ```
 
 X11, not VNC. Restart by rerunning that same command (not `docker start`).
-More recipes in `~/EDA/cheatsheets/iic-osic-tools_cheatsheet.md`.
+More recipes in `sudelbuecher/cheatsheets/iic-osic-tools_cheatsheet.md`.
 
 **Inside the container, before any `make`:**
 
