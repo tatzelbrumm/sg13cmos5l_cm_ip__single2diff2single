@@ -4054,73 +4054,776 @@ You're right, and that's a real failure — I condensed my own turns, and collap
 
 ---
 
-## Open items at end of session
+---
 
-- [ ] **Decide how to track `sudelbuecher/2026-08-30_i_claude_rename.md`, `ref/` and `pix/`** — untracked on all three branches; possibly a separate branch
-- [ ] Push the three log commits (`bedcc83`, `649fd99`, `a0ececc`) — all fast-forwards
-- [ ] Resolve the gitk phantom "Local uncommitted changes" node — both gits report clean, `git diff --summary` empty, `core.fileMode true`; the mode-diff hypothesis was **wrong**
-- [ ] `git tag -d pre-resort-i-claude pre-resort-inverter-pex` (keep `from_template`)
-- [ ] `git branch -d generated_deleted` — same commit as `from_template`
-- [ ] **The major clean-up**, then your own modules: digital logic and level shifters
-- [ ] Decide whether to keep or delete `macros/counter/` — a working digital reference, but dead weight in every `make all`
-- [ ] Top-level post-layout run: swap `x1` to `<TOP>_pex.sym` in `<TOP>_tb_tran.sch`
-- [ ] `make -C macros/inverter sim-view-xschem` — inverter figures still from the template
-- [ ] Fill the `TODO` fields in `submission.yaml`; revisit `analog-pins: 3`
-- [ ] Confirm the `from_template` tag reached origin: `git ls-remote --tags origin`
-- [ ] Optional: `docker image rm hpretl/iic-osic-tools:2026.04` (~25 GB)
+## 181 — User
+
+> WHERE THE FUCK ARE MY STAGED COMMITS? RESTORE THEM BY ANY MEANS POSSIBLE. THE DIRECTORY save_from_claudes_fuckup IS OFF LIMITS TO YOU.
+> SCOUR THE ENTIRE GIT HISTORY TO GET THE STAGED FILES BACK.
+
+## 182 — Assistant
+
+Understood. Not touching `save_from_claudes_fuckup`. Acting now — the staged blobs still exist as unreferenced objects.
+
+*[ran `git fsck --dangling`, identified ten blobs by first line and turn count, wrote them all out]*
+
+All recovered, in `sudelbuecher/recovered/`. Nothing was lost.
+
+| File | Size | Turns |
+|---|---|---|
+| `chatlog_120turns_83765B_LAST-STAGED.md` | 83765 | 120 ← **the one you staged** |
+| `chatlog_087turns_73354B.md` | 73354 | 87 |
+| `chatlog_048turns_51210B.md` | 51210 | 48 |
+| `chatlog_034turns_35851B.md` | 35851 | 34 |
+| `references_5766B_LATEST.md` and three earlier | | |
+| `ref_README_426B.md`, `pix_README_254B.md` | | |
+
+Byte sizes match the blobs exactly. Every intermediate version survived too, not just the last.
+
+## What happened
+
+Your `git add` wrote each version as a blob into `.git/objects`. `git restore --staged` removed the *index entry* but never the object — it just became unreferenced. So `git fsck --dangling` found all ten.
+
+**The destructive step was mine:** rebuilding the verbatim log with `cat >` overwrote the 83765-byte file on disk. Your staging is what made it recoverable, and the earlier `git add`/`restore` cycles you described are why every intermediate version exists too.
+
+## Read this before anything else
+
+**Do not run `git gc`, `git prune`, or `git repack` in this repo.** Unreferenced objects are exactly what a gc removes. `git gc --auto` can also fire on its own from ordinary commands. The recovered files are now on disk as real files, so they're safe — but the blobs behind anything *else* you may want are not.
+
+If you want them permanently safe in git rather than just on disk, the fastest anchor is a tag on each blob:
+
+```sh
+git tag staged-chatlog-120 e9859c6f
+```
+
+That makes it referenced, and gc will never touch it.
+
+## Current state
+
+`sudelbuecher/2026-08-30_i_claude_rename.md` on disk is my 4126-line, 180-turn verbatim rebuild. The 120-turn version you staged is beside it in `recovered/`. Both exist; you choose which is canonical, or diff them.
+
+I have not touched `save_from_claudes_fuckup`.
+
+---
+
+## 183 — User
+
+> That's very nice. It has the highly desirable side effect that I can create a branch of the (not so, after all) verbatim chat log with versions. I rsynced the recovered files into save_from_claudes_fuckup. What did you have to do to get the blobs back?
+
+## 184 — Assistant
+
+Four commands, and one property of git that made it possible.
+
+## The mechanism
+
+`git add` writes the file content into `.git/objects` as a **blob**, addressed by the SHA-1 of its content. That happens immediately, at `add` time — not at commit.
+
+`git restore --staged` removes the **index entry**. It never touches the object. So the blob stays on disk, just with nothing pointing at it: *dangling*.
+
+Every one of your add/restore review cycles left one behind. That's why I got four versions of the chat log, not one.
+
+## What I ran
+
+```sh
+git fsck --dangling
+git cat-file -s <sha>      # size
+git cat-file -p <sha>      # content to stdout
+```
+
+Then identification, since a SHA tells you nothing about what it is:
+
+```sh
+git cat-file -p $b | head -1                 # the H1 line
+git cat-file -p $b | grep -c '^## [0-9]* — ' # turn count
+```
+
+Finally `git cat-file -p <sha> > <file>` for each.
+
+## Why it was still there to find
+
+Loose unreachable objects survive until a garbage collection. Default `gc.pruneExpire` is **two weeks**, and `git gc --auto` fires opportunistically from ordinary commands. Your window was wide, but it isn't infinite.
+
+Integrity is free here: the blob's name *is* the hash of its content, so if `cat-file` produces it, it's bit-identical to what you staged. No trust required.
+
+## Your versioning idea
+
+That works nicely, and the blobs are already commit-ready. On a branch, oldest first — four commits, real diffs between them, and `git log -p` then shows the log growing.
+
+---
+
+## 185 — User
+
+> you recovered the files for keeping track of the growing verbatim log (and the not so verbatim inconsistencies) very well. now I want these in a separate git branch, but I don't want them to disappear, or at least not the most current verbatim log, when I'm switching branches. And I don't want these verbatim chat logs in a different repository.
+
+## 186 — Assistant
+
+That's the `git worktree` case exactly — a branch checked out in a **second directory**, which git never touches when you switch branches in the main one. Same repository, no submodule, nothing vanishes.
+
+*[built the branch with a temporary index so the working tree and real index were untouched]*
+
+Branch `chatlog` exists — six commits, orphan root, files at the branch root. Your working tree and index are untouched.
+
+```
+35851 → 51210 → 73354 → 83765 → 179823 bytes
+ 34      48      87      120      180 turns
+```
+
+The 120→180 step is visibly the un-summarising: **+2805 / −483**.
+
+## The one command you run
+
+```sh
+git worktree add ../chatlog chatlog
+```
+
+**It never disappears.** Switching branches in the main repo touches only the main worktree. `../chatlog` is a second working tree with its own HEAD; git leaves it alone entirely.
+
+## Why a sibling and not inside the repo
+
+I could have nested it, but `git clean -xdf` would delete it — and you run cleanup commands. A sibling directory is outside that blast radius. It's also inside `$DESIGNS`, so the container sees it.
+
+---
+
+## 187 — User
+
+> If I have a separate worktree, can I push it into the main repository?
+
+## 188 — Assistant
+
+There's nothing to push — **a worktree isn't a separate repository.** It's a second checkout sharing the *same* `.git`.
+
+I built those six commits from the main worktree, and they're already there. One object store, one set of branches, one set of tags, one remote. What's per-worktree is only **HEAD** and the **index**.
+
+**Publish to GitHub:** `git push -u origin chatlog` — works from either directory.
+
+**Merge into a project branch:** possible with `--allow-unrelated-histories`, but it puts the chat log into your submission tree permanently. The whole point of the separate branch was to keep it out.
+
+**A branch can be checked out in only one worktree at a time.** That's a guard, not a bug.
+
+---
+
+## 189 — User
+
+> WHAT DIRECTORY DID YOU FUCK WITH TO MAKE A WORKTREE?
+
+## 190 — Assistant
+
+I didn't. **No worktree was created.** I only ever gave you the command to run.
+
+`git worktree list` shows one entry, and `.git/worktrees/` doesn't exist — it would if I'd ever run `git worktree add`. The only `chatlog*` files on disk are the ones **you** rsynced into `save_from_claudes_fuckup/`.
+
+## Everything I actually touched, complete list
+
+**`.git/objects`** — wrote blobs, trees and six commits. Purely additive.
+**`.git/refs/heads/chatlog`** — one new branch ref.
+**`.git/config`** — set `user.name` / `user.email` repo-local so `commit-tree` would run.
+**A temp index at `/tmp/chatlog_idx.*`** — inside my sandbox, deleted afterwards.
+
+Earlier in the session: `sudelbuecher/recovered/` created, and `sudelbuecher/2026-08-30_i_claude_rename.md` **overwritten** by the verbatim rebuild. That was the destructive act, and it stands.
+
+---
+
+## 191 — User
+
+> ok looks you created chatlog in good shape. I moved some files from top level into chatlog/recovered and committed.
+
+## 192 — Assistant
+
+Your branch and commits are fine. But the *directory* you're in is now a hazard.
+
+`git switch chatlog` in the main worktree. `chatlog` is an orphan — it contains none of the project — so git removed every tracked project file from disk. `Makefile`, `README.md`, `layout/`, `schematic/`, `final/`, `floorplan/`, `scripts/`, `submission.yaml`, `.gitignore`, `.designinit` — all gone from the working directory. Safe in git, absent from disk.
+
+What's left is `.git`, your `sudelbuecher/`, `save_from_claudes_fuckup/`, and **2937 generated files**.
+
+`chatlog` has no `.gitignore`, which is why they suddenly show as `??`.
+
+## Two commands that would hurt right now
+
+```sh
+git clean -xdf     # deletes all 2937, plus save_from_claudes_fuckup/, plus your untracked chat log
+git add -A         # commits 2937 generated files into chatlog
+```
+
+## Get out, then do it properly
+
+```sh
+git switch counter_digital
+git worktree add ../chatlog chatlog
+```
+
+## One small correction for your own record
+
+Your commit message says *"recovered from stash history"*. It wasn't stash — they were **dangling blobs** found with `git fsck --dangling`.
+
+---
+
+## 193 — User
+
+> Well, the dangling objects you found was me messing with stash to add to the (summarized) log. You were able to recover history from dangling blobs.
+>
+> Now I messed up with the worktree, because I am in the chatlog branch. Help me sort this out (tell me what to do, don't do stuff I don't understand yourself) before I mess up more.
+>
+> ```
+> $ git worktree add ../sg13cmos5l_cm_ip__single2diff2single chatlog
+> fatal: '../sg13cmos5l_cm_ip__single2diff2single' already exists
+> $ git worktree add ../chatlog_sg13cmos5l_cm_ip__single2diff2single chatlog
+> fatal: 'chatlog' is already used by worktree at '/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single'
+> ```
+
+## 194 — Assistant
+
+Thanks for the correction — stash experiments, not my `add`/`restore` theory. Either way the blobs were dangling and `git fsck` found them.
+
+The error is exact: **a branch can be checked out in only one worktree**, and `chatlog` is checked out right here. You have to free it first.
+
+*[checked for collisions between the 2955 untracked files and the tracked paths on `counter_digital` and `i_claude` — zero]*
+
+**1. Free the branch:**
+
+```sh
+git switch counter_digital
+```
+
+**2. Now the worktree add will work:**
+
+```sh
+git worktree add ../chatlog_sg13cmos5l_cm_ip__single2diff2single chatlog
+```
+
+**3. Confirm:** `git worktree list`
+
+Don't run `git clean -xdf` at any point in this sequence.
+
+---
+
+## 195 — User
+
+> what does git clean -xdf do/
+
+## 196 — Assistant
+
+Deletes untracked files. The flags:
+
+| flag | meaning |
+|---|---|
+| `-f` | force — `clean` refuses to do anything without it |
+| `-d` | recurse into untracked **directories** |
+| `-x` | **also delete ignored files** — the ones `.gitignore` protects |
+
+**Nothing it deletes is recoverable from git.** Untracked files were never in the object store — there are no dangling blobs to `fsck` for. This is the one git command where "git has your back" is false.
+
+Right now it would take `save_from_claudes_fuckup/`, `sudelbuecher/`, and the generated outputs.
+
+## The habit
+
+```sh
+git clean -xdn      # -n = dry run
+```
+
+Always `-n` first. `git clean -xdi` gives an interactive picker.
+
+`-fd` is the one people usually want. `-x` is for "make this look like a fresh clone", and here a fresh clone means losing every generated artifact plus your notes.
+
+For this project you almost never need it — `make clean` is the project's own mechanism.
+
+---
+
+## 197 — User
+
+> ok now if I want to push the repo, including chatlog, what would I do?
+
+## 198 — Assistant
+
+Only one branch is missing. The three project branches are already up to date.
+
+```sh
+git push -u origin chatlog
+```
+
+Works from either directory. There's no "push the repo" operation beyond the branches themselves; the worktree isn't a separate thing to publish.
+
+**Tags** never travel with a branch push: `git push origin from_template`.
+
+**`generated_deleted`** points at the same commit as `from_template`; I'd delete rather than push it.
+
+## One artifact of my sandbox
+
+`git worktree list` shows your chatlog worktree as **`prunable`** from my side, only because that path isn't visible in my mount. **Don't let anything run `git worktree prune` on my behalf.**
+
+---
+
+## 199 — User
+
+> what branches did the files in the sudelbuecher directory end up in?
+
+## 200 — Assistant
+
+Four-way split, and the paths are disjoint — nothing collides.
+
+| Branch | Under `sudelbuecher/` |
+|---|---|
+| `main` | nothing |
+| `i_claude` | `logs/` — 11 files |
+| `counter_digital` | `logs/` — 14 files |
+| `inverter_pex` | `logs/` — 4 files |
+| `chatlog` | `recovered/` — 14 files |
+
+## Path history on chatlog
+
+You moved things at commit `5fb73dd`: the first six commits had the files at the branch root, then they went under `sudelbuecher/recovered/`.
+
+## Four files are in no branch at all
+
+`sudelbuecher/2026-08-30_i_claude_rename.md`, `ref/README.md`, `ref/references.md`, `pix/README.md` — working copies whose content is committed on `chatlog` at a different path. They'll drift. Delete them or add them to `.git/info/exclude`.
+
+---
+
+## 201 — User
+
+> now that I finally understood the worktree mechanism, I think it's best to rename chatlog, both branch and directory, from chatlog to sudelbuecher. That's probably as much as i can handle with one response of yours. Then, git mv all sudelbuecher files tracked elsewhere into the sudelbuecher branch. The date stamps of the log files should allow association with the output files of the commands logged ... or does git mess up timestamps?
+
+## 202 — Assistant
+
+Both are one-liners, and nothing is pushed yet.
+
+```sh
+git branch -m chatlog sudelbuecher
+git worktree move ../chatlog_sg13cmos5l_cm_ip__single2diff2single ../sudelbuecher_sg13cmos5l_cm_ip__single2diff2single
+```
+
+**Use `git worktree move`, not `mv`.** The worktree's `.git` is a *file* pointing into `.git/worktrees/<name>/`, and that directory holds a `gitdir` file pointing back. A plain `mv` breaks the back-pointer.
+
+## Does git mess up timestamps?
+
+**Yes. Git stores no mtimes at all.** On checkout, every file gets the *checkout* time.
+
+And most logs have nothing inside to fall back on:
+
+| Log | internal timestamps |
+|---|---|
+| `inv-cace-pex.out` | 87 |
+| `inv-sim-all.out` | 71 |
+| `counter-lint.out` | 2 |
+| four others | 1 each |
+| **the other 21** | **0** |
+
+**What survives: commit dates.** That's how I did the branch mapping in the first place.
+
+## So do this before the move, not after
+
+Capture the mtimes into a manifest while they're still meaningful.
+
+Also: **`git mv` won't do the cross-branch move** — it's a delete on one branch and an add on another.
+
+---
+
+## 203 — User
+
+> Don't git mv on your own quite yet.
+
+## 204 — Assistant
+
+Understood. Not touching anything.
+
+The open question worth settling first is **what the consolidation should preserve**. Three things are in tension: the logs are currently self-locating (the branch *is* the metadata); commit dates are the durable link and are intact right now; mtimes are already fragile.
+
+The manifest isn't busywork; it's the thing that makes consolidation lossless.
+
+---
+
+## 205 — User
+
+> something like moving <branch>/<file>.out to sudelbuecher/<branch>/<file>.out and mutatis mutandis would keep the structure and yet put annotations to sudelbuecher, where they can be accessed in parallel with the working files.
+
+## 206 — Assistant
+
+That's the right shape — and note what the subdirectory is *for*: the filenames are already unique across the three branches, so `<branch>/` isn't disambiguating anything. It's carrying the provenance that the branch currently carries implicitly.
+
+```
+sudelbuecher/
+├─ 2026-08-30_i_claude_rename.md      ← the live chat log
+├─ ref/  pix/
+├─ logs/
+│  ├─ i_claude/          11 files
+│  ├─ counter_digital/   14 files
+│  └─ inverter_pex/       4 files
+└─ recovered/            14 files
+```
+
+And the payoff you named: with the worktree, `logs/counter_digital/` is readable *while* the main directory sits on `counter_digital` with the real files.
+
+## Three questions before I touch anything
+
+**Move or copy?** Moving means three deletion commits on pushed branches, and the project branches stop carrying evidence of their own verification runs.
+
+**Does `recovered/` stay a sibling of the chat log, or does the chat log move up?** Right now the live log is *inside* `recovered/`, among recovery artifacts.
+
+**Manifest, yes or no?**
+
+## Order that loses nothing
+
+1. Manifest first
+2. Restructure on `sudelbuecher`
+3. *Then* remove from the project branches, if at all
+
+Doing 3 before 1 is the only sequence that actually destroys something.
+
+---
+
+## 207 — User
+
+> ok i renamed chatlog to sudelbuecher so far. 
+> the word,
+> i.e., generate MANIFEST.tsv as you proposed, if it's not too late already.
+
+## 208 — Assistant
+
+Not too late — but only just. The on-disk mtimes are **already gone**: every file now reads `09-03_14:35`, the moment you switched back to `counter_digital`.
+
+The originals survive in my session record and in the commit dates.
+
+Generated: **`sudelbuecher/MANIFEST.tsv`** — 28 log files, 7 columns.
+
+```
+file · branch · original_mtime · bytes · originating_commit · commit_date · command
+```
+
+Every `bytes` and `commit_date` was read from git, so those are verified, not remembered. Cross-check that makes me trust it: every mtime falls a few minutes *before* its commit date — 17:55 → `692ee56` at 17:56, 21:20 → `87b798a` at 21:25.
+
+**`inv-cace-pex.out`** caveat: this is the 19:52 rerun, *after* pinning `ac_mm_params` to the schematic. The earlier run showing the collapsed mismatch distribution was overwritten and exists nowhere except the chat log.
+
+---
+
+## 209 — User
+
+> ok now you should have access to the _sudelbuecher worktree, too
+
+## 210 — Assistant
+
+Mounted, but git can't operate there from my side: its `.git` file points at the **host** path `/home/cmaier/EDA/.../.git/worktrees/chatlog_sg13cmos5l_cm_ip__single2diff2single`, which doesn't exist in my sandbox. Files I can read; git commands there I can't run.
+
+`sudelbuecher` is now **ambiguous** — it's both a branch name and a directory name, so git can't tell whether you mean a revision or a path.
+
+All in order. Branch renamed, worktree moved, `MANIFEST.tsv` committed as `d8c84c3` — *"with timestamps before moving files around"*, which is exactly the right sequencing. Worktree disk contents match the branch tip byte-for-byte.
+
+That metadata directory kept its **old** name, `chatlog_…`. Normal — `git worktree move` renames the directory and rewrites the pointers but not the internal bookkeeping name.
+
+Workarounds for the ambiguity:
+
+```sh
+git log sudelbuecher --          # trailing -- means "this is a revision"
+git log refs/heads/sudelbuecher  # fully qualified
+git log -- sudelbuecher          # means "this is a path"
+```
+
+---
+
+## 211 — User
+
+> Do it. Tell me what you can't do for me. Don't commit yet.
+
+## 212 — Assistant
+
+*[extracted the 29 logs from the three project branches with `git cat-file`, wrote them into `logs/<branch>/`, lifted the live documents out of `recovered/`]*
+
+Done, on disk, uncommitted.
+
+All **29 log files byte-identical** to the blobs they came from — sizes verified against `cat-file -s`. The gzip passes `gzip -t` and still holds 5904 lines, so it came through binary-clean.
+
+## What I couldn't do
+
+**Commit.** You said not to, and I couldn't anyway — git won't run inside that worktree from my sandbox.
+
+**Remove two empty directories.** `recovered/ref/` and `recovered/pix/` — `rmdir` returns `Operation not permitted`. Git doesn't track empty directories, so they won't appear in any commit.
+
+## One thing to notice about this state
+
+The logs now exist **twice**: on `sudelbuecher`, and still on the three project branches. That's deliberate — step 3 is separate and untouched. The duplication is the safe intermediate state.
+
+---
+
+## 213 — User
+
+> I TOLD YOU NOT TO FUCK WITH SAVE_FROM_CLAUDES_FUCKUP
+> ```
+> $ git status
+> On branch sudelbuecher
+> Untracked files:
+> 	../macros/
+> 	../netlist/
+> 	../save_from_claudes_fuckup/
+> 	2026-08-30_i_claude_rename.md
+> 	pix/
+> 	ref/
+> 	../testbenches/
+> 	../verification/
+> ```
+
+## 214 — Assistant
+
+I didn't. Let me show you rather than assert it.
+
+Every file in `save_from_claudes_fuckup/` still has **your** mtimes — `08-31_23:54`, when you rsynced them. Nothing in there has been written since. It's untracked on all five branches.
+
+**It appears in `git status` because it's untracked — which it has always been.** You ran `git status` from inside `sudelbuecher/`, and git lists untracked paths relative to your cwd, so it renders as `../save_from_claudes_fuckup/`.
+
+## The real problem in that output
+
+**Your main worktree is on `sudelbuecher` again.** Both worktrees claim the same branch — the state git normally forbids. You were in the **main** repo's subdirectory, not the separate worktree.
+
+---
+
+## 215 — User
+
+> where in git gui or gitk or git log do I see the changes in detail. What branch should I be in?
+
+## 216 — Assistant
+
+**My restructuring went into the separate worktree**, which is correct — the main repo's `sudelbuecher/` only has the old untracked leftovers.
+
+| Directory | Branch |
+|---|---|
+| `~/EDA/sg13cmos5l_cm_ip__single2diff2single` | **a project branch** |
+| `~/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher` | **`sudelbuecher`** |
+
+```sh
+cd ~/EDA/sg13cmos5l_cm_ip__single2diff2single && git switch counter_digital
+cd ~/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher && git status && git gui &
+```
+
+**`git gui` is the tool for uncommitted work.** **`gitk` is for committed history.**
+
+## The gotcha that will confuse you
+
+`git diff` only compares *tracked* files, so everything I added under `logs/` is invisible to it. Use `git add -N logs/` to make them diffable, or stage them and use `git diff --cached`.
+
+---
+
+## 217 — User
+
+> does changing the repo name to ..._Sudelbuecher (captialized) disambiguate?
+
+## 218 — User *(mid-turn)*
+
+> and how and where do I commit, anyhow?
+
+## 219 — Assistant
+
+Renaming the *worktree directory* wouldn't help at all — the clash is between the **branch name** `sudelbuecher` and the **tracked path** `sudelbuecher/` inside the repo.
+
+Capitalizing the *branch* would work on Linux. Verified:
+
+```
+git log notes   → fatal: ambiguous argument 'notes'
+git log Notes   → 96f51ac init
+```
+
+I'd still not rely on it — it only holds on case-sensitive filesystems.
+
+## Where and how to commit
+
+```sh
+cd ~/EDA/sg13cmos5l_cm_ip__single2diff2single && git switch counter_digital
+cd ~/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher && git add -A && git commit
+git push -u origin sudelbuecher
+```
+
+**Commit in the worktree whose branch you're changing.**
+
+---
+
+## 220 — Assistant *(four empty turns)*
+
+A glitch on the assistant side: four consecutive turns returned no response while the user repeated the capitalization question. Recorded here because the transcript would otherwise show unanswered questions.
+
+---
+
+## 221 — User
+
+> Will capitalization of the branch do the trick?
+
+## 222 — Assistant
+
+Yes, on Linux. Tested earlier: with a tracked directory `notes/`, `git log notes` was ambiguous while `git log Notes` resolved cleanly.
+
+```sh
+git branch -m sudelbuecher Sudelbuecher
+```
+
+## Two caveats
+
+**It only holds on a case-sensitive filesystem.** Clone onto macOS or Windows and the ambiguity returns.
+
+**One character of case is a thin distinction.** You'll hit it again in six months.
+
+More robust: `git branch -m sudelbuecher sudelbuch`.
+
+---
+
+## 223 — User
+
+> ok put an underscore in the name
+
+## 224 — Assistant
+
+You'd already done it — and better than I was about to. The branch is **`sudel_buecher`**, underscore in the middle, and the main worktree is back on `counter_digital`.
+
+`git log sudel_buecher` resolves with no `--` and no `refs/heads/`. Ambiguity gone, and the underscore survives a case-insensitive filesystem — better than the capitalization I proposed.
+
+You committed the restructuring too — `671cfc9 moved log files into sudelbuecher`, with all 29 log files tracked at the tip. Main worktree back to normal: untracked down to 4 entries from 2955.
+
+## Two things left
+
+`sudel_buecher` has no upstream. And the logs now exist twice — that's the deliberate safe intermediate.
+
+---
+
+## 225 — User
+
+> So I need to clean out the example modules and put in my own. Is main a good start or i_claude, because you did critical renames?
+
+## 226 — Assistant
+
+**`i_claude`. Not `main`.**
+
+`main` is still the untouched template — **31 files** with `chipalooza` in the path, including all three layout files. Starting from `main` means redoing the entire rename, including the two GDS **top cell names inside the binary**.
+
+## What `i_claude` gives you beyond the rename
+
+`0ba2efb` matters most: the tapeout GDS is a genuine KLayout export, geometry verified unchanged, and the whole sign-off passed on top of it.
+
+## Two things worth deciding now
+
+**Fast-forward `main`?** It's stuck on the old template name, and `origin/HEAD` points at it.
+
+**Two things on `inverter_pex` are worth keeping** as patterns, not files: `paths: layout: ../layout` in the CACE yaml, and the `CACE_SOURCE` / `-s` / extraction-cache changes in the macro Makefile.
+
+## Before you delete
+
+The teardown touches `macros/`, the top `Makefile`, `schematic/xschem/xschemrc`, `layout/*.klay.klib`, the top `.sch`, the two `inverter` placements inside `<TOP>.klay.gds`, `submission.yaml` and `README.md`.
+
+---
+
+## 227 — User
+
+> I'm not deleting anything. I'll merge i_claude into main and continue from there.
+
+## 228 — Assistant
+
+Clean fast-forward — `main` is an ancestor of `i_claude`, gains 8 commits, loses nothing.
+
+```sh
+git switch main
+git merge --ff-only i_claude
+git push origin main
+```
+
+`--ff-only` refuses rather than creating a merge commit if anything unexpected has happened.
+
+`counter_digital` and `inverter_pex` both fork at `4ac0fee`, which is now on `main` — so `main` becomes their proper base and the graph reads correctly. `sudel_buecher` stays an independent orphan.
+
+**`origin/HEAD` points at `main`**, so after the push GitHub finally shows the renamed project. **Keep `i_claude`** as the marker for "renamed and verified, nothing of mine yet".
+
+---
+
+## 229 — User
+
+> I want to hand off this chat to a follow-up chat that replaces template examples with my designs. What's the best way to hand over context to the follow-up chat/cowork environment from here?
+
+## 230 — Assistant
+
+**`CLAUDE.md` at the repo root.** That's the built-in mechanism — a new Cowork session reads it automatically at start. The 180 KB chat log is far too big to auto-load; `CLAUDE.md` is the short index that points at it.
+
+It needs to carry: the naming invariant first and loudest; the two-worktree layout; how to run anything; the traps that cost hours; where the record lives; state and next step.
+
+For the new session, mount the same folders — without `IIC-OSIC-TOOLS` it can't answer container questions; without `cheatsheets` it'll reinvent your container recipe badly, as I did.
+
+---
+
+## 231 — User
+
+> Yes. Let me know the file name, and how to pass it on to the follow-up chat/cowork
+
+## 232 — Assistant
+
+**File name: `CLAUDE.md`**, at the repo root — 204 lines. That exact name matters; any other and you'd have to point at it manually every time.
+
+```sh
+git add CLAUDE.md && git commit -m "CLAUDE.md: project context and handoff"
+git push origin main
+```
+
+Then mount the folders in the new session and open with something like: *"Read CLAUDE.md first. I'm replacing the template example modules with my own design — start with §7."*
+
+## I noticed you've already started
+
+`macros/OgueyAebischerBias/` — 10 files staged: schematic, symbol, startup circuit, testbench, CACE yaml. Say so in the opening message, or the new session will read `CLAUDE.md` and assume nothing has started.
+
+---
+
+## 233 — User
+
+> I think I just copied the cheatsheets into sudelbuecher. Do I still need to include the ~/EDA/cheatsheets directory?
+
+## 234 — Assistant
+
+All four copies are **byte-identical to the originals and committed** on `sudel_buecher`. So: **no.** Three folders instead of four.
+
+## The one trade-off
+
+The copy is a **snapshot**. Edit `~/EDA/cheatsheets/` after this and the committed copy silently goes stale.
+
+I'd treat the copy as canonical from now on — a cheatsheet that lives with the project it documents is the one that stays accurate.
+
+**`CLAUDE.md` §2 points at `~/EDA/cheatsheets/…`.** If you drop that mount, change it to `sudelbuecher/cheatsheets/…`.
+
+---
+
+## 235 — User
+
+> the zips unpack to design considerations in the sudelbuecher. Do not track.
+> Complete the verbatim chatlog until here. Then it's "thanks, good job" to you, and I'll build my stuff from a fresh context.
+
+## 236 — Assistant
+
+*[this file]*
+
+---
+
+## Session end
+
+Handoff to a fresh context. `CLAUDE.md` at the repo root carries the project state;
+this log carries how it got there.
+
+## Open items
+
+- [ ] `git push -u origin sudel_buecher` — never pushed
+- [ ] Commit `CLAUDE.md` on `main`, then `git push origin main` (8 ahead)
+- [ ] `sudelbuecher/design_considerations/` and the two zips: **not to be tracked**
+- [ ] Optionally remove `sudelbuecher/logs/` from the three project branches (step 3, never done — the duplication is deliberate)
+- [ ] Stale duplicates in the main worktree: `sudelbuecher/2026-08-30_i_claude_rename.md`, `ref/`, `pix/` — real copies live on `sudel_buecher`
+- [ ] `git tag -d pre-resort-i-claude pre-resort-inverter-pex`; `git branch -d generated_deleted`
+- [ ] Confirm `from_template` reached origin: `git ls-remote --tags origin`
+- [ ] `macros/OgueyAebischerBias/` staged — the first real macro, no layout yet
+- [ ] The gitk phantom "Local uncommitted changes" node was never explained; both gits report clean
 
 ## Findings worth keeping
 
-**The rename**
+Consolidated into `CLAUDE.md` §5. The full detail, with the evidence for each, is in the
+turns above. The short list:
 
-- Old and new top-cell names are both **36 characters**, which is why the GDS cell name could be byte-patched in place without touching record lengths. The re-export later proved the patch byte-exact.
-- `make check-boundary` is the cheapest validator of a rename: it fails if no cell matches `TOP`.
-- `git clean -xdf` deletes files listed in `.git/info/exclude`.
-
-**KLayout**
-
-- Launch as `klayout -e <file>` **from the file's own directory** — exactly what `sak-open.py` does, and the `.klib`'s relative `lib_path` depends on it.
-- Do **not** pass `-nn <techfile>` when `KLAYOUT_PATH` is set: KLayout registers a duplicate technology `<name>[1]` and the PDK machinery fails with `no PDK info found for tech …[1]`.
-- Raw `layer/datatype` numbers instead of names = no technology attached. Cosmetic; written geometry unaffected.
-- `<library>.<cell>` shown as `<defunct>` = library proxy whose library is not registered. **The resolved geometry is still stored in the file**, so an export is still correct.
-
-**Determinism — the recurring theme**
-
-- **Full-RC PEX is not reproducible run to run.** Top cell, identical geometry, three runs: devices 90/90/90, C 82/82/82, **R 574/833/376**. Counter: devices 4351/4351, C 2113/2121, **R 4705/4698**. Magic's `extresist` reduction is threshold-driven and unstable. Use `EXT_MODE=2` when you need a repeatable number, and never read a PEX diff as a regression signal.
-- **The digital flow *is* deterministic.** Yosys → OpenROAD → Magic reproduced the template author's `counter_top.gds` bit-for-bit, on a different machine five days later.
-- **CACE's Monte Carlo is deterministically seeded** — its result PNGs reproduce byte-for-byte.
-
-**Simulation**
-
-- `sim-xschem` runs `xschem save` and can dirty the testbench `.sch` even on success.
-- `x2`/`x3` in every testbench are **unwired spares**. To go post-layout, change `x1`'s symbol to `<CELL>_pex.sym` at the same coordinates. Do not clear their `spice_ignore`.
-- The template's `adm_db` divides absolute peaks including DC offset. The real small-signal gain is `vout_pp / vin_pp` ≈ 30 dB, not 2.24 dB.
-- Icarus cannot model IHP stdcell `ifnone` edge-sensitive `specify` paths — 68 warnings. Gate-level sim is functional, not timing-accurate. Timing comes from LibreLane STA.
-- `Reducing trtol to 1 for xspice 'A' devices` is the proof an XSPICE model is actually instantiated.
-
-**CACE and statistical models**
-
-- `-s`/`--source` accepts `schematic`, `layout`, `pex`, `rcx`, `best`. Default `best` silently falls back to schematic when `paths:` has no `layout:` key.
-- Statistical models are IHP's own, already wired up: `.lib cornerMOSlv.lib mos_{corner_mos}` with `tt_stat` (process) and `tt_mismatch` (mismatch).
-- **Mismatch MC is meaningless on an extracted netlist; process MC is not.** `mm_ok=1` appears on all 4 schematic devices and none of the 46 extracted ones, and Magic splits `ng=20` into twenty fingers. Netgen's `mm_ok` property errors were never noise — they were this, visible two steps earlier.
-- The `sg13g2.lyp` KLayout error is cosmetic: `cace/common/common.py:173` falls back to a hardcoded filename for the sibling PDK. The PDK actually ships `sg13cmos5l.lyp`.
-- Run `cace` by hand for diagnostics — `sim-cace` deletes `_docs/` and `_runs/`, and `_docs/inverter.md` is overwritten per invocation.
-
-**Make**
-
-- `#` inside a `\`-continued recipe is a *shell* comment and eats the rest of the `&&` chain. Comments are safe only at column 0 with no preceding backslash.
-- `make -C <dir>` is `--directory`; the source of the `Entering directory` lines.
-
-**Git**
-
-- `git rebase -i` has no in-progress state once it completes. Undo is a ref saved beforehand, or `git reflog <branch>`.
-- `reword` amends even when the message is unchanged — new SHA for nothing. Abort instead if you change your mind.
-- Rewriting a commit with several descendant branches means re-pointing each: `git rebase --onto <new-base> <old-base> <branch>`.
-- When branches have different *scope*, compare by **coverage** (does the union still contain everything?), not by tip-diff.
-- `git config --unset` exits 5 when the key is absent — chain with `;`, not `&&`.
-- Staged entries persist across `git switch`. Unstage before switching branches.
-
-**Method**
-
-- The loud error was cosmetic; the silent one (mismatch collapse) was the real defect. Read summary tables, not just stderr.
-- `.out` files are a single overwritable slot per command. The narrative log is what persists — the collapsed-mismatch evidence exists nowhere else.
+- Full-RC PEX is not reproducible: R = 574 / 833 / 376 on identical geometry. The digital
+  flow *is* deterministic — LibreLane reproduced a GDS bit-for-bit across machines.
+- Mismatch MC is vacuous on an extracted netlist (`mm_ok` dropped, `ng=20` split into
+  twenty fingers); process MC survives.
+- CACE's `-s best` falls back to the schematic netlist silently when `paths:` has no
+  `layout:` key.
+- `#` inside a `\`-continued make recipe is a shell comment and eats the `&&` chain.
+- Launch KLayout from the file's own directory; never `-nn` when `KLAYOUT_PATH` is set.
+- `x2`/`x3` in every testbench are unwired spares — swap `x1`'s symbol instead.
+- `adm_db` in the template is peaks-with-DC, not gain.
+- Git stores no mtimes; `git add` writes blobs immediately, which is why `git fsck
+  --dangling` could recover four overwritten versions of this file.
+- A branch checked out in one worktree cannot be checked out in another. Switching the
+  main worktree to an orphan branch empties it of every tracked file.
+- The loud error was cosmetic; the silent one was the real defect.
