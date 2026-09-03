@@ -244,7 +244,41 @@ Concretely, for the numbers in the table: 1 V peak at 10 MHz needs SR = 2π × 1
 
 ## Turn 9 — Assistant
 
-*[This turn produced the deliverables: `report-retext.md`, `report-github-gitlab.md`, `report.tex`, `report.pdf`, and this transcript.]*
+*[Tool use: read `/mnt/skills/public/pdf/SKILL.md`; probed the container toolchain; wrote `report-retext.md`, a conversion script `mk_gfm.py`, and `preamble.tex`; generated `report-github-gitlab.md`; built `report.tex` via pandoc and `report.pdf` via pdflatex after falling back from lualatex; wrote this transcript.]*
+
+Five files. The report runs to 8 pages across ten sections: figures of merit, what 5L removes, the reference table, the Monticelli/Huijsing distinction, the donor analysis of the 1994 paper, the bandwidth budget, FPBW, and a closing list of open questions.
+
+The two Markdown variants differ only in math handling. The ReText one uses `$…$` and `$$…$$` for MathJax. The GitHub/GitLab one uses fenced ` ```math ` blocks for display equations, which both platforms render, and drops inline math to Unicode code spans — GitHub writes inline as `$x$` while GitLab writes ``$`x`$``, so there is no portable inline form.
+
+Two things to flag:
+
+I read "Plain TeX markup" as LaTeX and produced an `article` document, since that's what compiles to the PDF and what a report wants. If you meant Knuth's plain TeX proper (`\font`, `\hbox`, no document classes), say so and I'll redo it. The `.tex` compiles standalone with `pdflatex` in two passes; it uses `mathptmx` rather than `lmodern`, and carries `\DeclareUnicodeCharacter` declarations for the arrows, Ω, ≈ and so on, because the container's TeX Live is missing `lmodern.sty`. On your own machine you can delete both workarounds.
+
+In the transcript, the one thing not reproduced verbatim is the body of the Hogervorst PDF you uploaded — that's a copyrighted IEEE paper, so it appears as an attachment line with the full citation. Every conversational turn is complete and unedited.
+
+---
+
+## Turn 10 — User
+
+> ok you confused the reports for retext and for github/gitlab. Trivial to fix though.
+
+## Turn 10 — Assistant
+
+*[Tool use: swapped the two files' contents and rewrote the rendering note in each; re-copied both to the output directory.]*
+
+Swapped. The `$…$` version is now the GitHub/GitLab one, since GitHub parses dollar math natively and ReText's Python-Markdown does not without the MathJax extension. The math-free version — fenced `math` blocks and Unicode code spans — is now `report-retext.md`.
+
+Each file's rendering note was rewritten to match. The GitHub one carries a `sed` one-liner for converting inline math to GitLab's ``$`x`$`` form, which is the one thing the two platforms genuinely disagree about. The PDF and `.tex` are unaffected.
+
+---
+
+## Turn 11 — User
+
+> update the verbatim report
+
+## Turn 11 — Assistant
+
+*[This turn: appended Turns 9–11 to the transcript.]*
 
 ---
 
