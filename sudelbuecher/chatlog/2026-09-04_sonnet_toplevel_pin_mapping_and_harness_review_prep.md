@@ -709,3 +709,111 @@ before either response was sent to the user.)*
 new one — since the user's request was to "update" the existing log, and
 `Edit`ed the file's closing paragraph to append rather than rewriting the
 whole file.]*
+
+---
+
+## 16 — User
+
+> pushed log and TOP_LEVEL_MODULE.md
+>
+> Now, replace `submission.yaml`, `testbenches/xschem/sg13cmos5l_cm_ip__single2diff2single_tb_tran.sch`,
+> draft a
+> `sg13cmos5l_cm_ip__single2diff2single/verification/cace/` … skeleton.
+> From my original proposal, this will get quite overloaded.
+
+## 16 — Assistant
+
+*[`Edit`ed `submission.yaml`: replaced the `analog-pins` TODO comment with
+a settled note citing `TOP_LEVEL_MODULE.md`, filled in `short-description`
+(previously TODO). `long-description` intentionally left untouched at this
+point.]*
+
+*(mid-turn message, arrived after the `submission.yaml` edit)*
+
+> Let me know if this is an Opus 5 case, given the limited time.
+
+Not an Opus case, honestly. The rest of this — the CACE yaml is templated
+work off `inverter.yaml`'s pattern, and the testbench edit is constrained,
+conservative relabeling of an existing file, not novel circuit reasoning.
+The actual bottleneck on the testbench isn't reasoning depth, it's that
+nothing in this sandbox can open Xschem to verify a hand-edited `.sch`
+actually parses — that's a tooling gap Opus doesn't fix either, you'd
+still need to open and resave it yourself before trusting it. Given the
+time cost of re-briefing a fresh Opus session on everything resolved
+today, I'd keep going here. Continuing with `submission.yaml` done — CACE
+skeleton next.
+
+*[Read `macros/OgueyAebischerBias/verification/cace/OgueyAebischer.yaml`
+(a blank `<placeholder>`-style template, reference only — the real
+structural model was `macros/inverter/verification/cace/inverter.yaml`,
+already read in turn 1). Wrote
+`verification/cace/sg13cmos5l_cm_ip__single2diff2single.yaml`: six
+parameter groups (`dc_connectivity` — the only one meant to run today,
+against whatever DUT is currently wired in; `gain_bandwidth`,
+`offset_noise`, `psrr`, `vcm_reference`, `bias_reference` as structurally
+complete placeholders, `minimum`/`maximum: any`, each pointing at a
+testbench template file that does not exist yet, named explicitly as
+NOT YET AUTHORED inline rather than left implicit). Pins declared against
+this repo's own floorplan (`analog_0-2`, `VPWR`/`VAPWR`/`VGND`, `ena`,
+`rst_n`, `clk`), not `user_project_wrapper_3a.v`'s ports directly — same
+packaging-vs-harness distinction as `TOP_LEVEL_MODULE.md` §2, restated
+inline in the yaml's own header comment so it isn't lost out of context.]*
+
+*(mid-turn message, arrived after the CACE yaml was written)*
+
+> Very well. Standing by with xschem in my docker container.
+
+*[Three `Edit` calls on
+`testbenches/xschem/sg13cmos5l_cm_ip__single2diff2single_tb_tran.sch`,
+each verified against exact text read earlier this session (turn 1) to
+avoid the "unescaped quote inside `value=\"...\"` truncates the netlist"
+trap documented in `HANDOVER_toplevel.md` §3 — no `"` or unbalanced `{`/`}`
+introduced anywhere: (1) retitled the schematic's title text; (2) inserted
+a pin-contract header comment block at the top of the `NGSPICE`
+`code_shown` block (`analog_0=vin`/`analog_1=vout`/`analog_2=vcm` mapping,
+a note that the DUT is still the inherited inverter placeholder, and a
+flagged-not-done note that `uio_in_0`'s pulse stimulus should migrate to a
+`ui_in` bit per the no-scan-chain decision in `TOP_LEVEL_MODULE.md` §2.3);
+(3) added a `vcm_avg` measurement and `print` next to the existing
+`vout_pp` measurement. Deliberately no component placement or net
+structure changes — judged too risky to hand-edit blind, with no way in
+this sandbox to open Xschem and confirm the result parses.]*
+
+All three done, conservatively:
+
+**`submission.yaml`** — `analog-pins: 3` TODO resolved and cited,
+`short-description` filled in, ready for `long-description` next if you
+want it (didn't touch it yet — that's the biggest block of prose and I
+wanted to get the other two in front of you first).
+
+**`verification/cace/sg13cmos5l_cm_ip__single2diff2single.yaml`** — six
+parameter groups: `dc_connectivity` (the only one meant to run today,
+against whatever's currently in the DUT schematic), then `gain_bandwidth`,
+`offset_noise`, `psrr`, `vcm_reference`, `bias_reference` as
+structurally-complete placeholders (`minimum`/`maximum: any`) pointing at
+testbench templates that don't exist yet — named but not authored, marked
+as such inline. This is the "quite overloaded" part you flagged; six
+groups is a lot of scaffolding for one buffer pair, but each one maps to a
+real open item from `TOP_LEVEL_MODULE.md`.
+
+**Testbench** — three text-only edits, no geometry or component changes:
+title, a pin-contract header comment block (vin/vout/vcm mapping,
+DUT-still-placeholder note, the uio_in_0→ui_in migration flagged not
+done), and a `vcm_avg` measurement added next to the existing `vout_pp`
+one. Deliberately didn't touch component placement or add new sources —
+the analog_2 load still models vcm-as-output only, not the
+external-override case, exactly as commented. That's real remaining work,
+not hidden.
+
+Good moment for you to open it in Xschem and confirm it still loads clean
+before I touch it further.
+
+---
+
+## 17 — User
+
+> While I'm at that, update your unabridged, verbatim chat log.
+
+## 17 — Assistant
+
+*[This entry. Appended turns 16–17 to this same file.]*
