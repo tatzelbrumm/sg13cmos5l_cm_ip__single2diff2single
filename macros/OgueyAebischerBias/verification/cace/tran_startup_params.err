@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "/usr/local/lib/python3.12/dist-packages/cace/parameter/parameter.py", line 377, in run
-    self.implementation()
-  File "/usr/local/lib/python3.12/dist-packages/cace/parameter/parameter_ngspice.py", line 721, in implementation
-    if variables[_index] != None:
-       ~~~~~~~~~^^^^^^^^
-IndexError: list index out of range
