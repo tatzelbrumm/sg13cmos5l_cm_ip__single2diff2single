@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 """OgueyAebischerBias core, netlist-first, with the three measured trouble spots marked.
 
 Netlist transcribed from
@@ -11,10 +13,48 @@ Local VDD / GND port symbols are used rather than one global rail net, so the
 only long wires left are the three that actually matter: vbp, vbn, vbr.
 
 Numbers on the figure are from RUN_2026-09-04_08-27-47 (tt, 27 C, 3.3 V).
+
+Running it
+----------
+The committed trouble_spots.svg / .png ARE the deliverable; this file is the
+reproducibility record.  Re-rendering needs two things that are deliberately
+not in this repository:
+
+  sch_netlist.py   the netlist + DRC + SVG core of the `analog-schematic`
+                   Claude skill.  Not vendored: that skill ships with no
+                   LICENSE file and no SPDX header (its sibling skills do
+                   ship LICENSE.txt), so its terms are unstated and an
+                   unlicensed third-party copy must not enter a Chipalooza
+                   submission -- same rule as
+                   sudelbuecher/chatlog/ref/README.md, "index, do not copy".
+  cairosvg         PNG rasterisation only; the SVG is produced without it.
+                   pip install cairosvg --break-system-packages
+
+  SCH_NETLIST_DIR=<dir containing sch_netlist.py> python3 trouble_spots.py
+
+Outputs are written next to this file regardless of the working directory.
 """
+import os
 import sys
-sys.path.insert(0, 'scripts')
-from sch_netlist import Circuit, Mosfet, Port, save_png
+import tempfile
+
+_HERE = os.path.dirname(os.path.abspath(__file__))
+for _cand in (os.environ.get('SCH_NETLIST_DIR'),
+              os.path.join(_HERE, 'scripts'),
+              'scripts'):
+    if _cand and os.path.isfile(os.path.join(_cand, 'sch_netlist.py')):
+        sys.path.insert(0, _cand)
+        break
+try:
+    from sch_netlist import Circuit, Mosfet, Port, save_png
+except ImportError:
+    sys.exit(
+        "sch_netlist.py not found.\n"
+        "  It is the renderer from the `analog-schematic` Claude skill and is\n"
+        "  deliberately not committed here (see this file's docstring).\n"
+        "  Point SCH_NETLIST_DIR at the directory that contains it:\n"
+        "    SCH_NETLIST_DIR=.../skills/analog-schematic/scripts \\\n"
+        "        python3 " + os.path.basename(__file__))
 
 W, H = 1260, 940
 c = Circuit(W, H)
@@ -71,7 +111,8 @@ for n in ('M10', 'M16', 'M18', 'M20', 'M15', 'M17', 'M19'):
 
 v = c.drc()
 print('DRC violations:', v if v else 'none')
-c.render('oab.svg')
+_plain = os.path.join(tempfile.gettempdir(), 'oab_plain_%d.svg' % os.getpid())
+c.render(_plain)   # raises DRCError if any pin is floating or any bulk untied
 
 # --------------------------------------------------------------- annotation overlay
 RED, AMB, VIO, INK, MID = '#c0392b', '#b9770e', '#6c3483', '#111', '#555'
@@ -179,7 +220,13 @@ y = block(y, VIO, '3', 'Everything here is 1 µm²', [
     'The same area buys ×10 on the 1/f noise.',
 ])
 
-svg = open('oab.svg').read().replace('</svg>', ''.join(a) + '</svg>')
-open('oab_annotated.svg', 'w').write(svg)
-save_png('oab_annotated.svg', 'oab_annotated.png', width=1500)
-print('annotated')
+svg = open(_plain).read().replace('</svg>', ''.join(a) + '</svg>')
+os.unlink(_plain)
+out_svg = os.path.join(_HERE, 'trouble_spots.svg')
+open(out_svg, 'w').write(svg)
+print('wrote', out_svg)
+try:
+    print('wrote', save_png(out_svg, os.path.join(_HERE, 'trouble_spots.png'), width=1500))
+except ImportError:
+    print('cairosvg not installed - SVG written, PNG skipped '
+          '(pip install cairosvg --break-system-packages)')
