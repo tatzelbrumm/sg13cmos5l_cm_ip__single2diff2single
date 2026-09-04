@@ -75,7 +75,7 @@ logx=0
 logy=0
 linewidth_mult=3
 autoload=0}
-T {Testbench for transient analysis - Chipalooza 2026 - Analog Project} 390 -1740 0 0 1 1 {}
+T {Testbench for transient analysis - single2diff2single top level (DUT still the inherited inverter placeholder; pin contract per TOP_LEVEL_MODULE.md)} 390 -1740 0 0 1 1 {}
 N 1420 -1160 1420 -1120 {lab=VPWR}
 N 1420 -1060 1420 -1020 {lab=GND}
 N 780 -440 780 -420 {lab=GND}
@@ -152,6 +152,17 @@ N 780 -700 780 -500 {lab=uio_in_0}
 C {devices/code_shown.sym} 20 -1450 0 0 {name=NGSPICE
 only_toplevel=true 
 value="
+* Pin contract (TOP_LEVEL_MODULE.md, settled 2026-09-04):
+*   analog_0 = vin   (S2D input buffer, driven by vsine below)
+*   analog_1 = vout  (D2S output buffer, Cload/Rload below)
+*   analog_2 = vcm   (switchable pin/internal/infrastructure; Cload/Rload
+*                     below models the internal/infrastructure case only)
+* DUT (x1) is still the inherited inverter placeholder -- numbers below
+* reflect that circuit, not the real one.
+* uio_in_0 carries a generic pulse placeholder. Per TOP_LEVEL_MODULE.md
+* section 2.3 there is no on-die scan chain: mode-select/enable bits wire
+* directly to ui_in bits once the harness integration lands, not to uio_*.
+* Migrating this stimulus accordingly is flagged, not done in this pass.
 .include ../../../netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice
 .param VPWR=1.5
 .csparam VPWR=VPWR
@@ -194,6 +205,10 @@ meas tran vout_pp_max MAX v(analog_1)
 meas tran vout_pp_min MIN v(analog_1)
 let vout_pp = vout_pp_max - vout_pp_min
 print vout_pp
+
+* Vcm pin (analog_2) sanity -- see the pin-contract note above.
+meas tran vcm_avg AVG v(analog_2)
+print vcm_avg
 
 * Write Data
 unset appendwrite

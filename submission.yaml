@@ -25,13 +25,11 @@ team-members:
 # Must match the floorplan template this layout was started from.
 slot-size: tiny
 
-# TODO: confirm once the real circuit is in. Number of analog pins actually
-# used, 0-3. The inherited example wires all three
-# (analog_0, analog_1, analog_2), see final/vh/sg13cmos5l_cm_ip__single2diff2single.vh.
+# Settled 2026-09-04: vin (analog_0), vout (analog_1), vcm (analog_2).
+# See TOP_LEVEL_MODULE.md for the full boundary-layer rationale.
 analog-pins: 3
 
-# TODO: one line describing what this macro does.
-short-description: Single-ended to differential to single-ended signal converter.
+short-description: Single-ended-to-differential-to-single-ended analog pin buffer pair with on-die bias generation, designed against the Chipalooza harness slot interface.
 
 # Please add the documentation about your project here.
 # Why did you choose to create it? How does it work? How can it be tested, etc.?
