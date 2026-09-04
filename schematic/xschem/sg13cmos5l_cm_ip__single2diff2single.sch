@@ -33,4 +33,4 @@ C {devices/opin.sym} 140 -220 2 0 {name=p19 lab=vout}
 C {devices/iopin.sym} 140 -180 2 0 {name=p20 lab=vcm}
 C {devices/iopin.sym} 140 -140 2 0 {name=p21 lab=vdiffp}
 C {devices/iopin.sym} 140 -120 2 0 {name=p22 lab=vdiffn}
-C {title.sym} 160 -40 0 0 {name=l1 author="Stefan Schippers"}
+C {title.sym} 160 -40 0 0 {name=l1 author="Christoph Maier"}
