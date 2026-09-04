@@ -849,3 +849,289 @@ The actual ask underneath — populate the top-level schematic with real
 block instances (or functional/behavioral placeholders) instead of the
 inherited `inverter` cells — is the CLAUDE.md §7 teardown work proper,
 not another testbench tweak. Standing by for the candidates.
+
+---
+
+**Fidelity note on turns 19–27, corrected.** This session hit a
+context-window compaction between turn ~18 and where turn 27 resumes: the
+running conversation was summarized by the platform, not by the
+assistant, before being handed back, and turns 19–26 were first logged
+below as reconstructions from that summary — accurate on every concrete
+fact but explicitly flagged as not verbatim. That flag prompted the user
+to ask, directly, whether compaction meant the underlying data was gone
+(see turn 28 below) — it wasn't: the platform still writes a full raw
+JSONL transcript to disk independent of what's in the assistant's active
+context, and the assistant located and read it back turn-by-turn. Turns
+19–25's assistant prose below is now the actual recovered text (verified
+against the raw transcript, not reconstructed) — user quotes were already
+verbatim in the first pass and are unchanged. Turn 26 genuinely has no
+recoverable assistant prose: the raw transcript confirms the assistant's
+response was still mid-tool-call (no completed text block) at the exact
+point compaction cut in, so "no verbatim text exists for this turn" is
+itself the accurate, verified statement, not a gap in the recovery.
+
+## 19 — User
+
+> You could help me with finding level shifter / analog switch macros in the harness or in others' contributions, if available.
+
+## 19 — Assistant
+
+*[Grepped `sg13cmos5l_ocd_chipalooza/netlist/schematic/openframe_user_project.spice`
+for subcircuit definitions; read `magic/analog_switch_array.mag` and
+`magic/chipalooza_frame.mag`; attempted a `web_fetch` of the
+`analog_switches` GitHub README (`raw.githubusercontent.com/...`), which
+returned empty content, same pattern as earlier in the session.]*
+
+Found real candidates, and better than I expected — Tim's own harness repo has actual designed-and-taped-out circuits for exactly this:
+
+**Level shifter — `level_shift` subcircuit**, extracted in `sg13cmos5l_ocd_chipalooza/netlist/schematic/openframe_user_project.spice` (line 1287): `.subckt level_shift in_n in_p out vdd vss`. It's already in productive use in that same netlist — `bias_generator_be0p`/`be1p` instantiate it to convert a digital `source_ena` bit into a 3.3 V-referenced enable for switching bias current sources (line 596/952: `x9[N] source_ena[N] net1[N] source_ena_b_3v3[N] avdd avss level_shift`). That is *precisely* the 1.2 V-control-to-3.3 V-analog crossing `TOP_LEVEL_MODULE.md` §4 flags as open — Tim already solved this exact problem once, for his own bias generator's enables.
+
+**Analog switch — `xgate` subcircuit** (line 1267): `.subckt xgate ena_b vdd in out vss ena` — a standard complementary transmission gate, `ena`/`ena_b` driven. Also a real **hard layout block**, `magic/analog_switch_array.mag`, instantiated in `chipalooza_frame.mag` — this is almost certainly the actual "analog switches" block from the harness PDF's block diagram, the one gated by `ana_route_sel` that connects `analog_bus[3:0]` to a slot.
+
+**Power switch — `power_stage` subcircuit** (line 110): `.subckt power_stage enable IOVDD_IN IOVSS DVSS DVDD IOVDD_OUT` — the actual `power_3v3_ena`/`power_1v2_ena` gating circuit from `user_project_control.v`, not just a black-box enable.
+
+**Two undownloaded submodule dependencies**, declared in `.gitmodules` but not checked out in this clone (no `dependencies/` folder present — `git submodule update --init` was never run here):
+- `sg13cmos5l_ocd_ip__analog_switches` — Tim's own repo, confirmed via its GitHub page: "Analog and power switch library for IHP SG13CMOS5L," with a real silicon note worth knowing before you use it — the first taped-out version has an *inverted* enable, later renamed `nenable` to make the polarity explicit.
+- `sg13cmos5l_ocd_ip__biasgen` — likely the source of the `bandgap`/`biasgen1`/`voltgen` hierarchy I found flattened in the netlist (bandgap reference, two iDACs, two voltage generators — this is what actually sits behind the harness's `ibias[1:0]`/`vbias` pins, and it's a real, fairly elaborate design, not a stub).
+
+If you want these as usable Xschem symbols rather than just netlist evidence, that needs `git submodule update --init` run from your own terminal (this sandbox can't write into that repo's `dependencies/`), or I can keep working from the flattened netlist directly. Your leaderboard link is still one I can't see — worth a quick look yourself for other contributors' proposals, since I only found Tim's own blocks.
+
+## 20 — User
+
+> In which repository and which directory thereof should I `git submodule update --init`?
+
+## 20 — Assistant
+
+*[Read `sg13cmos5l_ocd_chipalooza/.gitmodules`.]*
+
+Repository: `sg13cmos5l_ocd_chipalooza` — that's where `.gitmodules` lives (`/home/cmaier/EDA/sg13cmos5l_ocd_chipalooza/.gitmodules`), listing both submodules. Directory: the repo root itself, since that's where `.gitmodules` is and where Git looks for it by default.
+
+```sh
+cd ~/EDA/sg13cmos5l_ocd_chipalooza
+git submodule update --init dependencies/sg13cmos5l_ocd_ip__analog_switches dependencies/sg13cmos5l_ocd_ip__biasgen
+```
+
+Or just `git submodule update --init --recursive` from that same root — there are only the two entries in `.gitmodules`, so it pulls both. This is a normal clone (unlike the `_sudelbuecher` worktree's gitlink quirk), so plain `git` should work fine both from your terminal and, once it's populated, readable by me here too.
+
+## 21 — User
+
+> are there any differences between the independent analog switches and bias generators and their submodule version in ocd_chipalooza?
+
+## 21 — Assistant
+
+*[With the submodules now checked out (user ran the command from turn 20
+themselves), read git history/content in both
+`dependencies/sg13cmos5l_ocd_ip__analog_switches` and
+`dependencies/sg13cmos5l_ocd_ip__biasgen`.]*
+
+Real differences exist — this isn't a rhetorical worry, the submodules' own git history shows active redesign after `ocd_chipalooza` first vendored them in:
+
+**`analog_switches`** (pinned at `24a08a9`, which is that repo's own current tip — no lag against itself): the power switch went through at least two generations. The original `power_stage` used a pMOS waffle-pattern device with an *inverted* enable (renamed `nenable` for clarity); `power_stage2` replaced it with a standard fingered-device array, dropped resistance from whatever the waffle version measured down to **0.671 Ω**, and restored a sense-positive `enable`. A separate `power_stage1v2` variant was added specifically for the 1.2 V digital rail at **0.75 Ω**, explicitly to avoid the area cost of reusing the high-voltage switch there. On the analog-switch side: `analog_switch`, then smaller/faster variants (`analog_switch_small`, `analog_switch_med`), then dedicated `analog_pswitch_small` (p-side-only) specifically added for **the per-project `ibias` connection**, alongside a small CMOS switch for the **per-project `vbias` connection** — both under **< 5 Ω**. There's also a dedicated `sw_lvl_shift` cell, separate from the general-purpose `level_shift` I mentioned last time.
+
+**One concrete, checkable divergence**: the flattened top-level netlist I read earlier (`netlist/schematic/openframe_user_project.spice`) instantiates `power_stage` — the *original*, inverted-enable, higher-resistance cell — not `power_stage2`. That netlist is a snapshot from whenever it was last extracted, and may predate the redesign now sitting in the submodule.
+
+**One correction to what I told you last time**: `xgate` is defined in the **biasgen** submodule (`bias_generator_be0p`/`be1p` use it internally to switch bias-current taps), not in `analog_switches` — it's a general-purpose transmission gate, not necessarily *the* per-slot analog-bus switch. The real per-slot switch candidates are `analog_switch`/`_small`/`_med`/`analog_pswitch_small` in the `analog_switches` submodule.
+
+What I haven't confirmed and won't guess at: whether `chipalooza_frame.mag` (the actual harness layout, not the `openframe_user_project.spice` demo netlist) has been re-placed with `power_stage2`/`bandgap_v2`/`biasgen1`/`voltgen_v2` throughout, or still mixes generations — the top-level `.mag` only directly instantiates `analog_switch_array` (a locally-composed cell), with the rest nested a level or two deeper than a flat grep resolves cleanly. Fastest way to settle it for real: `grep -r "use " magic/*.mag` in your own container, or just open `chipalooza_frame.mag` in Magic and read the instance names directly.
+
+## 22 — User
+
+> If I want to include a bias generator, a level shifter, or an analog switch as dependent macro in the single2diff2single hierarchy, what's the best way for me to do this?
+
+## 22 — Assistant
+
+Best mechanism, following both the repo-comparison report's own recommendation and `ocd_chipalooza`'s own precedent for consuming this exact IP (its `dependencies/` + `addpath`/`source xschemrc` pattern):
+
+**1. Submodule under `dependencies/`, not `macros/`.** `macros/` in this repo means "design unit owned and built here" (inverter, counter — things this project draws, verifies, and signs off itself). These blocks are the opposite: silicon-precedented external IP you consume as-is. Mirror what `ocd_chipalooza` itself does:
+
+```sh
+git submodule add https://github.com/RTimothyEdwards/sg13cmos5l_ocd_ip__biasgen dependencies/sg13cmos5l_ocd_ip__biasgen
+git submodule add https://github.com/RTimothyEdwards/sg13cmos5l_ocd_ip__analog_switches dependencies/sg13cmos5l_ocd_ip__analog_switches
+```
+
+**2. Schematic level — what actually matters for tonight.** One line in `schematic/xschem/xschemrc`, same pattern already used for `inverter`/`counter`:
+
+```tcl
+source ../dependencies/sg13cmos5l_ocd_ip__biasgen/xschem/xschemrc
+source ../dependencies/sg13cmos5l_ocd_ip__analog_switches/xschem/xschemrc
+```
+
+That's the exact line `ocd_chipalooza`'s own `xschem/xschemrc` uses for the same two repos, so it's proven to work, not a guess. Once sourced, the symbols instantiate directly in the top-level `.sch` like any other macro: `C {sg13cmos5l_ocd_ip__biasgen1.sym} ...`, `C {sw_lvl_shift.sym} ...`, `C {analog_switch_small.sym} ...`. This alone gets you a real, simulatable schematic-level top level — no layout work needed for that.
+
+**3. Layout level — can wait.** Two separate, unrelated toolchain gaps here, worth knowing about now even if you defer them: Magic needs the dependency's `magic/` path added (mirror `ocd_chipalooza`'s own `scripts/layout_setup.tcl`: `addpath ../dependencies/<repo>/magic`) for DRC/LVS/PEX; separately, this repo's own layout is hand-drawn in **KLayout**, which pulls in macro GDS via `layout/<TOP>.klay.klib` bindings (currently just `inverter` → `macros/inverter/layout/inverter.gds`) — a new binding per block would be needed there, and I haven't checked whether the submodules ship a `.gds` directly or only `.mag` (needing a Magic export step first). Don't block tonight's schematic work on this.
+
+**One decision I'd flag rather than make for you**: which generation to pull in. `biasgen` has `biasgen1` and `biasgen2`/`bandgap_v2`/`voltgen_v2` coexisting; `analog_switches` has `power_stage`/`power_stage2`, `analog_switch`/`_small`/`_med`. Picking the newer, lower-resistance ones (`biasgen2`-family, `power_stage2`, `analog_switch_small`/`analog_pswitch_small`) is probably right, but worth naming as a deliberate choice in the review rather than an accident of whichever symbol you happened to click first.
+
+And separately from the mechanics: pulling Tim's own harness cells directly into this macro's hierarchy is itself worth saying out loud to him — it blurs "this macro's own IP" versus "harness-supplied resource" in a way that's exactly the boundary question this whole session has been circling. Good material for the peer-to-peer framing, not just a build-system detail.
+
+## 23 — User
+
+> ok i see this as a form of complication right now. first things first.
+> I'll change schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch to a placeholder for the actual mixed signal circuit, with black boxes.
+
+## 23 — Assistant
+
+Good call — cleanest path forward, and it's your own hands-on Xschem session doing it, not another blind text edit from here.
+
+For reference while you're in there, the black boxes per `TOP_LEVEL_MODULE.md`'s resolved boundary: S2D input buffer (`vin`→internal diff pair), D2S output buffer (internal diff pair→`vout`, class-AB), V<sub>CM</sub> reference (switchable pin/internal/infrastructure), gmC stage (filter/oscillator), and the bias generator (`vdd`/`vss`/`vbp`/`vbn`/`vbr`, already a real symbol at `macros/OgueyAebischerBias/schematic/xschem/OgueyAebischerBias.sym` if you want to drop the real one in rather than another black box). No scan chain block, per the earlier decision.
+
+If it'd help, I can draft plain placeholder `.sym` files for the four undesigned blocks (box + labeled pins, no schematic behind them, `type=subcircuit` so Xschem doesn't choke on the missing `.sch`) so you have symbols ready to instantiate rather than building them from scratch mid-edit — say the word. Otherwise I'll stay out of the way while you work.
+
+*(Note, added on recovery: this response still says "no scan chain block,
+per the earlier decision" — turn 24 is where the user pulled that back to
+open. Left as actually said, not smoothed over.)*
+
+## 24 — User
+
+> not sure about the scan chain block decision, but anyhow, I'll gut the schematic, then let you adjust the pins according to user_project_wrapper_3a.v
+
+## 24 — Assistant
+
+Noted — scan chain's back to open, not decided; I'll stop presenting it as settled in anything I touch from here.
+
+Standing by for the gutted file. One thing worth flagging before you start, so it doesn't surprise either of us partway through: the top-level `.sym`'s pins today are physically tied to the floorplan GDS this repo builds against — `check-boundary`, DRC, LVS and PEX all expect the `.sym`/`.sch` port list to match `floorplan/*.gds`'s actual pin geometry (`analog_0-2`, `ui_in[7:0]`, `uo_out[7:0]`, `uio_*[7:0]`, `clk`/`ena`/`rst_n`, `VPWR`/`VAPWR`/`VGND` — fixed pin count and position). `user_project_wrapper_3a.v` has a different pin count and shape entirely (`dig_in[23:0]`/`dig_out[11:0]` alone is 3x the digital I/O this floorplan has room for). So "adjust the pins to match `user_project_wrapper_3a.v`" can mean two different-sized jobs: relabeling/documenting the existing physical pins with their real intended roles (fast, what I did on the testbench), or actually redrawing the floorplan's pin geometry in KLayout to match the harness's real port count (a layout-level change, not a text edit, and not something I can do blind from here). Worth knowing which one you want before I touch anything once it's gutted.
+
+## 25 — User
+
+> then the idea is to propagate these changes top down.
+
+## 25 — Assistant
+
+Understood — top-down for real, not just relabeling: `.sym` boundary changes to genuinely match `user_project_wrapper_3a.v`, then that propagates into the testbench, `submission.yaml`, and the CACE `pins:` section, all of which currently assume the old floorplan pin set.
+
+One scope note so we're aligned on what "propagate" reaches today versus later: the `.sym`/`.sch`/testbench/`submission.yaml`/CACE layer is all text/schematic-level — genuinely doable now. The floorplan GDS itself (`floorplan/*.gds`, and this repo's own `layout/<TOP>.klay.gds`/`.gds`) is physical layout — redrawing pin geometry there to actually match the new port list is real KLayout work, not something today's edits reach, so `check-boundary`/DRC/LVS/PEX won't pass against it until that happens separately. That's fine as a known follow-up, not a blocker for tonight — just flagging it so "propagated top down" doesn't quietly imply the physical build is caught up too.
+
+Standing by for the gutted `.sch`.
+
+## 26 — User
+
+> schematic is gutted. now change the pins to the pins from sudelbuecher/description/s2d_d2s_pinbuffers and reconcile with user_project_wrapper_3a.v.
+> Complain if there aren't enough digital pins in the user_project_wrapper. 
+> There is some sloppiness in the s2d_d2s proposal ...
+
+## 26 — Assistant (no completed text block exists — see fidelity note above)
+
+*[Read the user-gutted `sg13cmos5l_cm_ip__single2diff2single.sch`: the
+inherited `inverter` component instances were gone, but every old
+`ipin`/`opin`/`iopin` port declaration (the eFPGA-template set —
+`rst_n`, `clk`, `ena`, `uio_in[7:0]`, `ui_in[7:0]`, `uio_oe[7:0]`,
+`uio_out[7:0]`, `uo_out[7:0]`, `VPWR`/`VGND`/`VAPWR`, `analog_0-2`) was
+still present, plus a handful of now-dangling `lab_pin.sym` stubs left
+over from the deleted inverter wiring. Compaction cut in here — the raw
+transcript confirms the reconciliation analysis was still in-progress
+(thinking/tool-call activity, no `text`-type content block ever
+completed for this turn), so there is nothing verbatim to recover for
+turn 26's assistant side. It genuinely resumes fresh in turn 27.]*
+
+---
+## 27 — User
+
+*[Continuation after compaction — no new user message; the assistant
+resumed the turn-26 task directly per the resumption instruction, then
+the user sent one message mid-turn, surfaced by the platform alongside a
+tool result:]*
+
+> What does "Compacting our converstation so we can keep chatting" mean and why does it get stuck at 95%?
+
+## 27 — Assistant
+
+*[Rewrote `schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch`
+(`Write`, full replacement): removed all old `ipin`/`opin`/`iopin`
+declarations and the orphaned `analog_0`/`analog_1`/`analog_2`/`ui_in[0]`
+stub nets/`lab_pin.sym`s left from the deleted inverter, replaced with 22
+reconciled boundary pins in a single column at x=500 — same simple
+per-pin-component style the gutted file already used, just a new list:
+5 power (`vdd_3v3`, `vdd_1v2`, `vss_3v3`, `vss_1v2`, `vssio`, all
+`iopin`), `ena`/`clk` (`ipin`), 7 digital control bits (`outbuf_en`,
+`inbuf_en`, `filter_en`, `vdiff_en[1]`, `vdiff_en[0]`, `vcmsel[1]`,
+`vcmsel[0]`, all `ipin`), 3 bias pins (`ibias`, `igmc`, `vbias`, `ipin`),
+and the analog trio (`vin` `ipin`, `vout` `opin`, `vcm` `iopin`) plus
+`vdiffp`/`vdiffn` (`iopin`). Title text block states the reconciliation
+source and the two open decisions (scan chain reopened; no `reset` pin,
+by design, not omission).
+
+Rewrote `schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sym`
+(`Write`, full replacement) to match: boundary rectangle ±160×±420,
+13 inputs on the left edge (all `ipin`-side signals above except the
+5 power pins), `vout` alone on the right edge as the sole `dir=out`, and
+8 `dir=inout` pins (`vcm`, `vdiffp`, `vdiffn`, the 5 power pins) filling
+out the right edge below it, each with a `B 5 ...` pin-stub box and a
+`T {...}` text label. Title text repeats the reconciliation-source and
+open-decisions note from the `.sch`.
+
+Answered the user's mid-turn compaction question directly (what
+compaction is, why 95% often just means the summary generation step is
+still running rather than actually stuck, what to do if it truly stalls),
+then continued the same turn.
+
+Presented the reconciliation analysis and the two things asked for
+explicitly:
+
+**Digital pin count — no shortage.** At most 7 of `dig_in[23:0]`'s 24
+bits are needed for direct-wired control (`outbuf_en`, `inbuf_en`,
+`filter_en`, `vdiff_en[1:0]`, `vcmsel[1:0]`); `dig_out[11:0]` isn't
+forced to carry anything by the spec at all with the scan chain dropped.
+The actual gap: **no `reset` pin exists on `user_project_wrapper_3a.v`**
+at all — chip-global via housekeeping SPI only, not a per-slot port — a
+missing signal category, not insufficient width. Did not fabricate a
+pin for it; said so in both the `.sch`/`.sym` header comments and (already
+present from an earlier turn) `TOP_LEVEL_MODULE.md` §2's paragraph right
+after the pin table.
+
+**Sloppiness in `sudelbuecher/description/s2d_d2s_pinbuffers.md`:**
+`vbias` and `vcm` both labeled "common mode voltage" in separate,
+uncross-referenced tables (ambiguous whether `vcm`'s "infrastructure"
+mode just *is* `vbias`); conceptual overlap between the three single-bit
+enables (`outbuf_en`/`inbuf_en`/`filter_en`) and `vdiff_en[1:0]`'s
+4-state enum, undisambiguated in the source doc; broken markdown
+(`g<sub>m<\sub>C`) in test items 5–7; near-verbatim duplication of the
+full pin tables between the main "Circuit pinout" section and the later
+"standalone breakout" section.
+
+**Final reconciled boundary (22 pins)**, as now built into the `.sch`/
+`.sym`: 5 power (1:1 to the harness), `vin`/`vout`/`vcm` → `analog_pin[2:0]`
+(kept as meaningful circuit names on this macro's own symbol, not
+renamed to the wrapper's generic bus-slice names — the wrapper does that
+binding at instantiation, not this macro), `vdiffp`/`vdiffn` → 2 of
+`analog_bus[3:0]` (2 spare, unused), `ibias`/`igmc` → `ibias[1:0]`,
+`vbias` → harness `vbias`, `ena` → harness `enable`, `clk` → harness
+`clk` (gated availability noted, unchanged from `TOP_LEVEL_MODULE.md`
+§2.2), and the 7-bit digital control set above.
+
+Propagated top-down, per turn 25's confirmed plan:
+
+- **`TOP_LEVEL_MODULE.md`** — corrected the scan-chain status everywhere
+  it was previously written as "decided, dropped": §1's block table row,
+  §2.3's heading and decision paragraph (now "reopened, not decided," with
+  an explicit status-correction note explaining why), and §7 item 2. The
+  reasoning for dropping it is kept as the case *for*, not the verdict.
+- **`submission.yaml`** — `analog-pins` comment rewritten to cite the real
+  reconciliation source instead of the old "settled" framing; the
+  `long-description`'s scan-chain bullet reworded to "direct dig_in wiring,
+  reopened" instead of asserting a scan chain exists; the "how it is
+  tested" paragraph updated to drop the scan-chain/USB-pattern-generator
+  framing (this macro has no standalone breakout — every pin connects to
+  the harness — so testing goes through the harness's own housekeeping
+  SPI / `dig_in` / `dig_out`, not an independent bench setup).
+- **`verification/cace/sg13cmos5l_cm_ip__single2diff2single.yaml`** —
+  full rewrite (`Write`): `pins:` section replaced with the 22 reconciled
+  boundary pins (plus an explicit no-`rst_n` note), `default_conditions`
+  and every parameter group's `conditions:`/descriptions renamed from
+  `vdd`/`vapwr`/`analog_1`/`analog_2`/`VAPWR` to `vdd_1v2`/`vdd_3v3`/
+  `vout`/`vcm`, voltage ranges corrected to real domain values (1.1–1.5V
+  for `vdd_1v2`, 3.0–3.6V for `vdd_3v3`, replacing the old flat 1.4–1.6V
+  guess). `dc_connectivity` remains the only group meant to produce real
+  numbers today; the other five stay structural placeholders.
+- **Testbench `sg13cmos5l_cm_ip__single2diff2single_tb_tran.sch`** —
+  text-only again, deliberately: title and the `NGSPICE` pin-contract
+  comment block rewritten to document the full old→new mapping and state
+  plainly that **`x1`'s actual wiring has NOT been rewired** — the new
+  `.sym`'s pin geometry is structurally different from the old one (22
+  pins at new coordinates vs. ~90 at the old ones), so the existing nets
+  in this testbench no longer land on real pins of `x1`. This needs
+  hands-on Xschem work, the same division of labor as every other
+  structural edit this session — not something to do blind from this
+  sandbox.
+
+Appended this entry to the chat log (turns 19–27, with the fidelity note
+above for 19–26).]*
