@@ -6,8 +6,9 @@ suite — diagnosing why its PSRR and matching are poor, deriving a systematic
 sizing method, and drawing an annotated schematic of the trouble spots.
 
 - **Repo:** `sg13cmos5l_cm_ip__single2diff2single`
-- **Branch:** `cace` (checked out throughout; the user committed between
-  turns 3 and 4, and handles all `git add`/`commit` himself)
+- **Branch:** `cace` for turns 1–7, then `oguey` from turn 8 on (the user
+  committed between turns 3 and 4 and again after turn 7, and handles all
+  `git add`/`commit` himself)
 - **Assistant:** Claude Opus 5 (Cowork), the "stronger model" session
   `HANDOVER.md` was written for
 - **Second session:** a Claude Sonnet 5 session ran in parallel on the same
@@ -407,16 +408,198 @@ Three untracked things in the design worktree are mine:
 
 ---
 
+## 8 — User
+
+> check if I released the git index.lock you couldn't, and I left the git repository including worktree in a reasonably tidy state.
+
+## 8 — Assistant
+
+*[tool calls: an audit run entirely with `git --no-optional-locks` so as not to recreate the very lock being checked — `find` for `*.lock` and for in-progress markers (`MERGE_HEAD`, `rebase-*`, `sequencer`, …), `worktree list --porcelain`, `status -sb` in both worktrees, `log --oneline`, `branch -vv`, then direct `cat` of `.git/worktrees/*/gitdir` and of the worktree's own `.git` file to test the `prunable` flag against evidence, plus `show --stat` on the three new commits and a `.gitignore` grep.]*
+
+Both checks pass. Lock is gone, everything of mine is committed and pushed.
+
+```
+.git/*.lock                    none
+MERGE_HEAD / rebase-* / etc.   none
+oguey          d37e598  == origin/oguey     (working tree: untracked only)
+sudel_buecher  1300844  == origin/sudel_buecher   clean
+doc/scripts                    gone
+```
+
+`d37e598` took the `doc/` files, `4409987` the transcript + `ref/` + `pix/`, `1300844` the duplicate under `sudelbuecher/transistor_only_reference_sizing/`. All six branches match their upstreams.
+
+**One thing you should *not* act on.** From in here, `git worktree list` flags the `_sudelbuecher` worktree as `prunable — gitdir file points to non-existent location`. That's a false alarm caused by my sandbox, and I checked the files rather than trusting it: the admin dir `chatlog_sg13cmos5l_cm_ip__single2diff2single` exists, its `gitdir` points at `/home/cmaier/EDA/..._sudelbuecher/.git`, and that `.git` file points back at the same admin dir. Consistent both ways. The path simply doesn't exist inside my mount namespace.
+
+**But the same trap is real in your container.** Those links are absolute host paths, and IIC-OSIC-TOOLS mounts the tree at `/foss/designs/...`. So from inside the container the `_sudelbuecher` worktree will look broken in exactly this way, and `git worktree prune` there would silently deregister a perfectly good worktree. Do git work on `_sudelbuecher` from the host shell only. If it ever does get pruned, `git worktree repair` from the host in the main repo fixes both ends. Probably worth a line in CLAUDE.md §5 next to the "never `git switch sudel_buecher` in the main directory" warning — it's the same class of foot-gun.
+
+Three tidiness items left, none urgent:
+
+**`.gitignore` still only covers `inverter`.** Lines 18–21 have no `OgueyAebischerBias` counterpart, so `_runs/`, `_docs/` and `netlist/` under its `verification/cace/` are still ~1650 files one `git add -A` away:
+
+```
+/macros/OgueyAebischerBias/verification/cace/_runs
+/macros/OgueyAebischerBias/verification/cace/_docs
+/macros/OgueyAebischerBias/verification/cace/netlist
+/macros/OgueyAebischerBias/verification/cace/templates/simulations
+```
+
+**Untracked clutter sitting inside a tracked directory on `oguey`**: `sudelbuecher/pix/`, `sudelbuecher/ref/`, `sudelbuecher/2026-08-30_i_claude_rename.md`, `files.zip`, `files_corrected.zip`, plus `save_from_claudes_fuckup/` at the root. The first three now duplicate what lives properly in `_sudelbuecher` under `sudelbuecher/chatlog/`. Because `sudelbuecher/` is a tracked directory on the design branches, these are the ones most likely to get swept in by accident.
+
+**Neither committed copy of `trouble_spots.py` can actually be re-run.** It does `sys.path.insert(0, 'scripts')` for `sch_netlist.py`, which isn't in either copy and comes from the session-provided `analog-schematic` skill — it may not exist in a future session. Either vendor that file (check its licence first) or add a line to the script's docstring naming the dependency. Right now the header explains the circuit but not what the script needs to run.
+
+---
+
+## 9 — User
+
+> walk me through the trouble_spots.py fix or at least workaround. Which git branch or worktree should I be in to add and commit the fix?
+
+## 9 — Assistant
+
+*[tool calls: searched the skill tree for `LICENSE`/`COPYING`/`NOTICE` and for SPDX or copyright lines, and compared against the sibling skills; confirmed the two `trouble_spots.py` copies are byte-identical and read the head/tail of the live one; four `Edit` calls; then a three-part test — failure path from an unrelated cwd, success path with `SCH_NETLIST_DIR` set, and a `cmp` of the regenerated SVG/PNG against the committed ones — plus `py_compile` and a `git status` to confirm the diff is one file.]*
+
+### The licence finding, which decides the fix
+
+I checked before recommending: `analog-schematic` ships **no `LICENSE` file and no SPDX or copyright line anywhere** — not in `SKILL.md`, `scripts/sch_netlist.py`, `tests/golden.py`, or `references/conventions.md`. Its sibling skills (`pdf`, `pptx`, `xlsx`, `docx`, `skill-creator`) each ship a `LICENSE.txt`. This one doesn't.
+
+Unstated terms means no permission granted, so **don't vendor it** — not into a Chipalooza submission that carries SPDX headers throughout and whose own `ref/README.md` says "index, do not copy". That rules out the clean fix and leaves the workaround, which is what I've applied.
+
+### What I changed in `macros/OgueyAebischerBias/doc/trouble_spots.py`
+
+Three things, 54 lines added, no change to the drawing itself:
+
+**1. The dependency is now declared and resolved explicitly.** `sys.path.insert(0, 'scripts')` pointed at a directory that has never existed. Now it looks in `$SCH_NETLIST_DIR`, then `<script dir>/scripts`, then `./scripts`, and if none has `sch_netlist.py` it exits 1 with instructions instead of a bare `ImportError`:
+
+```
+$ python3 trouble_spots.py
+sch_netlist.py not found.
+  It is the renderer from the `analog-schematic` Claude skill and is
+  deliberately not committed here (see this file's docstring).
+  Point SCH_NETLIST_DIR at the directory that contains it:
+    SCH_NETLIST_DIR=.../skills/analog-schematic/scripts \
+        python3 trouble_spots.py
+```
+
+The docstring gained a "Running it" section recording *why* the file isn't vendored, so the next person doesn't have to re-derive the licence reasoning.
+
+**2. It writes the files it's supposed to write.** This was the bigger bug, and I'd missed it: the script produced `oab.svg` / `oab_annotated.svg` / `oab_annotated.png`, not `trouble_spots.*`. Re-running it never regenerated the committed artifacts. Output now goes to `trouble_spots.svg` / `.png` next to the script, resolved from `__file__` so the working directory doesn't matter, with the intermediate plain render in a tempfile that gets cleaned up. Missing `cairosvg` now writes the SVG and skips the PNG with a note, rather than dying.
+
+**3. SPDX header** matching `reference.yaml` — `2026 Christoph Maier`, `Apache-2.0 WITH SHL-2.1`. Change the attribution if you'd rather it read differently; I picked the repo's existing convention.
+
+Verified: fails cleanly without the env var, succeeds from an unrelated cwd with it, DRC still clean, and **the regenerated SVG and PNG are byte-identical to the committed ones** — so your diff is one file:
+
+```
+ M macros/OgueyAebischerBias/doc/trouble_spots.py     54 insertions(+), 7 deletions(-)
+```
+
+### Where to commit it
+
+**`~/EDA/sg13cmos5l_cm_ip__single2diff2single`, branch `oguey`** — already checked out, nothing to switch:
+
+```sh
+cd ~/EDA/sg13cmos5l_cm_ip__single2diff2single
+git add macros/OgueyAebischerBias/doc/trouble_spots.py
+git commit -m "macros/OgueyAebischerBias/doc/trouble_spots.py : declare the sch_netlist dependency, write the files it names"
+```
+
+**Leave the `sudel_buecher` copy alone** — my recommendation. `sudelbuecher/transistor_only_reference_sizing/doc/trouble_spots.py` is byte-identical today, but that branch is a provenance log: it should record what was actually produced on 2026-09-04, not track later maintenance. If you'd rather keep them in step, it's a second, independent commit in the `_sudelbuecher` worktree — from the **host shell**, not inside the container, per the path trap from before. No cherry-pick: `sudel_buecher` is an orphan branch, so the two trees are unrelated and you'd just copy the file across.
+
+One more piece of litter from me: `doc/__pycache__/` from my byte-compile check. It's covered by `.gitignore` lines 9 and 12 so it can't reach the history, but I can't delete it — `rm -rf macros/OgueyAebischerBias/doc/__pycache__` when convenient.
+
+---
+
+## 10 — User
+
+> there's also a .submission.yaml.swp file hanging around. What's that?
+
+## 10 — Assistant
+
+*[tool calls: `find` for swap files in both worktrees, `file` and `strings` on the header, `stat` for mtimes, `git check-ignore`, and a `comm` of the swap's text blocks against the saved `submission.yaml` to test for unsaved content.]*
+
+A Vim swap file — and not one of mine; I've run no editor.
+
+```
+Vim swap file, version 9.1, pid 27803, user 1000, host 6d5151b7f97c,
+file /foss/designs/sg13cmos5l_cm_ip__single2diff2single/submission.yaml
+```
+
+Two things in that header place it: `/foss/designs/...` is the container's mount point, and `6d5151b7f97c` is a 12-hex Docker container ID, not your host name. So it's a `vim submission.yaml` started **inside IIC-OSIC-TOOLS**.
+
+Timeline:
+
+| | |
+|---|---|
+| `submission.yaml` last saved | 01:55:57 |
+| swap file created/touched | 14:02:37 |
+| my `git status` that did *not* see it | ~13:25 |
+| now | 14:30 |
+
+So the session started in the last half hour, after my earlier tidiness check. Vim deletes its swap on a clean `:q`, so its presence means either that Vim is **still open**, or it died without cleaning up — killed, terminal disconnected, or the container stopped.
+
+**Nothing is at risk in it.** I compared the text blocks in the swap against the saved `submission.yaml`: the only strings that appear in the swap and not in the file are the two header fields (the container hostname and the original path). The buffer matches what's on disk, so there are no unsaved edits to recover. That's a strong indication rather than a proof — `vim -r submission.yaml` is the definitive check if you want it — but I'd not expect it to turn anything up.
+
+**Before deleting, check it isn't live.** From inside the container:
+
+```sh
+ps -p 27803 -o pid,tty,cmd
+```
+
+If that shows a Vim, it's your open session — leave the swap alone, it'll clean itself up on `:q`. If the container has been restarted since, the pid means nothing. If nothing comes back:
+
+```sh
+rm ~/EDA/sg13cmos5l_cm_ip__single2diff2single/.submission.yaml.swp
+```
+
+Worth doing while you're in `.gitignore` anyway: there's no swap pattern in it, so this 16 KB binary is currently listed as untracked and is `git add -A` bait, same category as the `_runs/` directories. Add:
+
+```
+*.sw[a-p]
+*~
+```
+
+---
+
+## 11 — User
+
+> thanks, identified the open gvim in the docker container and closed it.
+> update your verbatim chat log. then I'll switch context to your Sonnet 5 alter ego for a while.
+
+## 11 — Assistant
+
+*[tool calls: read this file's headings, header block and closing section, then three `Edit` calls — the branch bullet, this block of turns 8–11, and the rewritten standing-items list below.]*
+
+Log updated through this turn. The swap file was live after all — a gvim open in the container, now closed, so it will have cleaned itself up on exit and needs no `rm`.
+
+Handing over: the standing-items list below is the whole of what I'd tell a successor. The two things I'd flag hardest are that my first PSRR diagnosis in turn 3 was wrong and stands corrected in turn 4 — read them in that order, not in isolation — and that the figure in `pix/` is my hand transcription of `reference.spice`, DRC-clean but not machine-checked against the netlist.
+
+---
+
 ## Standing items at the end of this session
 
 Carried forward for whoever picks this up:
 
-1. **The lock.** `rm -f .git/index.lock` in the design worktree.
-2. **Four spec/threshold fixes in `reference.yaml` and `reference_tb_tran.sch`**, none of them design work: `Ibias_val` min 200 nA (circuit does 47 nA), `Iq_enabled` typ 10 µA (338 nA), `t_startup` typ 20 µs (242 ns), and the `t_startup` threshold itself, which currently fires on VDD-ramp coupling at 0.8 V rather than on the loop starting. Until that last one is fixed there is no start-up measurement at all.
-3. **Cascode M13, M14, M10** — the highest-return change, 24 → ~50 dB expected.
-4. **×100 area on M10–M14**, and consider raising K from 16 to 64.
-5. **The one unmeasured quantity that still matters**: the inversion coefficient. If M11 sits near IC ≈ 1 the `ΔVgs = n·U_T·ln K` relation the whole topology rests on is not holding. A gm/I_D sweep settles it, and also replaces the estimated `I_spec□` and the `gm/I_D` assumed in the `A_VT` extraction.
-6. **`ibias_nom` in `reference_tb_dc_mm.sch`** defaults to `4.665e-8` and goes stale the moment sizing changes.
-7. **`save_from_claudes_fuckup/`** is still untracked in the design worktree.
+### Design work
+
+1. **Four spec/threshold fixes in `reference.yaml` and `reference_tb_tran.sch`**, none of them design work but all of them blocking a meaningful sign-off: `Ibias_val` min 200 nA (circuit does 47 nA), `Iq_enabled` typ 10 µA (338 nA), `t_startup` typ 20 µs (242 ns), and the `t_startup` threshold itself, which currently fires on VDD-ramp coupling at 0.8 V rather than on the loop starting. Until that last one is fixed there is no start-up measurement at all.
+2. **Cascode M13, M14, M10** — the highest-return change, 24 → ~50 dB expected. `vbr` ≈ 1.0 V and `vbn` ≈ 0.61 V are already available as cascode gates and there is headroom at 3.3 V.
+3. **×100 area on M10–M14**, and consider raising K from 16 to 64 (vres 93 → 140 mV, 1.5× on every mismatch term, paid in branch current rather than area).
+4. **The one unmeasured quantity that still matters**: the inversion coefficient. If M11 sits near IC ≈ 1 the `ΔVgs = n·U_T·ln K` relation the whole topology rests on is not holding. A gm/I_D sweep settles it, and also replaces the estimated `I_spec□` and the `gm/I_D` assumed in the `A_VT` extraction.
+5. **`ibias_nom` in `reference_tb_dc_mm.sch`** defaults to `4.665e-8` and goes stale the moment sizing changes.
+
+### Repository hygiene
+
+6. **`.gitignore` has no `OgueyAebischerBias` counterpart to lines 18–21**, so `_runs/`, `_docs/` and `netlist/` under its `verification/cace/` — about 1650 generated files — are one `git add -A` from the history. No swap-file pattern either (`*.sw[a-p]`, `*~`).
+7. **Untracked clutter inside the tracked `sudelbuecher/` directory on `oguey`**: `sudelbuecher/pix/`, `sudelbuecher/ref/`, `sudelbuecher/2026-08-30_i_claude_rename.md`, `files.zip`, `files_corrected.zip`, plus `save_from_claudes_fuckup/` at the root. The first three duplicate what now lives properly in this worktree under `sudelbuecher/chatlog/`.
+8. **`git worktree prune` must never be run from inside the container.** The worktree links are absolute host paths (`/home/cmaier/EDA/...`) and IIC-OSIC-TOOLS mounts the tree at `/foss/designs/...`, so `_sudelbuecher` looks prunable there and would be silently deregistered. Host shell only; `git worktree repair` from the host recovers it. Worth adding to CLAUDE.md §5 beside the existing `git switch sudel_buecher` warning.
+
+### Provenance caveats for a successor
+
+9. **Read turns 3 and 4 in that order.** Turn 3's diagnosis (DIBL-limited mirrors; start-up leakage) was wrong on both counts and is retracted in turn 4 on the evidence of `Leg_matching` typ = +5.568 % and `Iq_disabled` = 66 pA. Turn 3 is kept because the retraction is the instructive part, not because its conclusions stand.
+10. **The figure in `pix/` is a hand transcription** of `reference.spice` into the `analog-schematic` skill's netlist language. Its DRC proves no pin is floating and no bulk untied; nothing checks it against the real netlist. A wrong connection would be the transcription's fault.
+11. **`trouble_spots.py` needs `sch_netlist.py`**, which is deliberately not committed anywhere — the skill ships with no licence statement. Set `SCH_NETLIST_DIR` to re-render. The committed SVG/PNG are the deliverable; the script is the record.
+12. **Numbers to distrust until re-measured**: `A_VT ≈ 5–7 mV·µm` (assumes an unverified `gm/I_D` of 15–20) and `I_spec□ ≈ 200 nA/□` (estimated from `t_ox`, never extracted). Everything else quoted in this transcript came from the CACE runs.
+
+### Handover
+
+13. The user is moving to the parallel **Claude Sonnet 5** session next. Per `HANDOVER.md` §5 the division of labour has been: Opus in `schematic/xschem/*.sch` and `verification/cace/templates/*.sch`, Sonnet in `README.md` / `submission.yaml` / the CACE `.yaml`. Items 1 and 5 above are yaml edits and therefore Sonnet's; items 2–4 are schematic work.
 
 
