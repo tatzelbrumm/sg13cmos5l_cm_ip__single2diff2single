@@ -65,7 +65,10 @@ only_toplevel=false
 value="
 .include CACE\{DUT_path\}
 .temp CACE\{temp\}
-.options savecurrents klu method=gear reltol=1e-4 abstol=1e-15 gmin=1e-15 SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
+* ngspice's .noise analysis does not support the KLU solver (errors with
+* Noise simulation is not yet supported with option KLU), unlike every
+* other analysis type used across these testbenches -- sparse instead, here only.
+.options savecurrents sparse method=gear reltol=1e-4 abstol=1e-15 gmin=1e-15 SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 .option warn=1
 .nodeset v(vbp)=200m
 *
@@ -96,7 +99,7 @@ value="
 .lib cornerRES.lib res_CACE\{corner_r\}
 "}
 C {reference.sym} 360 -300 0 0 {name=x1}
-C {devices/vsource.sym} 180 -210 0 1 {name=VDD value=CACE\{vdd\}}
+C {devices/vsource.sym} 180 -210 0 1 {name=VDD value="dc CACE\{vdd\} ac 1"}
 C {devices/gnd.sym} 180 -120 0 0 {name=l1 lab=0}
 C {devices/vsource.sym} 260 -210 0 1 {name=Voff value=0}
 C {devices/lab_wire.sym} 480 -320 0 0 {name=l2 lab=vbp}
