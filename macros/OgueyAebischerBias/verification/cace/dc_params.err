@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/dist-packages/cace/parameter/parameter.py", line 377, in run
+    self.implementation()
+  File "/usr/local/lib/python3.12/dist-packages/cace/parameter/parameter_ngspice.py", line 857, in implementation
+    self.makeplot(
+  File "/usr/local/lib/python3.12/dist-packages/cace/parameter/parameter.py", line 1045, in makeplot
+    minimum = float(value)
+              ^^^^^^^^^^^^
+ValueError: could not convert string to float: '200n'
