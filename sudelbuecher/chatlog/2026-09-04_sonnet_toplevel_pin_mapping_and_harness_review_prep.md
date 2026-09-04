@@ -817,3 +817,35 @@ before I touch it further.
 ## 17 — Assistant
 
 *[This entry. Appended turns 16–17 to this same file.]*
+
+---
+
+## 18 — User
+
+> the xschem schematic looks (and feels) like nothing changed at all.
+> As proof-of-concept, we should populate the top level schematic with some macros ... functional blocks if needs be.
+>
+> Update your chat log while I look for candidates.
+
+## 18 — Assistant
+
+*[This entry. No other tool calls this turn — the user asked specifically
+for the log update while they search for candidate macros/blocks
+themselves, so the schematic-population work is deliberately not started
+yet, pending what they bring back.]*
+
+Worth confirming for the record rather than assuming: "looks like nothing
+changed" is consistent with what turn 16 actually did, not a sign
+something broke. All three testbench edits were text inside existing
+elements — the title string and the contents of the `NGSPICE`
+`code_shown` block's `value=` property — with zero new components, wires,
+or moved geometry. Xschem's canvas view shows exactly what it showed
+before unless you open that specific code block's property editor or
+zoom into the title text; nothing about the visual schematic diagram was
+touched, deliberately, given no way to verify a structural edit renders
+correctly from this sandbox.
+
+The actual ask underneath — populate the top-level schematic with real
+block instances (or functional/behavioral placeholders) instead of the
+inherited `inverter` cells — is the CLAUDE.md §7 teardown work proper,
+not another testbench tweak. Standing by for the candidates.
