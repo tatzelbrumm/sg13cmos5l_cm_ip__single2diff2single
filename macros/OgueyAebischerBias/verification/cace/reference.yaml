@@ -122,13 +122,13 @@ parameters:
       Ibias_val:
         display: Core reference current
         description: Core branch current, read from the schematic's own Vi1 ammeter (x1.xbias.vi1)
-        unit: A
+        unit: nA
         minimum:
-          value: 2e-7
+          value: 200
         typical:
           value: any
         maximum:
-          value: 1e-6
+          value: 1000
     tool:
       ngspice:
         template: reference_tb_dc.sch
@@ -337,23 +337,23 @@ parameters:
       Iq_enabled:
         display: Quiescent supply current, enabled
         description: 'TODO: same testbench, measure i(VDD) with disable low'
-        unit: A
+        unit: uA
         minimum:
           value: any
         typical:
-          value: 1e-5
+          value: 10
         maximum:
-          value: 2e-5
+          value: 20
       Iq_disabled:
         display: Quiescent supply current, disabled
         description: 'TODO: same testbench, measure i(VDD) with disable high'
-        unit: A
+        unit: nA
         minimum:
           value: any
         typical:
-          value: 1e-8
+          value: 10
         maximum:
-          value: 2e-8
+          value: 20
     tool:
       ngspice:
         template: reference_tb_tran_disable.sch   # TODO: does not exist yet

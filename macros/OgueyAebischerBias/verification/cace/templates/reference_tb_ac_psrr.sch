@@ -14,7 +14,7 @@ positive number is good rejection. disable held low (enabled).
 
 The .nodeset is the same hint used in reference_tb_dc.sch: without it the
 op point ngspice finds before the AC sweep may be the degenerate
-zero-current solution, and the AC result would be meaningless.} 400 -290 0 0 0.3 0.3 {}
+zero-current solution, and the AC result would be meaningless.} 510 -290 0 0 0.3 0.3 {}
 N 180 -140 180 -120 {lab=0}
 N 420 -320 480 -320 {lab=vbp}
 N 420 -300 480 -300 {lab=vbn}

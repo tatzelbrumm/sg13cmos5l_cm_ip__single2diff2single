@@ -5,9 +5,9 @@ V {}
 S {}
 F {}
 E {}
-T {Template Testbench for output-current noise - OgueyAebischerBias reference} 120 -890 0 0 0.5 0.5 {}
+T {Template Testbench for output-current noise - OgueyAebischerBias reference} 120 -1030 0 0 0.5 0.5 {}
 T {H. J. Oguey and D. Aebischer, “CMOS current reference without resistance,”
-IEEE J. Solid-State Circuits, vol. 32, no. 7, pp. 1132-1135, Jul. 1997} 400 -140 0 0 0.3 0.3 {}
+IEEE J. Solid-State Circuits, vol. 32, no. 7, pp. 1132-1135, Jul. 1997} 210 -120 0 0 0.3 0.3 {}
 T {How the current noise is measured
 ---------------------------------
 ngspice's .noise can only take a VOLTAGE as its output, so the mirrored
@@ -29,7 +29,7 @@ replica sizing are visible in one place.
 A plain resistor cannot be used instead of the CCVS: at ~50 nA the
 device's own noise current is ~0.1 pA/rtHz, so any resistor small enough
 not to disturb the drain node would swamp the measurement with its own
-thermal noise.} 400 -430 0 0 0.3 0.3 {}
+thermal noise.} 770 -520 0 0 0.3 0.3 {}
 T {What is reported
 ----------------
 Ibias_noise is the SPOT noise density at f_spot (default 1 Hz), in
@@ -44,7 +44,7 @@ variable for the onoise_total line below.
 
 ngspice reports onoise_spectrum as a density (A/rtHz here, given the
 1 V/A CCVS). If your build returns a power density instead, the values
-will look absurdly small - wrap the expression in sqrt().} 400 -730 0 0 0.3 0.3 {}
+will look absurdly small - wrap the expression in sqrt().} 770 -800 0 0 0.3 0.3 {}
 N 180 -140 180 -120 {lab=0}
 N 420 -320 480 -320 {lab=vbp}
 N 420 -300 480 -300 {lab=vbn}
@@ -59,7 +59,7 @@ N 260 -280 260 -240 {lab=#net1}
 N 360 -360 360 -340 {lab=#net2}
 N 180 -360 360 -360 {lab=#net2}
 N 180 -360 180 -240 {lab=#net2}
-C {devices/code_shown.sym} 20 -670 0 0 {name=NGSPICE
+C {devices/code_shown.sym} 20 -880 0 0 {name=NGSPICE
 simulator=ngspice
 only_toplevel=false
 value="
@@ -88,7 +88,7 @@ let Ibias_noise = 1e9 * onoise_spectrum[0]
 echo $&Ibias_noise > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
 .endc
 "}
-C {devices/code_shown.sym} 20 -780 0 0 {name=MODEL only_toplevel=true
+C {devices/code_shown.sym} 20 -990 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
 value="
 .lib cornerMOShv.lib mos_CACE\{corner_mos\}
