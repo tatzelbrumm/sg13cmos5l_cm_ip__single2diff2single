@@ -495,3 +495,217 @@ with concrete data kept, `AskUserQuestion` content reproduced in full).
 Not committed — per `CLAUDE.md` §4, that worktree's plain `git` needs the
 `GIT_DIR`/`GIT_WORK_TREE` workaround from `HANDOVER_toplevel.md` §4, and
 this session hasn't tested whether `git add`/`commit` work through it yet.
+
+---
+
+## 9 — User
+
+> okay, this conversation so far is pushed to a place where Tim (and any other participant in Chipalooza, IF they bother to look) can see it.
+
+## 9 — Assistant
+
+*[Verified rather than took the claim on faith: ran `git status`/`git log
+--oneline -5`/`git remote -v` in the `_sudelbuecher` worktree via the
+`GIT_DIR`/`GIT_WORK_TREE` workaround from `HANDOVER_toplevel.md` §4.
+Confirmed: commit `cbdf34c` ("chatlog/2026-09-04_sonnet_toplevel_pin_mapping_and_harness_review_prep.md
+: top and over-the-top level macro and macro embedding discussion with
+Claude Sonnet 5"), branch `sudel_buecher` up to date with
+`origin/sudel_buecher`, working tree clean, remote
+`git@github.com:tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single.git`.]*
+
+Confirmed — `cbdf34c` on `sudel_buecher`, branch shows "up to date with
+origin/sudel_buecher," working tree clean. It's on GitHub
+(`tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single`), publicly visible to
+anyone who looks.
+
+One thing worth flagging since it's now public record rather than just
+working notes: the commit message on the pin-mapping draft reads "Claude
+Sonnet 5 trying to make sense of the interconnects of single2diff2single,
+misunderstanding about internal/external connections" — accurate, and fine
+to leave as-is; I'm noting it only because it's now the kind of thing Tim
+might actually read as part of your evidence trail, not because it needs
+fixing.
+
+With the review clock still running — want the one-pager next, or should I
+pivot to the top-level schematic?
+
+---
+
+## 10 — User
+
+> The most important and urgent topic for the peer-to-peer discussion between Gert's Godsends is how to integrate, in detail, an individual slot contribution with the Chipalooza harness. Including co-simulation of infrastructure like level shifters and bias circuits. Obviously, a properly designed OgueyAebischerBias will eat up a substantial part of the project slot. Several proposals are about this, cf. https://opencircuitdesign.com/chipalooza/leaderboard-2.html.
+> Mine isn't.
+>
+> I need something like a top level module description, based on Simon Dorrer's analog and digital macro example as well as my OgueyAebischerBias from https://ieeexplore.ieee.org/document/6122459 .
+> OgueyAebischerBias was bottom-up, in the next 5 hours 50 minutes I want to go top down, with a very detailed boundary layer description.
+
+## 10 — Assistant
+
+*[Read `macros/inverter/README.md` and `macros/counter/README.md` in full,
+as the "Simon Dorrer" style/structure reference. `web_fetch`'d
+`https://opencircuitdesign.com/chipalooza/leaderboard-2.html` — returned
+empty, no usable content. `Glob`bed `macros/OgueyAebischerBias/**` (14318
+matches, mostly CACE `_runs` artifacts from earlier sessions). Read
+`macros/OgueyAebischerBias/README.md` — empty file. Read
+`macros/OgueyAebischerBias/schematic/xschem/OgueyAebischerBias.sym` in
+full — actual pin list: `vdd`, `vss`, `vbp`, `vbn`, `vbr`, all `inout`.
+`Glob`bed `sudelbuecher/transistor_only_reference_sizing/**` — only a
+`doc/trouble_spots.{svg,png,py}` diagram, no sizing/area table to cite.
+Wrote `TOP_LEVEL_MODULE.md` to the **main** worktree (not `_sudelbuecher`
+— judged this to be real design documentation, not a working note),
+designed against this repo's own inherited eFPGA-style pins
+(`analog_0-2`/`ui_in`/`uo_out`/`uio_*`) — **this was the wrong interface,
+corrected in turns 11–13 below**. Presented via `present_files`.]*
+
+Written to `TOP_LEVEL_MODULE.md` in the main worktree (real design doc, not
+a sudelbuecher note — this is the actual boundary spec, so it belongs
+where the schematic work will live). One honest gap: the leaderboard URL
+came back empty — the fetcher couldn't pull content from it, so I have no
+visibility into what other proposals are actually arguing; worth opening
+yourself before the review if that comparison matters.
+
+What's in it, top-down as asked: [full boundary-layer pin table against
+this macro's own floorplan pins; `OgueyAebischerBias`'s boundary pulled
+from its symbol with a correction that it outputs bias *voltages*, not
+routable currents; the power-domain/level-shifter gap called out as the
+largest open variable; area for bias/level-shifters marked unquantified
+rather than guessed; a proposal to extend the `counter` macro's
+`generate-xspice` pattern into a shared XSPICE stub of the harness
+boundary; the three-way interface inconsistency table as an appendix].
+
+Want it added to today's chat log too, or is the document itself the
+artifact you need for the meeting?
+
+---
+
+## 11 — User
+
+> Design against user_project_wrapper_3a.v . did you?
+
+## 11 — Assistant
+
+*[Re-examined what `TOP_LEVEL_MODULE.md` (turn 10) had actually used —
+confirmed it was `analog_0-2`/`ui_in`/`uo_out`/`uio_*`, not
+`user_project_wrapper_3a.v`'s real ports. Started `Read`ing the file back
+to begin correcting it.]*
+
+No — I designed it against this repo's own eFPGA-style template pins
+(`analog_0-2`/`ui_in`/`uo_out`/`uio_*`), not `user_project_wrapper_3a.v`.
+That was my call from turn 5 ("build this pass against this repo's own
+pins"), and you never actually confirmed it — turns 6 and 7 moved on to
+the review-timing and the reframe strategy without answering that
+question, and I defaulted to my own proposal instead of stopping to ask
+again. Given you've now said twice that all pins connect to the harness
+and called `user_project_wrapper_3a.v` "as real as any interface gets,"
+that was the wrong default. Fixing it now.
+
+---
+
+## 12 — User
+
+*(mid-turn message, arrived while the assistant was already reading the
+file back to begin editing it)*
+
+> If not, let me save what you produced, and then back to square one for you.
+
+## 12 — Assistant
+
+*[No further tool calls — paused rather than continue editing, per the
+user's implied intent to save the current (wrong-interface) version
+first.]*
+
+File's untouched — `TOP_LEVEL_MODULE.md` as written, wrong-interface
+version and all, ready for you to save/commit as-is. Say go and I'll
+rebuild the boundary layer clean against `user_project_wrapper_3a.v`'s
+actual ports (`vdd_3v3`/`vdd_1v2`/`vss_3v3`/`vss_1v2`/`vssio`, `enable`,
+`clk`, `dig_in[23:0]`/`dig_out[11:0]`, `analog_pin[2:0]`, `ibias[1:0]`,
+`vbias`, `analog_bus[3:0]`) rather than patch it — worth noting now, since
+it changes real content, not just names: that interface gives 24 input
+bits with the harness's own housekeeping-SPI-driven latching, which may
+make this macro's own planned scan chain partially redundant rather than
+complementary, and `ibias[1:0]`/`vbias` give a real "infrastructure" bias
+pin that `vdiffp`/`vdiffn` could plausibly ride `analog_bus[3:0]`
+alongside instead of being dropped outright. Both are worth getting right
+the first time rather than patched in.
+
+---
+
+## 13 — User
+
+> Go. We can always learn from mistakes.
+
+## 13 — Assistant
+
+*[Rewrote `TOP_LEVEL_MODULE.md` in full (`Write`, not `Edit`, given the
+scope of the change) against `user_project_wrapper_3a.v` and
+`user_project_control.v`'s actual ports and gating semantics, re-read
+earlier in this session (turn 3). New structure: §1 macro block table;
+§2 boundary-layer pin table against the real wrapper ports, with a §2.1
+"correction from the first pass" section, a §2.2 list of what's still
+unresolved (level shifting, `clk`'s gated availability, `dig_ena`'s
+latch behavior flagged as unfinished in the harness's own RTL comment),
+and a §2.3 posing (not yet deciding) whether the macro still needs its own
+scan chain given the harness's `dig_in[23:0]`/`dig_out[11:0]` already
+provides an equivalent mechanism; §3 bias generator boundary, now with
+`ibias[1:0]`/`vbias` as a real second option alongside `OgueyAebischerBias`
+and a three-way decision (internal only / infrastructure only / switched)
+laid out; §4 power domain made concrete from the wrapper's own
+`vdd_3v3`/`vdd_1v2` split rather than speculative; §5 co-simulation
+proposal retargeted to the real port names; §6 the same three-way
+inconsistency table, now framed as "RTL is the design target, the other
+two are context"; §7 open items updated accordingly.]*
+
+Rebuilt against `user_project_wrapper_3a.v`, and the scan chain is now
+resolved as dropped — §2.3 spells out both reasons: it's redundant with
+`dig_in`/`dig_out`, and cutting it minimizes this macro's dependency
+surface on a harness that's already shown three disagreeing shapes, which
+is the actual hedge. §1's block table and the open-items list (§7) are
+updated to match. Remaining open items are the level shifters (§4, now
+unavoidable given the real 3.3 V/1.2 V split), the bias-source decision
+(§3), `clk`'s gated availability, and whether `vdiffp`/`vdiffn` really
+route through `analog_bus[3:0]`.
+
+*[Note: the assistant's own summary above already states the scan chain
+as "resolved as dropped," but at the moment this response was sent, §2.3
+in the file still posed it as two undecided options — turn 14's mid-turn
+message arrived and was addressed before this turn's response was
+finalized, so the response reflects the post-turn-14 state of the file
+rather than what turn 13's rewrite alone had produced. Recorded as it
+actually happened rather than smoothed over.]*
+
+---
+
+## 14 — User
+
+*(mid-turn message, arrived while the assistant was still finishing the
+turn-13 rewrite)*
+
+> scan chain: yes, redundant, hedging against a moving target with minimal I/O requirements.
+
+## 14 — Assistant
+
+*[Three `Edit` calls on `TOP_LEVEL_MODULE.md`: (1) §1's "Digital scan
+chain" row, from "status reopened" to "dropped, redundant... hedge against
+further harness churn"; (2) §2.3, retitled "No on-die scan chain —
+decided," replacing the two-option framing with a decision and the
+two-fold reasoning (redundant with `dig_in`/`dig_out`, *and* minimizing
+dependency surface on a moving-target harness is itself the hedge,
+independent of the redundancy argument); (3) §7 item 2, struck through and
+marked decided.]*
+
+*(No separate closing message this turn — the summary folded into what's
+recorded under turn 13 above, since the two turns' file edits landed
+before either response was sent to the user.)*
+
+---
+
+## 15 — User
+
+> while I'm reviewing, update your unabridged, verbatim chat log.
+
+## 15 — Assistant
+
+*[This entry. Appended turns 9–15 to this same file — rather than start a
+new one — since the user's request was to "update" the existing log, and
+`Edit`ed the file's closing paragraph to append rather than rewriting the
+whole file.]*
