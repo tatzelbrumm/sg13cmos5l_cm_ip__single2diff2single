@@ -81,10 +81,11 @@ op
 noise v(nsense) VDD dec CACE\{noise_pts=10\} CACE\{f_spot=1\} CACE\{fn_stop=100k\}
 setplot noise1
 * sweep starts at f_spot, so index 0 IS the spot frequency
-let Ibias_noise = 1e9 * onoise_spectrum[0]
-* alternative: integrated RMS over the whole swept band, in nA
+* echo the raw A/rtHz value -- CACE unconverts to the yaml's nA/rtHz for display
+let Ibias_noise = onoise_spectrum[0]
+* alternative: integrated RMS over the whole swept band
 * setplot noise2
-* let Ibias_noise = 1e9 * onoise_total
+* let Ibias_noise = onoise_total
 echo $&Ibias_noise > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
 .endc
 "}

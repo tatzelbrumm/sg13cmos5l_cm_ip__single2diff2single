@@ -62,11 +62,12 @@ let I1 = v.x1.xbias.vi1#branch
 let I2 = v.x1.xbias.vi4#branch
 let I3 = v.x1.xbias.viaux#branch
 let ibias_nom = CACE\{ibias_nom=4.665e-8\}
-let Ibias_accuracy = 100 * (I1 - ibias_nom) / ibias_nom
+* echo as a raw fraction -- CACE unconverts to the yaml's '%' for display
+let Ibias_accuracy = (I1 - ibias_nom) / ibias_nom
 * PMOS mirror ratio M12:M13 = 1:4, so I2 should come out at 4*I1
-let Leg_matching = 100 * (I2 / (4 * I1) - 1)
+let Leg_matching = (I2 / (4 * I1) - 1)
 * to grade the 2x aux leg (M14) instead, use this line in its place:
-* let Leg_matching = 100 * (I3 / (2 * I1) - 1)
+* let Leg_matching = (I3 / (2 * I1) - 1)
 echo $&Ibias_accuracy $&Leg_matching > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
 .endc
 "}

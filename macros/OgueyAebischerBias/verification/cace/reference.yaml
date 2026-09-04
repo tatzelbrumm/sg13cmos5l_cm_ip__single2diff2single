@@ -11,14 +11,21 @@
 # grouping used in the precedent this circuit was ported from:
 # TinyTapeout/designs/tt10-analog-tatzelreference (sky130).
 #
-# dc_params and tran_startup_params below are wired to real testbench
-# templates (reference_tb_dc.sch / reference_tb_tran.sch) and should run
-# as-is, but neither has been opened in Xschem or simulated yet -- check
-# them before trusting results. ac_psrr_params, noise_params,
-# disable_params and mm_params are fully specified (targets adapted from
+# All six parameter groups now have a `tool:` testbench template (the last
+# four -- ac_psrr_params, noise_params, disable_params, mm_params -- were
+# added after this file's first draft; their targets were adapted from
 # ../../../../../sky130_cm_ip__biasgen/README.md's spec table for the same
-# core circuit) but their `tool:` templates do not exist yet -- see the
-# TODO on each.
+# core circuit). None have been opened in Xschem or simulated yet -- check
+# every one of them before trusting results.
+#
+# All six testbenches now echo raw, unscaled SI values (amps, seconds, dB,
+# fraction) as CACE expects; it unconverts to each spec's declared `unit:`
+# for display and converts spec limits the same way for comparison. Two of
+# the four newer testbenches originally pre-scaled their echoed value to
+# match the display unit (reference_tb_noise.sch multiplied by 1e9,
+# reference_tb_dc_mm.sch multiplied by 100), which would have double-
+# converted in both directions -- fixed 2026-09-04, see their git history
+# if this surfaces again in a future edit.
 
 name:           reference
 description:    Oguey-Aebischer resistor-free bias reference + start-up kick, for the ihp-sg13cmos5l chip template
@@ -185,13 +192,13 @@ parameters:
       t_startup:
         display: Start-up time
         description: Time from VDD ramp start until vbr first crosses 100mV, no .nodeset assist
-        unit: s
+        unit: ns
         minimum:
           value: any
         typical:
-          value: 2e-5
+          value: 20000
         maximum:
-          value: 4e-5
+          value: 40000
       Vbp_final:
         display: Settled vbp
         description: vbp at the end of the start-up transient (sanity read-back)
@@ -261,16 +268,16 @@ parameters:
         unit: s
         typical: 200u
 
-  # TODO: no testbench template exists yet for the four groups below.
-  # Targets are carried over from ../../../../../sky130_cm_ip__biasgen/README.md's
-  # spec table (same Oguey-Aebischer core, 2024) as a starting point, not
-  # numbers derived from a sg13cmos5l simulation.
+  # Targets in the four groups below are carried over from
+  # ../../../../../sky130_cm_ip__biasgen/README.md's spec table (same
+  # Oguey-Aebischer core, 2024) as a starting point, not numbers derived
+  # from a sg13cmos5l simulation.
 
   ac_psrr_params:
     spec:
       PSRR_vbr:
         display: PSRR of vbr at 1kHz
-        description: 'TODO: needs reference_tb_ac_psrr.sch (AC source on vdd, vbr as output)'
+        description: AC source on vdd (1V amplitude), vbr as output; PSRR = -20*log10|vbr/vdd|
         unit: dB
         minimum:
           value: 50
@@ -280,7 +287,7 @@ parameters:
           value: any
     tool:
       ngspice:
-        template: reference_tb_ac_psrr.sch   # TODO: does not exist yet
+        template: reference_tb_ac_psrr.sch
         format: ascii
         suffix: .data
         variables: [PSRR_vbr]
@@ -298,7 +305,7 @@ parameters:
     spec:
       Ibias_noise:
         display: Output current noise density
-        description: 'TODO: needs reference_tb_noise.sch (.noise analysis on the mirrored output current), 0.1-10Hz band per sky130_cm_ip__biasgen precedent'
+        description: 'Spot noise density of the mirrored output current at f_spot (default 1Hz); see reference_tb_noise.sch for the 0.1-10Hz band alternative'
         unit: nA/rtHz
         minimum:
           value: any
@@ -308,7 +315,7 @@ parameters:
           value: 1
     tool:
       ngspice:
-        template: reference_tb_noise.sch   # TODO: does not exist yet
+        template: reference_tb_noise.sch
         format: ascii
         suffix: .data
         variables: [Ibias_noise]
@@ -326,8 +333,8 @@ parameters:
     spec:
       t_disable:
         display: Turn-off time
-        description: 'TODO: needs reference_tb_tran_disable.sch (disable asserted mid-transient, measure vbr collapse time)'
-        unit: s
+        description: Delay from the disable edge (t=200us) until vbr falls back through 100mV
+        unit: ns
         minimum:
           value: any
         typical:
@@ -336,7 +343,7 @@ parameters:
           value: any
       Iq_enabled:
         display: Quiescent supply current, enabled
-        description: 'TODO: same testbench, measure i(VDD) with disable low'
+        description: -i(vdd), averaged 150-195us, disable low
         unit: uA
         minimum:
           value: any
@@ -346,7 +353,7 @@ parameters:
           value: 20
       Iq_disabled:
         display: Quiescent supply current, disabled
-        description: 'TODO: same testbench, measure i(VDD) with disable high'
+        description: -i(vdd), averaged 350-395us, disable high
         unit: nA
         minimum:
           value: any
@@ -356,7 +363,7 @@ parameters:
           value: 20
     tool:
       ngspice:
-        template: reference_tb_tran_disable.sch   # TODO: does not exist yet
+        template: reference_tb_tran_disable.sch
         format: ascii
         suffix: .data
         variables: [t_disable, Iq_enabled, Iq_disabled]
@@ -374,7 +381,7 @@ parameters:
     spec:
       Ibias_accuracy:
         display: Core current accuracy - Mismatch
-        description: 'TODO: needs a Monte Carlo mismatch collation script, see macros/inverter''s ac_mm_params for the pattern (script + collate: iterations)'
+        description: 'I1 (x1.xbias.vi1) vs. a fixed nominal (see reference_tb_dc_mm.sch for how to refresh it), run corner_mos=tt_mismatch/corner_r=typ_mismatch with collate: iterations -- computed inline in the testbench, no separate collation script needed'
         unit: '%'
         minimum:
           value: -2
@@ -384,7 +391,7 @@ parameters:
           value: 2
       Leg_matching:
         display: Leg-to-leg current matching - Mismatch
-        description: 'TODO: reference_tb_dc.sch already has two more usable probes (x1.xbias.vi4, x1.xbias.viaux) besides vi1 -- extend that template rather than starting from scratch'
+        description: I2 (x1.xbias.vi4) against its ideal 4x ratio to I1; same run as Ibias_accuracy
         unit: '%'
         minimum:
           value: -1
@@ -394,7 +401,7 @@ parameters:
           value: 1
     tool:
       ngspice:
-        template: reference_tb_dc_mm.sch   # TODO: does not exist yet
+        template: reference_tb_dc_mm.sch
         collate: iterations
         format: ascii
         suffix: .data
