@@ -15,6 +15,9 @@ backups/
 sim_build/
 /schematic/xschem/simulations
 /testbenches/xschem/simulations
+/macros/OgueyAebischerBias/verification/cace/_runs
+/macros/OgueyAebischerBias/verification/cace/_docs
+/macros/OgueyAebischerBias/verification/cace/netlist/schematic/*.spice
 /macros/inverter/verification/cace/_runs
 /macros/inverter/verification/cace/_docs
 /macros/inverter/verification/cace/netlist
@@ -25,3 +28,4 @@ sim_build/
 /macros/counter/testbenches/xschem/simulations
 /macros/counter/flow/final
 /macros/counter/fpga/*/build/
+save_from_claudes_fuckup
