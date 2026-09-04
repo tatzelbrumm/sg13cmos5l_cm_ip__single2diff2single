@@ -38,10 +38,10 @@ value="
 .control
 save all
 tran CACE\{tstep\} CACE\{tstop\}
-let Vbp_final = v(vbp)
-let Vbn_final = v(vbn)
-let Vbr_final = v(vbr)
 meas tran t_startup WHEN v(vbr)=100m RISE=1
+meas tran Vbp_final find v(vbp) at=CACE\{tstop\}
+meas tran Vbn_final find v(vbn) at=CACE\{tstop\}
+meas tran Vbr_final find v(vbr) at=CACE\{tstop\}
 echo $&t_startup $&Vbp_final $&Vbn_final $&Vbr_final > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
 .endc
 "}

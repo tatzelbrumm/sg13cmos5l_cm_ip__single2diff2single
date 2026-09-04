@@ -124,11 +124,11 @@ parameters:
         description: Core branch current, read from the schematic's own Vi1 ammeter (x1.xbias.vi1)
         unit: A
         minimum:
-          value: 200n
+          value: 2e-7
         typical:
           value: any
         maximum:
-          value: 1u
+          value: 1e-6
     tool:
       ngspice:
         template: reference_tb_dc.sch
@@ -189,9 +189,9 @@ parameters:
         minimum:
           value: any
         typical:
-          value: 20u
+          value: 2e-5
         maximum:
-          value: 40u
+          value: 4e-5
       Vbp_final:
         display: Settled vbp
         description: vbp at the end of the start-up transient (sanity read-back)
@@ -341,9 +341,9 @@ parameters:
         minimum:
           value: any
         typical:
-          value: 10u
+          value: 1e-5
         maximum:
-          value: 20u
+          value: 2e-5
       Iq_disabled:
         display: Quiescent supply current, disabled
         description: 'TODO: same testbench, measure i(VDD) with disable high'
@@ -351,9 +351,9 @@ parameters:
         minimum:
           value: any
         typical:
-          value: 10n
+          value: 1e-8
         maximum:
-          value: 20n
+          value: 2e-8
     tool:
       ngspice:
         template: reference_tb_tran_disable.sch   # TODO: does not exist yet
