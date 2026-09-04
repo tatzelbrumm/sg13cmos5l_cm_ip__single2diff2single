@@ -1,0 +1,54 @@
+[07:08:07] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
+[07:08:07] INFO     Working directory set to '..'                                                           parameter_manager.py:153
+                    ('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias').                               
+[07:08:07] INFO     Starting a new run with tag 'RUN_2026-09-04_07-08-07'.                                  parameter_manager.py:624
+[07:08:07] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
+[07:08:07] INFO     Running parameters: mm_params                                                                    cace_cli.py:327
+[07:08:07] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
+──────────────────────────────────────────────────────── Started mm_params ─────────────────────────────────────────────────────────
+[07:08:07] INFO     Parameter mm_params: Generating simulation files…                                       parameter_ngspice.py:211
+[07:08:07] INFO     Collating results using condition "iterations"                                          parameter_ngspice.py:314
+[07:09:12] INFO     Parameter mm_params: Running simulations…                                               parameter_ngspice.py:564
+[07:10:53] INFO     Parameter mm_params: Collecting results…                                                parameter_ngspice.py:663
+[07:10:53] INFO     Parameter mm_params: Saving simulation summary as                                       parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_07-08-07/parameters/mm_params/simulation_summary.md'…                                
+                                                  Simulation Summary for mm_params                                                  
+
+                                                                                             
+ run                  iterations              Ibias_accuracy                    Leg_matching 
+ ─────────────────────────────────────────────────────────────────────────────────────────── 
+ run_0  [1.000, 2.000, 3.000, …]  [15.470, 1.236, 16.351, …]  [15.038, 5.752, -3.194e-01, …] 
+                                                                                             
+─────────────────────────────────────────────────── Completed mm_params: Fail ❌ ───────────────────────────────────────────────────
+
+[07:10:53] INFO     Done with CACE simulations and evaluations in 0:02:46.                                           cace_cli.py:371
+                                                     CACE Summary for reference                                                     
+
+netlist source: schematic                                                                                                           
+
+                                                                                                                                    
+ Parameter                 Tool     Result          Min Limit    Min Value   Typ Target  Typ Value  Max Limit    Max Value  Status  
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ PMOS mirror bias voltage  ngspice  Vbp_val               any             ​          any           ​        any             ​  Skip 🟧 
+ NMOS mirror bias voltage  ngspice  Vbn_val               any             ​          any           ​        any             ​  Skip 🟧 
+ Resistor-free reference   ngspice  Vbr_val               any             ​          any           ​        any             ​  Skip 🟧 
+ voltage                                                                                                                            
+ Core reference current    ngspice  Ibias_val          200 nA             ​          any           ​    1000 nA             ​  Skip 🟧 
+ Start-up time             ngspice  t_startup             any             ​       2e-5 s           ​     4e-5 s             ​  Skip 🟧 
+ Settled vbp               ngspice  Vbp_final             any             ​          any           ​        any             ​  Skip 🟧 
+ Settled vbn               ngspice  Vbn_final             any             ​          any           ​        any             ​  Skip 🟧 
+ Settled vbr               ngspice  Vbr_final             any             ​          any           ​        any             ​  Skip 🟧 
+ PSRR of vbr at 1kHz       ngspice  PSRR_vbr            50 dB             ​        60 dB           ​        any             ​  Skip 🟧 
+ Output current noise      ngspice  Ibias_noise           any             ​  0.5 nA/rtHz           ​  1 nA/rtHz             ​  Skip 🟧 
+ density                                                                                                                            
+ Turn-off time             ngspice  t_disable             any             ​          any           ​        any             ​  Skip 🟧 
+ Quiescent supply          ngspice  Iq_enabled            any             ​        10 uA           ​      20 uA             ​  Skip 🟧 
+ current, enabled                                                                                                                   
+ Quiescent supply          ngspice  Iq_disabled           any             ​        10 nA           ​      20 nA             ​  Skip 🟧 
+ current, disabled                                                                                                                  
+ Core current accuracy -   ngspice  Ibias_accuracy       -2 %  -7632.380 %          0 %  130.588 %        2 %  14804.800 %  Fail ❌ 
+ Mismatch                                                                                                                           
+ Leg-to-leg current        ngspice  Leg_matching         -1 %  -1730.540 %          0 %  556.837 %        1 %   3964.500 %  Fail ❌ 
+ matching - Mismatch                                                                                                                
+                                                                                                                                    
+[07:10:53] INFO     CACE failed, skipping documentation generation.                                                  cace_cli.py:404

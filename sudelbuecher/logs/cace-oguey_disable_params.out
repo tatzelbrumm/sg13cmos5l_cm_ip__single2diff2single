@@ -1,0 +1,52 @@
+[07:07:21] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
+[07:07:21] INFO     Working directory set to '..'                                                           parameter_manager.py:153
+                    ('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias').                               
+[07:07:21] INFO     Starting a new run with tag 'RUN_2026-09-04_07-07-21'.                                  parameter_manager.py:624
+[07:07:21] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
+[07:07:21] INFO     Running parameters: disable_params                                                               cace_cli.py:327
+[07:07:21] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
+────────────────────────────────────────────────────── Started disable_params ──────────────────────────────────────────────────────
+[07:07:21] INFO     Parameter disable_params: Generating simulation files…                                  parameter_ngspice.py:211
+[07:07:22] INFO     Parameter disable_params: Running simulations…                                          parameter_ngspice.py:564
+[07:07:23] INFO     Parameter disable_params: Collecting results…                                           parameter_ngspice.py:663
+[07:07:23] INFO     Parameter disable_params: Saving simulation summary as                                  parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_07-07-21/parameters/disable_params/simulation_summary.md'…                           
+                                               Simulation Summary for disable_params                                                
+
+                                           
+ run    t_disable  Iq_enabled  Iq_disabled 
+ ───────────────────────────────────────── 
+ run_0  3.530e-08   3.379e-07    6.621e-11 
+                                           
+──────────────────────────────────────────────── Completed disable_params: Pass ✅ ─────────────────────────────────────────────────
+
+[07:07:23] INFO     Done with CACE simulations and evaluations in 0:00:01.                                           cace_cli.py:371
+                                                     CACE Summary for reference                                                     
+
+netlist source: schematic                                                                                                           
+
+                                                                                                                                    
+ Parameter                     Tool     Result          Min Limit  Min Value   Typ Target  Typ Value  Max Limit  Max Value  Status  
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ PMOS mirror bias voltage      ngspice  Vbp_val               any           ​          any           ​        any           ​  Skip 🟧 
+ NMOS mirror bias voltage      ngspice  Vbn_val               any           ​          any           ​        any           ​  Skip 🟧 
+ Resistor-free reference       ngspice  Vbr_val               any           ​          any           ​        any           ​  Skip 🟧 
+ voltage                                                                                                                            
+ Core reference current        ngspice  Ibias_val          200 nA           ​          any           ​    1000 nA           ​  Skip 🟧 
+ Start-up time                 ngspice  t_startup             any           ​       2e-5 s           ​     4e-5 s           ​  Skip 🟧 
+ Settled vbp                   ngspice  Vbp_final             any           ​          any           ​        any           ​  Skip 🟧 
+ Settled vbn                   ngspice  Vbn_final             any           ​          any           ​        any           ​  Skip 🟧 
+ Settled vbr                   ngspice  Vbr_final             any           ​          any           ​        any           ​  Skip 🟧 
+ PSRR of vbr at 1kHz           ngspice  PSRR_vbr            50 dB           ​        60 dB           ​        any           ​  Skip 🟧 
+ Output current noise density  ngspice  Ibias_noise           any           ​  0.5 nA/rtHz           ​  1 nA/rtHz           ​  Skip 🟧 
+ Turn-off time                 ngspice  t_disable             any    0.000 s          any    0.000 s        any    0.000 s  Pass ✅ 
+ Quiescent supply current,     ngspice  Iq_enabled            any   0.338 uA        10 uA   0.338 uA      20 uA   0.338 uA  Pass ✅ 
+ enabled                                                                                                                            
+ Quiescent supply current,     ngspice  Iq_disabled           any   0.066 nA        10 nA   0.066 nA      20 nA   0.066 nA  Pass ✅ 
+ disabled                                                                                                                           
+ Core current accuracy -       ngspice  Ibias_accuracy       -2 %           ​          0 %           ​        2 %           ​  Skip 🟧 
+ Mismatch                                                                                                                           
+ Leg-to-leg current matching   ngspice  Leg_matching         -1 %           ​          0 %           ​        1 %           ​  Skip 🟧 
+ - Mismatch                                                                                                                         
+                                                                                                                                    
+[07:07:23] INFO     Generating documentation in 'cace/_docs'                                                parameter_manager.py:255

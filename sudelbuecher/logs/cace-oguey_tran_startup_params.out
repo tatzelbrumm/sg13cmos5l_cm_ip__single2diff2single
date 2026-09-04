@@ -1,16 +1,16 @@
-[05:05:18] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
-[05:05:18] INFO     Working directory set to '..'                                                           parameter_manager.py:153
+[07:14:35] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
+[07:14:35] INFO     Working directory set to '..'                                                           parameter_manager.py:153
                     ('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias').                               
-[05:05:18] INFO     Starting a new run with tag 'RUN_2026-09-04_05-05-18'.                                  parameter_manager.py:624
-[05:05:18] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
-[05:05:18] INFO     Running parameters: tran_startup_params                                                          cace_cli.py:327
-[05:05:18] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
+[07:14:35] INFO     Starting a new run with tag 'RUN_2026-09-04_07-14-35'.                                  parameter_manager.py:624
+[07:14:35] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
+[07:14:35] INFO     Running parameters: tran_startup_params                                                          cace_cli.py:327
+[07:14:35] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
 ─────────────────────────────────────────────────── Started tran_startup_params ────────────────────────────────────────────────────
-[05:05:18] INFO     Parameter tran_startup_params: Generating simulation files…                             parameter_ngspice.py:211
-[05:05:23] INFO     Parameter tran_startup_params: Running simulations…                                     parameter_ngspice.py:564
-[05:06:32] INFO     Parameter tran_startup_params: Collecting results…                                      parameter_ngspice.py:663
-[05:06:32] INFO     Parameter tran_startup_params: Saving simulation summary as                             parameter_ngspice.py:846
-                    'cace/_runs/RUN_2026-09-04_05-05-18/parameters/tran_startup_params/simulation_summary.m                         
+[07:14:35] INFO     Parameter tran_startup_params: Generating simulation files…                             parameter_ngspice.py:211
+[07:14:40] INFO     Parameter tran_startup_params: Running simulations…                                     parameter_ngspice.py:564
+[07:15:51] INFO     Parameter tran_startup_params: Collecting results…                                      parameter_ngspice.py:663
+[07:15:51] INFO     Parameter tran_startup_params: Saving simulation summary as                             parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_07-14-35/parameters/tran_startup_params/simulation_summary.m                         
                     d'…                                                                                                             
                                              Simulation Summary for tran_startup_params                                             
 
@@ -33,13 +33,13 @@
  run_13    27          ff  2.196e-07      2.724      0.570      0.974 
  run_14    85          ff  2.007e-07      2.792      0.531      1.000 
                                                                       
-[05:06:32] INFO     Parameter tran_startup_params: Plotting t_startup_vs_corner_mos to                              parameter.py:929
-                    'cace/_runs/RUN_2026-09-04_05-05-18/parameters/tran_startup_params'…                                            
-[05:06:32] INFO     Parameter tran_startup_params: Plotting t_startup_vs_temp to                                    parameter.py:929
-                    'cace/_runs/RUN_2026-09-04_05-05-18/parameters/tran_startup_params'…                                            
+[07:15:51] INFO     Parameter tran_startup_params: Plotting t_startup_vs_corner_mos to                              parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_07-14-35/parameters/tran_startup_params'…                                            
+[07:15:51] INFO     Parameter tran_startup_params: Plotting t_startup_vs_temp to                                    parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_07-14-35/parameters/tran_startup_params'…                                            
 ────────────────────────────────────────────── Completed tran_startup_params: Pass ✅ ──────────────────────────────────────────────
 
-[05:06:32] INFO     Done with CACE simulations and evaluations in 0:01:14.                                           cace_cli.py:371
+[07:15:51] INFO     Done with CACE simulations and evaluations in 0:01:16.                                           cace_cli.py:371
                                                      CACE Summary for reference                                                     
 
 netlist source: schematic                                                                                                           
@@ -51,7 +51,7 @@ netlist source: schematic
  NMOS mirror bias voltage      ngspice  Vbn_val               any           ​          any           ​        any           ​  Skip 🟧 
  Resistor-free reference       ngspice  Vbr_val               any           ​          any           ​        any           ​  Skip 🟧 
  voltage                                                                                                                            
- Core reference current        ngspice  Ibias_val          2e-7 A           ​          any           ​     1e-6 A           ​  Skip 🟧 
+ Core reference current        ngspice  Ibias_val          200 nA           ​          any           ​    1000 nA           ​  Skip 🟧 
  Start-up time                 ngspice  t_startup             any    0.000 s       2e-5 s    0.000 s     4e-5 s    0.000 s  Pass ✅ 
  Settled vbp                   ngspice  Vbp_final             any    2.559 V          any    2.674 V        any    2.792 V  Pass ✅ 
  Settled vbn                   ngspice  Vbn_final             any    0.531 V          any    0.614 V        any    0.689 V  Pass ✅ 
@@ -59,13 +59,13 @@ netlist source: schematic
  PSRR of vbr at 1kHz           ngspice  PSRR_vbr            50 dB           ​        60 dB           ​        any           ​  Skip 🟧 
  Output current noise density  ngspice  Ibias_noise           any           ​  0.5 nA/rtHz           ​  1 nA/rtHz           ​  Skip 🟧 
  Turn-off time                 ngspice  t_disable             any           ​          any           ​        any           ​  Skip 🟧 
- Quiescent supply current,     ngspice  Iq_enabled            any           ​       1e-5 A           ​     2e-5 A           ​  Skip 🟧 
+ Quiescent supply current,     ngspice  Iq_enabled            any           ​        10 uA           ​      20 uA           ​  Skip 🟧 
  enabled                                                                                                                            
- Quiescent supply current,     ngspice  Iq_disabled           any           ​       1e-8 A           ​     2e-8 A           ​  Skip 🟧 
+ Quiescent supply current,     ngspice  Iq_disabled           any           ​        10 nA           ​      20 nA           ​  Skip 🟧 
  disabled                                                                                                                           
  Core current accuracy -       ngspice  Ibias_accuracy       -2 %           ​          0 %           ​        2 %           ​  Skip 🟧 
  Mismatch                                                                                                                           
  Leg-to-leg current matching   ngspice  Leg_matching         -1 %           ​          0 %           ​        1 %           ​  Skip 🟧 
  - Mismatch                                                                                                                         
                                                                                                                                     
-[05:06:32] INFO     Generating documentation in 'cace/_docs'                                                parameter_manager.py:255
+[07:15:51] INFO     Generating documentation in 'cace/_docs'                                                parameter_manager.py:255
