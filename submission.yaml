@@ -25,8 +25,11 @@ team-members:
 # Must match the floorplan template this layout was started from.
 slot-size: tiny
 
-# Settled 2026-09-04: vin (analog_0), vout (analog_1), vcm (analog_2).
-# See TOP_LEVEL_MODULE.md for the full boundary-layer rationale.
+# Reconciled 2026-09-04 against sg13cmos5l_ocd_chipalooza's real harness RTL
+# (verilog/rtl/user_project_wrapper_3a.v): vin, vout, vcm -> analog_pin[2:0].
+# This repo's own eFPGA-template analog_0/1/2 naming is not the design
+# target; see TOP_LEVEL_MODULE.md for the full boundary-layer rationale and
+# for what's still open (bias source, scan chain, level shifting).
 analog-pins: 3
 
 short-description: Single-ended-to-differential-to-single-ended analog pin buffer pair with on-die bias generation, designed against the Chipalooza harness slot interface.
@@ -57,17 +60,19 @@ long-description: |
   * a fully differential gmC stage, switchable between filtering the input
     signal and running as a self-sustained quadrature oscillator, as a
     self-contained proof-of-concept circuit
-  * a digital scan chain (shift register + holding registers) so most
-    control pins (enables, mode selects, trim) are absorbed into a serial
-    interface instead of dedicated pads
+  * digital control (enables, mode selects, trim) -- currently wired
+    directly to the harness's dig_in/dig_out bus rather than through an
+    on-die scan chain; whether a scan chain is still needed is reopened,
+    not decided (see TOP_LEVEL_MODULE.md section 2.3)
   * bias generation from an Oguey & Aebischer ultra-high-input-impedance,
     low-noise bias block (imported into macros/OgueyAebischerBias/, not yet
     wired into the design)
 
   How it is tested: a single-ended input is fed through the input buffer,
   the differential gmC stage and the output buffer. Nine testbench
-  configurations (selected via the scan-chain enable/select bits) exercise
-  the output buffer alone, the input buffer alone, the two chained with the
+  configurations (selected via digital control bits, currently wired
+  directly to the harness's dig_in bus -- see note above) exercise the
+  output buffer alone, the input buffer alone, the two chained with the
   filter off, the filter as a driven filter, the filter as a free-running or
   driven oscillator, and the shared differential lines shorted to
   characterize wire/pad parasitics. The two shared analog pins (vdiffp,
@@ -75,9 +80,11 @@ long-description: |
   output stages can be characterized separately; measuring them needs either
   an external instrumentation amplifier or an active differential
   oscilloscope probe, since the true internal differential nodes are not
-  brought out to a low-impedance output. Digital control (enable, mode
-  select, trim) is driven and read back over the scan chain with a USB
-  digital pattern generator / logic analyzer.
+  brought out to a low-impedance output. All pins of this macro connect to
+  the sg13cmos5l_ocd_chipalooza harness (there is no standalone breakout);
+  digital control is driven and read back through the harness's own
+  housekeeping SPI / dig_in / dig_out mechanism, not an independent USB
+  pattern generator.
 
   See sudelbuecher/description/s2d_d2s_pinbuffers.md (branch sudel_buecher,
   the _sudelbuecher worktree) for the full proposal: pinout tables, bias and

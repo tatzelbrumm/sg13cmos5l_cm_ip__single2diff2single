@@ -75,7 +75,7 @@ logx=0
 logy=0
 linewidth_mult=3
 autoload=0}
-T {Testbench for transient analysis - single2diff2single top level (DUT still the inherited inverter placeholder; pin contract per TOP_LEVEL_MODULE.md)} 390 -1740 0 0 1 1 {}
+T {Testbench for transient analysis - single2diff2single top level. x1's symbol was rewritten 2026-09-04 to the harness-reconciled pin set (vin/vout/vcm/vdd_3v3/... replacing analog_0-2/VPWR/VAPWR/uio_*) but the wires below still target the OLD pin geometry -- x1's actual net connections need hands-on Xschem rewiring before this testbench will elaborate. See the NGSPICE code block below and TOP_LEVEL_MODULE.md.} 390 -1740 0 0 1 1 {}
 N 1420 -1160 1420 -1120 {lab=VPWR}
 N 1420 -1060 1420 -1020 {lab=GND}
 N 780 -440 780 -420 {lab=GND}
@@ -152,17 +152,30 @@ N 780 -700 780 -500 {lab=uio_in_0}
 C {devices/code_shown.sym} 20 -1450 0 0 {name=NGSPICE
 only_toplevel=true 
 value="
-* Pin contract (TOP_LEVEL_MODULE.md, settled 2026-09-04):
-*   analog_0 = vin   (S2D input buffer, driven by vsine below)
-*   analog_1 = vout  (D2S output buffer, Cload/Rload below)
-*   analog_2 = vcm   (switchable pin/internal/infrastructure; Cload/Rload
-*                     below models the internal/infrastructure case only)
-* DUT (x1) is still the inherited inverter placeholder -- numbers below
-* reflect that circuit, not the real one.
-* uio_in_0 carries a generic pulse placeholder. Per TOP_LEVEL_MODULE.md
-* section 2.3 there is no on-die scan chain: mode-select/enable bits wire
-* directly to ui_in bits once the harness integration lands, not to uio_*.
-* Migrating this stimulus accordingly is flagged, not done in this pass.
+* Pin contract -- SUPERSEDED 2026-09-04, reconciled against
+* user_project_wrapper_3a.v (TOP_LEVEL_MODULE.md section 2), NOT YET
+* WIRED into x1 below. x1's own symbol already carries the new pins;
+* the wires/net labels in THIS testbench still use the old names and
+* need hands-on Xschem rewiring (structural pin geometry changed, not
+* just a rename) before this schematic will elaborate cleanly.
+*   OLD analog_0 -> NEW vin    (S2D input buffer, driven by vsine below)
+*   OLD analog_1 -> NEW vout   (D2S output buffer, Cload/Rload below)
+*   OLD analog_2 -> NEW vcm    (switchable pin/internal/infrastructure)
+*   OLD VPWR     -> NEW vdd_1v2 / vss_1v2  (was a single supply, now a
+*                    gated 1.2V domain plus its own ground return)
+*   OLD VAPWR    -> NEW vdd_3v3 / vss_3v3  (was a single supply, now a
+*                    gated 3.3V domain plus its own ground return)
+*   OLD uio_in_0 -> retired. No scan chain wiring exists on the new
+*                    boundary (reopened, not decided, section 2.3); the
+*                    new digital control pins are outbuf_en, inbuf_en,
+*                    filter_en, vdiff_en[1:0], vcmsel[1:0], plus ena/clk.
+*   NEW, no old equivalent: vssio, vdiffp, vdiffn, ibias, igmc, vbias.
+*   NEW pin with NO harness counterpart at all: none for reset -- there
+*                    is no rst_n on the new boundary, deliberately; see
+*                    TOP_LEVEL_MODULE.md section 2, paragraph after the
+*                    pin table.
+* DUT (x1) has no internal blocks yet -- schematic is gutted, boundary
+* only, per the user's own edit this session.
 .include ../../../netlist/pex/sg13cmos5l_cm_ip__single2diff2single_magic_pex_3.spice
 .param VPWR=1.5
 .csparam VPWR=VPWR

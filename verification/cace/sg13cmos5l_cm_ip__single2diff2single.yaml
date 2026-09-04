@@ -8,14 +8,21 @@
 # against a finished circuit — five of six internal blocks are still
 # schematic-less (see that file, §1). Only `dc_connectivity` below is
 # meant to produce real numbers today, against whatever DUT is currently
-# wired into sg13cmos5l_cm_ip__single2diff2single.sch (still the inherited
-# `inverter` placeholder as of this writing). Every other group is
+# wired into sg13cmos5l_cm_ip__single2diff2single.sch (currently gutted:
+# boundary pins only, no internal blocks yet). Every other group is
 # structural scaffolding: correct pins, correct conditions, `minimum`/
 # `maximum: any` until the real block exists to characterize.
 #
 # Referenced testbench templates under verification/cace/templates/ are
 # NOT all authored yet — see the per-group notes below. This file defines
 # the shape of the characterization, not a runnable `make sim-cace`.
+#
+# 2026-09-04: pins reconciled against sg13cmos5l_ocd_chipalooza's real
+# harness RTL (verilog/rtl/user_project_wrapper_3a.v), not this repo's own
+# inherited eFPGA-template floorplan. See TOP_LEVEL_MODULE.md §2. No
+# rst_n/reset pin: the harness has none per-project (chip-global only, via
+# housekeeping SPI). Scan chain reopened, not decided — see §2.3; the
+# digital control pins below are the direct-to-dig_in working default.
 #--------------------------------------------------------------
 
 name:           sg13cmos5l_cm_ip__single2diff2single
@@ -36,70 +43,116 @@ paths:
   documentation:    cace/_docs
   runs:             cace/_runs
 
-# Pins as this repo's own floorplan actually exposes them (analog_0-2,
-# ui_in/uo_out/uio_*, clk/ena/rst_n, VPWR/VAPWR/VGND) — NOT
-# user_project_wrapper_3a.v's ports directly. See TOP_LEVEL_MODULE.md §2
-# for why those are two different, deliberately separate boundaries: this
-# is the packaging/precheck-stage macro this repo actually builds, the
-# harness-facing conversion happens at a later integration layer.
+# Pins as reconciled against user_project_wrapper_3a.v (TOP_LEVEL_MODULE.md
+# §2), matching sg13cmos5l_cm_ip__single2diff2single.sym as of 2026-09-04.
 pins:
-  VPWR:
-    description: Digital/core supply (domain split vs. VAPWR still open, TOP_LEVEL_MODULE.md §4)
+  vdd_3v3:
+    description: Gated analog supply (user_project_wrapper_3a.v vdd_3v3)
     type: power
     direction: inout
-    Vmin: 1.4
-    Vmax: 1.6
-  VAPWR:
-    description: Analog supply (domain split vs. VPWR still open, TOP_LEVEL_MODULE.md §4)
+    Vmin: 3.0
+    Vmax: 3.6
+  vdd_1v2:
+    description: Gated digital/control supply (also powers the harness's own SPI/sequencer, not isolated — TOP_LEVEL_MODULE.md §4)
     type: power
     direction: inout
-    Vmin: 1.4
-    Vmax: 1.6
-  VGND:
-    description: Common ground return
+    Vmin: 1.1
+    Vmax: 1.5
+  vss_3v3:
+    description: Analog ground return
     type: ground
     direction: inout
-  analog_0:
-    description: vin — single-ended analog input (S2D input buffer)
+  vss_1v2:
+    description: Digital ground return
+    type: ground
+    direction: inout
+  vssio:
+    description: Global substrate/ESD ground, independent of vss_3v3/vss_1v2
+    type: ground
+    direction: inout
+  vin:
+    description: Single-ended analog input (S2D input buffer) — analog_pin[0]
     type: signal
     direction: input
-  analog_1:
-    description: vout — single-ended analog output (D2S output buffer)
+  vout:
+    description: Single-ended analog output (D2S output buffer) — analog_pin[1]
     type: signal
     direction: output
-  analog_2:
-    description: vcm — V_CM reference pin, switchable pin/internal/infrastructure (TOP_LEVEL_MODULE.md §3)
+  vcm:
+    description: V_CM reference pin, switchable pin/internal/infrastructure (TOP_LEVEL_MODULE.md §3) — analog_pin[2]
     type: signal
     direction: inout
-  ena:
-    description: Master enable
-    type: digital
+  vdiffp:
+    description: Unbuffered internal differential node, positive — analog_bus[0] candidate, shared/enable-gated (TOP_LEVEL_MODULE.md §2)
+    type: signal
+    direction: inout
+  vdiffn:
+    description: Unbuffered internal differential node, negative — analog_bus[1] candidate, shared/enable-gated
+    type: signal
+    direction: inout
+  ibias:
+    description: Infrastructure bias current option, alternative/complement to OgueyAebischerBias (TOP_LEVEL_MODULE.md §3) — ibias[0]
+    type: signal
     direction: input
-  rst_n:
-    description: Active-low reset (polarity assumed, not confirmed against spec)
+  igmc:
+    description: Infrastructure bias current option for the gmC stage — ibias[1]
+    type: signal
+    direction: input
+  vbias:
+    description: Infrastructure bias voltage, candidate feed for V_CM reference
+    type: signal
+    direction: input
+  ena:
+    description: Master enable (harness's dedicated per-slot enable, not shared)
     type: digital
     direction: input
   clk:
-    description: Clock — candidate role TBD, see TOP_LEVEL_MODULE.md §2.2 (not necessarily continuously available once harness-embedded)
+    description: Control-logic clock — gated to proj_clk = select & clk, not continuously available once harness-embedded (TOP_LEVEL_MODULE.md §2.2)
     type: digital
     direction: input
+  outbuf_en:
+    description: Output buffer enable — direct dig_in bit (scan chain reopened, not decided, TOP_LEVEL_MODULE.md §2.3)
+    type: digital
+    direction: input
+  inbuf_en:
+    description: Input buffer enable — direct dig_in bit
+    type: digital
+    direction: input
+  filter_en:
+    description: gmC filter enable — direct dig_in bit
+    type: digital
+    direction: input
+  vdiff_en:
+    description: gmC differential path mode select (off/in/out/out_offset) — 2 direct dig_in bits
+    type: digital
+    direction: input
+    width: 2
+  vcmsel:
+    description: V_CM source select (analog pin/internal/infrastructure) — 2 direct dig_in bits
+    type: digital
+    direction: input
+    width: 2
+
+# NOTE: no rst_n/reset pin. user_project_wrapper_3a.v has no per-project
+# reset port (TOP_LEVEL_MODULE.md §2, the paragraph right after the pin
+# table). Any block-local reset has to be derived internally.
 
 default_conditions:
-  vdd:
-    description: Digital/core supply voltage (VPWR)
-    display: VPWR
+  vdd_1v2:
+    description: Digital/control supply voltage
+    display: Vdd (1.2V domain)
     unit: V
-    typical: 1.5
-  vapwr:
-    description: Analog supply voltage (VAPWR)
-    display: VAPWR
+    typical: 1.2
+  vdd_3v3:
+    description: Analog supply voltage
+    display: Vdd (3.3V domain)
     unit: V
-    typical: 1.5
+    typical: 3.3
   vcm:
     description: Common-mode / bias-point voltage
     display: Vcm
     unit: V
-    typical: 0.75
+    typical: 1.65
   corner_mos:
     description: Process corner MOSFET
     display: Corner MOSFET
@@ -123,22 +176,22 @@ parameters:
 
   # -------------------------------------------------------------
   # The one group meant to be real today. Runs against whatever DUT is
-  # currently in sg13cmos5l_cm_ip__single2diff2single.sch, including the
-  # inherited inverter placeholder — the point is pin-level sanity, not
-  # circuit performance.
+  # currently in sg13cmos5l_cm_ip__single2diff2single.sch — currently a
+  # gutted boundary-only schematic (no internal blocks) — the point is
+  # pin-level sanity, not circuit performance.
   # -------------------------------------------------------------
   dc_connectivity:
     spec:
       Vout_dc:
         display: DC output level at vout
-        description: Operating-point voltage at analog_1, sanity check that the pin is driven and not floating
+        description: Operating-point voltage at vout, sanity check that the pin is driven and not floating
         unit: V
         minimum: { value: any }
         typical: { value: any }
         maximum: { value: any }
       Vcm_dc:
         display: DC level at vcm pin
-        description: Operating-point voltage at analog_2
+        description: Operating-point voltage at vcm
         unit: V
         minimum: { value: any }
         typical: { value: any }
@@ -152,14 +205,14 @@ parameters:
     plot:
       Vout_dc_vs_vdd:
         type: xyplot
-        xaxis: vdd
+        xaxis: vdd_1v2
         yaxis: Vout_dc
         limits: auto
     conditions:
-      vdd:
-        typical: 1.5
-      vapwr:
-        typical: 1.5
+      vdd_1v2:
+        typical: 1.2
+      vdd_3v3:
+        typical: 3.3
       corner_mos:
         typical: tt
       corner_r:
@@ -198,7 +251,7 @@ parameters:
     plot:
       Adm_dB_vs_vdd:
         type: xyplot
-        xaxis: vdd
+        xaxis: vdd_3v3
         yaxis: Adm_dB
         limits: auto
       Adm_dB_vs_corner_mos:
@@ -207,8 +260,8 @@ parameters:
         yaxis: Adm_dB
         limits: auto
     conditions:
-      vdd:
-        typical: 1.5
+      vdd_3v3:
+        typical: 3.3
       corner_mos:
         enumerate: [ss, sf, tt, fs, ff]
       corner_r:
@@ -245,8 +298,8 @@ parameters:
         type: histogram
         xaxis: Vos
     conditions:
-      vdd:
-        typical: 1.5
+      vdd_3v3:
+        typical: 3.3
       corner_mos:
         typical: tt_stat
       corner_r:
@@ -263,7 +316,7 @@ parameters:
     spec:
       PSRR_dB:
         display: Power-supply rejection ratio
-        description: PSRR from VAPWR to vout — directly relevant to TOP_LEVEL_MODULE.md §4's domain-split question
+        description: PSRR from vdd_3v3 to vout — directly relevant to TOP_LEVEL_MODULE.md §4's domain-split question
         unit: dB
         minimum: { value: any }
         typical: { value: any }
@@ -277,27 +330,27 @@ parameters:
     plot:
       PSRR_dB_vs_vdd:
         type: xyplot
-        xaxis: vdd
+        xaxis: vdd_3v3
         yaxis: PSRR_dB
         limits: auto
     conditions:
-      vdd:
-        typical: 1.5
+      vdd_3v3:
+        typical: 3.3
       temp:
         typical: 27
 
   vcm_reference:
     spec:
       Vcm_accuracy:
-        display: V_CM accuracy vs. VAPWR/2
-        description: Deviation of the internal V_CM reference from VAPWR/2, internal mode (vcmsel), TOP_LEVEL_MODULE.md §3
+        display: V_CM accuracy vs. vdd_3v3/2
+        description: Deviation of the internal V_CM reference from vdd_3v3/2, internal mode (vcmsel), TOP_LEVEL_MODULE.md §3
         unit: mV
         minimum: { value: any }
         typical: { value: any }
         maximum: { value: any }
       Vcm_line_reg:
         display: V_CM line regulation
-        description: dVcm/dVAPWR
+        description: dVcm/dVdd_3v3
         unit: mV/V
         minimum: { value: any }
         typical: { value: any }
@@ -309,16 +362,16 @@ parameters:
         suffix: .data
         variables: [Vcm_accuracy, Vcm_line_reg]
     plot:
-      Vcm_accuracy_vs_vapwr:
+      Vcm_accuracy_vs_vdd_3v3:
         type: xyplot
-        xaxis: vapwr
+        xaxis: vdd_3v3
         yaxis: Vcm_accuracy
         limits: auto
     conditions:
-      vapwr:
-        minimum: 1.4
-        typical: 1.5
-        maximum: 1.6
+      vdd_3v3:
+        minimum: 3.0
+        typical: 3.3
+        maximum: 3.6
       corner_mos:
         enumerate: [ss, sf, tt, fs, ff]
 
@@ -332,7 +385,9 @@ parameters:
           exists to characterize the bias distribution NET at the top
           level (i.e. does vbp/vbn actually reach every consumer at the
           voltage the reference intended), not to duplicate that macro's
-          own device-level characterization.
+          own device-level characterization. Also covers the harness's own
+          ibias/igmc/vbias as the infrastructure alternative — see
+          TOP_LEVEL_MODULE.md §3, decision not yet made.
         unit: nA
         minimum: { value: any }
         typical: { value: any }
@@ -350,7 +405,7 @@ parameters:
         yaxis: Ibias_val
         limits: auto
     conditions:
-      vdd:
-        typical: 1.5
+      vdd_1v2:
+        typical: 1.2
       corner_mos:
         enumerate: [ss, sf, tt, fs, ff]

@@ -37,7 +37,7 @@ to honor, and let that constrain the blocks, not the reverse.
 | D2S output buffer | internal differential pair → `vout`, class-AB | not designed — no schematic |
 | V<sub>CM</sub> reference | internal common-mode reference, switchable pin / internal / infrastructure | not designed — no schematic |
 | g<sub>m</sub>C stage | differential filter, switchable to free-running/driven quadrature oscillator | not designed — no schematic |
-| Digital scan chain | shift register + holding registers | **dropped, see §2.3** — redundant with the harness's own `dig_in`/`dig_out`, and removing it is itself a hedge against further harness churn |
+| Digital scan chain | shift register + holding registers | **reopened, see §2.3** — direct-wire-to-`dig_in`/`dig_out` is the current schematic, but the user flagged this as not actually settled after the fact |
 | [`macros/OgueyAebischerBias/`](macros/OgueyAebischerBias/) | on-chip PMOS/NMOS bias voltage generator | **schematic exists**; layout/verification not yet set up |
 
 ---
@@ -120,7 +120,16 @@ Everything else changes:
   a mechanism the harness's own source admits isn't finished yet is a risk
   worth naming to Tim directly, not quietly assuming away.
 
-### 2.3 No on-die scan chain — decided
+### 2.3 On-die scan chain — reopened, not decided
+
+**Status correction:** this section previously read "decided, dropped."
+The user reopened it explicitly ("not sure about the scan chain block
+decision") after the reasoning below had already been written down. The
+reasoning stands as the case *for* dropping it, and the current `.sch`/
+`.sym` wire control bits directly to `dig_in` rather than through a scan
+chain — but that is a working default for today's schematic pass, not a
+settled architectural decision to present to Tim as closed. Treat
+everything below as the argument, not the verdict.
 
 The original spec called for an on-die shift register + holding registers
 specifically to avoid spending dedicated pads on `outbuf_en`, `inbuf_en`,
@@ -132,12 +141,14 @@ serial-loadable control mechanism** — functionally the same thing the
 original scan chain was proposed to build, just implemented once in the
 harness instead of once per slot.
 
-**Decision: dropped.** `outbuf_en`, `inbuf_en`, `filter_en`,
+**Working default, not a decision:** `outbuf_en`, `inbuf_en`, `filter_en`,
 `vdiff_en[1:0]`, `vcmsel[1:0]`, and headroom for more, wire directly to
-individual `dig_in[i]` bits — no on-die shift register, no holding
-registers, one fewer schematic block to design, lay out and verify.
-`dig_out[11:0]` is free for direct status/readback (oscillator lock,
-V<sub>CM</sub> settled, etc.), no serial read-back protocol needed.
+individual `dig_in[i]` bits in the current `.sch`/`.sym` — no on-die shift
+register, no holding registers, one fewer schematic block to design, lay
+out and verify. `dig_out[11:0]` is free for direct status/readback
+(oscillator lock, V<sub>CM</sub> settled, etc.), no serial read-back
+protocol needed. This is what's built today; it is reopened, not closed
+(see the status correction above) and could still go the other way.
 
 The reasoning is two-fold, not just "avoid redundant logic": with the
 harness interface itself a demonstrated moving target (§6 — three
@@ -266,11 +277,13 @@ peer-to-peer reframe:
 1. Level shifter design between the 1.2 V control domain and the 3.3 V
    analog domain (§4) — now the concrete, unavoidable consequence of the
    real interface, not a hypothetical.
-2. ~~On-die scan chain~~ — **decided, dropped** (§2.3): redundant with
-   `dig_in`/`dig_out`, and minimizing this macro's dependency surface on
-   the harness's exact digital-control mechanism hedges against further
-   interface churn. Residual risk (the harness's own unfinished `dig_ena`
-   latch, §2.2) exists regardless and isn't scan-chain-specific.
+2. On-die scan chain — **reopened, not decided** (§2.3): today's `.sch`
+   wires control bits directly to `dig_in`, which is a real argument
+   (redundant with `dig_in`/`dig_out`, smaller harness-dependency surface)
+   but the user pulled this back from "settled" after the fact. Needs an
+   actual decision, not an assumption either way. Residual risk (the
+   harness's own unfinished `dig_ena` latch, §2.2) exists regardless and
+   isn't scan-chain-specific.
 3. Bias source: `OgueyAebischerBias` only, harness `ibias`/`vbias` only, or
    a switched combination (§3) — and if switched, that switch is itself
    more infrastructure to design and co-simulate.
