@@ -22,7 +22,17 @@ Derived from the *Chipalooza Analog Project* template,
   <em>Render of the ihp-sg13cmos5l sg13cmos5l_cm_ip__single2diff2single `tiny` layout (200um x 200um).</em>
 </p>
 
-This is an analog-on-top project for Chipalooza 2026: the top level `sg13cmos5l_cm_ip__single2diff2single` is drawn **by hand** in KLayout, based on one of the floorplan templates in `floorplan/`. It uses a **recursive macro structure**: the top level embeds the [`inverter`](macros/inverter/README.md) sub-macro, which shows the complete analog design flow (schematic → simulation → layout → DRC/LVS/PEX → post-layout simulation → characterization). For **mixed-signal (AMS)** submissions the digital [`counter`](macros/counter/README.md) sub-macro is shipped alongside it, which shows the complete digital flow (RTL → lint → RTL simulation → FPGA → LibreLane hardening → PEX → gate-level and mixed-signal simulation).
+This is an analog-on-top project for Chipalooza 2026: **single-ended ↔ differential analog pin buffers**. On-chip building blocks (amplifiers, filters, comparators, …) should be fully differential in/out for signal range and PSRR, but multi-user shared-die platforms like Chipalooza, TinyTapeout and HeiChips are severely I/O-limited. `sg13cmos5l_cm_ip__single2diff2single` bridges that gap: a single-ended-in pin buffers into a fully differential internal signal, and a differential-in class-AB driver buffers back out to a single-ended pin, so a slot's scarce single-ended pins can still host differential circuitry. The full proposal is [`sudelbuecher/description/s2d_d2s_pinbuffers.md`](../sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/description/s2d_d2s_pinbuffers.md) on the `sudel_buecher` branch (`_sudelbuecher` worktree).
+
+Planned circuit blocks:
+
+- a single-ended-to-differential input buffer and a differential-to-single-ended class-AB output buffer (unity / negative-unity gain), each possibly integrated into its pin
+- an internal common-mode voltage reference (V<sub>CM</sub>), switchable between the analog pin, an internal source, or the infrastructure supply
+- a fully differential g<sub>m</sub>C stage, switchable between filtering the input signal and running as a self-sustained quadrature oscillator, as a self-contained proof-of-concept circuit
+- a digital scan chain (shift register + holding registers) so most control pins (enables, mode selects, trim) are absorbed into a serial interface instead of dedicated pads
+- bias generation: an [Oguey & Aebischer](https://www.semanticscholar.org/paper/Ultra-High-Input-Impedance%2C-Low-Noise-Integrated-Chi-Maier/ab83669efb5f29a94e19b8e2c3f4801ab50ba3ea/figure/10) ultra-high-input-impedance, low-noise bias block is expected to become part of the design — its schematic is already imported into [`macros/OgueyAebischerBias/`](macros/OgueyAebischerBias/) but it is not yet wired into any build, layout or verification target
+
+The top level `sg13cmos5l_cm_ip__single2diff2single` is drawn **by hand** in KLayout, based on one of the floorplan templates in `floorplan/`, and uses the same **recursive macro structure** as the *Chipalooza Analog Project* template it was forked from: each block above becomes its own sub-macro under `macros/`, verified and built with its own Makefile, then instantiated into the top-level layout and schematic. As of this file the repo still carries the template's own example sub-macros, [`inverter`](macros/inverter/README.md) and [`counter`](macros/counter/README.md) — useful as a reference for the complete analog flow (schematic → simulation → layout → DRC/LVS/PEX → post-layout simulation → characterization) and the complete digital/mixed-signal flow (RTL → lint → RTL simulation → FPGA → LibreLane hardening → PEX → gate-level and mixed-signal simulation) — but they are template placeholders, not part of this design. Replacing them with the real pin-buffer, g<sub>m</sub>C and bias macros is the next task (see `CLAUDE.md`, §7).
 
 The whole flow runs inside the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container, which ships every tool it needs: Xschem, ngspice, Magic, Netgen, KLayout, CACE, LibreLane, Verilator, Icarus Verilog, cocotb, Yosys, and the `sak-*` helper scripts.
 
@@ -65,6 +75,24 @@ To rename the project again later, change `TOP` in the [`Makefile`](Makefile) �
 Then search and replace the remaining occurrences inside those files — Xschem schematics and the plot script are plain text. The ones that matter are the DUT symbol instances and the `.include` of the PEX netlist in the testbench, and the raw file names in the plot script. Finally set `top-cell` in [`submission.yaml`](submission.yaml) to the same name.
 
 
+## Chip Integration: This Repository vs. `sg13cmos5l_ocd_chipalooza`
+
+Everything above — `submission.yaml`, the `floorplan/` templates, the `analog_0`…`analog_2` pins, `slot-size` — is the **packaging and precheck** stage: it produces a self-contained macro (GDS, LEF, LIB, Verilog stub) that the *Chipalooza Analog Project* template's own precheck can validate against an eFPGA-connected `tiny`/`small`/`large` slot.
+
+That macro's actual **chip-level embedding** is a separate, later step, into [`sg13cmos5l_ocd_chipalooza`](https://github.com/RTimothyEdwards/sg13cmos5l_ocd_chipalooza) — a different repository (not a submodule of this one) implementing the Chipalooza Analog Harness: an 80-pin Caravel-openframe-derived padframe with 16–18 fixed analog project **slots** (`s1`…`s16`, each with 1–4 dedicated `sg13cmos5l_IOPadAnalog` pins plus shared bias, power-switch and housekeeping-SPI resources), assembled from a `config.txt` pad-type list rather than from `submission.yaml`. Its own pinout has no eFPGA and no `analog_0`…`analog_2` naming — a slot's pins are named from `config.txt` (e.g. `s1_an[0]` → core signal `s1_an_0`).
+
+This means the two documents describe **different levels of the same eventual chip**, not competing schemes:
+
+| | This repository | `sg13cmos5l_ocd_chipalooza` |
+| --- | --- | --- |
+| Produces | a standalone macro (GDS/LEF/LIB/Verilog stub) | the full chip: padframe + housekeeping wrapper + all project slots |
+| Governed by | `submission.yaml`, `floorplan/` | `config.txt`, the padframe/wrapper Tcl and Magic scripts |
+| Pin naming | `analog_0`…`analog_2`, eFPGA `ui_in`/`uo_out` | `sN_an[x]` → `sN_an_x` per `config.txt` |
+| Status here | in progress (see §7 of `CLAUDE.md`) | this design is **not yet referenced anywhere** in that repository — no slot, no submodule entry |
+
+**Open / TBD:** which slot number this design will occupy, how many of its analog pins (`vin`, `vout`, and the shared `vcm`/`vdiffp`/`vdiffn` from [`s2d_d2s_pinbuffers.md`](../sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/description/s2d_d2s_pinbuffers.md)) map to a slot's `sN_an[x]` pads vs. the harness's shared analog lines, and whether the digital control pins (`ena`, `scanclk`, …) connect to the slot's dedicated digital pins or ride on the harness's housekeeping SPI. None of this is decided yet, and `sg13cmos5l_ocd_chipalooza` itself is left untouched until it is.
+
+
 ## Directory Structure
 
 <details>
@@ -91,8 +119,9 @@ Then search and replace the remaining occurrences inside those files — Xschem 
 │  ├─ sg13cmos5l_cm_ip__single2diff2single.klay.gds     # KLayout editing source (live PCells + library references)
 │  └─ sg13cmos5l_cm_ip__single2diff2single.klay.klib    # library binding of the .klay.gds to macros/inverter/layout/inverter.gds
 ├─ 📁 macros/
-│  ├─ 📁 counter/                            # digital example sub-macro for AMS designs (own Makefile & README)
-│  └─ 📁 inverter/                           # analog example sub-macro (own Makefile & README)
+│  ├─ 📁 OgueyAebischerBias/                 # bias generator, expected to become part of the design (schematic only, not yet wired in)
+│  ├─ 📁 counter/                            # digital example sub-macro for AMS designs (own Makefile & README) — template placeholder
+│  └─ 📁 inverter/                           # analog example sub-macro (own Makefile & README) — template placeholder
 ├─ 📁 netlist/
 │  ├─ 📁 layout/
 │  │  ├─ *.cir                               # KLayout LVS extracted netlists
@@ -141,11 +170,12 @@ Then search and replace the remaining occurrences inside those files — Xschem 
 
 ## Recursive Macro Structure
 
-This project embeds two sub-macros in `macros/`, and each level has its own Makefile with the same targets:
+The repository currently embeds three sub-macros in `macros/`, and each level has its own Makefile with the same targets. Two of them, `inverter` and `counter`, are the *template's* own example macros, kept as a working reference for the flow — they are not part of this design and stay only until the teardown in `CLAUDE.md` (§7) replaces them with the real pin-buffer, g<sub>m</sub>C and bias macros described above. The third, `OgueyAebischerBias`, is the first real building block, though only its schematic has been imported so far:
 
-- **Top level (`sg13cmos5l_cm_ip__single2diff2single`)** — the hand-drawn submission macro. Its layout instantiates the `inverter` cells. Its Makefile verifies and builds the **top cell only** (`CELL` defaults to `sg13cmos5l_cm_ip__single2diff2single`).
-- **Analog sub-macro ([`macros/inverter/`](macros/inverter/README.md))** — the complete flow reference for the unit `inverter` cell (`TOP = inverter`), including sizing notebooks and CACE characterization.
-- **Digital sub-macro ([`macros/counter/`](macros/counter/README.md))** — the digital counterpart for **mixed-signal (AMS)** designs (`TOP = counter_top`). Its RTL is linted (Verilator), simulated (Icarus Verilog and cocotb), emulated on an FPGA and hardened into a placeable macro with LibreLane, which runs the Magic and KLayout DRC and the Netgen LVS as part of the flow. [`generate-xspice`](macros/counter/README.md#generate-xspice-file) turns the hardened netlist into an XSPICE model, so the digital block can be simulated together with analog circuitry in an Xschem testbench.
+- **Top level (`sg13cmos5l_cm_ip__single2diff2single`)** — the hand-drawn submission macro. Its layout currently still instantiates the template's `inverter` cells, not the real design. Its Makefile verifies and builds the **top cell only** (`CELL` defaults to `sg13cmos5l_cm_ip__single2diff2single`).
+- **Bias sub-macro ([`macros/OgueyAebischerBias/`](macros/OgueyAebischerBias/))** — Oguey & Aebischer ultra-high-input-impedance, low-noise bias generator, expected to derive the design's PMOS/NMOS bias currents with matching layout primitives. Only the Xschem schematic (`OgueyAebischerBias.sch`/`.sym` and `ToBiasStartup.sch`/`.sym`) has been imported; Makefile, layout and verification are not yet set up.
+- **Analog template placeholder ([`macros/inverter/`](macros/inverter/README.md))** — the complete flow reference for the unit `inverter` cell (`TOP = inverter`), including sizing notebooks and CACE characterization. Not part of this design.
+- **Digital template placeholder ([`macros/counter/`](macros/counter/README.md))** — the digital counterpart for **mixed-signal (AMS)** designs (`TOP = counter_top`). Its RTL is linted (Verilator), simulated (Icarus Verilog and cocotb), emulated on an FPGA and hardened into a placeable macro with LibreLane, which runs the Magic and KLayout DRC and the Netgen LVS as part of the flow. [`generate-xspice`](macros/counter/README.md#generate-xspice-file) turns the hardened netlist into an XSPICE model, so a digital block (such as the scan chain) can eventually be simulated together with analog circuitry in an Xschem testbench. Not part of this design, but its flow is the template for how the scan chain will be built.
 
 Every macro follows the same principle, and the simulations always run last, so they use the artifacts the same invocation has just produced:
 
@@ -158,7 +188,7 @@ Every macro follows the same principle, and the simulations always run last, so 
 **Build order matters**: if you modify a sub-macro, run its own flow first (`make -C macros/inverter all` or `make -C macros/counter all`, or equivalently `make build-inverter` / `make build-counter` from here), then rebuild the top level. The top-level `make all` does this automatically by running `build-macros` before verifying and building the top cell. You can also remove the sub-macros entirely and draw everything flat in the top-level layout (not recommended).
 
 > [!TIP]
-> The example top level shipped here is **analog only**: it instantiates the `inverter` and leaves the `counter` unused, so nothing but `build-macros` touches it. To go mixed-signal, build the digital macro once with `make build-counter`, add its hardened GDS `macros/counter/final/gds/counter_top.gds` as a second library entry in [`layout/sg13cmos5l_cm_ip__single2diff2single.klay.klib`](layout/sg13cmos5l_cm_ip__single2diff2single.klay.klib) next to the `inverter` binding, place the `counter_top` cell in the top-level layout and re-export the tapeout GDS. `counter_top.sym` is already visible in a top-level Xschem session, see [Xschem Configuration](#xschem-configuration).
+> The top level as shipped still carries the **template's inherited placeholder content**: it instantiates the `inverter` and leaves the `counter` unused, so nothing but `build-macros` touches it. This is not the real design (see above) — it demonstrates the mechanism the real macros will use once they replace `inverter`/`counter`. To go mixed-signal with the template's example macros in the meantime, build the digital macro once with `make build-counter`, add its hardened GDS `macros/counter/final/gds/counter_top.gds` as a second library entry in [`layout/sg13cmos5l_cm_ip__single2diff2single.klay.klib`](layout/sg13cmos5l_cm_ip__single2diff2single.klay.klib) next to the `inverter` binding, place the `counter_top` cell in the top-level layout and re-export the tapeout GDS. `counter_top.sym` is already visible in a top-level Xschem session, see [Xschem Configuration](#xschem-configuration).
 
 
 ## Floorplan Templates

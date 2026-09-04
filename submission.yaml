@@ -3,6 +3,13 @@
 #
 # This is the configuration file for your submission.
 # Please edit the fields below to match your project.
+#
+# NOTE: this file governs the packaging/precheck stage only (this template's
+# eFPGA-connected tiny/small/large slot). The finished macro's actual chip
+# embedding happens separately, as a slot in sg13cmos5l_ocd_chipalooza (a
+# different repository, Caravel-openframe based, configured via its own
+# config.txt) -- see "Chip Integration" in README.md. Which ocd_chipalooza
+# slot this design will occupy is not decided yet.
 
 project-name: Single-to-Differential-to-Single Converter
 
@@ -31,21 +38,59 @@ short-description: Single-ended to differential to single-ended signal converter
 # If your project requires additional external hardware, e.g. a USB port,
 # please mention this so it can be considered when designing the PCB.
 long-description: |
-  TODO: replace this block before submitting.
+  Single-ended <-> differential analog pin buffers for I/O-limited shared-die
+  platforms (Chipalooza, TinyTapeout, HeiChips).
 
-  A single-ended to differential to single-ended signal converter for the
-  ihp-sg13cmos5l Open-PDK.
+  On-chip analog building blocks (amplifiers, filters, comparators, ...)
+  should be fully differential in/out for signal range and PSRR, but shared
+  multi-user platforms hand each participant only a few single-ended pins.
+  This macro bridges that gap: a single-ended-in pin buffers into a fully
+  differential internal signal, and a differential-in class-AB driver
+  buffers back out to a single-ended pin, so a slot's scarce single-ended
+  pins can still host differential circuitry.
+
+  Planned circuit blocks:
+
+  * a single-ended-to-differential input buffer and a differential-to-
+    single-ended class-AB output buffer (unity / negative-unity gain), each
+    possibly integrated into its pin
+  * an internal common-mode voltage reference (V_CM), switchable between the
+    analog pin, an internal source, or the infrastructure supply
+  * a fully differential gmC stage, switchable between filtering the input
+    signal and running as a self-sustained quadrature oscillator, as a
+    self-contained proof-of-concept circuit
+  * a digital scan chain (shift register + holding registers) so most
+    control pins (enables, mode selects, trim) are absorbed into a serial
+    interface instead of dedicated pads
+  * bias generation from an Oguey & Aebischer ultra-high-input-impedance,
+    low-noise bias block (imported into macros/OgueyAebischerBias/, not yet
+    wired into the design)
+
+  How it is tested: a single-ended input is fed through the input buffer,
+  the differential gmC stage and the output buffer. Nine testbench
+  configurations (selected via the scan-chain enable/select bits) exercise
+  the output buffer alone, the input buffer alone, the two chained with the
+  filter off, the filter as a driven filter, the filter as a free-running or
+  driven oscillator, and the shared differential lines shorted to
+  characterize wire/pad parasitics. The two shared analog pins (vdiffp,
+  vdiffn) carry the unbuffered internal differential signal so the input and
+  output stages can be characterized separately; measuring them needs either
+  an external instrumentation amplifier or an active differential
+  oscilloscope probe, since the true internal differential nodes are not
+  brought out to a low-impedance output. Digital control (enable, mode
+  select, trim) is driven and read back over the scan chain with a USB
+  digital pattern generator / logic analyzer.
+
+  See sudelbuecher/description/s2d_d2s_pinbuffers.md (branch sudel_buecher,
+  the _sudelbuecher worktree) for the full proposal: pinout tables, bias and
+  bandwidth targets, and open questions.
 
   NOTE: the layout, schematic and netlists currently committed in this
   repository are still the unmodified `inverter` example carried over from the
   Chipalooza Analog Project template. Only the *names* have been changed so
-  far. Replace the circuit, then re-run `make all` and rewrite this section to
-  describe:
-
-  * why the circuit exists and how it works
-  * how it is tested (which pins to drive, what to observe)
-  * any external hardware the test needs (e.g. a USB port), so it can be
-    considered when designing the PCB
+  far (see README.md and CLAUDE.md, section 7). Replace the circuit, then
+  re-run `make all` and rewrite this section to describe the final, as-built
+  circuit.
 
 # These paths are used to verify your
 # submission during the precheck.
