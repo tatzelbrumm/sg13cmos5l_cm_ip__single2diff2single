@@ -1,0 +1,85 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias/testbenches/xschem/OgueyAebischerBias_tb.sch
+**.subckt OgueyAebischerBias_tb
+xbias vdd vbp vbn vbr 0 OgueyAebischerBias
+xstart vdd vbp vbn disable vbr 0 ToBiasStartup
+VDD vdd 0 dc 1.2 pwl(0 0 100m 1.2)
+Voff disable 0 0
+**** begin user architecture code
+
+
+.options gmin=1e-15 abstol=1p
+.option savecurrents
+.nodeset v(vbp)=200m
+.control
+save all
+op
+remzerovec
+write test_OgueyAebischerBias.op.raw
+tran 20u .2
+remzerovec
+write test_OgueyAebischerBias.raw
+plot vdd vbp vbn vbr xbias.vres
+plot v.xbias.vi1#branch v.xbias.vi4#branch v.xbias.viaux#branch
+.endc
+
+
+ .lib cornerMOShv.lib mos_tt
+
+.param mc_mm_switch=0
+.param mc_pr_switch=1
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  OgueyAebischerBias.sym # of pins=5
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias/schematic/xschem/OgueyAebischerBias.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias/schematic/xschem/OgueyAebischerBias.sch
+.subckt OgueyAebischerBias vdd vbp vbn vbr vss
+*.iopin vss
+*.iopin vdd
+*.iopin vbp
+*.iopin vbn
+*.iopin vbr
+XM10 net3 vbn vres vss sg13_hv_nmos w=1u l=1u ng=1 m=4 mm_ok=1
+XM12 vbp vbp vdd vdd sg13_hv_pmos w=1u l=1u ng=1 m=1 mm_ok=1
+XM11 vbn vbn vss vss sg13_hv_nmos w=1u l=1u ng=1 m=1 mm_ok=1
+XM13 net2 vbp vdd vdd sg13_hv_pmos w=1u l=1u ng=1 m=4 mm_ok=1
+XM14 net1 vbp vdd vdd sg13_hv_pmos w=1u l=1u ng=1 m=2 mm_ok=1
+XM16 vres vbr net5 vss sg13_hv_nmos w=1u l=20u ng=1 m=1 mm_ok=1
+XM15 vbr vbr net4 vss sg13_hv_nmos w=1u l=20u ng=1 m=1 mm_ok=1
+Vi1 vbp net3 0
+.save i(vi1)
+Vi4 net2 vbn 0
+.save i(vi4)
+Viaux net1 vbr 0
+.save i(viaux)
+XM18 net5 vbr net6 vss sg13_hv_nmos w=1u l=20u ng=1 m=1 mm_ok=1
+XM17 net4 vbr net7 vss sg13_hv_nmos w=1u l=20u ng=1 m=1 mm_ok=1
+XM20 net6 vbr net9 vss sg13_hv_nmos w=1u l=20u ng=1 m=1 mm_ok=1
+XM19 net7 vbr net8 vss sg13_hv_nmos w=1u l=20u ng=1 m=1 mm_ok=1
+XM22 net9 vbr vss vss sg13_hv_nmos w=1u l=20u ng=1 m=1 mm_ok=1
+XM21 net8 vbr vss vss sg13_hv_nmos w=1u l=20u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  ToBiasStartup.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias/schematic/xschem/ToBiasStartup.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias/schematic/xschem/ToBiasStartup.sch
+.subckt ToBiasStartup vdd vbp vbn disable vbr vss
+*.iopin vss
+*.iopin vdd
+*.iopin vbp
+*.iopin vbn
+*.iopin vbr
+*.ipin disable
+XM24 vbr disable vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM22 vbr vkick vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM25 vkick vbp vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM23 vbn disable vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM21 vbn vkick vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XM20 disable vkick disable vss sg13_hv_nmos w=8u l=2u ng=1 m=1 mm_ok=1
+XM26 vdd vbp vdd vss sg13_hv_nmos w=8u l=2u ng=1 m=1 mm_ok=1
+.ends
+
+.end
