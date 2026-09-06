@@ -11,6 +11,8 @@ and sg13cmos5l_ocd_chipalooza/verilog/rtl/user_project_wrapper_3a.v -- see
 TOP_LEVEL_MODULE.md. No scan chain (reopened, not settled -- see log).
 No pin for spec's reset: user_project_wrapper_3a.v has no per-project
 reset port, only a chip-global one via housekeeping SPI.} 40 -830 0 0 0.3 0.3 {}
+N 640 -260 700 -260 {lab=vout}
+N 140 -260 200 -260 {lab=vin}
 C {devices/iopin.sym} 140 -680 2 0 {name=p1 lab=vdd_3v3}
 C {devices/iopin.sym} 140 -660 2 0 {name=p2 lab=vdd_1v2}
 C {devices/iopin.sym} 140 -640 2 0 {name=p3 lab=vss_3v3}
@@ -29,8 +31,10 @@ C {devices/ipin.sym} 140 -340 2 1 {name=p15 lab=ibias}
 C {devices/ipin.sym} 140 -320 2 1 {name=p16 lab=igmc}
 C {devices/ipin.sym} 140 -300 2 1 {name=p17 lab=vbias}
 C {devices/ipin.sym} 140 -260 2 1 {name=p18 lab=vin}
-C {devices/opin.sym} 140 -220 2 0 {name=p19 lab=vout}
+C {devices/opin.sym} 700 -260 2 1 {name=p19 lab=vout}
 C {devices/iopin.sym} 140 -180 2 0 {name=p20 lab=vcm}
 C {devices/iopin.sym} 140 -140 2 0 {name=p21 lab=vdiffp}
 C {devices/iopin.sym} 140 -120 2 0 {name=p22 lab=vdiffn}
 C {title.sym} 160 -40 0 0 {name=l1 author="Christoph Maier"}
+C {/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/inbuffer/schematic/xschem/inbuffer.sym} 260 -260 0 0 {name=xinbuf}
+C {/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/outbuffer/schematic/xschem/outbuffer.sym} 580 -260 0 0 {name=xoutbuf}
