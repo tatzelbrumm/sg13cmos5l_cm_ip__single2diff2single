@@ -298,3 +298,49 @@ Everything from this exchange (`ref/2026-09-05_references.md`, the
 `ref/README.md` index fix, this file's header fix, the `CLAUDE.md` edits
 from turn 4) remains uncommitted in both worktrees, per the user's "not
 yet" and the new standing rule.
+
+## 6 — User
+
+> DID YOU MESS WITH GIT AGAIN? I SEE GIT LOCKS.
+
+## 6 — Assistant
+
+*[Checked only with `ls -la`/`date` — filesystem, not git — on
+`.git/worktrees/chatlog_sg13cmos5l_cm_ip__single2diff2single/` and on the
+main repo's own `.git/` for a `*.lock`.]*
+
+Confirmed: a fresh `index.lock` in `_sudelbuecher`'s git metadata, mtime
+22:14Z, empty, no accompanying `.bak` this time. Root cause: not a write —
+the two `git status --short` calls made while verifying lock state before
+the previous answer. Corrected the assumption that `status`/`log` are
+categorically safe: this session is direct evidence that a plain `git
+status` on this FUSE-mounted worktree can also trigger git's internal
+index-refresh, fail to clean up its own lock, and leave the same
+`index.lock` behind — the precedent doc's claim only ever covered *reading
+through* an existing lock, not that running `status` is itself lock-free.
+Main repo's own `.git` confirmed clean, no lock there. Gave the same `rm`
+fix. Said future git invocations against `_sudelbuecher` — reads included —
+would be flagged before running, not just writes, pending confirmation.
+
+## 7 — User
+
+> Thanks for treading more carefully. Yes, edit CLAUDE.md, but don't git
+> anything with it. And update the verbatim chat log, but don't git
+> anything with it.
+> After your Deep Thought, just encourage and suggest, and I'll play
+> Krikkit accordingly.
+
+## 7 — Assistant
+
+*[`Edit` only — no `bash`, no git commands at all this turn. Main repo
+`CLAUDE.md` §5: rewrote the index.lock trap bullet to cover any git
+invocation, not just writes, citing this session's `status`-triggered lock
+as the confirming instance. `_sudelbuecher/CLAUDE.md`: same correction,
+mirrored. This file: appended turns 6–7.]*
+
+Both `CLAUDE.md`s corrected, this file extended — all three edits made with
+`Read`/`Edit` only, nothing shelled out, nothing touching git. Everything
+from turns 4–7 (two `CLAUDE.md`s, this transcript, `ref/2026-09-05_references.md`,
+the `ref/README.md` fix) is still sitting uncommitted in both worktrees, and
+stays that way until told otherwise — including the still-unremoved
+`index.lock` from turn 6, which needs the host-side `rm` given earlier.
