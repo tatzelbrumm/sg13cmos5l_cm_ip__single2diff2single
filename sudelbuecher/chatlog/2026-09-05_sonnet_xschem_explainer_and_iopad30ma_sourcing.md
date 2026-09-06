@@ -344,3 +344,62 @@ from turns 4–7 (two `CLAUDE.md`s, this transcript, `ref/2026-09-05_references.
 the `ref/README.md` fix) is still sitting uncommitted in both worktrees, and
 stays that way until told otherwise — including the still-unremoved
 `index.lock` from turn 6, which needs the host-side `rm` given earlier.
+
+## 8 — User
+
+> Now git stash doesn't seem to work any more. Too many players in one local
+> repository?
+>  git stash schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch
+> fatal: subcommand wasn't specified; 'push' can't be assumed due to
+> unexpected token 'schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch'
+
+## 8 — Assistant
+
+Not contention — plain git syntax. Modern git refuses to guess whether a
+bare argument after `git stash` is a pathspec or a subcommand, so the
+explicit form is required: `git stash push schematic/xschem/....sch` (or
+`git stash push -- <path>` if the path could ever look like an option).
+Noted both `.sch`/`.sym` are still modified from turn 1, stash together or
+run it twice.
+
+## 9 — User
+
+> You updated CLAUDE.md which sits at the main branch and affects all
+> subsequent branches. What's the best way to update CLAUDE.md to all
+> branches? commit to main and rebase everything on top? commit to toplevel
+> and cherry-pick to cace and oguey?
+
+## 9 — Assistant
+
+Recommended cherry-pick over rebase-everything: this project cites exact
+commit SHAs as its provenance mechanism throughout the chatlogs and
+`MANIFEST.tsv`, and a rebase would rewrite every one of them on every
+downstream branch, orphaning that cross-referencing for a doc-only change.
+Proposed: commit the fix on `toplevel` (where it already sits), then
+`git cherry-pick <sha>` onto `main`, `oguey`, `cace`. Recommended *not*
+touching `i_claude`/`counter_digital`/`inverter_pex` — CLAUDE.md's own
+branch table calls those frozen verification snapshots/markers, not active
+work. Offered to run it, flagged that the main repo is the same class of
+connected folder as `_sudelbuecher` and likely carries the same lock risk,
+so would ask before each step rather than chain them — left it to the user
+to say whether they or the assistant would run it.
+
+## 10 — User
+
+> Looks like your additions to CLAUDE.md are unnecessarily chatty because
+> they are redundant.
+> First restrict git use to read only, then restrict it completely.
+> Shorten the instruction.
+
+## 10 — Assistant
+
+*[`Edit` only, both `CLAUDE.md`s — no bash, no git.]*
+
+Rewrote both files' trap bullet from a multi-sentence paragraph (dated
+confirmation, a parenthetical about existing-vs-fresh locks, the `.bak`
+anecdote, a separate "no agent session can clean up" sentence) down to
+roughly four sentences each, restated as the two-stage rule requested:
+read-only first, then fully off-limits, since even reads have now locked
+this worktree. Same underlying fact (confirmed 2026-09-05 `index.lock` from
+a bare `status`), same actionable rule (ask before any git command; if it
+locks, name the file and stop), much less of it repeated across sentences.
