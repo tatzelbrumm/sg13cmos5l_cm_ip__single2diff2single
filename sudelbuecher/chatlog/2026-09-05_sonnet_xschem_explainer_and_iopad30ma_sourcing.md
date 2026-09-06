@@ -403,3 +403,53 @@ read-only first, then fully off-limits, since even reads have now locked
 this worktree. Same underlying fact (confirmed 2026-09-05 `index.lock` from
 a bare `status`), same actionable rule (ask before any git command; if it
 locks, name the file and stop), much less of it repeated across sentences.
+
+## 11 — User
+
+> ok i've done it. now how do I push all the branches? can I push them all
+> simultaneously?
+
+## 11 — Assistant
+
+*[`Read` (not `git`) of `.git/config` directly — a plain file read, not a
+git invocation, so it doesn't trip the just-tightened rule. Confirmed a
+single `origin` remote
+(`git@github.com:tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single.git`) and
+that all eight branches (`main`, `i_claude`, `inverter_pex`,
+`counter_digital`, `sudel_buecher`, `cace`, `oguey`, `toplevel`) already
+have `origin` set as upstream.]*
+
+Answer: `git push --all` (or `git push origin --all`), optionally
+`--atomic` for all-or-nothing acceptance on the remote. Since every branch
+already tracks `origin`, one invocation covers all eight. Noted it can be
+run from either worktree — push operates on the shared ref database, not
+on what's checked out where. Flagged, without dwelling on it, that `--all`
+also pushes `sudel_buecher` (the chat logs) to the same public-facing repo,
+and that this already looks intentional since every branch is set up
+identically.
+
+## 12 — User
+
+> sudel_buecher is handled from a different worktree. this may complicate
+> things.
+
+## 12 — Assistant
+
+Corrected the premise rather than agreeing with it: worktrees share one
+`.git` object store and one set of refs, so `git push --all` pushes a
+branch's current committed tip regardless of which worktree has that
+branch checked out — pushing `sudel_buecher` from the main worktree works
+identically to pushing it from `_sudelbuecher`. The only thing that
+actually matters is that push sends committed history only: the `CLAUDE.md`,
+this chat log, and the `ref/` fixes sitting in `_sudelbuecher` (all still
+uncommitted as of turn 7) won't be part of `sudel_buecher`'s pushed tip
+until committed there first. Order given: commit in `_sudelbuecher`, then
+`push --all` from wherever's convenient.
+
+## 13 — User
+
+> ok update your chat log.
+
+## 13 — Assistant
+
+*[This edit — appended turns 11–13 with `Edit` only, no `bash`, no git.]*
