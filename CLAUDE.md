@@ -153,6 +153,12 @@ sim is functionally accurate, not timing-accurate. Timing comes from LibreLane S
 fallback filename for the sibling PDK; this one ships `sg13cmos5l.lyp`. It only breaks
 the datasheet's layout thumbnail, after all numbers are computed.
 
+**Agent git access here: read-only, and even that isn't safe — treat it as fully
+off-limits.** The sandbox can't `unlink`/`rename` in a connected folder's `.git/`, and a
+bare `status`/`log`, not just `add`/`commit`, can leave an unremovable `index.lock`
+(confirmed 2026-09-05). No git commands without asking first; if one locks, name the
+exact file and stop — don't retry.
+
 ---
 
 ## 6. Where the record lives
