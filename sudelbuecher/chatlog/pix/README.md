@@ -16,5 +16,20 @@ Images for the notes in `sudelbuecher/`.
   annotation overlay was added. Kept because it is the readable version if
   you only want the topology.
 
+- `2026-09-06_sonnet_gatedecode_npath_drc.png` / `.svg` — DRC-clean
+  transistor-level render of `sg13cmos5l_IOPadInOut30mA`'s `GateDecode`
+  N-path (`io_inv_x1` → `io_nor2_x1` → `LevelUp`), built with the
+  `analog-schematic` skill from a transcription of the ChatGPT-produced
+  `.spi` in `sudelbuecher/sg13cmos5l_IOPadInOut30mA/`. Belongs to
+  [`../2026-09-05_sonnet_xschem_explainer_and_iopad30ma_sourcing.md`](../2026-09-05_sonnet_xschem_explainer_and_iopad30ma_sourcing.md).
+  This session's own generated output (unlike the ChatGPT/Opus artifacts in
+  that same cell folder, which stay where they are and are only linked, not
+  copied — see that transcript's turn 3 and `ref/2026-09-05_references.md`
+  §4). Source of truth is
+  `sudelbuecher/sg13cmos5l_IOPadInOut30mA/sg13cmos5l_GateDecode_npath_drc.py`;
+  the copy here is the figure as it stood at the end of that turn. DRC
+  proves this transcription internally well-formed, not that it matches the
+  real IHP cell — see the transcript for the caveat in full.
+
 Not the place for design renders: those are generated artifacts and belong in
 `render/img/`, produced by `make render-gds`.

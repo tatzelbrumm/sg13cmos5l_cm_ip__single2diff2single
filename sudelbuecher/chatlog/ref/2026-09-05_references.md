@@ -78,8 +78,83 @@ neither of these is that):
   / [`.svg`](../../sg13cmos5l_IOPadInOut30mA/sg13cmos5l_IOPadInOut30mA_verified_schematic_v3.svg),
   plus the accompanying
   [`sg13cmos5l_IOPadInOut30mA_full_hierarchy.spi`](../../sg13cmos5l_IOPadInOut30mA/sg13cmos5l_IOPadInOut30mA_full_hierarchy.spi)
-  — appeared mid-session (see the transcript's "Companion activity" note),
-  apparently from a parallel Opus session acting on turn 2's own
-  suggestion. Neither the `.spi`'s claimed provenance (extraction "from the
-  official IHP `libs.ref/sg13cmos5l_io/spice/sg13cmos5l_io.spi`") nor the
-  schematic's correctness has been checked by this session.
+  — appeared mid-session (see the transcript's "Companion activity" note).
+  Turn 12 corrected the provenance guess above: this was the user's
+  colleague ChatGPT, not a parallel Opus session — see turn 12 and its
+  correction of turn 3's misattribution. Neither the `.spi`'s claimed
+  provenance (extraction "from the official IHP
+  `libs.ref/sg13cmos5l_io/spice/sg13cmos5l_io.spi`") nor the schematic's
+  correctness had been checked as of turn 3; turn 13 (the `analog-schematic`
+  build) and turn 24 (the real KLayout-exported GDS) are what actually
+  checked parts of it — see §5 and §7.
+
+## 5. `analog-schematic` skill build (turn 13)
+
+- `anthropic-skills:analog-schematic`'s own `SKILL.md`,
+  `scripts/sch_netlist.py`, `tests/golden.py` — read in full to learn the
+  `Mosfet`/`TwoTerm`/`Port` primitives and the DRC-then-render workflow
+  before writing any netlist code, per this session's own research-before-
+  skill convention.
+- Input netlist:
+  `sudelbuecher/sg13cmos5l_IOPadInOut30mA/sg13cmos5l_IOPadInOut30mA_full_hierarchy.spi`
+  (the ChatGPT-produced file above), read in full — every `.subckt`'s
+  D/G/S/B node list transcribed by hand into the skill's Python primitives
+  for the `GateDecode` N-path only (`io_inv_x1` → `io_nor2_x1` →
+  `LevelUp`); the mirrored P-path and the ESD clamps/diodes were not
+  rendered (no `Diode` primitive in the skill; device count too high for a
+  legible figure). Output: `pix/2026-09-06_sonnet_gatedecode_npath_drc.png`
+  / `.svg` (see `pix/README.md`) and
+  `sudelbuecher/sg13cmos5l_IOPadInOut30mA/sg13cmos5l_GateDecode_npath_drc.py`
+  (the build script, also copied there).
+- `pip install cairosvg` — installed into the sandbox to rasterize the SVG
+  for the mandatory visual-inspection step the skill requires.
+
+## 6. Local build-script and meeting-chat research (turns 15–16)
+
+All read directly, no web fetch:
+
+- `IIC-OSIC-TOOLS/_build/images/open_pdks/scripts/install_ihp.sh` and
+  `install_ihp_cmos5l.sh` — read for the real `libs.ref/<pdk>_io/` and
+  `libs.tech/xschem/<pdk>_tests|tests/` path conventions and the
+  `sg13g2_IOPad_tb.sch` testbench reference, before the user confirmed the
+  real paths from inside the container in turn 14.
+- `chipalooza_cmos5L/GMT20260827-140446_RecordingnewChat.txt` — the actual
+  2026-08-27 Chipalooza review call chat log. Grepped for `klayout`/`magic`
+  and for `Herman`/`Edwards`/`Dorrer`; quoted verbatim with timestamps in
+  turn 16's answer (Simon Dorrer's KLayout productivity-suite link at
+  00:46:48; Krzysztof Herman's and "tim"'s presence on the call at
+  01:02:28/01:02:37).
+- `chipalooza_cmos5L/repo_consolidation_analog_project.md` — read for the
+  "Austrian School" (JKU/Dorrer/Pretl) vs. "Edwards School" (Tim Edwards)
+  framing and its link to <https://opencircuitdesign.com/analog_flow/> as
+  Edwards' own reference flow. Re-read in full, with its own byline read
+  out, for turn 18's authorship question (Christoph Maier, revision 2,
+  2026-08-28).
+- `home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/README.md` §License
+  — re-read for the SPDX-header question (turns 20–21).
+
+## 7. Real KLayout-exported pad GDS (turn 24)
+
+- `macros/IOPad/layout/gds/*.gds` (six files, user-exported from the real
+  `$PDK_ROOT` inside the container via `pya`, per turns 19–21's discussion)
+  — read with `gdstk` (`pip install gdstk`), not opened by hand: cell
+  names, bounding boxes, polygon counts, per file. This is the first point
+  in the whole `sg13cmos5l_IOPadInOut30mA` investigation where **real**
+  IHP-sourced hierarchy data (not a ChatGPT transcription, not a web
+  search) was directly inspected. Confirmed: `IOPadInOut30mA`'s real
+  hierarchy has 13 cells and no `GuardRing_*` subcells anywhere — the
+  ChatGPT `.spi`'s nine `GuardRing_*` subckts (§1 above / that transcript's
+  turn 2) do not exist as named cells in the real layout.
+
+## 8. Web search + failed fetch (turn 22, CC BY-NC question)
+
+- `mcp__workspace__web_fetch` on
+  <https://opencircuitdesign.com/chipalooza/challenge-2.html> — returned
+  empty (likely JS-rendered); not used as a source, noted as a failed
+  attempt in the transcript rather than silently dropped.
+- `WebSearch`, query `Chipalooza challenge 2 open circuit design license
+  requirements submission` — no Challenge-2-specific page found; used only
+  for the general pattern ("recognized permissive open-source license"
+  required by this class of program). Result links quoted to the user as a
+  `Sources:` block in that turn; not reproduced again here since they were
+  general-pattern evidence, not a specific rule for this repo.
