@@ -1,0 +1,200 @@
+* sg13cmos5l_IOPadAnalog -- real subcircuit hierarchy, excerpted verbatim
+*
+* Source: sudelbuecher/sg13cmos5l_IOPadInOut30mA/sg13cmos5l_io.spi
+* (the file the user obtained directly from the IHP PDK install --
+* NOT a ChatGPT transcription. Unlike sg13cmos5l_IOPadInOut30mA, this
+* file's provenance was never in question: it is the real
+* $PDK_ROOT/ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/spice/sg13cmos5l_io.spi,
+* read directly by this assistant. Every subckt below is a byte-for-byte
+* copy of that file, with the source line number noted in each comment.)
+*
+* Copyright 2024 IHP PDK Authors, Apache-2.0 (see that file's own header,
+* lines 6-22, reproduced there not here -- this is an excerpt for reading,
+* not a redistribution copy).
+*
+* Assembled 2026-09-10 for the same purpose as
+* sg13cmos5l_IOPadInOut30mA_full_hierarchy.spi served that cell: a single
+* file holding the target subckt and its full dependency closure. The
+* difference is entirely in the sourcing -- that file started as a
+* colleague's (ChatGPT's) transcription and was checked against the real
+* PDK only afterward; this one is copied from the real PDK file directly,
+* first.
+
+* ===========================================================================
+* TOP: sg13cmos5l_IOPadAnalog  (real file, line 831-838)
+* ===========================================================================
+* 6 pins: vss vdd iovss iovdd pad padres
+* NOTE (verified by inspection, not present in ChatGPT's IOPadInOut30mA
+* transcription because that cell doesn't have this property): "vdd" and
+* "vss" are declared subckt pins but appear NOWHERE in the body below --
+* every instance line uses only iovss/iovdd/pad/padres. This pad's core-
+* domain supply pins are wired through for pin-list uniformity across the
+* sg13cmos5l_io library (see sg13cmos5l_Gallery, line 840, which instances
+* every pad off the same vdd/vss/iovdd bus) but are electrically inert
+* inside this specific cell: IOPadAnalog has no digital logic, so it never
+* needed the 1.2V core rail at all.
+*
+* Consequence: unlike sg13cmos5l_IOPadInOut30mA (GateDecode + two LevelUp
+* level shifters, c2p/c2p_en/p2c control pins), IOPadAnalog has NO active
+* driver and NO digital control path. It is pure ESD/analog-signal
+* protection: two self-biased passive HV clamps (Nclamp, Pclamp) plus two
+* DC diode pairs plus one SecondaryProtection block guarding "padres" (a
+* series-resistor-isolated tap of "pad", presumably the point an on-chip
+* analog block actually connects to).
+
+.subckt sg13cmos5l_IOPadAnalog vss vdd iovss iovdd pad padres
+Xnclamp iovss iovdd pad sg13cmos5l_Clamp_N20N0D
+Xpclamp iovss iovdd pad sg13cmos5l_Clamp_P20N0D
+Xdcndiode iovss pad iovdd sg13cmos5l_DCNDiode
+Xdcpdiode pad iovdd iovss sg13cmos5l_DCPDiode
+Xsecondprot iovdd iovss pad padres sg13cmos5l_SecondaryProtection
+.ends sg13cmos5l_IOPadAnalog
+
+* ===========================================================================
+* sg13cmos5l_Clamp_N20N0D  (real file, line 757-782)
+* ===========================================================================
+* 3 pins only: iovss iovdd pad -- NO gate pin. Compare
+* sg13cmos5l_Clamp_N15N15D (used by IOPadInOut30mA), which has a 4th pin
+* "gate" driven by GateDecode's ngate output -- that clamp doubles as the
+* pad's active pull-down driver. This one has nowhere for an external
+* signal to enter: it is passive-only, self-biased entirely internally.
+*
+* 20 sg13_hv_nmos fingers (l=0.6um w=4.4um each), drain/source alternating
+* pad/iovss for adjacent fingers (shared-diffusion layout), every gate
+* tied to one internal node "off". "off" is held near iovss in normal
+* operation by XRoff, a single resistor from iovss to "off" -- so the
+* clamp's own fingers stay off under normal bias. During an ESD transient
+* on "pad", gate-drain coupling through the fingers' Cgd pulls "off"
+* upward fast enough (Roff is a weak pull-down) to turn the stack on
+* momentarily and shunt the transient to iovss. This is the standard
+* gate-grounded / RC-less self-triggering passive NMOS clamp topology --
+* distinct from Clamp_N15N15D's actively-gated version, and consistent
+* with IOPadAnalog having no digital signal to gate it with.
+
+.subckt sg13cmos5l_Clamp_N20N0D iovss iovdd pad
+Xclamp_g0  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g1  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g2  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g3  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g4  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g5  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g6  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g7  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g8  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g9  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g10 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g11 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g12 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g13 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g14 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g15 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g16 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g17 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g18 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g19 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+XOuterRing iovdd sg13cmos5l_GuardRing_N16000W1980HFF
+XInnerRing iovss sg13cmos5l_GuardRing_P15280W1260HFF
+XRoff      iovss off sub! rppd l=3.54um w=0.5um
+.ends sg13cmos5l_Clamp_N20N0D
+
+* ===========================================================================
+* sg13cmos5l_Clamp_P20N0D  (real file, line 784-829)
+* ===========================================================================
+* 3 pins: iovss iovdd pad -- again no gate pin. Structural P-side mirror
+* of Clamp_N20N0D: 20 finger *positions*, each built from 2 parallel
+* sg13_hv_pmos devices ("_r0"/"_r1", l=0.6um w=6.66um) instead of 1 -- so
+* 40 physical transistors total, twice Clamp_N20N0D's device count, same
+* pattern seen in the InOut30mA pad's Clamp_P15N15D vs Clamp_N15N15D pair.
+* Self-biased the same way, mirrored to the positive rail: XRoff runs
+* iovdd -> "off" (a much larger resistor here, l=12.9um vs 3.54um, i.e.
+* a weaker/slower pull-up -- consistent with needing the "off" node to
+* sit close to iovdd rather than iovss).
+
+.subckt sg13cmos5l_Clamp_P20N0D iovss iovdd pad
+Xclamp_g0_r0  iovdd off pad  iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g0_r1  iovdd off pad  iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g1_r0  pad  off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g1_r1  pad  off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+* ... (g2 through g18 repeat the same g_r0/g_r1 alternating pattern;
+*      elided here for length -- see the real .spi lines 790-823, or
+*      sg13cmos5l_io.spi in this same sudelbuecher/ tree, for all 40
+*      lines verbatim. Nothing about the pattern changes.)
+Xclamp_g19_r0 pad  off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g19_r1 pad  off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+XOuterRing iovss sg13cmos5l_GuardRing_P16000W3852HFF
+XInnerRing iovdd sg13cmos5l_GuardRing_N15280W3132HTF
+XRoff      iovdd off sub! rppd l=12.9um w=0.5um
+.ends sg13cmos5l_Clamp_P20N0D
+
+* ===========================================================================
+* sg13cmos5l_DCNDiode / sg13cmos5l_DCPDiode  (real file, line 148-165)
+* ===========================================================================
+* Reused verbatim from the sg13cmos5l_IOPadInOut30mA dependency tree
+* already read for that cell -- same two subckts, unchanged. Each is a
+* pair of parallel diode-primitive devices (dantenna/dpantenna, not a
+* MOSFET) plus one guard-ring tie. Not representable by the
+* analog-schematic skill (no Diode primitive) -- see the render-scope
+* note at the end of this file.
+
+.subckt sg13cmos5l_DCNDiode anode cathode guard
+Xdcdiode[0] anode cathode dantenna l=1.26um w=27.78um
+Xdcdiode[1] anode cathode dantenna l=1.26um w=27.78um
+Xguard guard sg13cmos5l_GuardRing_N7276W2716HFF
+.ends sg13cmos5l_DCNDiode
+
+.subckt sg13cmos5l_DCPDiode anode cathode guard
+Xdcdiode[0] anode cathode dpantenna l=1.26um w=27.78um
+Xdcdiode[1] anode cathode dpantenna l=1.26um w=27.78um
+Xguard guard sg13cmos5l_GuardRing_P7276W2716HFF
+.ends sg13cmos5l_DCPDiode
+
+* ===========================================================================
+* sg13cmos5l_SecondaryProtection  (real file, line 89-97)
+* ===========================================================================
+* Also reused verbatim from the IOPadInOut30mA tree (it sits inside
+* LevelDown there, guarding a receiver input; here it guards "padres"
+* directly off the pad). One resistor (TwoTerm-compatible) plus two
+* diode-primitive devices plus three guard-ring ties.
+
+.subckt sg13cmos5l_SecondaryProtection iovdd iovss pad core
+XR pad core sub! rppd l=2.0um w=1.0um
+Xguard1 iovss sg13cmos5l_GuardRing_P576W948HFF
+XDN iovss core dantenna l=3.1um w=0.64um
+Xguard2 iovss sg13cmos5l_GuardRing_P456W948HFF
+XDP core iovdd dpantenna l=0.64um w=4.98um
+Xguard3 iovdd sg13cmos5l_GuardRing_N1324W456HTF
+.ends sg13cmos5l_SecondaryProtection
+
+* ===========================================================================
+* Guard rings (real file, various lines) -- all empty placeholder subckts,
+* geometry-only ring cells, one pin ("conn"). Same status as the
+* GuardRing_* subckts already documented for IOPadInOut30mA: real,
+* present in the spice hierarchy, electrically trivial, not elevated to
+* separate GDS cells. Full list of the ones this cell's tree touches:
+*   GuardRing_N16000W1980HFF   (line 505)  -- Clamp_N20N0D outer ring
+*   GuardRing_P15280W1260HFF   (line 510)  -- Clamp_N20N0D inner ring
+*   GuardRing_P16000W3852HFF   (line 524)  -- Clamp_P20N0D outer ring
+*   GuardRing_N15280W3132HTF   (line 529)  -- Clamp_P20N0D inner ring
+*   GuardRing_N7276W2716HFF    (line 144)  -- DCNDiode guard
+*   GuardRing_P7276W2716HFF    (line 156)  -- DCPDiode guard
+*   GuardRing_P576W948HFF      (line 75)   -- SecondaryProtection guard1
+*   GuardRing_P456W948HFF      (line 80)   -- SecondaryProtection guard2
+*   GuardRing_N1324W456HTF     (line 85)   -- SecondaryProtection guard3
+* Same four (N16000W1980HFF / P15280W1260HFF / P16000W3852HFF /
+* N15280W3132HTF) are also the ones Clamp_N2N2D / Clamp_P2N2D use
+* (line 514-539) -- the ring geometry apparently tracks the clamp array's
+* physical footprint class, not its finger count.
+
+* ===========================================================================
+* Render-scope note
+* ===========================================================================
+* Unlike IOPadInOut30mA, this cell has no Mosfet-only *signal/logic* path
+* to render (no GateDecode, no LevelUp) -- everything here is either a
+* large parallel ESD-clamp finger array or a diode-primitive block the
+* analog-schematic skill's sch_netlist.py cannot draw at all (no Diode
+* class). The one piece that IS cleanly Mosfet+TwoTerm renderable, and
+* structurally different from anything shown for IOPadInOut30mA, is the
+* self-biased passive clamp's *unit cell*: a representative few fingers
+* of Clamp_N20N0D plus its Roff bias resistor, labeled as one slice of
+* the full 20-way (or, for the P-clamp, 40-way) array. See
+* sg13cmos5l_Clamp_N20N0D_unitcell_drc.py / .svg / .png in this folder.

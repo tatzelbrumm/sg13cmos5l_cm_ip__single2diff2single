@@ -31,5 +31,28 @@ Images for the notes in `sudelbuecher/`.
   proves this transcription internally well-formed, not that it matches the
   real IHP cell — see the transcript for the caveat in full.
 
+- `2026-09-10_sonnet_clamp_n20n0d_unitcell_drc.png` / `.svg` — DRC-clean
+  transistor-level render of `sg13cmos5l_Clamp_N20N0D`'s unit cell (3 of
+  its 20 parallel self-biased NMOS fingers, plus the `Roff` bias resistor
+  that holds the shared gate node near `iovss`), a dependency of
+  `sg13cmos5l_IOPadAnalog`. Unlike the GateDecode render above, built
+  directly from the real `sg13cmos5l_io.spi` (not a ChatGPT
+  transcription) — see
+  `sudelbuecher/sg13cmos5l_IOPadAnalog/sg13cmos5l_IOPadAnalog_real_hierarchy.spi`
+  for the sourced excerpt with line numbers, and
+  `sudelbuecher/sg13cmos5l_IOPadAnalog/sg13cmos5l_Clamp_N20N0D_unitcell_drc.py`
+  for the build script (source of truth; the copy here is the figure as
+  it stood when generated). No chat-log transcript covers this work yet —
+  linked here in advance of one being requested. DRC proves the netlist
+  internally well-formed; the topology it draws (self-biased passive
+  clamp: gates tied to one internal node, biased by a single resistor, no
+  external gate pin) is read directly off the real subckt, not inferred.
+  `sg13cmos5l_IOPadAnalog` has no digital control path at all (no
+  `GateDecode`/`LevelUp` — see that `.spi` excerpt file's header note), so
+  this unit cell is the only part of the cell that is both fully
+  MOSFET/resistor-only and small enough to render legibly; the rest is
+  either more of this same clamp array or diode-primitive ESD structures
+  the skill cannot draw.
+
 Not the place for design renders: those are generated artifacts and belong in
 `render/img/`, produced by `make render-gds`.
