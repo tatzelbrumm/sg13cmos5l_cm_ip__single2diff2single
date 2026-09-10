@@ -72,29 +72,29 @@ Xsecondprot iovdd iovss pad padres sg13cmos5l_SecondaryProtection
 * with IOPadAnalog having no digital signal to gate it with.
 
 .subckt sg13cmos5l_Clamp_N20N0D iovss iovdd pad
-Xclamp_g0  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g1  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g2  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g3  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g4  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g5  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g6  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g7  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g8  iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g9  pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g10 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g11 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g12 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g13 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g14 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g15 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g16 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g17 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g18 iovss off pad  iovss sg13_hv_nmos l=0.6um w=4.4um
-Xclamp_g19 pad  off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g0 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g1 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g2 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g3 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g4 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g5 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g6 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g7 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g8 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g9 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g10 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g11 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g12 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g13 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g14 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g15 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g16 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g17 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g18 iovss off pad iovss sg13_hv_nmos l=0.6um w=4.4um
+Xclamp_g19 pad off iovss iovss sg13_hv_nmos l=0.6um w=4.4um
 XOuterRing iovdd sg13cmos5l_GuardRing_N16000W1980HFF
 XInnerRing iovss sg13cmos5l_GuardRing_P15280W1260HFF
-XRoff      iovss off sub! rppd l=3.54um w=0.5um
+XRoff iovss off sub! rppd l=3.54um w=0.5um
 .ends sg13cmos5l_Clamp_N20N0D
 
 * ===========================================================================
@@ -111,19 +111,49 @@ XRoff      iovss off sub! rppd l=3.54um w=0.5um
 * sit close to iovdd rather than iovss).
 
 .subckt sg13cmos5l_Clamp_P20N0D iovss iovdd pad
-Xclamp_g0_r0  iovdd off pad  iovdd sg13_hv_pmos l=0.6um w=6.66um
-Xclamp_g0_r1  iovdd off pad  iovdd sg13_hv_pmos l=0.6um w=6.66um
-Xclamp_g1_r0  pad  off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
-Xclamp_g1_r1  pad  off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
-* ... (g2 through g18 repeat the same g_r0/g_r1 alternating pattern;
-*      elided here for length -- see the real .spi lines 790-823, or
-*      sg13cmos5l_io.spi in this same sudelbuecher/ tree, for all 40
-*      lines verbatim. Nothing about the pattern changes.)
-Xclamp_g19_r0 pad  off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
-Xclamp_g19_r1 pad  off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g0_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g0_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g1_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g1_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g2_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g2_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g3_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g3_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g4_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g4_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g5_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g5_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g6_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g6_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g7_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g7_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g8_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g8_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g9_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g9_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g10_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g10_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g11_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g11_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g12_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g12_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g13_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g13_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g14_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g14_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g15_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g15_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g16_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g16_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g17_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g17_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g18_r0 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g18_r1 iovdd off pad iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g19_r0 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
+Xclamp_g19_r1 pad off iovdd iovdd sg13_hv_pmos l=0.6um w=6.66um
 XOuterRing iovss sg13cmos5l_GuardRing_P16000W3852HFF
 XInnerRing iovdd sg13cmos5l_GuardRing_N15280W3132HTF
-XRoff      iovdd off sub! rppd l=12.9um w=0.5um
+XRoff iovdd off sub! rppd l=12.9um w=0.5um
 .ends sg13cmos5l_Clamp_P20N0D
 
 * ===========================================================================
