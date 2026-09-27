@@ -14,6 +14,10 @@ submission, so unlicensed copies of other people's docs do not belong in it.
   Opus CACE-templates / OAB-sizing session (ditto)
 - [`2026-09-05_references.md`](2026-09-05_references.md) — xschem explainer +
   `IOPadInOut30mA` sourcing session
+- [`2026-09-17_references.md`](2026-09-17_references.md) — the SG13CMOS5L
+  `bondpad`/`sg13cmos5l_io` PCell-and-CDL deep-dive session (public
+  IHP-Open-PDK GitHub source + ReadTheDocs), which also settled where
+  Claude's own working notes for this project should live
 
 Run logs live one level up in [`../logs/`](../logs/) and are committed to the
 branch that produced them, so their contents differ per branch. The chat log,
