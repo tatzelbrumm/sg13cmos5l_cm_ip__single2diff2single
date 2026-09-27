@@ -26,3 +26,6 @@
 
 [2026-09-27_sonnet_single2diff2single_toplevel_structure_and_chipalooza_magic_authoring.md](2026-09-27_sonnet_single2diff2single_toplevel_structure_and_chipalooza_magic_authoring.md)
 : `toplevel` structure work, a chipalooza Magic-authoring question, the `layout/klayout`+`layout/gds` split and its correction, and a compaction-recovery episode.
+
+[2026-09-27_sonnet_klayout_hierarchical_layout_invocation_and_cheatsheet_iteration.md](2026-09-27_sonnet_klayout_hierarchical_layout_invocation_and_cheatsheet_iteration.md)
+: How to invoke KLayout for hierarchical editing and reference macros via the `.klib`, `make`-vs-manual `klayout` invocation, a cheatsheet checklist iterated down to plain bullets, a `device_commit_files` stale-write bug caught and fixed, and a `make open` cwd mistake. Live/ongoing.
