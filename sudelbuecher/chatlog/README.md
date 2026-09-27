@@ -19,7 +19,7 @@
 : Explained what's in `schematic/xschem/`, then traced the real data source for `sg13cmos5l_IOPadInOut30mA` after a colleague's unverified ChatGPT guess.
 
 [2026-09-17_sonnet_sg13cmos5l_pad_docs_and_project_setup.md](2026-09-17_sonnet_sg13cmos5l_pad_docs_and_project_setup.md)
-: Deep dive on IHP's `bondpad` PCell and the `sg13cmos5l_io` cell library, plus deciding where Claude's working notes should live.
+: Deep dive on IHP's `bondpad` PCell and the `sg13cmos5l_io` cell library, plus deciding where Claude's own working notes should live.
 
 [2026-09-27_sonnet_git_worktree_to_sg13cmos5l_ocd_chipalooza.md](2026-09-27_sonnet_git_worktree_to_sg13cmos5l_ocd_chipalooza.md)
 : Worktree surgery on `sg13cmos5l_ocd_chipalooza`: moved the primary worktree to `tatzelbranch` and split off a new orphan `sudel_buecher` worktree.
@@ -35,3 +35,6 @@
 
 [2026-09-27_sonnet_chatlog_integrity_correction_and_handover.md](2026-09-27_sonnet_chatlog_integrity_correction_and_handover.md)
 : The user caught a fabricated sentence in the klayout-hierarchical-layout log's Turn 21; audit, correction, and a session handover (paired with `HANDOVER_xschem_makefile_lvs_and_chatlog_integrity.md` at the main repo root) to close out an unwieldy session.
+
+[2026-09-28_sonnet_makefile_magic_recs_and_inverter_clean_recovery.md](2026-09-28_sonnet_makefile_magic_recs_and_inverter_clean_recovery.md)
+: Retrieved the handover's Makefile-verification recommendations for the `layout/magic`+`layout/klayout` split, then walked the user through recovering `macros/inverter` from a `make clean` (PEX, DRC/LVS, sim/CACE, render, `build-top`) one deleted-file group at a time.
