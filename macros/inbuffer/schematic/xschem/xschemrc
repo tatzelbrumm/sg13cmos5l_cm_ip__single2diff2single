@@ -44,15 +44,6 @@ if {![llength [info commands append_xschem_library_path_unique]]} {
 append_xschem_library_path_unique [file dirname [info script]]
 append_xschem_library_path_unique [file join [file dirname [info script]] ../../testbenches/xschem]
 
-# Source macro xschemrc
-source [file dirname [info script]]/../../macros/inbuffer/schematic/xschem/xschemrc
-source [file dirname [info script]]/../../macros/outbuffer/schematic/xschem/xschemrc
-# TODO(teardown, CLAUDE.md sec.7): inverter/counter are the template's example
-# macros, slated for removal once the real design no longer needs them as
-# reference. Left sourced for now so in-progress work there doesn't break.
-source [file dirname [info script]]/../../macros/inverter/schematic/xschem/xschemrc
-source [file dirname [info script]]/../../macros/counter/schematic/xschem/xschemrc
-
 # Pin the netlist directory to the simulations folder of the loaded schematic
 if {![llength [info commands pin_netlist_dir]]} {
   proc pin_netlist_dir {dir} {
