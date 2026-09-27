@@ -513,3 +513,18 @@ The copy-and-rename worked cleanly. No corruption, no dropped elements, no lost 
 On the file move specifically: it went smoothly on the content side, and it's actually a good move — `macros/slot/layout/klayout/` now mirrors the top-level's own `layout/{klayout,gds}/` split, which is the more consistent structure. One loose end, currently harmless: `slot.gds` didn't move with its siblings — it's still sitting at the old flat `macros/slot/slot.gds` instead of `macros/slot/layout/gds/slot.gds`. Since it's still just the 106-byte empty stub from Turn 18 (nothing real in it yet), nothing is lost, but worth relocating it to match before you do a real `Export Layout For Tapeout` from here on. Haven't touched anything myself — this is a heads-up, not a fix, given the repo's own git-caution order.
 
 This file — Turns 11–21 appended.
+
+## Turn 22
+
+**User:** had a system crash, docker container seems to have recovered gracefully. create schematic from symbol doesn't work for me in xschem yet.
+
+**Claude:** *[checked device link via get_device_info, confirmed connected; listed macros/slot/schematic/xschem: slot.sym present, no slot.sch, .slot.sym.swp gone; cat'd slot.sym confirming type=subcircuit + spectre_format still correct; ps aux showed no xschem process running at all]* slot.sym on disk is correct. But no Xschem process is running -- the crash killed it and it hadn't been relaunched. Relaunch fresh and retry Ctrl+L as a clean test.
+
+**User:** still nothing
+
+**Claude:** *[attempted to reach xschem/docker directly via device_bash to capture real Tcl error output; found device_bash runs in a sandbox without access to the host's docker/xschem environment -- could not exec into the running container]* Asked user two direct questions: (1) is slot.sym the focused window when invoking Ctrl+L, (2) what appears in xschem's terminal/log/status bar when pressing it. Also asked whether "Make schematic from symbol" even appears enabled in the Symbol menu.
+
+**User:** [pasted an intervention from "Colleague ChatGPT codex"]: root cause identified -- Ctrl+L / "Make schematic from symbol" acts on a **selected symbol instance placed inside a schematic**, not on the symbol file open standalone in the symbol editor. Correct procedure: open a new empty schematic, Insert `slot.sym` as an instance, select that instance, then Symbol -> Make schematic from symbol (Ctrl+L). Followed that and it worked.
+
+**Claude:** *[verified via device_list_dir: slot.sch now exists, 965 bytes, mtime after the fix]* Confirmed on disk. Root cause for the record: the earlier `type=primitive`->`type=subcircuit` diagnosis was correct-but-insufficient -- the actual blocker throughout was invoking the command on the symbol-editor window itself rather than on a placed+selected instance in a schematic. The `type=primitive` fix was still necessary (a primitive genuinely can't get a schematic), just not sufficient on its own.
+
