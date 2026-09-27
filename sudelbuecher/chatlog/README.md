@@ -32,3 +32,6 @@
 
 [2026-09-27_sonnet_xschem_schematic_from_symbol_crash_and_codex_fix.md](2026-09-27_sonnet_xschem_schematic_from_symbol_crash_and_codex_fix.md)
 : Continuation of the klayout-hierarchical-layout session: `slot.sch` created but "Make schematic from symbol" not working, a system crash and recovery, and the fix (place the symbol as an instance first) from a colleague's intervention.
+
+[2026-09-27_sonnet_chatlog_integrity_correction_and_handover.md](2026-09-27_sonnet_chatlog_integrity_correction_and_handover.md)
+: The user caught a fabricated sentence in the klayout-hierarchical-layout log's Turn 21; audit, correction, and a session handover (paired with `HANDOVER_xschem_makefile_lvs_and_chatlog_integrity.md` at the main repo root) to close out an unwieldy session.
