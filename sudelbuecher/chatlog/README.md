@@ -29,3 +29,6 @@
 
 [2026-09-27_sonnet_klayout_hierarchical_layout_invocation_and_cheatsheet_iteration.md](2026-09-27_sonnet_klayout_hierarchical_layout_invocation_and_cheatsheet_iteration.md)
 : How to invoke KLayout for hierarchical editing and reference macros via the `.klib`, `make`-vs-manual `klayout` invocation, a cheatsheet checklist iterated down to plain bullets, a `device_commit_files` stale-write bug caught and fixed, and a `make open` cwd mistake. Live/ongoing.
+
+[2026-09-27_sonnet_xschem_schematic_from_symbol_crash_and_codex_fix.md](2026-09-27_sonnet_xschem_schematic_from_symbol_crash_and_codex_fix.md)
+: Continuation of the klayout-hierarchical-layout session: `slot.sch` created but "Make schematic from symbol" not working, a system crash and recovery, and the fix (place the symbol as an instance first) from a colleague's intervention.
