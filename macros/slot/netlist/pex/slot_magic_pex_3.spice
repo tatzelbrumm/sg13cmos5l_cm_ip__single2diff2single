@@ -1,0 +1,174 @@
+* PEX produced on Mon Sep 28 03:48:43 AM CEST 2026 using /foss/tools/sak/sak-pex.sh with m=3 and s=1 (extresist threshold=10000 mOhm, minres=1000 mOhm, mindelay=1 ps)
+* NGSPICE file created from slot_pex.ext - technology: ihp-sg13cmos5l
+
+.subckt slot_pex vss_1v2 vdd_1v2 vss_3v3 vdd_3v3 s7_an[0] s7_an[1] s7_an_0_esd vbias
++ dig_in[23] dig_in[22] dig_in[21] dig_in[20] dig_in[19] dig_in[18] dig_in[17] dig_in[16]
++ dig_in[15] dig_in[14] dig_in[13] dig_in[12] dig_in[11] dig_in[10] dig_in[9] dig_in[8]
++ dig_in[7] dig_in[6] dig_in[5] dig_in[4] dig_in[3] dig_in[2] dig_in[1] dig_in[0]
++ dig_out[11] dig_out[10] dig_out[9] dig_out[8] dig_out[7] dig_out[6] dig_out[5] dig_out[4]
++ dig_out[3] dig_out[2] dig_out[1] dig_out[0] ibias0 ibias1 analog_bus3 analog_bus2
++ analog_bus1 analog_bus0 enable clk reset vss_1v2_uq0
+C0 dig_out[2] dig_out[3] 0.23029f
+C1 dig_in[9] vss_1v2_uq0 0.01338f
+C2 dig_in[12] dig_in[13] 0.23029f
+C3 vbias m3_0_18723# 0.15943f
+C4 vss_1v2_uq0 dig_in[5] 0.01338f
+C5 dig_in[12] vss_1v2_uq0 0.01338f
+C6 dig_in[12] dig_in[11] 0.23029f
+C7 dig_in[1] dig_in[2] 0.23029f
+C8 dig_in[16] vss_1v2_uq0 0.01338f
+C9 dig_in[4] dig_in[3] 0.23029f
+C10 ibias0 vss_1v2_uq0 0.0303f
+C11 ibias0 m3_0_19899# 0.15943f
+C12 dig_in[2] vss_1v2_uq0 0.01338f
+C13 dig_in[16] dig_in[15] 0.23029f
+C14 dig_in[3] vss_1v2_uq0 0.01338f
+C15 dig_out[1] vss_1v2_uq0 0.01338f
+C16 vss_1v2_uq0 dig_in[20] 0.01338f
+C17 analog_bus1 m3_0_22251# 0.15943f
+C18 vss_1v2_uq0 dig_in[21] 0.01338f
+C19 vss_1v2_uq0 dig_in[6] 0.01338f
+C20 dig_in[23] vss_1v2_uq0 0.01338f
+C21 dig_out[11] vss_1v2_uq0 0.0225f
+C22 dig_in[1] dig_in[0] 0.23029f
+C23 dig_out[7] vss_1v2_uq0 0.01338f
+C24 dig_out[1] dig_out[2] 0.23029f
+C25 dig_in[20] dig_in[19] 0.23029f
+C26 dig_in[7] dig_in[8] 0.23029f
+C27 dig_out[10] dig_out[11] 0.23029f
+C28 dig_out[9] vss_1v2_uq0 0.01338f
+C29 vss_1v2_uq0 dig_in[0] 0.0225f
+C30 dig_in[13] dig_in[14] 0.23029f
+C31 vss_3v3 m3_0_22839# 0.05f
+C32 dig_in[7] vss_1v2_uq0 0.01338f
+C33 dig_in[14] vss_1v2_uq0 0.01338f
+C34 vss_1v2_uq0 dig_out[0] 0.04411f
+C35 dig_in[23] reset 0.23029f
+C36 dig_out[10] dig_out[9] 0.23029f
+C37 vss_3v3 analog_bus0 0.049f
+C38 analog_bus3 m3_0_20487# 0.15943f
+C39 analog_bus2 m3_0_21663# 0.15943f
+C40 vss_3v3 vdd_3v3 0.01435f
+C41 dig_out[5] vss_1v2_uq0 0.01338f
+C42 analog_bus0 m3_0_22839# 0.15943f
+C43 dig_in[22] dig_in[21] 0.23029f
+C44 vbias m3_0_19311# 0.15943f
+C45 dig_in[17] vss_1v2_uq0 0.01338f
+C46 dig_in[15] dig_in[14] 0.23029f
+C47 dig_in[23] dig_in[22] 0.23029f
+C48 dig_out[5] dig_out[4] 0.23029f
+C49 vss_1v2_uq0 ibias1 0.0105f
+C50 m3_0_19899# ibias1 0.15943f
+C51 dig_in[10] vss_1v2_uq0 0.01338f
+C52 dig_in[10] dig_in[11] 0.23029f
+C53 dig_out[7] dig_out[6] 0.23029f
+C54 dig_out[7] dig_out[8] 0.23029f
+C55 dig_in[4] vss_1v2_uq0 0.01338f
+C56 clk enable 0.23029f
+C57 dig_in[8] vss_1v2_uq0 0.01338f
+C58 dig_in[1] vss_1v2_uq0 0.01338f
+C59 dig_out[9] dig_out[8] 0.23029f
+C60 dig_in[6] dig_in[5] 0.23029f
+C61 vss_1v2_uq0 enable 0.01349f
+C62 dig_in[18] dig_in[17] 0.23029f
+C63 dig_in[13] vss_1v2_uq0 0.01338f
+C64 dig_in[3] dig_in[2] 0.23029f
+C65 clk vss_1v2_uq0 0.03818f
+C66 analog_bus3 m3_0_21075# 0.15943f
+C67 vss_1v2_uq0 dig_in[11] 0.01338f
+C68 dig_out[5] dig_out[6] 0.23029f
+C69 dig_out[4] vss_1v2_uq0 0.01338f
+C70 vbias vss_1v2_uq0 0.08266f
+C71 dig_out[10] vss_1v2_uq0 0.01338f
+C72 dig_in[15] vss_1v2_uq0 0.01338f
+C73 analog_bus0 m3_0_22251# 0.15943f
+C74 reset enable 0.22207f
+C75 dig_in[20] dig_in[21] 0.23029f
+C76 vss_1v2_uq0 dig_in[19] 0.01338f
+C77 dig_out[2] vss_1v2_uq0 0.01338f
+C78 analog_bus1 m3_0_21663# 0.15943f
+C79 reset vss_1v2_uq0 0.01349f
+C80 analog_bus2 m3_0_21075# 0.15943f
+C81 dig_in[18] vss_1v2_uq0 0.01338f
+C82 ibias0 m3_0_19311# 0.15943f
+C83 dig_out[3] vss_1v2_uq0 0.01338f
+C84 dig_in[9] dig_in[10] 0.23029f
+C85 analog_bus1 vss_3v3 0.0154f
+C86 dig_in[22] vss_1v2_uq0 0.01338f
+C87 dig_in[16] dig_in[17] 0.23029f
+C88 dig_out[4] dig_out[3] 0.23029f
+C89 dig_out[6] vss_1v2_uq0 0.01338f
+C90 dig_out[1] dig_out[0] 0.23029f
+C91 vss_1v2_uq0 dig_out[8] 0.01338f
+C92 dig_in[4] dig_in[5] 0.23029f
+C93 ibias1 m3_0_20487# 0.15943f
+C94 dig_in[9] dig_in[8] 0.23029f
+C95 clk m3_0_18723# 0.01706f
+C96 dig_in[7] dig_in[6] 0.23029f
+C97 dig_in[18] dig_in[19] 0.23029f
+C98 dig_out[11] dig_in[0] 0.05407f
+C99 m3_0_18723# vss_1v2_uq0 0.04105f
+C100 vdd_1v2 w_0_400# 4.65913f
+C101 vss_1v2_uq0 w_0_400# 2.44023f
+C102 vss_3v3 w_0_400# 2.54283f
+C103 vdd_3v3 w_0_400# 8.76404f
+C104 dig_out[0] w_0_400# 0.08214f
+C105 dig_out[1] w_0_400# 0.02288f
+C106 dig_out[2] w_0_400# 0.02288f
+C107 dig_out[3] w_0_400# 0.02288f
+C108 dig_out[4] w_0_400# 0.02288f
+C109 dig_out[5] w_0_400# 0.02288f
+C110 dig_out[6] w_0_400# 0.02288f
+C111 dig_out[7] w_0_400# 0.02288f
+C112 dig_out[8] w_0_400# 0.02288f
+C113 dig_out[9] w_0_400# 0.02288f
+C114 dig_out[10] w_0_400# 0.02288f
+C115 dig_out[11] w_0_400# 0.03089f
+C116 dig_in[0] w_0_400# 0.03089f
+C117 dig_in[1] w_0_400# 0.02288f
+C118 dig_in[2] w_0_400# 0.02288f
+C119 dig_in[3] w_0_400# 0.02288f
+C120 dig_in[4] w_0_400# 0.02288f
+C121 dig_in[5] w_0_400# 0.02288f
+C122 dig_in[6] w_0_400# 0.02288f
+C123 dig_in[7] w_0_400# 0.02288f
+C124 dig_in[8] w_0_400# 0.02288f
+C125 dig_in[9] w_0_400# 0.02288f
+C126 dig_in[10] w_0_400# 0.02288f
+C127 dig_in[11] w_0_400# 0.02288f
+C128 dig_in[12] w_0_400# 0.02288f
+C129 dig_in[13] w_0_400# 0.02288f
+C130 dig_in[14] w_0_400# 0.02288f
+C131 dig_in[15] w_0_400# 0.02288f
+C132 dig_in[16] w_0_400# 0.02288f
+C133 dig_in[17] w_0_400# 0.02288f
+C134 dig_in[18] w_0_400# 0.02288f
+C135 dig_in[19] w_0_400# 0.02288f
+C136 dig_in[20] w_0_400# 0.02288f
+C137 dig_in[21] w_0_400# 0.02288f
+C138 dig_in[22] w_0_400# 0.02288f
+C139 dig_in[23] w_0_400# 0.02288f
+C140 reset w_0_400# 0.02298f
+C141 enable w_0_400# 0.02298f
+C142 clk w_0_400# 0.0486f
+C143 vbias w_0_400# 0.17696f
+C144 ibias0 w_0_400# 0.17696f
+C145 ibias1 w_0_400# 0.17696f
+C146 analog_bus3 w_0_400# 0.17696f
+C147 analog_bus2 w_0_400# 0.17696f
+C148 analog_bus1 w_0_400# 0.17696f
+C149 analog_bus0 w_0_400# 0.17696f
+C150 s7_an[0] w_0_400# 2.00254f
+C151 s7_an_0_esd w_0_400# 0.15069f
+C152 s7_an[1] w_0_400# 2.01693f
+C153 vss_1v2 w_0_400# 6.45241f
+C154 m3_0_18723# w_0_400# 0.05313f ; **FLOATING
+C155 m3_0_19311# w_0_400# 0.02853f ; **FLOATING
+C156 m3_0_19899# w_0_400# 0.02853f ; **FLOATING
+C157 m3_0_20487# w_0_400# 0.02853f ; **FLOATING
+C158 m3_0_21075# w_0_400# 0.02853f ; **FLOATING
+C159 m3_0_21663# w_0_400# 0.02853f ; **FLOATING
+C160 m3_0_22251# w_0_400# 0.02853f ; **FLOATING
+C161 m3_0_22839# w_0_400# 0.08667f ; **FLOATING
+.ends
+
