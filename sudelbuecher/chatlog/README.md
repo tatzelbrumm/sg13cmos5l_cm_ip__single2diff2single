@@ -38,3 +38,6 @@
 
 [2026-09-28_sonnet_makefile_magic_recs_and_inverter_clean_recovery.md](2026-09-28_sonnet_makefile_magic_recs_and_inverter_clean_recovery.md)
 : Retrieved the handover's Makefile-verification recommendations for the `layout/magic`+`layout/klayout` split, then walked the user through recovering `macros/inverter` from a `make clean` (PEX, DRC/LVS, sim/CACE, render, `build-top`) one deleted-file group at a time.
+
+[2026-09-28_sonnet_toplevel_verify_targets_and_check_boundary_gds_mismatch.md](2026-09-28_sonnet_toplevel_verify_targets_and_check_boundary_gds_mismatch.md)
+: Continuation, split into a new file at the user's request: which top-level `make` targets to try first, then confirming exactly which GDS `check-boundary` checks and why a clean pass doesn't mean much while the top level's schematic and layout describe different designs.
