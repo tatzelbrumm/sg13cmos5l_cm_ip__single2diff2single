@@ -44,3 +44,6 @@
 
 [2026-09-28_sonnet_slot_makefile_scaffold_and_klayout_lvs_debugging.md](2026-09-28_sonnet_slot_makefile_scaffold_and_klayout_lvs_debugging.md)
 : New session: scaffolded `macros/slot`'s Makefile (DRC/LVS/PEX first, then a full inverter-based copy per the user's own call), interactive-KLayout and `build-top`/tapeout-export explainers, a `klayout-lvs-netlist` failure triaged from a log paste, and a `slot.klay.gds` vs. the `sg13cmos5l_ocd_chipalooza` harness's `slot7_wrapper.gds` diff that cleared a removed TopMetal1 sliver as LVS-safe.
+
+[2026-09-28_sonnet_chatlog_convention_lookup_and_claude_md_pointer.md](2026-09-28_sonnet_chatlog_convention_lookup_and_claude_md_pointer.md)
+: New session: looked up the established rules for unabridged/verbatim logging and the README-index summaries, survived a mid-session device-bridge disconnect, then wrote both rules into the main repo's `CLAUDE.md` §6 so any future chat in this project picks them up automatically.
