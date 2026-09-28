@@ -18,6 +18,12 @@ submission, so unlicensed copies of other people's docs do not belong in it.
   `bondpad`/`sg13cmos5l_io` PCell-and-CDL deep-dive session (public
   IHP-Open-PDK GitHub source + ReadTheDocs), which also settled where
   Claude's own working notes for this project should live
+- [`2026-09-28_references.md`](2026-09-28_references.md) — the `sg13cmos5l_io`
+  by-reference / PCell-discovery session: the PDK's own `libs.ref/sg13cmos5l_io/`
+  layout (from the user's own in-container `find`, not fetched by the
+  assistant), the project's own PCell-internals doc, and the KLayout Salt
+  packages (`LibraryManagerPlugin`/`KLayoutPluginUtils`, IIC-JKU) identified
+  live in the GUI
 
 Run logs live one level up in [`../logs/`](../logs/) and are committed to the
 branch that produced them, so their contents differ per branch. The chat log,

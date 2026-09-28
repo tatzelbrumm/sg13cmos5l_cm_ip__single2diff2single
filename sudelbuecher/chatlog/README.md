@@ -46,4 +46,10 @@
 : New session: scaffolded `macros/slot`'s Makefile (DRC/LVS/PEX first, then a full inverter-based copy per the user's own call), interactive-KLayout and `build-top`/tapeout-export explainers, a `klayout-lvs-netlist` failure triaged from a log paste, and a `slot.klay.gds` vs. the `sg13cmos5l_ocd_chipalooza` harness's `slot7_wrapper.gds` diff that cleared a removed TopMetal1 sliver as LVS-safe.
 
 [2026-09-28_sonnet_chatlog_convention_lookup_and_claude_md_pointer.md](2026-09-28_sonnet_chatlog_convention_lookup_and_claude_md_pointer.md)
-: New session: looked up the established rules for unabridged/verbatim logging and the README-index summaries, survived a mid-session device-bridge disconnect, then wrote both rules into the main repo's `CLAUDE.md` §6 so any future chat in this project picks them up automatically.
+: Looked up the chatlog/README conventions and wrote them into `CLAUDE.md` §6.
+
+[2026-09-28_sonnet_sg13cmos5l_io_klib_reference_and_sg13_dev_pcells.md](2026-09-28_sonnet_sg13cmos5l_io_klib_reference_and_sg13_dev_pcells.md)
+: New session, on `macros/sg13cmos5l_IOPadDiff2Single`: replaced copied-GDS `sg13cmos5l_io` pad cells with a real `.klib` by-reference entry, traced the mechanism to KLayout's `LibraryManagerPlugin` Salt package, and found IHP's `SG13_dev` PCells already registered with zero extra setup.
+
+[2026-09-28_sonnet_chatlog_export_meta_and_formatting_corrections.md](2026-09-28_sonnet_chatlog_export_meta_and_formatting_corrections.md)
+: Split off from the file above at the user's request: exporting that session verbatim ran into a checksum mismatch traced to macOS stamping C2PA/JUMBF metadata into images, then two rounds of getting this very log's own formatting conventions wrong (README one-sentence rule, `*[ ]*` block line breaks) and being corrected.

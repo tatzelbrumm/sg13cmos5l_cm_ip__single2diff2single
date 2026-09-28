@@ -54,5 +54,67 @@ Images for the notes in `sudelbuecher/`.
   either more of this same clamp array or diode-primitive ESD structures
   the skill cannot draw.
 
+- `2026-09-28_sonnet_klayout_sg13cmos5l_io_library_resolved.png` — screenshot
+  of the running KLayout session's main window (Cells/Layers/Libraries
+  panels, "SG13CMOS5L PDK" custom menu), Libraries dropdown showing
+  `sg13cmos5l_io - sg13cmos5l_io.gds` resolved with real cell names listed
+  below it. Belongs to
+  [`../2026-09-28_sonnet_sg13cmos5l_io_klib_reference_and_sg13_dev_pcells.md`](../2026-09-28_sonnet_sg13cmos5l_io_klib_reference_and_sg13_dev_pcells.md)
+  (Turn 6). User-taken screenshot of their own screen, not generated. Proves
+  the `.klib` `lib_path` entry `$PDKPATH/libs.ref/sg13cmos5l_io/gds/sg13cmos5l_io.gds`
+  (added earlier that same turn sequence) resolves — i.e. the KLayout
+  `LibraryManagerPlugin` expands `$PDKPATH` at load time. Does not prove
+  anything about which specific cells are safe to place yet, only that the
+  library itself is reachable.
+- `2026-09-28_sonnet_salt_package_manager_current_packages.png` — screenshot
+  of KLayout's Salt Package Manager, "Current Packages" tab, listing
+  `KLayoutPluginUtils`, `AlignToolPlugin`, `AutoBackupPlugin`,
+  `LayerShortcutsPlugin`, `LibraryManagerPlugin`, `MoveQuicklyToolPlugin`,
+  `NetlistImportPlugin`, `PinToolPlugin`, `VectorFileExportPlugin`, `xsection`;
+  `KLayoutPluginUtils` highlighted, its Details pane showing author Martin
+  Jan Köhler and a `github.com/iic-jku/klayout-plugin-utils` documentation
+  link. Belongs to the same file, Turn 8. Identifies the actual author/origin
+  (IIC-JKU) of the `.klib` mechanism and the custom "SG13CMOS5L PDK" menu
+  used earlier in that session — see `ref/2026-09-28_references.md`.
+- `2026-09-28_sonnet_cell_library_manager_dialog.png` — screenshot of the
+  `LibraryManagerPlugin`'s own "Cell Library Manager" dialog
+  (`File > Manage Cell Library Map...`), showing the Layout/Library-Map
+  paths for `sg13cmos5l_IOPadDiff2Single`, and the Library Mappings table:
+  `sg13cmos5l_io` → `$PDK_ROOT/ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/gds/sg13cmos5l_io.gds`,
+  Status `OK`. Belongs to the same file, Turn 9. This is the GUI equivalent
+  of hand-editing the `.klib` JSON that the earlier turns in that session
+  did manually — found by the user, not this assistant (no screen access
+  from this session).
+- `2026-09-28_sonnet_sg13_native_pcell_lib_cells_panel.png` — screenshot of
+  the Cells/Libraries panel with `SG13_native_pcell_lib - SG13G2 Native
+  PCells [Technology sg13cmos5l]` selected, cell list showing `Via`. Belongs
+  to the same file, Turn 10.
+- `2026-09-28_sonnet_sg13_dev_pcell_lib_cells_panel.png` — screenshot of the
+  same panel with `SG13_dev - IHP SG13CMOS5L Pcells [Technology sg13cmos5l]`
+  selected instead, listing the full device-primitive set: `NoFillerStack`,
+  `SVaricap`, `bondpad`, `cap_cmomf`, `cap_cmomi`, `chipText`, `dantenna`,
+  `dpantenna`, `esd`, `guard_ring`, `nmos`, `nmosHV`, `ntap1`, `pmos`,
+  `pmosHV`, `pnpMPA`, `ptap1`, `rfnmos`, `rfnmosHV`, `rfpmos`, `rfpmosHV`,
+  `rhigh`, `rppd`, `rsil`, `sealring`, `via_stack`. Belongs to the same file,
+  Turn 10. Proves the `SG13_dev` PCell library (Python-code PCells,
+  registered via `KLAYOUT_PATH`, not a `.klib` path entry) was already fully
+  registered with zero extra setup — the actual finding of that turn.
+- `2026-09-28_sonnet_bingo_reaction.jpg` — a reaction still (Christoph Waltz
+  in character, captioned "THAT'S A BINGO!") sent alongside the two panel
+  screenshots above, Turn 10 of the same file. **Not evidence of anything
+  technical** — kept only because the chat-log rule for this export is
+  unabridged/verbatim and the user sent it as part of that turn. Flagged,
+  not silently decided: this is a copyrighted film still with meme text
+  overlay, third-party material, and `ref/README.md`'s "index, do not copy"
+  rule (adopted because this repository carries SPDX headers throughout as
+  a Chipalooza submission) was written with exactly this kind of unlicensed
+  third-party copy in mind, even though that rule as stated is about
+  external *documents* rather than reaction images specifically. `pix/` and
+  this whole `sudelbuecher/` tree are the orphaned notes branch, not part of
+  the submission's tracked design content — but the branch still lives in
+  the same repository. Worth the user's own explicit call on whether this
+  one file should stay, rather than this assistant deciding it unilaterally
+  either way.
+
 Not the place for design renders: those are generated artifacts and belong in
 `render/img/`, produced by `make render-gds`.
