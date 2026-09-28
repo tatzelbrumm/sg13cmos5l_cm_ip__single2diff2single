@@ -2,7 +2,7 @@
 
 Images for the notes in `sudelbuecher/`.
 
-- `2026-09-04_opus_oab_trouble_spots.png` / `.svg` — annotated
+- [`2026-09-04_opus_oab_trouble_spots.png`](./2026-09-04_opus_oab_trouble_spots.png) / [`.svg`](./2026-09-04_opus_oab_trouble_spots.svg) — annotated
   `OgueyAebischerBias` core schematic marking the three measured weaknesses
   (supply-tracking Vds on M13/M14/M10, the `vbr` positive-feedback loop, the
   1 µm² device area). Belongs to
@@ -12,11 +12,11 @@ Images for the notes in `sudelbuecher/`.
   builds it from a transcription of `reference.spice` via the
   `analog-schematic` skill's netlist-first renderer. The copy here is the
   figure as it stood at the end of that session.
-- `2026-09-04_opus_oab_unannotated.png` — the same circuit before the
+- [`2026-09-04_opus_oab_unannotated.png`](./2026-09-04_opus_oab_unannotated.png) — the same circuit before the
   annotation overlay was added. Kept because it is the readable version if
   you only want the topology.
 
-- `2026-09-06_sonnet_gatedecode_npath_drc.png` / `.svg` — DRC-clean
+- [`2026-09-06_sonnet_gatedecode_npath_drc.png`](./2026-09-06_sonnet_gatedecode_npath_drc.png) / [`.svg`](./2026-09-06_sonnet_gatedecode_npath_drc.svg) — DRC-clean
   transistor-level render of `sg13cmos5l_IOPadInOut30mA`'s `GateDecode`
   N-path (`io_inv_x1` → `io_nor2_x1` → `LevelUp`), built with the
   `analog-schematic` skill from a transcription of the ChatGPT-produced
@@ -31,7 +31,7 @@ Images for the notes in `sudelbuecher/`.
   proves this transcription internally well-formed, not that it matches the
   real IHP cell — see the transcript for the caveat in full.
 
-- `2026-09-10_sonnet_clamp_n20n0d_unitcell_drc.png` / `.svg` — DRC-clean
+- [`2026-09-10_sonnet_clamp_n20n0d_unitcell_drc.png`](./2026-09-10_sonnet_clamp_n20n0d_unitcell_drc.png) / [`.svg`](./2026-09-10_sonnet_clamp_n20n0d_unitcell_drc.svg) — DRC-clean
   transistor-level render of `sg13cmos5l_Clamp_N20N0D`'s unit cell (3 of
   its 20 parallel self-biased NMOS fingers, plus the `Roff` bias resistor
   that holds the shared gate node near `iovss`), a dependency of
@@ -54,7 +54,7 @@ Images for the notes in `sudelbuecher/`.
   either more of this same clamp array or diode-primitive ESD structures
   the skill cannot draw.
 
-- `2026-09-28_sonnet_klayout_sg13cmos5l_io_library_resolved.png` — screenshot
+- [`2026-09-28_sonnet_klayout_sg13cmos5l_io_library_resolved.png`](./2026-09-28_sonnet_klayout_sg13cmos5l_io_library_resolved.png) — screenshot
   of the running KLayout session's main window (Cells/Layers/Libraries
   panels, "SG13CMOS5L PDK" custom menu), Libraries dropdown showing
   `sg13cmos5l_io - sg13cmos5l_io.gds` resolved with real cell names listed
@@ -66,7 +66,7 @@ Images for the notes in `sudelbuecher/`.
   `LibraryManagerPlugin` expands `$PDKPATH` at load time. Does not prove
   anything about which specific cells are safe to place yet, only that the
   library itself is reachable.
-- `2026-09-28_sonnet_salt_package_manager_current_packages.png` — screenshot
+- [`2026-09-28_sonnet_salt_package_manager_current_packages.png`](./2026-09-28_sonnet_salt_package_manager_current_packages.png) — screenshot
   of KLayout's Salt Package Manager, "Current Packages" tab, listing
   `KLayoutPluginUtils`, `AlignToolPlugin`, `AutoBackupPlugin`,
   `LayerShortcutsPlugin`, `LibraryManagerPlugin`, `MoveQuicklyToolPlugin`,
@@ -76,7 +76,7 @@ Images for the notes in `sudelbuecher/`.
   link. Belongs to the same file, Turn 8. Identifies the actual author/origin
   (IIC-JKU) of the `.klib` mechanism and the custom "SG13CMOS5L PDK" menu
   used earlier in that session — see `ref/2026-09-28_references.md`.
-- `2026-09-28_sonnet_cell_library_manager_dialog.png` — screenshot of the
+- [`2026-09-28_sonnet_cell_library_manager_dialog.png`](./2026-09-28_sonnet_cell_library_manager_dialog.png) — screenshot of the
   `LibraryManagerPlugin`'s own "Cell Library Manager" dialog
   (`File > Manage Cell Library Map...`), showing the Layout/Library-Map
   paths for `sg13cmos5l_IOPadDiff2Single`, and the Library Mappings table:
@@ -85,11 +85,11 @@ Images for the notes in `sudelbuecher/`.
   of hand-editing the `.klib` JSON that the earlier turns in that session
   did manually — found by the user, not this assistant (no screen access
   from this session).
-- `2026-09-28_sonnet_sg13_native_pcell_lib_cells_panel.png` — screenshot of
+- [`2026-09-28_sonnet_sg13_native_pcell_lib_cells_panel.png`](./2026-09-28_sonnet_sg13_native_pcell_lib_cells_panel.png) — screenshot of
   the Cells/Libraries panel with `SG13_native_pcell_lib - SG13G2 Native
   PCells [Technology sg13cmos5l]` selected, cell list showing `Via`. Belongs
   to the same file, Turn 10.
-- `2026-09-28_sonnet_sg13_dev_pcell_lib_cells_panel.png` — screenshot of the
+- [`2026-09-28_sonnet_sg13_dev_pcell_lib_cells_panel.png`](./2026-09-28_sonnet_sg13_dev_pcell_lib_cells_panel.png) — screenshot of the
   same panel with `SG13_dev - IHP SG13CMOS5L Pcells [Technology sg13cmos5l]`
   selected instead, listing the full device-primitive set: `NoFillerStack`,
   `SVaricap`, `bondpad`, `cap_cmomf`, `cap_cmomi`, `chipText`, `dantenna`,
@@ -99,7 +99,7 @@ Images for the notes in `sudelbuecher/`.
   Turn 10. Proves the `SG13_dev` PCell library (Python-code PCells,
   registered via `KLAYOUT_PATH`, not a `.klib` path entry) was already fully
   registered with zero extra setup — the actual finding of that turn.
-- `2026-09-28_sonnet_bingo_reaction.jpg` — a reaction still (Christoph Waltz
+- [`2026-09-28_sonnet_bingo_reaction.jpg`](./2026-09-28_sonnet_bingo_reaction.jpg) — a reaction still (Christoph Waltz
   in character, captioned "THAT'S A BINGO!") sent alongside the two panel
   screenshots above, Turn 10 of the same file. **Not evidence of anything
   technical** — kept only because the chat-log rule for this export is
