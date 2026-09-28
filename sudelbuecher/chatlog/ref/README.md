@@ -24,6 +24,9 @@ submission, so unlicensed copies of other people's docs do not belong in it.
   assistant), the project's own PCell-internals doc, and the KLayout Salt
   packages (`LibraryManagerPlugin`/`KLayoutPluginUtils`, IIC-JKU) identified
   live in the GUI
+- [`2026-09-28_opus_references.md`](2026-09-28_opus_references.md) — the Opus
+  `Clamp_N`/`Clamp_P` PCell session: the IHP GitHub repos and commits cloned in the cloud
+  container, the user's own `sg13cmos5l_io.{gds,cdl}` copies, and the KLayout versions used
 
 Run logs live one level up in [`../logs/`](../logs/) and are committed to the
 branch that produced them, so their contents differ per branch. The chat log,
