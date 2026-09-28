@@ -59,7 +59,8 @@ outside the tie window. `clamp_refdata.py` is its output; don't edit it by hand.
 
 | file | role |
 |---|---|
-| `__init__.py`, `load_clamp_pcells.py` | register KLayout library **`SG13_cm_clamps`** (needs the PDK's `sg13cmos5l_pycell_lib` importable) |
+| `__init__.py`, `load_clamp_pcells.py` | register KLayout library **`SG13_cm_clamps`** (finds the PDK's `sg13cmos5l_pycell_lib` and `cni` via `$KLAYOUT_PATH`/`$PDKPATH` if they aren't on the path yet) |
+| `use_clamp_pcells.py` | swap `sg13cmos5l_Clamp_*` cells (static copies or `.klib` references) in an existing layout for the PCells; writes only if the flattened geometry is unchanged |
 | `clamp_base_code.py`, `Clamp_N_code.py`, `Clamp_P_code.py` | the PyCells (`DloGen`) |
 | `clamp_engine.py` | geometry rules + interpolation, pure Python, integer nm |
 | `clamp_refdata.py` | extracted frames / tie blocks (generated) |
@@ -87,6 +88,31 @@ python3 scripts/pcells/gen_clamp.py --limits
 The `.spice` output starts with `.global sub!`. `sg13cmos5l_io.cdl` leaves
 `sub!` undeclared, and plain ngspice would otherwise make it a separate local
 node in every instance.
+
+## Putting the PCells into an existing layout
+
+```sh
+export LC_ALL=C.UTF-8     # IHP's pycell lib reads its modules with the locale's encoding;
+                          # under a bare C locale 'klayout -b' fails with UnicodeDecodeError
+klayout -b -r scripts/pcells/use_clamp_pcells.py -rd input=<in.gds> -rd output=<out.gds>
+```
+
+It replaces each `sg13cmos5l_Clamp_<F><ng>N<..>D` cell with `Clamp_<F>(ng, tie)` in all its
+placements, compares the flattened top cell layer by layer, and writes only if all drawing
+and pin layers are identical. Label moves are listed but don't block: IHP's cells carry
+extra hand-placed `pad` labels, while the PCells put one on each drain strap.
+
+Things to know:
+
+* The clamps become cells named `Clamp_N` / `Clamp_P` (`Clamp_N$1` … for further variants),
+  no longer `sg13cmos5l_Clamp_N15N15D` etc.
+* The saved GDS contains the full geometry plus a PCell reference. Opened with the library
+  registered (`-rm load_clamp_pcells.py`), the cells are live PCells whose `ng`/`tie` can be
+  edited. Without it they show as `<defunct>` but the geometry is intact, so DRC, LVS and
+  stream-out read the same shapes.
+* `SG13_cm_clamps` is registered without a technology restriction. GDS doesn't store a
+  layout's technology, so a restricted library could not re-attach to its instances when a
+  saved file is read back.
 
 ## Verification status (2026-09-28)
 

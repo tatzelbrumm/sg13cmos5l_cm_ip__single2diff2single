@@ -18,7 +18,6 @@ import importlib
 import pya
 
 import sg13cmos5l_pycell_lib                      # noqa: F401  (creates SG13_dev)
-from sg13cmos5l_pycell_lib.sg13_tech import SG13_Tech
 from cni.tech import Tech
 from cni.dlo import PCellWrapper
 
@@ -33,7 +32,10 @@ moduleNames = [
 class ClampPyCellLib(pya.Library):
     def __init__(self):
         self.description = 'sg13cmos5l ESD clamps (parametrized from sg13cmos5l_io)'
-        self.technology = SG13_Tech.TECH_NAME
+        # Deliberately NOT restricted to technology sg13cmos5l (unlike SG13_dev): GDS does not
+        # store a layout's technology, so a restricted library cannot re-attach to its PCell
+        # instances when a saved layout is read back. The PCells take all rules from the
+        # SG13_dev Tech object, not from the layout's technology.
         tech = Tech.get('SG13_dev')
         for moduleName in moduleNames:
             module = importlib.import_module('%s.%s' % (__name__, moduleName))
