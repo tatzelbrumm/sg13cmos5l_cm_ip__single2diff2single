@@ -1,0 +1,1 @@
+{"name": "ihp-flat-cell-to-pcell", "description": "Turn flattened IHP open-PDK (sg13cmos5l/sg13g2) layout cells into parametrized KLayout PyCells that reproduce the originals exactly, with XOR, DRC and connectivity verification."}
