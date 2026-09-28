@@ -45,8 +45,8 @@ append_xschem_library_path_unique [file dirname [info script]]
 append_xschem_library_path_unique [file join [file dirname [info script]] ../../testbenches/xschem]
 
 # Source macro xschemrc
-source [file dirname [info script]]/../../macros/inbuffer/schematic/xschem/xschemrc
-source [file dirname [info script]]/../../macros/outbuffer/schematic/xschem/xschemrc
+source [file dirname [info script]]/../../macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/xschemrc
+source [file dirname [info script]]/../../macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/xschemrc
 # TODO(teardown, CLAUDE.md sec.7): inverter/counter are the template's example
 # macros, slated for removal once the real design no longer needs them as
 # reference. Left sourced for now so in-progress work there doesn't break.

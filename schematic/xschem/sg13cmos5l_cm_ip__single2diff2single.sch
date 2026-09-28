@@ -36,7 +36,7 @@ C {devices/iopin.sym} 140 -180 2 0 {name=p20 lab=vcm}
 C {devices/iopin.sym} 140 -140 2 0 {name=p21 lab=vdiffp}
 C {devices/iopin.sym} 140 -120 2 0 {name=p22 lab=vdiffn}
 C {title.sym} 160 -40 0 0 {name=l1 author="Christoph Maier"}
-C {inbuffer.sym} 260 -260 0 0 {name=xinbuf}
-C {outbuffer.sym} 580 -260 0 0 {name=xoutbuf}
+C {sg13cmos5l_IOPadSingle2Diff.sym} 260 -260 0 0 {name=xinbuf}
+C {sg13cmos5l_IOPadDiff2Single.sym} 580 -260 0 0 {name=xoutbuf}
 C {sg13cmos5l_io/sg13cmos5l_IOPadAnalog.sym} 700 -780 1 0 {name=x1}
 C {sg13cmos5l_io/sg13cmos5l_IOPadInOut16mA.sym} 700 -570 1 0 {name=x2}
