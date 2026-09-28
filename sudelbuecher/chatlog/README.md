@@ -49,7 +49,7 @@
 : Looked up the chatlog/README conventions and wrote them into `CLAUDE.md` §6.
 
 [2026-09-28_sonnet_sg13cmos5l_io_klib_reference_and_sg13_dev_pcells.md](2026-09-28_sonnet_sg13cmos5l_io_klib_reference_and_sg13_dev_pcells.md)
-: New session, on `macros/sg13cmos5l_IOPadDiff2Single`: replaced copied-GDS `sg13cmos5l_io` pad cells with a real `.klib` by-reference entry, traced the mechanism to KLayout's `LibraryManagerPlugin` Salt package, and found IHP's `SG13_dev` PCells already registered with zero extra setup.
+: New session, on `macros/sg13cmos5l_IOPadDiff2Single`: replaced copied-GDS `sg13cmos5l_io` pad cells with a real `.klib` by-reference entry, traced the mechanism to KLayout's `LibraryManagerPlugin` Salt package, found IHP's `SG13_dev` PCells already registered with zero extra setup, worked out the Levels=1 flatten for the pad wrapper from the real GDS hierarchy, confirmed `Clamp_*`/`DCNDiode`/`DCPDiode` have no standalone PCell anywhere in the public PDK, and hit an unresolved hash mismatch between GitHub's `ihp-sg13cmos5l` `main` and the user's IIC-OSIC-TOOLS container copy.
 
 [2026-09-28_sonnet_chatlog_export_meta_and_formatting_corrections.md](2026-09-28_sonnet_chatlog_export_meta_and_formatting_corrections.md)
 : Split off from the file above at the user's request: exporting that session verbatim ran into a checksum mismatch traced to macOS stamping C2PA/JUMBF metadata into images, then two rounds of getting this very log's own formatting conventions wrong (README one-sentence rule, `*[ ]*` block line breaks) and being corrected.
