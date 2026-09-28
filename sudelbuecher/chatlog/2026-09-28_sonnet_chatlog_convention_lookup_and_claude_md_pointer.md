@@ -36,15 +36,16 @@
 
 **Assistant:**
 
-*[Listed `sudelbuecher/` recursively (`device_list_dir`) to find `chatlog/`. Read
-`chatlog/README.md`, the `_sudelbuecher` worktree's own `CLAUDE.md`, and the main
-worktree's `CLAUDE.md` (first 300 lines) via `device_bash cat`. Grepped
-`verbatim|unabridged|abridg` across `chatlog/README.md`, `chatlog/ref/README.md`,
+*[Listed `sudelbuecher/` recursively (`device_list_dir`) to find `chatlog/`.  
+Read `chatlog/README.md`, the `_sudelbuecher` worktree's own `CLAUDE.md`, and the main
+worktree's `CLAUDE.md` (first 300 lines) via `device_bash cat`.  
+Grepped `verbatim|unabridged|abridg` across `chatlog/README.md`, `chatlog/ref/README.md`,
 `chatlog/pix/README.md`, and `2026-09-27_sonnet_chatlog_integrity_correction_and_
-handover.md` — found the rule-bearing hits concentrated in the integrity file. Grepped
-that file for `README` mentions. Attempted a stray `Read` on a placeholder path
-(harmless tool error, no real file involved). Read that file's header (lines 1–40) and
-tail (lines 230–290, plus a line count) via `device_bash sed`/`wc`. Read `chatlog/ref/
+handover.md` — found the rule-bearing hits concentrated in the integrity file.  
+Grepped that file for `README` mentions.  
+Attempted a stray `Read` on a placeholder path (harmless tool error, no real file involved).  
+Read that file's header (lines 1–40) and tail (lines 230–290, plus a line count) via `device_bash sed`/`wc`.  
+Read `chatlog/ref/
 README.md` and `chatlog/pix/README.md` in full.]*
 
 Here's what's actually established as the current convention, drawn from `sudelbuecher/chatlog/README.md`, `ref/README.md`, `pix/README.md`, and the incident file `2026-09-27_sonnet_chatlog_integrity_correction_and_handover.md` (which is where most of the verbatim-log rules got hammered out the hard way).
@@ -86,14 +87,14 @@ One thing worth flagging: `CLAUDE.md` §6 in the main worktree ("Where the recor
 *[Located this session's own raw transcript on the container
 (`/root/.claude/projects/-home-claude/8092a469-edcc-5db6-924d-6f5c83ac024a.jsonl`),
 confirmed its record-type structure with a `python3` line-by-line dump, then extracted
-and cross-checked the verbatim Turn-1 user message and final assistant text against it.
+and cross-checked the verbatim Turn-1 user message and final assistant text against it.  
 Attempted `device_bash` to read the header of the two most recent chatlog files
 (`2026-09-28_sonnet_slot_makefile_scaffold_and_klayout_lvs_debugging.md`,
 `2026-09-28_sonnet_toplevel_verify_targets_and_check_boundary_gds_mismatch.md`) to
-confirm the current header/turn convention before writing anything — the call failed:
-"The device this session is bound to is not connected to the bridge." Retried once, per
-the tool's own guidance; same failure. Stopped rather than keep retrying blind, since no
-file had been written yet.]*
+confirm the current header/turn convention before writing anything — the call failed:  
+"The device this session is bound to is not connected to the bridge."  
+Retried once, per the tool's own guidance; same failure.  
+Stopped rather than keep retrying blind, since no file had been written yet.]*
 
 I've hit a snag — the connection to your computer dropped mid-task. Let me flag this now rather than push further blind.
 
@@ -101,7 +102,9 @@ I've hit a snag — the connection to your computer dropped mid-task. Let me fla
 - I have this session's own raw JSONL transcript located (`/root/.claude/projects/-home-claude/8092a469-edcc-5db6-924d-6f5c83ac024a.jsonl`) and extracted the verbatim text for both turns of this chat, ready to write as a log entry.
 - I have **not yet** written the log file, updated `chatlog/README.md`, or touched `CLAUDE.md` — the device connection dropped before I could get back to the file for the header-convention check, so nothing has been changed on disk.
 
-**On your actual question — how to point any chat at these conventions:** the mechanism already exists and you just watched it work: this very turn opened with a full dump of both project `CLAUDE.md` files injected as "codebase and user instructions" — that's automatic, every session, no action needed from you per-chat. So the answer is simply: **write the conventions into `CLAUDE.md`**, and every future chat in this project gets them for free. The natural spot is §6 ("Where the record lives") in the main repo's `CLAUDE.md`, which I flagged last turn as already stale — it predates `chatlog/`, `ref/`, `pix/`, and the README-index convention entirely.
+**On your actual question — how to point any chat at these conventions:** the mechanism already exists and you just watched it work: this very turn opened with a full dump of both project `CLAUDE.md` files injected as "codebase and user instructions" — that's automatic, every session, no action needed from you per-chat.  
+So the answer is simply: **write the conventions into `CLAUDE.md`**, and every future chat in this project gets them for free.  
+The natural spot is §6 ("Where the record lives") in the main repo's `CLAUDE.md`, which I flagged last turn as already stale — it predates `chatlog/`, `ref/`, `pix/`, and the README-index convention entirely.
 
 I'll hold off writing anything until your computer reconnects — I don't want to guess at the current file header convention and write something inconsistent with your existing logs. Want me to retry now, or say when you're back?
 
@@ -115,22 +118,27 @@ I'll hold off writing anything until your computer reconnects — I don't want t
 **Assistant:**
 
 *[Confirmed the device bridge was reachable again (`device_bash echo ok` + `ls "$HOME/
-mnt/"`). Read the exact header/metadata/turn/footer convention from the two most recent
+mnt/"`).  
+Read the exact header/metadata/turn/footer convention from the two most recent
 chatlog files in full (`...slot_makefile_scaffold_and_klayout_lvs_debugging.md`,
 `...toplevel_verify_targets_and_check_boundary_gds_mismatch.md`) before writing
-anything. Confirmed this is still the same session — same JSONL transcript file, now
+anything.  
+Confirmed this is still the same session — same JSONL transcript file, now
 grown to 166 lines — and extracted the full Turn-2/Turn-3 span programmatically,
 including tracking down the harness's own "Instructions no longer present" notice as an
 `attachment`-type `instructions` record (`reason: "session_start"`), confirming it was
-never stored as user-authored text. Re-fetched `chatlog/README.md` and the main
+never stored as user-authored text.  
+Re-fetched `chatlog/README.md` and the main
 `CLAUDE.md` fresh from the device to rule out any change during the disconnect (both
-byte-identical to what had already been read this session). Staged the main `CLAUDE.md`
+byte-identical to what had already been read this session).  
+Staged the main `CLAUDE.md`
 (`device_stage_files`), rewrote §6 ("Where the record lives") with `Edit` to reflect the
 current `chatlog/`+`ref/`+`pix/`+README-index structure and to state the
 verbatim-logging rule directly, with a pointer to this session's own referenced incident
 file for the fuller mechanics rather than duplicating it, and committed it back to the
 device via `device_commit_files` — verified by `md5sum` match between the container-side
-edit and the device copy. Assembled this file from the full three-turn extraction, wrote
+edit and the device copy.  
+Assembled this file from the full three-turn extraction, wrote
 it to `/mnt/user-data/outputs/` in the cloud container, transferred it to
 `sudelbuecher/chatlog/` via `device_commit_files`, updated `chatlog/README.md`'s index
 the same way (`.bak` kept first), and verified both writes landed correctly on the
