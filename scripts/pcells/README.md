@@ -92,10 +92,12 @@ node in every instance.
 ## Putting the PCells into an existing layout
 
 ```sh
-export LC_ALL=C.UTF-8     # IHP's pycell lib reads its modules with the locale's encoding;
-                          # under a bare C locale 'klayout -b' fails with UnicodeDecodeError
 klayout -b -r scripts/pcells/use_clamp_pcells.py -rd input=<in.gds> -rd output=<out.gds>
 ```
+
+If this fails with a `UnicodeDecodeError` inside IHP's `sg13cmos5l_pycell_lib/__init__.py`,
+the locale isn't UTF-8: IHP's library reads its module files with the locale's encoding.
+IIC-OSIC-TOOLS already sets `LC_ALL=en_US.UTF-8`; elsewhere, run with a UTF-8 locale.
 
 It replaces each `sg13cmos5l_Clamp_<F><ng>N<..>D` cell with `Clamp_<F>(ng, tie)` in all its
 placements, compares the flattened top cell layer by layer, and writes only if all drawing
