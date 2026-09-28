@@ -41,3 +41,6 @@
 
 [2026-09-28_sonnet_toplevel_verify_targets_and_check_boundary_gds_mismatch.md](2026-09-28_sonnet_toplevel_verify_targets_and_check_boundary_gds_mismatch.md)
 : Continuation, split into a new file at the user's request: which top-level `make` targets to try first, then confirming exactly which GDS `check-boundary` checks and why a clean pass doesn't mean much while the top level's schematic and layout describe different designs.
+
+[2026-09-28_sonnet_slot_makefile_scaffold_and_klayout_lvs_debugging.md](2026-09-28_sonnet_slot_makefile_scaffold_and_klayout_lvs_debugging.md)
+: New session: scaffolded `macros/slot`'s Makefile (DRC/LVS/PEX first, then a full inverter-based copy per the user's own call), interactive-KLayout and `build-top`/tapeout-export explainers, a `klayout-lvs-netlist` failure triaged from a log paste, and a `slot.klay.gds` vs. the `sg13cmos5l_ocd_chipalooza` harness's `slot7_wrapper.gds` diff that cleared a removed TopMetal1 sliver as LVS-safe.
