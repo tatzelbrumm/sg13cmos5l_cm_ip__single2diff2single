@@ -1,5 +1,6 @@
 # Sudelbuch — 2026-09-28 — verbatim chat log (Opus session: parametrized sg13cmos5l Clamp_N/Clamp_P
-PCells, the `ihp-flat-cell-to-pcell` skill, worktree questions, and `[reasoning_extraction]` stops)
+PCells, the `ihp-flat-cell-to-pcell` skill, worktree questions, `[reasoning_extraction]` stops, and
+installing the PCells into `sg13cmos5l_IOPadDiff2Single`)
 
 **Repo:** `sg13cmos5l_cm_ip__single2diff2single` (main worktree) /
 `sg13cmos5l_cm_ip__single2diff2single_sudelbuecher` (`_sudelbuecher` worktree, `sudel_buecher`
@@ -9,12 +10,17 @@ branch); input data from the connected folder `~/EDA/chipalooza_cmos5L`
 
 **Assistant:** Claude Opus 5.5 (configured model `claude-opus-5-5`), cloud session linked to the
 user's computer (session `9cac00c9-eeb1-55fe-8703-d20a7d0c771e`), 2026-09-28 22:40 to 2026-09-29
-00:31 CEST
+02:24 CEST
 
 **Deliverables of this session:** `scripts/pcells/` in the main worktree (14 files, untracked;
 KLayout library `SG13_cm_clamps` with PCells `Clamp_N`/`Clamp_P`, see its `README.md`) and the
 skill `ihp-flat-cell-to-pcell`, which the user saved to the account and as
 `Claude/Ihp flat cell to pcell-v1.zip` in the main worktree.
+
+**Update (2026-09-29, at the user's request in Turn 23):** Turn 14 is completed and Turns 15–23
+are appended, built the same way from the same raw transcript. Turns 15–23 cover installing the
+PCells into `macros/sg13cmos5l_IOPadDiff2Single` (new script `scripts/pcells/use_clamp_pcells.py`),
+the locale question, and the manual KLayout walkthrough.
 
 **What is reproduced, and what is not:** every `**User:**` block and every assistant text below
 is extracted by script from this session's raw transcript
@@ -23,7 +29,8 @@ reconstructed, per `CLAUDE.md` §6. That includes the assistant's short progress
 tool calls, which the app shows only in summarized form. Tool calls are elided as
 `*[bracketed italic summaries]*` that record actions and their results. The model's internal
 reasoning blocks, which the raw transcript also stores, are **not** reproduced, in keeping with the
-constraint the user set for this log in Turn 14. The `*[ ]*` summaries describe what was done,
+constraint the user set for this log in Turn 14 (and for the update in Turn 23: "within Anthropic
+trade secret boundaries"). The `*[ ]*` summaries describe what was done,
 not that internal reasoning.
 
 **Stopped attempts (Turns 7, 8, 10–13):** these messages were stopped by the safety classifier
@@ -644,4 +651,580 @@ Located this session's raw transcript, `~/.claude/projects/-home-claude/9cac00c9
 Listed every record carrying human-authored text, printed the user text and visible assistant text of records 830 onward (internal reasoning blocks shown only as placeholders), and followed the `parentUuid` chain from the last record to separate the continuing conversation from the stopped attempts.  
 Wrote `chatlog_build/skeleton.py`, which extracts user messages, visible assistant text and tool calls along that chain, and printed the resulting skeleton (52 tool runs).]*
 
-*[This log was written during Turn 14; the rest of that turn (writing and transferring this file, the `ref/` file and the README updates) and its closing reply are not included.]*
+*[Printed the second half of the skeleton (runs 27–52).]*
+
+The skeleton gives 14 user turns: 8 on the live path and 6 stopped attempts on dead branches, with 52 runs of tool calls. Getting the commit hashes of the repos I cloned, for the `ref/` file:
+
+*[Read the `origin` URL and `HEAD` commit of the four repositories cloned in the container, and the `klayout` versions (Python module 0.30.12, binary 0.28.16).  
+Wrote `chatlog_build/summaries.py` with the `*[ ]*` action summaries for the 52 tool runs.]*
+
+Now the assembler, which merges the verbatim extracts with those summaries:
+
+*[Wrote `chatlog_build/build.py`, which renders the live path into turns: user text as blockquotes, visible assistant text verbatim, tool runs as `*[ ]*` blocks from `summaries.py`, stopped attempts inserted before the message that replaced them.]*
+
+The run containing the `SendUserMessage` call gets split around the message, so the summaries need `27a`/`27b` keys:
+
+*[Renamed the summary keys of the run containing `SendUserMessage` to `27a`/`27b`; the first build failed with `KeyError: 27`, fixed; the second failed with `KeyError: 53` because the transcript had grown past the skeleton.]*
+
+The transcript keeps growing as I work. I'll cut the log at the skeleton step (record 990); everything after it is building this log, which the closing note covers:
+
+*[Added a cutoff at record 990 (the skeleton step) and rebuilt: 14 turns, 52 runs, no run without a summary; listed the turn headers.]*
+
+All 14 turns and 52 runs are accounted for. I'll switch the stopped-attempt timestamps to local time, then read the output through, starting with the head and the turn boundaries:
+
+*[Switched the stopped-attempt timestamps to CEST and printed the first 40 lines and the Turn 2–3 region of the rendered body.]*
+
+Turns 1–3 read correctly. Now the stopped attempts and the final turn:
+
+*[Printed the Turn 6–14 region of the body.  
+Removed a post-cutoff sentence from the run-52 summary and reworded the stopped-response note, wrote the header, and assembled the log file (45,019 bytes).  
+Ran a check script against the raw transcript: all 14 user messages and the mid-turn message found verbatim in the file, all 60 visible assistant texts found verbatim, and none of the 121 internal reasoning blocks (97 of them non-empty) sharing any 40-character window with the file.]*
+
+The no-overlap test is meaningful: 97 of the 121 reasoning blocks hold text, and none of it appears in the log. Next the `ref/` file, following an existing one's format:
+
+*[Read the head of `ref/2026-09-28_references.md` for the format and wrote `ref/2026-09-28_opus_references.md`.]*
+
+Transferring the log and the `ref/` file, then backing up both READMEs and appending the entries in place on your machine:
+
+*[Copied both files to `/mnt/user-data/outputs/chatlog/`, `sha256sum`ed them, and wrote them to the `_sudelbuecher` worktree with `device_commit_files` (2 written).  
+On the linked computer: `sha256sum` matched both; backed up `chatlog/README.md` as `README.md.bak4` and `ref/README.md` as `README.md.bak2`; appended the one-sentence log entry and a `ref/` bullet in place with Python; showed both diffs (the command's exit status 1 came from `diff` reporting the differences).]*
+
+The chat log is written: `sudelbuecher/chatlog/2026-09-28_opus_sg13cmos5l_clamp_pcells_skill_and_worktree_questions.md`, 45 KB, 14 turns. It follows the precedent format, and both it and the new `ref/2026-09-28_opus_references.md` have checksums matching their container copies. I appended one-sentence entries to `chatlog/README.md` and `ref/README.md` after backing them up as `README.md.bak4` and `ref/README.md.bak2`. I ran no git commands.
+
+**How it meets your constraint:**
+- A script pulled every user message and every visible assistant text straight from this session's raw transcript, so nothing was retyped. That includes the progress sentences between tool calls and the status message I sent mid-work.
+- Tool calls are condensed into `*[ ]*` blocks, one sentence per line with two spaces + LF. They record what was done and what came back.
+- My internal reasoning blocks, which the raw transcript also stores, are left out. I checked this by string comparison: none of the 97 non-empty reasoning blocks overlaps the log anywhere. A separate check confirmed that all 14 user messages and all 60 visible assistant texts appear word for word.
+
+**Two choices to confirm:**
+- **Stopped attempts.** I included the six attempts the safety classifier stopped as Turns 7, 8 and 10–13, with your text word for word and the notice the app showed. They are marked as retries that the next message replaced, not as part of the continuing conversation. If you'd rather keep them out of the main log, I can move them into a split-off file the way the formatting-corrections log was split.
+- **End of Turn 14.** The log stops partway through that turn, because it was written during it. A closing note says so.
+
+I didn't add any `pix/` entries. The layout renders I looked at stayed in the cloud container and were never shown to you, so pushing them to your machine would only pick up the image-metadata stamp your CLAUDE.md warns about.
+
+## Turn 15
+
+**User:**
+
+> ok back to business. Apparently, you tested the pcells you generated. Walk me through installing and verifying your pcells in sg13cmos5l_IOPadDiff2Single.klay.gds.
+
+**Assistant:**
+
+I'll look at what `sg13cmos5l_IOPadDiff2Single.klay.gds` and its `.klib` currently contain, so the walkthrough fits your actual cell hierarchy.
+
+*[Listed the files of `macros/sg13cmos5l_IOPadDiff2Single/` and printed both `.klib` files (one library, `sg13cmos5l_io` → `$PDKPATH/libs.ref/sg13cmos5l_io/gds/sg13cmos5l_io.gds`).  
+Staged `sg13cmos5l_IOPadDiff2Single.klay.gds` (3,483,966 bytes) into the container.  
+Grepped the macro's schematic for its components (`sg13cmos5l_ClampN15N15.sym` and `sg13cmos5l_ClampP15N15.sym` from `macros/IOPad`), and read `.designinit` and the Makefile's KLayout lines.]*
+
+The schematic uses `sg13cmos5l_ClampN15N15` and `ClampP15N15` symbols from `macros/IOPad`. Now the layout's hierarchy:
+
+*[Printed the `.klay.gds` hierarchy: top cell `sg13cmos5l_IOPadDiff2Single` with `sg13cmos5l_Clamp_N15N15D` at (0, 6), `sg13cmos5l_Clamp_P15N15D` at (0, 65), `DCNDiode`, `DCPDiode` and `GateDecode`.  
+Listed the PDK's `.lym` macros and read the text of `tech/pymacros/autorun.lym` (adds `python/` and `pycell4klayout-api/source/python/` to `sys.path`, imports `sg13cmos5l_pycell_lib`).  
+Read and rewrote `load_clamp_pcells.py` so it adds those two directories from `$KLAYOUT_PATH`/`$PDKPATH` when the PDK library is not importable.]*
+
+Now the install script. It swaps static reference cells for the matching PCell variants, then compares the flattened layout before and after before it writes anything:
+
+*[Wrote `use_clamp_pcells.py`.]*
+
+Testing on the staged copy of your macro, with the environment set up like the container's (`KLAYOUT_PATH` set, nothing preloaded):
+
+*[Copied the staged macro to `swaptest/in.gds` and ran the script on it: 'no static sg13cmos5l_Clamp_* cells found'.]*
+
+Nothing matched, so the clamp cells must be proxies. Checking what they really are:
+
+*[Listed every cell of the macro: all cells below the top are library proxies of `sg13cmos5l_io` (`<defunct>` in the container, geometry stored in the file).  
+Let the script accept such proxies; next run stopped with 'library SG13_cm_clamps / Clamp_N not available'.  
+Made the script set the layout's technology to `sg13cmos5l`; next run reported XOR differences on 15 layers and all labels of the two clamps removed.  
+Rewrote `flat_regions` to use a recursive shape iterator on the layout itself; same result.]*
+
+The two new cells really are empty in this layout, although the same call produced full cells in a fresh layout earlier. Debugging directly:
+
+*[Checked `create_cell` directly: the PCell variant has its full geometry.  
+Replaced `inst.inst()` by `inst.child_inst()` in the swap loop and re-ran: geometry IDENTICAL, 15 `pad` labels removed and 15 added, `swaptest/out.gds` written.  
+Wrote `swaptest/check.py` and reopened `out.gds` with and without the library: geometry identical to `in.gds` both times, but the clamp cells `<defunct>` even with the library registered.  
+Removed the technology restriction from `__init__.py` and the technology setting from the script, and re-ran: geometry IDENTICAL; reopened with the library the clamps are live PCells with `ng = 15`, `tie = D`; without it `<defunct>` with identical geometry.  
+Ran the script through the KLayout 0.28.16 binary (`klayout -b -r … -rd input=… -rd output=…`): `ModuleNotFoundError: No module named 'cni'`.]*
+
+Inside the KLayout binary, `$KLAYOUT_PATH/python` is on the path automatically, so the PDK library was found but `cni` wasn't. The loader has to check both:
+
+*[Made the loader check for `cni` as well and re-ran the binary: `psutil` warnings, then `UnicodeDecodeError: 'ascii' codec …`.  
+Re-ran with `LANG=C.UTF-8 LC_ALL=C.UTF-8`: geometry IDENTICAL, `swaptest/out_b.gds` written.]*
+
+With a UTF-8 locale it works, even on the KLayout 0.28 binary. Under the bare C locale it doesn't. Finding which file has a non-ASCII byte at offset 2804, and whether it's mine or IHP's:
+
+*[Searched my files and IHP's pycell modules for byte `0xe2` at offset 2804: no match.  
+Tried running a macro from `/dev/stdin` (refused: no interpreter), then ran `swaptest/dbg.py`: the traceback ends in IHP's `sg13cmos5l_pycell_lib/__init__.py`, line 202, reading its module files with the ASCII codec.  
+Re-ran `verify_clamp.py` in both modes (16 IDENTICAL, RESULT: PASS), and changed `ng` 15 → 12 on a reopened `Clamp_N` instance: new variant `Clamp_N$1` with 12 gates.]*
+
+Re-parametrizing in place works: the instance becomes a new variant, `Clamp_N$1`, with 12 gates. Its bbox prints empty only because KLayout hadn't refreshed its caches yet. Now `run_drc.py`'s usage:
+
+*[Grepped `run_drc.py` for its usage string.]*
+
+Now updating the README with a section on using the PCells in an existing layout, then shipping the changed files:
+
+*[Added a `use_clamp_pcells.py` row and a section 'Putting the PCells into an existing layout' to `README.md`, byte-compiled the changed files, copied four files to `/mnt/user-data/outputs/pcells/` and `sha256sum`ed them.  
+Wrote the four files to `scripts/pcells/` with `device_commit_files` (4 written); `sha256sum` on the linked computer showed `__init__.py` and `load_clamp_pcells.py` still at their old hashes.]*
+
+The checksum caught the `device_commit_files` bug your CLAUDE.md warns about: `__init__.py` and `load_clamp_pcells.py` were reported written but still hold the old versions. Retrying those two:
+
+*[Re-sent those two files with `force`; all four hashes then matched.]*
+
+I tested the whole procedure on a copy of your macro here. The swap leaves the flattened geometry **identical** on every drawing and pin layer. Along the way I fixed three problems in my scripts that only this real-file test exposed.
+
+**What's in the macro.** `sg13cmos5l_IOPadDiff2Single.klay.gds` has a single top cell. Everything below it is placed by reference to `sg13cmos5l_io` through your `.klib`. That includes `sg13cmos5l_Clamp_N15N15D` at (0, 6) and `sg13cmos5l_Clamp_P15N15D` at (0, 65), both unrotated. "Installing" means swapping those two for `Clamp_N` / `Clamp_P` with `ng=15, tie=D`. Everything else stays a `.klib` reference.
+
+**What I fixed.** I added a new script, `scripts/pcells/use_clamp_pcells.py`, and corrected three things; the updated files are on your machine with matching checksums:
+- **Library restriction:** the library no longer carries the `sg13cmos5l` technology restriction. GDS doesn't store a layout's technology, so on reopening, a saved layout couldn't find the library, and the clamps showed up as dead ("defunct") copies instead of live PCells.
+- **Loader:** it now puts the PDK's `cni` package on the Python path itself. `klayout -b` skips the PDK's autorun macro, which normally does that.
+- **Swap:** my first version modified a copy of each placement instead of the placement itself; I caught that on your file.
+
+## 1. Set up the container
+
+```sh
+cd /foss/designs/sg13cmos5l_cm_ip__single2diff2single
+source .designinit
+export LC_ALL=C.UTF-8
+```
+
+The `LC_ALL` line is needed because of a bug in IHP's own library: it reads its module files in the locale's encoding. Under a plain C locale, any `klayout -b` run that loads IHP's PCells dies with a `UnicodeDecodeError`.
+
+## 2. Optional: check the PCells against the PDK's own clamp cells
+
+```sh
+python3 scripts/pcells/verify_clamp.py $PDKPATH/libs.ref/sg13cmos5l_io/gds/sg13cmos5l_io.gds \
+        --pdk-python $PDKPATH/libs.tech/klayout/python
+```
+
+You should see 16 × `IDENTICAL` and `RESULT: PASS`. This needs the `klayout` Python module in the container; check with `python3 -c 'import klayout.db'`. I extracted from the copy in `chipalooza_cmos5L`. If the container's PDK copy differs (you saw a hash mismatch between GitHub and the container last time), this is where it would show.
+
+## 3. Back up, swap, and replace
+
+```sh
+cd macros/sg13cmos5l_IOPadDiff2Single/layout/klayout
+cp sg13cmos5l_IOPadDiff2Single.klay.gds backups/sg13cmos5l_IOPadDiff2Single_pre_pcells.klay.gds
+klayout -b -r /foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/use_clamp_pcells.py \
+        -rd input=sg13cmos5l_IOPadDiff2Single.klay.gds -rd output=/tmp/IOPadDiff2Single_pcells.gds
+```
+
+On your file I got:
+
+```
+swapped sg13cmos5l_Clamp_N15N15D     -> Clamp_N(ng=15, tie=D)      (1 placement, cell Clamp_N)
+swapped sg13cmos5l_Clamp_P15N15D     -> Clamp_P(ng=15, tie=D)      (1 placement, cell Clamp_P)
+label differences (not blocking): 15 removed, 15 added
+geometry after swap: IDENTICAL on all drawing/pin layers
+```
+
+The label differences are only `pad` labels: IHP's cells have hand-placed ones, and the PCells put one on each drain strap. The script refuses to write if any geometry differs. If you get `IDENTICAL`, replace the original:
+
+```sh
+mv /tmp/IOPadDiff2Single_pcells.gds sg13cmos5l_IOPadDiff2Single.klay.gds
+```
+
+## 4. Open it in the GUI
+
+Start from the file's own directory, and don't use `-nn` (per your CLAUDE.md):
+
+```sh
+klayout -e -rm /foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/load_clamp_pcells.py \
+        sg13cmos5l_IOPadDiff2Single.klay.gds
+```
+
+What to check:
+- **Cell tree:** `Clamp_N` and `Clamp_P` replace the two `sg13cmos5l_Clamp_*` cells.
+- **Instance properties:** open the properties of one of the two clamp placements. The PCell parameters page should show `ng = 15`, `tie = D`. Changing `ng` there regenerates the clamp in place. I tested this in script form: 15 → 12 gave a new variant `Clamp_N$1` with 12 gates.
+- **Library browser:** it should list `SG13_cm_clamps`, which is where you'd place further clamps from.
+
+If you open the file without `-rm …load_clamp_pcells.py`, the two cells show as `<defunct>`. I tested that too: the geometry is intact, but you can't edit them as PCells.
+
+## 5. Verify the macro
+
+- **Main proof:** step 3's check compares all layers of the whole flattened macro, so DRC and LVS see exactly the same shapes as before.
+- **Cross-check with the real DRC deck:** your container's KLayout is new enough to run it without my workaround. Run it on the backup too; the results should match.
+  ```sh
+  python3 $PDKPATH/libs.tech/klayout/tech/drc/run_drc.py --path=sg13cmos5l_IOPadDiff2Single.klay.gds \
+          --topcell=sg13cmos5l_IOPadDiff2Single --run_dir=/tmp/drc_pcells --no_density
+  ```
+- **After saving from the GUI:** compare against the backup with KLayout's XOR tool, or `strmxor` if the container has it.
+
+Two consequences to keep in mind:
+- **Cell names:** the clamps are now called `Clamp_N` / `Clamp_P` (further variants `Clamp_N$1` …), no longer `sg13cmos5l_Clamp_N15N15D`. Anything that matches cells by that name, like hierarchical LVS or scripts, will see the change. Your schematic uses the `sg13cmos5l_ClampN15N15` / `ClampP15N15` symbols from `macros/IOPad`.
+- **The GDS stays self-contained:** it stores the full clamp geometry plus the PCell link. Tools that never load my library, such as Magic or stream-out, still read the same shapes.
+
+What I couldn't test from here: the GUI steps themselves, and the container's own KLayout version and PDK copy.
+
+## Turn 16
+
+**User:**
+
+> What are reasons that I should *not* include export LC_ALL=C.UTF-8 in ~/EDA/.designinit, so UTF-8 is chosen whenever I start an Austrian School docker container?
+
+**Assistant:**
+
+I found a few reasons, most of them about scope. The first is that you should check whether you need it at all. The failure I saw was in my cloud container, whose locale is empty (`LANG=`, `LC_ALL=`, so plain C). Your IIC-OSIC-TOOLS container may already run under a UTF-8 locale, and then the problem never shows up there. Run `locale` in both an X11 session and a `docker exec` shell before changing anything.
+
+If you do need it, here's what speaks against `LC_ALL` in `~/EDA/.designinit`:
+
+- **`LC_ALL` is the heaviest setting there is.** It overrides `LANG` and every `LC_*` category: character set, sorting, number format, dates, messages. It also wins over anything a script or tool sets more narrowly, such as a `LC_NUMERIC=C` for number parsing or a `LANG=… cmd` prefix. glibc intends it for temporary overrides, not permanent configuration. The only thing you need changed is the character encoding.
+- **It changes behaviour across all your projects.** The container sources `~/EDA/.designinit` for everything under `DESIGNS=$HOME/EDA`, not just `single2diff2single`. A side effect would show up in the HeiChips and chipalooza repos as well.
+- **It can change your committed outputs.** Your regression test is "rerun the target, then `git diff`". xschem, Magic and netgen are Tcl programs, and Tcl picks its file encoding from the locale. So any non-ASCII in `.sch` files, labels or comments (µ, Ω, umlauts in your name) may be read or written differently afterwards. Ordering from `sort`/`ls` and date formats in logs can change too. I don't know that any of this happens here, but you'd have to rerun the sign-off targets and diff to be sure.
+- **It sits outside the repo.** `~/EDA/.designinit` isn't versioned, so a colleague, a CI run, or you on another machine won't get it. The repo would then depend on an invisible file. If it goes anywhere, the project's own `.designinit` is better, because it's committed and scoped to this project.
+- **The locale might not exist.** `C.UTF-8` is built into Ubuntu 24.04's glibc, so it's almost certainly fine. If it were missing, every shell would warn `setlocale: LC_ALL: cannot change locale` and fall back to C anyway. `locale -a` settles it.
+
+Narrower alternatives, from broadest to most targeted:
+
+1. **`export LC_CTYPE=C.UTF-8`** changes only the character encoding, which is the part that matters.
+2. **`export PYTHONUTF8=1`** switches only Python to UTF-8 mode. KLayout's embedded Python should honour it, since it reads other `PYTHON*` variables, but I haven't tested that.
+3. **No environment change at all.** My loader could switch Python's stdin to UTF-8 (`sys.stdin.reconfigure(encoding='utf-8')`) just before it imports IHP's library. The fix would live in `scripts/pcells`, apply only to the clamp scripts, and be versioned with them. I can add that and test it under the bare C locale that failed here.
+
+The root cause is IHP's `open(…, encoding=sys.stdin.encoding)` in `sg13cmos5l_pycell_lib/__init__.py`. Reading source files should use `encoding='utf-8'`. It's worth an issue upstream, because it breaks their own PCells in any C-locale batch run, not just mine.
+
+## Turn 17
+
+**User:**
+
+> Well, seems to be a non-issue in the IIC-OSIC-TOOLS docker:
+> /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/ihp > locale
+> LANG=en_US.UTF-8
+> LANGUAGE=
+> LC_CTYPE="en_US.UTF-8"
+> LC_NUMERIC="en_US.UTF-8"
+> LC_TIME="en_US.UTF-8"
+> LC_COLLATE="en_US.UTF-8"
+> LC_MONETARY="en_US.UTF-8"
+> LC_MESSAGES="en_US.UTF-8"
+> LC_PAPER="en_US.UTF-8"
+> LC_NAME="en_US.UTF-8"
+> LC_ADDRESS="en_US.UTF-8"
+> LC_TELEPHONE="en_US.UTF-8"
+> LC_MEASUREMENT="en_US.UTF-8"
+> LC_IDENTIFICATION="en_US.UTF-8"
+> LC_ALL=en_US.UTF-8
+
+**Assistant:**
+
+Good, then it's a non-issue there. The image already sets `LC_ALL=en_US.UTF-8`, so the embedded Python in KLayout reads IHP's files as UTF-8 and batch runs work as they are. Nothing needs to go into either `.designinit`.
+
+That also means the `export LC_ALL=C.UTF-8` I put in step 1 of the walkthrough, and in the new README section, is unnecessary in your container. It would even override the image's `en_US.UTF-8` for that shell, which is harmless but pointless. The failure only happens where the locale is plain C or unset, like my cloud container.
+
+I'd change the README line to a conditional note: "if `klayout -b` fails with `UnicodeDecodeError` in IHP's `sg13cmos5l_pycell_lib`, the locale isn't UTF-8; IIC-OSIC-TOOLS already sets `LC_ALL=en_US.UTF-8`". Should I make that edit and push it?
+
+## Turn 18
+
+**User:**
+
+> what do you mean with "push it"? make the edit and save on my computer, but leave git alone.
+
+**Assistant:**
+
+By "push" I meant copying the file to your computer, not `git push`; that was a poor choice of word. I'll edit the README in place on your computer and leave git alone:
+
+*[On the linked computer: backed up `scripts/pcells/README.md` as `README.md.bak`, replaced the `export LC_ALL=C.UTF-8` block with a conditional note in place with Python, and showed the diff and the new `sha256sum`.]*
+
+I've edited `scripts/pcells/README.md` on your computer. The `export LC_ALL=C.UTF-8` line is gone, and in its place is a note saying what the `UnicodeDecodeError` means and that IIC-OSIC-TOOLS already sets `LC_ALL=en_US.UTF-8`. No git commands were run.
+
+I backed up the old version as `scripts/pcells/README.md.bak` before editing. I can't delete files in that folder, so remove it yourself once you're happy with the edit.
+
+## Turn 19
+
+**User:**
+
+> Steps 1 and 2 of your verification steps passed.
+> I didn't quite get what verify_clamp.py is doing. I also don't quite get which of your python scripts are for testing only.
+> I don't quite get Step 3. You propose to create a backup file; I keep very fine grained git version control.
+> Explain the klayout options -b -r  -rd and walk me through what use_clamp_pcells.py does (and how).
+
+**Assistant:**
+
+I'll re-read the current `use_clamp_pcells.py` so the walkthrough matches the file exactly:
+
+*[Read the current `use_clamp_pcells.py`.]*
+
+## What `verify_clamp.py` does
+
+It answers one question: do my PCells reproduce IHP's clamp cells exactly? It runs in three parts:
+
+1. **Reproduction via the geometry code.** For each of the eight reference cells (N/P × `ng` = 2, 8, 15 with `tie=D`, and `ng=20` with `tie=0D`), it builds the cell with my geometry code (`clamp_engine.py`, no KLayout PCell machinery involved). Then it XORs the result against the original in `sg13cmos5l_io.gds`, layer by layer, after merging overlapping shapes. An empty XOR on every layer prints `IDENTICAL`.
+2. **Reproduction via the PCells** (only with `--pdk-python`). It does the same comparison again, but builds the cells through the real IHP `cni` PCell framework. That tests the PCell code path you'll use in KLayout, not just the geometry code underneath it.
+3. **Sweep.** It generates every legal `ng` for each family and variant, and checks that each cell has the right number of gates and of separate M2 straps. `--sweep-gds` writes all those cells into one GDS, for DRC or connectivity runs.
+
+That's why your step 2 showed 16 × `IDENTICAL` (8 cells × 2 paths) and then `RESULT: PASS`.
+
+## Which scripts are for what
+
+| Role | Files |
+|---|---|
+| **The PCells themselves**, needed whenever KLayout uses them | `__init__.py`, `load_clamp_pcells.py`, `clamp_base_code.py`, `Clamp_N_code.py`, `Clamp_P_code.py`, `clamp_engine.py`, `clamp_refdata.py` |
+| **Tools you run** | `use_clamp_pcells.py` (one-time conversion of an existing layout); `gen_clamp.py` (standalone GDS + CDL + ngspice for any `ng`, no GUI), which uses `clamp_netlist.py` and `clamp_klayout.py` |
+| **Maintenance** | `extract_clamp_refdata.py`: regenerates `clamp_refdata.py` if IHP ever changes the reference cells |
+| **Testing only** | `verify_clamp.py`, `lvs_clamp.py` |
+
+## Step 3 with git instead of a backup copy
+
+You're right: with fine-grained git control, the backup copy is redundant. Commit the macro's `.klay.gds` so it's clean, then convert it in place. The script reads the whole file into memory before writing, so input and output can be the same path:
+
+```sh
+cd macros/sg13cmos5l_IOPadDiff2Single/layout/klayout
+klayout -b -r /foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/use_clamp_pcells.py \
+        -rd input=sg13cmos5l_IOPadDiff2Single.klay.gds -rd output=sg13cmos5l_IOPadDiff2Single.klay.gds
+```
+
+It only writes if the geometry is unchanged, so a failed check leaves the file untouched. If you don't like the result anyway, git gets it back. Two things to bear in mind:
+- **`git diff` won't show much.** GDS is binary, so the evidence of an identical result is the script's own check. For an independent check afterwards, pull the committed version out with `git show HEAD:<path> > /tmp/old.gds` and XOR it against the new file (KLayout's XOR tool, or `strmxor` if the container has it).
+- **Separate `backups/` folder.** It already exists next to the file. It's where KLayout's Library Manager plugin writes its own timestamped backups; I didn't create it.
+
+## `klayout -b`, `-r`, `-rd`
+
+- **`-b`**: batch mode, short for `-zz -nc -rx`:
+  - `-zz`: no GUI and no display at all.
+  - `-nc`: don't read or write your KLayout configuration file.
+  - `-rx`: skip implicit macros, including autorun ones. Among them is the PDK's `autorun.lym`, which normally puts IHP's PCell library and its `cni` API on Python's path, and that's why my loader adds those two directories itself.
+- **`-r <script>`**: run this script in KLayout's embedded Python (or Ruby, going by the file extension). With `-b`, KLayout exits when the script finishes. Inside the script, `pya` gives full access to KLayout's layout database.
+- **`-rd name=value`**: define a variable the script sees as a global, here `input` and `output`. Values are always strings. You can repeat it as often as you need.
+
+For comparison, the GUI command from step 4 uses:
+- **`-e`**: editor mode, so you can edit the layout.
+- **`-rm <script>`**: run a script at startup, then carry on into the normal GUI. The autorun macros have already run by then.
+
+## What `use_clamp_pcells.py` does, step by step
+
+**Start (lines 118–130).** The script can be started two ways:
+- **Plain `python3 … in.gds out.gds`:** there's no global named `input`, so it parses the command line with argparse.
+- **`klayout -b -r … -rd input=… -rd output=…`:** the `-rd` variables exist as globals, so it takes `input` and `output` from there. It also finds its own directory from the `-r` argument on the command line, because KLayout doesn't reliably set `__file__`. Then it calls `main()`.
+
+**`main()`:**
+
+1. **Load the library (line 60).** It runs `load_clamp_pcells.py`, which checks that IHP's `sg13cmos5l_pycell_lib` and `cni` are importable (adding the PDK paths if not) and registers the library `SG13_cm_clamps`, containing `Clamp_N` and `Clamp_P`.
+2. **Read the layout (lines 61–66).** It reads the GDS and insists on exactly one top cell. Everything below that cell is what gets compared.
+3. **Take the "before" snapshot (line 67, `flat_regions`).** For every layer, a recursive shape iterator walks the whole hierarchy under the top cell. Each shape is moved into top-cell coordinates (that's what `it.trans()` is for), collected per layer, and merged. Merging matters: two layouts that draw the same area with differently cut shapes still compare equal. Texts go into a separate set of (layer, string, x, y).
+4. **Find what to replace (lines 70–77).** It picks cells whose name matches `sg13cmos5l_Clamp_<N|P><ng>N<k>D`, that have no subcells, and that aren't already a PCell. From the name it reads the family, `ng`, and the tie: `k == ng` means `D` (gate pin plus antenna diode), `k == 0` means `0D` (gate tied off through the rppd). So `sg13cmos5l_Clamp_N15N15D` becomes `Clamp_N`, `ng=15`, `tie=D`. In your macro both candidates are `.klib` references to `sg13cmos5l_io`, and those qualify just like static copies would.
+5. **Create the PCell variant (line 78).** `ly.create_cell('Clamp_N', 'SG13_cm_clamps', {...})` asks the library for that parameter set. KLayout runs my PCell code, and the new cell appears in your layout as a library proxy: it holds the generated geometry plus a link back to the library and its parameters. If the library isn't registered, this returns `None`, and the script stops at line 80.
+6. **Move every placement (lines 82–84).** For each place where the old cell is used, it re-points that same instance at the new cell. Position, rotation and array settings stay untouched.
+
+   `child_inst()` is the fix from my earlier test run. It returns the live instance inside the parent cell. The similar-looking `inst()` returns a copy, which my first version edited, so the change never reached the layout.
+7. **Delete the old cell (line 86).** Nothing references it any more.
+8. **Take the "after" snapshot and compare (lines 88–96).** Same flattening as step 3, then an XOR per layer. Text layers are skipped here. Any leftover polygon on a drawing or pin layer is printed with its layer and bounding box, and the verdict becomes `DIFFERENT`.
+9. **Report (lines 97–105).** It lists what was swapped, how many placements moved, and the new cell names. Then it lists label differences: `-` for labels that vanished, `+` for new ones. With your macro only the `pad` labels move: IHP's hand-placed extra labels go, and one label per drain strap arrives.
+10. **Write (lines 106–115).** If nothing was found, it writes nothing and returns 1. If the geometry is identical, it writes the file and returns 0. Otherwise it writes nothing and returns 2, unless you pass `force`.
+
+**What the written GDS contains.** The two new cells hold their full geometry. KLayout also stores the library name, PCell name and parameters with each of them. That stored reference is what lets them come back as live PCells when the library is loaded, and as `<defunct>` but intact geometry when it isn't. The other `sg13cmos5l_io` cells keep their own library references, so your `.klib` link to the PDK's pad library is unaffected.
+
+## Turn 20
+
+**User:**
+
+> about to run
+> cd macros/sg13cmos5l_IOPadDiff2Single/layout/klayout
+> klayout -b -r /foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/use_clamp_pcells.py \
+>         -rd input=sg13cmos5l_IOPadDiff2Single.klay.gds -rd output=sg13cmos5l_IOPadDiff2Single.klay.gds
+> with sg13cmos5l_IOPadDiff2Single.klay.gds open in interactive klayout.
+> What should I expect?
+
+**Assistant:**
+
+You'll get the same result I got on the copy of your file, as long as the file on disk is the version you want converted. Having it open in the GUI is where you need care.
+
+**Terminal output.** Possibly a harmless `Could not import tkinter. No callback support.` from IHP's `cni`, and `psutil` warnings if that package is missing. Then:
+
+```
+swapped sg13cmos5l_Clamp_N15N15D     -> Clamp_N(ng=15, tie=D)      (1 placement, cell Clamp_N)
+swapped sg13cmos5l_Clamp_P15N15D     -> Clamp_P(ng=15, tie=D)      (1 placement, cell Clamp_P)
+label differences (not blocking): 15 removed, 15 added
+   - 10/25 pad ...   (15 lines)
+   + 10/25 pad ...   (15 lines)
+geometry after swap: IDENTICAL on all drawing/pin layers
+wrote sg13cmos5l_IOPadDiff2Single.klay.gds
+```
+
+The batch run doesn't load your `.klib`, because `-b` skips the Library Manager plugin. The `sg13cmos5l_io` cells are therefore read as frozen copies from the file itself and written back with their library references intact. I checked that in my test.
+
+**What the open GUI means:**
+
+- **Separate processes.** The batch KLayout reads the file from disk, not from your GUI. Any unsaved edits in the GUI are not part of the conversion. Save or discard them first, and commit.
+- **The GUI keeps the old version.** It won't pick up the new file by itself. KLayout may offer a reload when it notices the file changed on disk, but I'm not certain your version does.
+- **Biggest risk: saving from the GUI afterwards.** A later save (or Ctrl+S) from that GUI writes its old in-memory layout back over the converted file. That silently undoes the swap, and git would show it only as another binary change. Don't save from that window after the run.
+- **Reloading in the same window isn't enough.** If that GUI wasn't started with `-rm …/load_clamp_pcells.py`, it doesn't have `SG13_cm_clamps` registered. After a reload, `Clamp_N`/`Clamp_P` show as `<defunct>`: the geometry is visible, but you can't edit them as PCells. Registering the library after the layout is already loaded doesn't re-link them either.
+
+**Simplest sequence:**
+
+1. Save or discard the GUI's changes, commit, and close the layout (or KLayout).
+2. Run the command.
+3. Reopen from the same directory with the library:
+   ```sh
+   klayout -e -rm /foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/load_clamp_pcells.py \
+           sg13cmos5l_IOPadDiff2Single.klay.gds
+   ```
+4. Check that `Clamp_N` and `Clamp_P` appear in the cell tree, and that the properties of one of those instances show the PCell parameters `ng = 15`, `tie = D`.
+
+## Turn 21
+
+**User:**
+
+> If I want to test the replacement in interactive klayout first, then your use_clamp_pcells.py script, how would I proceed? This probably involves using the macro editor in klayout. For the batch test, I'd need to undo the interactive changes.
+
+**Assistant:**
+
+Yes, the macro editor is the right place. To make the interactive test meaningful, it should run the same code as the batch script, just on the layout loaded in the GUI and without writing anything. I'll refactor `use_clamp_pcells.py` so the swap-and-compare lives in one function that both entry points call. The GUI entry point wraps everything in a single undo step, so one Edit → Undo reverts it. Then I'll test that undo headless here, with KLayout's view API from the 0.30 Python module.
+
+*[Refactored `use_clamp_pcells.py` into `swap_in_layout` (swap and compare), `main` (batch read/write) and `swap_in_view` (current KLayout window, one undo transaction, nothing written), and byte-compiled it.  
+Listed the undo-related methods of `klayout.lay.LayoutView` and `klayout.db.Manager`.  
+Tested undo with a `db.Manager` attached to the layout: swap inside one transaction (IDENTICAL), `undo` restored cell names, geometry, labels and the `sg13cmos5l_io` proxies exactly, `redo` re-applied the swap.]*
+
+One undo step restores everything: cell names, geometry, labels, and the `sg13cmos5l_io` library references. Redo re-applies it. Re-running the batch paths after the refactor:
+
+*[Re-ran the batch paths after the refactor (Python module, and the KLayout 0.28.16 binary with a UTF-8 locale): both IDENTICAL and written; `check.py` with the library showed live PCells.  
+Copied the script to `/mnt/user-data/outputs/pcells/`, wrote it with `device_commit_files` (1 written), then on the linked computer ran `sha256sum` (old hash) and inserted the interactive-test paragraph into `README.md` in place with Python.]*
+
+The silent no-op again: `use_clamp_pcells.py` still has the old checksum. Retrying:
+
+*[Re-sent `use_clamp_pcells.py` with `force`; hash matched and `swap_in_view` present.]*
+
+I refactored `use_clamp_pcells.py` so the interactive test runs exactly the code the batch run uses. It's on your machine with a matching checksum; the first write was another silent no-op, caught by the checksum and redone. I also added a paragraph on the interactive test to the README, edited in place.
+
+The swap-and-compare now lives in one function. There are two ways in:
+- **Batch (`main`)**: reads the file, swaps, writes only if identical. Same command and output as before.
+- **Interactive (`swap_in_view`)**: works on the layout in the current window, writes nothing to disk, and wraps the whole swap in a single undo step.
+
+I tested the undo here: after one undo the cell names, geometry, labels and `sg13cmos5l_io` library references are exactly as before, and redo re-applies it. What I couldn't test is the GUI itself.
+
+## 1. Interactive test
+
+1. Commit, so the `.klay.gds` is clean.
+2. Open it as usual, from its directory:
+   ```sh
+   cd macros/sg13cmos5l_IOPadDiff2Single/layout/klayout
+   klayout -e -rm /foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/load_clamp_pcells.py \
+           sg13cmos5l_IOPadDiff2Single.klay.gds
+   ```
+   With `-rm`, the library is already registered when the file opens. `swap_in_view` would load it anyway if it weren't.
+3. Open **Macros → Macro Development**. You don't need to create a macro file: type the two lines into the **Python console** at the bottom of that window:
+   ```python
+   import runpy
+   runpy.run_path('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/use_clamp_pcells.py')['swap_in_view']()
+   ```
+4. The console should print the same report as the batch run: two `swapped` lines, 15/15 `pad` label moves, and `geometry after swap: IDENTICAL on all drawing/pin layers`.
+
+   Here the "before" side is your live `.klib` references, so the comparison also checks my PCells against the **container's** `sg13cmos5l_io` geometry, not just the `chipalooza_cmos5L` copy I built them from.
+5. Look around:
+   - the cell tree shows `Clamp_N` / `Clamp_P`;
+   - the properties of one of the two clamp instances show `ng = 15`, `tie = D`;
+   - you can try changing `ng` to watch it regenerate. If you do, that's an extra undo step to take back.
+
+## 2. Undo the interactive test
+
+- **Edit → Undo** once. The menu entry should read "swap sg13cmos5l_Clamp_* for SG13_cm_clamps PCells", which is the name I gave the undo step. Undo any `ng` experiments first. Afterwards the cell tree shows `sg13cmos5l_Clamp_N15N15D` / `P15N15D` again.
+- **Or, more foolproof:** close the layout and say no to saving. Nothing was ever written to disk, so the file is still your committed version.
+
+Either way, don't save from that window. `git status` should show the `.klay.gds` unmodified. With the layout closed or reverted, the batch step below can't collide with the GUI.
+
+## 3. Batch run
+
+```sh
+klayout -b -r /foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/use_clamp_pcells.py \
+        -rd input=sg13cmos5l_IOPadDiff2Single.klay.gds -rd output=sg13cmos5l_IOPadDiff2Single.klay.gds
+```
+
+Expect the same report plus `wrote sg13cmos5l_IOPadDiff2Single.klay.gds`. Then reopen with the `-rm` command from step 1.2, and check the cell tree and instance parameters as in step 1.5. This time the change is on disk, and git shows it as a modified binary file.
+
+## Turn 22
+
+**User:**
+
+> The point of the interactive klayout exercise is specifically NOT to let use_clamp_pcells.py do everything for me, but —drawing step 5. ahead— manually installing an exercising the macro, and doing the cell representations manually, one at a time.
+> Also, I want a walkthrough of how to add the pcell library (what name does it have, anyhow, and where do I find it?) vs. registering it into the .klib.
+
+**Assistant:**
+
+Understood: you place and replace the cells yourself, and my code only supplies the library and, if you want it, a read-only check afterwards. First the library itself, then the walkthrough.
+
+## The library: name, where it lives, and how it differs from the `.klib`
+
+**Names.** The library is called **`SG13_cm_clamps`**; its description reads "sg13cmos5l ESD clamps (parametrized from sg13cmos5l_io)". It contains two PCells, **`Clamp_N`** and **`Clamp_P`**. Their parameters:
+- **`ng`**: integer, number of gate fingers.
+- **`tie`**: `D` (gate pin plus antenna diode) or `0D` (gate tied off through the rppd).
+- **Informational fields** you can ignore: `cdf_version`, `Display`, `model`.
+
+It is **not a file you can point KLayout at**. It only exists inside a KLayout process after `load_clamp_pcells.py` has run there. That script executes `scripts/pcells/__init__.py`, which builds the library in Python and registers it with KLayout.
+
+**Your `.klib` is a different mechanism.** It is data for the Library Manager plugin: "library `sg13cmos5l_io` = the cells in this GDS file". Those are static cells, placed by reference, and the plugin loads them whenever you open the layout.
+
+A PCell, by contrast, is code: the geometry is computed from `ng` and `tie` each time, and that code has to run in the KLayout session before the library exists. The only `.klib` entries I've seen (your two files) are `lib_name` + `lib_path` pointing at a layout file. I don't know whether the plugin can do more than that, so I wouldn't count on registering a Python library through it.
+
+A `.klib` *could* point at a GDS of fixed clamp variants written by `gen_clamp.py`. That just gets you back to static cells, without the parameters.
+
+**Ways to register the Python library:**
+
+1. **Per launch:** `klayout -e -rm …/scripts/pcells/load_clamp_pcells.py <file>`. Explicit, and nothing else changes.
+2. **Mid-session**, in the Python console of Macros → Macro Development:
+   ```python
+   import runpy; runpy.run_path('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/load_clamp_pcells.py')
+   ```
+   This works for placing new PCells. A layout already open with `<defunct>` `Clamp_*` cells has to be reopened after registering for them to come back to life.
+3. **Automatically, like the PDK does it:** the PDK ships `libs.tech/klayout/tech/pymacros/autorun.lym`, a macro KLayout runs at every startup because it's marked autorun. A small autorun `.lym` of our own, in a directory KLayout scans (`~/.klayout/pymacros`, or a project directory added to `KLAYOUT_PATH`), would do the same for `SG13_cm_clamps`. I haven't written that; say if you want it.
+
+**Where it shows up in the GUI:**
+- in KLayout's library browser panel, where the libraries appear next to the cell tree (View menu if the panel isn't visible);
+- in the Instance tool's library selection.
+
+It is not restricted to a technology, so it appears for any layout.
+
+## Manual walkthrough
+
+**0. Start clean.** Commit, then open the macro with the library registered:
+
+```sh
+cd macros/sg13cmos5l_IOPadDiff2Single/layout/klayout
+klayout -e -rm /foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/load_clamp_pcells.py \
+        sg13cmos5l_IOPadDiff2Single.klay.gds
+```
+
+**1. Find the library.** In the library browser, pick `SG13_cm_clamps`. You should see `Clamp_N` and `Clamp_P`.
+
+**2. Exercise the PCells on their own first,** away from your pad. Make a scratch cell (Cell → New Cell, then show it), or open a new layout.
+
+- Take the Instance tool and choose library `SG13_cm_clamps`, cell `Clamp_N`. The editor options (F3 if they're hidden) show the PCell parameters. Place one with `ng = 15`, `tie = D`.
+- Things worth trying:
+  - `ng` = 2, 8, 15 (IHP's own cells), and values in between such as 5 or 11;
+  - `tie = 0D` (rppd instead of the diode);
+  - `Clamp_P`;
+  - an illegal `ng`, e.g. 50: this should fail with the message from my code ("does not fit inside the 80 um guard ring" or similar), not with a crash.
+- Existing instances can be edited through their properties (select one, then Edit → Properties or `Q`). Changing `ng` regenerates the cell as a new variant (`Clamp_N$1`, …).
+
+**3. Replace the N clamp.** In `sg13cmos5l_IOPadDiff2Single`, it's the instance of `sg13cmos5l_Clamp_N15N15D` at (0, 6), R0. Two ways:
+
+- **A: edit the instance.** Select it and open its properties. Switch the library to `SG13_cm_clamps` and the cell to `Clamp_N`; the PCell parameters page should appear. Set `ng = 15`, `tie = D`, and leave position (0, 6) and rotation R0 as they are.
+- **B: place new, delete old.** Place `Clamp_N` (`ng = 15`, `tie = D`) anywhere. Open its properties and type the position exactly as x = 0, y = 6, rotation R0. Delete the old instance.
+
+I haven't tried A in the GUI myself. If the properties dialog in your KLayout version won't let you change the library and cell of an existing instance, use B.
+
+**4. Check it.** Paste this into the Python console. It only reads: it compares the layout in the window with the committed file on disk, flattened and merged, ignoring text layers:
+
+```python
+import runpy, pya
+u = runpy.run_path('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/use_clamp_pcells.py')
+cv = pya.CellView.active(); ly = cv.layout()
+ref = pya.Layout(); ref.read(cv.filename()); top = ref.top_cells()[0].name
+a, _ = u['flat_regions'](ref, ref.cell(top)); b, _ = u['flat_regions'](ly, ly.cell(top))
+bad = [k for k in set(a) | set(b) if k not in u['TEXT_LAYERS'] and not (a.get(k, pya.Region()) ^ b.get(k, pya.Region())).is_empty()]
+print('IDENTICAL' if not bad else 'differs on %s' % sorted(bad))
+```
+
+It should print `IDENTICAL`. A wrong position, rotation or parameter shows up here as differing layers.
+
+**5. Replace the P clamp** at (0, 65), R0, the same way with `Clamp_P`, `ng = 15`, `tie = D`, and run the check again.
+
+**6. Undo the whole exercise.** Either Edit → Undo, step by step, until the cell tree shows `sg13cmos5l_Clamp_N15N15D` / `P15N15D` again, or close the layout without saving. The file on disk was never touched, so `git status` shows it unmodified.
+
+**7. Batch run** with `use_clamp_pcells.py`, exactly as before. The interactive exercise and the batch run should give the same geometry, and you have a manual reference to compare it with.
+
+## Turn 23
+
+**User:**
+
+> ok i need a break. update the unabridged, verbatim (within Anthropic trade secret boundaries) chat log.
+
+**Assistant:**
+
+I'll append only what's new since the last export: the rest of Turn 14 and every turn after it. It gets built the same way, from the raw transcript, with visible text only.
+
+*[This update was written during Turn 23; the rest of that turn (writing and transferring the update, and the README entry) and its closing reply are not included.]*
