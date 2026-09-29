@@ -16,7 +16,8 @@ Apache-2.0 `sg13cmos5l_io` cells (with IHP's copyright line carried in that file
   `scripts/pcells/clamp_refdata.py`.
 - `sudelbuecher/chatlog/` (`README.md`, `ref/README.md`, `pix/README.md`,
   `2026-09-28_sonnet_chatlog_export_meta_and_formatting_corrections.md`) and both
-  `CLAUDE.md` files — read for the chat-log conventions in Turn 14.
+  `CLAUDE.md` files — read for the chat-log conventions in Turn 14
+  (split off into `2026-09-28_opus_safety_stops_and_chatlog_export.md`).
 
 ## This project's own Claude-Project doc (outside the git repo)
 
