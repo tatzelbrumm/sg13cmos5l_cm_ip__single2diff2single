@@ -16,6 +16,11 @@ Inside the IIC-OSIC-TOOLS container, after 'source .designinit':
 or, where the 'klayout' Python module is installed:
     python3 scripts/pcells/use_clamp_pcells.py <in.gds> <out.gds>
 
+Interactive test (nothing written; one undo step), from KLayout's Macro Development
+window (Python), in a KLayout started with -rm .../load_clamp_pcells.py:
+    import runpy
+    runpy.run_path('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/use_clamp_pcells.py')['swap_in_view']()
+
 Labels: the PCells carry one 'pad' label per drain strap; IHP's cells carry extra,
 hand-placed 'pad' labels. Such label differences are listed but do not block.
 """
@@ -56,14 +61,13 @@ def flat_regions(layout, top):
     return regs, texts
 
 
-def main(inp, out, force=False, script_dir=None):
-    runpy.run_path(os.path.join(script_dir, 'load_clamp_pcells.py'))
-    ly = db.Layout()
-    ly.read(inp)
-    tops = ly.top_cells()
-    if len(tops) != 1:
-        raise SystemExit('expected exactly one top cell, found %s' % [c.name for c in tops])
-    top = tops[0]
+def swap_in_layout(ly, top=None):
+    """Swap the clamp cells in an in-memory layout and compare. Returns (swapped, ok)."""
+    if top is None:
+        tops = ly.top_cells()
+        if len(tops) != 1:
+            raise SystemExit('expected exactly one top cell, found %s' % [c.name for c in tops])
+        top = tops[0]
     before, tbefore = flat_regions(ly, top)
 
     swapped = []
@@ -104,15 +108,44 @@ def main(inp, out, force=False, script_dir=None):
         for key, s, x, y in gained:
             print('   + %d/%d %-6s (%.3f, %.3f)' % (key[0], key[1], s, x * ly.dbu, y * ly.dbu))
     if not swapped:
-        print('no static sg13cmos5l_Clamp_* cells found; nothing written')
+        print('no sg13cmos5l_Clamp_* cells to swap')
+    else:
+        print('geometry after swap:', 'IDENTICAL on all drawing/pin layers' if ok else 'DIFFERENT')
+    return swapped, ok
+
+
+def main(inp, out, force=False, script_dir=None):
+    """Batch: read inp, swap, write out only if the geometry is unchanged."""
+    runpy.run_path(os.path.join(script_dir, 'load_clamp_pcells.py'))
+    ly = db.Layout()
+    ly.read(inp)
+    swapped, ok = swap_in_layout(ly)
+    if not swapped:
+        print('nothing written')
         return 1
-    print('geometry after swap:', 'IDENTICAL on all drawing/pin layers' if ok else 'DIFFERENT')
     if ok or force:
         ly.write(out)
         print('wrote', out)
         return 0
     print('not written (use --force to write anyway)')
     return 2
+
+
+def swap_in_view(view=None, script_dir=None):
+    """Interactive: swap in the layout shown in the current KLayout window, as one undo step.
+    Nothing is written to disk. Edit > Undo reverts it."""
+    import pya
+    runpy.run_path(os.path.join(script_dir or _HERE, 'load_clamp_pcells.py'))
+    view = view or pya.LayoutView.current()
+    cv = view.active_cellview()
+    ly = cv.layout()
+    top = cv.cell if cv.cell is not None and cv.cell.is_top() else None
+    view.transaction('swap sg13cmos5l_Clamp_* for SG13_cm_clamps PCells')
+    try:
+        swapped, ok = swap_in_layout(ly, top)
+    finally:
+        view.commit()
+    return swapped, ok
 
 
 if __name__ == '__main__' and 'input' not in globals():

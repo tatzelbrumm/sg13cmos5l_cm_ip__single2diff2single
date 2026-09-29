@@ -104,6 +104,17 @@ placements, compares the flattened top cell layer by layer, and writes only if a
 and pin layers are identical. Label moves are listed but don't block: IHP's cells carry
 extra hand-placed `pad` labels, while the PCells put one on each drain strap.
 
+To try it interactively first, start KLayout with `-rm …/load_clamp_pcells.py`, open the
+layout, and run in the Macro Development window (Python):
+
+```python
+import runpy
+runpy.run_path('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/use_clamp_pcells.py')['swap_in_view']()
+```
+
+This runs the same swap-and-compare on the layout in the window, writes nothing to disk, and
+is a single undo step (Edit > Undo reverts it completely).
+
 Things to know:
 
 * The clamps become cells named `Clamp_N` / `Clamp_P` (`Clamp_N$1` … for further variants),
