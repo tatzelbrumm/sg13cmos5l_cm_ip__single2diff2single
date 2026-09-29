@@ -1,5 +1,8 @@
 # Tool inventory — IHP pcell tree / class / import visualizations
 
+(updated 2026-09-29 18:40: `pyreverse_packages_ihp.*` regenerated with `cni` resolved; the first,
+cni-less version was overwritten)
+
 Session 2026-09-29, Claude (configured model `claude-opus-5-5`), cloud container
 (Ubuntu 24.04, x86_64). Nothing below was installed on your machine.
 
@@ -46,17 +49,26 @@ Not present: `tree`, `rsvg-convert`, `inkscape`, `cairosvg`, `klayout` / `klayou
 # UML class diagram
 dot -Tsvg ihp_pcell_classes_uml.dot -o ihp_pcell_classes_uml.svg
 
-# pyreverse import graph (run on a copy with symlinks resolved: cp -rL)
+# pyreverse import graph, run on a copy (cp -rL resolves the g2 symlinks)
+P=<pdk>/libs.tech/klayout/python
+mkdir -p src
+cp -rL $P/sg13cmos5l_pycell_lib $P/pycell4klayout-api/source/python/cni src/
+touch src/cni/__init__.py     # cni is a namespace package; without this pyreverse skips it
 PYTHONPATH=src pyreverse -o dot -p ihp -k src/sg13cmos5l_pycell_lib src/cni
 #   -> packages_ihp.dot; then relaid out: rankdir BT -> LR, label prefix
 #      'sg13cmos5l_pycell_lib.' stripped; edges untouched
 dot -Tsvg pyreverse_packages_ihp.dot -o pyreverse_packages_ihp.svg
 ```
 
+| pyreverse run | modules | import edges | inheritance edges |
+|---|---|---|---|
+| `cni` as namespace package (first run, discarded) | 38 | 74 | 19 |
+| same, with module names or `--source-roots` | 38 | 74 (or TypeError) | 19 |
+| empty `cni/__init__.py` in the copy (→ `pyreverse_packages_ihp.*`) | 73 | 186 | 67 |
+
 ## Known limitations of the outputs
 
-* pyreverse could not resolve `cni` (no `__init__.py`, namespace package), so the import
-  graph lacks all `cni` edges. It also cannot see the registrar's
+* pyreverse cannot see the registrar's
   `importlib.import_module(f"...ihp.{moduleName}")`: the edge that actually loads every
   cell is invisible to static analysis. `sg13cmos5l_pycell_lib` → cells shows as unconnected.
 * The UML diagram omits the cni geometry classes (Box, Point, Layer, Shape, …): cells
