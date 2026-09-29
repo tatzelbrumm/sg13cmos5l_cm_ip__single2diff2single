@@ -1,0 +1,495 @@
+IHP-Open-PDK  ihp-sg13cmos5l/libs.tech/klayout   (complete, unabridged)
+source: github.com/IHP-GmbH/IHP-Open-PDK, branch dev, commit 04881535 2026-09-28 13:55:00 +0000
+symlink targets shown after "->"; <g2> = ../../(...)/ihp-sg13g2; submodule contents expanded in place
+[R] = class registered as a PCell (listed in moduleNames of sg13cmos5l_pycell_lib/__init__.py)
+[ ] = class defined but not registered
+entries: 61 dirs, 190 files, 173 symlinks, 63 submodule entries
+
+libs.tech/klayout/
+├── python/                                                                           
+│   ├── import_netlist/                                                               
+│   │   ├── __init__.py                                                               -> <g2>/libs.tech/klayout/python/import_netlist/__init__.py
+│   │   ├── ihp130_pcell_templates.py                                                 
+│   │   └── import_netlist.py                                                         -> <g2>/libs.tech/klayout/python/import_netlist/import_netlist.py
+│   ├── pycell4klayout-api/                                                           -> ../../../../ihp-sg13g2/libs.tech/klayout/python/pycell4klayout-api   [git submodule IHP-GmbH/pycell4klayout-api @ ad47f5f]
+│   │   ├── .gitignore                                                                
+│   │   ├── doc/                                                                      
+│   │   │   └── pycell4klayout.pdf                                                    
+│   │   ├── LICENSE                                                                   
+│   │   ├── README.md                                                                 
+│   │   └── source/                                                                   
+│   │       └── python/                                                               
+│   │           └── cni/                                                              
+│   │               ├── box.py                                                        Box(object)
+│   │               ├── constants.py                                                  
+│   │               ├── dlo.py                                                        ChoiceConstraint(list), RangeConstraint(), PyCellContext(object), PCellWrapper(pya.PCellDeclaration)
+│   │               ├── dlogen.py                                                     Dlo(object), DloGen(Dlo)
+│   │               ├── ellipse.py                                                    Ellipse(Shape)
+│   │               ├── font.py                                                       Font(object)
+│   │               ├── geo.py                                                        
+│   │               ├── grouping.py                                                   Grouping(PhysicalComponent)
+│   │               ├── instance.py                                                   Instance()
+│   │               ├── layer.py                                                      Layer(object)
+│   │               ├── location.py                                                   Location(object)
+│   │               ├── namemapper.py                                                 NameMapper(object)
+│   │               ├── net.py                                                        Net(object)
+│   │               ├── numeric.py                                                    Numeric(float)
+│   │               ├── orientation.py                                                Orientation(object)
+│   │               ├── paramarray.py                                                 ParamArray(dict)
+│   │               ├── path.py                                                       Path(Shape)
+│   │               ├── pathstyle.py                                                  PathStyle(object)
+│   │               ├── physicalComponent.py                                          PhysicalComponent(ABC)
+│   │               ├── physicalrule.py                                               PhysicalRule(float)
+│   │               ├── pin.py                                                        Pin(object)
+│   │               ├── point.py                                                      Point(object)
+│   │               ├── pointlist.py                                                  PointList(ulist[Point])
+│   │               ├── polygon.py                                                    Polygon(Shape)
+│   │               ├── rect.py                                                       Rect(Shape)
+│   │               ├── shape.py                                                      Shape(PhysicalComponent)
+│   │               ├── shapefilter.py                                                ShapeFilter(object)
+│   │               ├── signaltype.py                                                 SignalType(object)
+│   │               ├── tech.py                                                       TechImpl(object), Tech(object)
+│   │               ├── term.py                                                       Term(object)
+│   │               ├── termtype.py                                                   TermType(object)
+│   │               ├── text.py                                                       Text(Shape)
+│   │               ├── transform.py                                                  Transform(object)
+│   │               └── ulist.py                                                      ulist(List[T])
+│   ├── pypreprocessor/                                                               -> ../../../../ihp-sg13g2/libs.tech/klayout/python/pypreprocessor   [git submodule IHP-GmbH/pypreprocessor @ cf1ff9b]
+│   │   ├── .DS_Store                                                                 
+│   │   ├── .gitignore                                                                
+│   │   ├── .pylintrc                                                                 
+│   │   ├── Examples/                                                                 
+│   │   │   ├── debug.py                                                              
+│   │   │   ├── debug2production.py                                                   
+│   │   │   └── py2and3.py                                                            
+│   │   ├── INSTALL.md                                                                
+│   │   ├── LICENSE                                                                   
+│   │   ├── MANIFEST.in                                                               
+│   │   ├── pypreprocessor/                                                           
+│   │   │   └── __init__.py                                                           
+│   │   ├── README.md                                                                 
+│   │   ├── setup.py                                                                  
+│   │   └── tests/                                                                    
+│   │       ├── .isolated/                                                            
+│   │       │   └── directivetest.py                                                  
+│   │       ├── __init__.py                                                           
+│   │       ├── deprecationtest.py                                                    
+│   │       ├── maintest.py                                                           
+│   │       └── parsetarget.py                                                        
+│   └── sg13cmos5l_pycell_lib/                                                        
+│       ├── __init__.py                                                               registrar: moduleNames, #ifdef preprocessing, PyCellLib -> library "SG13_dev"
+│       ├── callbacks/                                                                
+│       │   └── moscap_cb.tcl                                                         -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/callbacks/moscap_cb.tcl   Tcl parameter callback
+│       ├── ihp/                                                                      
+│       │   ├── __init__.py                                                           empty package marker
+│       │   ├── bondpad_code.py                                                       [R] bondpad(DloGen)
+│       │   ├── cap_cmomf_code.py                                                     [R] cap_cmomf(DloGen)
+│       │   ├── cap_cmomi_code.py                                                     [R] cap_cmomi(DloGen)
+│       │   ├── chipText_code.py                                                      -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/chipText_code.py   [R] chipText(DloGen)
+│       │   ├── dantenna_code.py                                                      -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/dantenna_code.py   [R] dantenna(DeviceBase)
+│       │   ├── device_base_code.py                                                   -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/device_base_code.py   [ ] DeviceBase(DloGen)  (base, not registered)
+│       │   ├── dpantenna_code.py                                                     -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/dpantenna_code.py   [R] dpantenna(DeviceBase)
+│       │   ├── esd_code.py                                                           [R] esd(DloGen)
+│       │   ├── geometry.py                                                           -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/geometry.py   helper (star-imported by every cell)
+│       │   ├── guard_ring_code.py                                                    -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/guard_ring_code.py   [R] GuardRingType(StrEnum), guard_ring(DloGen)
+│       │   ├── moscap_n_code.py                                                      -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/moscap_n_code.py   [ ] moscap_n(DloGen)  (NOT in moduleNames)
+│       │   ├── moscap_p_code.py                                                      -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/moscap_p_code.py   [ ] moscap_p(DloGen)  (NOT in moduleNames)
+│       │   ├── nmos_code.py                                                          -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/nmos_code.py   [R] nmos(DeviceBase)
+│       │   ├── nmosHV_code.py                                                        -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/nmosHV_code.py   [R] nmosHV(DeviceBase)
+│       │   ├── NoFillerStack_code.py                                                 [R] NoFillerStack(DloGen)
+│       │   ├── ntap1_code.py                                                         [R] ntap1(DloGen)
+│       │   ├── pmos_code.py                                                          -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/pmos_code.py   [R] pmos(DeviceBase)
+│       │   ├── pmosHV_code.py                                                        -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/pmosHV_code.py   [R] pmosHV(DeviceBase)
+│       │   ├── pnpMPA_code.py                                                        [R] pnpMPA(DloGen)
+│       │   ├── ptap1_code.py                                                         [R] ptap1(DloGen)
+│       │   ├── res_base_code.py                                                      -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/res_base_code.py   [ ] ResistorInfo(), ResistorBase(DeviceBase)  (base, not registered)
+│       │   ├── rfmosfet_base_code.py                                                 [ ] rfmosfet_base(DloGen)  (base, not registered)
+│       │   ├── rfnmos_code.py                                                        -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/rfnmos_code.py   [R] rfnmos(rfmosfet_base)
+│       │   ├── rfnmosHV_code.py                                                      -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/rfnmosHV_code.py   [R] rfnmosHV(rfmosfet_base)
+│       │   ├── rfpmos_code.py                                                        -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/rfpmos_code.py   [R] rfpmos(rfmosfet_base)
+│       │   ├── rfpmosHV_code.py                                                      -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/rfpmosHV_code.py   [R] rfpmosHV(rfmosfet_base)
+│       │   ├── rhigh_code.py                                                         -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/rhigh_code.py   [R] rhigh(ResistorBase)
+│       │   ├── rppd_code.py                                                          -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/rppd_code.py   [R] rppd(ResistorBase)
+│       │   ├── rsil_code.py                                                          -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/rsil_code.py   [R] rsil(ResistorBase)
+│       │   ├── sealring_code.py                                                      [R] sealring(DloGen)
+│       │   ├── SVaricap_code.py                                                      [R] SVaricap(DeviceBase)
+│       │   ├── thermal.py                                                            -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/thermal.py   helper
+│       │   ├── utility_functions.py                                                  -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/utility_functions.py   helper (star-imported by every cell)
+│       │   └── via_stack_code.py                                                     -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/via_stack_code.py   [R] via_stack(DloGen)
+│       ├── native_pcells/                                                            
+│       │   ├── sg13_klayout_tech_info.py                                             -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/native_pcells/sg13_klayout_tech_info.py   [ ] KLayerInfo(), KViaInfo(), KTechInfo(), KTechInfoFactory()
+│       │   └── via_pcell.py                                                          -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/native_pcells/via_pcell.py   [ ] ViaPCell(pya.PCellDeclarationHelper)
+│       ├── sg13_tech.py                                                              Tech.register(SG13_Tech()) -> cni Tech "SG13_dev"
+│       ├── sg13_tech_info.py                                                         -> <g2>/libs.tech/klayout/python/sg13g2_pycell_lib/sg13_tech_info.py   [ ] LayerInfo(), ViaInfo(), ViaArrayInfo(), TechInfo(), TechInfoFactory()
+│       ├── sg13cmos5l_tech.json                                                      techParams: design-rule numbers + layer map
+│       └── sg13cmos5l_tech_mod.json                                                  variant of the tech JSON (not read by sg13_tech.py)
+├── README.md                                                                         -> ../../../ihp-sg13g2/libs.tech/klayout/README.md
+├── sg13cmos5l_tests/                                                                 
+│   ├── cap_cmomf_sweep.py                                                            
+│   ├── cap_cmomi_consistency_test.py                                                 
+│   ├── cap_cmomi_geometry_test.py                                                    
+│   ├── cap_cmomi_sweep.py                                                            
+│   ├── pycell_concurrency_test.py                                                    
+│   └── pycell_test.py                                                                
+└── tech/                                                                             
+    ├── d25/                                                                          
+    │   └── sg13cmos5l_beol.lyd25                                                     
+    ├── drc/                                                                          
+    │   ├── ihp-sg13cmos5l.drc                                                        
+    │   ├── rule_decks/                                                               
+    │   │   ├── antenna.drc                                                           
+    │   │   ├── beol/                                                                 
+    │   │   │   ├── 5_16_metal1.drc                                                   -> ../<g2>/libs.tech/klayout/tech/drc/rule_decks/beol/5_16_metal1.drc
+    │   │   │   ├── 5_17_metaln.drc                                                   
+    │   │   │   ├── 5_18_metalnfiller.drc                                             
+    │   │   │   ├── 5_19_via1.drc                                                     
+    │   │   │   ├── 5_20_vian.drc                                                     
+    │   │   │   ├── 5_21_topvia1.drc                                                  
+    │   │   │   ├── 5_22_topmetal1.drc                                                -> ../<g2>/libs.tech/klayout/tech/drc/rule_decks/beol/5_22_topmetal1.drc
+    │   │   │   ├── 5_23_topmetal1filler.drc                                          -> ../<g2>/libs.tech/klayout/tech/drc/rule_decks/beol/5_23_topmetal1filler.drc
+    │   │   │   ├── 5_27_passiv.drc                                                   
+    │   │   │   ├── 6_10_sealring.drc                                                 
+    │   │   │   ├── 6_9_pad.drc                                                       
+    │   │   │   ├── 7_3_metalslits.drc                                                
+    │   │   │   └── 9_1_lbe.drc                                                       -> ../<g2>/libs.tech/klayout/tech/drc/rule_decks/beol/9_1_lbe.drc
+    │   │   ├── density.drc                                                           
+    │   │   ├── feol/                                                                 
+    │   │   │   ├── 5_10_psd.drc                                                      -> ../<g2>/libs.tech/klayout/tech/drc/rule_decks/feol/5_10_psd.drc
+    │   │   │   ├── 5_14_cont.drc                                                     
+    │   │   │   ├── 5_15_contbar.drc                                                  
+    │   │   │   ├── 5_1_nwell.drc                                                     
+    │   │   │   ├── 5_2_pwellblock.drc                                                
+    │   │   │   ├── 5_3_nbulay.drc                                                    
+    │   │   │   ├── 5_5_activ.drc                                                     -> ../<g2>/libs.tech/klayout/tech/drc/rule_decks/feol/5_5_activ.drc
+    │   │   │   ├── 5_6_activfiller.drc                                               
+    │   │   │   ├── 5_7_thickgateox.drc                                               -> ../<g2>/libs.tech/klayout/tech/drc/rule_decks/feol/5_7_thickgateox.drc
+    │   │   │   ├── 5_8_gatpoly.drc                                                   -> ../<g2>/libs.tech/klayout/tech/drc/rule_decks/feol/5_8_gatpoly.drc
+    │   │   │   ├── 5_9_gatpolyfiller.drc                                             
+    │   │   │   └── 7_2_latchup.drc                                                   -> ../<g2>/libs.tech/klayout/tech/drc/rule_decks/feol/7_2_latchup.drc
+    │   │   ├── forbidden/                                                            
+    │   │   │   ├── 3_2_forbidden.drc                                                 
+    │   │   │   └── 3_2_forbidden_cmos5l.drc                                          
+    │   │   ├── geometry/                                                             
+    │   │   │   ├── 3_1_offgrid.drc                                                   
+    │   │   │   └── 3_2_angle.drc                                                     
+    │   │   ├── layers_def.drc                                                        -> <g2>/libs.tech/klayout/tech/drc/rule_decks/layers_def.drc
+    │   │   ├── pin/                                                                  
+    │   │   │   └── 7_4_pin.drc                                                       
+    │   │   ├── sg13cmos5l_maximal.drc                                                
+    │   │   └── sg13cmos5l_tech_default.json                                          
+    │   ├── run_drc.py                                                                
+    │   └── testing/                                                                  
+    │       ├── create_top_layer_tests.py                                             
+    │       ├── gen_golden.py                                                         
+    │       ├── README.md                                                             -> <g2>/libs.tech/klayout/tech/drc/testing/README.md
+    │       ├── run_regression.py                                                     
+    │       └── testcases/                                                            
+    │           ├── unit/                                                             
+    │           │   ├── activ.gds                                                     -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/activ.gds
+    │           │   ├── activfiller.gds                                               -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/activfiller.gds
+    │           │   ├── antenna.gds                                                   -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/antenna.gds
+    │           │   ├── cont.gds                                                      -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/cont.gds
+    │           │   ├── contbar.gds                                                   -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/contbar.gds
+    │           │   ├── density/                                                      
+    │           │   │   ├── fail/                                                     
+    │           │   │   │   └── density_fail.gds                                      
+    │           │   │   └── pass/                                                     
+    │           │   │       └── density_pass.gds                                      
+    │           │   ├── forbidden.gds                                                 -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/forbidden.gds
+    │           │   ├── forbidden_cmos5l.gds                                          
+    │           │   ├── gatpoly.gds                                                   -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/gatpoly.gds
+    │           │   ├── gatpolyfiller.gds                                             -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/gatpolyfiller.gds
+    │           │   ├── latchup.gds                                                   -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/latchup.gds
+    │           │   ├── lbe.gds                                                       -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/lbe.gds
+    │           │   ├── metal1.gds                                                    -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/metal1.gds
+    │           │   ├── metal2.gds                                                    -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/metal2.gds
+    │           │   ├── metal3.gds                                                    -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/metal3.gds
+    │           │   ├── metal4.gds                                                    -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/metal4.gds
+    │           │   ├── metalnfiller.gds                                              -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/metalnfiller.gds
+    │           │   ├── nbulay.gds                                                    -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/nbulay.gds
+    │           │   ├── nwell.gds                                                     -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/nwell.gds
+    │           │   ├── pad.gds                                                       -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/pad.gds
+    │           │   ├── passiv.gds                                                    -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/passiv.gds
+    │           │   ├── pin.gds                                                       -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/pin.gds
+    │           │   ├── psd.gds                                                       -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/psd.gds
+    │           │   ├── pwellblock.gds                                                -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/pwellblock.gds
+    │           │   ├── sealring.gds                                                  -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/sealring.gds
+    │           │   ├── thickgateox.gds                                               -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/thickgateox.gds
+    │           │   ├── topmetal1.gds                                                 
+    │           │   ├── topmetal1filler.gds                                           
+    │           │   ├── topvia1.gds                                                   
+    │           │   ├── via1.gds                                                      -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/via1.gds
+    │           │   ├── via2.gds                                                      -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/via2.gds
+    │           │   └── via3.gds                                                      -> ../../<g2>/libs.tech/klayout/tech/drc/testing/testcases/unit/via3.gds
+    │           └── unit_golden/                                                      
+    │               ├── activ_golden.gds                                              
+    │               ├── activfiller_golden.gds                                        
+    │               ├── antenna_golden.gds                                            
+    │               ├── cont_golden.gds                                               
+    │               ├── contbar_contb_golden.gds                                      
+    │               ├── forbidden_golden.gds                                          
+    │               ├── gatpoly_golden.gds                                            
+    │               ├── gatpolyfiller_golden.gds                                      
+    │               ├── latchup_lu_golden.gds                                         
+    │               ├── lbe_golden.gds                                                
+    │               ├── metal1_golden.gds                                             
+    │               ├── metal2_metaln_golden.gds                                      
+    │               ├── metal3_metaln_golden.gds                                      
+    │               ├── metal4_metaln_golden.gds                                      
+    │               ├── metalnfiller_golden.gds                                       
+    │               ├── nbulay_nBuLay_golden.gds                                      
+    │               ├── nwell_golden.gds                                              
+    │               ├── passiv_golden.gds                                             
+    │               ├── pin_golden.gds                                                
+    │               ├── psd_pSD_golden.gds                                            
+    │               ├── pwellblock_golden.gds                                         
+    │               ├── thickgateox_golden.gds                                        
+    │               ├── topmetal1_golden.gds                                          
+    │               ├── topmetal1filler_golden.gds                                    
+    │               ├── topvia1_golden.gds                                            
+    │               ├── via1_golden.gds                                               
+    │               ├── via2_vian_golden.gds                                          
+    │               └── via3_vian_golden.gds                                          
+    ├── lvs/                                                                          
+    │   ├── rule_decks/                                                               
+    │   │   ├── bjt_connections.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/bjt_connections.lvs
+    │   │   ├── bjt_derivations.lvs                                                   
+    │   │   ├── bjt_extraction.lvs                                                    -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/bjt_extraction.lvs
+    │   │   ├── cap_cmomf_connections.lvs                                             -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/cap_cmomf_connections.lvs
+    │   │   ├── cap_cmomf_derivations.lvs                                             -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/cap_cmomf_derivations.lvs
+    │   │   ├── cap_cmomi_connections.lvs                                             -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/cap_cmomi_connections.lvs
+    │   │   ├── cap_cmomi_derivations.lvs                                             -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/cap_cmomi_derivations.lvs
+    │   │   ├── cap_connections.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/cap_connections.lvs
+    │   │   ├── cap_derivations.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/cap_derivations.lvs
+    │   │   ├── cap_extraction.lvs                                                    -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/cap_extraction.lvs
+    │   │   ├── cap_svaricap_cmos5l.lvs                                               
+    │   │   ├── cmos5l_forbidden_check.lvs                                            
+    │   │   ├── custom_bjt_extractor.lvs                                              -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_bjt_extractor.lvs
+    │   │   ├── custom_classes.lvs                                                    -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_classes.lvs
+    │   │   ├── custom_combiner.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_combiner.lvs
+    │   │   ├── custom_devices.lvs                                                    -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_devices.lvs
+    │   │   ├── custom_extractor.lvs                                                  -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_extractor.lvs
+    │   │   ├── custom_isolbox_extractor.lvs                                          -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_isolbox_extractor.lvs
+    │   │   ├── custom_mim_extractor.lvs                                              -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_mim_extractor.lvs
+    │   │   ├── custom_mom_extractor.lvs                                              -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_mom_extractor.lvs
+    │   │   ├── custom_mom_extractor.lvs~5bb07564 (added `custom_mom_extractor.lvs`)  
+    │   │   ├── custom_moscap_extractor.lvs                                           -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_moscap_extractor.lvs
+    │   │   ├── custom_reader.lvs                                                     -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_reader.lvs
+    │   │   ├── custom_writer.lvs                                                     -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/custom_writer.lvs
+    │   │   ├── devices_connections.lvs                                               -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/devices_connections.lvs
+    │   │   ├── diode_connections.lvs                                                 -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/diode_connections.lvs
+    │   │   ├── diode_derivations.lvs                                                 -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/diode_derivations.lvs
+    │   │   ├── diode_extraction.lvs                                                  -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/diode_extraction.lvs
+    │   │   ├── esd_connections.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/esd_connections.lvs
+    │   │   ├── esd_derivations.lvs                                                   
+    │   │   ├── esd_extraction.lvs                                                    -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/esd_extraction.lvs
+    │   │   ├── general_connections.lvs                                               
+    │   │   ├── general_derivations.lvs                                               -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/general_derivations.lvs
+    │   │   ├── globals.lvs                                                           -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/globals.lvs
+    │   │   ├── ind_connections.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/ind_connections.lvs
+    │   │   ├── ind_derivations.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/ind_derivations.lvs
+    │   │   ├── ind_extraction.lvs                                                    -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/ind_extraction.lvs
+    │   │   ├── layers_definitions.lvs                                                -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/layers_definitions.lvs
+    │   │   ├── mos_connections.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/mos_connections.lvs
+    │   │   ├── mos_derivations.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/mos_derivations.lvs
+    │   │   ├── mos_extraction.lvs                                                    -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/mos_extraction.lvs
+    │   │   ├── res_connections.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/res_connections.lvs
+    │   │   ├── res_derivations.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/res_derivations.lvs
+    │   │   ├── res_extraction.lvs                                                    -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/res_extraction.lvs
+    │   │   ├── rfmos_connections.lvs                                                 -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/rfmos_connections.lvs
+    │   │   ├── rfmos_derivations.lvs                                                 -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/rfmos_derivations.lvs
+    │   │   ├── rfmos_extraction.lvs                                                  -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/rfmos_extraction.lvs
+    │   │   ├── rfmos_model_mapping.lvs                                               -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/rfmos_model_mapping.lvs
+    │   │   ├── sram_integration.lvs                                                  -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/sram_integration.lvs
+    │   │   ├── tap_connections.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/tap_connections.lvs
+    │   │   ├── tap_derivations.lvs                                                   -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/tap_derivations.lvs
+    │   │   └── tap_extraction.lvs                                                    -> <g2>/libs.tech/klayout/tech/lvs/rule_decks/tap_extraction.lvs
+    │   ├── run_lvs.py                                                                
+    │   ├── sg13cmos5l.lvs                                                            
+    │   └── testing/                                                                  
+    │       ├── create_cap_cmomf_testcases.py                                         
+    │       ├── create_cap_cmomi_testcases.py                                         
+    │       ├── create_cell_testcases.py                                              
+    │       ├── create_ind_testcases.py                                               
+    │       ├── Makefile                                                              
+    │       ├── README.md                                                             
+    │       ├── run_regression.py                                                     
+    │       ├── run_regression_cells.py                                               
+    │       └── testcases/                                                            
+    │           ├── extraction_checking                                               -> ../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/extraction_checking
+    │           ├── manual_tests/                                                     
+    │           │   ├── cap_cmomf_checks/                                             
+    │           │   │   ├── all_dropped.cdl                                           
+    │           │   │   ├── chain_match.cdl                                           
+    │           │   │   ├── chain_missing.cdl                                         
+    │           │   │   ├── chain_swapped.cdl                                         
+    │           │   │   ├── chain_wrong_band.cdl                                      
+    │           │   │   ├── chain_wrong_m.cdl                                         
+    │           │   │   ├── chain_wrong_wl.cdl                                        
+    │           │   │   ├── cmomf_all_dropped.gds                                     
+    │           │   │   ├── cmomf_chain.gds                                           
+    │           │   │   ├── cmomf_coexist.gds                                         
+    │           │   │   ├── cmomf_hier_wired.gds                                      
+    │           │   │   ├── cmomf_merged.gds                                          
+    │           │   │   ├── cmomf_mirrored.gds                                        
+    │           │   │   ├── cmomf_shorted.gds                                         
+    │           │   │   ├── coexist.cdl                                               
+    │           │   │   ├── hier_deep_missing.cdl                                     
+    │           │   │   ├── hier_wired.cdl                                            
+    │           │   │   ├── merged.cdl                                                
+    │           │   │   ├── mirrored.cdl                                              
+    │           │   │   ├── run_lvs.sh                                                
+    │           │   │   └── shorted.cdl                                               
+    │           │   ├── cap_cmomi_checks/                                             
+    │           │   │   ├── all_dropped.cdl                                           
+    │           │   │   ├── chain_match.cdl                                           
+    │           │   │   ├── chain_missing.cdl                                         
+    │           │   │   ├── chain_swapped.cdl                                         
+    │           │   │   ├── chain_wrong_band.cdl                                      
+    │           │   │   ├── chain_wrong_feed.cdl                                      
+    │           │   │   ├── chain_wrong_m.cdl                                         
+    │           │   │   ├── chain_wrong_wl.cdl                                        
+    │           │   │   ├── cmomi_all_dropped.gds                                     
+    │           │   │   ├── cmomi_chain.gds                                           
+    │           │   │   ├── cmomi_feed_none.gds                                       
+    │           │   │   ├── cmomi_hier_wired.gds                                      
+    │           │   │   ├── cmomi_merged.gds                                          
+    │           │   │   ├── cmomi_short_same.gds                                      
+    │           │   │   ├── feed_none.cdl                                             
+    │           │   │   ├── hier_deep_missing.cdl                                     
+    │           │   │   ├── hier_wired.cdl                                            
+    │           │   │   ├── merged.cdl                                                
+    │           │   │   ├── run_lvs.sh                                                
+    │           │   │   └── short_same.cdl                                            
+    │           │   ├── esd_ptap/                                                     
+    │           │   │   ├── esd_ptap.cdl                                              -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/esd_ptap/esd_ptap.cdl
+    │           │   │   ├── esd_ptap.gds                                              -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/esd_ptap/esd_ptap.gds
+    │           │   │   └── run_lvs.sh                                                
+    │           │   ├── implicit_connections/                                         
+    │           │   │   ├── run_lvs.sh                                                
+    │           │   │   ├── SP6TCClockGenerator.cdl                                   -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/implicit_connections/SP6TCClockGenerator.cdl
+    │           │   │   └── SP6TCClockGenerator.gds                                   -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/implicit_connections/SP6TCClockGenerator.gds
+    │           │   ├── sram_support/                                                 
+    │           │   │   ├── run_lvs.sh                                                
+    │           │   │   ├── SP01.oas                                                  -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/sram_support/SP01.oas
+    │           │   │   └── SP01.spi                                                  -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/sram_support/SP01.spi
+    │           │   └── svs_testss/                                                   
+    │           │       ├── run_lvs.sh                                                
+    │           │       ├── svs_layout_conn_fail.cdl                                  -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/svs_testss/svs_layout_conn_fail.cdl
+    │           │       ├── svs_layout_match.cdl                                      -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/svs_testss/svs_layout_match.cdl
+    │           │       ├── svs_layout_param_fail.cdl                                 -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/svs_testss/svs_layout_param_fail.cdl
+    │           │       └── svs_master_inv.cdl                                        -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/manual_tests/svs_testss/svs_master_inv.cdl
+    │           └── unit/                                                             
+    │               ├── bjt_devices/                                                  
+    │               │   ├── layout/                                                   
+    │               │   │   └── pnpMPA.gds                                            
+    │               │   └── netlist/                                                  
+    │               │       └── pnpMPA.cdl                                            
+    │               ├── cap_devices/                                                  
+    │               │   ├── layout/                                                   
+    │               │   │   ├── cap_cmomf.gds                                         
+    │               │   │   ├── cap_cmomf_config.gds                                  
+    │               │   │   ├── cap_cmomf_hier.gds                                    
+    │               │   │   ├── cap_cmomi.gds                                         
+    │               │   │   ├── cap_cmomi_config.gds                                  
+    │               │   │   ├── cap_cmomi_hier.gds                                    
+    │               │   │   ├── sg13_hv_svaricap.gds                                  -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/cap_devices/layout/sg13_hv_svaricap.gds
+    │               │   │   ├── sg13_moscap_n.gds                                     -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/cap_devices/layout/sg13_moscap_n.gds
+    │               │   │   ├── sg13_moscap_n.yaml                                    -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/cap_devices/layout/sg13_moscap_n.yaml
+    │               │   │   ├── sg13_moscap_p.gds                                     -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/cap_devices/layout/sg13_moscap_p.gds
+    │               │   │   └── sg13_moscap_p.yaml                                    -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/cap_devices/layout/sg13_moscap_p.yaml
+    │               │   └── netlist/                                                  
+    │               │       ├── cap_cmomf.cdl                                         
+    │               │       ├── cap_cmomf_config.cdl                                  
+    │               │       ├── cap_cmomf_hier.cdl                                    
+    │               │       ├── cap_cmomi.cdl                                         
+    │               │       ├── cap_cmomi_config.cdl                                  
+    │               │       ├── cap_cmomi_hier.cdl                                    
+    │               │       ├── sg13_hv_svaricap.cdl                                  -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/cap_devices/netlist/sg13_hv_svaricap.cdl
+    │               │       ├── sg13_moscap_n.cdl                                     -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/cap_devices/netlist/sg13_moscap_n.cdl
+    │               │       └── sg13_moscap_p.cdl                                     -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/cap_devices/netlist/sg13_moscap_p.cdl
+    │               ├── diode_devices/                                                
+    │               │   ├── layout/                                                   
+    │               │   │   ├── dantenna.gds                                          -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/diode_devices/layout/dantenna.gds
+    │               │   │   └── dpantenna.gds                                         -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/diode_devices/layout/dpantenna.gds
+    │               │   └── netlist/                                                  
+    │               │       ├── dantenna.cdl                                          -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/diode_devices/netlist/dantenna.cdl
+    │               │       └── dpantenna.cdl                                         -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/diode_devices/netlist/dpantenna.cdl
+    │               ├── esd_devices/                                                  
+    │               │   ├── layout/                                                   
+    │               │   │   ├── diodevdd_2kv.gds                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/esd_devices/layout/diodevdd_2kv.gds
+    │               │   │   ├── diodevdd_4kv.gds                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/esd_devices/layout/diodevdd_4kv.gds
+    │               │   │   ├── diodevss_2kv.gds                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/esd_devices/layout/diodevss_2kv.gds
+    │               │   │   ├── diodevss_4kv.gds                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/esd_devices/layout/diodevss_4kv.gds
+    │               │   │   ├── nmoscl_2.gds                                          
+    │               │   │   └── nmoscl_4.gds                                          
+    │               │   └── netlist/                                                  
+    │               │       ├── diodevdd_2kv.cdl                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/esd_devices/netlist/diodevdd_2kv.cdl
+    │               │       ├── diodevdd_4kv.cdl                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/esd_devices/netlist/diodevdd_4kv.cdl
+    │               │       ├── diodevss_2kv.cdl                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/esd_devices/netlist/diodevss_2kv.cdl
+    │               │       ├── diodevss_4kv.cdl                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/esd_devices/netlist/diodevss_4kv.cdl
+    │               │       ├── nmoscl_2.cdl                                          
+    │               │       └── nmoscl_4.cdl                                          
+    │               ├── ind_devices/                                                  
+    │               │   ├── layout/                                                   
+    │               │   │   ├── inductor.gds                                          
+    │               │   │   └── inductor3.gds                                         
+    │               │   └── netlist/                                                  
+    │               │       ├── inductor.cdl                                          
+    │               │       └── inductor3.cdl                                         
+    │               ├── mos_devices/                                                  
+    │               │   ├── layout/                                                   
+    │               │   │   ├── sg13_hv_nmos.gds                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/mos_devices/layout/sg13_hv_nmos.gds
+    │               │   │   ├── sg13_hv_pmos.gds                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/mos_devices/layout/sg13_hv_pmos.gds
+    │               │   │   ├── sg13_lv_nmos.gds                                      
+    │               │   │   └── sg13_lv_pmos.gds                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/mos_devices/layout/sg13_lv_pmos.gds
+    │               │   └── netlist/                                                  
+    │               │       ├── sg13_hv_nmos.cdl                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/mos_devices/netlist/sg13_hv_nmos.cdl
+    │               │       ├── sg13_hv_pmos.cdl                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/mos_devices/netlist/sg13_hv_pmos.cdl
+    │               │       ├── sg13_lv_nmos.cdl                                      
+    │               │       └── sg13_lv_pmos.cdl                                      -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/mos_devices/netlist/sg13_lv_pmos.cdl
+    │               ├── res_devices/                                                  
+    │               │   ├── layout/                                                   
+    │               │   │   ├── res_metal1.gds                                        -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/layout/res_metal1.gds
+    │               │   │   ├── res_metal2.gds                                        -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/layout/res_metal2.gds
+    │               │   │   ├── res_metal3.gds                                        -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/layout/res_metal3.gds
+    │               │   │   ├── res_metal4.gds                                        -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/layout/res_metal4.gds
+    │               │   │   ├── res_topmetal1.gds                                     -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/layout/res_topmetal1.gds
+    │               │   │   ├── rhigh.gds                                             -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/layout/rhigh.gds
+    │               │   │   ├── rppd.gds                                              -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/layout/rppd.gds
+    │               │   │   └── rsil.gds                                              -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/layout/rsil.gds
+    │               │   └── netlist/                                                  
+    │               │       ├── res_metal1.cdl                                        -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/netlist/res_metal1.cdl
+    │               │       ├── res_metal2.cdl                                        -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/netlist/res_metal2.cdl
+    │               │       ├── res_metal3.cdl                                        -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/netlist/res_metal3.cdl
+    │               │       ├── res_metal4.cdl                                        -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/netlist/res_metal4.cdl
+    │               │       ├── res_topmetal1.cdl                                     -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/netlist/res_topmetal1.cdl
+    │               │       ├── rhigh.cdl                                             -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/netlist/rhigh.cdl
+    │               │       ├── rppd.cdl                                              -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/netlist/rppd.cdl
+    │               │       └── rsil.cdl                                              -> ../../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/res_devices/netlist/rsil.cdl
+    │               └── tap_devices/                                                  
+    │                   ├── layout                                                    -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/tap_devices/layout
+    │                   └── netlist                                                   -> ../../../<g2>/libs.tech/klayout/tech/lvs/testing/testcases/unit/tap_devices/netlist
+    ├── macros/                                                                       
+    │   ├── ihp130_import_netlist.lym                                                 
+    │   ├── ihp_logo.png                                                              -> <g2>/libs.tech/klayout/tech/macros/ihp_logo.png
+    │   ├── sg13cmos5l_density_report.lym                                             
+    │   ├── sg13cmos5l_drc.lym                                                        
+    │   ├── sg13cmos5l_drc_options.lym                                                
+    │   ├── sg13cmos5l_filler_ActGatP.lym                                             
+    │   ├── sg13cmos5l_filler_Metal.lym                                               
+    │   ├── sg13cmos5l_lvs.lym                                                        
+    │   └── sg13cmos5l_lvs_options.lym                                                
+    ├── pymacros/                                                                     
+    │   └── autorun.lym                                                               bootstrap: sys.path += python/, cni; import sg13cmos5l_pycell_lib
+    ├── scripts/                                                                      
+    │   ├── bondpad.py                                                                standalone generator script
+    │   ├── filler.py                                                                 standalone generator script
+    │   └── sealring.py                                                               standalone generator script
+    ├── sg13cmos5l.lyp                                                                layer properties (names -> layer/datatype, read by SG13_Tech)
+    ├── sg13cmos5l.lyt                                                                KLayout technology "sg13cmos5l"
+    ├── sg13cmos5l.map                                                                
+    └── xsect/                                                                        
+        ├── cross_section.lyp                                                         
+        ├── README.md                                                                 -> <g2>/libs.tech/klayout/tech/xsect/README.md
+        └── sg13cmos5l_for_EM.xs
