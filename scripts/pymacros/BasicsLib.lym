@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<klayout-macro>
+ <description>BasicsLib - FEOL contacts, PMOS buffer cap</description>
+ <version/>
+ <category>pymacros</category>
+ <prolog/><epilog/><doc/>
+ <autorun>true</autorun>
+ <autorun-early>false</autorun-early>
+ <priority>0</priority>
+ <shortcut/>
+ <show-in-menu>false</show-in-menu>
+ <group-name/><menu-path/>
+ <interpreter>python</interpreter>
+ <dsl-interpreter-name/>
+ <text># -*- coding: utf-8 -*-
+import pya
+
+
+# ── PCell: feol_contact ───────────────────────────────────────────────────────
+#
+# A single row/column of contacts with an M1 landing bar.
+# l and h are in nm (integers = DBU at dbu=0.001 µm).
+
+class feol_contact(pya.PCellDeclarationHelper):
+
+    def __init__(self):
+        super().__init__()
+        self.param("l",        self.TypeInt,   "contact length (nm)", default=260)
+        self.param("h",        self.TypeInt,   "contact height (nm)", default=160)
+        self.param("ly_active",self.TypeLayer, "Active (diffusion)",  default=pya.LayerInfo( 1, 0))
+        self.param("ly_po",    self.TypeLayer, "Poly (Gate)",         default=pya.LayerInfo( 5, 0))
+        self.param("ly_co",    self.TypeLayer, "Contact (CO)",        default=pya.LayerInfo( 6, 0))
+        self.param("ly_m1",    self.TypeLayer, "Metal 1",             default=pya.LayerInfo( 8, 0))
+        self.param("ly_pimp",  self.TypeLayer, "P+ implant",          default=pya.LayerInfo(14, 0))
+        self.param("ly_nwell", self.TypeLayer, "N-Well",              default=pya.LayerInfo(31, 0))
+        self.param("ly_pr",    self.TypeLayer, "Placement boundary",  default=pya.LayerInfo(63, 0))
+
+    def display_text_impl(self):
+        return f"feol_contact(l={self.l}nm, h={self.h}nm)"
+
+    def coerce_parameters_impl(self):
+        if self.l &lt;= 260: self.l = 260
+        if self.h &lt;= 160: self.h = 160
+
+    def produce_impl(self):
+        ly_co = self.layout.layer(self.ly_co)
+        ly_m1 = self.layout.layer(self.ly_m1)
+
+        contact_size     = 160
+        contact_distance = 180
+        contact_pitch    = contact_size + contact_distance
+        metal1endcap     =  50
+        l = self.l
+        h = self.h
+        n_cuts_x = max(0, (l + contact_distance - 2 * metal1endcap) // contact_pitch)
+        n_cuts_y = max(0, (h + contact_distance)                     // contact_pitch)
+        xext     = n_cuts_x * contact_pitch - contact_distance
+        yext     = n_cuts_y * contact_pitch - contact_distance
+        start_x  = (l - xext) // 2
+        start_y  = (h - yext) // 2
+        for row in range(n_cuts_y):
+            for col in range(n_cuts_x):
+                xl = start_x + col * contact_pitch
+                yb = start_y + row * contact_pitch
+                self.cell.shapes(ly_co).insert(
+                    pya.Box(xl, yb, xl + contact_size, yb + contact_size))
+        self.cell.shapes(ly_m1).insert(pya.Box(0, 0, l, h))
+
+
+
+# ── PCell: pmos_buffer_cap ────────────────────────────────────────────────────
+#
+# Translated directly from IHP pmosHV_code.py using sg13g2_tech.json.
+# ng=1, W >= cont_act_min. pmosHV placed rot=90 mirrorTrue:
+#   cell_x = y_internal,  cell_y = x_internal
+#
+# sg13g2_tech.json values used:
+#   cnt_a=0.16  cnt_b=0.18  cnt_c=0.07  cnt_f=0.11
+#   gat_c=0.18  m1_c=0.0    m1_c1=0.05
+#   nw_c1=0.62  psd_c=0.18  psd_i1=0.40
+#
+# Derived coords (µm):
+#   xcb=0.07  xce=0.23  xpb=0.34(=gate_y0)  xcb2=L+0.45  xce2=L+0.61  xde=L+0.68
+#   m1_ext=0.44  act_ext=0.51
+#   gate_y1 = 0.34 + L
+#   NWell/TGO enclose outer tie active => y spans [-(act_ext+nw_c1), xde+act_ext+nw_c1]
+
+class pmos_buffer_cap(pya.PCellDeclarationHelper):
+
+    def __init__(self):
+        super().__init__()
+        self.param("w_nm",      self.TypeInt,   "Gate width  W (nm)", default=8000)
+        self.param("l_nm",      self.TypeInt,   "Gate length L (nm)", default=8000)
+        self.param("ly_activ",  self.TypeLayer, "Activ  1/0",  default=pya.LayerInfo( 1, 0))
+        self.param("ly_po",     self.TypeLayer, "GatPoly 5/0", default=pya.LayerInfo( 5, 0))
+        self.param("ly_po2",    self.TypeLayer, "GatPoly 5/2", default=pya.LayerInfo( 5, 2))
+        self.param("ly_co",     self.TypeLayer, "Cont   6/0",  default=pya.LayerInfo( 6, 0))
+        self.param("ly_m1",     self.TypeLayer, "Metal1 8/0",  default=pya.LayerInfo( 8, 0))
+        self.param("ly_m1p",    self.TypeLayer, "Metal1 8/2",  default=pya.LayerInfo( 8, 2))
+        self.param("ly_psd",    self.TypeLayer, "pSD   14/0",  default=pya.LayerInfo(14, 0))
+        self.param("ly_nwell",  self.TypeLayer, "NWell 31/0",  default=pya.LayerInfo(31, 0))
+        self.param("ly_tgo",    self.TypeLayer, "TGO   44/0",  default=pya.LayerInfo(44, 0))
+        self.param("ly_gc",     self.TypeLayer, "GatCont 40/0",default=pya.LayerInfo(40, 0))
+        self.param("ly_devmk",  self.TypeLayer, "DevMk  51/0", default=pya.LayerInfo(51, 0))
+
+    def display_text_impl(self):
+        return f"pmos_buffer_cap(W={self.w_nm}nm L={self.l_nm}nm)"
+
+    def coerce_parameters_impl(self):
+        if self.w_nm &lt; 300: self.w_nm = 300
+        if self.l_nm &lt; 400: self.l_nm = 400
+
+    def produce_impl(self):
+        dbu = self.layout.dbu
+        def u(um): return round(um / dbu)
+        def box(ly, x1, y1, x2, y2):
+            self.cell.shapes(ly).insert(pya.Box(u(x1), u(y1), u(x2), u(y2)))
+
+        ly_act  = self.layout.layer(self.ly_activ)
+        ly_po   = self.layout.layer(self.ly_po)
+        ly_po2  = self.layout.layer(self.ly_po2)
+        ly_co   = self.layout.layer(self.ly_co)
+        ly_m1   = self.layout.layer(self.ly_m1)
+        ly_m1p  = self.layout.layer(self.ly_m1p)
+        ly_psd  = self.layout.layer(self.ly_psd)
+        ly_nw   = self.layout.layer(self.ly_nwell)
+        ly_tgo  = self.layout.layer(self.ly_tgo)
+        ly_gc   = self.layout.layer(self.ly_gc)
+        ly_dm   = self.layout.layer(self.ly_devmk)
+
+        W = self.w_nm / 1000.0
+        L = self.l_nm / 1000.0
+
+        cnt_a=0.16; cnt_b=0.18; cnt_c=0.07; cnt_f=0.11
+        gat_c=0.18; m1_c=0.0;  m1_c1=0.05
+        nw_c1=0.62; psd_c=0.18; psd_i1=0.40
+
+        xcb  = cnt_c
+        xce  = xcb  + cnt_a
+        xpb  = xce  + cnt_f
+        xpe  = xpb  + L
+        xcb2 = xpe  + cnt_f
+        xce2 = xcb2 + cnt_a
+        xde  = xce2 + cnt_c
+        m1_ext  = xce + m1_c1 + cnt_a
+        act_ext = m1_ext + cnt_c
+
+        # Active
+        box(ly_act, 0, 0,                          W,  xde)
+        box(ly_act, 0, 0,           cnt_a+2*cnt_c,     cnt_a+2*cnt_c)
+        box(ly_act, 0, xcb2-cnt_c,  cnt_a+2*cnt_c,     xde)
+        box(ly_act, 0, -act_ext,                   W, -act_ext+cnt_a+2*cnt_c)
+        box(ly_act, 0,  xde+act_ext-cnt_a-2*cnt_c, W,  xde+act_ext)
+
+        # GatPoly
+        box(ly_po,  -gat_c, xpb,  W+gat_c, xpe)
+        box(ly_po2, -gat_c, xpb,  W+gat_c, xpe)
+        box(ly_po,  -0.46,  xpb,  W+0.46,  xpe)
+
+        # M1
+        box(ly_m1,  0, -m1_ext, W,  xde+m1_ext)
+        box(ly_m1p, 0,  xcb,    W,  xce)
+        box(ly_m1p, 0,  xcb2,   W,  xce2)
+
+        # pSD: cell_x=[-psd_i1, W+psd_i1], cell_y=[-psd_c, xde+psd_c]
+        box(ly_psd, -psd_i1, -psd_c,  W+psd_i1,  xde+psd_c)
+
+        # NWell and TGO (must enclose outer tie active)
+        box(ly_nw,  -nw_c1, -(act_ext+nw_c1),  W+nw_c1,  xde+act_ext+nw_c1)
+        box(ly_tgo, -nw_c1, -(act_ext+nw_c1),  W+nw_c1,  xde+act_ext+nw_c1)
+
+        # Gate contact marker (layer 40) = drain active corner square
+        box(ly_gc,  0,  xcb2-cnt_c,  cnt_a+2*cnt_c,  xde)
+
+        # Device marker (layer 51) = channel poly extents
+        box(ly_dm, -gat_c,  xpb,  W+gat_c,  xpe)
+
+        # Contact columns (stacked in cell_x, fixed cell_y strip)
+        def contact_col(cell_y_bot, W_span):
+            n   = max(1, int((W_span - 2*cnt_c + cnt_b) / (cnt_a+cnt_b) + 1e-9))
+            tot = n*(cnt_a+cnt_b) - cnt_b
+            c0  = round(((W_span - tot) / 2) / dbu) * dbu
+            for i in range(n):
+                cx = c0 + i*(cnt_a+cnt_b)
+                self.cell.shapes(ly_co).insert(pya.Box(
+                    u(cx), u(cell_y_bot), u(cx+cnt_a), u(cell_y_bot+cnt_a)))
+
+        contact_col(xcb,              W)
+        contact_col(xcb2,             W)
+        contact_col(-m1_ext,          W)
+        contact_col(xde+m1_ext-cnt_a, W)
+
+        # Gate contact bars (in cell_y = L direction, on poly arms)
+        gate_L_ox = -(xce + m1_c1 + cnt_f)        # = -0.38
+        gate_R_ox =   W + xcb + cnt_f + m1_c1 - 0.01  # ~= W+0.22
+
+        def gate_bar(cell_x_left, L_span):
+            n   = max(1, int((L_span - 2*cnt_c + cnt_b) / (cnt_a+cnt_b) + 1e-9))
+            tot = n*(cnt_a+cnt_b) - cnt_b
+            y0  = xpb + round(((L_span - tot) / 2) / dbu) * dbu
+            for i in range(n):
+                cy = y0 + i*(cnt_a+cnt_b)
+                self.cell.shapes(ly_co).insert(pya.Box(
+                    u(cell_x_left), u(cy), u(cell_x_left+cnt_a), u(cy+cnt_a)))
+            ym1b = min(y0 - m1_c1, xpb)
+            ym1t = max(y0 + tot + m1_c1, xpe)
+            self.cell.shapes(ly_m1).insert(pya.Box(
+                u(cell_x_left - m1_c), u(ym1b),
+                u(cell_x_left + cnt_a + m1_c), u(ym1t)))
+
+        gate_bar(gate_L_ox,         L)
+        gate_bar(gate_R_ox,          L)
+
+# ── Library registration ──────────────────────────────────────────────────────
+
+class BasicsLib(pya.Library):
+    def __init__(self):
+        super().__init__()
+        self.description = "BasicsLib"
+        self.layout().register_pcell("FEOL contacts",   feol_contact())
+        self.layout().register_pcell("pmos_buffer_cap", pmos_buffer_cap())
+        self.register("BasicsLib")
+
+BasicsLib()</text>
+</klayout-macro>
