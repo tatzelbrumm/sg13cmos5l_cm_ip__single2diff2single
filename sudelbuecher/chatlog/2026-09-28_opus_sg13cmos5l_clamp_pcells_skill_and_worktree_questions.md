@@ -1,7 +1,7 @@
 # Sudelbuch — 2026-09-28 — verbatim chat log (Opus session: parametrized sg13cmos5l Clamp_N/Clamp_P
 PCells, the `ihp-flat-cell-to-pcell` skill, worktree questions, installing the PCells into
-`sg13cmos5l_IOPadDiff2Single`, a minimal `feol_contact` PCell, and where KLayout finds PCell
-libraries)
+`sg13cmos5l_IOPadDiff2Single`, a minimal `feol_contact` PCell, where KLayout finds PCell
+libraries, and swapping the clamps for the PCells by hand)
 
 **Repo:** `sg13cmos5l_cm_ip__single2diff2single` (main worktree) /
 `sg13cmos5l_cm_ip__single2diff2single_sudelbuecher` (`_sudelbuecher` worktree, `sudel_buecher`
@@ -10,8 +10,8 @@ branch); input data from the connected folder `~/EDA/chipalooza_cmos5L`
 **Repo write target:** `sudelbuecher/chatlog/2026-09-28_opus_sg13cmos5l_clamp_pcells_skill_and_worktree_questions.md`
 
 **Assistant:** Claude Opus 5.5 (configured model `claude-opus-5-5`), cloud session linked to the
-user's computer (session `9cac00c9-eeb1-55fe-8703-d20a7d0c771e`), 2026-09-28 22:40 to 2026-09-29
-14:30 CEST
+user's computer (session `9cac00c9-eeb1-55fe-8703-d20a7d0c771e`), 2026-09-28 22:40 to 2026-09-30
+07:30 CEST
 
 **Deliverables of this session:** `scripts/pcells/` in the main worktree (14 files, untracked;
 KLayout library `SG13_cm_clamps` with PCells `Clamp_N`/`Clamp_P`, see its `README.md`) and the
@@ -31,6 +31,15 @@ the locale question, and the manual KLayout walkthrough.
 complexity, a `feol_contact`-only `BasicsLib.lym` distilled from `PUDDING/python/BasicsLib.py`
 (shown in the chat, not saved), where the scaffolds keep custom PCells (nowhere), and how the IHP
 PCells get loaded at every KLayout start.
+
+**Third update (2026-09-30, at the user's request in Turn 42):** Turns 31–45 are appended from a
+copy of the raw transcript taken after the context compaction of 2026-09-29 14:49 CEST. Two
+stretches before that point are lost from the transcript: the end of Turn 30 and the start of Turn
+31. They are filled from text the user pasted from the app (marked as such in place), without the
+app's step-group labels and progress lines. Turns 32–45 cover
+how the HeiChips 2026 PCell exercise loads its library, copying and comparing `BasicsLib`,
+loading it and the clamp library from KLayout's Macro Development window, and checking the
+user's hand-made clamp swap in `sg13cmos5l_IOPadDiff2Single_manualPcell`.
 
 **What is reproduced, and what is not:** every `**User:**` block and every assistant text below
 is extracted by script from this session's raw transcript
@@ -1294,4 +1303,486 @@ Sources:
 
 Same procedure as last time: the new stretch is the rest of Turn 23 plus everything since. First the skeleton of what the transcript holds after record 1470:
 
-*[This update was written during Turn 30; the rest of that turn (writing and transferring the update, and the README entry) and its closing reply are not included.]*
+*[Filled on 2026-09-30 from text the user pasted from the app, because the transcript records of this stretch are lost (see the header).  
+The app's collapsed step group ('Created a file, used Computer, and 8 more steps') is replaced by this summary, written from the build files and the reply below: printed the skeleton of the transcript after record 1470, wrote `summaries_delta2.py` and `build_delta2.py` (records 1471–1767), built and checked the update, staged the log from the linked computer (unchanged), and wrote it back with `device_commit_files`; the first write was a silent no-op caught by `sha256sum`, and the retry matched.  
+Backed up `chatlog/README.md` as `README.md.bak6` and extended the log's entry in place.  
+The reply follows as pasted; the paste carries no Markdown, so its list and emphasis formatting is lost.]*
+
+I've updated the chat log. It now covers everything up to your request in Turn 30: I completed Turn 23 and appended Turns 24–30. The file is 116 KB, and its checksum matches on both sides.
+
+How it was built: the same method as last time. Your messages and my visible replies are copied from the raw transcript by script, and tool calls appear as *[ ]* action summaries.
+Checks on the new part: your 9 new user messages (including both interruption markers) and all 17 visible replies appear word for word. None of the 23 non-empty internal reasoning blocks overlaps the log.
+Before overwriting: I confirmed your copy was unchanged since the last update. The first write was another silent no-op from device_commit_files; the checksum caught it, and the retry went through.
+Header: the title and time range (to 14:30 CEST) are updated, and there's a short note on what Turns 24–30 cover. Turn 24 is marked as having no reply before your interruption.
+Where the log stops: it ends partway through Turn 30, because the update was written during it. A closing note says so.
+README entry: I extended the log's one-sentence entry in chatlog/README.md, after backing it up as README.md.bak6.
+No git commands were run.
+
+## Turn 31
+
+**User:**
+
+*[Filled on 2026-09-30 from text the user pasted from the app.]*
+
+> on second thought, put turns 7-14 into a separate chat log, because this doesn't concern pcell design, but corporate chokepoint capitalism. put a note into 2026-09-28_opus_sg13cmos5l_clamp_pcells_skill_and_worktree_questions.md about the gap, and a reference to the quarantined partial chat log.
+> Also, the chatlog/README.md log descriptions are getting WAY too long. Shorten yours.
+
+*[The following paragraph was sent as a second message; the transcript's stored last-prompt record begins with it.]*
+
+> Also, document the rules by which you created an as verbatim as possible chat log, so later Opus chats can learn from your experience how not to run into corporate censorship again. With that said, do carry on with separating turns 7-14 and annotating the remaining log accordingly.
+
+**Assistant:**
+
+*[Filled on 2026-09-30 from text the user pasted from the app; the paste carries no Markdown, so the list formatting is lost.]*
+
+Four tasks:
+
+move Turns 7–14 into their own log;
+leave a gap note in the main log that links to it;
+shorten my README entry and add one for the new file;
+write down the export rules where later sessions will find them.
+First I'll confirm your copy of the main log is still the version I last wrote, and look at its header:
+
+*[Part of the app's collapsed step group ('Created a file, used Computer, and 18 more steps, 1 failed'), summarized from the compaction summary: on the linked computer, confirmed the main log unchanged (hash `d791ca6c…`), listed `sudelbuecher/cheatsheets/`, and read the main log's header (lines 1–60).]*
+
+Unchanged, so I'll build both files from my copy of that exact version:
+
+*[Checked that the container copy of the main log still matched the version last written to the linked computer (hash `d791ca6c…`), cut the text from `## Turn 7` to just before `## Turn 15` into the new file `2026-09-28_opus_safety_stops_and_chatlog_export.md` with its own header, replaced it in the main log with a gap note, and edited the main log's header (title, split note, stopped-attempts paragraph removed).  
+The context was compacted here (2026-09-29 14:49 CEST).  
+Tried to read timestamps from the raw transcript: it now held only 49 records, starting after the compaction; printed the main log's new header and the region around the gap note.  
+Printed the stopped-attempt timestamps from the new file and its Turn 14 region, and searched the transcript for the Turn 14/15 user messages: only the compaction summary matched.  
+Changed the headers' references to Turn 31 into 'after Turn 30' and the new file's time range to 'from 00:00 CEST'.  
+Reflowed the main log's title, checked that the moved text and the rest of the main log are byte-identical to the previous version, and copied both files to `/mnt/user-data/outputs/chatlog/` (hashes `75420a3a…` and `ec49571d…`).  
+On the linked computer: confirmed the main log still at `d791ca6c…`, listed `chatlog/` with modification times, printed the log entries of `chatlog/README.md`, listed the connected folders and grepped the main worktree's `CLAUDE.md` for 'chat'.]*
+
+Commit both log files (main with mtime guard):
+
+*[Wrote both logs to `chatlog/` with `device_commit_files` (the main log guarded by its modification time; 2 written), and printed §6 of the main worktree's `CLAUDE.md`.  
+On the linked computer: both hashes matched; backed up `chatlog/README.md` as `README.md.bak7`, replaced the main log's entry with a shorter one and added an entry for the new file in place with Python, and showed the diff.  
+Confirmed the raw transcript now starts at 2026-09-29 14:47 CEST, and grepped `ref/2026-09-28_opus_references.md` and `ref/README.md` for turn references.  
+Edited the Turn 14 reference in `ref/2026-09-28_opus_references.md` in place, looked at a cheatsheet's header and the directory listing of `sudelbuecher/`, and found `verbatim_chatlog_recovery/`.  
+Listed `verbatim_chatlog_recovery/` and read the head of its `chat-recovery-after-compaction.md`.  
+Wrote `verbatim_chatlog_recovery/verbatim-chatlog-export.md` and wrote it to the linked computer with `device_commit_files` (1 written); container hash `c85dc4c5…`.]*
+
+Now the checksum, plus a one-line pointer in the main `CLAUDE.md` §6 after the chat-log rule paragraph:
+
+*[On the linked computer: `sha256sum` matched (`c85dc4c5…`); inserted a two-line pointer after the chat-log rule paragraph of the main worktree's `CLAUDE.md` §6 in place with Python and showed the diff (exit status 1 from `diff` reporting the difference).]*
+
+Turns 7–14 are now in their own log, and the main log has a gap note pointing to it. Every file I changed or added matches its checksum on your computer. I didn't touch git.
+
+- **Split-off log:** `chatlog/2026-09-28_opus_safety_stops_and_chatlog_export.md` holds Turns 7–14 byte for byte, including the part of Turn 14 added in the first update. It keeps the original turn numbers. Its header now carries the "stopped attempts" note and a short note on why it was split off.
+- **Main log:**
+  - Turns 7–14 are replaced by a "Turns 7–14 (moved)" note with a link to the split file, and turn numbering is unchanged.
+  - I removed the "`[reasoning_extraction]` stops" topic from the title and the stopped-attempts paragraph from the header, and added a dated split note.
+  - The rest of the file is unchanged.
+- **`chatlog/README.md`:** my entry is now one short sentence, and the split file has a one-line entry of its own. There's a `.bak7` backup, per your CLAUDE.md. I also updated the one line in `ref/2026-09-28_opus_references.md` that pointed to Turn 14.
+- **Rules for later sessions:** they're in `sudelbuecher/verbatim_chatlog_recovery/verbatim-chatlog-export.md`, next to the existing compaction-recovery note. They cover:
+  - what got stopped;
+  - how to word the request;
+  - what the log includes and excludes;
+  - how it's checked before writing;
+  - how updates and splits are done.
+
+  The main `CLAUDE.md` §6 now has a two-line pointer to it, after the chat-log rule paragraph. What triggers the stop is inferred from which requests were stopped and which weren't, and the note says so.
+
+Compacting this conversation rewrote the raw transcript file: it now starts at 12:47 today. Everything earlier is gone from it. The build directory still has the extracted material, but the published log can't be re-checked against the original records any more.
+
+That also means I couldn't find the exact end time of Turn 14, so the split file's header gives only "from 00:00 CEST". The rules note now says to copy the transcript aside before the next export.
+
+## Turn 32
+
+**User:**
+
+> Good enough.
+> How was the pcell read-in solved in ~/EDA/heichips26/heichips2026_pypcell ? I remember that I got this to work interactively while zooming in to the HeiChips 2026 presentation, so it must have been very simple.
+
+**Assistant:**
+
+*[Listed `~/EDA/heichips26` (names only: `heichips2026_pypcell`), requested read access to `heichips2026_pypcell` (granted), listed its files (`README.md`, `pcell_python_0.lym` … `pcell_python_6.lym`), and read the README, `pcell_python_0.lym`, the head and tail of `pcell_python_6.lym`, and the last three commit subjects.]*
+
+There's no loader at all. Each step file in `heichips2026_pypcell` is one self-contained `.lym` macro, with `<autorun>false</autorun>`, and nothing else is involved: no `sys.path` changes, no `__init__.py`, no `cni`, no `DloGen`.
+
+**How the macro registers the library.** Everything is in the file:
+
+- a `PolygonGuardRing(db.PCellDeclarationHelper)` class;
+- a `HeiChipsLib(db.Library)` class whose `__init__` calls `register_pcell("PolygonGuardRing", …)` and then `self.register("HeiChipsLib")`;
+- a last line, `HeiChipsLib()`, which creates the library and registers it the moment the macro runs.
+
+**What you most likely did in the workshop:**
+
+1. Open the Macro Development window (Tools → Macro Development, F5).
+2. Open the step file there, or paste it into a new Python macro. Step 0 is simply KLayout's own "PCell library" template.
+3. Press Run. `HeiChipsLib` then appears in the library browser and the instance dialog.
+4. Edit, and run again. Registering a library under a name that already exists replaces the old one, and placed instances are regenerated. That's what made the edit–run–look loop so quick.
+
+In step 1 the README swaps `pya` for `klayout.db`, so the same file also runs under the standalone Python module.
+
+**Making it load at startup.** Nothing else is needed: set `<autorun>true</autorun>` and put the `.lym` in a `pymacros/` folder that KLayout scans, i.e. `~/.klayout/pymacros` or `pymacros/` under any `KLAYOUT_PATH` entry. That's exactly what the PUDDING `BasicsLib.lym` already does. Alternatively, pass it with `klayout -rm file.lym`.
+
+**Why the clamp PCells needed a loader and this doesn't.** The clamps are written against IHP's `cni`/`DloGen` API, so they depend on `sg13cmos5l_pycell_lib` and `cni` being importable. The PDK's `autorun.lym` sets that up in the GUI, but `-b` skips it, and that gap is what `load_clamp_pcells.py` was covering. A plain `PCellDeclarationHelper` depends on nothing but KLayout itself.
+
+## Turn 33
+
+**User:**
+
+> what's the rsync or cp bash command to copy ~/EDA/PUDDING/python/BasicsLib.py into ~/EDA/sg13cmos5l_cm_ip__single2diff2single/python/BasicsLib.py , creating the python directory on the fly? Don't do it, tell me how to do it. No composite script if possible.
+
+**Assistant:**
+
+Use rsync's `--mkpath` option (it needs rsync 3.2.3 or newer):
+
+```sh
+rsync -a --mkpath ~/EDA/PUDDING/python/BasicsLib.py ~/EDA/sg13cmos5l_cm_ip__single2diff2single/python/BasicsLib.py
+```
+
+- `--mkpath` creates the destination file's missing parent directories, here `python/`.
+- `-a` keeps the file's permissions and modification time. Leave it out if you want a fresh mtime.
+- If rsync complains about the option, check `rsync --version`: older versions don't have it.
+
+**Using `install` instead.** It's also a single command:
+
+```sh
+install -D -p -m 644 ~/EDA/PUDDING/python/BasicsLib.py ~/EDA/sg13cmos5l_cm_ip__single2diff2single/python/BasicsLib.py
+```
+
+- `-D` creates the leading directories.
+- `-p` keeps the mtime.
+- `-m 644` is needed because `install` otherwise makes the file executable (755).
+
+**Why not plain `cp`.** It can't create the destination directory by itself. `cp --parents` would recreate the whole source path, `EDA/PUDDING/python/`, under the target instead. With cp it's two commands:
+
+```sh
+mkdir -p ~/EDA/sg13cmos5l_cm_ip__single2diff2single/python
+cp -p ~/EDA/PUDDING/python/BasicsLib.py ~/EDA/sg13cmos5l_cm_ip__single2diff2single/python/
+```
+
+## Turn 34
+
+**User:**
+
+> rsync -avu --progress --mkpath ~/EDA/PUDDING/python/BasicsLib.py ~/EDA/sg13cmos5l_cm_ip__single2diff2single/python/BasicsLib.py
+> and
+> rsync -avu --progress --mkpath ~/EDA/PUDDING/pymacros/BasicsLib.lym ~/EDA/sg13cmos5l_cm_ip__single2diff2single/pymacros/BasicsLib.lym
+> worked, 
+> but I moved the files to scripts/pcells and scripts/pymacros.
+> First, go through the differences between your version of BasicsLib.lym and the version in pymacros that I hand merged between the PUDDING version. Comment on what you omitted in addition to the pmos transistor pcell. The <autorun-early>, <show-in-menu>, <priority> stuff ..
+
+**Assistant:**
+
+*[Listed `scripts/pcells/BasicsLib.py` and `scripts/pymacros/`, and printed `scripts/pymacros/BasicsLib.lym`.  
+Printed PUDDING's `pymacros/BasicsLib.lym` and the head of its `python/BasicsLib.py`, and the container's `BasicsLib.lym` from Turn 26.]*
+
+Your merged file is my version with some of PUDDING's code style and comments put back. It draws the same shapes. Here's what differs, and then what I left out besides `pmos_buffer_cap`.
+
+## Your merge vs. my version
+
+- **What you took from PUDDING:**
+  - the `# -*- coding: utf-8 -*-` line;
+  - the ruled section comment;
+  - the display text `feol_contact(l=…nm, h=…nm)` (mine used `feol_contact_l…_h…`, taken from `python/BasicsLib.py`);
+  - the `xext`/`yext` intermediate variables;
+  - the loop variables `row`/`col`;
+  - the wrapped `insert(...)` call.
+- **The `<dsl-interpreter-name/>` tag** is back in your version. It's harmless: see below.
+- **The coding line** does nothing inside a `.lym`. KLayout decodes the XML and hands the text to Python as a string, and Python 3 source is UTF-8 by default anyway.
+- **One comment is wrong** in both PUDDING and your merge: "A single row/column of contacts". The code draws an `n_cuts_x × n_cuts_y` array. It's only one row at the default `h = 160`.
+
+## The XML tags I left out
+
+A missing tag gets KLayout's default value, and every value PUDDING had set is that default. When you save a macro from the Macro Development window, KLayout writes the full set of tags back, which is why PUDDING's file has them all.
+
+| tag | what it does | why it can go |
+|---|---|---|
+| `<version/>` | free-text version string | empty |
+| `<prolog/>`, `<epilog/>` | text run before/after the macro body | empty |
+| `<doc/>` | documentation text shown in the IDE | empty |
+| `<autorun-early>false` | runs the macro before KLayout has set up technologies and libraries | `false` is the default, and a PCell library needs the normal autorun |
+| `<priority>0` | order of this macro among the autorun macros | `0` is the default; there's nothing to order against |
+| `<shortcut/>`, `<show-in-menu>false`, `<group-name/>`, `<menu-path/>` | bind the macro to a key or a menu entry, for macros you trigger by hand | a library that registers itself at startup is never triggered by hand |
+| `<dsl-interpreter-name/>` | names the DSL when `<interpreter>` is `dsl` (DRC/LVS scripts) | this macro is plain Python |
+
+## The code I left out
+
+- **Five layer parameters.** `ly_active`, `ly_po`, `ly_pimp`, `ly_nwell` and `ly_pr` were declared in the PUDDING `.lym`, but `produce_impl` never draws on them. They only put five layer pickers into the PCell dialog that change nothing. Only `ly_co` and `ly_m1` are used.
+- **Library description.** It changed from `"BasicsLib"` to `"A very basic pcell library"`, the `.py` version's text. That's cosmetic: it's what the library browser shows.
+
+**Existing layouts.** Instances placed with the PUDDING version still work. KLayout matches stored PCell parameters by name and ignores the five unused layer parameters that are stored with them.
+
+## Turn 35
+
+**User:**
+
+> so, is your internal version and the pymacros/BasicsLib.lym functionally identical?
+
+**Assistant:**
+
+*[Checked the container for the earlier `BasicsLib.lym` and for KLayout (binary 0.28.16, Python module 0.30.12), and staged `scripts/pymacros/BasicsLib.lym` from the linked computer.  
+Loaded both files' PCell code in the Python module and generated `feol_contact` for 4,018 (l, h) pairs: no geometry or parameter differences; same parameter names, labels and defaults; library description 'A very basic pcell library'.]*
+
+Yes, apart from one visible string: the name KLayout displays for a placed instance.
+
+I tested both files in the container: your `scripts/pymacros/BasicsLib.lym`, copied from your computer, and my version from earlier. I loaded each and generated `feol_contact` for 4,018 (l, h) pairs, from 0 to 3 µm in `l` and 0 to 2 µm in `h`, which includes values below the minimum so the clamping is exercised. The contact and Metal1 boxes are identical in every case. Both versions also have the same four parameters (`l`, `h`, `ly_co`, `ly_m1`) with the same labels and defaults, register the same library `BasicsLib` with the same description, and use the same PCell name, "FEOL contacts".
+
+The one difference is `display_text_impl`, which sets the name shown for a placed instance in the cell tree and the instance properties:
+
+- your file: `feol_contact(l=1000nm, h=600nm)`
+- mine: `feol_contact_l1000_h600`
+
+That text isn't stored as a parameter and has no effect on the geometry, so the two are interchangeable for layouts you've already drawn.
+
+## Turn 36
+
+**User:**
+
+> now how do i make this BasicsLib available in the klayout version running right now?
+
+**Assistant:**
+
+You don't need to restart KLayout: run the macro once in the open session, and it registers `BasicsLib` straight away. The paths below assume the running KLayout is in the IIC-OSIC-TOOLS container, where `~/EDA` is mounted at `/foss/designs`.
+
+**Quickest: one line in the Macro Development console**
+
+1. Open the Macro Development window with F5, or Tools → Macro Development.
+2. In the console pane at the bottom, set the language selector to Python.
+3. Type:
+   ```python
+   pya.Macro("/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pymacros/BasicsLib.lym").run()
+   ```
+   This loads the `.lym` file and runs its `<text>`. The last line of that text, `BasicsLib()`, registers the library.
+
+**If you want to edit it in the IDE and re-run it**
+
+1. In the Macro Development window, right-click in the macro tree and choose "Add Location". Pick `/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pymacros`.
+2. Double-click `BasicsLib` to open it, then press the "Run script from current tab" button (Shift+F5).
+3. After each edit, run it again. The new registration replaces the old library, and instances you've already placed are redrawn.
+
+**Using it:** choose the Instance tool, set the library to `BasicsLib`, and pick the cell "FEOL contacts". Then set `l` and `h` in the Instance dialog and place it. `BasicsLib` isn't tied to a technology, so it appears whichever technology is active.
+
+**Next KLayout start:** a run like this lasts only for the current session. The added location is saved in KLayout's settings under `/headless/.klayout`, which isn't mounted from your computer, so it's lost when the container is recreated. To load the library at startup without that, start KLayout with `-rm /foss/designs/.../scripts/pymacros/BasicsLib.lym`.
+
+## Turn 37
+
+**User:**
+
+> ok i did
+> In the Macro Development window, right-click in the macro tree and choose "Add Location". Pick `/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pymacros`.
+> and BasicsLib automatically loaded. Placing a FEOL contacts pcell worked.
+>
+> So far so good. 
+> By the way, does the equivalent of FEOL contacts exist in the SG13_dev pcell hierarchy (i.e., a contact row primitive that is used for contacting diffusions of any polarity as well as gate poly to metal1)? I wrote FEOL contacs because I didn't find it in the available pcells.
+
+**Assistant:**
+
+*[Started a search of the container for IHP's `sg13cmos5l_pycell_lib` and its `moduleNames`; the user rejected the command, so it did not run.]*
+
+## Turn 38
+
+**User** (a request-interruption marker, followed immediately by a new instruction):
+
+> [Request interrupted by user for tool use]
+>
+> Now how do I do the same trick with the clamp pcells you wrote? I think that there's no .lym for your library yet, and I'm not sure if the .lym method is appropriate for this more complex example.
+
+**Assistant:**
+
+You don't need a `.lym` for this: the clamp library already has its loader, `scripts/pcells/load_clamp_pcells.py`, and you can run it in the open KLayout the same way.
+
+**Loading it into the running KLayout**
+
+In the Macro Development console, with the language set to Python, type:
+
+```python
+import runpy; runpy.run_path("/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/load_clamp_pcells.py")
+```
+
+Library `SG13_cm_clamps` then appears with the PCells `Clamp_N` and `Clamp_P`, which take the parameters `ng` and `tie` (`D`/`0D`).
+
+Use `runpy` rather than opening the file in the IDE with Add Location: the loader finds its own directory through `__file__`, and `runpy` sets that reliably.
+
+The loader imports IHP's `sg13cmos5l_pycell_lib` and `cni`. In a KLayout started with the PDK, the PDK's autorun macro has already made them importable; if not, the loader finds them through `KLAYOUT_PATH`/`PDKPATH`.
+
+**Where it differs from BasicsLib**
+
+- **Re-running does nothing.** The loader skips the import if the package `sg13cmos5l_cm_clamps` is already in `sys.modules`, so edits to the clamp code only take effect after a KLayout restart. BasicsLib is one file with no import, which is why running it again replaces the library.
+- **It's several modules.** `__init__.py` plus the `*_code.py`, `clamp_engine.py` and `clamp_refdata.py` files are one package built on IHP's `cni` framework, not a single `PCellDeclarationHelper` file.
+
+**Is a `.lym` right for it?**
+
+A `.lym` is just a wrapper around Python text. For a multi-module package, IHP's own way of doing it would work here too:
+
+- the package sits in a directory on `sys.path`;
+- a three-line autorun `.lym` in `pymacros/` imports it. That's exactly what the PDK's `tech/pymacros/autorun.lym` does for `sg13cmos5l_pycell_lib`.
+
+For the clamps that would mean putting the package under an importable name, not `scripts/pcells/`, and adding that small `.lym`. It's the "autoloadable, no more, no less than the IHP collections" step from your roadmap. I haven't written it, since you asked for no new scripts. Say if you want it.
+
+## Turn 39
+
+**User:**
+
+> re:
+> Use runpy rather than opening the file in the IDE with Add Location: the loader finds its own directory through __file__, and runpy sets that reliably.
+>
+> this means installing yet more software hierarchy slop.
+> How can I  start this from the added `scripts/pcells` location in the Macro Development browser?
+
+**Assistant:**
+
+*[Ran a two-line test script with the KLayout 0.28.16 binary (`-b -r` and `-zz -rm`): `__file__` set both times.  
+Ran it through `pya.Macro(path).run()`, the way the Macro Development window runs a macro: `__file__` set to the absolute path.]*
+
+You don't need `runpy`: running `load_clamp_pcells.py` straight from the Macro Development window works, so skip the console line I gave you. I tested that in the container (KLayout 0.28.16). When KLayout runs a `.py` file as a macro, which is what the IDE's Run button does, it sets `__file__` to the file's absolute path. That's all the loader needs to find the rest of the clamp package, so my warning about Add Location was wrong.
+
+**Steps**
+
+1. Macro Development window (F5): right-click in the tree, choose Add Location, and pick `/foss/designs/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells`. KLayout lists every `.py` file in that folder as a Python macro.
+2. Double-click `load_clamp_pcells.py` to open it in a tab.
+3. Press "Run script from current tab" (Shift+F5).
+4. Library `SG13_cm_clamps` is now available, with PCells `Clamp_N` and `Clamp_P`: in the Instance tool, pick the library, then the cell, then `ng` and `tie`.
+
+**Things to know**
+
+- **Only run the loader.** Every other file in that folder shows up as a macro too. `verify_clamp.py`, `gen_clamp.py` and the rest are command-line tools, and running them from the IDE does nothing useful.
+- **Nothing runs automatically.** A plain `.py` file only autoruns if it carries KLayout's autorun marker, and none of these files do. You press Run every time.
+- **Re-running does nothing.** The loader checks `sys.modules` and skips the import if the package is already loaded, so code edits only take effect after a KLayout restart.
+- **The PDK has to be loaded first.** This needs KLayout to have started with the PDK in `KLAYOUT_PATH`, as it does in your normal container start, so that IHP's `sg13cmos5l_pycell_lib` and `cni` can be imported.
+
+## Turn 40
+
+**User:**
+
+> ok. ran load_clamp_pcells.py manually and replaced the clamps by pcells. Saved hierarchically as sg13cmos5l_IOPadDiff2Single_manualPcell
+> Sanity check?
+
+**Assistant:**
+
+I'll find the saved file and compare it with the original.
+
+*[Listed the `sg13cmos5l_IOPadDiff2Single*` files in the main worktree (the saved `_manualPcell.klay.gds`/`.klib`, and KLayout's backup copies in `layout/klayout/backups/`), and staged the original and the `_manualPcell` `.gds` and `.klib` files.  
+Printed the `_manualPcell` `.klib` (only `sg13cmos5l_io`), both files' cells and top-level placements, and a flattened layer-by-layer XOR: 14 layers differ, all within the P clamp; labels: 15 `pad` moved, `gate` and `dpant` only in the original, `rppd r=6.768k` only in the saved file.  
+Found the PDK copy in the container and read the saved PCell parameters: `Clamp_N` `ng=15, tie=D`, `Clamp_P` `ng=15, tie=0D`.  
+Tried switching the saved `Clamp_P` to `tie=D` in the container copy and comparing again; the change did not take and the comparison was not usable.  
+Compared freshly generated `Clamp_N`/`Clamp_P` (`ng=15`, `tie` `D` and `0D`) cell by cell with IHP's clamps and with the saved ones: `Clamp_N(15, D)` and `Clamp_P(15, D)` identical to IHP's cells; the saved `Clamp_P` identical to `Clamp_P(15, 0D)`.]*
+
+Almost: `Clamp_N` is right, but `Clamp_P` was saved with the wrong tie setting, `tie = 0D` instead of `D`.
+
+**What I compared.** I copied both GDS files into the cloud workspace and checked them against each other and against freshly generated PCells.
+
+- **Placements and hierarchy:** unchanged. There are still five instances at the same positions: `Clamp_N` at (0, 6), `Clamp_P` at (0, 65), and `DCNDiode`, `DCPDiode` and `GateDecode` as before. The `.klib` is unchanged, and the file stores the PCell parameters, so the clamps reopen as live PCells.
+- **`Clamp_N`:** `ng = 15`, `tie = D`. It's identical on every drawing and pin layer to IHP's `sg13cmos5l_Clamp_N15N15D`.
+- **`Clamp_P`:** `ng = 15`, `tie = 0D`. It differs from IHP's `sg13cmos5l_Clamp_P15N15D` on 14 layers, all inside the P clamp's area (y ≈ 65–84 µm).
+  - It is identical to a freshly generated `Clamp_P(15, 0D)`.
+  - A freshly generated `Clamp_P(15, D)` is identical to IHP's cell.
+
+  So the only thing wrong is the parameter; the PCell itself is fine.
+
+**Why it matters.** `0D` is the always-off variant: the gate is tied to the rail through the rppd resistor, so there is no `gate` pin and no antenna diode. The labels show exactly that. Your file has no `gate` or `dpant` label but has `rppd r=6.768k`. In this macro, GateDecode's drive to the P-clamp gate would be left unconnected.
+
+**Fix.**
+
+1. Select the `Clamp_P` instance.
+2. Open Edit → Properties (Q), go to the PCell parameters tab, and set `tie` to `D`.
+3. Save.
+
+After that the P clamp matches IHP's cell too.
+
+The 15 `pad` labels in each clamp have moved, which is expected. IHP places extra `pad` labels by hand, while the PCells put one on each drain strap.
+
+## Turn 41
+
+**User:**
+
+> Better?
+
+**Assistant:**
+
+*[Listed the layout directory on the linked computer, staged the re-saved `_manualPcell.klay.gds` (3,482,734 bytes) and compared it with the original: both clamps `ng=15, tie=D`, placements unchanged, no difference on the 23 drawing and pin layers, 15 `pad` labels moved.]*
+
+Yes, it's right now. I copied the file you saved at 07:16 and compared it with the original `sg13cmos5l_IOPadDiff2Single.klay.gds`.
+
+- **Parameters:** both clamps are `ng = 15, tie = D`, and they reopen as live PCells.
+- **Placements:** unchanged, with `Clamp_N` at (0, 6), `Clamp_P` at (0, 65), and `DCNDiode`, `DCPDiode` and `GateDecode` where they were.
+- **Geometry:** the whole flattened layout is identical to the original on all 23 drawing and pin layers.
+- **Labels:** the only difference is the 15 `pad` labels that sit in different places, which is expected. `gate`, `dpant`, `iovdd` and `iovss` are back where IHP has them.
+
+## Turn 42
+
+**User:**
+
+> update the unabridged verbatim log, if it already exists.
+
+**Assistant:**
+
+*[Copied the raw transcript aside (`chatlog_build/raw/`), and read the recovery section of `verbatim_chatlog_recovery/chat-recovery-after-compaction.md` on the linked computer.  
+Tried to search inside this chat with `conversation_search` (refused: it only searches other chats), and read this chat back from claude.ai with `read_conversation`: '[Content redacted, chat flagged by safety classifier]'.  
+Listed the record types of the transcript copy: it starts with the last few records before the compaction, then the compaction summary, then everything since.  
+Printed the compaction-boundary record and the stored last-prompt records (the user's message cut off after about 30 words).  
+Searched `/root/.claude`, `/home/claude` and `/tmp` for the Turn 31 message text: only the compaction summary in the transcript matched.  
+Printed `build_delta2.py` and the end of the main log, and wrote `build_delta3.py`, which lists the conversation events of the transcript copy with the compaction summary excluded; printed its skeleton.]*
+
+## Turn 43
+
+**User** (a request-interruption marker, followed immediately by a new instruction):
+
+> [Request interrupted by user]
+>
+> can you see my previous choice to put some turns into a separate chat?
+> is compaction an obstacle for unabridged, verbatim reconstruction or do you know the way around it?
+
+**Assistant:**
+
+Yes to the first, and yes to the second: compaction has cost this session a stretch of turns, and the usual workaround doesn't work for this chat.
+
+**The earlier split.** Turns 7–14 are in `chatlog/2026-09-28_opus_safety_stops_and_chatlog_export.md`, and the main log has a "Turns 7–14 (moved)" note in their place. I know that from the files on your computer. I can't quote the message in which you asked for it, because that message is in the part compaction removed.
+
+That raises one choice for this update. Turn 31 is the split request itself, plus the note on how not to trip the stop, so by topic it belongs in the split-off log. I was going to append it there and leave a "Turn 31 (moved)" note in the main log. Tell me if you'd rather keep it in the main log, like the other log-update turns (23 and 30).
+
+**Compaction.** Here's what I checked:
+
+- **Local transcript:** compaction on 2026-09-29 at 14:49 CEST rewrote the file. It keeps only the last few records before that point.
+- **The recovery route in your `chat-recovery-after-compaction.md`:** reading the chat back from claude.ai returns "[Content redacted, chat flagged by safety classifier]". The `[reasoning_extraction]` stops flagged this chat, and the flag also blocks that way back.
+- **Other copies:** there's no prompt history file and no other copy of the transcript in the workspace. One stored copy of your last prompt is cut off after about 30 words. The compaction summary has a paraphrase, which the log rules don't allow as a source.
+
+What that means for the log:
+
+- **Turns 1–30:** safe. They were exported and checked before compaction.
+- **Lost:** the end of Turn 30 (writing and transferring that update, and my closing reply), and Turn 31 before the compaction point, including your message itself.
+- **From the compaction onward:** everything is in the current transcript and can be exported verbatim, which covers the rest of Turn 31 (the split work) and Turns 32–41 up to your request just now. I've copied the transcript aside so a later compaction can't take it.
+
+**How to fill the gap.** The chat as you see it in the app probably still shows those turns; the redaction applies to my read of it. You can paste your Turn 31 message and my Turn 30 closing reply here. I'd put them into the log marked as pasted by you, not extracted from the transcript. Otherwise the log gets a dated gap note saying what's missing and why.
+
+## Turn 44
+
+**User:**
+
+> the turns are not numbered.  give me beginning and end of the turn[s] I should paste again.
+
+**Assistant:**
+
+Three pieces, all from the evening of 2026-09-29, in this order.
+
+1. **The rest of my reply to your log-update request.**
+   - Your message was: "update the unabridged, verbatim chat log, now that we found out how you're allowed to do it."
+   - The log already has my first sentence of that reply: "Same procedure as last time: the new stretch is the rest of Turn 23 plus everything since. First the skeleton of what the transcript holds after record 1470:"
+   - Paste everything after that sentence, to the end of that reply.
+
+2. **Your next message, in full, including the part after the interruption.**
+   - It starts: "on second thought, put turns 7-14 into a separate chat log"
+   - Then comes "[Request interrupted by user]", and after it the part starting: "Also, document the rules by which you created an as verbatim as possible chat log"
+   - It should end with: "…do carry on with separating turns 7-14 and annotating the remaining log accordingly."
+   - My copies of the start and end come from the compaction summary, so the exact wording may differ slightly. What your app shows is what counts.
+
+3. **The start of my reply to that message.**
+   - Paste from its first line up to, but not including: "Unchanged, so I'll build both files from my copy of that exact version:"
+   - Everything from that line on is still in the transcript.
+
+Text only is enough: leave out the collapsed step groups. I'll mark all three pieces in the log as pasted by you, not extracted from the transcript.
+
+## Turn 45
+
+**User:**
+
+> Not sure where the gap begins and ends. Export what you have, mark the gap, I'll look at the output, then paste what you need, and you insert it into the exported log to fill the gap.
+
+**Assistant:**
+
+*[This update was written during Turn 45; the rest of that turn (building and transferring the update) and its closing reply are not included.]*
