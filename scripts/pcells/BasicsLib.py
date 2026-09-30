@@ -2,6 +2,9 @@
 import pya
 
 # FEOL contact row (minimal PCell example)
+#
+# A single row/column of contacts with an M1 landing bar.
+# l and h are in nm (integers = DBU at dbu=0.001 µm).
 
 class feol_contact(pya.PCellDeclarationHelper):
     def __init__(self):
@@ -9,59 +12,44 @@ class feol_contact(pya.PCellDeclarationHelper):
         # Parameters
         self.param("l", self.TypeInt, "contact length (nm)", default=260)
         self.param("h", self.TypeInt, "contact height (nm)", default=160)
-        self.param("ly_active", self.TypeLayer, "active area (diffusion)", default=pya.LayerInfo(1, 0))
-        self.param("ly_po",     self.TypeLayer, "Poly (Gate)",             default=pya.LayerInfo(5, 0))
         self.param("ly_co",     self.TypeLayer, "Contact (CO)",            default=pya.LayerInfo(6, 0))
         self.param("ly_m1",     self.TypeLayer, "Metal1 (M1)",             default=pya.LayerInfo(8, 0))
-        self.param("ly_pimp",   self.TypeLayer, "P+ implant",              default=pya.LayerInfo(14, 0))
-        self.param("ly_nwell",  self.TypeLayer, "N-Well",                  default=pya.LayerInfo(31, 0))
-        self.param("ly_pr",     self.TypeLayer, "Placement boundary",      default=pya.LayerInfo(63, 0))
 
     def display_text_impl(self):
-        return f"feol_contact_l{self.l}_h{self.h}"
+        return f"feol_contact(l={self.l}nm, h={self.h}nm)"
 
     def coerce_parameters_impl(self):
         # Keep parameters valid; add rules as needed
-        if self.l <= 260: self.l = 260
-        if self.h <= 160: self.h = 160
+        # minimum contact size 160, minimum endcap 50, grid 5
+        self.l = max(260, self.l // 5 * 5)
+        self.h = max(160, self.h // 5 * 5)
 
     def produce_impl(self):
         # Resolve layers
-        ly_active = self.layout.layer(self.ly_active)
-        ly_po     = self.layout.layer(self.ly_po)
-        ly_co     = self.layout.layer(self.ly_co)
-        ly_m1     = self.layout.layer(self.ly_m1)
-        ly_pimp   = self.layout.layer(self.ly_pimp)
-        ly_nwell  = self.layout.layer(self.ly_nwell)
-        ly_pr     = self.layout.layer(self.ly_pr)
+        ly_co = self.layout.layer(self.ly_co)
+        ly_m1 = self.layout.layer(self.ly_m1)
 
         contact_size    = 160
         contact_distance= 180
         contact_pitch   = contact_size + contact_distance
-        metal1extension =   0   # metal 1 extension
         metal1endcap    =  50   # metal 1 end cap
         l = self.l
         h = self.h
-        x0 = 0
-        y0 = 0
-        n_cuts_x    = max(0, (l + contact_distance - 2 * metal1endcap) // contact_pitch)
-        n_cuts_y    = max(0, (h + contact_distance - 2 * metal1extension) // contact_pitch)
+        n_cuts_x = max(0, (l + contact_distance - 2 * metal1endcap) // contact_pitch)
+        n_cuts_y = max(0, (h + contact_distance)                     // contact_pitch)
         xext = n_cuts_x * contact_pitch - contact_distance
         yext = n_cuts_y * contact_pitch - contact_distance
-        start_x = (l - xext) // 2
-        start_y = (h - yext) // 2
+        start_x = (l - xext) // 10 * 5
+        start_y = (h - yext) // 10 * 5
 
-        shapes = self.cell.shapes
-        # place CO cuts
-        for y in range(n_cuts_y):
-            for x in range(n_cuts_x):
-                xl = start_x + x * contact_pitch
-                xr = xl + contact_size
-                yb = start_y + y * contact_pitch
-                yt = yb + contact_size
-                shapes(ly_co).insert(pya.Box(xl, yb, xr, yt))
+        for row in range(n_cuts_y):
+            for col in range(n_cuts_x):
+                xl = start_x + col * contact_pitch
+                yb = start_y + row * contact_pitch
+                self.cell.shapes(ly_co).insert(
+                    pya.Box(xl, yb, xl + contact_size, yb + contact_size))
         # M1 landing bar that covers the row of contacts
-        shapes(ly_m1).insert(pya.Box(x0, y0, x0 + l, y0 + h))
+        self.cell.shapes(ly_m1).insert(pya.Box(0, 0, l, h))
 
 # Register library
 class BasicsLib(pya.Library):

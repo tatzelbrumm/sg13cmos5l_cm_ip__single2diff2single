@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <klayout-macro>
  <description>BasicsLib - FEOL contacts</description>
+ <version/>
  <category>pymacros</category>
+ <prolog/>
+ <epilog/>
+ <doc/>
  <autorun>true</autorun>
+ <autorun-early>false</autorun-early>
+ <priority>0</priority>
+ <shortcut/>
+ <show-in-menu>false</show-in-menu>
+ <group-name/>
+ <menu-path/>
  <interpreter>python</interpreter>
  <dsl-interpreter-name/>
  <text># -*- coding: utf-8 -*-
@@ -26,8 +36,10 @@ class feol_contact(pya.PCellDeclarationHelper):
         return f"feol_contact(l={self.l}nm, h={self.h}nm)"
 
     def coerce_parameters_impl(self):
-        if self.l &lt;= 260: self.l = 260
-        if self.h &lt;= 160: self.h = 160
+        # Keep parameters valid; add rules as needed
+        # minimum contact size 160, minimum endcap 50, grid 5
+        self.l = max(260, self.l // 5 * 5)
+        self.h = max(160, self.h // 5 * 5)
 
     def produce_impl(self):
         ly_co = self.layout.layer(self.ly_co)
@@ -43,8 +55,8 @@ class feol_contact(pya.PCellDeclarationHelper):
         n_cuts_y = max(0, (h + contact_distance)                     // contact_pitch)
         xext     = n_cuts_x * contact_pitch - contact_distance
         yext     = n_cuts_y * contact_pitch - contact_distance
-        start_x  = (l - xext) // 2
-        start_y  = (h - yext) // 2
+        start_x  = (l - xext) // 10 * 5
+        start_y  = (h - yext) // 10 * 5
         for row in range(n_cuts_y):
             for col in range(n_cuts_x):
                 xl = start_x + col * contact_pitch
@@ -53,11 +65,14 @@ class feol_contact(pya.PCellDeclarationHelper):
                     pya.Box(xl, yb, xl + contact_size, yb + contact_size))
         self.cell.shapes(ly_m1).insert(pya.Box(0, 0, l, h))
 
+# Register library
 class BasicsLib(pya.Library):
     def __init__(self):
         super().__init__()
         self.description = "A very basic pcell library"
+        # Register PCells
         self.layout().register_pcell("FEOL contacts", feol_contact())
+        # Register the library by name
         self.register("BasicsLib")
 
 BasicsLib()
