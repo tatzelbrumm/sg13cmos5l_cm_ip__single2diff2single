@@ -234,7 +234,7 @@ Topology B with 50 Ω or with 1 kΩ to ground has no loop gain and is omitted fr
 | C_L | 5 pF | 10 pF | 20 pF | 50 pF | 100 pF | 300 pF | 1 nF |
 |---|---|---|---|---|---|---|---|
 | A: f_c / PM | 2.18 MHz / 86° | 2.18 / 85° | 2.17 / 83° | 2.13 / 76° | 2.02 / 66° | 1.59 / 46° | 1.00 / 27° |
-| B: f_c / PM | 13.6 MHz / 47° | 9.72 / 51° | 6.45 / 58° | 3.30 / 71° | 1.81 / 79° | 0.64 / 87° | 0.20 / 90° |
+| B: f_c / PM | 13.6 MHz / 47° | 9.71 / 51° | 6.45 / 58° | 3.30 / 71° | 1.81 / 79° | 0.64 / 87° | 0.20 / 90° |
 
 **TABLE III — Corners (ideal bias references)**
 
@@ -336,3 +336,15 @@ References are from memory and not re-checked for this note.
 
 `run_d2s.py`, `results.txt`
 : Script and output for every number in Section VII.
+
+`xschem/d2s_{miller,loadcomp,bias}.{sch,sym}`, `xschem/xschemrc`
+: xschem schematics and box symbols generated from the netlists above with the PDK's
+  `sg13cmos5l_pr` symbols. Every device terminal carries a net label, so connectivity does
+  not depend on wiring; placement follows signal flow and is meant to be tidied by hand.
+  Parameters are frozen at their defaults (`wdp`, `wdn`, `iab = 5 µA`).
+
+`gen_xschem.py`, `check_xschem.py`
+: Generator for the schematics, and a device-by-device comparison (model, terminal nets in
+  order, w / l / ng / value, port order) of xschem's netlist against the `.spice` source.
+  After editing a schematic, `python3 check_xschem.py` netlists all three with xschem and
+  compares them.

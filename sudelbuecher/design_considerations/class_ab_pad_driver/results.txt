@@ -42,7 +42,7 @@ fs 27C   100p      gain=0.5015 off=  0.20mV IqP/IqN= 239/ 239uA Idd=  426uA T0= 
 
 == Topology B: single-stage, load compensated: loop gain vs C_L (no resistive load), tt 27C
 5p: T0= 34.3dB fc=13.55MHz PM= 47.1
-10p: T0= 34.3dB fc= 9.72MHz PM= 50.7
+10p: T0= 34.3dB fc= 9.71MHz PM= 50.7
 20p: T0= 34.3dB fc= 6.45MHz PM= 58.1
 50p: T0= 34.3dB fc= 3.30MHz PM= 70.9
 100p: T0= 34.3dB fc= 1.81MHz PM= 79.2

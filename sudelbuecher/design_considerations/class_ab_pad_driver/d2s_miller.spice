@@ -9,13 +9,13 @@
 * --- pair 1 (signal): gain-setting degeneration R1 = 2*R2
 XT1a s1a vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
 XT1b s1b vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
-XR1 s1a s1b vdd rhigh w=0.5u l=39u
+XR1 s1a s1b vss rhigh w=0.5u l=39u
 XM1a x vinn s1a s1a sg13_hv_pmos w=20u l=1u ng=2
 XM1b y vinp s1b s1b sg13_hv_pmos w=20u l=1u ng=2
 * --- pair 2 (feedback)
 XT2a s2a vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
 XT2b s2b vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
-XR2 s2a s2b vdd rhigh w=0.5u l=17u
+XR2 s2a s2b vss rhigh w=0.5u l=17u
 XM2a y vref s2a s2a sg13_hv_pmos w=20u l=1u ng=2
 XM2b x vfb s2b s2b sg13_hv_pmos w=20u l=1u ng=2
 * --- folded cascode (50 uA sinks: 2 x 20 uA from the pairs + 10 uA branch)
