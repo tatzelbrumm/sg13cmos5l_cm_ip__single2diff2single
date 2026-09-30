@@ -1,0 +1,205 @@
+scripts/pcells — call hierarchy (static calls from Python ast, dynamic ones marked by hand)
+source: sg13cmos5l_cm_ip__single2diff2single/scripts/pcells as of 2026-09-30
+
+legend:  a -> b   indentation = "a calls b"
+         <== IHP  function from sg13cmos5l_pycell_lib/ihp/geometry.py (symlink into sg13g2)
+         <== cni  class/function from pycell4klayout-api (package cni)
+         [dyn]    edge made at run time (importlib / runpy / KLayout callback): invisible to pyreverse
+         klayout.db / pya calls (Box, Layout, Region, ...) are not listed individually
+
+1. KLayout PCell path (library SG13_cm_clamps)
+----------------------------------------------
+klayout -e -rm scripts/pcells/load_clamp_pcells.py        (GUI entry point)
+    load_clamp_pcells.<module>
+        load_clamp_pcells._missing
+        load_clamp_pcells._pdk_python_dirs
+        [dyn] importlib spec_from_file_location + exec_module  ->  __init__.py as package "sg13cmos5l_cm_clamps"
+            __init__.<module>
+                import sg13cmos5l_pycell_lib        <== IHP  (side effect: registers Tech "SG13_dev" and library "SG13_dev")
+                ClampPyCellLib.__init__
+                    Tech.get('SG13_dev')            <== cni
+                    [dyn] importlib.import_module("…Clamp_N_code"), ("…Clamp_P_code")
+                    PCellWrapper(Clamp_X(), tech, None, path)   <== cni
+                        [dyn] clamp_base.defineParamSpecs(specs)   (called by PCellWrapper.__init__)
+                            ChoiceConstraint   <== cni
+                    pya layout().register_pcell('Clamp_N' / 'Clamp_P', wrapper)
+                    pya register('SG13_cm_clamps')
+
+per PCell instance, whenever KLayout (re)generates it:
+    [dyn] cni PCellWrapper.produce(layout, layers, params, cell)
+        clamp_base.setupParams(params)
+        clamp_base.genLayout
+            dbReplaceProp   <== IHP
+            clamp_engine.generate
+                clamp_engine.plan
+                    clamp_engine.nearest_ref
+                    clamp_engine.expand
+                    clamp_engine.check_limits
+                        clamp_engine.array_extent
+                        clamp_engine._bbox
+                    clamp_engine.snap
+                    clamp_engine.interp
+                    clamp_engine.shift_texts
+                clamp_engine.rule_texts
+                    clamp_engine.columns
+                        clamp_engine.array_extent
+                        clamp_engine.gate_lefts
+                            clamp_engine.array_extent
+                clamp_engine.bus_shapes
+                    clamp_engine.gate_lefts   (see above)
+                    clamp_engine._box
+                clamp_engine.array_shapes
+                    clamp_engine.array_extent
+                    clamp_engine.columns   (see above)
+                    clamp_engine.gate_lefts   (see above)
+                    clamp_engine._box
+            clamp_engine.cell_name
+            dbCreateLabel   <== IHP
+            Layer   <== cni
+            dbCreateRect   <== IHP
+            dbCreatePolygon   <== IHP
+            Point   <== cni
+            clamp_base_code._um
+            Box   <== cni
+            PointList   <== cni
+
+2. gen_clamp.py (CLI: GDS + CDL + ngspice, no PDK needed)
+---------------------------------------------------------
+    gen_clamp.<module>
+        gen_clamp.main
+            gen_clamp.ng_list
+            clamp_engine.generate
+                clamp_engine.plan
+                    clamp_engine.nearest_ref
+                    clamp_engine.expand
+                    clamp_engine.check_limits
+                        clamp_engine.array_extent
+                        clamp_engine._bbox
+                    clamp_engine.snap
+                    clamp_engine.interp
+                    clamp_engine.shift_texts
+                clamp_engine.rule_texts
+                    clamp_engine.columns
+                        clamp_engine.array_extent
+                        clamp_engine.gate_lefts
+                            clamp_engine.array_extent
+                clamp_engine.bus_shapes
+                    clamp_engine.gate_lefts   (see above)
+                    clamp_engine._box
+                clamp_engine.array_shapes
+                    clamp_engine.array_extent
+                    clamp_engine.columns   (see above)
+                    clamp_engine.gate_lefts   (see above)
+                    clamp_engine._box
+            clamp_engine.cell_name
+            clamp_netlist.cdl
+                clamp_netlist._devices
+                    clamp_engine.plan   (see above)
+                clamp_engine.cell_name
+                clamp_netlist.pins
+                clamp_netlist._u
+            clamp_netlist.ngspice
+                clamp_netlist._devices   (see above)
+                clamp_engine.cell_name
+                clamp_netlist.si
+                clamp_netlist._u
+                clamp_netlist.pins
+            clamp_klayout.write_cell
+                clamp_klayout.layer_index
+            clamp_engine.max_ng
+                clamp_engine.plan   (see above)
+
+3. verify_clamp.py (XOR vs IHP references)
+------------------------------------------
+    verify_clamp.<module>
+        verify_clamp.main
+            clamp_engine.max_ng
+                clamp_engine.plan
+                    clamp_engine.nearest_ref
+                    clamp_engine.expand
+                    clamp_engine.check_limits
+                        clamp_engine.array_extent
+                        clamp_engine._bbox
+                    clamp_engine.snap
+                    clamp_engine.interp
+                    clamp_engine.shift_texts
+            clamp_engine.generate
+                clamp_engine.plan   (see above)
+                clamp_engine.rule_texts
+                    clamp_engine.columns
+                        clamp_engine.array_extent
+                        clamp_engine.gate_lefts
+                            clamp_engine.array_extent
+                clamp_engine.bus_shapes
+                    clamp_engine.gate_lefts   (see above)
+                    clamp_engine._box
+                clamp_engine.array_shapes
+                    clamp_engine.array_extent
+                    clamp_engine.columns   (see above)
+                    clamp_engine.gate_lefts   (see above)
+                    clamp_engine._box
+            clamp_engine.cell_name
+            clamp_klayout.write_cell
+                clamp_klayout.layer_index
+            verify_clamp.compare
+                verify_clamp.regions
+            verify_clamp.regions
+            clamp_engine.columns   (see above)
+    [dyn] with --pdk-python: runpy.run_path(load_clamp_pcells.py) -> section 1, then SG13_Tech  <== IHP
+
+4. lvs_clamp.py (light connectivity check)
+------------------------------------------
+    lvs_clamp.<module>
+        lvs_clamp.main
+            lvs_clamp.check
+
+5. extract_clamp_refdata.py (regenerates clamp_refdata.py)
+----------------------------------------------------------
+    extract_clamp_refdata.<module>
+        extract_clamp_refdata.main
+            extract_clamp_refdata.parse_cdl
+            extract_clamp_refdata.cell_regions
+            extract_clamp_refdata.shapes_to_regions
+            extract_clamp_refdata.sub
+            extract_clamp_refdata.encode_regions
+                extract_clamp_refdata.encode
+            clamp_engine.array_shapes
+                clamp_engine.array_extent
+                clamp_engine.columns
+                    clamp_engine.array_extent
+                    clamp_engine.gate_lefts
+                        clamp_engine.array_extent
+                clamp_engine.gate_lefts   (see above)
+                clamp_engine._box
+            clamp_engine.bus_shapes
+                clamp_engine.gate_lefts   (see above)
+                clamp_engine._box
+            extract_clamp_refdata.netlist_info
+
+6. use_clamp_pcells.py (swap flat clamps for PCells)
+----------------------------------------------------
+    use_clamp_pcells.<module>
+        use_clamp_pcells.main
+            use_clamp_pcells.swap_in_layout
+                use_clamp_pcells.flat_regions
+    [dyn] main() / swap_in_view(): runpy.run_path(load_clamp_pcells.py) -> section 1
+
+7. BasicsLib.py / BasicsLib.lym (independent: pya only, no cni, no IHP)
+-----------------------------------------------------------------------
+    BasicsLib.<module>
+        BasicsLib.load_libraries
+    BasicsLib.__init__   (runs when load_libraries() instantiates BasicsLib)
+        pya layout().register_pcell("FEOL contacts", feol_contact())
+        pya register("BasicsLib")
+    [dyn] KLayout calls feol_contact.coerce_parameters_impl / produce_impl per instance
+
+Calls into the IHP pcell hierarchy, complete list
+-------------------------------------------------
+clamp_base_code.py   from cni.dlo import *                               DloGen (base class), ChoiceConstraint, Layer, Box, Point, PointList, Font
+                     from sg13cmos5l_pycell_lib.ihp.geometry import *    dbCreateRect, dbCreatePolygon, dbCreateLabel, dbReplaceProp
+                     from sg13cmos5l_pycell_lib.ihp.utility_functions import *   (nothing used)
+                     specs.tech.getTechParams()['CDFVersion']            the only value read from sg13cmos5l_tech.json
+__init__.py          import sg13cmos5l_pycell_lib; cni.tech.Tech.get; cni.dlo.PCellWrapper
+verify_clamp.py      sg13cmos5l_pycell_lib.sg13_tech.SG13_Tech.TECH_NAME (only with --pdk-python)
+all other files      none (clamp_engine, clamp_refdata, clamp_klayout, clamp_netlist, gen_clamp, lvs_clamp,
+                     extract_clamp_refdata, load_clamp_pcells, use_clamp_pcells, BasicsLib)

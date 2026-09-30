@@ -1,0 +1,34 @@
+digraph "packages_cm" {
+rankdir=LR; ranksep=1.0
+charset="utf-8"
+labelloc=t; label="pyreverse (pylint 4.0.9) import graph of scripts/pcells (package sg13cmos5l_cm_clamps), relaid out LR; A → B = A imports B\nnot shown (dynamic or outside the analysed package): __init__ → Clamp_N/P_code (importlib), load_clamp_pcells → __init__ (spec_from_file_location),\nuse_clamp_pcells, verify_clamp → load_clamp_pcells (runpy); imports of cni / sg13cmos5l_pycell_lib (see cm_pcells_call_tree.txt)";
+"sg13cmos5l_cm_clamps" [color="black", label=<sg13cmos5l_cm_clamps (__init__)>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.BasicsLib" [color="black", label=<BasicsLib>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.Clamp_N_code" [color="black", label=<Clamp_N_code>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.Clamp_P_code" [color="black", label=<Clamp_P_code>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.clamp_base_code" [color="black", label=<clamp_base_code>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.clamp_engine" [color="black", label=<clamp_engine>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.clamp_klayout" [color="black", label=<clamp_klayout>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.clamp_netlist" [color="black", label=<clamp_netlist>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.clamp_refdata" [color="black", label=<clamp_refdata>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.extract_clamp_refdata" [color="black", label=<extract_clamp_refdata>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.gen_clamp" [color="black", label=<gen_clamp>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.load_clamp_pcells" [color="black", label=<load_clamp_pcells>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.lvs_clamp" [color="black", label=<lvs_clamp>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.use_clamp_pcells" [color="black", label=<use_clamp_pcells>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.verify_clamp" [color="black", label=<verify_clamp>, shape="box", style="solid"];
+"sg13cmos5l_cm_clamps.Clamp_N_code" -> "sg13cmos5l_cm_clamps.clamp_base_code" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.Clamp_P_code" -> "sg13cmos5l_cm_clamps.clamp_base_code" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.clamp_base_code" -> "sg13cmos5l_cm_clamps.clamp_engine" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.clamp_base_code" -> "sg13cmos5l_cm_clamps.clamp_refdata" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.clamp_netlist" -> "sg13cmos5l_cm_clamps.clamp_engine" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.extract_clamp_refdata" -> "sg13cmos5l_cm_clamps.clamp_engine" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.gen_clamp" -> "sg13cmos5l_cm_clamps.clamp_engine" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.gen_clamp" -> "sg13cmos5l_cm_clamps.clamp_klayout" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.gen_clamp" -> "sg13cmos5l_cm_clamps.clamp_netlist" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.gen_clamp" -> "sg13cmos5l_cm_clamps.clamp_refdata" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.lvs_clamp" -> "sg13cmos5l_cm_clamps.clamp_engine" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.verify_clamp" -> "sg13cmos5l_cm_clamps.clamp_engine" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.verify_clamp" -> "sg13cmos5l_cm_clamps.clamp_klayout" [arrowhead="open", arrowtail="none"];
+"sg13cmos5l_cm_clamps.verify_clamp" -> "sg13cmos5l_cm_clamps.clamp_refdata" [arrowhead="open", arrowtail="none"];
+}
