@@ -1,0 +1,20 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias generator (diode-connected replicas fed from ideal reference currents)
+.subckt d2s_bias vdd vss vbp vbn vbpc vbnc vabp vabn iab=5u
+IBP vbp vss 20u
+XBP vbp vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
+IBN vdd vbn 50u
+XBN vbn vbn vss vss sg13_hv_nmos w=25u l=2u ng=2
+IBNC vdd vbnc 5u
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=4u ng=1
+IBPC vbpc vss 5u
+XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=2u l=4u ng=1
+* class-AB translinear references: replica of output device (1/41, 1/33) + replica of AB device
+IABP vabp vss {iab}
+XRP1 n1 n1 vdd vdd sg13_hv_pmos w=13.32u l=0.6u ng=2
+XRP2 vabp vabp n1 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+IABN vdd vabn {iab}
+XRN1 n2 n2 vss vss sg13_hv_nmos w=8.8u l=1u ng=2
+XRN2 vabn vabn n2 vss sg13_hv_nmos w=4.4u l=1u ng=1
+.ends d2s_bias

@@ -1,0 +1,42 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_miller: differential-in, single-ended pad out, two-stage class-AB, Miller compensated
+* vout - vref = (Gm1/Gm2)*(vinp - vinn) ~= 1/2 * (vinp - vinn), with vfb tied to vout (vfb separate only to break the loop in simulation)
+* front end: differential difference amplifier (DDA), two source-degenerated PMOS pairs,
+*            folded cascode, low-voltage cascode mirror
+* output:    common-source push-pull (clamp frames), floating class-AB control (Hogervorst/Huijsing 1994)
+.subckt d2s_miller vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn
+* --- pair 1 (signal): gain-setting degeneration R1 = 2*R2
+XT1a s1a vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
+XT1b s1b vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
+XR1 s1a s1b vdd rhigh w=0.5u l=39u
+XM1a x vinn s1a s1a sg13_hv_pmos w=20u l=1u ng=2
+XM1b y vinp s1b s1b sg13_hv_pmos w=20u l=1u ng=2
+* --- pair 2 (feedback)
+XT2a s2a vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
+XT2b s2b vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
+XR2 s2a s2b vdd rhigh w=0.5u l=17u
+XM2a y vref s2a s2a sg13_hv_pmos w=20u l=1u ng=2
+XM2b x vfb s2b s2b sg13_hv_pmos w=20u l=1u ng=2
+* --- folded cascode (50 uA sinks: 2 x 20 uA from the pairs + 10 uA branch)
+XSX x vbn vss vss sg13_hv_nmos w=25u l=2u ng=2
+XSY y vbn vss vss sg13_hv_nmos w=25u l=2u ng=2
+XCX l1 vbnc x vss sg13_hv_nmos w=10u l=1u ng=1
+XCY b vbnc y vss sg13_hv_nmos w=10u l=1u ng=1
+* --- low-voltage cascode mirror (10 uA per branch)
+XPL pl l2 vdd vdd sg13_hv_pmos w=10u l=2u ng=1
+XPR pr l2 vdd vdd sg13_hv_pmos w=10u l=2u ng=1
+XPCL l2 vbpc pl vdd sg13_hv_pmos w=10u l=1u ng=1
+XPCR a vbpc pr vdd sg13_hv_pmos w=10u l=1u ng=1
+* --- floating current source (left, replica) and floating class-AB control (right)
+XFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1
+XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
+* --- output devices: one Clamp_P frame (L=0.6, 41 x 2 rows), two Clamp_N frames at L=1.0 (2 x 33)
+XOP vout a vdd vdd sg13_hv_pmos w=546.12u l=0.6u ng=82
+XON vout b vss vss sg13_hv_nmos w=290.4u l=1u ng=66
+* --- plain Miller compensation, MOM caps M1..M4, ~1 pF each
+XCMA vout a cap_cmomi w=31e-6 l=31e-6
+XCMB vout b cap_cmomi w=31e-6 l=31e-6
+.ends d2s_miller

@@ -1,0 +1,32 @@
+* tb_d2s_miller_step: step response of d2s_miller, tt corner
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run: ngspice tb_d2s_miller_step.spice   (interactive: plots) or ngspice -b (batch: prints measurements)
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.include d2s_bias.spice
+.include d2s_miller.spice
+Vdd vdd 0 3.3
+Vcm vref 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias
+.param vstep=0.5
+* differential stimulus around vref: vinp - vinn = v(dp)
+Vd dp 0 pulse({-vstep} {vstep} 1u 1n 1n 4u 8u)
+Ep vinp vref dp 0 0.5
+En vinn vref dp 0 -0.5
+* closed loop: vfb = vout
+Xd vdd 0 vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_miller
+* load (edit): 1 kohm to vref || 100 pF
+RL vout vref 1k
+CL vout 0 100p
+.control
+tran 2n 9u
+meas tran vlo find v(vout) at=0.99u
+meas tran vhi find v(vout) at=4.9u
+if $?batchmode = 0
+  plot v(vout) v(vinp) v(vinn)
+end
+.endc
+.end

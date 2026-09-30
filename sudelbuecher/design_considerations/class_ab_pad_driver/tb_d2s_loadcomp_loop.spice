@@ -1,0 +1,34 @@
+* tb_d2s_loadcomp_loop: loop gain of d2s_loadcomp, tt corner
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run: ngspice tb_d2s_loadcomp_loop.spice   (interactive: plots) or ngspice -b (batch: prints measurements)
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.include d2s_bias.spice
+.include d2s_loadcomp.spice
+Vdd vdd 0 3.3
+Vcm vref 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias
+* loop broken at the feedback gate: DC closed through 1 GH, AC injected through 1 F
+* T = -v(vout)/v(fb) (exact: vfb only drives a MOS gate)
+Xd vdd 0 vref vref vref vout fb vbp vbn vbpc vbnc vabp vabn d2s_loadcomp
+Lb vout fb 1G
+Cb fb inj 1
+Vinj inj 0 dc 0 ac 1
+* load (edit): 100 pF
+*RL vout vref 1k
+CL vout 0 100p
+.control
+ac dec 50 10 1G
+let T=-v(vout)/v(fb)
+meas ac fc when vdb(T)=0
+meas ac pT find vp(T) when vdb(T)=0
+let pm=180/pi*pT+180
+print pm
+if $?batchmode = 0
+  plot vdb(T) 180/pi*vp(T)
+end
+.endc
+.end
