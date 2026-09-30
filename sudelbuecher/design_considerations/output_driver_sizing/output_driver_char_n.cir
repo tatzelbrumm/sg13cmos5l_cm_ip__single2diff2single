@@ -1,0 +1,28 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Interactive bench: one full sg13_hv_nmos clamp frame (ng=42, 4.4 um fingers, W=184.8 um, L=0.6 um)
+* Same circuit that output_driver_char.py writes to tb.cir; no .control block, so ngspice stays at its prompt.
+*
+* Start (IIC-OSIC-TOOLS, after `source .designinit`):   ngspice output_driver_char_n.cir
+*
+* Vd = |Vds|, Vg = |Vgs|. Two sweeps cover everything the script does:
+*   full_drive / fingers_for:   alter Vg = 3.3    (or 2.0 2.5 3.0)
+*                               dc Vd 0 3.3 0.01
+*   small_signal / idle current: alter Vd = 1.65   (or 0.5 2.8)
+*                               dc Vg 0.2 3.3 0.005
+*   then e.g.                   plot abs(@n.x1.nsg13_hv_nmos[ids])
+*                               plot @n.x1.nsg13_hv_nmos[gm] @n.x1.nsg13_hv_nmos[gds]
+*                               plot @n.x1.nsg13_hv_nmos[cgg] @n.x1.nsg13_hv_nmos[cgdol] @n.x1.nsg13_hv_nmos[cjd]
+* Corner: edit the .lib line (mos_tt / mos_ss / mos_ff).  Temperature: option temp=125, then rerun the dc.
+* Length comparison: change L and nf (finger pitch = L + 0.91 um, nf = int(63.4/(L+0.91))) and `source` again.
+
+.lib cornerMOShv.lib mos_tt
+.temp 27
+.param L=0.6u nf=42 wf=4.4u
+
+Vd d 0 0
+Vg g 0 3.3
+X1 d g 0 0 sg13_hv_nmos w={wf*nf} l={L} ng={nf}
+
+.save all @n.x1.nsg13_hv_nmos[ids] @n.x1.nsg13_hv_nmos[gm] @n.x1.nsg13_hv_nmos[gds] @n.x1.nsg13_hv_nmos[cgg] @n.x1.nsg13_hv_nmos[cgdol] @n.x1.nsg13_hv_nmos[cjd]
+.end

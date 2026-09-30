@@ -1,0 +1,45 @@
+# models: IHP-Open-PDK dev branch, ihp-sg13cmos5l/libs.tech/ngspice/models (hv models = sg13g2 symlinks)
+# osdi: psp103{,_nqs}.osdi compiled with OpenVAF-reloaded, patched to report OSDI 0.3 for ngspice 42
+== Full gate drive |Vgs|=3.3 V, one full frame each
+n mos_tt  27C Ron(50mV)= 10.3 ohm I(0.1)=  9.6mA I(0.2)= 18.7mA I(0.3)= 27.2mA I(0.5)= 41.8mA I(1.0)= 64.6mA I(1.65)= 76.4mA I(3.3)= 83.7mA
+n mos_ss  27C Ron(50mV)= 11.0 ohm I(0.1)=  9.0mA I(0.2)= 17.5mA I(0.3)= 25.3mA I(0.5)= 38.5mA I(1.0)= 58.4mA I(1.65)= 68.2mA I(3.3)= 74.0mA
+n mos_ff  27C Ron(50mV)=  9.5 ohm I(0.1)= 10.4mA I(0.2)= 20.3mA I(0.3)= 29.6mA I(0.5)= 45.6mA I(1.0)= 71.4mA I(1.65)= 85.3mA I(3.3)= 94.1mA
+n mos_ss 125C Ron(50mV)= 15.5 ohm I(0.1)=  6.4mA I(0.2)= 12.5mA I(0.3)= 18.1mA I(0.5)= 27.9mA I(1.0)= 44.0mA I(1.65)= 53.0mA I(3.3)= 58.9mA
+p mos_tt  27C Ron(50mV)= 13.0 ohm I(0.1)=  7.6mA I(0.2)= 14.8mA I(0.3)= 21.7mA I(0.5)= 34.2mA I(1.0)= 57.3mA I(1.65)= 72.2mA I(3.3)= 81.6mA
+p mos_ss  27C Ron(50mV)= 16.2 ohm I(0.1)=  6.1mA I(0.2)= 12.0mA I(0.3)= 17.7mA I(0.5)= 28.2mA I(1.0)= 48.1mA I(1.65)= 61.3mA I(3.3)= 69.9mA
+p mos_ff  27C Ron(50mV)= 11.2 ohm I(0.1)=  8.8mA I(0.2)= 17.2mA I(0.3)= 25.1mA I(0.5)= 39.4mA I(1.0)= 65.7mA I(1.65)= 82.6mA I(3.3)= 93.2mA
+p mos_ss 125C Ron(50mV)= 19.4 ohm I(0.1)=  5.1mA I(0.2)= 10.1mA I(0.3)= 14.8mA I(0.5)= 23.5mA I(1.0)= 40.1mA I(1.65)= 51.2mA I(3.3)= 58.5mA
+
+== Fingers of one frame needed for 10 mA, mos_ss 125C (hd = |Vds| headroom)
+n |Vgs|=2.0  hd=0.2V   7.4mA/frame ng= 56.6  hd=0.3V  10.3mA/frame ng= 40.8  hd=0.5V  14.4mA/frame ng= 29.1
+n |Vgs|=2.5  hd=0.2V   9.8mA/frame ng= 43.0  hd=0.3V  13.9mA/frame ng= 30.2  hd=0.5V  20.5mA/frame ng= 20.4
+n |Vgs|=3.0  hd=0.2V  11.6mA/frame ng= 36.3  hd=0.3V  16.7mA/frame ng= 25.1  hd=0.5V  25.5mA/frame ng= 16.5
+n |Vgs|=3.3  hd=0.2V  12.5mA/frame ng= 33.7  hd=0.3V  18.1mA/frame ng= 23.2  hd=0.5V  27.9mA/frame ng= 15.0
+p |Vgs|=2.0  hd=0.2V   6.6mA/frame ng= 62.3  hd=0.3V   9.3mA/frame ng= 44.1  hd=0.5V  13.4mA/frame ng= 30.7
+p |Vgs|=2.5  hd=0.2V   8.2mA/frame ng= 49.9  hd=0.3V  11.9mA/frame ng= 34.5  hd=0.5V  18.1mA/frame ng= 22.6
+p |Vgs|=3.0  hd=0.2V   9.5mA/frame ng= 43.3  hd=0.3V  13.8mA/frame ng= 29.6  hd=0.5V  21.8mA/frame ng= 18.8
+p |Vgs|=3.3  hd=0.2V  10.1mA/frame ng= 40.8  hd=0.3V  14.8mA/frame ng= 27.7  hd=0.5V  23.5mA/frame ng= 17.4
+
+== Small signal vs quiescent current, |Vds|=1.65 V, mos_tt 27C, one full frame
+n IQ=    10uA |Vgs|=0.559 gm= 0.275mS gm/Id= 27.5/V gds=  3.51uS Cgg=  124fF Cjd= 24fF Cgdov= 45fF fT=   354MHz
+n IQ=    30uA |Vgs|=0.602 gm= 0.729mS gm/Id= 24.3/V gds=  9.57uS Cgg=  157fF Cjd= 24fF Cgdov= 45fF fT=   737MHz
+n IQ=   100uA |Vgs|=0.658 gm= 1.857mS gm/Id= 18.6/V gds= 25.44uS Cgg=  206fF Cjd= 24fF Cgdov= 45fF fT=  1432MHz
+n IQ=   300uA |Vgs|=0.728 gm= 3.902mS gm/Id= 13.0/V gds= 55.94uS Cgg=  247fF Cjd= 24fF Cgdov= 46fF fT=  2514MHz
+n IQ=  1000uA |Vgs|=0.846 gm= 8.141mS gm/Id=  8.1/V gds=122.87uS Cgg=  279fF Cjd= 24fF Cgdov= 46fF fT=  4645MHz
+n IQ=  3000uA |Vgs|=1.019 gm=14.976mS gm/Id=  5.0/V gds=242.08uS Cgg=  301fF Cjd= 24fF Cgdov= 47fF fT=  7924MHz
+n IQ= 10000uA |Vgs|=1.354 gm=26.127mS gm/Id=  2.6/V gds=531.19uS Cgg=  327fF Cjd= 24fF Cgdov= 49fF fT= 12713MHz
+p IQ=    10uA |Vgs|=0.545 gm= 0.237mS gm/Id= 23.7/V gds=  0.55uS Cgg=  537fF Cjd= 70fF Cgdov= 93fF fT=    70MHz
+p IQ=    30uA |Vgs|=0.594 gm= 0.627mS gm/Id= 20.9/V gds=  1.48uS Cgg=  629fF Cjd= 70fF Cgdov= 93fF fT=   159MHz
+p IQ=   100uA |Vgs|=0.659 gm= 1.605mS gm/Id= 16.0/V gds=  3.91uS Cgg=  768fF Cjd= 70fF Cgdov= 93fF fT=   333MHz
+p IQ=   300uA |Vgs|=0.741 gm= 3.391mS gm/Id= 11.3/V gds=  8.76uS Cgg=  882fF Cjd= 70fF Cgdov= 93fF fT=   612MHz
+p IQ=  1000uA |Vgs|=0.876 gm= 7.034mS gm/Id=  7.0/V gds= 20.60uS Cgg=  966fF Cjd= 70fF Cgdov= 93fF fT=  1159MHz
+p IQ=  3000uA |Vgs|=1.077 gm=12.833mS gm/Id=  4.3/V gds= 47.91uS Cgg= 1011fF Cjd= 70fF Cgdov= 93fF fT=  2021MHz
+p IQ= 10000uA |Vgs|=1.465 gm=22.936mS gm/Id=  2.3/V gds=180.06uS Cgg= 1045fF Cjd= 70fF Cgdov= 93fF fT=  3495MHz
+
+== Length comparison, one 80 um frame (P: 2 rows), 10 mA target
+n L=0.6 ng/frame=41 W/frame= 180.4um frames=0.74 | IQ=100uA: gm/gds=   73 VA=  4.0V Cgg=  202fF Cgdov= 44fF Id(Vds=0.5/1.65/2.8)= 73/100/132uA
+n L=1.0 ng/frame=33 W/frame= 145.2um frames=1.55 | IQ=100uA: gm/gds=  132 VA=  9.7V Cgg=  339fF Cgdov= 36fF Id(Vds=0.5/1.65/2.8)= 87/100/112uA
+n L=2.0 ng/frame=21 W/frame=  92.4um frames=4.93 | IQ=100uA: gm/gds=  244 VA= 29.2V Cgg=  506fF Cgdov= 23fF Id(Vds=0.5/1.65/2.8)= 95/100/104uA
+p L=0.6 ng/frame=41 W/frame= 546.1um frames=0.84 | IQ=100uA: gm/gds=  410 VA= 25.6V Cgg=  768fF Cgdov= 93fF Id(Vds=0.5/1.65/2.8)= 95/100/104uA
+p L=1.0 ng/frame=33 W/frame= 439.6um frames=1.75 | IQ=100uA: gm/gds= 1094 VA= 86.0V Cgg= 1171fF Cgdov= 75fF Id(Vds=0.5/1.65/2.8)= 98/100/101uA
+p L=2.0 ng/frame=21 W/frame= 279.7um frames=5.57 | IQ=100uA: gm/gds= 2140 VA=265.0V Cgg= 1695fF Cgdov= 48fF Id(Vds=0.5/1.65/2.8)= 99/100/100uA
