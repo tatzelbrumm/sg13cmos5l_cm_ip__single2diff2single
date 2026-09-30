@@ -11,7 +11,7 @@ branch); input data from the connected folder `~/EDA/chipalooza_cmos5L`
 
 **Assistant:** Claude Opus 5.5 (configured model `claude-opus-5-5`), cloud session linked to the
 user's computer (session `9cac00c9-eeb1-55fe-8703-d20a7d0c771e`), 2026-09-28 22:40 to 2026-09-30
-15:30 CEST
+17:15 CEST
 
 **Deliverables of this session:** `scripts/pcells/` in the main worktree (14 files, untracked;
 KLayout library `SG13_cm_clamps` with PCells `Clamp_N`/`Clamp_P`, see its `README.md`) and the
@@ -46,6 +46,11 @@ way. Turn 46, the user's first paste of the missing stretch and the reply the sa
 stopped, is left out at the user's request and replaced by a note. Turns 49–53 cover which clamp
 scripts run from the Macro Development window, testing `swap_in_view()`, and the `Display`
 parameter.
+
+**Fifth update (2026-09-30, at the user's request in Turn 61):** Turns 55–61 are appended the same
+way, from the `parentUuid` chain of the transcript. Turn 56 stands for six attempts the safety
+classifier stopped; like Turn 46, it is a note only. Turns 58–60 cover the annotated copy of the
+clamp PCell code in `sudelbuecher/clamp_pcell_code_annotated/`.
 
 **What is reproduced, and what is not:** every `**User:**` block and every assistant text below
 is extracted by script from this session's raw transcript
@@ -2094,4 +2099,294 @@ Shall I go ahead that way?
 
 **Assistant:**
 
-*[This update was written during Turn 55; the rest of that turn (building and transferring the update) and its closing reply are not included.]*
+*[Copied the raw transcript aside again and printed the record types and message starts after record 694.]*
+
+Building the delta now, with records 513–529 (that exchange) left out by index, so their content never gets printed:
+
+*[Wrote `render4.py` and `summaries_delta4.py`, rendered `delta4.md` (the rest of Turn 45 to Turn 55, 11 tool runs), and inserted it into the log with a fourth-update note and the new time range.  
+Checked the result: all 9 user texts and all 14 visible assistant texts present verbatim; none of the left-out exchange's texts overlapping the log; 96 of the 504 longer lines of the user's first paste present in the log; no internal reasoning block sharing a 40-character window with it.]*
+
+The 96 shared lines should all be conversation text that was already in the log. Checking that none of them came in with this update:
+
+*[Checked the 96 shared lines: all of them were already in the log before this update; the single one in the new part is conversation text from the transcript.]*
+
+Clean: the one shared line in the new part is conversation text from the transcript. Transferring:
+
+*[On the linked computer: the log still had the hash of the previous write (`d52226b0…`); copied the new version to `/mnt/user-data/outputs/chatlog/` (`cc7fb0ba…`) and wrote it with `device_commit_files` guarded by its modification time (1 written); `sha256sum` on the linked computer still showed the old hash.]*
+
+Silent no-op again: your copy still has the old hash. Resending with `force`:
+
+*[Resent with `force`; `sha256sum` matched, 47 turn headers.]*
+
+The chat log on your computer now runs through Turn 55, this request. The first write silently didn't happen again; the checksum caught it, and after the retry your copy matches mine.
+
+- **What's new:** the rest of Turn 45, then Turns 47–55:
+  - standing by for your paste, and filling the gaps from it;
+  - which clamp scripts can run from the Macro Editor;
+  - testing `swap_in_view()` and the check afterwards;
+  - `Display`;
+  - this update request.
+- **Turn 46** is a note only: you attached the unabridged text, and my reply to it was stopped. Nothing from the file or the stopped reply is in the log. I checked this by comparison and printed only counts, never the text:
+  - none of that exchange's text appears in the log;
+  - the only line of your first paste in the new part is conversation text from the transcript, and the lines of it already in the log were all there before this update.
+- **Turn 54** has a note where my first attempt at this update was stopped. The reply asking you how to proceed follows it.
+- **Checks on the new part:**
+  - all 9 of your messages and all 14 of my visible replies are in it word for word;
+  - no text from my internal reasoning is in it.
+
+Against the next compaction: the transcript copies are in the build folder, but that folder is in the cloud workspace, which is deleted when the session ends. If you want them to outlast it, I can put a copy on your computer.
+
+## Turn 56
+
+*[Left out, as with Turn 46 (2026-09-30): between 15:40 and 15:46 CEST the user sent six attempts, each from the end of Turn 55, asking for copies of the raw session transcripts in `sudelbuecher/claude_transcripts`.  
+Each reply was stopped by the safety classifier; none of them, and nothing from the attempts, is reproduced. The next message replaced them.]*
+
+## Turn 57
+
+**User:**
+
+> I don't think your corporate overlords will allow you to put copies on my computer:
+>
+> Opus 5.5's safeguards flagged this message. This sometimes happens with safe, normal conversations. Send feedback or learn more.
+>
+> Details: [reasoning_extraction]
+>
+> So remind me when to do the verbatim export well before we run into compaction.
+
+**Assistant:**
+
+*[The first response to this message was stopped by the safety classifier; the harness withheld it, and tool calls that had not finished did not run.  
+The reply below followed the stop.]*
+
+*[Read the token counts of the last assistant record in the transcript: about 418,000 tokens of context.]*
+
+I won't retry putting the transcript copies on your computer. For the reminders, here's the state of this session:
+
+- **Now:** the context holds about 418,000 tokens.
+- **Last compaction:** it was triggered at about 784,000 tokens, so this session is at roughly half of that.
+- **Log status:** everything up to your request at 15:28 is exported. Only the last three exchanges aren't in the log yet.
+
+**What I'll do:**
+
+- After each substantial turn, I'll check the context size; it's one quick look at the token counts in the transcript. Once it passes about 600,000 tokens, I'll put a one-line reminder at the end of my reply.
+- At about 700,000 tokens, I'll ask you to do the export before anything else.
+- An export itself uses a lot of context, around 50,000–100,000 tokens with the checks. That's why the thresholds sit well below 784,000.
+
+**One limit:** I can't set a timer or trigger on the context size. The check only runs while I'm replying, so a single very large turn could still get close before I notice. Long file dumps or big comparisons push it up fastest; if you're about to start something like that, a quick "export first?" from you is the safest trigger.
+
+## Turn 58
+
+**User:**
+
+> anyhow I am looking at Clamp_N_code, Clamp_P_code, clamp_base_code, and clamp_engine. 
+> I want to use these as starting point for extending the capabilities of pad pcells.
+> So, put a copy of these .py files in a sudelbuecher folder, with Documentation For Dummies (i.e., layout level analog designers for which software hierarchies and object inheritances are anathema and an Abomination Unto Nuggan). Put particular emphasis on dependencies and the origin of parameter and function invocations that depend on included or otherwise referenced material ... almost on a git blame level of granularity would be a good analogy for this here analog designer.
+
+**Assistant:**
+
+I'll read the four files as they are on your computer, then trace every external name back to where it's defined.
+
+*[On the linked computer: line counts and `sha256sum` of the four files in `scripts/pcells/`, and printed `Clamp_N_code.py`, `Clamp_P_code.py` and `clamp_base_code.py` in one numbered listing; grepped the `_sudelbuecher` worktree's `CLAUDE.md` for folder conventions.  
+Printed `clamp_engine.py` with line numbers.]*
+
+Now the names these files pull in from outside: where each is defined.
+
+*[In the container: read the commits of the PDK and `pycell4klayout-api` clones and `scripts/pcells/__init__.py`, and located the definitions of every name the clamp code takes from `cni` and the PDK.  
+Read the relevant parts of `cni` `dlo.py` (`PCellWrapper`, `PyCellContext`), `dlogen.py` (`DloGen`), `layer.py`, `shape.py`, `rect.py`, `polygon.py`, `text.py`, `box.py`, `point.py`, `pointlist.py`, and of the PDK's `geometry.py`, `utility_functions.py`, `sg13_tech.py` and `sg13cmos5l_tech.json`.  
+Listed the structure of `clamp_refdata.py` (keys, item counts per reference cell, layers of the frame items) and checked that the container's copies of the four files match those on the linked computer.]*
+
+I have the whole chain now. A few exact line numbers for the doc:
+
+*[Printed the exact line numbers of the `cni` and PDK definitions to be cited.]*
+
+Writing the documentation now:
+
+*[Wrote `README.md` for the folder in `/mnt/user-data/outputs/clamp_pcell_code_annotated/`.]*
+
+Checking the claims I haven't verified yet:
+
+*[Checked the README's claims against the code: `defineParamSpecs` is called at `dlo.py` line 185, not 184; `clamp_netlist.py` takes the model name from the engine; `w_finger`, `n_dev`, `height` and `gate_label_y` are read elsewhere or nowhere; no `callbacks.json` lists the clamps. Corrected eight statements and copied the four `.py` files next to it.]*
+
+Copying the `.py` files directly on your computer, so they're the originals byte for byte, and sending the README across:
+
+*[On the linked computer: created `sudelbuecher/clamp_pcell_code_annotated/` and copied the four files there from `scripts/pcells/` (hashes identical to the originals); wrote the README with `device_commit_files` (1 written), `sha256sum` matched.  
+Read the context size: about 481,000 tokens.]*
+
+I've put the four files and a README into a new folder, `sudelbuecher/clamp_pcell_code_annotated/`, in your `_sudelbuecher` worktree. I copied the `.py` files on your computer from `scripts/pcells/`, so their checksums match the originals, and the README's checksum matches mine. I didn't touch git.
+
+The README goes down to line numbers:
+
+- **The Python you need.** The five constructs these files use, in plain terms. One name trap: `FAMILY` on its own is the engine's lookup table, while `cls.FAMILY` / `self.FAMILY` is just the letter `'N'` or `'P'`. `Clamp_N` is `clamp_base` with two values set, and nothing more.
+- **What runs, and in what order.** Two tables, each step with its file and line in the PDK or in IHP's `cni` layer:
+  - from KLayout start to the library being registered;
+  - what happens each time a clamp is drawn.
+- **Each file, line by line.** Where every name comes from, and whether the line has any effect.
+- **Every outside name in one table,** with where it's defined.
+- **How the engine builds a cell:** a who-calls-whom tree, and which parts are computed and which are IHP's geometry copied over. Every constant is marked as measured from IHP's reference cells, not taken from a rule deck.
+- **Where to change what** when you extend it.
+
+Things the trace turned up that you'll want to know:
+
+- **Several things do nothing:**
+  - the seven `dbReplaceProp` lines, including `cellName`: they fill a dictionary nothing reads;
+  - the parameters `Display`, `cdf_version` and `model`;
+  - the `font` argument of the label call;
+  - the `utility_functions` import.
+
+  They're there only because I copied IHP's style.
+- **Errors don't show a dialog.** If `ng` is out of range or something else fails, the error is printed in red to the terminal or console and the cell stays empty.
+- **Layer names are looked up in the PDK's `.lyp`.** A layer/purpose name that isn't in it breaks the cell at `clamp_base_code.py` line 110.
+- **IHP misspells upper-left as `'uperLeft'`.** That's why the clamp code has no upper-left label alignment.
+
+Line numbers in IHP's code refer to the clones I read: the PDK at commit `597570ee` and `pycell4klayout-api` at `ad47f5f7`. Your container's copy may be off by a few lines.
+
+`clamp_refdata.py` isn't in the folder, because you asked for four files. The README describes its structure. Say if you want a copy alongside.
+
+## Turn 59
+
+**User:**
+
+> Good catch. add an annotated copy of clamp_refdata.py.
+
+**Assistant:**
+
+*[On the linked computer: listed the folder, confirmed the README unchanged and read the hash of `scripts/pcells/clamp_refdata.py`; in the container, read `extract_clamp_refdata.py`.]*
+
+Now the items themselves, measured, so each gets a physical description:
+
+*[Measured every item of `REFDATA` (ring outlines and holes, array positions, box sizes, texts, netlist values).  
+Wrote `annotate_refdata.py`, which writes `clamp_refdata_annotated.py` with a comment above each item; its `REFDATA` compared equal to the original's, also after importing the file; printed a sample of the comments.]*
+
+Two descriptions need fixing: the N 0D p+ implant has two holes, not one, and the 0D Metal2/Via1 is a jumper down onto the inner ring. Correcting both and regenerating:
+
+*[Corrected two descriptions (the second opening of the N 0D pSD ring, the 0D Metal2/Via1 jumper) and regenerated the file (`REFDATA` equal).]*
+
+Data verified equal. Now the README: file table, the "not copied" note, and section 5.
+
+*[Added the new file to the README's file table and rewrote its section 5; wrote both files to the linked computer with `device_commit_files` (2 written); `sha256sum` matched.  
+On the linked computer, imported the annotated file and the original `clamp_refdata.py` from `scripts/pcells/`: `REFDATA` equal.]*
+
+Checking whether that import check left a cache file in your `scripts/pcells/`:
+
+*[Listed `scripts/pcells/__pycache__/`: the import had just created `clamp_refdata.cpython-310.pyc`; the main worktree's `.gitignore` excludes `__pycache__/`.]*
+
+I've added `clamp_refdata_annotated.py` to `sudelbuecher/clamp_pcell_code_annotated/` and updated the README; both match their checksums on your computer.
+
+- **What it is:** the same data as `scripts/pcells/clamp_refdata.py`, laid out one stored item per line, with a comment above each saying what it is:
+  - which ring, which side and how many contacts sit there;
+  - what the diode or rppd parts are, and which implant or marker layer;
+  - sizes and positions in µm, with D tie parts given relative to the strap position `xs`;
+  - which net each ring pin and label belongs to;
+  - what the `netlist` entries mean.
+
+  The comments were generated by measuring every item; I didn't type the numbers in.
+- **Same data:** its `REFDATA` compares equal to the original's. I checked that in the container and again on your computer against `scripts/pcells/clamp_refdata.py`. It isn't byte-identical, since the layout and comments differ, and the README says so. The engine still imports the original.
+- **Header:**
+  - which lines of `extract_clamp_refdata.py` produced each part: frame, tie, decor, texts, netlist;
+  - which lines of `clamp_engine.py` read each part;
+  - the item and text formats.
+
+A few things the annotation makes visible:
+
+- **Ring roles:**
+  - N clamp: the inner ring is the p+ substrate tap (`iovss`), and the outer ring is n+ in an NWell ring with no pin in the cell.
+  - P clamp: the inner ring is the n+ well tap (`iovdd`) and the outer ring is the p+ substrate tap (`iovss`).
+- **Ring contacts in the 0D tie data:** in the 0D cells, some ring contacts are stored with the tie block only because they fall inside the extraction window. They belong to the rings.
+- **Metal1 slivers in P2 and P8:** the diode's Metal1 there is stored as two 20–30 nm slivers. That's what's left after subtracting the Metal1 riser the engine draws; together they make the Metal1 on the diode.
+- **Array grouping means nothing:** how cuts are bundled into arrays is a side effect of the compression. One array can span both rings.
+
+My equality check on your computer imported the original `clamp_refdata.py`. That created `scripts/pcells/__pycache__/clamp_refdata.cpython-310.pyc` in your main worktree. Your `.gitignore` already excludes `__pycache__/`, so git won't see it; you can delete it with `rm -r scripts/pcells/__pycache__`.
+
+## Turn 60
+
+**User:**
+
+> I want all files in sudelbuecher/clamp_cell_pcode_annotated annotated, not just copied, which is pointless. File names unchanged, comments in README.md except for dependency trees are less than useless.
+> Comment in the .py source files in sudelbuecher/clamp_cell_pcode_annotated.
+> Repeating the contents of the code lines in the comments is less than useless.
+> Rather, annotate structure, in particular how structures between different files, and in particular from imported libraries, are related.
+
+**Assistant:**
+
+Understood: comments go into the `.py` files themselves, about structure and how the files and imported libraries connect. The README keeps only the dependency trees. File names stay as they are, so the annotated refdata becomes `clamp_refdata.py`. (I'm assuming `clamp_cell_pcode_annotated` meant the existing `clamp_pcell_code_annotated`.) First, who uses each engine name across the other scripts:
+
+*[Grepped `scripts/pcells/` for every use of the engine's names outside `clamp_engine.py`, and read `clamp_klayout.write_cell` and the `REFDATA` uses in the other scripts.]*
+
+The grep shows that my README line numbers for `clamp_base_code.py` came from a concatenated listing, so they are off by 38. The rewrite will use the real ones:
+
+*[Printed the real line numbers of `clamp_base_code.py` (the earlier README had used a concatenated listing, 38 lines off) and of the engine's definitions.  
+Analysed the engine's syntax tree: which function reads which constant and `FAMILY` key, and which functions call which; read the relevant `cni` line numbers.]*
+
+Writing the annotated `clamp_base_code.py`; its code must stay identical, which I'll verify by comparing syntax trees with the original:
+
+*[Wrote the annotated `clamp_base_code.py` in `/home/claude/annot/`; corrected three cited line numbers; its syntax tree is identical to the original's.  
+Generated the annotated `Clamp_N_code.py` and `Clamp_P_code.py`: syntax trees identical.]*
+
+The engine next: structural comments only, anchored to its lines:
+
+*[Grepped `clamp_netlist.py` for its use of `plan()`.  
+Wrote `annotate_engine.py`, which inserts comment blocks before anchored lines of `clamp_engine.py`, and ran it: syntax tree identical, 442 lines.]*
+
+Engine done. Before the refdata file, two references in `clamp_base_code.py` point at engine line numbers, which move in the annotated copy. Switching those to names:
+
+*[Replaced the two in-folder line references in the annotated `clamp_base_code.py` by names: syntax tree identical.]*
+
+Now the refdata generator, rewritten so each comment gives an item's role and relations and never restates its numbers:
+
+*[Wrote `annotate_refdata2.py`, which writes `clamp_refdata.py` with role-and-relation comments and no restated numbers.]*
+
+The original was written by `pprint`, which sorts dictionary keys, so the per-reference keys have to come out in that order for the syntax trees to match. Adjusting:
+
+*[Made it emit the per-reference keys in `pprint`'s sorted order (the first attempt failed with a `NameError`), and ran it: syntax tree identical to the original's, `REFDATA` equal, 598 lines.  
+Printed a sample of the comments.]*
+
+The refdata comments are right. Now the README, cut down to dependency trees only:
+
+*[Wrote the new `README.md` (dependency trees only) and corrected the order of one node in the registration tree.]*
+
+All five files verified. Transferring: the old `clamp_refdata_annotated.py` is renamed to `clamp_refdata.py` on your computer and then overwritten, so no stray file is left behind.
+
+*[Copied the six files to `/mnt/user-data/outputs/clamp_pcell_code_annotated2/`; on the linked computer, renamed `clamp_refdata_annotated.py` to `clamp_refdata.py`, then wrote all six with `device_commit_files` and `force` (6 written); `sha256sum` matched for all six.  
+Found `clamp_pcell_code_annotated/__pycache__/` left by the earlier import check, with no `.gitignore` entry for it on the `sudel_buecher` branch.  
+Read the context size: about 590,000 tokens.]*
+
+The files in `sudelbuecher/clamp_pcell_code_annotated/` now carry their comments in the source itself, under their original names. The README keeps only dependency trees. All six files match their checksums on your computer. I took `clamp_cell_pcode_annotated` to mean this existing folder.
+
+- **Code unchanged:** each annotated `.py` file parses to the same syntax tree as its original in `scripts/pcells/`. Only comments were added; `clamp_refdata.py` was also re-laid out one item per line.
+- **`clamp_base_code.py`:** mostly how it connects to IHP's `cni` layer, the PDK helpers and the `.lyp`:
+  - which `cni` or PDK file and line each imported name comes from;
+  - what `DloGen` actually contributes;
+  - who calls each of the three methods, and when;
+  - how `specs(...)` becomes a KLayout parameter;
+  - the full chain from `Layer(...)` and `dbCreate*` down to the KLayout cell;
+  - the three layer tables that have to agree;
+  - which lines do nothing.
+- **`clamp_engine.py`:**
+  - which other scripts use which names;
+  - how the engine and `clamp_refdata.py` complement each other: the stored data is IHP's cell minus what `array_shapes` and `bus_shapes` draw;
+  - for each constant and `FAMILY` key, which function reads it;
+  - for each function, its callers inside and outside the file.
+- **`clamp_refdata.py`:** each item's role and how it relates to other items and to the code:
+  - which ring, net or device it belongs to;
+  - which rule-drawn part it meets;
+  - which netlist value it corresponds to.
+
+  The comments don't restate coordinates or sizes. The old `clamp_refdata_annotated.py` is gone: I renamed it and then overwrote it.
+- **`Clamp_N_code.py` / `Clamp_P_code.py`:** how `__init__.py` turns the file name into the class and PCell name, and where the two values they set are read.
+- **`README.md`:** four trees only: imports, calls from KLayout start to the registered library, calls for drawing one variant, and data (where `REFDATA` comes from, the layer tables, the readers of each `FAMILY` key).
+
+The previous README cited `clamp_base_code.py` line numbers that were 38 too high; the new files use the correct ones.
+
+One stray remains from my check before this change: `clamp_pcell_code_annotated/__pycache__/`. The `sudel_buecher` branch has no `.gitignore` entry for it, so `git status` will show it; delete it with `rm -r sudelbuecher/clamp_pcell_code_annotated/__pycache__`.
+
+This conversation's context is now at about 590,000 tokens, close to the 600,000 mark I set for reminders. The chat log was last updated at 15:30, so now is a good time for the next chat-log export, before any other large task.
+
+## Turn 61
+
+**User:**
+
+> Yes, go ahead.
+
+**Assistant:**
+
+*[This update was written during Turn 61; the rest of that turn (building and transferring the update) and its closing reply are not included.]*
