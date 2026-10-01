@@ -205,7 +205,6 @@ N 2160 -570 2160 -300 {lab=b}
 N 2040 -740 2160 -740 {lab=a}
 N 2160 -900 2160 -740 {lab=a}
 N 2160 -980 2160 -900 {lab=a}
-C {devices/iopin.sym} 2320 -620 0 0 {name=p6 lab=vout}
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2260 -900 0 0 {name=OP
 l=0.6u
 w=546.12u
@@ -257,6 +256,7 @@ C {devices/iopin.sym} 60 -140 0 1 {name=p2 lab=vss}
 C {devices/ipin.sym} 60 -600 0 0 {name=p3 lab=vinp}
 C {devices/ipin.sym} 60 -660 0 0 {name=p4 lab=vinn}
 C {devices/ipin.sym} 60 -560 0 0 {name=p5 lab=vref}
+C {devices/iopin.sym} 2320 -620 0 0 {name=p6 lab=vout}
 C {devices/ipin.sym} 60 -540 0 0 {name=p7 lab=vfb}
 C {devices/ipin.sym} 60 -920 0 0 {name=p8 lab=vbp}
 C {devices/ipin.sym} 60 -260 0 0 {name=p9 lab=vbn}
