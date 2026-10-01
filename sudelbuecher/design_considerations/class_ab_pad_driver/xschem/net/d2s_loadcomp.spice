@@ -1,11 +1,11 @@
 ** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/xschem/d2s_loadcomp.sch
 **.subckt d2s_loadcomp vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn
+*.iopin vout
 *.iopin vdd
 *.iopin vss
 *.ipin vinp
 *.ipin vinn
 *.ipin vref
-*.iopin vout
 *.ipin vfb
 *.ipin vbp
 *.ipin vbn
