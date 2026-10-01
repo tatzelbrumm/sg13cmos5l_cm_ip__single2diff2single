@@ -1,0 +1,43 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/xschem/d2s_loadcomp.sch
+**.subckt d2s_loadcomp vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn
+*.iopin vdd
+*.iopin vss
+*.ipin vinp
+*.ipin vinn
+*.ipin vref
+*.iopin vout
+*.ipin vfb
+*.ipin vbp
+*.ipin vbn
+*.ipin vbpc
+*.ipin vbnc
+*.ipin vabp
+*.ipin vabn
+XOP vout a vdd vdd sg13_hv_pmos w=546.12u l=0.6u ng=82 m=1 mm_ok=1
+XON vout b vss vss sg13_hv_nmos w=290.4u l=1u ng=66 m=1 mm_ok=1
+XDP a a vdd vdd sg13_hv_pmos w=13.32u l=0.6u ng=2 m=1 mm_ok=1
+XDN b b vss vss sg13_hv_nmos w=7.6u l=1u ng=2 m=1 mm_ok=1
+XT1a s1a vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2 m=1 mm_ok=1
+XT1b s1b vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2 m=1 mm_ok=1
+XR1 s1a s1b vss rhigh w=0.5u l=39u m=1 b=0 mm_ok=1
+XM1a x vinn s1a s1a sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XM1b y vinp s1b s1b sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XT2a s2a vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2 m=1 mm_ok=1
+XT2b s2b vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2 m=1 mm_ok=1
+XR2 s2a s2b vss rhigh w=0.5u l=17u m=1 b=0 mm_ok=1
+XM2a y vref s2a s2a sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XM2b x vfb s2b s2b sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XSX x vbn vss vss sg13_hv_nmos w=25u l=2u ng=2 m=1 mm_ok=1
+XSY y vbn vss vss sg13_hv_nmos w=25u l=2u ng=2 m=1 mm_ok=1
+XCX l1 vbnc x vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XCY b vbnc y vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XPL pl l2 vdd vdd sg13_hv_pmos w=10u l=2u ng=1 m=1 mm_ok=1
+XPR pr l2 vdd vdd sg13_hv_pmos w=10u l=2u ng=1 m=1 mm_ok=1
+XPCL l2 vbpc pl vdd sg13_hv_pmos w=10u l=1u ng=1 m=1 mm_ok=1
+XPCR a vbpc pr vdd sg13_hv_pmos w=10u l=1u ng=1 m=1 mm_ok=1
+**.ends
+.end
