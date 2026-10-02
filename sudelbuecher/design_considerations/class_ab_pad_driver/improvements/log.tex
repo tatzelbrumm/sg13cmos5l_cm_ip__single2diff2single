@@ -949,4 +949,103 @@ under that naming. 0 mismatches over 12 cells. A
 swapped unit-net label and a changed rhigh body
 were both reported.
 
+\hypertarget{1851--testbench-schematics-and-figures}{%
+\section{18:51 --- testbench schematics and
+figures}\label{1851--testbench-schematics-and-figures}}
+
+\textbf{Testbench schematics.}
+\texttt{xschem/tb\_*.sch} has one sheet per deck
+in \texttt{sim/tb/}, nine in all. They are laid
+out like \texttt{../xschem/tb\_d2s\_*.sch}. The
+DUT and the bias come from the schematics in
+\texttt{xschem/}. Each sheet\textquotesingle s
+code block holds the deck\textquotesingle s
+\texttt{.lib}, \texttt{.param} and \texttt{.save}
+lines and its \texttt{.control} section,
+unchanged. \texttt{check\_xschem.py} now also
+compares every testbench with its deck: each
+element (nets with GND = 0, value or model and
+sizes) and every code line.
+
+Result: 0 mismatches over 12 cells and 9
+testbenches. A changed RL value and a changed
+\texttt{meas} line were both reported. Netlisted
+by xschem and run in ngspice, all nine reproduce
+the decks\textquotesingle{} reference values: loop
+78.9 dB / 1.366 MHz / 72.4°, gain 0.49994, THD
+0.1187 \%, noise 230 µV, units 5.442 / 5.416 µA,
+MOS C--V 0.370 / 0.648 / 0.745 pF, and
+\texttt{d2s\_lc2} 74.0 dB / 1.49 MHz / 104.3°.
+
+\textbf{Sheets re-saved between 18:00 and 18:16.}
+Seven sheets on the linked computer had been saved
+again with xschem 3.4.8RC: \texttt{d2s\_bias\_lp},
+\texttt{d2s\_lc2}, \texttt{d2s\_lc2\_nc},
+\texttt{d2s\_mpdda}, \texttt{d2s\_mpdda\_flat},
+\texttt{d2s\_mpdda\_bias\_flat} and
+\texttt{unit\_r2}. The differences are
+xschem\textquotesingle s own rewriting: merged
+wire segments, reversed wire directions and
+reordered texts. Wire geometry and instances are
+unchanged, and the checker passes on these
+versions. They were left as they are; the figures
+were made from them.
+
+\textbf{Figures.}
+\texttt{figures/\textless{}sheet\textgreater{}.svg},
+\texttt{.pdf} and \texttt{.png} exist for all 21
+sheets (63 files). Each is
+xschem\textquotesingle s own SVG export with a
+white background and black wires, symbols and
+text. Block frames and legends are \#d55e00, about
+47 \% grey in monochrome. Each figure is cropped
+to the drawing and leaves out the title block, pin
+letters, pin squares, \texttt{m=1}, \texttt{ng=1},
+\texttt{b=0}, the rhigh \texttt{R=} expression and
+the MOS model names. The PNGs are 2 px per unit,
+at most 6000 px wide; the PDFs embed Liberation
+Sans. Details are in \texttt{xschem/README.md}.
+
+The SVG and PNG files reached the linked computer
+with a C2PA provenance block added in transfer:
+\texttt{\textless{}metadata\textgreater{}} in the
+SVG and a \texttt{caBX} chunk in the PNG. The
+pictures themselves are unchanged (pixel
+difference 0), and the PDFs arrived unchanged.
+
+\hypertarget{1859--regeneration-scripts-in-xschemscripts}{%
+\section{\texorpdfstring{18:59 --- regeneration
+scripts in
+\texttt{xschem/scripts/}}{18:59 --- regeneration scripts in xschem/scripts/}}\label{1859--regeneration-scripts-in-xschemscripts}}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{export\_figures.py} makes the figures;
+  by default it does all sheets of
+  \texttt{xschem/} into \texttt{figures/}. It
+  needs xschem, \texttt{\$PDK\_ROOT}, cairosvg and
+  Pillow.
+\item
+  \texttt{gen\_cells.py\ OUTDIR} and
+  \texttt{gen\_testbenches.py\ OUTDIR} drew the
+  cell and testbench sheets; they share the helper
+  \texttt{xsheet.py}. They refuse to write into
+  \texttt{xschem/} unless \texttt{-\/-overwrite}
+  is given, because the sheets there are now
+  edited by hand.
+\end{itemize}
+
+Before shipping, all three ran in the cloud from a
+copy of the folder layout. The figures came out
+identical to those in \texttt{figures/}: the same
+SVG, and PNG pixels with no difference. The
+generators\textquotesingle{} 34 output files were
+byte-identical to the first drafts. The guard
+against writing into \texttt{xschem/} also worked.
+The scripts have not been run on the linked
+computer; its sandbox has no xschem.
+\texttt{xschem/README.md} has a "Regenerating"
+section with the commands.
+
 \end{document}

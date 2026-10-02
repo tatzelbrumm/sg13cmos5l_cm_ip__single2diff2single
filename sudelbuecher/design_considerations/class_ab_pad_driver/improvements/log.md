@@ -416,3 +416,49 @@ Two new sheets show everything at transistor level:
 `check_xschem.py` compares the flat sheets with the sources with the subcircuits expanded under
 that naming. 0 mismatches over 12 cells. A swapped unit-net label and a changed rhigh body were
 both reported.
+
+## 18:51 — testbench schematics and figures
+
+**Testbench schematics.** `xschem/tb_*.sch` has one sheet per deck in `sim/tb/`, nine in all.
+They are laid out like `../xschem/tb_d2s_*.sch`. The DUT and the bias come from the schematics
+in `xschem/`. Each sheet's code block holds the deck's `.lib`, `.param` and `.save` lines and its
+`.control` section, unchanged. `check_xschem.py` now also compares every testbench with its
+deck: each element (nets with GND = 0, value or model and sizes) and every code line.
+
+Result: 0 mismatches over 12 cells and 9 testbenches. A changed RL value and a changed `meas`
+line were both reported. Netlisted by xschem and run in ngspice, all nine reproduce the decks'
+reference values: loop 78.9 dB / 1.366 MHz / 72.4°, gain 0.49994, THD 0.1187 %, noise
+230 µV, units 5.442 / 5.416 µA, MOS C–V 0.370 / 0.648 / 0.745 pF, and `d2s_lc2` 74.0 dB /
+1.49 MHz / 104.3°.
+
+**Sheets re-saved between 18:00 and 18:16.** Seven sheets on the linked computer had been saved
+again with xschem 3.4.8RC: `d2s_bias_lp`, `d2s_lc2`, `d2s_lc2_nc`, `d2s_mpdda`,
+`d2s_mpdda_flat`, `d2s_mpdda_bias_flat` and `unit_r2`. The differences are xschem's own
+rewriting: merged wire segments, reversed wire directions and reordered texts. Wire geometry
+and instances are unchanged, and the checker passes on these versions. They were left as they
+are; the figures were made from them.
+
+**Figures.** `figures/<sheet>.svg`, `.pdf` and `.png` exist for all 21 sheets (63 files). Each
+is xschem's own SVG export with a white background and black wires, symbols and text. Block
+frames and legends are #d55e00, about 47 % grey in monochrome. Each figure is cropped to the
+drawing and leaves out the title block, pin letters, pin squares, `m=1`, `ng=1`, `b=0`, the
+rhigh `R=` expression and the MOS model names. The PNGs are 2 px per unit, at most 6000 px
+wide; the PDFs embed Liberation Sans. Details are in `xschem/README.md`.
+
+The SVG and PNG files reached the linked computer with a C2PA provenance block added in
+transfer: `<metadata>` in the SVG and a `caBX` chunk in the PNG. The pictures themselves are
+unchanged (pixel difference 0), and the PDFs arrived unchanged.
+
+## 18:59 — regeneration scripts in `xschem/scripts/`
+
+- `export_figures.py` makes the figures; by default it does all sheets of `xschem/` into
+  `figures/`. It needs xschem, `$PDK_ROOT`, cairosvg and Pillow.
+- `gen_cells.py OUTDIR` and `gen_testbenches.py OUTDIR` drew the cell and testbench sheets; they
+  share the helper `xsheet.py`. They refuse to write into `xschem/` unless `--overwrite` is
+  given, because the sheets there are now edited by hand.
+
+Before shipping, all three ran in the cloud from a copy of the folder layout. The figures came
+out identical to those in `figures/`: the same SVG, and PNG pixels with no difference. The
+generators' 34 output files were byte-identical to the first drafts. The guard against writing
+into `xschem/` also worked. The scripts have not been run on the linked computer; its sandbox
+has no xschem. `xschem/README.md` has a "Regenerating" section with the commands.
