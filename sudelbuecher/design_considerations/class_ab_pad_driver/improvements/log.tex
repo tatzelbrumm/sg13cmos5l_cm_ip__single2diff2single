@@ -767,4 +767,186 @@ hyperref, xurl, microtype, textcomp, geometry). A
 snapshot: entries after 16:15 are only in
 \texttt{log.md}.
 
+\hypertarget{1637--testbench-decks-in-simtb}{%
+\section{\texorpdfstring{16:37 --- testbench decks
+in
+\texttt{sim/tb/}}{16:37 --- testbench decks in sim/tb/}}\label{1637--testbench-decks-in-simtb}}
+
+Nine stand-alone ngspice decks, so the results can
+be rerun without \texttt{run\_improvements.py}:
+\texttt{tb\_mpdda\_dc}, \texttt{tb\_mpdda\_loop},
+\texttt{tb\_mpdda\_step}, \texttt{tb\_mpdda\_thd},
+\texttt{tb\_mpdda\_noise}, \texttt{tb\_mpdda\_op},
+\texttt{tb\_units}, \texttt{tb\_moscv} and
+\texttt{tb\_lc2\_loop}. Each one names its
+reference value from
+\texttt{results\_improvements.txt} in the header
+and runs from its own directory
+(\texttt{ngspice\ -b\ \textless{}deck\textgreater{}}
+prints,
+\texttt{ngspice\ \textless{}deck\textgreater{}}
+plots). They need the PDK \texttt{.spiceinit}
+(sourcepath to the models, OSDI for psp103,
+r3\_cmc and cap\_cmomi). Rerun in the cloud, they
+reproduce the reference: gain 0.49994, offset
+0.055 mV, nonlinearity 1.243 mV, Idd 296 µA; loop
+78.9 dB, 1.366 MHz, 72.4°; THD 0.119 \%; noise 676
+/ 152 nV/√Hz at 1 / 100 kHz; \texttt{d2s\_lc2}
+near side 74.0 dB, 1.49 MHz, 104.3°.
+
+\hypertarget{1700--xschem-schematics-in-xschem}{%
+\section{\texorpdfstring{17:00 --- xschem
+schematics in
+\texttt{xschem/}}{17:00 --- xschem schematics in xschem/}}\label{1700--xschem-schematics-in-xschem}}
+
+First drafts for hand editing, laid out like the
+hand-edited \texttt{../xschem/d2s\_miller.sch}:
+ports in one column on the left, output on the
+right, vdd and vss as wires across the sheet, one
+column per current branch, bulks wired, and the
+input and bias nets as wire buses from the port
+column. Internal nets carry \texttt{lab\_wire}
+labels so that the netlist keeps the
+source\textquotesingle s net names.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{unit\_r2} (the unit of
+  \texttt{d2s\_mpdda}), and \texttt{unit\_r},
+  \texttt{unit\_t}, \texttt{unit\_w},
+  \texttt{unit\_q}. All five share one box symbol:
+  gp and gn on the left, vdd and vbp on top, x, y
+  and vss at the bottom.
+\item
+  \texttt{d2s\_mpdda}: four \texttt{unit\_r2}
+  boxes; the fold, mirror, class-AB pair and
+  output devices sit where they are in
+  \texttt{d2s\_miller.sch}. CMA and CMB are drawn
+  as hv PMOS accumulation capacitors.
+\item
+  \texttt{d2s\_lc2} and \texttt{d2s\_lc2\_nc}: the
+  same core. The output cascode gates reach vref
+  through one \texttt{lab\_pin}.
+\item
+  \texttt{d2s\_bias\_lp}, and
+  \texttt{d2s\_mpdda\_biased}, the CACE fixture,
+  which is wired like
+  \texttt{d2s\_miller\_biased.sch}.
+\item
+  The symbols of \texttt{d2s\_mpdda},
+  \texttt{d2s\_lc2(\_nc)}, \texttt{d2s\_bias\_lp}
+  and \texttt{d2s\_mpdda\_biased} are copies of
+  \texttt{d2s\_miller.sym}, \texttt{d2s\_bias.sym}
+  and \texttt{d2s\_miller\_biased.sym}, which have
+  the same port lists.
+\end{itemize}
+
+Parameters are frozen at the \texttt{.subckt}
+defaults:
+
+\begin{itemize}
+\tightlist
+\item
+  lcas = 3, so CX, CY, PCL and PCR are 30u / 3u
+  with ng = 2.
+\item
+  wc = lc = 16u.
+\item
+  rl = 50.6u in \texttt{unit\_r2} and 36.4u in
+  \texttt{unit\_r}.
+\item
+  iab = 5u, ibnc = 2u, wdp = 6.66u, wdn = 3.8u.
+\item
+  \texttt{unit\_w} keeps \texttt{w=wwi\ l=lwi},
+  which the testbench defines.
+\end{itemize}
+
+Not drawn: \texttt{d2s\_mp}, whose \texttt{ccomp}
+wrapper exists only in the testbench, and
+\texttt{ccomp\_mom} / \texttt{ccomp\_mos};
+\texttt{ccomp\_mos} appears in \texttt{d2s\_mpdda}
+as CMA and CMB.
+
+\texttt{check\_xschem.py} netlists every
+\texttt{.sch} with xschem and compares each
+subcircuit in the netlist with
+\texttt{../sim/*.spice}, device by device. It
+checks model, nets in order, w / l / ng / value,
+and the port order of both \texttt{.sch} and
+\texttt{.sym}. With xschem 3.4.4 it finds 0
+mismatches over the 10 cells, including the
+\texttt{unit\_r2} bodies inside the parents. It
+did report each deliberate error I introduced: a
+changed port label, a resistor length, a current
+value and two swapped \texttt{.sym} pins.
+
+In the first draft, nets l2 and b came out split
+(net1, net2). A bus crossed the middle of a column
+without a junction, and xschem connects a wire
+only at its end points. Hand edits can break
+connectivity the same way, so rerun
+\texttt{check\_xschem.py} after editing. Most of
+the 106 wire crossings in \texttt{d2s\_mpdda} are
+in the input and bias bus band under the four
+units; that band is the obvious place for hand
+rearrangement or for labels. The script that drew
+the sheets stays in the cloud, since the drafts
+are meant to be edited by hand from here on.
+
+\hypertarget{1715--latex-log-brought-up-to-date}{%
+\section{17:15 --- LaTeX log brought up to
+date}\label{1715--latex-log-brought-up-to-date}}
+
+\texttt{log.tex} and \texttt{log.pdf} were
+regenerated from this file through this entry,
+with the same steps as at 16:15 (pandoc, then the
+table widths). They are still snapshots: entries
+after this one are only in \texttt{log.md} until
+the next regeneration.
+
+\hypertarget{1735--block-annotations-flat-schematics-xschemreadmemd}{%
+\section{\texorpdfstring{17:35 --- block
+annotations, flat schematics,
+\texttt{xschem/README.md}}{17:35 --- block annotations, flat schematics, xschem/README.md}}\label{1735--block-annotations-flat-schematics-xschemreadmemd}}
+
+Every sheet now outlines its functional blocks
+with magenta dashed boxes tagged {[}1{]} to
+{[}9{]}, with a legend under the sheet. A number
+means the same block on every sheet: {[}1{]} DDA
+units, {[}2{]} fold, {[}3{]} mirror, {[}4{]}
+class-AB control, {[}5{]} its copy in the mirror
+input branch, {[}6{]} output devices, {[}7{]}
+Miller capacitors (cascodes in \texttt{d2s\_lc2}),
+{[}8{]} bias, {[}9{]} diode replicas in
+\texttt{d2s\_lc2}. \texttt{xschem/README.md}
+explains the blocks with sizes, nets and tt
+currents, gives the signal path and the bias
+network, and lists the files.
+
+Two new sheets show everything at transistor
+level:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{d2s\_mpdda\_flat}: \texttt{d2s\_mpdda}
+  with the four units drawn out. Unit devices and
+  nets carry the unit\textquotesingle s name
+  (\texttt{Ta\_A}, \texttt{sa\_A}, ...). It has
+  the same 13 pins.
+\item
+  \texttt{d2s\_mpdda\_bias\_flat}:
+  \texttt{d2s\_mpdda} and \texttt{d2s\_bias\_lp}
+  on one sheet, with the bias columns between the
+  port column and the units. It has 7 pins; the
+  bias nets are internal.
+\end{itemize}
+
+\texttt{check\_xschem.py} compares the flat sheets
+with the sources with the subcircuits expanded
+under that naming. 0 mismatches over 12 cells. A
+swapped unit-net label and a changed rhigh body
+were both reported.
+
 \end{document}

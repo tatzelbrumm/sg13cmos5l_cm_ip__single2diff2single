@@ -336,3 +336,83 @@ table and is not in it.
 and the tables were given widths weighted by their content. Builds with pdflatex using only
 standard packages (booktabs, longtable, calc, hyperref, xurl, microtype, textcomp, geometry).
 A snapshot: entries after 16:15 are only in `log.md`.
+
+## 16:37 — testbench decks in `sim/tb/`
+
+Nine stand-alone ngspice decks, so the results can be rerun without `run_improvements.py`:
+`tb_mpdda_dc`, `tb_mpdda_loop`, `tb_mpdda_step`, `tb_mpdda_thd`, `tb_mpdda_noise`,
+`tb_mpdda_op`, `tb_units`, `tb_moscv` and `tb_lc2_loop`. Each one names its reference value from `results_improvements.txt` in the header
+and runs from its own directory (`ngspice -b <deck>` prints, `ngspice <deck>` plots). They need
+the PDK `.spiceinit` (sourcepath to the models, OSDI for psp103, r3_cmc and cap_cmomi). Rerun in
+the cloud, they reproduce the reference: gain 0.49994, offset 0.055 mV, nonlinearity 1.243 mV,
+Idd 296 µA; loop 78.9 dB, 1.366 MHz, 72.4°; THD 0.119 %; noise 676 / 152 nV/√Hz at 1 / 100 kHz;
+`d2s_lc2` near side 74.0 dB, 1.49 MHz, 104.3°.
+
+## 17:00 — xschem schematics in `xschem/`
+
+First drafts for hand editing, laid out like the hand-edited `../xschem/d2s_miller.sch`: ports
+in one column on the left, output on the right, vdd and vss as wires across the sheet, one column
+per current branch, bulks wired, and the input and bias nets as wire buses from the port column.
+Internal nets carry `lab_wire` labels so that the netlist keeps the source's net names.
+
+- `unit_r2` (the unit of `d2s_mpdda`), and `unit_r`, `unit_t`, `unit_w`, `unit_q`. All five share
+  one box symbol: gp and gn on the left, vdd and vbp on top, x, y and vss at the bottom.
+- `d2s_mpdda`: four `unit_r2` boxes; the fold, mirror, class-AB pair and output devices sit
+  where they are in `d2s_miller.sch`. CMA and CMB are drawn as hv PMOS accumulation capacitors.
+- `d2s_lc2` and `d2s_lc2_nc`: the same core. The output cascode gates reach vref through one
+  `lab_pin`.
+- `d2s_bias_lp`, and `d2s_mpdda_biased`, the CACE fixture, which is wired like
+  `d2s_miller_biased.sch`.
+- The symbols of `d2s_mpdda`, `d2s_lc2(_nc)`, `d2s_bias_lp` and `d2s_mpdda_biased` are copies
+  of `d2s_miller.sym`, `d2s_bias.sym` and `d2s_miller_biased.sym`, which have the same port lists.
+
+Parameters are frozen at the `.subckt` defaults:
+
+- lcas = 3, so CX, CY, PCL and PCR are 30u / 3u with ng = 2.
+- wc = lc = 16u.
+- rl = 50.6u in `unit_r2` and 36.4u in `unit_r`.
+- iab = 5u, ibnc = 2u, wdp = 6.66u, wdn = 3.8u.
+- `unit_w` keeps `w=wwi l=lwi`, which the testbench defines.
+
+Not drawn: `d2s_mp`, whose `ccomp` wrapper exists only in the testbench, and
+`ccomp_mom` / `ccomp_mos`; `ccomp_mos` appears in `d2s_mpdda` as CMA and CMB.
+
+`check_xschem.py` netlists every `.sch` with xschem and compares each subcircuit in the netlist
+with `../sim/*.spice`, device by device. It checks model, nets in order, w / l / ng / value, and
+the port order of both `.sch` and `.sym`. With xschem 3.4.4 it finds 0 mismatches over the 10
+cells, including the `unit_r2` bodies inside the parents. It did report each deliberate error I
+introduced: a changed port label, a resistor length, a current value and two swapped `.sym`
+pins.
+
+In the first draft, nets l2 and b came out split (net1, net2). A bus crossed the middle of a
+column without a junction, and xschem connects a wire only at its end points. Hand edits can
+break connectivity the same way, so rerun `check_xschem.py` after editing. Most of the 106 wire
+crossings in `d2s_mpdda` are in the input and bias bus band under the four units; that band is
+the obvious place for hand rearrangement or for labels. The script that drew the sheets stays
+in the cloud, since the drafts are meant to be edited by hand from here on.
+
+## 17:15 — LaTeX log brought up to date
+
+`log.tex` and `log.pdf` were regenerated from this file through this entry, with the same steps
+as at 16:15 (pandoc, then the table widths). They are still snapshots: entries after this one
+are only in `log.md` until the next regeneration.
+
+## 17:35 — block annotations, flat schematics, `xschem/README.md`
+
+Every sheet now outlines its functional blocks with magenta dashed boxes tagged [1] to [9], with
+a legend under the sheet. A number means the same block on every sheet: [1] DDA units, [2] fold,
+[3] mirror, [4] class-AB control, [5] its copy in the mirror input branch, [6] output devices,
+[7] Miller capacitors (cascodes in `d2s_lc2`), [8] bias, [9] diode replicas in `d2s_lc2`.
+`xschem/README.md` explains the blocks with sizes, nets and tt currents, gives the signal path
+and the bias network, and lists the files.
+
+Two new sheets show everything at transistor level:
+
+- `d2s_mpdda_flat`: `d2s_mpdda` with the four units drawn out. Unit devices and nets carry the
+  unit's name (`Ta_A`, `sa_A`, ...). It has the same 13 pins.
+- `d2s_mpdda_bias_flat`: `d2s_mpdda` and `d2s_bias_lp` on one sheet, with the bias columns
+  between the port column and the units. It has 7 pins; the bias nets are internal.
+
+`check_xschem.py` compares the flat sheets with the sources with the subcircuits expanded under
+that naming. 0 mismatches over 12 cells. A swapped unit-net label and a changed rhigh body were
+both reported.
