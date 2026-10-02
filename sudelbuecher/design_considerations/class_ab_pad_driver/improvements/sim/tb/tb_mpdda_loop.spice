@@ -1,0 +1,41 @@
+* tb_mpdda_loop: loop gain of d2s_mpdda, tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* Loop broken at the feedback gate: DC closed through 1 GH, AC injected through 1 F;
+* T = -v(vout)/v(fb), exact because vfb only drives MOS gates.
+* Reference (results_improvements.txt): 1k||100p T0 78.9 dB, fc 1.37 MHz, PM 72.4 deg;
+* 100p 104.3 dB / 1.77 MHz / 62.0 deg; 50 ohm 53.1 dB / 0.23 MHz / 89.3 deg.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.include ../units.spice
+.include ../ccomp.spice
+.include ../d2s_mpdda.spice
+.include ../d2s_bias_lp.spice
+Vdd vdd 0 3.3
+Vcm vref 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+Vp vinp 0 1.65
+Vn vinn 0 1.65
+Xd vdd 0 vinp vinn vref vout fb vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+Lb vout fb 1G
+Cb fb inj 1
+Vinj inj 0 dc 0 ac 1
+* load (edit): 1 kohm to vref || 100 pF
+RL vout vref 1k
+CL vout 0 100p
+.control
+ac dec 50 10 1G
+let T=-v(vout)/v(fb)
+meas ac T0 find vdb(T) at=10
+meas ac fc when vdb(T)=0
+meas ac pT find vp(T) when vdb(T)=0
+let pm=180/pi*pT+180
+print T0 fc pm
+if $?batchmode = 0
+  plot vdb(T) 180/pi*vp(T)
+end
+.endc
+.end

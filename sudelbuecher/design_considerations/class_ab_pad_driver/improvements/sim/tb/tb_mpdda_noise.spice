@@ -1,0 +1,39 @@
+* tb_mpdda_noise: output noise of d2s_mpdda, tt 27 C, load 1 kOhm to vref || 100 pF
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* Reference (results_improvements.txt): 676 nV/rtHz at 1 kHz, 152 nV/rtHz at 100 kHz,
+* 231 uV rms 10 Hz - 10 MHz (trapezoidal integral of the spectrum; ngspice's onoise_total
+* integrates differently and reads 230 uV).
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.include ../units.spice
+.include ../ccomp.spice
+.include ../d2s_mpdda.spice
+.include ../d2s_bias_lp.spice
+Vdd vdd 0 3.3
+Vcm vref 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+Vd dp 0 dc 0 ac 1
+Ep vinp vref dp 0 0.5
+En vinn vref dp 0 -0.5
+Xd vdd 0 vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+RL vout vref 1k
+CL vout 0 100p
+.control
+* integrated noise first (plots noise1 = spectrum, noise2 = total), then two spot values
+noise v(vout) Vd dec 20 10 10meg
+setplot noise2
+print onoise_total
+noise v(vout) Vd lin 1 1k 1k
+noise v(vout) Vd lin 1 100k 100k
+* a one-point noise run makes only a spectrum plot: noise3 (1 kHz), noise4 (100 kHz)
+print noise3.onoise_spectrum noise4.onoise_spectrum
+if $?batchmode = 0
+  setplot noise1
+  loglog onoise_spectrum
+end
+.endc
+.end

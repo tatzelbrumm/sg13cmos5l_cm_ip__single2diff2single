@@ -1,0 +1,49 @@
+* tb_units: transfer of one DDA unit as used in the MP-DDA, tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* fA(x) = dI(gp = vref + x, gn = vref), fB(x) = dI(gp = vref, gn = vref - x).
+* A unit qualifies when fA and fB coincide (output depends on gp - gn only).
+* To test another unit, replace unit_r2 in XUA/XUB by unit_r, unit_t, unit_w or unit_q
+* (unit_w needs .param wwi=4u lwi=4u, already set below) and swap the bias to match the
+* unit's tails: unit_r2 (5/6 tails): 5 uA into a 5/6 diode, as d2s_bias_lp (default below);
+* unit_r, unit_t, unit_w, unit_q: 20 uA into a 20/2 diode, as run_improvements.py.
+* Reference: unit_r2, this deck (2026-10-02): fA(0.5 V) = 5.442 uA, fB(0.5 V) = 5.416 uA;
+* unit_r (20/2 bias, results_improvements.txt): Gm0 15.55 uS, MP-DDA error -1.04/-1.02 mV.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.param wwi=4u lwi=4u
+.include ../units.spice
+Vdd vdd 0 3.3
+IBP vbp 0 5u
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+* for unit_r / unit_t / unit_w / unit_q instead:
+*IBP vbp 0 20u
+*XBP vbp vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
+Vref vref 0 1.65
+Vx xd 0 0
+EpA gpa vref xd 0 1
+EnB gnb vref xd 0 -1
+* drains held at the folded-cascode source voltage
+Vfx1 x1 0 0.45
+Vfy1 y1 0 0.45
+Vfx2 x2 0 0.45
+Vfy2 y2 0 0.45
+XUA x1 y1 gpa vref vdd 0 vbp unit_r2
+XUB x2 y2 vref gnb vdd 0 vbp unit_r2
+.control
+dc Vx -0.8 0.8 0.005
+let fA = i(Vfx1) - i(Vfy1)
+let fB = i(Vfx2) - i(Vfy2)
+meas dc fa05 find fA at=0.5
+meas dc fb05 find fB at=0.5
+meas dc fam05 find fA at=-0.5
+meas dc fbm05 find fB at=-0.5
+print fa05 fb05 fam05 fbm05
+if $?batchmode = 0
+  plot fA fB
+  plot fA-fB
+end
+.endc
+.end

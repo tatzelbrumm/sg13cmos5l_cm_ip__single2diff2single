@@ -1,0 +1,40 @@
+* tb_mpdda_op: operating point of d2s_mpdda at vd = 0: device currents and saturation margin
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* Reference listing: results_improvements.txt, section "operating point".
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.include ../units.spice
+.include ../ccomp.spice
+.include ../d2s_mpdda.spice
+.include ../d2s_bias_lp.spice
+Vdd vdd 0 3.3
+Vcm vref 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+Vp vinp 0 1.65
+Vn vinn 0 1.65
+Xd vdd 0 vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+RL vout vref 1k
+CL vout 0 100p
+.control
+op
+print v(xd.x) v(xd.y) v(xd.a) v(xd.b) v(xd.l1) v(xd.l2) v(xd.pl) v(xd.pr) i(vdd)
+print @n.xd.xsx.nsg13_hv_nmos[ids] @n.xd.xsx.nsg13_hv_nmos[vds] @n.xd.xsx.nsg13_hv_nmos[vdss]
+print @n.xd.xsy.nsg13_hv_nmos[ids] @n.xd.xsy.nsg13_hv_nmos[vds] @n.xd.xsy.nsg13_hv_nmos[vdss]
+print @n.xd.xcx.nsg13_hv_nmos[ids] @n.xd.xcx.nsg13_hv_nmos[vds] @n.xd.xcx.nsg13_hv_nmos[vdss]
+print @n.xd.xcy.nsg13_hv_nmos[ids] @n.xd.xcy.nsg13_hv_nmos[vds] @n.xd.xcy.nsg13_hv_nmos[vdss]
+print @n.xd.xfnl.nsg13_hv_nmos[ids] @n.xd.xfnl.nsg13_hv_nmos[vds] @n.xd.xfnl.nsg13_hv_nmos[vdss]
+print @n.xd.xabn.nsg13_hv_nmos[ids] @n.xd.xabn.nsg13_hv_nmos[vds] @n.xd.xabn.nsg13_hv_nmos[vdss]
+print @n.xd.xon.nsg13_hv_nmos[ids] @n.xd.xon.nsg13_hv_nmos[vds] @n.xd.xon.nsg13_hv_nmos[vdss]
+print @n.xd.xpl.nsg13_hv_pmos[ids] @n.xd.xpl.nsg13_hv_pmos[vds] @n.xd.xpl.nsg13_hv_pmos[vdss]
+print @n.xd.xpr.nsg13_hv_pmos[ids] @n.xd.xpr.nsg13_hv_pmos[vds] @n.xd.xpr.nsg13_hv_pmos[vdss]
+print @n.xd.xpcl.nsg13_hv_pmos[ids] @n.xd.xpcl.nsg13_hv_pmos[vds] @n.xd.xpcl.nsg13_hv_pmos[vdss]
+print @n.xd.xpcr.nsg13_hv_pmos[ids] @n.xd.xpcr.nsg13_hv_pmos[vds] @n.xd.xpcr.nsg13_hv_pmos[vdss]
+print @n.xd.xfpl.nsg13_hv_pmos[ids] @n.xd.xfpl.nsg13_hv_pmos[vds] @n.xd.xfpl.nsg13_hv_pmos[vdss]
+print @n.xd.xabp.nsg13_hv_pmos[ids] @n.xd.xabp.nsg13_hv_pmos[vds] @n.xd.xabp.nsg13_hv_pmos[vdss]
+print @n.xd.xop.nsg13_hv_pmos[ids] @n.xd.xop.nsg13_hv_pmos[vds] @n.xd.xop.nsg13_hv_pmos[vdss]
+.endc
+.end

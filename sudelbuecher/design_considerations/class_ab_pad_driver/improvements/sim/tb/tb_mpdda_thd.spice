@@ -1,0 +1,36 @@
+* tb_mpdda_thd: THD of d2s_mpdda, 1 V differential sine (0.5 V at the output), tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* Uses ngspice's fourier (harmonics up to nfreqs - 1 = 7, last 4 periods); run_improvements.py
+* takes h2..h7 root-sum-square from an FFT over 4 periods. Reference (1k||100p):
+* -58.5 dB at 10 kHz, -51.3 dB at 100 kHz (results_improvements.txt). This deck at 10 kHz:
+* THD 0.119 % = -58.5 dB (2026-10-02). For 100 kHz set fin=100k and scale tran/fourier times.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.include ../units.spice
+.include ../ccomp.spice
+.include ../d2s_mpdda.spice
+.include ../d2s_bias_lp.spice
+Vdd vdd 0 3.3
+Vcm vref 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+.param fin=10k
+Vd dp 0 sin(0 1 {fin})
+Ep vinp vref dp 0 0.5
+En vinn vref dp 0 -0.5
+Xd vdd 0 vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+* load (edit)
+RL vout vref 1k
+CL vout 0 100p
+.control
+set nfreqs=8
+tran 0.25u 600u 200u 0.25u
+fourier 10k v(vout)
+if $?batchmode = 0
+  plot v(vout)
+end
+.endc
+.end

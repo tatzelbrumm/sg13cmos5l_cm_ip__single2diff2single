@@ -1,0 +1,41 @@
+* tb_lc2_loop: loop gain of the in-slot, load-compensated d2s_lc2 (case b), tt 27 C,
+* driving the pad through IOPadAnalog's 586.9 ohm (padres -> pad), sensed at padres (near side)
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* Reference (results_improvements.txt): C_L 100 pF near side: T0 74.0 dB, fc 1.49 MHz,
+* PM 104.3 deg; 20 pF: 5.46 MHz / 62.4 deg. Without Rs (wire vout to pad): 100 pF 76.7 deg.
+* Replace d2s_lc2 by d2s_lc2_nc for the uncascoded version.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.include ../units.spice
+.include ../d2s_lc2.spice
+.include ../d2s_bias_lp.spice
+Vdd vdd 0 3.3
+Vcm vref 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+Vp vinp 0 1.65
+Vn vinn 0 1.65
+Xd vdd 0 vinp vinn vref vout fb vbp vbn vbpc vbnc vabp vabn d2s_lc2
+Lb vout fb 1G
+Cb fb inj 1
+Vinj inj 0 dc 0 ac 1
+* pad: SecondaryProtection series resistor, pad capacitance, load (edit)
+Rs vout pad 586.9
+Cpad pad 0 2p
+CL pad 0 100p
+.control
+ac dec 50 10 1G
+let T=-v(vout)/v(fb)
+meas ac T0 find vdb(T) at=10
+meas ac fc when vdb(T)=0
+meas ac pT find vp(T) when vdb(T)=0
+let pm=180/pi*pT+180
+print T0 fc pm
+if $?batchmode = 0
+  plot vdb(T) 180/pi*vp(T)
+end
+.endc
+.end
