@@ -1,99 +1,89 @@
 # .gitignore consolidation: status quo and plan
 
-Date: 2026-10-02 (revision of the 2026-10-01 note). Repo: `sg13cmos5l_cm_ip__single2diff2single`,
-root `.gitignore` (39 lines, uncommitted edits on branch `pcells`; committed blob `bd6e021`).
+Date: 2026-10-02 (revision of the notes of 2026-10-01). Repo: `sg13cmos5l_cm_ip__single2diff2single`.
 Companion file: `gitignore_status_table.pdf` (same table, A4 landscape, 2 pages).
 
-Nothing in the repo was changed by this analysis.
+## Status
+
+- Step 1 done: the per-macro lines were replaced by six `/macros/*/…` wildcard lines. The root `.gitignore`
+  went from 31 to 26 lines (blob `c8e482a`, **uncommitted** on branch `pcells`; committed blob there is `bd6e021`).
+  Check: the set of ignored files is unchanged except two newly covered files (`slot.spice`,
+  `sg13cmos5l_IOPadDiff2Single.spice` in `testbenches/xschem/simulations`); no tracked file matches an ignore rule.
+- `save_from_claudes_fuckup` stays exactly as it is (decision: not to be touched).
+- `stash@{0}` holds only the eight slot / IOPadDiff2Single lines that the wildcards now make redundant.
+- Not done yet: section headers and a policy comment, scoping the `drc_*.tcl` / `ext_*.tcl` / `pex_*.tcl` patterns, committing, syncing to other branches.
 
 ## Policy implied by the inverter macro (the reference)
 
 Generated *reports* are committed (`.lyrdb`, `.lvsdb`, Magic `.rpt`/`.out`, CACE result PNGs).
 Logs, raw simulation output, run directories and Makefile-generated tool scripts are ignored.
-The inverter template is six rules: `cace/_runs`, `cace/_docs`, `cace/netlist`,
-`cace/templates/simulations`, `schematic/xschem/simulations`, `testbenches/xschem/simulations`.
 
 ## Currently ignored: one row per directory, one column per macro
 
 Row title = directory path relative to the macro root (`macros/<macro>/`), or to the repo root for
-"Top level". Rows with `*` stand for directory names that embed the macro name; the cell shows the
-actual name. Cell = actual directory name, then what is ignored there: all files of the directory
-(*n files*) or only files matching a pattern (`*.log` x n). *rule only* = a rule exists but the
-directory does not. **NO RULE** = directory exists, no rule covers it. Empty = nothing there.
+"Top level". Cell = actual directory name, then what is ignored there: all files of the directory
+(*n files*) or only files matching a pattern (`*.log` x n). *rule only* = a rule covers that path but the
+directory does not exist. Empty = no rule for it, nothing there.
 
-16,114 ignored files in total (state of 2026-10-02 00:2x); 14,299 are in OgueyAebischerBias `_runs`.
+16,196 ignored files in total (state of 2026-10-02 06:5x); 14,299 are in OgueyAebischerBias `_runs`.
 
-| Directory | inverter | slot | counter | IOPadDiff2Single | OgueyAebischerBias | IOPad, IOPadSingle2Diff | Top level |
-|---|---|---|---|---|---|---|---|
-| `layout/klayout/backups` | | | | `backups/` 585 files | | | `backups/` 2 files |
-| `layout/klayout/drc_run_slot` | | `drc_run_slot/` 4 files | | | | | |
-| `layout/klayout/lvs_run_slot_2026_09_28_02_54_58` | | `lvs_run_slot_2026_09_28_02_54_58/` 3 files | | | | | |
-| `layout/klayout/lvs_run_slot_2026_09_28_03_13_19` | | `lvs_run_slot_2026_09_28_03_13_19/` 4 files | | | | | |
-| `netlist/pex` | `pex/` `*.log` x1 | `pex/` `*.log` x1 | `pex/` `*.log` x1 | | | | `pex/` `*.log` x1 |
-| `schematic/xschem/simulations` | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | | | `simulations/` rule only |
-| `testbenches/xschem/simulations` | `simulations/` 9 files | `simulations/` 1 file | `simulations/` 3 files | `simulations/` 1 file | `simulations/` only via `*.raw` x2, no dir rule | IOPadSingle2Diff: `simulations/` empty dir, **NO RULE** | `simulations/` 3 files |
-| `testbenches/cocotb/sim_build` | | | `sim_build/` 5 files | | | | |
-| `testbenches/verilog` | | | `verilog/` `*.vcd` x1 | | | | |
-| `flow/final` | | | `final/` 29 files | | | | |
-| `flow/librelane/runs` | | | `runs/` 1,027 files | | | | |
-| `fpga/*/build` | | | `build/` rule only | | | | |
-| `verification/cace/_runs` | `_runs/` rule only | `_runs/` rule only | | | `_runs/` 14,299 files | | |
-| `verification/cace/_docs` | `_docs/` rule only | `_docs/` rule only | | | `_docs/` 6 files | | |
-| `verification/cace/netlist` | `netlist/` rule only | `netlist/` rule only | | | | | |
-| `verification/cace/netlist/schematic` | | | | | `schematic/` `*.spice` x1 (narrower rule) | | |
-| `verification/cace/templates/simulations` | `simulations/` rule only | `simulations/` rule only | | | | | |
-| `verification/drc/*.klayout.drc` | `inverter.klayout.drc/` `*.log` x32 | `slot.klayout.drc/` `*.log` x32 | | | | | `sg13cmos5l_cm_ip__single2diff2single.klayout.drc/` `*.log` x32 |
-| `verification/drc/*.magic.drc` | `inverter.magic.drc/` `*.log` x1, `drc_*.tcl` x1 | | | | | | `sg13cmos5l_cm_ip__single2diff2single.magic.drc/` `*.log` x1, `drc_*.tcl` x1 |
-| `verification/lvs/*.klayout.lvs` | `inverter.klayout.lvs/` `*.log` x3 | | | | | | `sg13cmos5l_cm_ip__single2diff2single.klayout.lvs/` `*.log` x3 |
-| `verification/lvs/*.magic.lvs` | `inverter.magic.lvs/` `*.log` x1, `ext_*.tcl` x1 | | | | | | `sg13cmos5l_cm_ip__single2diff2single.magic.lvs/` `*.log` x1, `ext_*.tcl` x1 |
-| `scripts/pcells/__pycache__` | | | | | | | `__pycache__/` 1 file |
-| `save_from_claudes_fuckup` | | | | | | | `save_from_claudes_fuckup/` 14 files |
+| Directory | inverter | slot | counter | IOPadDiff2Single | IOPadSingle2Diff | IOPad | OgueyAebischerBias | Top level |
+|---|---|---|---|---|---|---|---|---|
+| `layout/klayout/backups` | | | | `backups/` 667 files | | | | `backups/` 2 files |
+| `layout/klayout/drc_run_slot` | | `drc_run_slot/` 4 files | | | | | | |
+| `layout/klayout/lvs_run_slot_2026_09_28_02_54_58` | | `lvs_run_slot_2026_09_28_02_54_58/` 3 files | | | | | | |
+| `layout/klayout/lvs_run_slot_2026_09_28_03_13_19` | | `lvs_run_slot_2026_09_28_03_13_19/` 4 files | | | | | | |
+| `netlist/pex` | `pex/` `*.log` x1 | `pex/` `*.log` x1 | `pex/` `*.log` x1 | | | | | `pex/` `*.log` x1 |
+| `schematic/xschem/simulations` | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only |
+| `testbenches/xschem/simulations` | `simulations/` 9 files | `simulations/` 1 file | `simulations/` 3 files | `simulations/` 1 file | `simulations/` 0 files (empty dir) | `simulations/` rule only | `simulations/` 2 files | `simulations/` 3 files |
+| `testbenches/cocotb/sim_build` | | | `sim_build/` 5 files | | | | | |
+| `testbenches/verilog` | | | `verilog/` `*.vcd` x1 | | | | | |
+| `flow/final` | | | `final/` 29 files | | | | | |
+| `flow/librelane/runs` | | | `runs/` 1,027 files | | | | | |
+| `fpga/*/build` | | | `build/` rule only | | | | | |
+| `verification/cace/_runs` | `_runs/` rule only | `_runs/` rule only | `_runs/` rule only | `_runs/` rule only | `_runs/` rule only | `_runs/` rule only | `_runs/` 14,299 files | |
+| `verification/cace/_docs` | `_docs/` rule only | `_docs/` rule only | `_docs/` rule only | `_docs/` rule only | `_docs/` rule only | `_docs/` rule only | `_docs/` 6 files | |
+| `verification/cace/netlist` | `netlist/` rule only | `netlist/` rule only | `netlist/` rule only | `netlist/` rule only | `netlist/` rule only | `netlist/` rule only | `netlist/` 1 file | |
+| `verification/cace/templates/simulations` | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | `simulations/` rule only | |
+| `verification/drc/inverter.klayout.drc` | `inverter.klayout.drc/` `*.log` x32 | | | | | | | |
+| `verification/drc/inverter.magic.drc` | `inverter.magic.drc/` `*.log` x1, `drc_*.tcl` x1 | | | | | | | |
+| `verification/lvs/inverter.klayout.lvs` | `inverter.klayout.lvs/` `*.log` x3 | | | | | | | |
+| `verification/lvs/inverter.magic.lvs` | `inverter.magic.lvs/` `*.log` x1, `ext_*.tcl` x1 | | | | | | | |
+| `verification/drc/slot.klayout.drc` | | `slot.klayout.drc/` `*.log` x32 | | | | | | |
+| `verification/drc/sg13cmos5l_cm_ip__single2diff2single.klayout.drc` | | | | | | | | `sg13cmos5l_cm_ip__single2diff2single.klayout.drc/` `*.log` x32 |
+| `verification/drc/sg13cmos5l_cm_ip__single2diff2single.magic.drc` | | | | | | | | `sg13cmos5l_cm_ip__single2diff2single.magic.drc/` `*.log` x1, `drc_*.tcl` x1 |
+| `verification/lvs/sg13cmos5l_cm_ip__single2diff2single.klayout.lvs` | | | | | | | | `sg13cmos5l_cm_ip__single2diff2single.klayout.lvs/` `*.log` x3 |
+| `verification/lvs/sg13cmos5l_cm_ip__single2diff2single.magic.lvs` | | | | | | | | `sg13cmos5l_cm_ip__single2diff2single.magic.lvs/` `*.log` x1, `ext_*.tcl` x1 |
+| `scripts/pcells/__pycache__` | | | | | | | | `__pycache__/` 1 file |
+| `save_from_claudes_fuckup` | | | | | | | | `save_from_claudes_fuckup/` 14 files |
 
 ### Notes
 
-- Rules that match nothing today: `.DS_Store`, `pex_*.tcl`, `*.pyc` (shadowed by `__pycache__/`). `*.ext` only matters inside `runs/`, where `runs/` wins.
-- Untracked and not ignored (evening of 2026-10-01): `Makefile.bak`, `HANDOVER_xschem_makefile_lvs_and_chatlog_integrity.md`, `macros/slot/verification/drc/slot.klayout.drc/slot.klay_slot_full.lyrdb`. The last two should be committed, not ignored.
-- The inverter's CACE and schematic rules are purely preventive: none of those directories exist.
+- The `schematic/…/simulations`, `testbenches/…/simulations` and four `verification/cace/…` rows are covered for every macro by the six `/macros/*/…` lines. `flow/final` and `fpga/*/build` are counter-only rules.
+- Rules that decide no existing file today: `pex_*.tcl`, `*.raw`, `*.pyc`, `*.ext`, `.DS_Store`.
+- Untracked and not ignored: `Makefile.bak`, `_gitignore`, `HANDOVER_xschem_makefile_lvs_and_chatlog_integrity.md`, `macros/slot/verification/drc/slot.klayout.drc/slot.klay_slot_full.lyrdb`. The handover and the `.lyrdb` should be committed, not ignored.
 
-### What is unorganized in the file
+## What is still unorganized in the file
 
 1. No section headers or comments.
-2. Counter's rules are split in two places (IOPadDiff2Single lines sit between them).
-3. The same six rules are repeated per macro with different path prefixes.
-4. `save_from_claudes_fuckup` has no leading or trailing `/`, so it matches that name at any depth.
-5. `drc_*.tcl`, `ext_*.tcl`, `pex_*.tcl` match at any depth: a hand-written script with such a name would be ignored silently.
-6. Redundant entries: `macros/counter/flow/librelane/runs` (already `runs/`), `*.pyc` (already `__pycache__/`).
-
-## Suggested target: single root file, wildcards
-
-```
-/macros/*/schematic/xschem/simulations
-/macros/*/testbenches/xschem/simulations
-/macros/*/verification/cace/_runs
-/macros/*/verification/cace/_docs
-/macros/*/verification/cace/netlist
-/macros/*/verification/cace/templates/simulations
-```
-
-These replace the per-macro copies and cover IOPad, IOPadSingle2Diff (its empty `simulations/` is the one
-red cell above) and future macros automatically. Safe for OgueyAebischerBias (nothing tracked under
-`cace/netlist`). Counter's `flow/final` and `fpga/*/build/` stay macro-specific. Add section headers and a
-two-line policy comment. Anchor `save_from_claudes_fuckup` as `/save_from_claudes_fuckup/`; scope the three
-`*_*.tcl` patterns to the `verification/` directories where they are generated.
+2. `drc_*.tcl`, `ext_*.tcl`, `pex_*.tcl` match at any depth: a hand-written script with such a name would be ignored silently.
+3. Redundant entries: `*.pyc` is already covered by `__pycache__/`; `*.raw` no longer decides any file.
+4. `save_from_claudes_fuckup` has no leading or trailing `/` (left as is, by decision).
 
 ## The many-branches problem
 
 ### Branch state
 
-`.gitignore` exists in only three states across the 11 branches:
+`.gitignore` exists in only three committed states across the 11 branches:
 
 | `.gitignore` state | Branches |
 |---|---|
-| older (`2cf04a4`) | main, cace, oguey, counter_digital, inverter_pex, i_claude, generated_deleted |
-| committed (`bd6e021`) | pcells, toplevel, claude_salvage |
+| older (`2cf04a4`, 27 lines) | main, cace, oguey, counter_digital, inverter_pex, i_claude, generated_deleted |
+| committed (`bd6e021`, 31 lines) | pcells, toplevel, claude_salvage |
 | none (orphan) | sudel_buecher |
 
-The two versions differ by four lines: the three OgueyAebischerBias rules and `save_from_claudes_fuckup`.
+The new working-tree file (`c8e482a`, 26 lines) is not committed anywhere yet. The `oguey` file is a strict
+line-for-line subset of the stashed 39-line version.
 
 ### Where does which kind of file get committed?
 
@@ -111,19 +101,19 @@ only as a note in `sudelbuecher/chatlog/` where the chat logs live.
 
 ### Making the sync set small
 
-- `i_claude` and `generated_deleted` have nothing ahead of `main` (markers): turn them into tags (`git tag`) and delete the branches. Tags need no `.gitignore` or `CLAUDE.md`.
-- `main` is 2 commits ahead of `pcells`, both `CLAUDE.md`-only (content already identical on pcells), and 44 behind. `toplevel` has 1 `CLAUDE.md`-only commit pcells lacks and is 11 behind. Both are candidates for merging into / retiring behind `pcells` once you are happy with them.
-- `cace`, `oguey`, `counter_digital`, `inverter_pex` are experiment lines: sync only when you next work on them.
+- `i_claude` and `generated_deleted` have nothing ahead of `main` (markers): turn them into tags and delete the branches.
+- `main` is 2 commits ahead of `pcells`, both `CLAUDE.md`-only (content already identical on pcells); `pcells` is 44 commits ahead of `main`. `toplevel` has 1 `CLAUDE.md`-only commit pcells lacks and is 11 behind. Both are candidates for merging into / retiring behind `pcells`.
+- `cace`, `oguey`, `counter_digital`, `inverter_pex` are experiment lines: sync only when next worked on. `oguey` is where the CACE run files are generated, so it needs the wildcard rules first.
 
 ### Suggested order
 
-1. Finalize the new `.gitignore` and commit it on `pcells`.
+1. Finish the `.gitignore` edits and commit on `pcells`.
 2. Sync to the branches in use with `git checkout pcells -- .gitignore` plus one commit.
-3. Put personal junk (`save_from_claudes_fuckup`, `*.bak`) into `.git/info/exclude`: shared by all worktrees, branch-independent, not versioned.
+3. Put personal junk (for example `*.bak`) into `.git/info/exclude`: shared by all worktrees, branch-independent, not versioned.
 4. Optional, only if branches are merged into each other: `.gitignore merge=ours` in `.gitattributes` plus `git config merge.ours.driver true`. Merges then keep the receiving branch's file; edits made on side branches are silently dropped, so edit `.gitignore` only on `pcells`.
 
 ## Caveats
 
-- Counts were taken with read-only git plumbing (`ls-files -o -i`, `check-ignore -v`, `log`, `rev-parse`, `tag -l`) on the evening of 2026-10-01 and after midnight; they drift (the IOPadDiff2Single `backups/` count grew from 540 to 585 during the evening).
-- That git use happened although `CLAUDE.md` asks Claude not to use git without asking first. An early `git status` left a zero-byte `.git/index.lock` (2026-10-01 20:56:30 UTC); it was removed host-side on 2026-10-02.
+- Counts come from read-only git plumbing (`ls-files -o -i`, `check-ignore -v`, `log`, `rev-parse`, `stash`) and drift (the IOPadDiff2Single `backups/` count grew from 540 to 667 within a night).
+- That git use happened although `CLAUDE.md` asks Claude not to use git without asking first. An early `git status` left a zero-byte `.git/index.lock` (2026-10-01 20:56:30 UTC); it was removed host-side.
 - No git command was run in the `_sudelbuecher` worktree; whether `Claude/` and `skunkworx/` there are tracked is unchecked.
