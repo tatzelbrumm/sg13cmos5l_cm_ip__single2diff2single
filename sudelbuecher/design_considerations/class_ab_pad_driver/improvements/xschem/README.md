@@ -4,7 +4,9 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # xschem schematics of the class-AB pad driver revision
 
-These are drafts, drawn from `../sim/*.spice` for hand editing.
+These are drafts, drawn from `../sim/*.spice` and `../sim/tb/*.spice` for hand editing. Every
+sheet is also exported as a figure (SVG, PDF and PNG) in `../figures/`; see "Figures" below.
+The scripts that drew the sheets and make the figures are in `scripts/`.
 
 Every sheet outlines its functional blocks with magenta dashed boxes tagged [1] to [9]. A number
 means the same block on every sheet, and the legend under each sheet repeats the short
@@ -25,6 +27,7 @@ description.
 | `unit_r2` | one DDA unit | x y gp gn vdd vss vbp |
 | `d2s_lc2`, `d2s_lc2_nc` | case (b): output devices in the slot, load-compensated, with and without output cascodes | 13 |
 | `unit_r`, `unit_t`, `unit_w`, `unit_q` | the unit alternatives of the proposal, Section II | 7 |
+| `tb_*` | testbenches, one per deck in `../sim/tb/` (see "Testbenches") | none |
 
 In the flat sheets, each unit's devices and internal nets carry the unit's name: `Ta_A`, `Tb_A`,
 `R_A`, `Ma_A`, `Mb_A`, `sa_A`, `sb_A`, and likewise for B, C1 and C2.
@@ -94,3 +97,78 @@ replace the resistor:
 
 Only the rhigh units qualify for the matched-pair DDA. The others' output depends on the
 absolute source voltage, not on gp − gn alone (proposal, Section II).
+
+## Testbenches (`tb_*.sch`)
+
+Each sheet draws one deck of `../sim/tb/`, laid out like `../../xschem/tb_d2s_*.sch`: supplies on
+the left, bias block and DUT in the middle, load on the right. The DUT and the bias come from the
+schematics in this directory, so the decks' `.include` lines are not needed. The code block holds
+the deck's `.lib`, `.param` and `.save` lines and its `.control` section, unchanged.
+
+| sheet | measures |
+|---|---|
+| `tb_mpdda_dc` | DC transfer: gain, offset, nonlinearity, quiescent currents |
+| `tb_mpdda_step` | step response, ±0.5 V differential |
+| `tb_mpdda_thd` | THD at 10 kHz, 1 V differential |
+| `tb_mpdda_noise` | output noise spectrum and total |
+| `tb_mpdda_op` | operating point: node voltages, device currents, saturation margins |
+| `tb_mpdda_loop` | loop gain, loop broken at the vfb gate |
+| `tb_lc2_loop` | loop gain of `d2s_lc2` through IOPadAnalog's 586.9 Ω |
+| `tb_units` | transfer of one unit, fA against fB |
+| `tb_moscv` | C–V of the hv PMOS accumulation capacitor against a 31 × 31 µm MOM |
+
+`check_xschem.py` compares every testbench with its deck: each element (name, nets with
+GND = 0, value or model and sizes) and the code lines. Netlisted by xschem and run in ngspice,
+all nine reproduce the reference values in the decks' headers, for example 78.9 dB / 1.37 MHz /
+72.4° for the loop and 0.119 % THD.
+
+To simulate a sheet (with the PDK `.spiceinit` in place):
+
+```
+xschem --rcfile xschemrc -n -s -q -x -o net tb_mpdda_loop.sch
+cd net && ngspice tb_mpdda_loop.spice
+```
+
+## Figures (`../figures/`)
+
+Every sheet is exported three ways:
+
+- `<sheet>.svg`: vector, for Markdown.
+- `<sheet>.pdf`: vector, for pdflatex, e.g. `\includegraphics[width=\linewidth]{figures/d2s_mpdda}`.
+- `<sheet>.png`: bitmap at 2 px per xschem unit, at most 6000 px wide.
+
+The background is white, and wires, symbols and text are black. Block frames and legends are
+#d55e00 (vermillion), which prints as about 47 % grey in monochrome. The text is Liberation Sans
+(metric-compatible with Arial); the PDFs embed it.
+
+Compared with the xschem view, the figures leave out the title block, the G/D/S/B pin letters,
+the pin squares, `m=1`, `ng=1`, `b=0`, the rhigh `R=` expression, and the MOS model names (every
+MOS is an `sg13_hv_nmos` or `sg13_hv_pmos`).
+
+The figures come from xschem's own SVG export (`xschem print svg <file> <w> <h> <area>`), with
+the light colour scheme set to these colours, then cropped to the drawing. After editing sheets,
+regenerate them with `scripts/export_figures.py` (next section).
+
+## Regenerating (`scripts/`)
+
+| script | does |
+|---|---|
+| `export_figures.py` | figures of all sheets (or of the ones named) into `../figures/` |
+| `gen_cells.py OUTDIR` | the cell sheets and their symbols, as first drafted, from `../sim/*.spice` |
+| `gen_testbenches.py OUTDIR` | the `tb_*.sch`, from `../sim/tb/*.spice` |
+| `xsheet.py` | the drawing helper both generators use: pin positions from the `.sym` files, wires, and a geometric lint |
+
+```
+cd scripts
+python3 export_figures.py                       # all sheets
+python3 export_figures.py d2s_mpdda tb_units    # only these
+python3 gen_cells.py /tmp/regen && python3 gen_testbenches.py /tmp/regen
+```
+
+All of them need `$PDK_ROOT` (`PDK` defaults to `ihp-sg13cmos5l`). `export_figures.py` also
+needs xschem on the PATH and the Python packages cairosvg and Pillow.
+
+The generators reproduce the first drafts, not the hand-edited sheets. They therefore refuse to
+write into this directory unless `--overwrite` is given; the usual way is to write elsewhere and
+compare. Their lint reports wiring faults before xschem sees the sheet. `check_xschem.py` stays
+the final check, and works only on the sheets in this directory.
