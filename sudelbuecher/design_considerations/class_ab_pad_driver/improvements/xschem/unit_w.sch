@@ -1,17 +1,18 @@
-v {xschem version=3.4.4 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 T {unit_w: well-input PMOS pair, gates at vss} 60 -500 0 0 0.4 0.4 {}
 T {gp drains to y, gn drains to x; x and y go to the folding nodes} 60 -460 0 0 0.25 0.25 {}
 N 60 -400 310 -400 {lab=vdd}
-N 310 -370 310 -400 {lab=vdd}
+N 310 -400 310 -370 {lab=vdd}
 N 310 -340 330 -340 {lab=vdd}
-N 330 -340 330 -400 {lab=vdd}
+N 330 -400 330 -340 {lab=vdd}
 N 60 -280 250 -280 {lab=vbp}
-N 250 -280 250 -340 {lab=vbp}
+N 250 -340 250 -280 {lab=vbp}
 N 250 -340 270 -340 {lab=vbp}
 N 310 -310 310 -220 {lab=s}
 N 220 -220 310 -220 {lab=s}
@@ -23,18 +24,17 @@ N 400 -110 400 -20 {lab=x}
 N 400 -20 520 -20 {lab=x}
 N 220 -140 260 -140 {lab=gp}
 N 260 -140 260 -80 {lab=gp}
-N 260 -80 60 -80 {lab=gp}
-N 400 -140 360 -140 {lab=gn}
+N 60 -80 260 -80 {lab=gp}
+N 360 -140 400 -140 {lab=gn}
 N 360 -140 360 -40 {lab=gn}
-N 360 -40 60 -40 {lab=gn}
-N 180 -140 160 -140 {lab=vss}
+N 60 -40 360 -40 {lab=gn}
+N 160 -140 180 -140 {lab=vss}
 N 160 -140 160 100 {lab=vss}
 N 440 -140 460 -140 {lab=vss}
 N 460 -140 460 100 {lab=vss}
 N 60 100 160 100 {lab=vss}
 N 310 -400 330 -400 {lab=vdd}
-N 350 -220 400 -220 {lab=s}
-N 310 -220 350 -220 {lab=s}
+N 310 -220 400 -220 {lab=s}
 N 160 100 460 100 {lab=vss}
 C {devices/opin.sym} 520 -20 0 0 {name=p1 lab=x}
 C {devices/opin.sym} 520 20 0 0 {name=p2 lab=y}

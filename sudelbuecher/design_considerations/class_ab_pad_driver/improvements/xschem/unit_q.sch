@@ -1,17 +1,18 @@
-v {xschem version=3.4.4 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 T {unit_q: undegenerated square-law PMOS pair} 60 -500 0 0 0.4 0.4 {}
 T {gp drains to y, gn drains to x; x and y go to the folding nodes} 60 -460 0 0 0.25 0.25 {}
 N 60 -400 310 -400 {lab=vdd}
-N 310 -370 310 -400 {lab=vdd}
+N 310 -400 310 -370 {lab=vdd}
 N 310 -340 330 -340 {lab=vdd}
-N 330 -340 330 -400 {lab=vdd}
+N 330 -400 330 -340 {lab=vdd}
 N 60 -280 250 -280 {lab=vbp}
-N 250 -280 250 -340 {lab=vbp}
+N 250 -340 250 -280 {lab=vbp}
 N 250 -340 270 -340 {lab=vbp}
 N 310 -310 310 -220 {lab=s}
 N 220 -220 240 -220 {lab=s}
@@ -22,18 +23,17 @@ N 220 20 520 20 {lab=y}
 N 400 -110 400 -20 {lab=x}
 N 400 -20 520 -20 {lab=x}
 N 220 -140 240 -140 {lab=s}
-N 240 -140 240 -220 {lab=s}
-N 400 -140 380 -140 {lab=s}
-N 380 -140 380 -220 {lab=s}
+N 240 -220 240 -140 {lab=s}
+N 380 -140 400 -140 {lab=s}
+N 380 -220 380 -140 {lab=s}
 N 60 -140 180 -140 {lab=gp}
 N 60 -60 460 -60 {lab=gn}
-N 460 -60 460 -140 {lab=gn}
-N 460 -140 440 -140 {lab=gn}
+N 460 -140 460 -60 {lab=gn}
+N 440 -140 460 -140 {lab=gn}
 N 310 -400 330 -400 {lab=vdd}
 N 380 -220 400 -220 {lab=s}
 N 240 -220 310 -220 {lab=s}
-N 350 -220 380 -220 {lab=s}
-N 310 -220 350 -220 {lab=s}
+N 310 -220 380 -220 {lab=s}
 C {devices/opin.sym} 520 -20 0 0 {name=p1 lab=x}
 C {devices/opin.sym} 520 20 0 0 {name=p2 lab=y}
 C {devices/ipin.sym} 60 -140 0 0 {name=p3 lab=gp}

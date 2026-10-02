@@ -1,52 +1,53 @@
-v {xschem version=3.4.4 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 T {tb_mpdda_dc: DC transfer of d2s_mpdda, tt 27 C, load 1 kOhm to vref || 100 pF} 60 -440 0 0 0.5 0.5 {}
 T {DUT and bias from the schematics in this directory; code block = the deck's .lib/.param/.save lines and its .control section} 60 -395 0 0 0.3 0.3 {}
-N 100 170 100 -300 {lab=vdd}
+N 100 -300 100 170 {lab=vdd}
 N 100 230 100 700 {lab=GND}
-N 200 170 200 130 {lab=vref}
+N 200 130 200 170 {lab=vref}
 N 200 230 200 700 {lab=GND}
-N 620 300 620 -300 {lab=vdd}
+N 620 -300 620 300 {lab=vdd}
 N 620 620 620 700 {lab=GND}
-N 920 -80 920 -300 {lab=vdd}
+N 920 -300 920 -80 {lab=vdd}
 N 920 160 920 700 {lab=GND}
 N 840 360 960 360 {lab=vbp}
-N 960 360 960 160 {lab=vbp}
+N 960 160 960 360 {lab=vbp}
 N 840 400 1000 400 {lab=vbn}
-N 1000 400 1000 160 {lab=vbn}
+N 1000 160 1000 400 {lab=vbn}
 N 840 440 1040 440 {lab=vbpc}
-N 1040 440 1040 160 {lab=vbpc}
+N 1040 160 1040 440 {lab=vbpc}
 N 840 480 1080 480 {lab=vbnc}
-N 1080 480 1080 160 {lab=vbnc}
+N 1080 160 1080 480 {lab=vbnc}
 N 840 520 1120 520 {lab=vabp}
-N 1120 520 1120 160 {lab=vabp}
+N 1120 160 1120 520 {lab=vabp}
 N 840 560 1160 560 {lab=vabn}
-N 1160 560 1160 160 {lab=vabn}
-N 300 170 300 130 {lab=dp}
+N 1160 160 1160 560 {lab=vabn}
+N 300 130 300 170 {lab=dp}
 N 300 230 300 700 {lab=GND}
-N 520 -140 480 -140 {lab=dp}
-N 520 -100 480 -100 {lab=GND}
+N 480 -140 520 -140 {lab=dp}
+N 480 -100 520 -100 {lab=GND}
 N 560 -90 560 -60 {lab=vref}
-N 520 40 480 40 {lab=dp}
-N 520 80 480 80 {lab=GND}
+N 480 40 520 40 {lab=dp}
+N 480 80 520 80 {lab=GND}
 N 560 90 560 120 {lab=vref}
 N 560 -150 640 -150 {lab=vinp}
 N 640 -150 640 -20 {lab=vinp}
 N 640 -20 860 -20 {lab=vinp}
 N 560 30 660 30 {lab=vinn}
-N 660 30 660 20 {lab=vinn}
+N 660 20 660 30 {lab=vinn}
 N 660 20 860 20 {lab=vinn}
-N 860 60 820 60 {lab=vref}
-N 860 100 820 100 {lab=vout}
+N 820 60 860 60 {lab=vref}
+N 820 100 860 100 {lab=vout}
 N 1220 -20 1320 -20 {lab=vout}
 N 1420 -20 1460 -20 {lab=vout}
-N 1320 40 1320 -20 {lab=vout}
+N 1320 -20 1320 40 {lab=vout}
 N 1320 100 1320 140 {lab=vref}
-N 1420 40 1420 -20 {lab=vout}
+N 1420 -20 1420 40 {lab=vout}
 N 1420 100 1420 700 {lab=GND}
 N 60 -300 100 -300 {lab=vdd}
 N 100 700 200 700 {lab=GND}
@@ -55,9 +56,8 @@ N 620 -300 920 -300 {lab=vdd}
 N 100 -300 620 -300 {lab=vdd}
 N 300 700 620 700 {lab=GND}
 N 200 700 300 700 {lab=GND}
-N 620 700 800 700 {lab=GND}
+N 620 700 920 700 {lab=GND}
 N 920 700 1420 700 {lab=GND}
-N 800 700 920 700 {lab=GND}
 C {devices/vsource.sym} 100 200 0 0 {name=Vdd value=3.3 savecurrent=false}
 C {devices/vsource.sym} 200 200 0 0 {name=Vcm value=1.65 savecurrent=false}
 C {devices/lab_pin.sym} 200 130 0 1 {name=l1 sig_type=std_logic lab=vref}

@@ -1,30 +1,27 @@
-v {xschem version=3.4.4 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 T {tb_moscv: C-V of a thick-oxide PMOS used as accumulation capacitor (gate vs S/D/well),} 60 -200 0 0 0.5 0.5 {}
 T {X1: hv PMOS 14u x 14u, gate g against S/D/well w (accumulation); XM: cap_cmomi 31u x 31u} 60 -155 0 0 0.3 0.3 {}
 N 200 230 200 400 {lab=GND}
-N 200 170 200 0 {lab=g}
-N 200 0 300 0 {lab=g}
+N 200 0 200 170 {lab=g}
+N 200 0 400 0 {lab=g}
 N 440 -30 440 0 {lab=w}
 N 440 0 440 30 {lab=w}
-N 440 0 520 0 {lab=w}
+N 440 0 560 0 {lab=w}
 N 560 0 560 170 {lab=w}
 N 560 230 560 400 {lab=GND}
 N 700 230 700 400 {lab=GND}
-N 700 170 700 100 {lab=g2}
-N 700 100 760 100 {lab=g2}
+N 700 100 700 170 {lab=g2}
+N 700 100 820 100 {lab=g2}
 N 820 100 820 170 {lab=g2}
 N 820 230 820 400 {lab=GND}
-N 200 400 480 400 {lab=GND}
-N 300 0 400 0 {lab=g}
-N 520 0 560 0 {lab=w}
-N 760 100 820 100 {lab=g2}
+N 200 400 560 400 {lab=GND}
 N 700 400 820 400 {lab=GND}
-N 480 400 560 400 {lab=GND}
 N 560 400 700 400 {lab=GND}
 C {devices/vsource.sym} 200 200 0 0 {name=Vg value="dc \{1.65+vgw\} ac 1" savecurrent=false}
 C {devices/lab_wire.sym} 300 0 0 0 {name=l1 sig_type=std_logic lab=g}

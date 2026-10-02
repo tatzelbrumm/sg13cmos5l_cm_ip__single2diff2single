@@ -1,66 +1,63 @@
-v {xschem version=3.4.4 file_version=1.2}
+v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {}
 V {}
 S {}
+F {}
 E {}
 T {tb_lc2_loop: loop gain of the in-slot, load-compensated d2s_lc2 (case b), tt 27 C,} 60 -440 0 0 0.5 0.5 {}
 T {d2s_lc2 drives the pad through IOPadAnalog's 586.9 ohm (Rs); the loop is sensed at vout (padres, near side); T = -v(vout)/v(fb)} 60 -395 0 0 0.3 0.3 {}
-N 100 170 100 -300 {lab=vdd}
+N 100 -300 100 170 {lab=vdd}
 N 100 230 100 700 {lab=GND}
-N 200 170 200 130 {lab=vref}
+N 200 130 200 170 {lab=vref}
 N 200 230 200 700 {lab=GND}
-N 620 300 620 -300 {lab=vdd}
+N 620 -300 620 300 {lab=vdd}
 N 620 620 620 700 {lab=GND}
-N 920 -80 920 -300 {lab=vdd}
+N 920 -300 920 -80 {lab=vdd}
 N 920 160 920 700 {lab=GND}
 N 840 360 960 360 {lab=vbp}
-N 960 360 960 160 {lab=vbp}
+N 960 160 960 360 {lab=vbp}
 N 840 400 1000 400 {lab=vbn}
-N 1000 400 1000 160 {lab=vbn}
+N 1000 160 1000 400 {lab=vbn}
 N 840 440 1040 440 {lab=vbpc}
-N 1040 440 1040 160 {lab=vbpc}
+N 1040 160 1040 440 {lab=vbpc}
 N 840 480 1080 480 {lab=vbnc}
-N 1080 480 1080 160 {lab=vbnc}
+N 1080 160 1080 480 {lab=vbnc}
 N 840 520 1120 520 {lab=vabp}
-N 1120 520 1120 160 {lab=vabp}
+N 1120 160 1120 520 {lab=vabp}
 N 840 560 1160 560 {lab=vabn}
-N 1160 560 1160 160 {lab=vabn}
+N 1160 160 1160 560 {lab=vabn}
 N 300 230 300 700 {lab=GND}
-N 300 170 300 -20 {lab=vinp}
+N 300 -20 300 170 {lab=vinp}
 N 300 -20 860 -20 {lab=vinp}
 N 400 230 400 700 {lab=GND}
-N 400 170 400 20 {lab=vinn}
+N 400 20 400 170 {lab=vinn}
 N 400 20 860 20 {lab=vinn}
-N 860 60 820 60 {lab=vref}
-N 860 100 820 100 {lab=fb}
-N 1220 -20 1250 -20 {lab=vout}
+N 820 60 860 60 {lab=vref}
+N 820 100 860 100 {lab=fb}
+N 1220 -20 1320 -20 {lab=vout}
 N 1430 -20 1480 -20 {lab=pad}
-N 1480 40 1480 -20 {lab=pad}
+N 1480 -20 1480 40 {lab=pad}
 N 1480 100 1480 700 {lab=GND}
-N 1560 40 1560 -20 {lab=pad}
+N 1560 -20 1560 40 {lab=pad}
 N 1560 100 1560 700 {lab=GND}
 N 1320 -50 1320 -20 {lab=vout}
-N 1320 -110 1320 -140 {lab=fb}
-N 1680 -230 1680 -260 {lab=fb}
-N 1680 -170 1680 -140 {lab=inj}
+N 1320 -140 1320 -110 {lab=fb}
+N 1680 -260 1680 -230 {lab=fb}
+N 1680 -170 1680 -110 {lab=inj}
 N 1680 -50 1680 700 {lab=GND}
 N 60 -300 100 -300 {lab=vdd}
 N 100 700 200 700 {lab=GND}
 N 1320 -20 1370 -20 {lab=vout}
-N 1250 -20 1320 -20 {lab=vout}
-N 1520 -20 1560 -20 {lab=pad}
-N 1480 -20 1520 -20 {lab=pad}
-N 1680 -140 1680 -110 {lab=inj}
+N 1480 -20 1560 -20 {lab=pad}
 N 620 -300 920 -300 {lab=vdd}
 N 100 -300 620 -300 {lab=vdd}
 N 300 700 400 700 {lab=GND}
 N 200 700 300 700 {lab=GND}
 N 1560 700 1680 700 {lab=GND}
-N 620 700 800 700 {lab=GND}
+N 620 700 920 700 {lab=GND}
 N 400 700 620 700 {lab=GND}
 N 920 700 1480 700 {lab=GND}
-N 800 700 920 700 {lab=GND}
 N 1480 700 1560 700 {lab=GND}
 C {devices/vsource.sym} 100 200 0 0 {name=Vdd value=3.3 savecurrent=false}
 C {devices/vsource.sym} 200 200 0 0 {name=Vcm value=1.65 savecurrent=false}
