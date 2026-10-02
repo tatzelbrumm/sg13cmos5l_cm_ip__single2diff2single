@@ -1,0 +1,148 @@
+# models: /home/claude/pdk/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/ngspice/models
+# osdi: /home/claude/osdi
+# sections: units moscv table cload lcas corners noise op mc budget slot area
+
+== DDA units: one input at vref, other swept (fA: gp = vref+x; fB: gn = vref-x);
+   MP-DDA static error from the unit curves: solve fA(u)+fB(u) = 2 fA(v)
+unit_r  Gm0 15.55 uS  Gm CM sensitivity    0.6 %/V  compression at |x|=0.5  0.5 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5:   -1.04 /   -0.15 /   -0.15 /   -1.02 mV
+unit_t  Gm0 15.54 uS  Gm CM sensitivity   76.8 %/V  compression at |x|=0.5 20.4 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5: -191.26 /  -30.28 /  -20.32 /  -72.21 mV
+unit_w  Gm0 11.02 uS  Gm CM sensitivity  -26.6 %/V  compression at |x|=0.5  6.8 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5:   29.01 /    7.72 /    8.80 /   37.65 mV
+unit_q  Gm0  7.83 uS  Gm CM sensitivity  -72.1 %/V  compression at |x|=0.5 22.3 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5:   74.99 /   20.24 /   30.13 /  200.00 mV
+
+== C-V of hv PMOS 14 x 14 um as accumulation capacitor (gate vs S/D/well), and MOM 31 x 31 um, 1 MHz
+V_GW [V]: -1.00  -0.50  +0.00  +0.15  +0.50  +1.00  +1.25  +1.50  +2.00
+C [pF]:   0.815  0.320  0.350  0.370  0.444  0.648  0.745  0.813  0.871   (MOM 31x31: 1.002 pF)
+
+== Performance, tt 27C (Idd includes the bias fixture)
+baseline A                 50R           gain=0.4986 off=  0.26mV nonlin= 6.62mV IqP/N= 241/ 238uA Idd=  429uA Imin=  99uA | T0= 40.7dB fc= 0.30MHz PM= 90.1 | OS= 0.0% t1%=  873ns | THD 10k/100k=-46.2/-29.1dB
+baseline A                 1k||100p      gain=0.5005 off=  0.18mV nonlin= 5.52mV IqP/N= 240/ 239uA Idd=  427uA Imin= 122uA | T0= 66.5dB fc= 1.62MHz PM= 74.8 | OS= 0.0% t1%=  307ns | THD 10k/100k=-51.1/-50.2dB
+baseline A                 1k(gnd)||100p gain=0.5007 off= -0.01mV nonlin= 5.52mV IqP/N=1754/ 104uA Idd= 1941uA Imin=  98uA | T0=101.8dB fc= 1.98MHz PM= 80.6 | OS= 0.0% t1%=  321ns | THD 10k/100k=-51.0/-50.9dB
+baseline A                 20p           gain=0.5007 off=  0.18mV nonlin= 5.52mV IqP/N= 240/ 240uA Idd=  427uA Imin= 234uA | T0= 96.5dB fc= 2.17MHz PM= 82.7 | OS= 0.0% t1%=  299ns | THD 10k/100k=-51.0/-51.1dB
+baseline A                 100p          gain=0.5007 off=  0.18mV nonlin= 5.52mV IqP/N= 240/ 240uA Idd=  427uA Imin= 234uA | T0= 96.5dB fc= 2.02MHz PM= 66.4 | OS= 2.3% t1%=  311ns | THD 10k/100k=-51.0/-51.0dB
+baseline A                 1n            gain=0.5007 off=  0.18mV nonlin= 5.52mV IqP/N= 240/ 240uA Idd=  427uA Imin= 234uA | T0= 96.5dB fc= 1.00MHz PM= 26.5 | OS=29.4% t1%= 2307ns | THD 10k/100k=-51.0/-49.1dB
+MP-DDA (A sizing)          50R           gain=0.4978 off=  0.26mV nonlin= 2.14mV IqP/N= 242/ 238uA Idd=  429uA Imin= 102uA | T0= 40.7dB fc= 0.31MHz PM= 90.1 | OS= 0.0% t1%=  873ns | THD 10k/100k=-47.9/-29.2dB
+MP-DDA (A sizing)          1k||100p      gain=0.4998 off=  0.18mV nonlin= 1.04mV IqP/N= 240/ 240uA Idd=  427uA Imin= 125uA | T0= 66.5dB fc= 1.62MHz PM= 74.7 | OS= 0.0% t1%=  305ns | THD 10k/100k=-60.2/-55.5dB
+MP-DDA (A sizing)          1k(gnd)||100p gain=0.5000 off= -0.01mV nonlin= 1.03mV IqP/N=1754/ 104uA Idd= 1941uA Imin=  99uA | T0=101.8dB fc= 1.98MHz PM= 80.4 | OS= 0.0% t1%=  319ns | THD 10k/100k=-60.0/-58.9dB
+MP-DDA (A sizing)          20p           gain=0.5000 off=  0.18mV nonlin= 1.02mV IqP/N= 240/ 240uA Idd=  427uA Imin= 236uA | T0= 96.5dB fc= 2.17MHz PM= 82.6 | OS= 0.0% t1%=  297ns | THD 10k/100k=-60.0/-59.9dB
+MP-DDA (A sizing)          100p          gain=0.5000 off=  0.18mV nonlin= 1.02mV IqP/N= 240/ 240uA Idd=  427uA Imin= 236uA | T0= 96.5dB fc= 2.03MHz PM= 66.2 | OS= 2.4% t1%=  311ns | THD 10k/100k=-60.0/-59.8dB
+MP-DDA (A sizing)          1n            gain=0.5000 off=  0.18mV nonlin= 1.02mV IqP/N= 240/ 240uA Idd=  427uA Imin= 236uA | T0= 96.5dB fc= 1.00MHz PM= 26.4 | OS=29.6% t1%= 2305ns | THD 10k/100k=-60.0/-57.5dB
+MP-DDA (A sizing), MOS 18  50R           gain=0.4978 off=  0.26mV nonlin= 2.14mV IqP/N= 242/ 238uA Idd=  429uA Imin= 102uA | T0= 40.7dB fc= 0.31MHz PM= 90.1 | OS= 0.0% t1%=  781ns | THD 10k/100k=-47.6/-28.8dB
+MP-DDA (A sizing), MOS 18  1k||100p      gain=0.4998 off=  0.18mV nonlin= 1.04mV IqP/N= 240/ 240uA Idd=  427uA Imin= 125uA | T0= 66.5dB fc= 1.60MHz PM= 75.1 | OS= 0.0% t1%=  313ns | THD 10k/100k=-60.1/-53.2dB
+MP-DDA (A sizing), MOS 18  1k(gnd)||100p gain=0.5000 off= -0.01mV nonlin= 1.03mV IqP/N=1754/ 104uA Idd= 1941uA Imin=  99uA | T0=102.0dB fc= 2.10MHz PM= 80.8 | OS= 0.0% t1%=  311ns | THD 10k/100k=-59.9/-56.6dB
+MP-DDA (A sizing), MOS 18  20p           gain=0.5000 off=  0.18mV nonlin= 1.02mV IqP/N= 240/ 240uA Idd=  427uA Imin= 236uA | T0= 96.5dB fc= 2.14MHz PM= 82.9 | OS= 0.0% t1%=  303ns | THD 10k/100k=-60.0/-60.1dB
+MP-DDA (A sizing), MOS 18  100p          gain=0.5000 off=  0.18mV nonlin= 1.02mV IqP/N= 240/ 240uA Idd=  427uA Imin= 236uA | T0= 96.5dB fc= 2.00MHz PM= 67.0 | OS= 1.9% t1%=  301ns | THD 10k/100k=-60.0/-60.0dB
+MP-DDA (A sizing), MOS 18  1n            gain=0.5000 off=  0.18mV nonlin= 1.02mV IqP/N= 240/ 240uA Idd=  427uA Imin= 236uA | T0= 96.5dB fc= 1.00MHz PM= 26.9 | OS=28.5% t1%= 2257ns | THD 10k/100k=-60.0/-57.5dB
+d2s_mpdda                  50R           gain=0.4995 off=  0.07mV nonlin= 1.53mV IqP/N= 212/ 211uA Idd=  296uA Imin=  82uA | T0= 53.1dB fc= 0.23MHz PM= 89.3 | OS= 0.0% t1%=  943ns | THD 10k/100k=-45.4/-26.9dB
+d2s_mpdda                  1k||100p      gain=0.4999 off=  0.05mV nonlin= 1.24mV IqP/N= 212/ 212uA Idd=  296uA Imin= 102uA | T0= 78.9dB fc= 1.37MHz PM= 72.4 | OS= 0.0% t1%=  327ns | THD 10k/100k=-58.5/-51.3dB
+d2s_mpdda                  1k(gnd)||100p gain=0.5000 off= -0.00mV nonlin= 1.24mV IqP/N=1733/  83uA Idd= 1817uA Imin=  79uA | T0=103.2dB fc= 1.84MHz PM= 76.7 | OS= 0.0% t1%=  323ns | THD 10k/100k=-58.6/-54.6dB
+d2s_mpdda                  20p           gain=0.5000 off=  0.05mV nonlin= 1.24mV IqP/N= 212/ 212uA Idd=  296uA Imin= 208uA | T0=104.3dB fc= 1.89MHz PM= 78.4 | OS= 0.0% t1%=  309ns | THD 10k/100k=-58.6/-58.6dB
+d2s_mpdda                  100p          gain=0.5000 off=  0.05mV nonlin= 1.24mV IqP/N= 212/ 212uA Idd=  296uA Imin= 208uA | T0=104.3dB fc= 1.77MHz PM= 62.0 | OS= 4.7% t1%=  361ns | THD 10k/100k=-58.6/-58.4dB
+d2s_mpdda                  1n            gain=0.5000 off=  0.05mV nonlin= 1.24mV IqP/N= 212/ 212uA Idd=  296uA Imin= 208uA | T0=104.3dB fc= 0.87MHz PM= 24.1 | OS=32.9% t1%= 2687ns | THD 10k/100k=-58.6/-54.5dB
+
+== fc / PM vs load capacitance (no resistive load), tt 27C
+baseline A                 5p: 2.18 MHz/86.3 | 10p: 2.18 MHz/85.1 | 20p: 2.17 MHz/82.7 | 50p: 2.13 MHz/76.0 | 100p: 2.02 MHz/66.4 | 300p: 1.59 MHz/45.6 | 1n: 1.00 MHz/26.5
+MP-DDA (A sizing)          5p: 2.18 MHz/86.1 | 10p: 2.18 MHz/84.9 | 20p: 2.17 MHz/82.6 | 50p: 2.13 MHz/75.8 | 100p: 2.03 MHz/66.2 | 300p: 1.60 MHz/45.5 | 1n: 1.00 MHz/26.4
+MP-DDA (A sizing), MOS 18  5p: 2.14 MHz/86.4 | 10p: 2.14 MHz/85.2 | 20p: 2.14 MHz/82.9 | 50p: 2.10 MHz/76.4 | 100p: 2.00 MHz/67.0 | 300p: 1.59 MHz/46.3 | 1n: 1.00 MHz/26.9
+d2s_mpdda                  5p: 1.90 MHz/82.0 | 10p: 1.90 MHz/80.8 | 20p: 1.89 MHz/78.4 | 50p: 1.86 MHz/71.5 | 100p: 1.77 MHz/62.0 | 300p: 1.39 MHz/42.0 | 1n: 0.87 MHz/24.1
+d2s_mpdda, MOS 14x14       5p: 2.41 MHz/79.7 | 10p: 2.40 MHz/78.0 | 20p: 2.39 MHz/74.6 | 50p: 2.31 MHz/65.4 | 100p: 2.12 MHz/54.1 | 300p: 1.55 MHz/34.6 | 1n: 0.93 MHz/19.5
+d2s_mpdda, MOS 16x16       5p: 1.90 MHz/82.0 | 10p: 1.90 MHz/80.8 | 20p: 1.89 MHz/78.4 | 50p: 1.86 MHz/71.5 | 100p: 1.77 MHz/62.0 | 300p: 1.39 MHz/42.0 | 1n: 0.87 MHz/24.1
+d2s_mpdda, MOS 18x18       5p: 1.54 MHz/83.6 | 10p: 1.54 MHz/82.7 | 20p: 1.53 MHz/81.0 | 50p: 1.52 MHz/75.8 | 100p: 1.47 MHz/68.1 | 300p: 1.23 MHz/48.8 | 1n: 0.80 MHz/28.7
+
+== d2s_mpdda: loop gain vs cascode length (folded and mirror cascodes, W = 10 L)
+L = 1 um: 1k||100p: T0= 69.7dB fc= 1.36MHz PM= 73.4 | 100p: T0= 99.6dB fc= 1.76MHz PM= 63.4 | 50R: T0= 43.9dB fc= 0.23MHz PM= 89.6
+L = 2 um: 1k||100p: T0= 75.4dB fc= 1.37MHz PM= 73.0 | 100p: T0=103.1dB fc= 1.76MHz PM= 62.8 | 50R: T0= 49.6dB fc= 0.23MHz PM= 89.4
+L = 3 um: 1k||100p: T0= 78.9dB fc= 1.37MHz PM= 72.4 | 100p: T0=104.3dB fc= 1.77MHz PM= 62.0 | 50R: T0= 53.1dB fc= 0.23MHz PM= 89.3
+
+== Corners: gain / offset / nonlin at 1k||100p, loop at 1k||100p and 100p (bias references ideal)
+tt 27C      baseline A         gain=0.5005 off=  0.18mV nonlin= 5.52mV Iq= 240uA Idd= 427uA | 1k||100p T0= 66.5dB fc= 1.62MHz PM= 74.8 | 100p T0= 96.5dB fc= 2.02MHz PM= 66.4
+tt 27C      MP-DDA (A sizing)  gain=0.4998 off=  0.18mV nonlin= 1.04mV Iq= 240uA Idd= 427uA | 1k||100p T0= 66.5dB fc= 1.62MHz PM= 74.7 | 100p T0= 96.5dB fc= 2.03MHz PM= 66.2
+tt 27C      d2s_mpdda          gain=0.4999 off=  0.05mV nonlin= 1.24mV Iq= 212uA Idd= 296uA | 1k||100p T0= 78.9dB fc= 1.37MHz PM= 72.4 | 100p T0=104.3dB fc= 1.77MHz PM= 62.0
+ss 125C     baseline A         gain=0.5119 off=  1.30mV nonlin= 8.07mV Iq= 226uA Idd= 414uA | 1k||100p T0= 51.9dB fc= 1.44MHz PM= 74.0 | 100p T0= 84.6dB fc= 1.88MHz PM= 62.8
+ss 125C     MP-DDA (A sizing)  gain=0.4988 off=  1.28mV nonlin= 1.56mV Iq= 227uA Idd= 415uA | 1k||100p T0= 52.1dB fc= 1.46MHz PM= 73.7 | 100p T0= 84.8dB fc= 1.90MHz PM= 62.4
+ss 125C     d2s_mpdda          gain=0.4996 off=  0.45mV nonlin= 1.75mV Iq= 207uA Idd= 291uA | 1k||100p T0= 62.0dB fc= 1.20MHz PM= 71.8 | 100p T0= 94.8dB fc= 1.62MHz PM= 58.7
+ff -40C     baseline A         gain=0.4968 off=  0.12mV nonlin= 3.30mV Iq= 254uA Idd= 441uA | 1k||100p T0= 69.8dB fc= 1.85MHz PM= 74.6 | 100p T0= 98.0dB fc= 2.25MHz PM= 67.5
+ff -40C     MP-DDA (A sizing)  gain=0.4998 off=  0.12mV nonlin= 0.66mV Iq= 255uA Idd= 442uA | 1k||100p T0= 69.8dB fc= 1.85MHz PM= 74.5 | 100p T0= 98.0dB fc= 2.25MHz PM= 67.3
+ff -40C     d2s_mpdda          gain=0.5000 off=  0.03mV nonlin= 0.48mV Iq= 219uA Idd= 303uA | 1k||100p T0= 82.7dB fc= 1.56MHz PM= 72.0 | 100p T0=105.5dB fc= 1.96MHz PM= 62.9
+sf 27C      baseline A         gain=0.4998 off=  0.17mV nonlin= 4.11mV Iq= 240uA Idd= 427uA | 1k||100p T0= 66.9dB fc= 1.62MHz PM= 74.8 | 100p T0= 97.0dB fc= 2.03MHz PM= 66.3
+sf 27C      MP-DDA (A sizing)  gain=0.4998 off=  0.17mV nonlin= 0.82mV Iq= 241uA Idd= 428uA | 1k||100p T0= 67.0dB fc= 1.62MHz PM= 74.6 | 100p T0= 97.0dB fc= 2.03MHz PM= 66.2
+sf 27C      d2s_mpdda          gain=0.4999 off=  0.05mV nonlin= 0.78mV Iq= 212uA Idd= 296uA | 1k||100p T0= 79.4dB fc= 1.35MHz PM= 72.6 | 100p T0=104.4dB fc= 1.75MHz PM= 62.4
+fs 27C      baseline A         gain=0.5013 off=  0.20mV nonlin= 8.07mV Iq= 239uA Idd= 427uA | 1k||100p T0= 65.8dB fc= 1.61MHz PM= 74.8 | 100p T0= 95.8dB fc= 2.02MHz PM= 66.4
+fs 27C      MP-DDA (A sizing)  gain=0.4997 off=  0.20mV nonlin= 1.37mV Iq= 240uA Idd= 427uA | 1k||100p T0= 65.8dB fc= 1.62MHz PM= 74.7 | 100p T0= 95.8dB fc= 2.02MHz PM= 66.3
+fs 27C      d2s_mpdda          gain=0.4999 off=  0.05mV nonlin= 2.07mV Iq= 212uA Idd= 296uA | 1k||100p T0= 78.2dB fc= 1.38MHz PM= 72.2 | 100p T0=104.1dB fc= 1.78MHz PM= 61.7
+ss 27C      baseline A         gain=0.5022 off=  0.15mV nonlin=12.69mV Iq= 236uA Idd= 423uA | 1k||100p T0= 67.5dB fc= 1.61MHz PM= 74.7 | 100p T0= 97.6dB fc= 2.02MHz PM= 66.1
+ss 27C      MP-DDA (A sizing)  gain=0.4998 off=  0.15mV nonlin= 1.91mV Iq= 236uA Idd= 423uA | 1k||100p T0= 67.5dB fc= 1.61MHz PM= 74.5 | 100p T0= 97.7dB fc= 2.02MHz PM= 65.9
+ss 27C      d2s_mpdda          gain=0.4999 off=  0.04mV nonlin= 3.50mV Iq= 208uA Idd= 292uA | 1k||100p T0= 79.6dB fc= 1.42MHz PM= 71.4 | 100p T0=104.9dB fc= 1.84MHz PM= 60.0
+ff 27C      baseline A         gain=0.4990 off=  0.24mV nonlin= 3.30mV Iq= 244uA Idd= 431uA | 1k||100p T0= 64.8dB fc= 1.63MHz PM= 74.9 | 100p T0= 94.8dB fc= 2.03MHz PM= 66.7
+ff 27C      MP-DDA (A sizing)  gain=0.4997 off=  0.24mV nonlin= 0.69mV Iq= 244uA Idd= 432uA | 1k||100p T0= 64.8dB fc= 1.63MHz PM= 74.8 | 100p T0= 94.8dB fc= 2.03MHz PM= 66.5
+ff 27C      d2s_mpdda          gain=0.4999 off=  0.07mV nonlin= 0.53mV Iq= 216uA Idd= 300uA | 1k||100p T0= 78.0dB fc= 1.31MHz PM= 73.5 | 100p T0=103.6dB fc= 1.69MHz PM= 64.0
+tt 27C wcs  baseline A         gain=0.4895 off=  0.21mV nonlin= 7.09mV Iq= 240uA Idd= 427uA | 1k||100p T0= 64.9dB fc= 1.36MHz PM= 77.2 | 100p T0= 94.9dB fc= 1.72MHz PM= 69.7
+tt 27C wcs  MP-DDA (A sizing)  gain=0.4997 off=  0.22mV nonlin= 1.48mV Iq= 240uA Idd= 428uA | 1k||100p T0= 64.8dB fc= 1.35MHz PM= 77.2 | 100p T0= 94.8dB fc= 1.71MHz PM= 69.8
+tt 27C wcs  d2s_mpdda          gain=0.4999 off=  0.06mV nonlin= 2.03mV Iq= 212uA Idd= 296uA | 1k||100p T0= 77.3dB fc= 1.14MHz PM= 75.3 | 100p T0=102.7dB fc= 1.49MHz PM= 66.1
+tt 27C bcs  baseline A         gain=0.5148 off=  0.15mV nonlin= 5.07mV Iq= 240uA Idd= 427uA | 1k||100p T0= 68.0dB fc= 1.92MHz PM= 72.1 | 100p T0= 98.1dB fc= 2.37MHz PM= 62.8
+tt 27C bcs  MP-DDA (A sizing)  gain=0.4998 off=  0.15mV nonlin= 0.66mV Iq= 240uA Idd= 427uA | 1k||100p T0= 68.2dB fc= 1.95MHz PM= 71.7 | 100p T0= 98.2dB fc= 2.40MHz PM= 62.3
+tt 27C bcs  d2s_mpdda          gain=0.5000 off=  0.04mV nonlin= 0.63mV Iq= 212uA Idd= 296uA | 1k||100p T0= 80.5dB fc= 1.64MHz PM= 69.0 | 100p T0=106.0dB fc= 2.08MHz PM= 57.4
+tt 125C     baseline A         gain=0.5249 off=  1.89mV nonlin= 5.18mV Iq= 230uA Idd= 418uA | 1k||100p T0= 49.0dB fc= 1.69MHz PM= 71.6 | 100p T0= 81.5dB fc= 2.15MHz PM= 59.8
+tt 125C     MP-DDA (A sizing)  gain=0.4983 off=  1.84mV nonlin= 1.10mV Iq= 231uA Idd= 419uA | 1k||100p T0= 49.2dB fc= 1.73MHz PM= 71.1 | 100p T0= 81.7dB fc= 2.20MHz PM= 59.0
+tt 125C     d2s_mpdda          gain=0.4992 off=  0.83mV nonlin= 0.55mV Iq= 210uA Idd= 294uA | 1k||100p T0= 56.3dB fc= 1.36MHz PM= 69.9 | 100p T0= 89.3dB fc= 1.80MHz PM= 56.2
+tt -40C     baseline A         gain=0.4870 off=  0.13mV nonlin= 7.15mV Iq= 250uA Idd= 436uA | 1k||100p T0= 68.6dB fc= 1.53MHz PM= 77.1 | 100p T0= 97.0dB fc= 1.89MHz PM= 70.6
+tt -40C     MP-DDA (A sizing)  gain=0.4998 off=  0.13mV nonlin= 1.53mV Iq= 250uA Idd= 437uA | 1k||100p T0= 68.5dB fc= 1.51MHz PM= 77.1 | 100p T0= 96.9dB fc= 1.87MHz PM= 70.7
+tt -40C     d2s_mpdda          gain=0.5000 off=  0.03mV nonlin= 2.15mV Iq= 214uA Idd= 298uA | 1k||100p T0= 81.0dB fc= 1.35MHz PM= 74.0 | 100p T0=104.2dB fc= 1.72MHz PM= 65.2
+
+== Output noise, 1k||100p, tt 27C
+baseline A         1 kHz  1599.4 nV/rtHz  100 kHz  200.5 nV/rtHz  10 Hz-10 MHz  278.4 uV rms
+MP-DDA (A sizing)  1 kHz  1591.5 nV/rtHz  100 kHz  201.2 nV/rtHz  10 Hz-10 MHz  280.3 uV rms
+d2s_mpdda          1 kHz   676.0 nV/rtHz  100 kHz  152.1 nV/rtHz  10 Hz-10 MHz  230.8 uV rms
+
+== d2s_mpdda operating point at vd = 0 (1k||100p): devices and saturation margin
+  XSX   ids=  29.96 uA  |vds|=0.372  vdss=0.282  margin= 0.090 V
+  XSY   ids=  29.96 uA  |vds|=0.372  vdss=0.282  margin= 0.091 V
+  XCX   ids=   9.99 uA  |vds|=0.274  vdss=0.169  margin= 0.104 V
+  XCY   ids=   9.99 uA  |vds|=0.334  vdss=0.169  margin= 0.165 V
+  XPL   ids=   9.99 uA  |vds|=0.332  vdss=0.251  margin= 0.081 V
+  XPR   ids=   9.99 uA  |vds|=0.332  vdss=0.251  margin= 0.081 V
+  XPCL  ids=   9.99 uA  |vds|=0.667  vdss=0.216  margin= 0.451 V
+  XPCR  ids=   9.99 uA  |vds|=0.380  vdss=0.216  margin= 0.164 V
+  XFPL  ids=   0.00 uA  |vds|=1.655  vdss=0.101  margin= 1.554 V
+  XFNL  ids=   9.99 uA  |vds|=1.655  vdss=0.203  margin= 1.452 V
+  XABP  ids=   5.17 uA  |vds|=1.882  vdss=0.169  margin= 1.714 V
+  XABN  ids=   4.82 uA  |vds|=1.882  vdss=0.164  margin= 1.719 V
+  XOP   ids= 211.93 uA  |vds|=1.650  vdss=0.138  margin= 1.512 V
+  XON   ids= 211.88 uA  |vds|=1.650  vdss=0.146  margin= 1.504 V
+  v(x) = 0.372  v(a) = 2.588  v(b) = 0.706 V
+
+== Mismatch MC, 30 seeds (mos_tt_mismatch, res_typ_mismatch, mm_ok=1 on all MOS and rhigh), 1k||100p
+baseline A         offset sd 14.36 mV (range -37.76.. 38.51)  gain sd 1.60 % (range 0.4851..0.5153)  nonlin max 5.97 mV
+MP-DDA (A sizing)  offset sd 14.53 mV (range -29.51.. 28.10)  gain sd 1.33 % (range 0.4867..0.5115)  nonlin max 1.36 mV
+d2s_mpdda          offset sd  5.26 mV (range  -9.20.. 12.19)  gain sd 1.11 % (range 0.4890..0.5098)  nonlin max 1.74 mV
+
+== Offset / gain mismatch budget by device group (20 seeds, mismatch on one group at a time)
+MP-DDA (A sizing)  unit tails     offset sd  4.22 mV  gain sd 0.03 %
+MP-DDA (A sizing)  unit pairs     offset sd  1.74 mV  gain sd 0.01 %
+MP-DDA (A sizing)  unit rhigh     offset sd  0.00 mV  gain sd 1.00 %
+MP-DDA (A sizing)  folding sinks  offset sd 11.50 mV  gain sd 0.01 %
+MP-DDA (A sizing)  fold cascodes  offset sd  0.38 mV  gain sd 0.00 %
+MP-DDA (A sizing)  mirror         offset sd  2.28 mV  gain sd 0.00 %
+MP-DDA (A sizing)  class-AB       offset sd  0.01 mV  gain sd 0.00 %
+d2s_mpdda          unit tails     offset sd  1.42 mV  gain sd 0.02 %
+d2s_mpdda          unit pairs     offset sd  1.72 mV  gain sd 0.01 %
+d2s_mpdda          unit rhigh     offset sd  0.00 mV  gain sd 0.84 %
+d2s_mpdda          folding sinks  offset sd  4.32 mV  gain sd 0.00 %
+d2s_mpdda          fold cascodes  offset sd  0.06 mV  gain sd 0.00 %
+d2s_mpdda          mirror         offset sd  1.37 mV  gain sd 0.00 %
+d2s_mpdda          class-AB       offset sd  0.00 mV  gain sd 0.00 %
+
+== Case (b): output devices in the slot (not clamps), load-compensated, no compensation capacitor
+d2s_lc2_nc  gain=0.4932 off=  0.50mV Idd= 174uA | T0 (100p) 37.2 dB | 5p: 11.50 MHz/16.0 | 20p: 5.29 MHz/46.8 | 100p: 1.36 MHz/78.1 | 1n: 0.14 MHz/89.4 | 1k||100p: T0= -1.1dB (no crossover)
+d2s_lc2     gain=0.4999 off=  7.83mV Idd= 169uA | T0 (100p) 74.0 dB | 5p: 12.50 MHz/-7.9 | 20p: 5.49 MHz/38.5 | 100p: 1.33 MHz/76.7 | 1n: 0.13 MHz/88.7 | 1k||100p: T0= -1.4dB (no crossover)
+d2s_lc2 into IOPadAnalog padres -> 586.9 ohm -> pad (+2 pF) -> C_L, loop sensed at padres (near) or pad (far):
+  C_L 20p   near: T0= 74.0dB fc= 5.46MHz PM= 62.4 | far: fc= 5.11MHz PM= 41.4
+  C_L 100p  near: T0= 74.0dB fc= 1.49MHz PM=104.3 | far: fc= 1.30MHz PM= 76.9
+  C_L 1n    near: T0= 73.4dB fc= 0.15MHz PM=118.2 | far: fc= 0.13MHz PM= 88.7
+
+== Drawn device area without the output frames and without the bias fixture (W*L, rhigh w*l, cap w*l), um2
+baseline A                 gate    437  compensation   1922  rhigh   28  total   2387
+MP-DDA (A sizing), MOM     gate    517  compensation   1922  rhigh   73  total   2512
+MP-DDA (A sizing), MOS 18  gate    517  compensation    648  rhigh   73  total   1238
+d2s_mpdda, lcas 1          gate   1081  compensation    512  rhigh  101  total   1694
+d2s_mpdda, lcas 2          gate   1201  compensation    512  rhigh  101  total   1814
+d2s_mpdda, lcas 3          gate   1401  compensation    512  rhigh  101  total   2014

@@ -1,0 +1,41 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_mpdda: proposed revision of d2s_miller (topology A), output devices still the clamp frames.
+*  1. matched-pair DDA: four identical unit_r2 (units.spice), A (vinp, vref), B (vref, vinn),
+*     C1 = C2 (vref, vfb). Balance f(vinp-vref) + f(vref-vinn) = 2 f(vfb-vref) gives
+*     vout - vref = (vinp - vinn)/2 for any matched odd monotonic f; gain = unit count ratio.
+*  2. Miller capacitors: thick-oxide PMOS in accumulation (gate above n-well), wc x lc each,
+*     instead of 2 x 31 x 31 um cap_cmomi.  A side: gate a, S/D/well vout.  B side: gate vout,
+*     S/D/well b.
+*  3. currents: unit tails 2 x 5 uA (was 2 x 20 uA per pair), sinks 30 uA (was 50 uA),
+*     bias fixture d2s_bias_lp.
+*  4. offset: sinks 36/6, mirror 24/4 (the folding sinks dominated the offset).
+*  5. loop gain: folded and mirror cascodes at L = lcas um (default 3), W = 10 * L.
+* Pins as d2s_miller. Bias: d2s_bias_lp.
+.subckt d2s_mpdda vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn wc=16u lc=16u lcas=3 rl=50.6u
+XA x y vinp vref vdd vss vbp unit_r2 rl={rl}
+XB x y vref vinn vdd vss vbp unit_r2 rl={rl}
+XC1 x y vref vfb vdd vss vbp unit_r2 rl={rl}
+XC2 x y vref vfb vdd vss vbp unit_r2 rl={rl}
+* --- folded cascode (30 uA sinks: 4 x 5 uA from the units + 10 uA branch)
+XSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=4
+XSY y vbn vss vss sg13_hv_nmos w=36u l=6u ng=4
+XCX l1 vbnc x vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+XCY b vbnc y vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+* --- low-voltage cascode mirror (10 uA per branch)
+XPL pl l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4
+XPR pr l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4
+XPCL l2 vbpc pl vdd sg13_hv_pmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+XPCR a vbpc pr vdd sg13_hv_pmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+* --- floating current source (left, replica) and floating class-AB control (right), as d2s_miller
+XFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1
+XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
+* --- output devices: one Clamp_P frame (L=0.6, 41 x 2 rows), two Clamp_N frames at L=1.0 (2 x 33)
+XOP vout a vdd vdd sg13_hv_pmos w=546.12u l=0.6u ng=82
+XON vout b vss vss sg13_hv_nmos w=290.4u l=1u ng=66
+* --- Miller capacitors: hv PMOS accumulation capacitors (~5 fF/um2 C_ox; 0.4...0.8 of that in use)
+XCMA vout a vout vout sg13_hv_pmos w={wc} l={lc} ng=1
+XCMB b vout b b sg13_hv_pmos w={wc} l={lc} ng=1
+.ends d2s_mpdda

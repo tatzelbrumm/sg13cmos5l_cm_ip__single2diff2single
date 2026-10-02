@@ -1,0 +1,38 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_mp: d2s_miller with the matched-pair DDA (MP-DDA) front end.
+* Four identical units instead of two pairs of different degeneration:
+*   A  (vinp, vref)   B  (vref, vinn)   C1, C2 (vref, vfb)
+*   balance: f(vinp-vref) + f(vref-vinn) = 2 f(vfb-vref)  ->  vout - vref = (vinp - vinn)/2
+* The gain 1/2 is the unit count ratio 2:4 (independent of R, gm, corner); the units'
+* nonlinearity cancels as far as the units match. Fold, mirror, class-AB control and output
+* devices are those of d2s_miller. Unit = unit_r (rhigh, same element as before, one value).
+* XCC instantiates a subcircuit `ccomp` that the testbench defines as a wrapper around
+* ccomp_mom (cap_cmomi as in d2s_miller) or ccomp_mos (thick-oxide PMOS accumulation
+* capacitors), both in ccomp.spice; see header() in run_improvements.py.
+.subckt d2s_mp vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn rl=36.4u
+XA x y vinp vref vdd vss vbp unit_r rl={rl}
+XB x y vref vinn vdd vss vbp unit_r rl={rl}
+XC1 x y vref vfb vdd vss vbp unit_r rl={rl}
+XC2 x y vref vfb vdd vss vbp unit_r rl={rl}
+* --- folded cascode (50 uA sinks: 4 x 10 uA from the units + 10 uA branch)
+XSX x vbn vss vss sg13_hv_nmos w=25u l=2u ng=2
+XSY y vbn vss vss sg13_hv_nmos w=25u l=2u ng=2
+XCX l1 vbnc x vss sg13_hv_nmos w=10u l=1u ng=1
+XCY b vbnc y vss sg13_hv_nmos w=10u l=1u ng=1
+* --- low-voltage cascode mirror (10 uA per branch)
+XPL pl l2 vdd vdd sg13_hv_pmos w=10u l=2u ng=1
+XPR pr l2 vdd vdd sg13_hv_pmos w=10u l=2u ng=1
+XPCL l2 vbpc pl vdd sg13_hv_pmos w=10u l=1u ng=1
+XPCR a vbpc pr vdd sg13_hv_pmos w=10u l=1u ng=1
+* --- floating current source (left, replica) and floating class-AB control (right)
+XFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1
+XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
+* --- output devices: one Clamp_P frame (L=0.6, 41 x 2 rows), two Clamp_N frames at L=1.0 (2 x 33)
+XOP vout a vdd vdd sg13_hv_pmos w=546.12u l=0.6u ng=82
+XON vout b vss vss sg13_hv_nmos w=290.4u l=1u ng=66
+* --- compensation
+XCC vout a b vss ccomp
+.ends d2s_mp
