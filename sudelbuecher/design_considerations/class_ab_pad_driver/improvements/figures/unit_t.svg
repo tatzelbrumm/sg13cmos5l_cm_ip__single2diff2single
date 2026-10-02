@@ -1,0 +1,315 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="596" height="652" viewBox="228 280 596 652" version="1.1" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYToyNjFjZGY3ZC1hMzE0LTRiYzItYjhiMS04YjczNjM5NzdmYjMAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaGfASQj4rEpSvC5mi48/9KwAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo3NTRjYjdmNC0yNTkxLTQwYWQtYjUzMy1iZDRlNmFjNzIzOGZscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoa0r+HMUDe+70Z6Vn52aTRAAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggtdnVYGDvT9PeQFhZ5IWnf+nikHsL87/EIhHsg1aLPTikZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaIJflb0pbzQYiJ1Z+O7ZW7cAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCBwPAygJl6CGnPn1D1cs5Vz+AdzvSOK+n+nC41zVSojp2RuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBjTZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjI2MWNkZjdkLWEzMTQtNGJjMi1iOGIxLThiNzM2Mzk3N2ZiMy9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmY4ZTMxYTIxLThkOWEtNDU0YS04NWI2LTI5NDdhNDU2NTA2YXJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCC12dVgYO9P095AWFnkhad/6eKQewvzv8QiEeyDVos9OKJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFgg1xLbufsggLhcEDtDe+tWAXwaahrK4GWuGlP7S1e32SyiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggdg8DiQPHgc610BKlp3OnV1opNVO/zJaRdOwPGqNEUQV0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQODYse66wanJpeedByjPDz65gAV9Q7WJbsgNreEYrlDYW2AHiV2NiGj/5+leDPLYQnwxYwMcAMTjeJ7Q4aJLwMc=</c2pa:manifest></metadata>
+<style type="text/css">
+.l0{
+ fill: #ffffff;
+  stroke: #ffffff;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l1{
+ fill: #000000;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l2{
+  fill: none;
+  stroke: #808080;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l3{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l4{
+ fill: #000000;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l5{
+ fill: #000000;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l6{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l7{
+ fill: #ffffff; fill-opacity: 0.5;
+  stroke: #ffffff;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l8{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l9{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l10{
+ fill: #d55e00;
+  stroke: #d55e00;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l11{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l12{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l13{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l14{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l15{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l16{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l17{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l18{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l19{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l20{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l21{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+text {font-family: "Liberation Sans", Arial, Helvetica, sans-serif;}
+</style>
+<rect class="l0" x="0" y="0" width="1400" height="1200"/>
+<text fill="#000000"  xml:space="preserve" font-size="20.8" transform="translate(300, 318.886)" >unit_t: split-tail PMOS pair, triode hv PMOS degeneration</text>
+<text fill="#000000"  xml:space="preserve" font-size="13" transform="translate(300, 351.804)" >gp drains to y, gn drains to x; x and y go to the folding nodes</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(780, 786.831)" >x</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(780, 826.831)" >y</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(264.42, 666.831)" >gp</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(264.42, 746.831)" >gn</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(254.911, 406.206)" >vdd</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(254.911, 906.206)" >vss</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(256.005, 526.831)" >vbp</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(483.73, 575.394)" >sa</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(602.5, 575.394)" >sb</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(475, 439.443)" >Ta</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(428.35, 454.443)" >l=2u</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(423.25, 443.193)" >w=10u</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(614.8, 439.443)" >Tb</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(651.25, 454.443)" >l=2u</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(651.25, 443.193)" >w=10u</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(434.8, 639.443)" >Ma</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(471.25, 666.943)" >ng=2</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(471.25, 654.443)" >l=1u</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(471.25, 643.193)" >w=20u</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(655, 639.443)" >Mb</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(608.35, 666.943)" >ng=2</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(608.35, 654.443)" >l=1u</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(603.25, 643.193)" >w=20u</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(577.514, 600.1) rotate(270)" >D</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(562.514, 568.75) rotate(270)" >l=3u</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(573.764, 568.75) rotate(270)" >w=0.5u</text>
+<path class="l4" d="M472.5 437.5L472.5 482.5"/>
+<path class="l4" d="M460 430L460 442.5"/>
+<path class="l4" d="M460 477.5L460 490"/>
+<path class="l4" d="M477.5 445L477.5 475"/>
+<path class="l4" d="M460 477.5L472.5 477.5"/>
+<path class="l4" d="M460 442.5L472.5 442.5"/>
+<path class="l4" d="M478 460L500 460"/>
+<path class="l4" d="M467.5 440L472.5 442.5L467.5 445L467.5 440"/>
+<path class="l4" d="M477 444L479 444L479 476L477 476L477 444z"/>
+<path class="l4" d="M627.5 437.5L627.5 482.5"/>
+<path class="l4" d="M640 430L640 442.5"/>
+<path class="l4" d="M640 477.5L640 490"/>
+<path class="l4" d="M622.5 445L622.5 475"/>
+<path class="l4" d="M627.5 477.5L640 477.5"/>
+<path class="l4" d="M627.5 442.5L640 442.5"/>
+<path class="l4" d="M600 460L622 460"/>
+<path class="l4" d="M632.5 440L627.5 442.5L632.5 445L632.5 440"/>
+<path class="l4" d="M621 444L623 444L623 476L621 476L621 444z"/>
+<path class="l4" d="M447.5 637.5L447.5 682.5"/>
+<path class="l4" d="M460 630L460 642.5"/>
+<path class="l4" d="M460 677.5L460 690"/>
+<path class="l4" d="M442.5 645L442.5 675"/>
+<path class="l4" d="M447.5 677.5L460 677.5"/>
+<path class="l4" d="M447.5 642.5L460 642.5"/>
+<path class="l4" d="M420 660L442 660"/>
+<path class="l4" d="M452.5 640L447.5 642.5L452.5 645L452.5 640"/>
+<path class="l4" d="M441 644L443 644L443 676L441 676L441 644z"/>
+<path class="l4" d="M652.5 637.5L652.5 682.5"/>
+<path class="l4" d="M640 630L640 642.5"/>
+<path class="l4" d="M640 677.5L640 690"/>
+<path class="l4" d="M657.5 645L657.5 675"/>
+<path class="l4" d="M640 677.5L652.5 677.5"/>
+<path class="l4" d="M640 642.5L652.5 642.5"/>
+<path class="l4" d="M658 660L680 660"/>
+<path class="l4" d="M647.5 640L652.5 642.5L647.5 645L647.5 640"/>
+<path class="l4" d="M657 644L659 644L659 676L657 676L657 644z"/>
+<path class="l4" d="M527.5 592.5L572.5 592.5"/>
+<path class="l4" d="M567.5 580L580 580"/>
+<path class="l4" d="M520 580L532.5 580"/>
+<path class="l4" d="M535 597.5L565 597.5"/>
+<path class="l4" d="M532.5 580L532.5 592.5"/>
+<path class="l4" d="M567.5 580L567.5 592.5"/>
+<path class="l4" d="M550 598L550 620"/>
+<path class="l4" d="M570 587.5L567.5 592.5L565 587.5L570 587.5"/>
+<path class="l4" d="M534 597L566 597L566 599L534 599L534 597z"/>
+<path class="l5" d="M760 780L768.75 780"/>
+<path class="l5" d="M777.5 780L773.75 775L765 775L768.75 780L765 785L773.75 785L777.5 780"/>
+<path class="l5" d="M760 820L768.75 820"/>
+<path class="l5" d="M777.5 820L773.75 815L765 815L768.75 820L765 825L773.75 825L777.5 820"/>
+<path class="l5" d="M295 660L300 660"/>
+<path class="l5" d="M295 660L291.25 655L282.5 655L286.25 660L282.5 665L291.25 665L295 660"/>
+<path class="l5" d="M295 740L300 740"/>
+<path class="l5" d="M295 740L291.25 735L282.5 735L286.25 740L282.5 745L291.25 745L295 740"/>
+<path class="l5" d="M296.875 400L300 400"/>
+<path class="l5" d="M286.25 405L282.5 400L286.25 395L293.125 395L296.875 400L293.125 405L286.25 405"/>
+<path class="l5" d="M296.875 900L300 900"/>
+<path class="l5" d="M286.25 905L282.5 900L286.25 895L293.125 895L296.875 900L293.125 905L286.25 905"/>
+<path class="l5" d="M295 520L300 520"/>
+<path class="l5" d="M295 520L291.25 515L282.5 515L286.25 520L282.5 525L291.25 525L295 520"/>
+<path class="l5" d="M465 457.5L460 460L465 462.5L465 457.5"/>
+<path class="l5" d="M635 457.5L640 460L635 462.5L635 457.5"/>
+<path class="l5" d="M455 657.5L460 660L455 662.5L455 657.5"/>
+<path class="l5" d="M645 657.5L640 660L645 662.5L645 657.5"/>
+<path class="l5" d="M552.5 585L550 580L547.5 585L552.5 585"/>
+<path class="l1" d="M550 540L550 580"/>
+<path class="l1" d="M550 540L680 540"/>
+<path class="l1" d="M680 400L680 540"/>
+<path class="l1" d="M550 620L550 900"/>
+<path class="l1" d="M300 900L550 900"/>
+<path class="l1" d="M300 400L440 400"/>
+<path class="l1" d="M460 400L460 430"/>
+<path class="l1" d="M440 460L460 460"/>
+<path class="l1" d="M440 400L440 460"/>
+<path class="l1" d="M640 400L640 430"/>
+<path class="l1" d="M640 460L660 460"/>
+<path class="l1" d="M660 400L660 460"/>
+<path class="l1" d="M300 520L500 520"/>
+<path class="l1" d="M500 460L500 520"/>
+<path class="l1" d="M500 460L600 460"/>
+<path class="l1" d="M460 490L460 580"/>
+<path class="l1" d="M460 580L480 580"/>
+<path class="l1" d="M460 660L480 660"/>
+<path class="l1" d="M480 580L480 660"/>
+<path class="l1" d="M640 490L640 580"/>
+<path class="l1" d="M620 580L640 580"/>
+<path class="l1" d="M620 660L640 660"/>
+<path class="l1" d="M620 580L620 660"/>
+<path class="l1" d="M300 660L420 660"/>
+<path class="l1" d="M300 740L700 740"/>
+<path class="l1" d="M700 660L700 740"/>
+<path class="l1" d="M680 660L700 660"/>
+<path class="l1" d="M460 690L460 820"/>
+<path class="l1" d="M460 820L760 820"/>
+<path class="l1" d="M640 690L640 780"/>
+<path class="l1" d="M640 780L760 780"/>
+<path class="l1" d="M640 400L660 400"/>
+<path class="l1" d="M440 400L460 400"/>
+<path class="l1" d="M460 580L460 630"/>
+<path class="l1" d="M480 580L520 580"/>
+<path class="l1" d="M640 580L640 630"/>
+<path class="l1" d="M660 400L680 400"/>
+<path class="l1" d="M460 400L640 400"/>
+<path class="l1" d="M580 580L620 580"/>
+<circle class="l1" cx="620" cy="580" r="4"/>
+<circle class="l1" cx="460" cy="400" r="4"/>
+<circle class="l1" cx="640" cy="400" r="4"/>
+<circle class="l1" cx="480" cy="580" r="4"/>
+<circle class="l1" cx="460" cy="580" r="4"/>
+<circle class="l1" cx="440" cy="400" r="4"/>
+<circle class="l1" cx="460" cy="400" r="4"/>
+<circle class="l1" cx="620" cy="580" r="4"/>
+<circle class="l1" cx="620" cy="580" r="4"/>
+<circle class="l1" cx="640" cy="580" r="4"/>
+<circle class="l1" cx="480" cy="580" r="4"/>
+<circle class="l1" cx="460" cy="580" r="4"/>
+<circle class="l1" cx="480" cy="580" r="4"/>
+<circle class="l1" cx="460" cy="580" r="4"/>
+<circle class="l1" cx="440" cy="400" r="4"/>
+<circle class="l1" cx="460" cy="400" r="4"/>
+<circle class="l1" cx="440" cy="400" r="4"/>
+<circle class="l1" cx="660" cy="400" r="4"/>
+<circle class="l1" cx="640" cy="580" r="4"/>
+<circle class="l1" cx="640" cy="400" r="4"/>
+<circle class="l1" cx="660" cy="400" r="4"/>
+<circle class="l1" cx="640" cy="580" r="4"/>
+<circle class="l1" cx="660" cy="400" r="4"/>
+<circle class="l1" cx="640" cy="400" r="4"/>
+</svg>

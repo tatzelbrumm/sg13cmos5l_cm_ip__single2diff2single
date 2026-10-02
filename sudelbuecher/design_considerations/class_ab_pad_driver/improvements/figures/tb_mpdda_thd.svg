@@ -1,0 +1,403 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1508" height="1512" viewBox="252 280 1508 1512" version="1.1" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo5YTQ0MGRlMi1hZjNkLTQ3MTItYjIwNC1kODU1ZmY5ZGYyZGQAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaCU1Kp/owcDTonVmfJTU9LMAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo1NzM3NzA4MS03MzU1LTRjYzEtOTY1Zi1iNzM3ZTk0OTk3NGRscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoat/zLCbOEWAQLuGy8t16BgAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggxlSz3Syy8VHA2irjLQOFsDKYhv2du95HbQKgSVnw5D6kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaA2cMOCMASMIhs5jM61PtsYAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCBwVscvj4VYvEs/vo4cArUArZbaEUPcikzeIdIqyG8r0GRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBjXZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjlhNDQwZGUyLWFmM2QtNDcxMi1iMjA0LWQ4NTVmZjlkZjJkZC9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjE5MzI2YmQ2LTY2ODgtNGQxNS1hMzY0LWM5ZDRjMjQyNTMyM3JjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDGVLPdLLLxUcDaKuMtA4WwMpiG/Z273kdtAqBJWfDkPqJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggOImDDtNDc3WLw1T5Vyc9EhGh5t51zD93diky9KbJ5sKiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggpM22m8yjDaW9JVqp2pMvceB4oNMlJJOilO/6CNSjTQx0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQHHeIBdy74gytaioC5jX3h5vuaHMLz39gqsZ/J5Bw0gsSLm5fe6KaTeDggi57PobuDbYVGkV3rm1JYoaj5dKfYY=</c2pa:manifest></metadata>
+<style type="text/css">
+.l0{
+ fill: #ffffff;
+  stroke: #ffffff;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l1{
+ fill: #000000;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l2{
+  fill: none;
+  stroke: #808080;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l3{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l4{
+ fill: #000000;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l5{
+ fill: #000000;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l6{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l7{
+ fill: #ffffff; fill-opacity: 0.5;
+  stroke: #ffffff;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l8{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l9{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l10{
+ fill: #d55e00;
+  stroke: #d55e00;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l11{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l12{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l13{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l14{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l15{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l16{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l17{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l18{
+ fill: #000000; fill-opacity: 0.5;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l19{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l20{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+.l21{
+  fill: none;
+  stroke: #000000;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-width: 2;
+}
+text {font-family: "Liberation Sans", Arial, Helvetica, sans-serif;}
+</style>
+<rect class="l0" x="0" y="0" width="2070" height="2320"/>
+<text fill="#000000"  xml:space="preserve" font-size="26" transform="translate(300, 323.608)" >tb_mpdda_thd: THD of d2s_mpdda, 1 V differential sine (0.5 V at the output), tt 27 C</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" transform="translate(300, 359.165)" >DUT and bias from the schematics in this directory; code block = the deck's .lib/.param/.save lines and its .control section</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(447.5, 877.456)" >vref</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(1176.85, 1095.39)" >vbp</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(1216.85, 1135.39)" >vbn</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(1249.96, 1175.39)" >vbpc</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(1289.96, 1215.39)" >vbnc</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(1329.96, 1255.39)" >vabp</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(1369.96, 1295.39)" >vabn</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(547.5, 877.456)" >dp</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(695.67, 607.456)" >dp</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(687.255, 647.456)" >GND</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(807.5, 687.456)" >vref</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(695.67, 787.456)" >dp</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(687.255, 827.456)" >GND</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(807.5, 867.456)" >vref</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(849.96, 585.394)" >vinp</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(869.96, 765.394)" >vinn</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(1018.84, 807.456)" >vref</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(1018.84, 847.456)" >vout</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(1707.5, 727.456)" >vout</text>
+<text fill="#000000"  xml:space="preserve" font-size="17.16" transform="translate(1567.5, 887.456)" >vref</text>
+<text fill="#000000"  xml:space="preserve" font-size="14.04" transform="translate(276.845, 435.394)" >vdd</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1047.5, 1454.44)" >GND</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(360, 930.693)" >Vdd</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(360, 955.693)" >3.3</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(460, 930.693)" >Vcm</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(460, 955.693)" >1.65</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" transform="translate(830, 1044.16)" >d2s_bias_lp</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" transform="translate(830, 1364.16)" >Xb</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(830, 1019.44)" >ideal reference currents</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(855, 1074.44)" >vdd</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(862.514, 1335.3) rotate(270)" >vss</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1039.7, 1103.44)" >vbp</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1039.7, 1143.44)" >vbn</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1034.6, 1183.44)" >vbpc</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1034.6, 1223.44)" >vbnc</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1034.6, 1263.44)" >vabp</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1034.6, 1303.44)" >vabn</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" transform="translate(1130, 664.165)" >d2s_mpdda</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" transform="translate(1130, 904.165)" >Xd</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1130, 639.443)" >vout-vref = (vinp-vinn)/2, tie vfb to vout</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1155, 694.443)" >vdd</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1162.51, 875.3) rotate(270)" >vss</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1125, 723.443)" >vinp</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1125, 763.443)" >vinn</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1125, 803.443)" >vref</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1414.6, 723.443)" >vout</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1125, 843.443)" >vfb</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1202.51, 875.3) rotate(270)" >vbp</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1242.51, 875.3) rotate(270)" >vbn</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1282.51, 880.4) rotate(270)" >vbpc</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1322.51, 880.4) rotate(270)" >vbnc</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1362.51, 880.4) rotate(270)" >vabp</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1402.51, 880.4) rotate(270)" >vabn</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(560, 930.693)" >Vd</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(560, 955.693)" >sin(0 1 {fin})</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(820, 634.443)" >0.5</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(820, 611.943)" >Ep</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(820, 814.443)" >-0.5</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(820, 791.943)" >En</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1534.8, 805.693)" >RL</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1575, 815.693)" >1k</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1544.9, 793.193)" >1</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1544.9, 835.693)" >2</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1649.9, 793.193)" >1</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1649.9, 835.693)" >2</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1675, 800.693)" >CL</text>
+<text fill="#000000"  xml:space="preserve" font-size="10.4" transform="translate(1675, 813.193)" >100p</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" transform="translate(305, 1544.16)" >s1</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1569.16)" >.lib cornerMOShv.lib mos_tt</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1587.06)" >.lib cornerRES.lib res_typ</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1604.95)" >.lib cornerCAP.lib cap_typ</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1622.84)" >.param fin=10k</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1640.74)" >.control</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1658.63)" >set nfreqs=8</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1676.52)" >tran 0.25u 600u 200u 0.25u</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1694.42)" >fourier 10k v(vout)</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1712.31)" >if $?batchmode = 0</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1730.2)" >  plot v(vout)</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1748.1)" >end</text>
+<text fill="#000000"  xml:space="preserve" font-size="15.6" style="font-family:Monospace;" transform="translate(315, 1765.99)" >.endc</text>
+<path class="l4" d="M342.5 917.5L347.5 917.5"/>
+<path class="l4" d="M345 915L345 920"/>
+<path class="l4" d="M340 910L340 970"/>
+<circle class="l4" cx="340" cy="940" r="15" style="fill:none;"/>
+<path class="l4" d="M442.5 917.5L447.5 917.5"/>
+<path class="l4" d="M445 915L445 920"/>
+<path class="l4" d="M440 910L440 970"/>
+<circle class="l4" cx="440" cy="940" r="15" style="fill:none;"/>
+<path class="l4" d="M860 1040L860 1060"/>
+<path class="l4" d="M860 1340L860 1360"/>
+<path class="l4" d="M1060 1100L1080 1100"/>
+<path class="l4" d="M1060 1140L1080 1140"/>
+<path class="l4" d="M1060 1180L1080 1180"/>
+<path class="l4" d="M1060 1220L1080 1220"/>
+<path class="l4" d="M1060 1260L1080 1260"/>
+<path class="l4" d="M1060 1300L1080 1300"/>
+<path class="l4" style="fill:none;" d="M820 1060L1060 1060L1060 1340L820 1340L820 1060"/>
+<path class="l4" d="M1160 660L1160 680"/>
+<path class="l4" d="M1160 880L1160 900"/>
+<path class="l4" d="M1100 720L1120 720"/>
+<path class="l4" d="M1100 760L1120 760"/>
+<path class="l4" d="M1100 800L1120 800"/>
+<path class="l4" d="M1440 720L1460 720"/>
+<path class="l4" d="M1100 840L1120 840"/>
+<path class="l4" d="M1200 880L1200 900"/>
+<path class="l4" d="M1240 880L1240 900"/>
+<path class="l4" d="M1280 880L1280 900"/>
+<path class="l4" d="M1320 880L1320 900"/>
+<path class="l4" d="M1360 880L1360 900"/>
+<path class="l4" d="M1400 880L1400 900"/>
+<path class="l4" style="fill:none;" d="M1120 680L1440 680L1440 880L1120 880L1120 680"/>
+<path class="l4" d="M542.5 917.5L547.5 917.5"/>
+<path class="l4" d="M545 915L545 920"/>
+<path class="l4" d="M540 910L540 970"/>
+<circle class="l4" cx="540" cy="940" r="15" style="fill:none;"/>
+<path class="l4" d="M802.5 597.5L807.5 597.5"/>
+<path class="l4" d="M805 595L805 600"/>
+<path class="l4" d="M800 590L800 650"/>
+<path class="l4" d="M780 620L800 600"/>
+<path class="l4" d="M780 620L800 640"/>
+<path class="l4" d="M800 640L820 620"/>
+<path class="l4" d="M800 600L820 620"/>
+<path class="l4" d="M760 600L765 600"/>
+<path class="l4" d="M770 600L775 600"/>
+<path class="l4" d="M780 600L785 600"/>
+<path class="l4" d="M760 640L765 640"/>
+<path class="l4" d="M770 640L775 640"/>
+<path class="l4" d="M780 640L785 640"/>
+<path class="l4" d="M802.5 777.5L807.5 777.5"/>
+<path class="l4" d="M805 775L805 780"/>
+<path class="l4" d="M800 770L800 830"/>
+<path class="l4" d="M780 800L800 780"/>
+<path class="l4" d="M780 800L800 820"/>
+<path class="l4" d="M800 820L820 800"/>
+<path class="l4" d="M800 780L820 800"/>
+<path class="l4" d="M760 780L765 780"/>
+<path class="l4" d="M770 780L775 780"/>
+<path class="l4" d="M780 780L785 780"/>
+<path class="l4" d="M760 820L765 820"/>
+<path class="l4" d="M770 820L775 820"/>
+<path class="l4" d="M780 820L785 820"/>
+<path class="l4" d="M1560 830L1560 840"/>
+<path class="l4" d="M1560 830L1567.5 827.5"/>
+<path class="l4" d="M1552.5 822.5L1567.5 827.5"/>
+<path class="l4" d="M1552.5 822.5L1567.5 817.5"/>
+<path class="l4" d="M1552.5 812.5L1567.5 817.5"/>
+<path class="l4" d="M1552.5 812.5L1567.5 807.5"/>
+<path class="l4" d="M1552.5 802.5L1567.5 807.5"/>
+<path class="l4" d="M1552.5 802.5L1567.5 797.5"/>
+<path class="l4" d="M1552.5 792.5L1567.5 797.5"/>
+<path class="l4" d="M1552.5 792.5L1560 790"/>
+<path class="l4" d="M1560 780L1560 790"/>
+<path class="l4" d="M1562.5 787.5L1567.5 787.5"/>
+<path class="l4" d="M1565 785L1565 790"/>
+<path class="l4" d="M1660 815L1660 840"/>
+<path class="l4" d="M1660 780L1660 805"/>
+<path class="l4" d="M1650 805L1670 805"/>
+<path class="l4" d="M1650 815L1670 815"/>
+<path class="l4" d="M1662.5 787.5L1667.5 787.5"/>
+<path class="l4" d="M1665 785L1665 790"/>
+<path class="l4" d="M300 1550L370 1550"/>
+<path class="l4" d="M300 1550L300 1570"/>
+<path class="l4" d="M1040 1440L1040 1452.5"/>
+<path class="l4" d="M1035 1452.5L1045 1452.5"/>
+<path class="l4" d="M1040 1457.5L1045 1452.5"/>
+<path class="l4" d="M1035 1452.5L1040 1457.5"/>
+<path class="l1" d="M340 440L340 910"/>
+<path class="l1" d="M340 970L340 1440"/>
+<path class="l1" d="M440 870L440 910"/>
+<path class="l1" d="M440 970L440 1440"/>
+<path class="l1" d="M860 440L860 1040"/>
+<path class="l1" d="M860 1360L860 1440"/>
+<path class="l1" d="M1160 440L1160 660"/>
+<path class="l1" d="M1160 900L1160 1440"/>
+<path class="l1" d="M1080 1100L1200 1100"/>
+<path class="l1" d="M1200 900L1200 1100"/>
+<path class="l1" d="M1080 1140L1240 1140"/>
+<path class="l1" d="M1240 900L1240 1140"/>
+<path class="l1" d="M1080 1180L1280 1180"/>
+<path class="l1" d="M1280 900L1280 1180"/>
+<path class="l1" d="M1080 1220L1320 1220"/>
+<path class="l1" d="M1320 900L1320 1220"/>
+<path class="l1" d="M1080 1260L1360 1260"/>
+<path class="l1" d="M1360 900L1360 1260"/>
+<path class="l1" d="M1080 1300L1400 1300"/>
+<path class="l1" d="M1400 900L1400 1300"/>
+<path class="l1" d="M540 870L540 910"/>
+<path class="l1" d="M540 970L540 1440"/>
+<path class="l1" d="M720 600L760 600"/>
+<path class="l1" d="M720 640L760 640"/>
+<path class="l1" d="M800 650L800 680"/>
+<path class="l1" d="M720 780L760 780"/>
+<path class="l1" d="M720 820L760 820"/>
+<path class="l1" d="M800 830L800 860"/>
+<path class="l1" d="M800 590L880 590"/>
+<path class="l1" d="M880 590L880 720"/>
+<path class="l1" d="M880 720L1100 720"/>
+<path class="l1" d="M800 770L900 770"/>
+<path class="l1" d="M900 760L900 770"/>
+<path class="l1" d="M900 760L1100 760"/>
+<path class="l1" d="M1060 800L1100 800"/>
+<path class="l1" d="M1060 840L1100 840"/>
+<path class="l1" d="M1460 720L1560 720"/>
+<path class="l1" d="M1660 720L1700 720"/>
+<path class="l1" d="M1560 720L1560 780"/>
+<path class="l1" d="M1560 840L1560 880"/>
+<path class="l1" d="M1660 720L1660 780"/>
+<path class="l1" d="M1660 840L1660 1440"/>
+<path class="l1" d="M300 440L340 440"/>
+<path class="l1" d="M340 1440L440 1440"/>
+<path class="l1" d="M1560 720L1660 720"/>
+<path class="l1" d="M860 440L1160 440"/>
+<path class="l1" d="M340 440L860 440"/>
+<path class="l1" d="M540 1440L860 1440"/>
+<path class="l1" d="M440 1440L540 1440"/>
+<path class="l1" d="M860 1440L1160 1440"/>
+<path class="l1" d="M1160 1440L1660 1440"/>
+<circle class="l1" cx="340" cy="440" r="4"/>
+<circle class="l1" cx="860" cy="440" r="4"/>
+<circle class="l1" cx="340" cy="440" r="4"/>
+<circle class="l1" cx="340" cy="440" r="4"/>
+<circle class="l1" cx="540" cy="1440" r="4"/>
+<circle class="l1" cx="440" cy="1440" r="4"/>
+<circle class="l1" cx="440" cy="1440" r="4"/>
+<circle class="l1" cx="540" cy="1440" r="4"/>
+<circle class="l1" cx="540" cy="1440" r="4"/>
+<circle class="l1" cx="860" cy="1440" r="4"/>
+<circle class="l1" cx="440" cy="1440" r="4"/>
+<circle class="l1" cx="860" cy="440" r="4"/>
+<circle class="l1" cx="860" cy="440" r="4"/>
+<circle class="l1" cx="860" cy="1440" r="4"/>
+<circle class="l1" cx="1160" cy="1440" r="4"/>
+<circle class="l1" cx="860" cy="1440" r="4"/>
+<circle class="l1" cx="1160" cy="1440" r="4"/>
+<circle class="l1" cx="1160" cy="1440" r="4"/>
+<circle class="l1" cx="1560" cy="720" r="4"/>
+<circle class="l1" cx="1660" cy="720" r="4"/>
+<circle class="l1" cx="1660" cy="720" r="4"/>
+<circle class="l1" cx="1560" cy="720" r="4"/>
+<circle class="l1" cx="1660" cy="720" r="4"/>
+<circle class="l1" cx="1560" cy="720" r="4"/>
+</svg>
