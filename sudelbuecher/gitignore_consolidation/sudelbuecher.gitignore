@@ -1,0 +1,22 @@
+# Proposed .gitignore for the sudelbuecher worktree (branch sudel_buecher).
+# Same rules as the modules in the main repository: generated, regenerable output is ignored.
+drc_run_*
+lvs_run_*
+drc_*.tcl
+ext_*.tcl
+pex_*.tcl
+*.vcd
+*.raw
+*.log
+*.pyc
+*.ext
+.DS_Store
+__pycache__/
+runs/
+backups/
+sim_build/
+# per module under design_considerations/ (counterpart of /macros/*/ in the main repository)
+/sudelbuecher/design_considerations/*/xschem/simulations
+/sudelbuecher/design_considerations/*/verification/cace/_runs
+/sudelbuecher/design_considerations/*/verification/cace/netlist
+/sudelbuecher/design_considerations/*/verification/cace/templates/simulations
