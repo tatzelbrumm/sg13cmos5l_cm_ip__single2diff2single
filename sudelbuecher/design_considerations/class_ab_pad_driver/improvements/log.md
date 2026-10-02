@@ -68,7 +68,8 @@ Each unit is one split-tail PMOS pair; x = gp − gn swept ±0.8 V at input CM 1
 
 The MOS alternatives are linear enough on their own; their problem is common-mode sensitivity
 (triode R depends on V_SG = source − gate; well-input κ depends on well-to-gate voltage, as
-Sarpeshkar's §3.3.1 reports). Why that matters for the next step: see 15:05.
+Sarpeshkar's §3.3.1 reports). Why that matters for the next step: see 14:43 (a leftover "15:05"
+from the guessed timestamps, corrected 16:15).
 
 ## 14:43 — matched-pair DDA (MP-DDA)
 
@@ -295,3 +296,43 @@ What drove the size, for planning similar tasks:
 
 A second session that starts from `proposed_improvements.md` and `log.md` instead of the
 papers would begin with far less context.
+
+## 15:55 — IEEEtran version
+
+`proposed_improvements.tex` is `proposed_improvements.md` in IEEEtran journal style: the same
+content and numbers, with equations and a references list taken from `literature_notes.md`.
+`proposed_improvements.pdf` (5 pages) was built in the cloud with pdflatex, run twice, and
+had no errors and no overfull boxes. The only packages it needs besides IEEEtran.cls are
+amsmath, booktabs, tabularx, array, textcomp, url and cite; there is no siunitx. The sandbox
+I reach on the linked computer has pdflatex but neither IEEEtran.cls nor siunitx. Building
+there needs TeX Live's `texlive-publishers`, or a copy of IEEEtran.cls next to the file.
+
+## 16:06 — time and tokens, updated through the LaTeX work
+
+Same method as at 15:20, now including the report, the questions afterwards and the two LaTeX
+conversions:
+
+| phase | wall clock | API calls | output tokens | cache writes | cache reads |
+|---|---|---|---|---|---|
+| orientation | 14:08–14:12 | 14 | 20,138 | 106,368 | 1,958,053 |
+| simulation environment + literature/OCR | 14:12–14:27 | 49 | 23,126 | 122,848 | 12,499,286 |
+| baseline reproduced; Caltech-thesis check | 14:27–14:31 | 6 | 2,887 | 13,684 | 1,960,595 |
+| design reasoning + simulations | 14:31–15:00 | 40 | 125,771 | 157,464 | 17,134,286 |
+| accounting, log timestamp correction | 15:00–15:02 | 5 | 10,264 | 17,604 | 2,485,393 |
+| runner, re-run, notes, proposal, transfer checks, report | 15:02–15:20 | 41 | 64,333 | 102,341 | 23,278,772 |
+| questions about the spreadsheet button | 15:20–15:52 | 1 | 427 | 6,984 | 613,327 |
+| IEEEtran LaTeX of the proposal | 15:52–16:04 | 16 | 32,152 | 45,403 | 10,226,268 |
+| resource-log question; start of the log's LaTeX | 16:04–16:06 | 2 | 1,576 | 7,552 | 1,339,858 |
+| **total, main thread** | | 174 | 280,674 | 580,248 | 71,495,838 |
+| subagent (Caltech PDF check) | 14:30–14:31 | 5 | 1,463 | 94,882 | 368,538 |
+
+The context is now ~674 k tokens per call. The LaTeX conversion of this log comes after this
+table and is not in it.
+
+## 16:15 — LaTeX version of this log
+
+`log.tex` / `log.pdf` (article class, not IEEEtran, in the style of
+`sudelbuecher/esd_protection/*.tex`). The body was converted from this file with pandoc 3.1.3,
+and the tables were given widths weighted by their content. Builds with pdflatex using only
+standard packages (booktabs, longtable, calc, hyperref, xurl, microtype, textcomp, geometry).
+A snapshot: entries after 16:15 are only in `log.md`.

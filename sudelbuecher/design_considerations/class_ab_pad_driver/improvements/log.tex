@@ -1,0 +1,770 @@
+% SPDX-FileCopyrightText: 2026 Christoph Maier
+% SPDX-License-Identifier: Apache-2.0
+%
+% Running log of the class-AB pad driver revision (LaTeX version of log.md).
+% Body converted from log.md with pandoc 3.1.3 (gfm -> latex, --shift-heading-level-by=-1,
+% --columns=50), tables and '~' post-processed; preamble written by hand in the style of ../../../esd_protection/*.tex.
+% Build: pdflatex log.tex (twice). Packages: standard LaTeX tools, booktabs, longtable, calc,
+% hyperref, xurl, microtype, textcomp, geometry. No IEEEtran, no siunitx.
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=22mm]{geometry}
+\usepackage[expansion=false]{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{textcomp}
+\usepackage{longtable,booktabs,array,calc}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+
+% characters outside T1 used in log.md
+\DeclareUnicodeCharacter{03A9}{\ensuremath{\Omega}}
+\DeclareUnicodeCharacter{03BA}{\ensuremath{\kappa}}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\rightarrow}}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\DeclareUnicodeCharacter{2213}{\ensuremath{\mp}}
+\DeclareUnicodeCharacter{221A}{\ensuremath{\surd}}
+\DeclareUnicodeCharacter{2225}{\ensuremath{\parallel}}
+\DeclareUnicodeCharacter{2248}{\ensuremath{\approx}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+
+% what pandoc's body expects
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setlength{\emergencystretch}{3em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt plus 2pt}
+\renewcommand{\arraystretch}{1.1}
+\setcounter{secnumdepth}{0}
+% allow line breaks after underscores (file and net names in \texttt)
+\renewcommand{\_}{\textunderscore\hspace{0pt}}
+
+\title{Running log --- improvements to the class-AB pad driver\\[2pt]
+  \large \texttt{sg13cmos5l\_cm\_ip\_\_single2diff2single}, \texttt{design\_considerations/class\_ab\_pad\_driver/improvements}}
+\author{}
+\date{2 October 2026}
+
+\begin{document}
+\maketitle
+\small
+Session 2026-10-02, Claude (configured model
+\texttt{claude-opus-5-5}; the serving model may
+differ). Newest entries at the bottom. Times are
+Europe/Berlin, taken from the session transcript
+(corrected 15:01: the first versions of several
+headings carried guessed times, up to 1¼ h too
+late).
+
+Task as given: area, current and loop gain of
+\texttt{d2s\_miller} / \texttt{d2s\_loadcomp} are
+unsatisfactory, probably because of the linear
+passives (rhigh degeneration, MOM Miller caps).
+Look in Edwards, Minch, Cauwenberghs, Hasler
+(DoNotLitter/TimEdwards, LogDomain, FloatingGate)
+and Sarpeshkar 1997 for (1) alternatives to
+resistor source degeneration in the DDA, (2)
+compensation without linear BEOL capacitance, (3)
+cascoding with the output devices either doubling
+as ESD clamps or as separate devices in the slot,
+(4) externally-linear / internally-nonlinear
+circuits whose internal nonlinearity is not the
+subthreshold exponential. End result: proposed
+improvements to \texttt{class\_ab\_pad\_driver}.
+
+Nothing is written to
+\texttt{\textasciitilde{}/DoNotLitter}. Papers are
+cited, not copied (chatlog/ref rule).
+
+\hypertarget{1410--baseline-taken-from-the-existing-note-and-the-first-cace-run}{%
+\section{14:10 --- baseline taken from the
+existing note and the first CACE
+run}\label{1410--baseline-taken-from-the-existing-note-and-the-first-cace-run}}
+
+What the CACE run
+(\texttt{verification/cace/first\_run\_summary.md})
+adds to the design note:
+
+\begin{itemize}
+\tightlist
+\item
+  Gain spread 0.476\ldots0.554 over PVT + rhigh
+  corners, 0.41\ldots0.61 in process MC. Cause:
+  the gain is (R2 + 2/gm)/(R1 + 2/gm); R tracks R,
+  but gm does not track R.
+\item
+  Output offset in mismatch MC −32\ldots+49 mV (4
+  degenerated pairs; offset referred through 1/Gm
+  of degenerated pairs is large).
+\item
+  INL 469 mV worst corner; THD −15 dB at 1.25 V
+  output (pairs run out of I\_tail·R range).
+\item
+  Output noise 1.6 µV/√Hz at 1 kHz (degeneration
+  resistors + low Gm).
+\item
+  Area: the two MOM Miller caps (2 × 31 × 31 µm)
+  dominate the non-frame area (1920 of
+  $\sim$2500 µm²).
+\item
+  Current: 427 µA, of which 240 µA output-stage
+  quiescent, $\sim$180 µA front end +
+  bias.
+\end{itemize}
+
+\hypertarget{1425--literature-read-so-far-details-in-literature_notesmd}{%
+\section{\texorpdfstring{14:25 --- literature read
+so far (details in
+\texttt{literature\_notes.md})}{14:25 --- literature read so far (details in literature\_notes.md)}}\label{1425--literature-read-so-far-details-in-literature_notesmd}}
+
+\begin{itemize}
+\tightlist
+\item
+  Sarpeshkar 1997 thesis (scanned,
+  OCR\textquotesingle d locally on the linked
+  computer), ch. 3 = the wide-linear-range OTA:
+  well input, diode source degeneration, gate
+  degeneration through the mirror diode, bump
+  linearization (w = 2 cancels the cubic term). No
+  resistors.
+\item
+  Edwards thesis §3.5--3.10, Edwards \&
+  Cauwenberghs 2000: ELIN/log-domain; names the
+  square law of strong inversion as the other
+  usable internal nonlinearity; matching = "same
+  surround".
+\item
+  Minch thesis ch. 7: a source follower is linear
+  whatever the device law (MITE via FG source
+  follower, valid above threshold).
+\item
+  Hasler thesis ch. 4--5, Sánchez-Sinencio FG
+  slides: capacitive dividers / FG inputs widen
+  linear range, but need linear caps and charge
+  control (tunneling/injection or UV).
+\end{itemize}
+
+\hypertarget{1425--simulation-environment}{%
+\section{14:25 --- simulation
+environment}\label{1425--simulation-environment}}
+
+Cloud container: ngspice-42 (Ubuntu), IHP-Open-PDK
+\texttt{dev} sparse checkout, OpenVAF-reloaded
+built from source with LLVM 18 for psp103 /
+r3\_cmc / cap\_cmomi. (in progress)
+
+\hypertarget{1428--simulation-environment-ready-baseline-reproduced}{%
+\section{14:28 --- simulation environment ready,
+baseline
+reproduced}\label{1428--simulation-environment-ready-baseline-reproduced}}
+
+ngspice-42 + IHP-Open-PDK \texttt{dev} models +
+psp103 / r3\_cmc / cap\_cmomi compiled with
+OpenVAF-reloaded (LLVM 18, OSDI minor version
+patched 4 → 3 for ngspice 42, as in the first
+session). \texttt{run\_d2s.py} functions reproduce
+\texttt{results.txt} exactly (A, 1 kΩ ∥ 100 pF:
+gain 0.5005, 0.18 mV, nonlin 5.52 mV, T0 66.5 dB,
+fc 1.62 MHz, PM 74.8°, THD 10 kHz −51.1 dB).
+
+\hypertarget{1440--dda-unit-characterization-simunitsspice-test-bench-now-in-run_improvementspy-units}{%
+\section{\texorpdfstring{14:40 --- DDA unit
+characterization (\texttt{sim/units.spice}; test
+bench now in
+\texttt{run\_improvements.py\ units})}{14:40 --- DDA unit characterization (sim/units.spice; test bench now in run\_improvements.py units)}}\label{1440--dda-unit-characterization-simunitsspice-test-bench-now-in-run_improvementspy-units}}
+
+Each unit is one split-tail PMOS pair; x = gp − gn
+swept ±0.8 V at input CM 1.40 / 1.65 / 1.90 V.
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1053}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3070}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2234}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1720}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1923}}@{}}
+\toprule\noalign{}
+unit & degeneration & Gm0 @ CM 1.40 / 1.65 / 1.90
+& f(0.5)/(Gm0·0.5) & CM sensitivity of Gm \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+unit\_r & rhigh 0.5 × 36.4 µm (108 kΩ), I\_t = 2 ×
+10 µA & 15.54 / 15.55 / 15.58 µS & 0.996 & 0.5
+\%/V \\
+unit\_t & hv PMOS 0.5/3 in triode, gate at vss &
+12.43 / 15.54 / 18.40 µS & 0.992 & 77 \%/V \\
+unit\_w & Sarpeshkar well input, 4/4, gates at
+vss, 1 × 20 µA & 11.82 / 11.02 / 10.35 µS & 0.991
+& −27 \%/V \\
+\end{longtable}
+
+The MOS alternatives are linear enough on their
+own; their problem is common-mode sensitivity
+(triode R depends on V\_SG = source − gate;
+well-input κ depends on well-to-gate voltage, as
+Sarpeshkar\textquotesingle s §3.3.1 reports). Why
+that matters for the next step: see 14:43 (a
+leftover "15:05" from the guessed timestamps,
+corrected 16:15).
+
+\hypertarget{1443--matched-pair-dda-mp-dda}{%
+\section{14:43 --- matched-pair DDA
+(MP-DDA)}\label{1443--matched-pair-dda-mp-dda}}
+
+Idea: four identical units, A (vinp, vref), B
+(vref, vinn), C1 = C2 (vref, vfb): f(vinp − vref)
++ f(vref − vinn) = 2 f(vfb − vref). With matched
+units the solution is vout − vref = (vinp −
+vinn)/2 for \emph{any} odd monotonic f (exact for
+input CM = vref; for a CM error c the error is
+second order in c). Gain ½ = unit count ratio; no
+R1/R2, no gm term. This is static ELIN: the input
+units compress, the feedback units invert the same
+law. Caveat found analytically: A and C sit at CM
+vref + x/2, B at vref − x/2. A unit whose Gm
+depends on CM (k per volt) gives v ≈ u − k u²/2 →
+unit\_t ≈ 96 mV, unit\_w ≈ 34 mV of second-order
+error at u = 0.5 V, unit\_r ≈ 0.6 mV. So in this
+topology the poly resistor stays the right
+degenerator. Its area is $\sim$18 µm² per
+unit, it never was the area problem.
+
+First simulation, everything else unchanged (fold,
+mirror, class-AB, frames, MOM caps, bias):
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.2697}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1364}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1008}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1088}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.2097}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1745}}@{}}
+\toprule\noalign{}
+variant & load & gain & nonlin & T0 / fc / PM &
+THD 10 k / 100 kHz \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+baseline A & 1 k ∥ 100 p & 0.5005 & 5.52 mV & 66.5
+dB / 1.62 MHz / 74.8° & −51.1 / −50.2 dB \\
+MP-DDA, MOM & 1 k ∥ 100 p & 0.4998 & 1.04 mV &
+66.5 dB / 1.62 MHz / 74.7° & −60.2 / −55.5 dB \\
+MP-DDA, MOM & 100 p & 0.5000 & 1.02 mV & 96.5 dB /
+2.03 MHz / 66.2° & −60.0 / −59.8 dB \\
+MP-DDA, hv-PMOS accumulation cap 14 × 14 µm & 100
+p & 0.5000 & 1.02 mV & 96.7 dB / 2.80 MHz / 53.4°
+& −60.0 / −59.9 dB \\
+\end{longtable}
+
+Same current (427 µA) and tail budget (8 × 10 µA =
+baseline 4 × 20 µA). 9 dB better THD, 5× lower DC
+nonlinearity. The MOS cap (196 µm² vs 961 µm² MOM)
+does not degrade THD despite a 2× C--V variation
+over 0.15\ldots1.25 V (0.37 → 0.75 pF); it is just
+smaller than 1 pF on average, so it needs resizing
+for the PM.
+
+\hypertarget{1448--mos-capacitor-sizing-corners-mismatch}{%
+\section{14:48 --- MOS capacitor sizing, corners,
+mismatch}\label{1448--mos-capacitor-sizing-corners-mismatch}}
+
+\textbf{MOS accumulation cap size} (MP-DDA, f\_c /
+PM): 18 × 18 µm matches the 31 × 31 µm MOM pair
+almost exactly (100 pF: 2.00 MHz / 67.0° vs 2.03
+MHz / 66.2°; 300 pF: 46.3° vs 45.5°; 1 nF: 26.9°
+vs 26.4°). Area per side 324 µm² instead of 961
+µm² (3.0×), no metal used.
+
+\textbf{Corners} (dc gain fitted over
+\textbar vd\textbar{} ≤ 0.2 V, 1 kΩ ∥ 100 pF;
+nonlin = max deviation over ±1 V):
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2725}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3669}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3605}}@{}}
+\toprule\noalign{}
+corner & baseline A gain / nonlin & MP-DDA gain /
+nonlin \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+tt 27 & 0.5005 / 5.52 mV & 0.4998 / 1.04 mV \\
+ss 125 (res wcs) & 0.5119 / 8.07 & 0.4988 /
+1.56 \\
+ff −40 (res bcs) & 0.4968 / 3.30 & 0.4998 /
+0.66 \\
+sf / fs 27 & 0.4998 / 4.11, 0.5013 / 8.07 & 0.4998
+/ 0.82, 0.4997 / 1.37 \\
+ss 27 / ff 27 & 0.5022 / 12.69, 0.4990 / 3.30 &
+0.4998 / 1.91, 0.4997 / 0.69 \\
+tt res wcs / bcs & 0.4895 / 7.09, 0.5148 / 5.07 &
+0.4997 / 1.48, 0.4998 / 0.66 \\
+tt 125 / tt −40 & 0.5249 / 5.18, 0.4870 / 7.15 &
+0.4983 / 1.10, 0.4998 / 1.53 \\
+\end{longtable}
+
+Systematic gain spread −2.6\ldots+5.0 \% →
+−0.34\ldots0 \%. Loop gain / PM unchanged.
+(Corrected 15:25: this line first said "±3.8 \%",
+which was half the spread, not its range.)
+
+\textbf{Mismatch MC} (30 seeds,
+\texttt{mos\_tt\_mismatch} +
+\texttt{res\_typ\_mismatch}, mm\_ok=1 on all MOS
+and rhigh): baseline offset σ 14.4 mV, MP-DDA σ
+14.5 mV --- the front-end change does not touch
+the offset. Budget by device group (mismatch on
+one group at a time, 20 seeds): folding sinks 11.5
+mV, tails 4.2, mirror 2.3, pairs 1.7, everything
+else \textless{} 0.4. Same mechanism Sarpeshkar
+describes (§3.3.4: current mismatch /
+transconductance; low Gm/I front ends are
+offset-prone, and the mirrors, not the input
+devices, matter most).
+
+\hypertarget{1453--d2s_mp2-same-topology-resized-for-current-and-offset}{%
+\section{\texorpdfstring{14:53 ---
+\texttt{d2s\_mp2}: same topology, resized for
+current and
+offset}{14:53 --- d2s\_mp2: same topology, resized for current and offset}}\label{1453--d2s_mp2-same-topology-resized-for-current-and-offset}}
+
+\begin{itemize}
+\tightlist
+\item
+  units at 2 × 5 µA (long-L tails 5/6), R = 150 kΩ
+  (rhigh 0.5 × 50.6 µm), I\_t·R = 0.75 V
+\item
+  folding sinks 30 µA, 36/6 (lower gm/I), mirror
+  24/4 at 10 µA
+\item
+  bias fixture \texttt{d2s\_bias\_lp}: reference
+  currents 5 + 5 + 2 + 2 + 5 + 5 µA instead of 20
+  + 50 + 5 + 5 + 5 + 5
+\item
+  headroom limit found on the way: a ≈ 2.6 V and b
+  ≈ 0.7 V are the output-device gates, so the
+  mirror and the sinks each get only
+  $\sim$0.35 V; their overdrive
+  can\textquotesingle t be raised for matching,
+  only their area.
+\item
+  all devices ≥ 70 mV from saturation edge at vd =
+  0 (\texttt{oppoint.py})
+\end{itemize}
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3258}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2964}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3778}}@{}}
+\toprule\noalign{}
+& baseline A & d2s\_mp2, MOS 16 × 16 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+I\_DD (incl. bias fixture) & 427 µA & 297 µA \\
+I\_Q P/N & 240 µA & 213 µA \\
+compensation area & 2 × 961 µm² MOM (M1--M4) & 2 ×
+256 µm² hv-PMOS \\
+T0 1 k ∥ 100 p / 100 p / 50 Ω & 66.5 / 96.5 / 40.7
+dB & 69.7 / 99.6 / 43.9 dB \\
+fc / PM, 100 p & 2.02 MHz / 66° & 1.76 MHz /
+63° \\
+THD 10 kHz (1 k ∥ 100 p) & −51.1 dB & −58.7 dB \\
+THD 100 kHz (1 k ∥ 100 p) & −50.2 dB & −51.4 dB \\
+nonlin (±1 V vd) & 5.52 mV & 1.24 mV \\
+offset σ (mismatch, 30) & 14.4 mV & 5.3 mV \\
+gain σ (mismatch, 30) & 1.6 \% & 1.1 \% (0.84 \%
+from rhigh unit mismatch) \\
+\end{longtable}
+
+Gain σ is now set by rhigh area (0.5 × 50.6 µm per
+unit): 4× the area halves it.
+
+\hypertarget{1457--the-right-figure-of-merit-for-a-dda-unit-simrun_improvementspy-units}{%
+\section{\texorpdfstring{14:57 --- the right
+figure of merit for a DDA unit
+(\texttt{sim/run\_improvements.py\ units})}{14:57 --- the right figure of merit for a DDA unit (sim/run\_improvements.py units)}}\label{1457--the-right-figure-of-merit-for-a-dda-unit-simrun_improvementspy-units}}
+
+The first unit test swept both inputs around a
+common CM. In the MP-DDA one input of every unit
+sits at vref, so the relevant comparison is fA(x)
+= I(vref + x, vref) against fB(x) = I(vref, vref −
+x): the same differential voltage, but the
+pair\textquotesingle s sources sit x lower in B.
+Solving fA(u) + fB(u) = 2 fA(v) from the unit
+curves alone predicts the whole
+driver\textquotesingle s static error; for unit\_r
+it gives −1.04 / −1.02 mV at u = ∓0.5 V, which is
+the full-circuit 1.04 mV.
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3839}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2836}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3325}}@{}}
+\toprule\noalign{}
+unit & own compression at 0.5 V & MP-DDA error at
+u = −0.5 / +0.5 V \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+unit\_r (split tails + rhigh) & 0.5 \% & −1.0 /
+−1.0 mV \\
+unit\_t (triode PMOS) & 20 \% & −191 / −72 mV \\
+unit\_w (well input) & 7 \% & +29 / +38 mV \\
+unit\_q (undegenerated 2/6, square law, no R) & 22
+\% & +75 / +200 mV \\
+\end{longtable}
+
+So the criterion for an ELIN unit here is not its
+linearity but that its output depends on gp − gn
+only. The split-tail pair meets it because each
+device is a constant-current source follower
+(Minch thesis ch. 7: a follower is linear whatever
+the device law) and the element between the
+sources sees exactly gp − gn. Any element whose
+value depends on the absolute source voltage
+(triode R, well κ, tail/CLM of a single-tail pair)
+fails.
+
+\hypertarget{1456--cascoding}{%
+\section{14:56 ---
+cascoding}\label{1456--cascoding}}
+
+\textbf{(a) output devices = ESD clamp frames.} A
+series cascode would put its drain, not the
+clamp\textquotesingle s, on the pad; a
+stacked-clamp frame would be a new ESD structure
+to qualify. So no output cascode. What remains is
+cascoding the internal high-impedance nodes.
+Lengthening the folded and mirror cascodes (L 1 →
+3 µm, W scaled, same overdrive) in
+\texttt{d2s\_mp2}:
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2493}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2332}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1763}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1649}}>{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1763}}@{}}
+\toprule\noalign{}
+cascode L & T0 1 k ∥ 100 p & T0 100 p & T0 50 Ω &
+PM 100 p \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 µm (d2s\_mp2) & 69.7 dB & 99.6 dB & 43.9 dB &
+63.4° \\
+2 µm & 75.4 & 103.1 & 49.6 & 62.8° \\
+3 µm (d2s\_mp2c3) & 78.9 & 104.3 & 53.1 & 62.0° \\
+\end{longtable}
+
++9 dB for $\sim$320 µm² of gate area.
+Regulated (gain-boosted) cascodes were not tried:
+node a sits at $\sim$2.6 V and b at
+$\sim$0.7 V (the output gates), which
+leaves $\sim$0.35 V per device for the
+mirror, the sinks and their cascodes, so no
+headroom for an auxiliary
+amplifier\textquotesingle s V\_GS.
+
+\textbf{(b) separate output devices in the slot.}
+Then they can be cascoded. Test case
+\texttt{d2s\_lc2}: load-compensated (topology B,
+no compensation capacitor at all), MP-DDA front
+end, half-frame output devices, cascode gates
+simply at vref (output range
+$\sim$1.0\ldots2.4 V):
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1444}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1208}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1292}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1119}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1119}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1119}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1582}}>{\raggedright\arraybackslash}p{(\linewidth - 16\tabcolsep) * \real{0.1119}}@{}}
+\toprule\noalign{}
+& T0 & 5 p & 20 p & 100 p & 1 n & 1 k ∥ 100 p &
+I\_DD \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+no cascode & 37.2 dB & 16° & 47° & 78° & 89° & no
+loop gain & 174 µA \\
+cascoded & 74.0 dB & unstable & 39° & 77° & 89° &
+no loop gain & 169 µA \\
+\end{longtable}
+
+Cascoding adds 37 dB; a resistive load still
+collapses a single-stage loop, and the minimum
+load capacitance stays ($\sim$30--40 pF).
+In the slot, the pad goes through IOPadAnalog,
+whose \texttt{padres} is behind 587 Ω
+(SecondaryProtection). Sensing at \texttt{padres}
+(near side) makes that resistor an isolation
+resistor: PM at 20 pF 39° → 62°, 100 pF → 104°;
+the pad then sees a 587 Ω · C\_L low-pass outside
+the loop (2.7 MHz at 100 pF). Sensing at
+\texttt{pad} keeps the PM of the no-resistor case.
+50 Ω through 587 Ω is not drivable at all. Open
+point: the cascoded version has 7.8 mV systematic
+offset (diode replicas at a different V\_DS than
+the cascoded output devices); cascoding the diode
+replicas would fix it.
+
+\hypertarget{1458--noise-1-k--100-p-output-referred}{%
+\section{14:58 --- noise (1 k ∥ 100 p,
+output-referred)}\label{1458--noise-1-k--100-p-output-referred}}
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.3270}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2214}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2111}}>{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2406}}@{}}
+\toprule\noalign{}
+& 1 kHz & 100 kHz & 10 Hz--10 MHz \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+baseline A & 1599 nV/√Hz & 200 nV/√Hz & 278 µV
+rms \\
+MP-DDA (baseline sizing) & 1592 & 201 & 279 \\
+d2s\_mp2c3 & 676 & 152 & 231 \\
+\end{longtable}
+
+\hypertarget{1459--d2s_mp2c3--d2s_mp2-with-l--3-uxb5m-cascodes-mos-caps-16--16-uxb5m-full-table}{%
+\section{\texorpdfstring{14:59 ---
+\texttt{d2s\_mp2c3} (= d2s\_mp2 with L = 3 µm
+cascodes, MOS caps 16 × 16 µm): full
+table}{14:59 --- d2s\_mp2c3 (= d2s\_mp2 with L = 3 µm cascodes, MOS caps 16 × 16 µm): full table}}\label{1459--d2s_mp2c3--d2s_mp2-with-l--3-uxb5m-cascodes-mos-caps-16--16-uxb5m-full-table}}
+
+Renamed \texttt{d2s\_mpdda}
+(\texttt{sim/d2s\_mpdda.spice}); every number
+re-run in \texttt{sim/results\_improvements.txt}.
+296 µA (baseline 427), T0 78.9 dB at 1 k ∥ 100 p
+(66.5), 53.1 dB at 50 Ω (40.7), 104 dB capacitive
+(96.5), PM 62° at 100 pF, 42° at 300 pF. Gain
+0.4992\ldots0.5000 over 11 corners, nonlin ≤ 3.5
+mV (ss 27 °C). Offset σ 5.3 mV, gain σ 1.1 \%
+(rhigh area). THD 10 kHz −58.5 dB; 100 kHz −51.3
+dB (1 k ∥ 100 p; lower fc than the MOM-MP version,
+1.37 vs 1.62 MHz).
+
+\hypertarget{15051520--consolidation}{%
+\section{15:05--15:20 ---
+consolidation}\label{15051520--consolidation}}
+
+Intermediate netlists and scripts folded into one
+runner, \texttt{sim/run\_improvements.py}, which
+reuses \texttt{../run\_d2s.py} unchanged and
+reproduces every number of this log and of
+\texttt{proposed\_improvements.md} in one run (3
+min 49 s, \texttt{sim/results\_improvements.txt}).
+The re-run matches the numbers above. Files in
+\texttt{sim/}:
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3818}}>{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.6182}}@{}}
+\toprule\noalign{}
+file & content \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\texttt{units.spice} & DDA units: unit\_r (rhigh),
+unit\_r2 (final, 2 × 5 µA), unit\_t (triode MOS),
+unit\_w (well input), unit\_q (undegenerated) \\
+\texttt{d2s\_mp.spice} & MP-DDA in the
+baseline\textquotesingle s sizing; compensation
+through the \texttt{ccomp} wrapper \\
+\texttt{ccomp.spice} & ccomp\_mom (as
+d2s\_miller), ccomp\_mos (hv PMOS accumulation
+caps) \\
+\texttt{d2s\_mpdda.spice} & the proposal (frames
+kept as output devices) \\
+\texttt{d2s\_bias\_lp.spice} & bias fixture with
+26 µA of reference current instead of 90 µA \\
+\texttt{d2s\_lc2.spice} & case (b): in-slot output
+devices, load-compensated, cascoded (and not) \\
+\texttt{run\_improvements.py},
+\texttt{results\_improvements.txt} & runner and
+its output \\
+\end{longtable}
+
+\hypertarget{1518--transfer-check}{%
+\section{15:18 --- transfer
+check}\label{1518--transfer-check}}
+
+Checksums of the committed files against the
+container copies:
+\texttt{proposed\_improvements.md},
+\texttt{sim/results\_improvements.txt} and
+\texttt{sim/run\_improvements.py} did not match
+after the first commits, although the tool
+reported "written". The device still held earlier
+versions of them, 20530 / 16367 / 13939 bytes
+instead of 20571 / 18250 / 16300. Re-committing
+from the same staged paths, with force, changed
+nothing. Committing copies from a \emph{new}
+staged directory (\texttt{outputs/xfer2/}) worked.
+All files now match by sha256. This looks like the
+silent no-op described in the project CLAUDE.md,
+§6. Workaround: stage every new version of a file
+under a new staged path.
+
+\hypertarget{1520--time-and-tokens-used-by-this-task}{%
+\section{15:20 --- time and tokens used by this
+task}\label{1520--time-and-tokens-used-by-this-task}}
+
+Wall clock: 14:08 → $\sim$15:20, about 72
+minutes, interrupted twice by questions. Of that,
+the compute (not the model) took about 3 min for
+the OpenVAF build and model compile, about 6 min
+for OCR on your computer, and about 10 min of
+ngspice in total, including the 3 min 49 s full
+re-run.
+
+Tokens, from this session\textquotesingle s own
+transcript
+(\texttt{\textasciitilde{}/.claude/projects/-home-claude/\textless{}session\textgreater{}.jsonl},
+per API response, as of 15:19):
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.3167}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1405}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1217}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1462}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1405}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1345}}@{}}
+\toprule\noalign{}
+phase & wall clock & API calls & output tokens &
+cache writes & cache reads \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+orientation: existing note, netlists, CACE
+results, CLAUDE.md & 14:08--14:12 & 14 & 20,138 &
+106,368 & 1,958,053 \\
+simulation environment + literature reading/OCR,
+interleaved & 14:12--14:27 & 49 & 23,126 & 122,848
+& 12,499,286 \\
+baseline reproduced; Caltech-thesis check &
+14:27--14:31 & 6 & 2,887 & 13,684 & 1,960,595 \\
+design reasoning + simulations & 14:31--15:00 & 40
+& 125,771 & 157,464 & 17,134,286 \\
+accounting, log timestamp correction &
+15:00--15:02 & 5 & 10,264 & 17,604 & 2,485,393 \\
+consolidated runner, re-run, notes, proposal,
+transfer checks & 15:02--15:19 & 37 & 60,208 &
+98,924 & 21,839,596 \\
+\textbf{total, main thread} & & 151 & 242,394 &
+517,090 & 56,877,712 \\
+subagent (Caltech PDF check) & 14:30--14:31 & 5 &
+1,463 & 94,882 & 368,538 \\
+\end{longtable}
+
+How to read it:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Output tokens} ($\sim$244 k):
+  what the model wrote, including its reasoning.
+  More than half of it falls in the design phase.
+\item
+  \textbf{Cache reads} ($\sim$57 M): each
+  API call re-reads the whole conversation so far
+  from the prompt cache. The context grew from
+  $\sim$118 k tokens at the start (system
+  prompt, tools, memory) to $\sim$608 k
+  at the end. The growth came mostly from tool
+  output: paper text, OCR, netlists and simulation
+  listings.
+\item
+  \textbf{Cache writes} ($\sim$0.5 M):
+  new context added to the cache.
+\item
+  \textbf{Uncached input}: 302 tokens in all.
+\end{itemize}
+
+How cache reads, cache writes and output count
+against a specific plan\textquotesingle s usage
+limits is not something this log can state (not
+checked here); the plans\textquotesingle{} usage
+limits are documented at support.claude.com. What
+this kind of task pushes is the context size and
+the number of calls made over it.
+
+What drove the size, for planning similar tasks:
+
+\begin{itemize}
+\tightlist
+\item
+  Reading papers as text into the conversation:
+  Edwards, Minch and Hasler excerpts and the
+  Sarpeshkar OCR, roughly 100--150 k tokens of
+  context.
+\item
+  Long simulation listings.
+\item
+  A long reasoning phase before the first
+  simulation.
+\end{itemize}
+
+A second session that starts from
+\texttt{proposed\_improvements.md} and
+\texttt{log.md} instead of the papers would begin
+with far less context.
+
+\hypertarget{1555--ieeetran-version}{%
+\section{15:55 --- IEEEtran
+version}\label{1555--ieeetran-version}}
+
+\texttt{proposed\_improvements.tex} is
+\texttt{proposed\_improvements.md} in IEEEtran
+journal style: the same content and numbers, with
+equations and a references list taken from
+\texttt{literature\_notes.md}.
+\texttt{proposed\_improvements.pdf} (5 pages) was
+built in the cloud with pdflatex, run twice, and
+had no errors and no overfull boxes. The only
+packages it needs besides IEEEtran.cls are
+amsmath, booktabs, tabularx, array, textcomp, url
+and cite; there is no siunitx. The sandbox I reach
+on the linked computer has pdflatex but neither
+IEEEtran.cls nor siunitx. Building there needs TeX
+Live\textquotesingle s
+\texttt{texlive-publishers}, or a copy of
+IEEEtran.cls next to the file.
+
+\hypertarget{1606--time-and-tokens-updated-through-the-latex-work}{%
+\section{16:06 --- time and tokens, updated
+through the LaTeX
+work}\label{1606--time-and-tokens-updated-through-the-latex-work}}
+
+Same method as at 15:20, now including the report,
+the questions afterwards and the two LaTeX
+conversions:
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.3075}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1424}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1233}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1482}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1424}}>{\raggedright\arraybackslash}p{(\linewidth - 12\tabcolsep) * \real{0.1363}}@{}}
+\toprule\noalign{}
+phase & wall clock & API calls & output tokens &
+cache writes & cache reads \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+orientation & 14:08--14:12 & 14 & 20,138 & 106,368
+& 1,958,053 \\
+simulation environment + literature/OCR &
+14:12--14:27 & 49 & 23,126 & 122,848 &
+12,499,286 \\
+baseline reproduced; Caltech-thesis check &
+14:27--14:31 & 6 & 2,887 & 13,684 & 1,960,595 \\
+design reasoning + simulations & 14:31--15:00 & 40
+& 125,771 & 157,464 & 17,134,286 \\
+accounting, log timestamp correction &
+15:00--15:02 & 5 & 10,264 & 17,604 & 2,485,393 \\
+runner, re-run, notes, proposal, transfer checks,
+report & 15:02--15:20 & 41 & 64,333 & 102,341 &
+23,278,772 \\
+questions about the spreadsheet button &
+15:20--15:52 & 1 & 427 & 6,984 & 613,327 \\
+IEEEtran LaTeX of the proposal & 15:52--16:04 & 16
+& 32,152 & 45,403 & 10,226,268 \\
+resource-log question; start of the
+log\textquotesingle s LaTeX & 16:04--16:06 & 2 &
+1,576 & 7,552 & 1,339,858 \\
+\textbf{total, main thread} & & 174 & 280,674 &
+580,248 & 71,495,838 \\
+subagent (Caltech PDF check) & 14:30--14:31 & 5 &
+1,463 & 94,882 & 368,538 \\
+\end{longtable}
+
+The context is now $\sim$674 k tokens per
+call. The LaTeX conversion of this log comes after
+this table and is not in it.
+
+\hypertarget{1615--latex-version-of-this-log}{%
+\section{16:15 --- LaTeX version of this
+log}\label{1615--latex-version-of-this-log}}
+
+\texttt{log.tex} / \texttt{log.pdf} (article
+class, not IEEEtran, in the style of
+\texttt{sudelbuecher/esd\_protection/*.tex}). The
+body was converted from this file with pandoc
+3.1.3, and the tables were given widths weighted
+by their content. Builds with pdflatex using only
+standard packages (booktabs, longtable, calc,
+hyperref, xurl, microtype, textcomp, geometry). A
+snapshot: entries after 16:15 are only in
+\texttt{log.md}.
+
+\end{document}

@@ -1,0 +1,593 @@
+% SPDX-FileCopyrightText: 2026 Christoph Maier
+% SPDX-License-Identifier: Apache-2.0
+%
+% Proposed revision of the class-AB pad driver (IEEEtran version of proposed_improvements.md).
+% Build: pdflatex proposed_improvements.tex (twice). Needs IEEEtran.cls (TeX Live: texlive-publishers);
+% otherwise only amsmath, booktabs, tabularx, array, cite, textcomp, url.
+\documentclass[journal]{IEEEtran}
+
+\usepackage{amsmath}
+\usepackage{booktabs,tabularx,array}
+\usepackage{textcomp}
+\usepackage[hyphens]{url}
+\usepackage{cite}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcommand{\cell}[1]{\texttt{#1}}
+\newcommand{\um}{\,\textmu m}
+\newcommand{\umsq}{\,\textmu m$^2$}
+\newcommand{\uA}{\,\textmu A}
+\newcommand{\uS}{\,\textmu S}
+\newcommand{\mV}{\,mV}
+\newcommand{\dB}{\,dB}
+\newcommand{\MHz}{\,MHz}
+\newcommand{\pF}{\,pF}
+\newcommand{\kOhm}{\,k$\Omega$}
+\newcommand{\Ohm}{\,$\Omega$}
+\newcommand{\dg}{$^\circ$}
+\newcommand{\RL}{1\,k$\Omega\parallel$100\,pF}
+\newcommand{\vinp}{v_\mathrm{inp}}
+\newcommand{\vinn}{v_\mathrm{inn}}
+\newcommand{\vref}{v_\mathrm{ref}}
+\newcommand{\vfb}{v_\mathrm{fb}}
+\newcommand{\vout}{v_\mathrm{out}}
+
+\begin{document}
+
+\title{Proposed Revision of a Class-AB Analog Pad Driver in SG13CMOS5L: Matched-Pair DDA,
+MOS Miller Capacitors, and a Resized Front End}
+
+\author{C.~H.~Maier%
+\thanks{Design note in the IEEE journal format; companion to
+\cell{class\_ab\_pad\_driver.md}. Simulation only (ngspice-42, IHP-Open-PDK \cell{dev}, tt,
+27\,\textdegree C unless stated), no layout, not reviewed. Drafted with Claude (configured
+model \cell{claude-opus-5-5}; the serving model may differ), 2~October 2026. Running log:
+\cell{log.md}; sources: \cell{literature\_notes.md}; every number:
+\cell{sim/results\_improvements.txt}, produced by \cell{sim/run\_improvements.py}.}}
+
+\markboth{Design note, sg13cmos5l\_cm\_ip\_\_single2diff2single, 2 October 2026}%
+{Maier: Proposed Revision of a Class-AB Analog Pad Driver}
+
+\maketitle
+
+\begin{abstract}
+The first version of a differential-to-single-ended class-AB pad driver in IHP's SG13CMOS5L
+used the pad's ESD clamp frames as output devices. Its area was dominated by two MOM Miller
+capacitors (1922 of 2387\umsq{} outside the frames). Its gain was set by a ratio of two
+degenerated pairs, $(R_2+2/g_m)/(R_1+2/g_m)$, so it moved by $-2.6\ldots+5.0$\,\% over
+corners. Its offset came from the folding sinks, and its loop gain was limited by short
+internal cascodes. The poly resistors themselves occupy 28\umsq{}. The revision keeps the
+frames and the floating class-AB control. It replaces the differential difference amplifier
+(DDA) with four identical units balanced as $f(\vinp-\vref)+f(\vref-\vinn)=2f(\vfb-\vref)$,
+which sets the gain $\tfrac12$ by the unit count and cancels the units' nonlinearity as far
+as they match: a static ``externally linear, internally nonlinear'' circuit. The Miller
+capacitors become thick-oxide PMOS accumulation capacitors, and the front end and the
+internal cascodes are resized. Into 1\,k$\Omega\parallel$100\,pF the supply current drops
+from 427 to 296\uA{}, the loop gain rises from 66.5 to 78.9\dB, and the gain over 11 corners
+stays within 0.4992\ldots0.5000. The DC nonlinearity drops from 5.5 to 1.2\mV, THD at 10\,kHz
+from $-51$ to $-58.5$\dB, the mismatch offset $\sigma$ from 14.4 to 5.3\mV, and the output
+noise at 1\,kHz from 1.6 to 0.68\,\textmu V/$\sqrt{\mathrm{Hz}}$. Three resistor-free
+degenerations from the literature were checked: a triode MOS, a well input, and an
+undegenerated square-law pair. None fits this topology, because each unit's output must
+depend on the gate difference alone. The output devices cannot be cascoded while they are
+the ESD clamps. Moved into the slot and cascoded, they give a capacitor-free,
+load-compensated driver with 74\dB{} of loop gain, for capacitive loads only.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Class-AB output stage, differential difference amplifier, externally linear circuits, ESD,
+matched-nonlinearity cancellation, MOS capacitor, Miller compensation, pad driver, SG13CMOS5L.
+\end{IEEEkeywords}
+
+\section{Where the First Version's Numbers Come From}
+
+\IEEEPARstart{T}{able}~\ref{tab:diag} traces each figure of merit of the first version
+\cite{companion} to its cause. Only one of the causes is a linear passive: the MOM
+capacitors. The resistors set the gain error, but through their combination with $g_m$, not
+by being resistors.
+
+\begin{table}[!t]
+\caption{First Version: Figures of Merit and Their Causes}
+\label{tab:diag}
+\centering\footnotesize
+\begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}p{0.2\columnwidth}>{\raggedright\arraybackslash}p{0.26\columnwidth}L@{}}
+\toprule
+quantity & value & traced to\\
+\midrule
+area outside frames & 2387\umsq{} (gate 437, MOM 1922, rhigh 28) & MOM Miller capacitors on M1--M4\\
+supply current & 427\uA & output $I_Q$ 240, bias fixture $\approx$\,90, front end $\approx$\,100\\
+gain over corners & 0.4870\ldots0.5249 & $(R_2+2/g_m)/(R_1+2/g_m)$: $R$ tracks $R$, $g_m$ does not\\
+DC nonlinearity & 5.5\mV{} (12.7\mV{} at ss 27\,\textdegree C) & degenerated pairs, outside the loop\\
+offset $\sigma$ (30 seeds) & 14.4\mV & sinks 11.5, tails 4.2, mirror 2.3, pairs 1.7\mV\textsuperscript{a}\\
+loop gain, \RL & 66.5\dB & $A_1$ (short cascodes) $\times$ $A_2=g_{m,\mathrm{out}}(R_L\parallel r_o)\approx 6$\\
+\bottomrule
+\end{tabularx}\\[2pt]
+\parbox{\columnwidth}{\footnotesize \textsuperscript{a}Budget of the MP-DDA in the first
+version's sizing (fold, sinks and mirror identical), one device group at a time, 20 seeds.}
+\end{table}
+
+The offset budget follows Sarpeshkar's rule \cite[\S3.3.4]{sarpeshkar97}: the input offset
+is the current mismatch divided by the transconductance,
+\begin{equation}
+V_{os} = \Delta I / G_m ,
+\end{equation}
+so a front end with a low $G_m/I$ is offset-prone, and the mirrors and sinks matter more than
+the input devices.
+
+\section{Matched-Pair DDA}
+
+\subsection{Principle}
+Four identical transconductance units each deliver $f(g_p-g_n)$ to the fold nodes:
+unit~A with $(g_p,g_n)=(\vinp,\vref)$, unit~B with $(\vref,\vinn)$, and units C1 and C2,
+both with $(\vref,\vfb)$, subtracting. The loop forces
+\begin{equation}
+f(\vinp-\vref)+f(\vref-\vinn)=2f(\vfb-\vref).
+\label{eq:balance}
+\end{equation}
+With the input common mode at $\vref$, $\vinp-\vref=\vref-\vinn=u$, and (\ref{eq:balance})
+reads $2f(u)=2f(\vout-\vref)$. Hence $\vout-\vref=(\vinp-\vinn)/2$ for any odd, monotonic $f$.
+For an input common-mode error $c$, the input units carry
+\begin{equation}
+f(u+c)+f(u-c)=2f(u)+f''(u)\,c^2+O(c^4),
+\end{equation}
+so the error, $f''(u)\,c^2/2f'(u)$, is second order in $c$. The gain $\tfrac12$ is the ratio
+$2{:}4$ of unit counts. The input units compress, and the feedback units apply the inverse of
+the same law. This is the static form of ELIN: Minch's ``function inversion by negative
+feedback around a high-gain amplifier'' \cite{minch97}, and the cancellation the
+Säckinger--Guggenbühl DDA \cite{sackinger87} shows when both pairs carry the same signal.
+
+\subsection{Requirement on a Unit}
+One input of every unit sits at $\vref$. For the same differential voltage $x$, the input
+common mode, and with it the source voltages, moves by $+x/2$ in A and C and by $-x/2$ in B.
+So a unit qualifies only if its output depends on $g_p-g_n$ alone, not on where its sources
+sit; its own linearity is secondary. The test bench sweeps
+$f_A(x)=I(\vref+x,\vref)$ and $f_B(x)=I(\vref,\vref-x)$ and solves
+$f_A(u)+f_B(u)=2f_A(v)$ (Table~\ref{tab:units}). For the resistor unit this gives
+$-1.04/-1.02$\mV{} at $u=\mp0.5$\,V. The full driver's largest deviation from its
+small-signal line is 1.04\mV.
+
+\begin{table*}[!t]
+\caption{DDA Units: Common-Mode Sensitivity and Static MP-DDA Error}
+\label{tab:units}
+\centering\footnotesize
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+unit & $G_{m0}$ & $G_m$ vs.\ input CM & own compression at 0.5\,V & DDA error at $u=-0.5/+0.5$\,V\\
+\midrule
+\cell{unit\_r}: split tails, rhigh between the sources & 15.6\uS & 0.6\,\%/V & 0.5\,\% & $-1.0/-1.0$\mV\\
+\cell{unit\_t}: same, triode hv-PMOS instead of rhigh & 15.5\uS & 77\,\%/V & 20\,\% & $-191/-72$\mV\\
+\cell{unit\_w}: well (bulk) input, gates at $v_{ss}$ \cite{sarpeshkar97} & 11.0\uS & $-27$\,\%/V & 6.8\,\% & $+29/+38$\mV\\
+\cell{unit\_q}: undegenerated square-law pair, 2/6\um & 7.8\uS & $-72$\,\%/V & 22\,\% & $+75/+200$\mV\\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+The split-tail resistor unit qualifies because each input device is a constant-current
+source follower. A follower's transfer does not depend on the device law
+\cite[\S7.2.1]{minch97}, so the element between the sources sees exactly $g_p-g_n$. The other
+three fail for one common reason. A triode MOS's resistance depends on its $V_{SG}$, which is
+the absolute source voltage. The well input's $\kappa$ depends on the well-to-gate voltage
+\cite[\S3.3.1]{sarpeshkar97}. A single-tail pair's tail and channel-length modulation see the
+source move. The design rule is therefore ``no element whose value depends on the source
+voltage'', not ``no resistor'', and the poly resistor stays. A unit cannot be made symmetric
+in common mode here, because the feedback side has only $\vfb$ and $\vref$; that would need
+an inverted replica of the output.
+
+\subsection{Result With Nothing Else Changed}
+\cell{d2s\_mp} keeps the first version's fold, mirror, class-AB control, frames, MOM
+capacitors and bias, and the same 80\uA{} of tail current as $8\times10$\uA{}
+(Table~\ref{tab:mp}). The gain $\sigma$ is now the rhigh unit mismatch: 1.0\,\% for
+$0.5\times36.4$\um{} units and 0.84\,\% for the $0.5\times50.6$\um{} units of
+\cell{d2s\_mpdda}. Four times the resistor area would halve it, at about 75\umsq{} more per
+unit. The offset is untouched, because it lives in the fold (Section~\ref{sec:sizing}).
+
+\begin{table}[!t]
+\caption{MP-DDA in the First Version's Sizing}
+\label{tab:mp}
+\centering\footnotesize
+\begin{tabularx}{\columnwidth}{@{}Lcc@{}}
+\toprule
+ & first version & MP-DDA\\
+\midrule
+gain, tt & 0.5005 & 0.4998\\
+gain, 11 corners & 0.4870\ldots0.5249 & 0.4983\ldots0.4998\\
+nonlinearity $\pm1$\,V, tt / worst & 5.52 / 12.69\mV & 1.04 / 1.91\mV\\
+THD 10/100\,kHz, \RL & $-51.1/-50.2$\dB & $-60.2/-55.5$\dB\\
+THD 10/100\,kHz, 100\pF & $-51.0/-51.0$\dB & $-60.0/-59.8$\dB\\
+$T_0$ (\RL) & 66.5\dB & 66.5\dB\\
+$f_c$ / PM (\RL) & 1.62\MHz{} / 74.8\dg & 1.62\MHz{} / 74.7\dg\\
+gain $\sigma$ / offset $\sigma$ (30 seeds) & 1.60\,\% / 14.4\mV & 1.33\,\% / 14.5\mV\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Miller Compensation Without BEOL Capacitors}
+
+\subsection{Device}
+Each Miller capacitor is an \cell{sg13\_hv\_pmos} used as an accumulation capacitor, with
+the gate above the n-well. On the A side the gate is node $a$ ($\approx$\,2.6\,V) and
+source, drain and well are $\vout$. On the B side the gate is $\vout$ and source, drain and
+well are node $b$ ($\approx$\,0.7\,V). Over the linear output range $V_{GW}$ spans
+0.15\ldots1.15\,V (A) and 0.25\ldots1.25\,V (B). $C_{ox}\approx5$\,fF/\textmu m$^2$
+($t_{ox}=6.9$\,nm), and in that range the device delivers 0.38\ldots0.76 of $C_{ox}A$. A
+$14\times14$\um{} device has 0.370\pF{} at 0.15\,V, 0.648\pF{} at 1.0\,V and 0.745\pF{} at
+1.25\,V; a $31\times31$\um{} MOM capacitor has 1.002\pF.
+
+\subsection{Equivalence}
+$18\times18$\um{} per side reproduces the MOM pair's loop within a degree
+(Table~\ref{tab:cl}). That is 648\umsq{} of gate oxide instead of 1922\umsq{} of M1--M4
+fingers. THD with capacitive loads is unchanged ($-60.0/-60.0$\dB{} at 100\pF). With \RL{},
+100\,kHz THD loses 2.3\dB{} ($-53.2$ vs.\ $-55.5$\dB): the C--V curvature modulates $f_c$
+where the loop gain is lowest.
+
+\begin{table}[!t]
+\caption{Crossover Frequency / Phase Margin vs.\ Load Capacitance (No Resistive Load)}
+\label{tab:cl}
+\centering\footnotesize
+\begin{tabular}{@{}ccc@{}}
+\toprule
+$C_L$ & MOM $31\times31$\um & MOS $18\times18$\um\\
+\midrule
+5\pF & 2.18\MHz{} / 86.1\dg & 2.14\MHz{} / 86.4\dg\\
+20\pF & 2.17\MHz{} / 82.6\dg & 2.14\MHz{} / 82.9\dg\\
+100\pF & 2.03\MHz{} / 66.2\dg & 2.00\MHz{} / 67.0\dg\\
+300\pF & 1.60\MHz{} / 45.5\dg & 1.59\MHz{} / 46.3\dg\\
+1\,nF & 1.00\MHz{} / 26.4\dg & 1.00\MHz{} / 26.9\dg\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Why the Capacitor Cannot Simply Be Made Small}
+With Miller compensation the non-dominant pole is
+\begin{equation}
+\omega_{p2}\approx\frac{g_{m,\mathrm{out}}\,C_M}{C_L\,(C_g+C_M)} .
+\end{equation}
+The frame gates carry $C_g\approx0.86$\pF{} (P) and 0.69\pF{} (N), so pole splitting needs
+$C_M$ of the order of $C_g$ whatever $G_{m1}$ is; lowering $G_{m1}$ only lowers $f_c$. Two
+ways around this floor were considered but not simulated:
+\begin{itemize}
+\item Source-follower buffers in front of the frame gates. They shrink the high-impedance
+node, so $C_M$ could drop to perhaps 0.2\pF{} (estimate), but the class-AB loop would have
+to include the followers.
+\item Indirect (current-buffer) compensation \cite{ahuja83} into the fold nodes. These sit
+at $\approx$\,0.37\,V, which biases a MOS capacitor poorly. The $a$-side current would also
+have the wrong sign through the mirror unless injected at the mirror cascode's source.
+\end{itemize}
+Load compensation needs no capacitor at all, but only once the output can be cascoded
+(Section~\ref{sec:casc}).
+
+\subsection{ESD Check Item}
+The A-side capacitor puts a p$^+$/n-well junction, the n-well/p-substrate diode and 7\,nm of
+gate oxide between the pad and node $a$. The B-side capacitor puts gate oxide between the
+pad and node $b$. The frames' own gate--drain overlaps already carry the same oxide stress,
+but the capacitors belong in the ESD review.
+
+\section{Currents, Offset and Noise: \texttt{d2s\_mpdda}}
+\label{sec:sizing}
+
+\begin{table*}[!t]
+\caption{ELIN Approaches With Non-Exponential Internal Laws: Feasibility for This Driver}
+\label{tab:elin}
+\centering\footnotesize
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.2\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}p{0.2\textwidth}L@{}}
+\toprule
+approach & internal law & sources & verdict\\
+\midrule
+matched-nonlinearity feedback, $f^{-1}\circ f$ & any odd monotonic $f$ (here a degenerated square law) & \cite{minch97,sackinger87} & \textbf{used}; the unit must depend on $g_p-g_n$ only (Section~II)\\
+MOS translinear loop & square law & \cite{wiegerink,seevinck87} & already present: the floating class-AB control \cite{hogervorst94,monticelli86} is one\\
+constant-sum square-law push-pull & square law & \cite{sarpeshkar97} & the frames run at $g_m/I\approx12.5$\,V$^{-1}$ (moderate inversion); an exact square law would need mA of $I_Q$; not pursued\\
+$\sqrt{\ }$-domain / dynamic translinear & square law or exponential & \cite{mulder97tcas,mulder97jssc,efthivoulidis99,hiseni09} & dynamic (filters); a static buffer has nothing to compand\\
+triode MOSFET-C & triode, even orders cancel & --- & needs balanced signals; the feedback side here is single-ended\\
+capacitive dividers: FG input, MITE, AFGA, MIFG & capacitive + exponential or law-independent follower & \cite{minch97,minch01,hasler97,sanchez_fg,montalvo93} & needs linear capacitors, charge control (tunneling, injection or UV) and AC coupling; none is available or acceptable here\\
+well input, bump linearization & $\kappa$-scaled law; bump in subthreshold & \cite{sarpeshkar97} & $G_m$ depends on input CM: $+29/+38$\mV{} error (\cell{unit\_w}); bump range is subthreshold-sized\\
+undegenerated strong-inversion pair & square law & --- & linear enough, but the sources move with the signal: $+75/+200$\mV{} error (\cell{unit\_q})\\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\begin{table*}[!t]
+\caption{Variants Compared (\RL{} Unless Stated)}
+\label{tab:opt}
+\centering\footnotesize
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+variant & area & $I_{DD}$ & offset $\sigma$ & $T_0$: \RL{} / 50\Ohm{} / 100\pF & gain over corners & THD 10/100\,kHz\\
+\midrule
+first version (\cell{d2s\_miller}) & 2387\umsq & 427\uA & 14.4\mV & 66.5/40.7/96.5\dB & $-2.6\ldots+5.0$\,\% & $-51.1/-50.2$\dB\\
+area-lean: \cell{d2s\_mp} + MOS $18\times18$ & 1238\umsq & 427\uA & 14.5\mV & 66.5/40.7/96.5\dB & $-0.3\ldots0$\,\% & $-60.1/-53.2$\dB\\
+\cell{d2s\_mpdda}, $L_\mathrm{cas}=1$\um & 1694\umsq & 296\uA & 5.3\mV\textsuperscript{a} & 69.7/43.9/99.6\dB & not simulated & $-58.7/-51.4$\dB\textsuperscript{a}\\
+\cell{d2s\_mpdda}, $L_\mathrm{cas}=3$\um{} (default) & 2014\umsq & 296\uA & 5.3\mV & 78.9/53.1/104.3\dB & $-0.16\ldots0$\,\% & $-58.5/-51.3$\dB\\
+\bottomrule
+\end{tabular}\\[2pt]
+\parbox{\textwidth}{\footnotesize \textsuperscript{a}From the intermediate run in
+\cell{log.md} (\cell{d2s\_mp2}: the circuit of \cell{d2s\_mpdda} with $L_\mathrm{cas}=1$\um{}
+except $n_g=1$ in the cascodes; its loop numbers agree with the $L_\mathrm{cas}=1$ row of
+\cell{results\_improvements.txt}), not from that file itself.}
+\end{table*}
+
+Headroom fixes the sizing. Nodes $a$ ($\approx$\,2.6\,V) and $b$ ($\approx$\,0.7\,V) are the
+frame gates, which leaves about 0.35\,V per device for the mirror and its cascode and for the
+sinks and theirs. The overdrive of the matching-critical devices cannot be raised, so their
+area is raised instead (Table~\ref{tab:sizing}). All conducting devices are at least 80\mV{}
+clear of saturation at $v_d=0$. Table~\ref{tab:perf} compares the result with the first
+version.
+
+\begin{table}[!t]
+\caption{Sizing Changes}
+\label{tab:sizing}
+\centering\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lLL@{}}
+\toprule
+block & first version & \cell{d2s\_mpdda}\\
+\midrule
+unit tails & 2 pairs $\times$ 2 $\times$ 20\uA{} = 80\uA & 4 units $\times$ 2 $\times$ 5\uA{} = 40\uA{} (5/6\um)\\
+degeneration & rhigh 116\kOhm{} / 51\kOhm & rhigh 150\kOhm{} per unit ($I_tR=0.75$\,V)\\
+folding sinks & $2\times50$\uA, 25/2 & $2\times30$\uA, 36/6\\
+mirror, cascodes & 10/2, $L=1$\um{} cascodes & 24/4, $L=3$\um{} cascodes ($W=10L$)\\
+bias references & 90\uA & 26\uA\\
+output $I_Q$ (P/N) & 240\uA & 212\uA{} (class-AB devices 5.2/4.8\uA)\\
+$I_{DD}$ & 427\uA & 296\uA\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[!t]
+\caption{Performance: First Version vs.\ \texttt{d2s\_mpdda}}
+\label{tab:perf}
+\centering\footnotesize
+\begin{tabularx}{\columnwidth}{@{}Lcc@{}}
+\toprule
+ & first version & \cell{d2s\_mpdda}\\
+\midrule
+$T_0$: \RL{} / 50\Ohm{} / 100\pF & 66.5/40.7/96.5\dB & 78.9/53.1/104.3\dB\\
+$f_c$/PM, 100\pF & 2.02\MHz/66.4\dg & 1.77\MHz/62.0\dg\\
+$f_c$/PM, 300\pF & 1.59\MHz/45.6\dg & 1.39\MHz/42.0\dg\\
+$f_c$/PM, 1\,nF & 1.00\MHz/26.5\dg & 0.87\MHz/24.1\dg\\
+gain, 11 corners & 0.4870\ldots0.5249 & 0.4992\ldots0.5000\\
+nonlinearity, tt / worst (ss 27\,\textdegree C) & 5.52/12.69\mV & 1.24/3.50\mV\\
+THD 10/100\,kHz, \RL & $-51.1/-50.2$\dB & $-58.5/-51.3$\dB\\
+THD 10/100\,kHz, 50\Ohm & $-46.2/-29.1$\dB & $-45.4/-26.9$\dB\\
+$t_{1\%}$, \RL & 307\,ns & 327\,ns\\
+offset $\sigma$ / gain $\sigma$ (30 seeds) & 14.4\mV{} / 1.60\,\% & 5.3\mV{} / 1.11\,\%\\
+noise, 1\,kHz (nV/$\sqrt{\mathrm{Hz}}$) & 1599 & 676\\
+noise, 100\,kHz (nV/$\sqrt{\mathrm{Hz}}$) & 200 & 152\\
+noise, 10\,Hz--10\,MHz (\textmu V rms) & 278 & 231\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The offset budget of \cell{d2s\_mpdda} ($\sigma$, one group at a time, 20 seeds) is:
+sinks 4.3\mV, unit pairs 1.7\mV, tails 1.4\mV, mirror 1.4\mV, the rest below 0.1\mV. The
+sinks still lead.
+
+The halved front-end $G_m$ lowers $f_c$ from 1.62 to 1.37\MHz{} (\RL). That costs the
+100\,kHz THD gain of Section~II and makes 50\Ohm{} slightly worse. $14\times14$\um{}
+capacitors raise $f_c$ to 2.12\MHz{} at 100\pF{} but leave 54\dg{} of phase margin; the
+choice belongs to the specification. 50\Ohm{} remains what the first note called it: a DC
+and low-frequency case.
+
+\section{Cascoding}
+\label{sec:casc}
+
+\subsection{Output Devices Are the Pad's ESD Clamps}
+A series cascode would put its own drain, not the clamp's, on the pad. A stacked clamp frame
+would be a new ESD structure needing its own qualification. The output therefore stays
+uncascoded, and the frames' $r_o$ ($V_A\approx26$\,V for P; $L=1.0$\um{} for N) bounds the
+second stage. What can be cascoded are the internal high-impedance nodes $a$ and $b$
+(Table~\ref{tab:lcas}). Regulated (gain-boosted) cascodes do not fit: the $\approx$\,0.35\,V
+per device next to $a$ and $b$ leaves no room for an auxiliary amplifier's $V_{GS}$.
+
+\begin{table}[!t]
+\caption{Loop Gain vs.\ Fold and Mirror Cascode Length ($W=10L$)}
+\label{tab:lcas}
+\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$L$ & $T_0$, \RL & $T_0$, 100\pF & $T_0$, 50\Ohm & PM, 100\pF & area\\
+\midrule
+1\um & 69.7\dB & 99.6\dB & 43.9\dB & 63.4\dg & 1081\umsq\\
+2\um & 75.4\dB & 103.1\dB & 49.6\dB & 62.8\dg & 1201\umsq\\
+3\um & 78.9\dB & 104.3\dB & 53.1\dB & 62.0\dg & 1401\umsq\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Output Devices in the Slot}
+With the pad reached through \cell{IOPadAnalog}, the output devices are ordinary devices and
+can be cascoded. \cell{d2s\_lc2} is load-compensated and has no compensation capacitor. It
+uses the MP-DDA front end and half-frame output devices, with the cascode gates at $\vref$
+(output range $\approx$\,1.0\ldots2.4\,V); see Table~\ref{tab:slot}. Cascoding adds 37\dB.
+It helps neither resistive loads, which collapse any single-stage loop, nor the minimum load
+capacitance ($\approx$\,30--40\pF).
+
+\begin{table}[!t]
+\caption{In-Slot, Load-Compensated Driver Without Compensation Capacitor}
+\label{tab:slot}
+\centering\footnotesize
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & uncascoded & cascoded\\
+\midrule
+$T_0$ & 37.2\dB & 74.0\dB\\
+PM, 5\pF & 16\dg & unstable\\
+PM, 20\pF & 47\dg & 39\dg\\
+PM, 100\pF & 78\dg & 77\dg\\
+PM, 1\,nF & 89\dg & 89\dg\\
+\RL & no loop gain & no loop gain\\
+$I_{DD}$ & 174\uA & 169\uA\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In \cell{IOPadAnalog}, \cell{padres} sits behind the 586.9\Ohm{} of
+\cell{SecondaryProtection}. Sensing the loop at \cell{padres} (the near side) turns that
+resistor into an isolation resistor. The phase margin rises from 39\dg{} to 62\dg{} at
+20\pF{} and reaches 104\dg{} at 100\pF; the pad then sees a $587\,\Omega\cdot C_L$ low-pass
+outside the loop, 2.7\MHz{} at 100\pF. Sensing at \cell{pad} (the far side) keeps the
+margins of the bare stage. 50\Ohm{} cannot be driven through 587\Ohm.
+
+Two points remain open. First, the cascoded version has 7.8\mV{} of systematic offset,
+because the diode replicas sit at a different $V_{DS}$ than the cascoded output devices;
+cascoding the replicas should remove it. Second, an in-slot output stage is not an area
+saving. This is an estimate, not simulated: for the same output pole at the same current,
+in-slot devices for the two-stage topology would need about the frames' $W$, because the
+frames' $g_m/I\approx12.5$\,V$^{-1}$ at 240\uA{} is what sets the non-dominant pole.
+
+\section{Externally Linear Circuits With a Non-Exponential Internal Law}
+Edwards \cite[p.~72]{edwards_thesis} (see also \cite{edwards00,edwards98}) names the square law of strong inversion
+\cite{wiegerink} and the exponential as the two nonlinearities that ELIN circuits can
+exploit. Table~\ref{tab:elin} lists what else the sources offer and how each fares here.
+Two expressions recur in it. Sarpeshkar's square-law identity \cite[p.~25]{sarpeshkar97} is
+\begin{equation}
+(x-a)^2-(x-b)^2=(b-a)(2x-a-b).
+\end{equation}
+For a push-pull stage with constant $V_{GS,P}+V_{GS,N}=2V_Q$ and drive $\pm\delta$, it gives
+\begin{equation}
+I_P-I_N=2\beta\,(V_Q-V_t)\,\delta,\qquad |I_\mathrm{out}|<4I_Q ,
+\end{equation}
+exactly, in strong inversion.
+
+
+
+ELIN without the exponential is therefore feasible here in one form: function inversion by
+matched units. Its precondition is not a particular law but a unit whose output is
+independent of the source voltage, which the source-follower-plus-resistor unit provides.
+The square-law translinear classics need either strong inversion at currents this driver
+does not spend, or balanced signals that a single-ended pad does not have.
+
+\section{Options}
+Table~\ref{tab:opt} compares the variants. Area is drawn device area (W$\cdot$L, resistor
+w$\cdot$l, capacitor w$\cdot$l) without the frames and the bias fixture, as in the first
+note. The area-lean variant's corner gain is that of \cell{d2s\_mp}, since the capacitors do
+not enter the DC gain.
+
+
+
+\section{Not Done}
+\begin{itemize}
+\item xschem schematics and the CACE run for \cell{d2s\_mpdda}. The existing yaml should take
+it as a new DUT, with \cell{d2s\_bias\_lp} as fixture.
+\item Layout. The four units must match, so common-centroid placement and Edwards's ``same
+surround'' rule \cite[\S3.10]{edwards_thesis} apply; the PMOS input devices sit in separate
+wells (bulk at their own source).
+\item PSRR, CMRR, input CM range, supply corners (3.0/3.6\,V) and process Monte Carlo
+(\cell{tt\_stat}). Only mismatch Monte Carlo was run.
+\item ESD review of the pad-connected MOS capacitors (Section~III).
+\item \cell{d2s\_lc2}: cascoded replicas, a real minimum-$C_L$ specification, and whether a
+slot-side driver is wanted at all.
+\item Inherited from the first version: the PMOS of the left floating replica (\cell{XFPL})
+carries 1\,nA, because with its bulk at $v_{dd}$, $|V_{GS}|=0.78$\,V is below its
+body-shifted $|V_{th}|$ of 1.01\,V. Only \cell{XFNL} replicates the class-AB control. The
+circuit works, but the replica is not a true replica.
+\end{itemize}
+
+\appendix[Files]
+All files are in \cell{sim/}:
+\begin{itemize}
+\item \cell{d2s\_mpdda.spice}: proposed driver, subcircuit \cell{d2s\_mpdda} (pins as
+\cell{d2s\_miller}; parameters \cell{wc}, \cell{lc}, \cell{lcas}, \cell{rl}).
+\item \cell{units.spice}: DDA units \cell{unit\_r}, \cell{unit\_r2} (used by
+\cell{d2s\_mpdda}), \cell{unit\_t}, \cell{unit\_w}, \cell{unit\_q}.
+\item \cell{d2s\_bias\_lp.spice}: bias fixture for \cell{d2s\_mpdda} (pins as
+\cell{d2s\_bias}).
+\item \cell{d2s\_mp.spice}, \cell{ccomp.spice}: MP-DDA in the first version's sizing; MOM or
+MOS capacitors through a test-bench wrapper.
+\item \cell{d2s\_lc2.spice}: in-slot, load-compensated, cascoded (\cell{d2s\_lc2}) and
+uncascoded (\cell{d2s\_lc2\_nc}).
+\item \cell{run\_improvements.py}: reproduces every number here; imports
+\cell{../../run\_d2s.py} unchanged.
+\item \cell{results\_improvements.txt}: its output (3\,min 49\,s on two cores).
+\end{itemize}
+
+\begin{thebibliography}{99}
+\bibitem{companion}
+C.~H.~Maier, ``Two proof-of-concept class-AB analog pad drivers built on ESD-clamp output
+devices in IHP SG13CMOS5L,'' design note \cell{class\_ab\_pad\_driver.md}, Sep.~2026.
+
+\bibitem{sarpeshkar97}
+R.~Sarpeshkar, ``Efficient precise computation with noisy components: Extrapolating from an
+electronic cochlea to the brain,'' Ph.D. dissertation, California Inst. Technol., Pasadena,
+CA, USA, 1997, ch.~3.
+
+\bibitem{minch97}
+B.~A.~Minch, ``Analysis, synthesis, and implementation of networks of multiple-input
+translinear elements,'' Ph.D. dissertation, California Inst. Technol., Pasadena, CA, USA,
+1997.
+
+\bibitem{minch01}
+B.~A.~Minch, ``Multiple-input translinear element log-domain filters,'' \emph{IEEE Trans.
+Circuits Syst. II}, vol.~48, no.~1, pp.~29--36, Jan.~2001.
+
+\bibitem{hasler97}
+P.~Hasler, Ph.D. dissertation, California Inst. Technol., Pasadena, CA, USA, ch.~4--5
+(local copy: \cell{FloatingGate/Hasler/thesis\_chapter*.ps}).
+
+\bibitem{sanchez_fg}
+E.~S\'anchez-Sinencio, ``Floating gate techniques and applications,'' lecture notes, Analog
+and Mixed-Signal Center, Texas A\&M Univ., College Station, TX, USA.
+
+\bibitem{montalvo93}
+A.~J.~Montalvo and J.~J.~Paulos, ``Improved floating-gate devices using standard CMOS
+technology,'' \emph{IEEE Electron Device Lett.}, vol.~14, no.~8, pp.~372--374, Aug.~1993.
+
+\bibitem{edwards_thesis}
+R.~T.~Edwards, Ph.D. dissertation, Dept. Elect. Comput. Eng., Johns Hopkins Univ.,
+Baltimore, MD, USA, \S\S3.5--3.10 (local copy: \cell{TimEdwards/thesis.pdf}).
+
+\bibitem{edwards00}
+R.~T.~Edwards and G.~Cauwenberghs, ``Synthesis of log-domain filters from first-order
+building blocks,'' \emph{Analog Integr. Circuits Signal Process.}, vol.~22, pp.~177--186,
+2000.
+
+\bibitem{edwards98}
+R.~T.~Edwards and G.~Cauwenberghs, ``A second-order log-domain bandpass filter for audio
+frequency applications,'' in \emph{Proc. IEEE ISCAS}, Monterey, CA, USA, 1998, vol.~3.
+
+\bibitem{efthivoulidis99}
+G.~Efthivoulidis and Y.~Tsividis, ``Signal analysis of externally linear filters,'' in
+\emph{Proc. IEEE ISCAS}, 1999, vol.~6, pp.~65--68.
+
+\bibitem{mulder97tcas}
+J.~Mulder, A.~C.~van~der~Woerd, W.~A.~Serdijn, and A.~H.~M.~van~Roermund, ``General
+current-mode analysis method for translinear filters,'' \emph{IEEE Trans. Circuits Syst. I},
+vol.~44, no.~3, pp.~193--197, Mar.~1997.
+
+\bibitem{mulder97jssc}
+J.~Mulder, A.~C.~van~der~Woerd, W.~A.~Serdijn, and A.~H.~M.~van~Roermund, ``An RMS-DC
+converter based on the dynamic translinear principle,'' \emph{IEEE J. Solid-State Circuits},
+vol.~32, no.~7, pp.~1146--1150, Jul.~1997.
+
+\bibitem{hiseni09}
+S.~Hiseni, C.~Sawigun, and W.~A.~Serdijn, ``Dynamic translinear nonlinear energy operator,''
+in \emph{Proc. ECCTD}, 2009, pp.~153--156.
+
+\bibitem{wiegerink}
+R.~J.~Wiegerink, \emph{Analysis and Synthesis of MOS Translinear Circuits}. The Hague, The
+Netherlands (as cited in \cite{edwards_thesis}).
+
+\bibitem{sackinger87}
+E.~S\"ackinger and W.~Guggenb\"uhl, ``A versatile building block: The CMOS differential
+difference amplifier,'' \emph{IEEE J. Solid-State Circuits}, vol.~SC-22, no.~2,
+pp.~287--294, Apr.~1987.
+
+\bibitem{seevinck87}
+E.~Seevinck and R.~F.~Wassenaar, ``A versatile CMOS linear transconductor/square-law function
+circuit,'' \emph{IEEE J. Solid-State Circuits}, vol.~SC-22, no.~3, pp.~366--377, Jun.~1987.
+
+\bibitem{hogervorst94}
+R.~Hogervorst, J.~P.~Tero, R.~G.~H.~Eschauzier, and J.~H.~Huijsing, ``A compact
+power-efficient 3~V CMOS rail-to-rail input/output operational amplifier for VLSI cell
+libraries,'' \emph{IEEE J. Solid-State Circuits}, vol.~29, no.~12, pp.~1505--1513,
+Dec.~1994.
+
+\bibitem{monticelli86}
+J.~M.~Monticelli, ``A quad CMOS single-supply op amp with rail-to-rail output swing,''
+\emph{IEEE J. Solid-State Circuits}, vol.~SC-21, no.~6, pp.~1026--1034, Dec.~1986.
+
+\bibitem{ahuja83}
+B.~K.~Ahuja, ``An improved frequency compensation technique for CMOS operational
+amplifiers,'' \emph{IEEE J. Solid-State Circuits}, vol.~SC-18, no.~6, pp.~629--633,
+Dec.~1983 (from memory, not re-checked).
+\end{thebibliography}
+
+\end{document}
