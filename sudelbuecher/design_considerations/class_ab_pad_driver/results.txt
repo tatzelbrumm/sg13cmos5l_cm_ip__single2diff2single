@@ -2,14 +2,15 @@
 # osdi: psp103, r3_cmc, cap_cmomi compiled with OpenVAF-reloaded (OSDI version patched to 0.3 for ngspice 42)
 # vd = vinp - vinn swept +-1 V; gain/offset from |vd|<=0.2 V fit; nonlin = max deviation over +-1 V;
 # Imin = smaller output-device current at vd = +-1 V; step: vd -0.5 -> +0.5 V, i.e. vout vref-0.25 V -> vref+0.25 V; SR = 10-90 % rate (includes linear settling)
+# THD: h2..h7 root-sum-square over h1, 4 periods, rectangular window (corrected 2026-10-02; the previous results.txt summed harmonic magnitudes linearly and read 3-6 dB high)
 
 == Topology A: two-stage, Miller compensated, tt 27C, I_AB = 5 uA
-50R           gain=0.4986 off=  0.26mV nonlin= 6.62mV IqP/IqN= 241/ 238uA Idd=  429uA Imin=  99uA | T0= 40.7dB fc= 0.30MHz PM= 90.1 | step: OS= 0.0% SR= 0.83V/us t1%=  873ns | THD 10k/100k=-40.1/-23.8dB
-1k||100p      gain=0.5005 off=  0.18mV nonlin= 5.52mV IqP/IqN= 240/ 239uA Idd=  427uA Imin= 122uA | T0= 66.5dB fc= 1.62MHz PM= 74.8 | step: OS= 0.0% SR= 2.64V/us t1%=  307ns | THD 10k/100k=-46.0/-45.3dB
-1k(gnd)||100p gain=0.5007 off= -0.01mV nonlin= 5.52mV IqP/IqN=1754/ 104uA Idd= 1941uA Imin=  98uA | T0=101.8dB fc= 1.98MHz PM= 80.6 | step: OS= 0.0% SR= 2.75V/us t1%=  321ns | THD 10k/100k=-46.0/-45.9dB
-20p           gain=0.5007 off=  0.18mV nonlin= 5.52mV IqP/IqN= 240/ 240uA Idd=  427uA Imin= 234uA | T0= 96.5dB fc= 2.17MHz PM= 82.7 | step: OS= 0.0% SR= 2.91V/us t1%=  299ns | THD 10k/100k=-46.0/-46.1dB
-100p          gain=0.5007 off=  0.18mV nonlin= 5.52mV IqP/IqN= 240/ 240uA Idd=  427uA Imin= 234uA | T0= 96.5dB fc= 2.02MHz PM= 66.4 | step: OS= 2.3% SR= 3.78V/us t1%=  311ns | THD 10k/100k=-46.0/-46.0dB
-1n            gain=0.5007 off=  0.18mV nonlin= 5.52mV IqP/IqN= 240/ 240uA Idd=  427uA Imin= 234uA | T0= 96.5dB fc= 1.00MHz PM= 26.5 | step: OS=29.4% SR= 3.34V/us t1%= 2307ns | THD 10k/100k=-46.0/-43.9dB
+50R           gain=0.4986 off=  0.26mV nonlin= 6.62mV IqP/IqN= 241/ 238uA Idd=  429uA Imin=  99uA | T0= 40.7dB fc= 0.30MHz PM= 90.1 | step: OS= 0.0% SR= 0.83V/us t1%=  873ns | THD 10k/100k=-46.2/-29.1dB
+1k||100p      gain=0.5005 off=  0.18mV nonlin= 5.52mV IqP/IqN= 240/ 239uA Idd=  427uA Imin= 122uA | T0= 66.5dB fc= 1.62MHz PM= 74.8 | step: OS= 0.0% SR= 2.64V/us t1%=  307ns | THD 10k/100k=-51.1/-50.2dB
+1k(gnd)||100p gain=0.5007 off= -0.01mV nonlin= 5.52mV IqP/IqN=1754/ 104uA Idd= 1941uA Imin=  98uA | T0=101.8dB fc= 1.98MHz PM= 80.6 | step: OS= 0.0% SR= 2.75V/us t1%=  321ns | THD 10k/100k=-51.0/-50.9dB
+20p           gain=0.5007 off=  0.18mV nonlin= 5.52mV IqP/IqN= 240/ 240uA Idd=  427uA Imin= 234uA | T0= 96.5dB fc= 2.17MHz PM= 82.7 | step: OS= 0.0% SR= 2.91V/us t1%=  299ns | THD 10k/100k=-51.0/-51.1dB
+100p          gain=0.5007 off=  0.18mV nonlin= 5.52mV IqP/IqN= 240/ 240uA Idd=  427uA Imin= 234uA | T0= 96.5dB fc= 2.02MHz PM= 66.4 | step: OS= 2.3% SR= 3.78V/us t1%=  311ns | THD 10k/100k=-51.0/-51.0dB
+1n            gain=0.5007 off=  0.18mV nonlin= 5.52mV IqP/IqN= 240/ 240uA Idd=  427uA Imin= 234uA | T0= 96.5dB fc= 1.00MHz PM= 26.5 | step: OS=29.4% SR= 3.34V/us t1%= 2307ns | THD 10k/100k=-51.0/-49.1dB
 
 == Topology A: two-stage, Miller compensated: loop gain vs C_L (no resistive load), tt 27C
 5p: T0= 96.5dB fc= 2.18MHz PM= 86.3
@@ -33,12 +34,12 @@ fs 27C   1k||100p  gain=0.5013 off=  0.20mV IqP/IqN= 239/ 239uA Idd=  427uA T0= 
 fs 27C   100p      gain=0.5015 off=  0.20mV IqP/IqN= 239/ 239uA Idd=  426uA T0= 95.8dB fc= 2.02MHz PM= 66.4
 
 == Topology B: single-stage, load compensated, tt 27C, I_AB = 5 uA
-50R           gain=0.0291 off=  0.04mV nonlin= 0.72mV IqP/IqN= 168/ 167uA Idd=  359uA Imin=  33uA | T0=-24.2dB (no crossover) | step: OS= 0.0% SR= 0.64V/us t1%=   71ns | THD 10k/100k=-38.6/-38.4dB
-1k||100p      gain=0.2739 off=  0.36mV nonlin= 2.65mV IqP/IqN= 168/ 167uA Idd=  359uA Imin=  73uA | T0=  1.6dB fc= 1.01MHz PM=139.7 | step: OS= 0.0% SR= 2.49V/us t1%=  177ns | THD 10k/100k=-44.9/-44.9dB
-1k(gnd)||100p gain=0.0474 off=-815.70mV nonlin=161.15mV IqP/IqN= 851/  16uA Idd= 1041uA Imin=  14uA | T0=-30.3dB (no crossover) | step: OS= 0.0% SR= 0.36V/us t1%=  465ns | THD 10k/100k= -4.9/ -5.0dB
-20p           gain=0.4913 off=  0.58mV nonlin= 5.01mV IqP/IqN= 167/ 167uA Idd=  359uA Imin= 164uA | T0= 34.3dB fc= 6.45MHz PM= 58.1 | step: OS=11.3% SR=14.05V/us t1%=  141ns | THD 10k/100k=-46.7/-46.7dB
-100p          gain=0.4913 off=  0.58mV nonlin= 5.01mV IqP/IqN= 167/ 167uA Idd=  359uA Imin= 164uA | T0= 34.3dB fc= 1.81MHz PM= 79.2 | step: OS= 0.0% SR= 2.69V/us t1%=  307ns | THD 10k/100k=-46.7/-46.6dB
-1n            gain=0.4913 off=  0.58mV nonlin= 5.01mV IqP/IqN= 167/ 167uA Idd=  359uA Imin= 164uA | T0= 34.3dB fc= 0.20MHz PM= 89.7 | step: OS= 0.1% SR= 0.24V/us t1%= 3195ns | THD 10k/100k=-46.7/-45.2dB
+50R           gain=0.0291 off=  0.04mV nonlin= 0.72mV IqP/IqN= 168/ 167uA Idd=  359uA Imin=  33uA | T0=-24.2dB (no crossover) | step: OS= 0.0% SR= 0.64V/us t1%=   71ns | THD 10k/100k=-41.5/-41.4dB
+1k||100p      gain=0.2739 off=  0.36mV nonlin= 2.65mV IqP/IqN= 168/ 167uA Idd=  359uA Imin=  73uA | T0=  1.6dB fc= 1.01MHz PM=139.7 | step: OS= 0.0% SR= 2.49V/us t1%=  177ns | THD 10k/100k=-48.0/-48.0dB
+1k(gnd)||100p gain=0.0474 off=-815.70mV nonlin=161.15mV IqP/IqN= 851/  16uA Idd= 1041uA Imin=  14uA | T0=-30.3dB (no crossover) | step: OS= 0.0% SR= 0.36V/us t1%=  465ns | THD 10k/100k= -7.7/ -7.7dB
+20p           gain=0.4913 off=  0.58mV nonlin= 5.01mV IqP/IqN= 167/ 167uA Idd=  359uA Imin= 164uA | T0= 34.3dB fc= 6.45MHz PM= 58.1 | step: OS=11.3% SR=14.05V/us t1%=  141ns | THD 10k/100k=-51.8/-51.7dB
+100p          gain=0.4913 off=  0.58mV nonlin= 5.01mV IqP/IqN= 167/ 167uA Idd=  359uA Imin= 164uA | T0= 34.3dB fc= 1.81MHz PM= 79.2 | step: OS= 0.0% SR= 2.69V/us t1%=  307ns | THD 10k/100k=-51.8/-51.6dB
+1n            gain=0.4913 off=  0.58mV nonlin= 5.01mV IqP/IqN= 167/ 167uA Idd=  359uA Imin= 164uA | T0= 34.3dB fc= 0.20MHz PM= 89.7 | step: OS= 0.1% SR= 0.24V/us t1%= 3195ns | THD 10k/100k=-51.7/-48.4dB
 
 == Topology B: single-stage, load compensated: loop gain vs C_L (no resistive load), tt 27C
 5p: T0= 34.3dB fc=13.55MHz PM= 47.1
@@ -62,6 +63,6 @@ fs 27C   20p       gain=0.4920 off= -0.17mV IqP/IqN= 167/ 167uA Idd=  359uA T0= 
 fs 27C   100p      gain=0.4920 off= -0.17mV IqP/IqN= 167/ 167uA Idd=  359uA T0= 34.3dB fc= 1.81MHz PM= 79.2
 
 == Topology A: quiescent current vs 50 ohm performance, tt 27C
-I_AB=5u: 50R           gain=0.4986 off=  0.26mV nonlin= 6.62mV IqP/IqN= 241/ 238uA Idd=  429uA Imin=  99uA | T0= 40.7dB fc= 0.30MHz PM= 90.1 | step: OS= 0.0% SR= 0.83V/us t1%=  873ns | THD 10k/100k=-40.1/-23.8dB
-I_AB=10u: 50R           gain=0.4995 off=  0.16mV nonlin= 5.92mV IqP/IqN= 749/ 747uA Idd=  946uA Imin= 423uA | T0= 49.5dB fc= 0.52MHz PM= 89.5 | step: OS= 0.0% SR= 0.92V/us t1%=  819ns | THD 10k/100k=-42.3/-26.9dB
-I_AB=20u: 50R           gain=0.5000 off=  0.02mV nonlin= 5.58mV IqP/IqN=1998/1997uA Idd= 2215uA Imin=1353uA | T0= 55.9dB fc= 0.77MHz PM= 89.1 | step: OS= 0.0% SR= 1.06V/us t1%=  745ns | THD 10k/100k=-44.5/-31.3dB
+I_AB=5u: 50R           gain=0.4986 off=  0.26mV nonlin= 6.62mV IqP/IqN= 241/ 238uA Idd=  429uA Imin=  99uA | T0= 40.7dB fc= 0.30MHz PM= 90.1 | step: OS= 0.0% SR= 0.83V/us t1%=  873ns | THD 10k/100k=-46.2/-29.1dB
+I_AB=10u: 50R           gain=0.4995 off=  0.16mV nonlin= 5.92mV IqP/IqN= 749/ 747uA Idd=  946uA Imin= 423uA | T0= 49.5dB fc= 0.52MHz PM= 89.5 | step: OS= 0.0% SR= 0.92V/us t1%=  819ns | THD 10k/100k=-48.4/-32.4dB
+I_AB=20u: 50R           gain=0.5000 off=  0.02mV nonlin= 5.58mV IqP/IqN=1998/1997uA Idd= 2215uA Imin=1353uA | T0= 55.9dB fc= 0.77MHz PM= 89.1 | step: OS= 0.0% SR= 1.06V/us t1%=  745ns | THD 10k/100k=-50.2/-37.0dB

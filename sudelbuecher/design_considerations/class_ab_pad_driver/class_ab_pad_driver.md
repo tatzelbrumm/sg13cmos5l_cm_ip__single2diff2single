@@ -21,7 +21,7 @@ capacitance compensates the loop. In typical-corner simulation, A settles to 1 %
 into 1 kΩ ‖ 100 pF with 75° phase margin, drives ±10 mA into 50 Ω, and draws 427 µA.
 B draws 359 µA and is stable for C_L ≥ 5 pF (47°) with phase margin increasing with C_L,
 but has only 34 dB of loop gain and is unusable with resistive loads. The total harmonic
-distortion of both is limited to about −46 dB by the open-loop linearity of the DDA front end.
+distortion of both is limited to about −51 dB by the open-loop linearity of the DDA front end.
 
 **Index Terms** — Class-AB output stage, differential difference amplifier, ESD, Miller
 compensation, load compensation, pad driver, SG13CMOS5L.
@@ -196,8 +196,8 @@ series-pair type [4], [5] as the DDA inputs, with current-mirror outputs. It was
 Each class-AB cell is linear only while both of its branches conduct, roughly ±0.2 V in
 moderate inversion. Beyond that, the two cells work against each other: the balanced output
 current is the small difference of two large branch currents. In simulation this raised the
-output devices' current to 2.4 mA at v_d = ±1 V, with −20 dB THD. That netlist is not
-included.
+output devices' current to 2.4 mA at v_d = ±1 V, with −20 dB THD (computed with the first THD
+routine, which read about 5 dB high; see Section VII). That netlist is not included.
 
 ## VII. Simulated Results
 
@@ -210,20 +210,22 @@ MOM capacitors have no corner models and stay at their nominal value.
 
 | Load | Topology | Gain | Offset | I_Q (P/N) | I_DD | Loop gain T_0 | f_c | PM | 10–90 % rate | t_1% | THD 10 kHz / 100 kHz |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 50 Ω ‖ 20 pF | A | 0.499 | 0.26 mV | 241/238 µA | 429 µA | 40.7 dB | 0.30 MHz | 90° | 0.83 V/µs | 873 ns | −40.1 / −23.8 dB |
-| 1 kΩ ‖ 100 pF | A | 0.501 | 0.18 mV | 240/239 µA | 427 µA | 66.5 dB | 1.62 MHz | 75° | 2.64 V/µs | 307 ns | −46.0 / −45.3 dB |
-| 1 kΩ to gnd ‖ 100 pF | A | 0.501 | −0.01 mV | 1754/104 µA | 1941 µA | 101.8 dB | 1.98 MHz | 81° | 2.75 V/µs | 321 ns | −46.0 / −45.9 dB |
-| 20 pF | A | 0.501 | 0.18 mV | 240/240 µA | 427 µA | 96.5 dB | 2.17 MHz | 83° | 2.91 V/µs | 299 ns | −46.0 / −46.1 dB |
-| 100 pF | A | 0.501 | 0.18 mV | 240/240 µA | 427 µA | 96.5 dB | 2.02 MHz | 66° | 3.78 V/µs | 311 ns | −46.0 / −46.0 dB |
-| 1 nF | A | 0.501 | 0.18 mV | 240/240 µA | 427 µA | 96.5 dB | 1.00 MHz | 27° | 3.34 V/µs | 2307 ns | −46.0 / −43.9 dB |
-| 1 kΩ ‖ 100 pF | B | 0.274 | 0.36 mV | 168/167 µA | 359 µA | 1.6 dB | 1.01 MHz | 140° | 2.49 V/µs | 177 ns | −44.9 / −44.9 dB |
-| 20 pF | B | 0.491 | 0.58 mV | 167/167 µA | 359 µA | 34.3 dB | 6.45 MHz | 58° | 14.05 V/µs | 141 ns | −46.7 / −46.7 dB |
-| 100 pF | B | 0.491 | 0.58 mV | 167/167 µA | 359 µA | 34.3 dB | 1.81 MHz | 79° | 2.69 V/µs | 307 ns | −46.7 / −46.6 dB |
-| 1 nF | B | 0.491 | 0.58 mV | 167/167 µA | 359 µA | 34.3 dB | 0.20 MHz | 90° | 0.24 V/µs | 3195 ns | −46.7 / −45.2 dB |
+| 50 Ω ‖ 20 pF | A | 0.499 | 0.26 mV | 241/238 µA | 429 µA | 40.7 dB | 0.30 MHz | 90° | 0.83 V/µs | 873 ns | −46.2 / −29.1 dB |
+| 1 kΩ ‖ 100 pF | A | 0.501 | 0.18 mV | 240/239 µA | 427 µA | 66.5 dB | 1.62 MHz | 75° | 2.64 V/µs | 307 ns | −51.1 / −50.2 dB |
+| 1 kΩ to gnd ‖ 100 pF | A | 0.501 | −0.01 mV | 1754/104 µA | 1941 µA | 101.8 dB | 1.98 MHz | 81° | 2.75 V/µs | 321 ns | −51.0 / −50.9 dB |
+| 20 pF | A | 0.501 | 0.18 mV | 240/240 µA | 427 µA | 96.5 dB | 2.17 MHz | 83° | 2.91 V/µs | 299 ns | −51.0 / −51.1 dB |
+| 100 pF | A | 0.501 | 0.18 mV | 240/240 µA | 427 µA | 96.5 dB | 2.02 MHz | 66° | 3.78 V/µs | 311 ns | −51.0 / −51.0 dB |
+| 1 nF | A | 0.501 | 0.18 mV | 240/240 µA | 427 µA | 96.5 dB | 1.00 MHz | 27° | 3.34 V/µs | 2307 ns | −51.0 / −49.1 dB |
+| 1 kΩ ‖ 100 pF | B | 0.274 | 0.36 mV | 168/167 µA | 359 µA | 1.6 dB | 1.01 MHz | 140° | 2.49 V/µs | 177 ns | −48.0 / −48.0 dB |
+| 20 pF | B | 0.491 | 0.58 mV | 167/167 µA | 359 µA | 34.3 dB | 6.45 MHz | 58° | 14.05 V/µs | 141 ns | −51.8 / −51.7 dB |
+| 100 pF | B | 0.491 | 0.58 mV | 167/167 µA | 359 µA | 34.3 dB | 1.81 MHz | 79° | 2.69 V/µs | 307 ns | −51.8 / −51.6 dB |
+| 1 nF | B | 0.491 | 0.58 mV | 167/167 µA | 359 µA | 34.3 dB | 0.20 MHz | 90° | 0.24 V/µs | 3195 ns | −51.7 / −48.4 dB |
 
 Gain and offset are fitted over |v_d| ≤ 0.2 V. The step is v_d = −0.5 → +0.5 V
 (v_out = V_ref − 0.25 V → V_ref + 0.25 V). THD is for a 1-V differential sine (0.5 V at the
-output), harmonics 2–7. The "rate" column is the 10–90 % rise rate and includes linear settling,
+output), harmonics 2–7, root-sum-square over 4 periods with a rectangular window. (Corrected
+2026-10-02: the first version of this table summed the harmonic magnitudes linearly and read
+3–6 dB high.) The "rate" column is the 10–90 % rise rate and includes linear settling,
 so it is a slew rate only where the step is slew-limited. With 50 Ω the output of A reaches
 −0.505 / +0.502 V at v_d = ∓1 V, i.e. ±10 mA, while the non-conducting device keeps 99 µA.
 Topology B with 50 Ω or with 1 kΩ to ground has no loop gain and is omitted from the table
@@ -250,9 +252,9 @@ Topology B with 50 Ω or with 1 kΩ to ground has no loop gain and is omitted fr
 
 | I_AB | I_Q | I_DD | I_min at ±10 mA | T_0 | f_c | THD 10 kHz | THD 100 kHz |
 |---|---|---|---|---|---|---|---|
-| 5 µA | 240 µA | 0.43 mA | 99 µA | 40.7 dB | 0.30 MHz | −40.1 dB | −23.8 dB |
-| 10 µA | 748 µA | 0.95 mA | 423 µA | 49.5 dB | 0.52 MHz | −42.3 dB | −26.9 dB |
-| 20 µA | 2.0 mA | 2.2 mA | 1.35 mA | 55.9 dB | 0.77 MHz | −44.5 dB | −31.3 dB |
+| 5 µA | 240 µA | 0.43 mA | 99 µA | 40.7 dB | 0.30 MHz | −46.2 dB | −29.1 dB |
+| 10 µA | 748 µA | 0.95 mA | 423 µA | 49.5 dB | 0.52 MHz | −48.4 dB | −32.4 dB |
+| 20 µA | 2.0 mA | 2.2 mA | 1.35 mA | 55.9 dB | 0.77 MHz | −50.2 dB | −37.0 dB |
 
 **Area.** Excluding the output frames, topology A has about 440 µm² of front-end gate area plus
 130 µm² in the bias block, and 1920 µm² of MOM capacitance. Topology B has no capacitors.
@@ -273,7 +275,7 @@ only 34 dB. That leaves a gain error of about 2 % (0.491 instead of 0.5 in Table
 design fails completely with resistive loads. Its advantages are that it needs no capacitors,
 and that it is fast and stable into large capacitive loads.
 
-**50 Ω.** Topology A delivers the ±10 mA into 50 Ω, but with only 24 dB of distortion
+**50 Ω.** Topology A delivers the ±10 mA into 50 Ω, but with only 29 dB of distortion
 suppression at 100 kHz. The second stage has no voltage gain into 50 Ω at any sensible
 quiescent current (Section V). If 50-Ω operation matters beyond DC and low-frequency
 characterization, one option is a series resistor inside the loop with the feedback taken
@@ -281,7 +283,7 @@ from its far side, so that the output stage works into a higher impedance; the s
 to specify high-impedance instrumentation at the pad and treat 50 Ω as a DC and
 low-frequency case.
 
-**Distortion floor.** Both topologies stop at about −46 dB THD for 0.5 V at the output.
+**Distortion floor.** Both topologies stop at about −51 dB THD for 0.5 V at the output.
 This is the open-loop nonlinearity of the degenerated DDA pairs (Section IV), not of the output
 stage. It improves with more degeneration: a larger I_tail · R_i relative to the signal, at
 the cost of current or resistor area. Linearizing the DDA pairs, or using them only as error

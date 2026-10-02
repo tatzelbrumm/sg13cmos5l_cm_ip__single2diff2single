@@ -107,10 +107,12 @@ def thd(h, dut, load, f):
     per = 1 / f
     a = sim(h + dut() + LOADS[load] + f"Vd dp 0 sin(0 1 {f})\n" + DIFF,
             f"tran {per / 400} {6 * per} {2 * per}\nwrdata out.txt v(vout)\n")
+    # exactly 4 periods, rectangular window: harmonic n falls on bin 4n, no leakage.
+    # THD = root-sum-square of h2..h7 over h1. (Until 2026-10-02 this summed Hann-window bin
+    # magnitudes linearly over the harmonics, which read 3-6 dB too high.)
     tt = np.linspace(2 * per, 6 * per, 4096, endpoint=False)
-    F = np.abs(np.fft.rfft(np.interp(tt, a[:, 0], a[:, 1]) * np.hanning(4096)))
-    h1 = F[3:6].sum()
-    return 20 * np.log10(sum(F[4 * n - 1:4 * n + 2].sum() for n in range(2, 8)) / h1)
+    F = np.abs(np.fft.rfft(np.interp(tt, a[:, 0], a[:, 1])))
+    return 20 * np.log10(np.sqrt(sum(F[4 * n] ** 2 for n in range(2, 8))) / F[4])
 
 
 def fmt_loop(lg):
