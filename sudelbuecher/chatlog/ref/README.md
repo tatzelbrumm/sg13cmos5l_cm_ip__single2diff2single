@@ -27,6 +27,9 @@ submission, so unlicensed copies of other people's docs do not belong in it.
 - [`2026-09-28_opus_references.md`](2026-09-28_opus_references.md) — the Opus
   `Clamp_N`/`Clamp_P` PCell session: the IHP GitHub repos and commits cloned in the cloud
   container, the user's own `sg13cmos5l_io.{gds,cdl}` copies, and the KLayout versions used
+- [`2026-10-02_sonnet_references.md`](2026-10-02_sonnet_references.md) — the Edwards &
+  Cauwenberghs log-domain search session: two earlier claude.ai chats and the user's own
+  `~/DoNotLitter` PDFs and `.bib` files, indexed by path and not copied
 
 Run logs live one level up in [`../logs/`](../logs/) and are committed to the
 branch that produced them, so their contents differ per branch. The chat log,

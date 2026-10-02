@@ -59,3 +59,6 @@
 
 [2026-09-28_opus_safety_stops_and_chatlog_export.md](2026-09-28_opus_safety_stops_and_chatlog_export.md)
 : Split off from the file above: six `[reasoning_extraction]` safety stops, and how the verbatim chat log was then built.
+
+[2026-10-02_sonnet_edwards_cauwenberghs_log_domain_references_in_donotlitter.md](2026-10-02_sonnet_edwards_cauwenberghs_log_domain_references_in_donotlitter.md)
+: Read-only search of the user's `~/DoNotLitter` PDF collection for three Edwards & Cauwenberghs log-domain papers (ISCAS 1997, ISCAS 1998, 2000), plus a Minch-thesis lookup and a whole-collection title scan.
