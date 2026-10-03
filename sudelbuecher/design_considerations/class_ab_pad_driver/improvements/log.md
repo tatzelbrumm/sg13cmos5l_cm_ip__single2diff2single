@@ -462,3 +462,21 @@ out identical to those in `figures/`: the same SVG, and PNG pixels with no diffe
 generators' 34 output files were byte-identical to the first drafts. The guard against writing
 into `xschem/` also worked. The scripts have not been run on the linked computer; its sandbox
 has no xschem. `xschem/README.md` has a "Regenerating" section with the commands.
+
+## 19:43 — fix: interactive plot in `tb_mpdda_noise`
+
+Run from xschem in the IIC-OSIC-TOOLS container (ngspice-47), the noise testbench stopped with
+`loglog: no such command available in ngspice`. The `if $?batchmode = 0` block of the deck held
+`loglog onoise_spectrum`, but `loglog` is an option of `plot`, not a command. My earlier runs used
+`ngspice -b`, which skips that block, so the line had never been executed. The simulation results
+were not affected: 230.437 µV total, 676 nV/√Hz at 1 kHz, 152 nV/√Hz at 100 kHz.
+
+The line now reads `plot onoise_spectrum loglog`, in `sim/tb/tb_mpdda_noise.spice` and in
+`xschem/tb_mpdda_noise.sch`. The sheet was edited in place: the user's 3.4.8RC save of 19:11
+(xschem's normalization only) is kept. The `tb_mpdda_noise` figure was regenerated, because its
+code block shows the line.
+
+Checked: all nine testbenches were run in ngspice-42 in a pseudo-terminal on a virtual display,
+so that the `plot` commands actually execute. The seven decks with a plot block plot without an
+error message, the noise spectrum on log–log axes. The unfixed deck reproduces the error.
+`check_xschem.py`: 0 mismatches for `tb_mpdda_noise`.

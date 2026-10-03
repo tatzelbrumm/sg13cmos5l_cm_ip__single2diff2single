@@ -1048,4 +1048,39 @@ computer; its sandbox has no xschem.
 \texttt{xschem/README.md} has a "Regenerating"
 section with the commands.
 
+\hypertarget{1943--fix-interactive-plot-in-tb_mpdda_noise}{%
+\section{\texorpdfstring{19:43 --- fix:
+interactive plot in
+\texttt{tb\_mpdda\_noise}}{19:43 --- fix: interactive plot in tb\_mpdda\_noise}}\label{1943--fix-interactive-plot-in-tb_mpdda_noise}}
+
+Run from xschem in the IIC-OSIC-TOOLS container
+(ngspice-47), the noise testbench stopped with
+\texttt{loglog:\ no\ such\ command\ available\ in\ ngspice}.
+The \texttt{if\ \$?batchmode\ =\ 0} block of the
+deck held \texttt{loglog\ onoise\_spectrum}, but
+\texttt{loglog} is an option of \texttt{plot}, not
+a command. My earlier runs used
+\texttt{ngspice\ -b}, which skips that block, so
+the line had never been executed. The simulation
+results were not affected: 230.437 µV total, 676
+nV/√Hz at 1 kHz, 152 nV/√Hz at 100 kHz.
+
+The line now reads
+\texttt{plot\ onoise\_spectrum\ loglog}, in
+\texttt{sim/tb/tb\_mpdda\_noise.spice} and in
+\texttt{xschem/tb\_mpdda\_noise.sch}. The sheet
+was edited in place: the user\textquotesingle s
+3.4.8RC save of 19:11 (xschem\textquotesingle s
+normalization only) is kept. The
+\texttt{tb\_mpdda\_noise} figure was regenerated,
+because its code block shows the line.
+
+Checked: all nine testbenches were run in
+ngspice-42 in a pseudo-terminal on a virtual
+display, so that the \texttt{plot} commands
+actually execute. The seven decks with a plot
+block plot without an error message, the noise
+spectrum on log--log axes. The unfixed deck
+reproduces the error. \texttt{check\_xschem.py}: 0
+mismatches for \texttt{tb\_mpdda\_noise}.
 \end{document}
