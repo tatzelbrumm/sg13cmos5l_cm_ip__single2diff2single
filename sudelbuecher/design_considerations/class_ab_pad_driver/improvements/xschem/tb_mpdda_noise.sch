@@ -101,7 +101,7 @@ noise v(vout) Vd lin 1 100k 100k
 print noise3.onoise_spectrum noise4.onoise_spectrum
 if $?batchmode = 0
   setplot noise1
-  loglog onoise_spectrum
+  plot onoise_spectrum loglog
 end
 .endc"}
 C {devices/lab_wire.sym} 60 -300 0 0 {name=l21 sig_type=std_logic lab=vdd}
