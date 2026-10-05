@@ -1,0 +1,126 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/tb_lc2_loop.sch
+**.subckt tb_lc2_loop
+Vdd vdd GND 3.3
+Vcm vref GND 1.65
+Xb vdd GND vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+Xd vdd GND vinp vinn vref vout fb vbp vbn vbpc vbnc vabp vabn d2s_lc2
+Vp vinp GND 1.65
+Vn vinn GND 1.65
+Rs vout pad 586.9
+Cpad pad GND 2p
+CL pad GND 100p
+Lb vout fb 1G
+Cb fb inj 1
+Vinj inj GND dc 0 ac 1
+**** begin user architecture code
+
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.control
+ac dec 50 10 1G
+let T=-v(vout)/v(fb)
+meas ac T0 find vdb(T) at=10
+meas ac fc when vdb(T)=0
+meas ac pT find vp(T) when vdb(T)=0
+let pm=180/pi*pT+180
+print T0 fc pm
+if $?batchmode = 0
+  plot vdb(T) 180/pi*vp(T)
+end
+.endc
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  d2s_bias_lp.sym # of pins=8
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/d2s_bias_lp.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/d2s_bias_lp.sch
+.subckt d2s_bias_lp vdd vss vbp vbn vbpc vbnc vabp vabn
+*.iopin vdd
+*.iopin vss
+*.opin vbp
+*.opin vbn
+*.opin vbpc
+*.opin vbnc
+*.opin vabp
+*.opin vabn
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+IBP vbp vss 5u
+XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1 mm_ok=1
+IBPC vbpc vss 2u
+XRP1 n1 n1 vdd vdd sg13_hv_pmos w=13.32u l=0.6u ng=2 m=1 mm_ok=1
+XRP2 vabp vabp n1 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+IABP vabp vss 5u
+IBN vdd vbn 5u
+XBN vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1 mm_ok=1
+IBNC vdd vbnc 2u
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1 mm_ok=1
+IABN vdd vabn 5u
+XRN2 vabn vabn n2 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XRN1 n2 n2 vss vss sg13_hv_nmos w=8.8u l=1u ng=2 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  d2s_lc2.sym # of pins=13
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/d2s_lc2.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/d2s_lc2.sch
+.subckt d2s_lc2 vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn
+*.iopin vdd
+*.iopin vss
+*.ipin vinp
+*.ipin vinn
+*.ipin vref
+*.iopin vout
+*.ipin vfb
+*.ipin vbp
+*.ipin vbn
+*.ipin vbpc
+*.ipin vbnc
+*.ipin vabp
+*.ipin vabn
+XA x y vinp vref vdd vss vbp unit_r2
+XB x y vref vinn vdd vss vbp unit_r2
+XC1 x y vref vfb vdd vss vbp unit_r2
+XC2 x y vref vfb vdd vss vbp unit_r2
+XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XCX l1 vbnc x vss sg13_hv_nmos w=30u l=3u ng=2 m=1 mm_ok=1
+XSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=4 m=1 mm_ok=1
+XPL pl l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4 m=1 mm_ok=1
+XPCL l2 vbpc pl vdd sg13_hv_pmos w=30u l=3u ng=2 m=1 mm_ok=1
+XFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+XPR pr l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4 m=1 mm_ok=1
+XPCR a vbpc pr vdd sg13_hv_pmos w=30u l=3u ng=2 m=1 mm_ok=1
+XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XCY b vbnc y vss sg13_hv_nmos w=30u l=3u ng=2 m=1 mm_ok=1
+XSY y vbn vss vss sg13_hv_nmos w=36u l=6u ng=4 m=1 mm_ok=1
+XOP op a vdd vdd sg13_hv_pmos w=273.06u l=0.6u ng=41 m=1 mm_ok=1
+XOPC vout vref op op sg13_hv_pmos w=273.06u l=0.6u ng=41 m=1 mm_ok=1
+XONC vout vref on vss sg13_hv_nmos w=145.2u l=0.6u ng=33 m=1 mm_ok=1
+XON on b vss vss sg13_hv_nmos w=145.2u l=1u ng=33 m=1 mm_ok=1
+XDP a a vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+XDN b b vss vss sg13_hv_nmos w=3.8u l=1u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  unit_r2.sym # of pins=7
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/unit_r2.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/unit_r2.sch
+.subckt unit_r2 x y gp gn vdd vss vbp
+*.opin x
+*.opin y
+*.ipin gp
+*.ipin gn
+*.iopin vdd
+*.iopin vss
+*.ipin vbp
+XTa sa vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XTb sb vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XR sa sb vss rhigh w=0.5u l=50.6u m=1 b=0 mm_ok=1
+.ends
+
+.GLOBAL GND
+.end
