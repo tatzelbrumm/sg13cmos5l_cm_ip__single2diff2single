@@ -29,6 +29,9 @@
 \DeclareUnicodeCharacter{2248}{\ensuremath{\approx}}
 \DeclareUnicodeCharacter{2264}{\ensuremath{\le}}
 \DeclareUnicodeCharacter{2265}{\ensuremath{\ge}}
+\DeclareUnicodeCharacter{221D}{\ensuremath{\propto}}
+\DeclareUnicodeCharacter{03BC}{\ensuremath{\mu}}
+\DeclareUnicodeCharacter{25A1}{\ensuremath{\square}}
 
 % what pandoc's body expects
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -48,13 +51,13 @@
 \begin{document}
 \maketitle
 \small
-Session 2026-10-02, Claude (configured model
-\texttt{claude-opus-5-5}; the serving model may
-differ). Newest entries at the bottom. Times are
-Europe/Berlin, taken from the session transcript
-(corrected 15:01: the first versions of several
-headings carried guessed times, up to 1¼ h too
-late).
+Sessions 2026-10-02, 2026-10-03 and 2026-10-05,
+Claude (configured model \texttt{claude-opus-5-5};
+the serving model may differ). Newest entries at
+the bottom. Times are Europe/Berlin, taken from
+the session transcript (corrected 15:01: the first
+versions of several headings carried guessed
+times, up to 1¼ h too late).
 
 Task as given: area, current and loop gain of
 \texttt{d2s\_miller} / \texttt{d2s\_loadcomp} are
@@ -1083,4 +1086,166 @@ block plot without an error message, the noise
 spectrum on log--log axes. The unfixed deck
 reproduces the error. \texttt{check\_xschem.py}: 0
 mismatches for \texttt{tb\_mpdda\_noise}.
+
+\hypertarget{2026-10-03-1605--size-mockup-of-d2s_mpdda-miller-compensated-in-size_mockup}{%
+\section{\texorpdfstring{2026-10-03 16:05 --- size
+mockup of \texttt{d2s\_mpdda} (Miller compensated)
+in
+\texttt{size\_mockup/}}{2026-10-03 16:05 --- size mockup of d2s\_mpdda (Miller compensated) in size\_mockup/}}\label{2026-10-03-1605--size-mockup-of-d2s_mpdda-miller-compensated-in-size_mockup}}
+
+\texttt{size\_mockup/d2s\_mpdda\_size\_mockup.py}
+(and its \texttt{.gds}) is made like the existing
+\texttt{../size\_mockup/d2s\_size\_mockup.py}. It
+draws \texttt{d2s\_mpdda} with its four
+\texttt{unit\_r2} and \texttt{d2s\_bias\_lp}, at
+the \texttt{.subckt} defaults. Every device is a
+real SG13\_dev PCell with the
+netlist\textquotesingle s w/l/ng. OP and ON are
+the IO cell\textquotesingle s clamp frames, as
+before. CMA and CMB are hv PMOS 16 × 16 µm, about
+0.8 pF each at the tt operating point (V\_GW ≈
+0.95 V; 0.48 pF at 0.15 V, 0.97 pF at 1.25 V,
+simulated at 16 × 16). The R\_* are rhigh 0.5 ×
+50.6 µm, 150 kΩ (simulated). The grid follows
+\texttt{xschem/d2s\_mpdda\_bias\_flat.sch}, with
+the bias on the same sheet at the left. The IO
+cell is placed for scale, with the same outlines
+as before.
+
+Checked: the old script, run in the cloud (pip
+klayout 0.30.12, IHP-Open-PDK dev), reproduces the
+old GDS exactly (XOR empty on every layer). The
+new GDS holds the netlist\textquotesingle s 42
+devices outside the frames, with matching model,
+w, l and ng and nothing extra. A deliberately
+wrong size in a copy was reported.
+
+Device bounding-box areas (PCell extents, as the
+old script prints them), µm²:
+
+\begin{longtable}[]{@{}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.5266}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2429}}>{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2305}}@{}}
+\toprule\noalign{}
+block & \texttt{d2s\_miller} &
+\texttt{d2s\_mpdda} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+DDA: pairs, tails, rhigh & 529 & 969 \\
+fold sinks SX, SY & 152 & 529 \\
+fold cascodes CX, CY & 49 & 244 \\
+mirror PL, PR & 88 & 276 \\
+mirror cascodes PCL, PCR & 66 & 270 \\
+class-AB ABP, ABN, FPL, FNL & 64 & 64 \\
+front end, without frames and Miller capacitors &
+948 & 2351 \\
+Miller capacitors CMA + CMB & 1980 & 618 \\
+front end + Miller capacitors & 2928 & 2969 \\
+bias (\texttt{d2s\_bias} / \texttt{d2s\_bias\_lp})
+& 256 & 212 \\
+total outside the frames & 3184 & 3181 \\
+\end{longtable}
+
+By this measure the revision does not save area.
+The MOS capacitors save 1362 µm², and the longer
+devices take it back: the sinks and the mirror for
+offset (14.4 → 5.3 mV σ), the L = 3 µm cascodes
+for loop gain, and the four-unit DDA. The
+proposal\textquotesingle s 2387 → 2014 µm² counts
+drawn W·L only. Per device, the bounding box adds
+source/drain, contacts and the well and
+thick-oxide enclosures, and the new version has
+more devices and more fingers. Neither number
+includes wiring, guard rings or well spacing. By
+area alone, both versions fit into the 80 × 56 µm
+substrate-tap region above the P frame (4458 µm²).
+
+Picture, both mockups at the same scale:
+\texttt{pix/2026-10-03\_opus\_size\_mockup\_old\_vs\_new.png}
+(saved 16:13; \texttt{pix/README.md} lists it).
+
+\hypertarget{2026-10-05-2109--real-bias-circuits-biasmd-simd2s_bias_refspice-simrun_biaspy}{%
+\section{\texorpdfstring{2026-10-05 21:09 --- real
+bias circuits (\texttt{bias.md},
+\texttt{sim/d2s\_bias\_ref.spice},
+\texttt{sim/run\_bias.py})}{2026-10-05 21:09 --- real bias circuits (bias.md, sim/d2s\_bias\_ref.spice, sim/run\_bias.py)}}\label{2026-10-05-2109--real-bias-circuits-biasmd-simd2s_bias_refspice-simrun_biaspy}}
+
+Asked for: a real bias for the driver, with (1) a
+reference current from an external PMOS source,
+(2) a reference current into an external NMOS
+sink, (3) a self-contained reference without
+resistors or BJTs, and (4) a self-contained
+bandgap with BJTs. At 20:44 also: take PSRR into
+account, including which supplies connect to which
+part of the circuit.
+
+All four keep
+\texttt{d2s\_bias\_lp}\textquotesingle s six
+diodes and its outputs, so \texttt{d2s\_mpdda} is
+unchanged. The design and all tables are in
+\texttt{bias.md}; the numbers come from
+\texttt{sim/run\_bias.py}
+(\texttt{sim/results\_bias.txt}).
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{d2s\_bias\_in} /
+  \texttt{d2s\_bias\_out}: an input diode plus a
+  6-device mirror tree. Within about 1 \% over all
+  corners; 0.8--1 \%/V line sensitivity; σ about 1
+  \%.
+\item
+  \texttt{d2s\_bias\_oa}: an Oguey--Aebischer core
+  re-derived for sg13\_hv. M10/M11 are in weak
+  inversion (vres = U\_T ln 16), M10 is cascoded,
+  the PMOS mirror is cascoded, and the start-up
+  senses vbr. Process −6\ldots+7 \%, but −35 / +33
+  \% over −40\ldots125 °C (I ∝ μT²), σ 5.1 \%,
+  1072 µm². The existing
+  \texttt{OgueyAebischerBias} macro (an unsized
+  sky130 port) is not reused.
+\item
+  \texttt{d2s\_bias\_bg}: a Banba-type
+  current-mode bandgap with pnpMPA and rhigh, no
+  op-amp. ±1 \% over temperature and ±0.3 \% over
+  MOS corners, but −21 / +29 \% with the rhigh
+  corners. R1A is 10 \% longer than R1B, because
+  with equal R1 the core rested with both PNPs off
+  at −40 °C.
+\item
+  Both self-contained cores start from 0 V at all
+  corners and settle to the DC operating point.
+\end{itemize}
+
+Device data along the way: rhigh −0.22 \%/K, rppd
++0.017 \%/K, pnpMPA V\_BE −1.77 mV/K at 1 µA.
+Pelgrom pair coefficients from the mismatch models
+are 10 mV·µm (hv NMOS) and 6.6 mV·µm (hv PMOS).
+Specific current is about 220 nA/□ for hv NMOS (n
+≈ 1.35) and about 100 nA/□ for hv PMOS (n ≈ 1.54).
+
+\textbf{Supplies.} The front end and bias are on
+vdd/vss; OP/ON are on separate rails vddo/vsso.
+The class-AB replicas RP1/RN1 have to sit on the
+output-stage rails. With them on the bias rails, a
+50 mV offset between the rails moves I\_Q by −27 /
++41 \%; on the output rails, by ±0.5 \%. RN1 and
+ON need local substrate tap rings on vsso.
+
+\textbf{PSRR.} The bias variants change the
+driver\textquotesingle s supply rejection by a few
+dB only. The exception is the bandgap from vss at
+1 MHz: −45 dB instead of −60 dB. The output-stage
+rails are the limit: −31 dB at 100 kHz and −12 dB
+at 1 MHz, with any bias. The Miller capacitors tie
+the output gates to vout, so only the loop gain
+rejects ripple on OP\textquotesingle s or
+ON\textquotesingle s source. Options: a quiet
+output-stage rail, or cascode (Ahuja)
+compensation.
+
+The scratch scripts used during design (in the
+cloud) are not saved; \texttt{run\_bias.py}
+reproduces every number.
 \end{document}

@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # Running log — improvements to the class-AB pad driver
 
-Session 2026-10-02, Claude (configured model `claude-opus-5-5`; the serving model may differ).
+Sessions 2026-10-02, 2026-10-03 and 2026-10-05, Claude (configured model `claude-opus-5-5`; the serving model may differ).
 Newest entries at the bottom. Times are Europe/Berlin, taken from the session transcript
 (corrected 15:01: the first versions of several headings carried guessed times, up to 1¼ h too late).
 
@@ -480,3 +480,86 @@ Checked: all nine testbenches were run in ngspice-42 in a pseudo-terminal on a v
 so that the `plot` commands actually execute. The seven decks with a plot block plot without an
 error message, the noise spectrum on log–log axes. The unfixed deck reproduces the error.
 `check_xschem.py`: 0 mismatches for `tb_mpdda_noise`.
+
+## 2026-10-03 16:05 — size mockup of `d2s_mpdda` (Miller compensated) in `size_mockup/`
+
+`size_mockup/d2s_mpdda_size_mockup.py` (and its `.gds`) is made like the existing
+`../size_mockup/d2s_size_mockup.py`. It draws `d2s_mpdda` with its four `unit_r2` and
+`d2s_bias_lp`, at the `.subckt` defaults. Every device is a real SG13_dev PCell with the netlist's
+w/l/ng. OP and ON are the IO cell's clamp frames, as before. CMA and CMB are hv PMOS 16 × 16 µm,
+about 0.8 pF each at the tt operating point (V_GW ≈ 0.95 V; 0.48 pF at 0.15 V, 0.97 pF at
+1.25 V, simulated at 16 × 16). The R_* are rhigh 0.5 × 50.6 µm, 150 kΩ (simulated). The grid
+follows `xschem/d2s_mpdda_bias_flat.sch`, with the bias on the same sheet at the left. The IO cell
+is placed for scale, with the same outlines as before.
+
+Checked: the old script, run in the cloud (pip klayout 0.30.12, IHP-Open-PDK dev), reproduces the
+old GDS exactly (XOR empty on every layer). The new GDS holds the netlist's 42 devices outside
+the frames, with matching model, w, l and ng and nothing extra. A deliberately wrong size in a
+copy was reported.
+
+Device bounding-box areas (PCell extents, as the old script prints them), µm²:
+
+| block | `d2s_miller` | `d2s_mpdda` |
+|---|---|---|
+| DDA: pairs, tails, rhigh | 529 | 969 |
+| fold sinks SX, SY | 152 | 529 |
+| fold cascodes CX, CY | 49 | 244 |
+| mirror PL, PR | 88 | 276 |
+| mirror cascodes PCL, PCR | 66 | 270 |
+| class-AB ABP, ABN, FPL, FNL | 64 | 64 |
+| front end, without frames and Miller capacitors | 948 | 2351 |
+| Miller capacitors CMA + CMB | 1980 | 618 |
+| front end + Miller capacitors | 2928 | 2969 |
+| bias (`d2s_bias` / `d2s_bias_lp`) | 256 | 212 |
+| total outside the frames | 3184 | 3181 |
+
+By this measure the revision does not save area. The MOS capacitors save 1362 µm², and the
+longer devices take it back: the sinks and the mirror for offset (14.4 → 5.3 mV σ), the L = 3 µm
+cascodes for loop gain, and the four-unit DDA. The proposal's 2387 → 2014 µm² counts drawn
+W·L only. Per device, the bounding box adds source/drain, contacts and the well and thick-oxide
+enclosures, and the new version has more devices and more fingers. Neither number includes
+wiring, guard rings or well spacing. By area alone, both versions fit into the 80 × 56 µm
+substrate-tap region above the P frame (4458 µm²).
+
+Picture, both mockups at the same scale: `pix/2026-10-03_opus_size_mockup_old_vs_new.png`
+(saved 16:13; `pix/README.md` lists it).
+
+
+## 2026-10-05 21:09 — real bias circuits (`bias.md`, `sim/d2s_bias_ref.spice`, `sim/run_bias.py`)
+
+Asked for: a real bias for the driver, with (1) a reference current from an external PMOS source,
+(2) a reference current into an external NMOS sink, (3) a self-contained reference without
+resistors or BJTs, and (4) a self-contained bandgap with BJTs. At 20:44 also: take PSRR into account,
+including which supplies connect to which part of the circuit.
+
+All four keep `d2s_bias_lp`'s six diodes and its outputs, so `d2s_mpdda` is unchanged. The design and
+all tables are in `bias.md`; the numbers come from `sim/run_bias.py` (`sim/results_bias.txt`).
+
+- `d2s_bias_in` / `d2s_bias_out`: an input diode plus a 6-device mirror tree. Within about 1 % over
+  all corners; 0.8–1 %/V line sensitivity; σ about 1 %.
+- `d2s_bias_oa`: an Oguey–Aebischer core re-derived for sg13_hv. M10/M11 are in weak inversion (vres
+  = U_T ln 16), M10 is cascoded, the PMOS mirror is cascoded, and the start-up senses vbr. Process
+  −6…+7 %, but −35 / +33 % over −40…125 °C (I ∝ μT²), σ 5.1 %, 1072 µm². The existing
+  `OgueyAebischerBias` macro (an unsized sky130 port) is not reused.
+- `d2s_bias_bg`: a Banba-type current-mode bandgap with pnpMPA and rhigh, no op-amp. ±1 % over
+  temperature and ±0.3 % over MOS corners, but −21 / +29 % with the rhigh corners. R1A is 10 % longer
+  than R1B, because with equal R1 the core rested with both PNPs off at −40 °C.
+- Both self-contained cores start from 0 V at all corners and settle to the DC operating point.
+
+Device data along the way: rhigh −0.22 %/K, rppd +0.017 %/K, pnpMPA V_BE −1.77 mV/K at 1 µA.
+Pelgrom pair coefficients from the mismatch models are 10 mV·µm (hv NMOS) and 6.6 mV·µm (hv PMOS).
+Specific current is about 220 nA/□ for hv NMOS (n ≈ 1.35) and about 100 nA/□ for hv PMOS (n ≈ 1.54).
+
+**Supplies.** The front end and bias are on vdd/vss; OP/ON are on separate rails vddo/vsso. The
+class-AB replicas RP1/RN1 have to sit on the output-stage rails. With them on the bias rails, a
+50 mV offset between the rails moves I_Q by −27 / +41 %; on the output rails, by ±0.5 %. RN1 and ON
+need local substrate tap rings on vsso.
+
+**PSRR.** The bias variants change the driver's supply rejection by a few dB only. The exception is
+the bandgap from vss at 1 MHz: −45 dB instead of −60 dB. The output-stage rails are the limit:
+−31 dB at 100 kHz and −12 dB at 1 MHz, with any bias. The Miller capacitors tie the output gates to
+vout, so only the loop gain rejects ripple on OP's or ON's source. Options: a quiet output-stage
+rail, or cascode (Ahuja) compensation.
+
+The scratch scripts used during design (in the cloud) are not saved; `run_bias.py` reproduces every
+number.
