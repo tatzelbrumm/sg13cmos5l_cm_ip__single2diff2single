@@ -1248,4 +1248,53 @@ compensation.
 The scratch scripts used during design (in the
 cloud) are not saved; \texttt{run\_bias.py}
 reproduces every number.
+
+\hypertarget{2026-10-05-2225--schematics-of-the-bias-variants-xschemd2s_bias_-figuresd2s_bias_}{%
+\section{\texorpdfstring{2026-10-05 22:25 ---
+schematics of the bias variants
+(\texttt{xschem/d2s\_bias\_*},
+\texttt{figures/d2s\_bias\_*})}{2026-10-05 22:25 --- schematics of the bias variants (xschem/d2s\_bias\_*, figures/d2s\_bias\_*)}}\label{2026-10-05-2225--schematics-of-the-bias-variants-xschemd2s_bias_-figuresd2s_bias_}}
+
+Asked for: xschem schematics and figures of the
+four bias variants.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{xschem/d2s\_bias\_in}, \texttt{\_out},
+  \texttt{\_oa}, \texttt{\_bg} (\texttt{.sch} and
+  \texttt{.sym}) are drawn flat from
+  \texttt{sim/d2s\_bias\_ref.spice}: reference,
+  mirror tree and the six diodes, all at
+  transistor level. Each current branch is one
+  column between vdd and vss. vddo and vsso come
+  in from the right and reach only RP1 and RN1.
+  \texttt{xschem/README.md} describes the layout.
+\item
+  \texttt{xschem/scripts/gen\_bias.py} draws them.
+  Its geometric lint finds 0 faults; the sheets
+  have 7 / 11 / 21 / 17 wire crossings without a
+  junction.
+\item
+  \texttt{xschem/check\_xschem.py} now also covers
+  the bias sheets, compared with the flattened
+  subcircuits, and for pnpMPA it compares a, p and
+  m. Result: 0 mismatches over all 16 cells and 9
+  testbenches. Two planted faults were caught:
+  RP1\textquotesingle s source moved to vdd, and
+  Q2 at m=1.
+\item
+  Figures:
+  \texttt{figures/d2s\_bias\_*.\{svg,pdf,png\}},
+  made with \texttt{export\_figures.py}, so
+  \texttt{figures/} now holds 75 files.
+\item
+  The pnpMPA symbol\textquotesingle s netlist
+  format calls the Tcl procedure \texttt{ev7}.
+  xschem 3.4.4 (the cloud\textquotesingle s Ubuntu
+  package) does not have it, so the checks here
+  ran with a one-line stand-in for it in a scratch
+  \texttt{xschemrc}. That stand-in is not shipped;
+  current xschem defines \texttt{ev7}.
+\end{itemize}
 \end{document}

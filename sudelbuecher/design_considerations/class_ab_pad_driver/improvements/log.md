@@ -563,3 +563,22 @@ rail, or cascode (Ahuja) compensation.
 
 The scratch scripts used during design (in the cloud) are not saved; `run_bias.py` reproduces every
 number.
+
+## 2026-10-05 22:25 — schematics of the bias variants (`xschem/d2s_bias_*`, `figures/d2s_bias_*`)
+
+Asked for: xschem schematics and figures of the four bias variants.
+
+- `xschem/d2s_bias_in`, `_out`, `_oa`, `_bg` (`.sch` and `.sym`) are drawn flat from
+  `sim/d2s_bias_ref.spice`: reference, mirror tree and the six diodes, all at transistor level.
+  Each current branch is one column between vdd and vss. vddo and vsso come in from the right and
+  reach only RP1 and RN1. `xschem/README.md` describes the layout.
+- `xschem/scripts/gen_bias.py` draws them. Its geometric lint finds 0 faults; the sheets have
+  7 / 11 / 21 / 17 wire crossings without a junction.
+- `xschem/check_xschem.py` now also covers the bias sheets, compared with the flattened
+  subcircuits, and for pnpMPA it compares a, p and m. Result: 0 mismatches over all 16 cells and
+  9 testbenches. Two planted faults were caught: RP1's source moved to vdd, and Q2 at m=1.
+- Figures: `figures/d2s_bias_*.{svg,pdf,png}`, made with `export_figures.py`, so `figures/` now
+  holds 75 files.
+- The pnpMPA symbol's netlist format calls the Tcl procedure `ev7`. xschem 3.4.4 (the cloud's
+  Ubuntu package) does not have it, so the checks here ran with a one-line stand-in for it in a
+  scratch `xschemrc`. That stand-in is not shipped; current xschem defines `ev7`.
