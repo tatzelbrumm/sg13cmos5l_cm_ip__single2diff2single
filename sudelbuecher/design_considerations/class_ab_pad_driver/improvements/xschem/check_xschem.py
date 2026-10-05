@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Netlist the schematics in this directory with xschem (-> net/*.spice) and compare every
 subcircuit in those netlists, device by device, against its source in ../sim/*.spice:
-model, terminal nets in order, w / l / ng / value, and port order (.sch and .sym). Source parameters are
+model, terminal nets in order, w / l / ng / value (pnpMPA: a / p / m), and port order (.sch and .sym). Source parameters are
 evaluated at their .subckt defaults ({10e-6*lcas} -> 30u). Subcircuit instances must not
 override their child's defaults. The testbench schematics tb_*.sch are compared with the decks in
 ../sim/tb/: every top-level element (name, nets with GND = 0, value or model and w / l / ng) and the
@@ -16,7 +16,8 @@ import os, re, subprocess, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 SIM = os.path.join(HERE, '..', 'sim')
 CELLS = ['unit_r', 'unit_r2', 'unit_t', 'unit_w', 'unit_q', 'd2s_bias_lp', 'd2s_mpdda', 'd2s_lc2',
-         'd2s_lc2_nc', 'd2s_mpdda_biased', 'd2s_mpdda_flat', 'd2s_mpdda_bias_flat']
+         'd2s_lc2_nc', 'd2s_mpdda_biased', 'd2s_mpdda_flat', 'd2s_mpdda_bias_flat',
+         'd2s_bias_in', 'd2s_bias_out', 'd2s_bias_oa', 'd2s_bias_bg']
 # the assemblies have no .spice source; this is what they must netlist to
 FIXTURE = """.subckt d2s_mpdda_biased vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn
 xd vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn d2s_mpdda
@@ -27,10 +28,12 @@ xd vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn d2s_mpdda
 xb vdd vss vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
 .ends"""
 # flat schematics: compared against their source with every subcircuit expanded. Devices and
-# internal nets of a DDA unit get the unit's name as suffix (Ta_A, sa_A); the two assemblies
-# above are transparent (their parts keep their own names).
-FLAT = {'d2s_mpdda_flat': 'd2s_mpdda', 'd2s_mpdda_bias_flat': 'd2s_mpdda_bias_flat'}
-TRANSPARENT = ('d2s_mpdda_biased', 'd2s_mpdda_bias_flat')
+# internal nets of a DDA unit get the unit's name as suffix (Ta_A, sa_A); the assemblies below
+# are transparent (their parts keep their own names). The bias sheets (d2s_bias_ref.spice) are
+# drawn flat: reference, mirror tree and the six diodes at transistor level.
+BIAS = ('d2s_bias_in', 'd2s_bias_out', 'd2s_bias_oa', 'd2s_bias_bg')
+FLAT = {'d2s_mpdda_flat': 'd2s_mpdda', 'd2s_mpdda_bias_flat': 'd2s_mpdda_bias_flat', **{b: b for b in BIAS}}
+TRANSPARENT = ('d2s_mpdda_biased', 'd2s_mpdda_bias_flat') + BIAS
 TBS = ['tb_mpdda_dc', 'tb_mpdda_step', 'tb_mpdda_thd', 'tb_mpdda_noise', 'tb_mpdda_op', 'tb_mpdda_loop',
        'tb_lc2_loop', 'tb_units', 'tb_moscv']
 SI = {'f': 1e-15, 'p': 1e-12, 'n': 1e-9, 'u': 1e-6, 'm': 1e-3, 'k': 1e3, 'meg': 1e6, '': 1}
@@ -174,8 +177,8 @@ for c in CELLS + TBS:
                     if num(src[ms][1].get(k)) != v:
                         print(f'{c}/{name}: {n} {k}={v} differs from {ms} default {src[ms][1].get(k)}'); bad += 1
                 continue
-            for k in ('w', 'l', 'ng', 'value'):
-                if k in ps and ps[k] != px.get(k, 1 if k == 'ng' else None):
+            for k in ('w', 'l', 'ng', 'value', 'a', 'p', 'm'):     # a, p, m: pnpMPA emitter area, perimeter, multiplier
+                if k in ps and ps[k] != px.get(k, 1 if k in ('ng', 'm') else None):
                     print(f'{c}/{name}: {n} {k} {ps[k]} != {px.get(k)}'); bad += 1
         seen[name] = seen.get(name, 0) + 1
         print(f'{c}/{name}: {len(s)} devices, {len(ports)} ports compared')

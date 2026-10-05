@@ -196,6 +196,13 @@ on OP's or ON's source rail is rejected only by the loop gain:
 ON's bulk in these simulations is vsso, its frame's local tap ring. With the bulk on the front end's
 vss instead, the vss path drops to −15 dB at 1 MHz, an artefact of the model.
 
+## Schematics
+
+`xschem/d2s_bias_in.sch`, `_out`, `_oa` and `_bg` draw the four variants flat, at transistor level,
+each with a symbol for use one level up. The figures are `figures/d2s_bias_*.{svg,pdf,png}`, and
+`xschem/README.md` explains the layout. `xschem/check_xschem.py` compares each sheet device by device
+with the flattened subcircuit in `sim/d2s_bias_ref.spice`.
+
 ## Open points
 
 - The harness `ibias` current and direction are not known. Variants 1/2 assume 5 µA and scale with it.
@@ -204,4 +211,3 @@ vss instead, the vss path drops to −15 dB at 1 MHz, an artefact of the model.
 - Variant 3's temperature coefficient and variant 4's rhigh spread both go straight into I_Q. Which
   matters more depends on the specification (supply current budget, crossover distortion at
   temperature).
-- No schematics yet. xschem sheets and figures in the style of `xschem/` are the next step if wanted.

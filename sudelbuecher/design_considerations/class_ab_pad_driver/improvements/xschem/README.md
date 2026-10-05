@@ -10,10 +10,14 @@ The scripts that drew the sheets and make the figures are in `scripts/`.
 
 Every sheet outlines its functional blocks with magenta dashed boxes tagged [1] to [9]. A number
 means the same block on every sheet, and the legend under each sheet repeats the short
-description.
+description. The bias sheets add [R] (reference current in or out), [S] (start-up) and [C]
+(reference core).
 
 `check_xschem.py` netlists every sheet with xschem and compares it device by device with the
 `.spice` sources. Run it after any hand edit (it needs xschem and `$PDK_ROOT`).
+For pnpMPA it compares a, p and m. The pnpMPA symbol's netlist format calls the Tcl procedure
+`ev7`. xschem 3.4.4 (the Ubuntu package) does not have it and cannot netlist the PNPs; current
+xschem does.
 
 ## Files
 
@@ -24,6 +28,10 @@ description.
 | `d2s_mpdda` | the proposed driver, with the units as `unit_r2` boxes | as `d2s_miller` (13) |
 | `d2s_mpdda_biased` | CACE fixture: `d2s_mpdda` and `d2s_bias_lp` as two boxes, bias nets as pins, wired like `d2s_miller_biased` | 13 |
 | `d2s_bias_lp` | the bias network [8] | vdd, vss, 6 bias outputs |
+| `d2s_bias_in` | real bias, variant 1: [8] fed by a reference current into iref (external PMOS source) | vdd vss vddo vsso iref, 6 bias outputs |
+| `d2s_bias_out` | real bias, variant 2: [8] fed by a reference current out of iref (external NMOS sink) | as `d2s_bias_in` |
+| `d2s_bias_oa` | real bias, variant 3: self-contained, Oguey–Aebischer core, no resistor, no BJT | vdd vss vddo vsso, 6 bias outputs |
+| `d2s_bias_bg` | real bias, variant 4: self-contained, current-mode bandgap with pnpMPA and rhigh | as `d2s_bias_oa` |
 | `unit_r2` | one DDA unit | x y gp gn vdd vss vbp |
 | `d2s_lc2`, `d2s_lc2_nc` | case (b): output devices in the slot, load-compensated, with and without output cascodes | 13 |
 | `unit_r`, `unit_t`, `unit_w`, `unit_q` | the unit alternatives of the proposal, Section II | 7 |
@@ -75,6 +83,25 @@ Ideal reference currents flow into diode-connected devices:
 From vdd down to vabp, V_SG(OP) + V_SG(ABP) = V_SG(RP1) + V_SG(RP2). RP2 has ABP's size and
 about ABP's current, so OP's V_SG follows RP1's. OP is 41 × RP1. The N side closes the same loop
 through ON, ABN, RN1 and RN2, with ON = 33 × RN1. The two loops together settle at 212 µA.
+
+## Real bias (`d2s_bias_in`, `_out`, `_oa`, `_bg`)
+
+Drawn from `../sim/d2s_bias_ref.spice`; design and results are in `../bias.md`. Each sheet is flat:
+reference, mirror tree and the six diodes of [8], all at transistor level. `check_xschem.py`
+compares it with the flattened subcircuit.
+
+- **Columns are current branches**, rail to rail: PMOS on vdd at the top, NMOS on vss at the
+  bottom. From left to right: [S] and [C] (oa, bg only), [R], then the tree: the PMOS diodes BPC,
+  BP with their NMOS sinks, the vabp stack RP2 on RP1, the PMOS sources into the NMOS diodes BNC,
+  BN, and the vabn stack RN2 on RN1.
+- **Two gate buses** carry the reference across the tree. One PMOS gate line drives the sources
+  into the NMOS diodes, and one NMOS gate line drives the sinks out of the PMOS diodes.
+- **vddo and vsso come in from the right** and reach only RP1 (source and n-well) and RN1 (source
+  and bulk). These are the replicas of OP and ON, so they sit on the output-stage rails with them.
+  RP2's n-well stays on vdd, like ABP's.
+- The six bias outputs are pins at the right edge.
+- In `d2s_bias_bg`, Q2 is one pnpMPA symbol with m=8. The figure does not print m, so a note next
+  to Q2 says it.
 
 ## `d2s_lc2`, `d2s_lc2_nc`
 
@@ -156,13 +183,14 @@ regenerate them with `scripts/export_figures.py` (next section).
 | `export_figures.py` | figures of all sheets (or of the ones named) into `../figures/` |
 | `gen_cells.py OUTDIR` | the cell sheets and their symbols, as first drafted, from `../sim/*.spice` |
 | `gen_testbenches.py OUTDIR` | the `tb_*.sch`, from `../sim/tb/*.spice` |
+| `gen_bias.py OUTDIR` | the four `d2s_bias_*` sheets and their symbols, from `../sim/d2s_bias_ref.spice` |
 | `xsheet.py` | the drawing helper both generators use: pin positions from the `.sym` files, wires, and a geometric lint |
 
 ```
 cd scripts
 python3 export_figures.py                       # all sheets
 python3 export_figures.py d2s_mpdda tb_units    # only these
-python3 gen_cells.py /tmp/regen && python3 gen_testbenches.py /tmp/regen
+python3 gen_cells.py /tmp/regen && python3 gen_testbenches.py /tmp/regen && python3 gen_bias.py /tmp/regen
 ```
 
 All of them need `$PDK_ROOT` (`PDK` defaults to `ihp-sg13cmos5l`). `export_figures.py` also
