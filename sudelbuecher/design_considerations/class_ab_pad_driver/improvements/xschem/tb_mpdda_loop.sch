@@ -54,7 +54,7 @@ N 100 -300 620 -300 {lab=vdd}
 N 300 700 400 700 {lab=GND}
 N 200 700 300 700 {lab=GND}
 N 620 700 920 700 {lab=GND}
-N 400 700 620 700 {lab=GND}
+N 560 700 620 700 {lab=GND}
 N 1420 700 1560 700 {lab=GND}
 N 920 700 1420 700 {lab=GND}
 N 480 130 480 170 {lab=vddo}
@@ -65,6 +65,8 @@ N 1200 -120 1200 -80 {lab=vddo}
 N 1200 160 1200 200 {lab=vsso}
 N 660 260 660 300 {lab=vddo}
 N 660 620 660 660 {lab=vsso}
+N 400 700 480 700 {lab=GND}
+N 480 700 560 700 {lab=GND}
 C {devices/vsource.sym} 100 200 0 0 {name=Vdd value=3.3 savecurrent=false}
 C {devices/vsource.sym} 200 200 0 0 {name=Vcm value=1.65 savecurrent=false}
 C {devices/lab_pin.sym} 200 130 0 1 {name=l1 sig_type=std_logic lab=vref}
