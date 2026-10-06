@@ -582,3 +582,25 @@ Asked for: xschem schematics and figures of the four bias variants.
 - The pnpMPA symbol's netlist format calls the Tcl procedure `ev7`. xschem 3.4.4 (the cloud's
   Ubuntu package) does not have it, so the checks here ran with a one-line stand-in for it in a
   scratch `xschemrc`. That stand-in is not shipped; current xschem defines `ev7`.
+
+## 2026-10-06 02:05 — bias sheets, review round (`xschem/d2s_bias_*.sch`)
+
+- Christoph's hand edit of `d2s_bias_bg.sch` (00:30) checked: xschem's netlist is identical to that of
+  the generated sheet, and `check_xschem.py` finds 0 mismatches.
+- Start-up, asked how it works and whether it draws current once the core runs. It does: MS1 → MS2
+  carries 0.35–0.55 µA at all times (458 nA at tt, 3.3 V, 27 °C). MS2 holds ks at 0.2–1.6 mV, so MS3 is
+  off; its drain current is 1–10 pA, mostly junction leakage (channel 4 fA at 27 °C, 3 pA at 125 °C).
+  `bias.md`'s "leaks 4 fA" is the channel current at 27 °C only; to be corrected. A weaker MS1 is to be
+  revisited later.
+- Tree columns reordered on request to [R] | vabp BPC BP | vabn BNC BN, first in `d2s_bias_bg`, then in
+  `_in`, `_out` and `_oa` by copying the `_bg` tree (Christoph had set the frames 20 units apart).
+  - iref enters `_in` and `_out` from the left at y = −560, midway between vabp and vabn.
+  - In `_out` the iref line carries the gates of PABN, PBNC, PBN, and the vbn line those of NABP,
+    NBPC, NBP.
+  - `_oa`'s [R] column is now `_bg`'s (NI flipped), with `_oa`'s PO/POC sizes.
+- A preliminary edit of `_in` had shorted iref to vbpc at (380, −260): BPC's drain line and the iref
+  bus ended on the same point. Christoph fixed it before the reordering.
+- `check_xschem.py`: 0 mismatches over all sheets; no dangling wire ends or overlapping wires.
+- The reordering was done with a cloud-only scratch script, not shipped.
+- Not yet updated: the sheet legends ("separate rails from the right"), `xschem/README.md`, and
+  `figures/d2s_bias_*`.
