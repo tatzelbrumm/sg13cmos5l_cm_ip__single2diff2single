@@ -5,7 +5,7 @@
 * Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
 * Gain and offset here are two-point estimates (vd = -0.2 / 0 / +0.2 V); run_improvements.py
 * fits a line over |vd| <= 0.2 V. Reference (results_improvements.txt): gain 0.4999,
-* offset 0.05 mV, nonlin 1.24 mV, IqP/IqN 212/212 uA, Idd 296 uA.
+* offset 0.05 mV, nonlin 1.24 mV, IqP/IqN 212/212 uA, Idd 296 uA (vdd + vddo).
 .lib cornerMOShv.lib mos_tt
 .lib cornerRES.lib res_typ
 .lib cornerCAP.lib cap_typ
@@ -14,24 +14,27 @@
 .include ../d2s_mpdda.spice
 .include ../d2s_bias_lp.spice
 Vdd vdd 0 3.3
+* output-stage rails (OP / ON and their replicas RP1 / RN1), here at vdd / vss
+Vddo vddo 0 3.3
+Vsso vsso 0 0
 Vcm vref 0 1.65
-Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+Xb vdd 0 vddo vsso vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
 .param vstep=0.5
 * differential stimulus around vref: vinp - vinn = v(dp)
 Vd dp 0 0
 Ep vinp vref dp 0 0.5
 En vinn vref dp 0 -0.5
-Xd vdd 0 vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+Xd vdd 0 vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
 * load (edit)
 RL vout vref 1k
 CL vout 0 100p
-.save v(vout) v(dp) vdd#branch @n.xd.xop.nsg13_hv_pmos[ids] @n.xd.xon.nsg13_hv_nmos[ids]
+.save v(vout) v(dp) vdd#branch vddo#branch @n.xd.xop.nsg13_hv_pmos[ids] @n.xd.xon.nsg13_hv_nmos[ids]
 .control
 dc Vd -1 1 0.01
 let vo = v(vout) - 1.65
 let ip = abs(@n.xd.xop.nsg13_hv_pmos[ids])
 let in = abs(@n.xd.xon.nsg13_hv_nmos[ids])
-let idd = -i(vdd)
+let idd = -i(vdd) - i(vddo)
 meas dc vop find vo at=0.2
 meas dc von find vo at=-0.2
 meas dc off find vo at=0

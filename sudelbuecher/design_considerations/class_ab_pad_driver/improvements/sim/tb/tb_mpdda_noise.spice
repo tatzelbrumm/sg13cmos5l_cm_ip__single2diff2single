@@ -14,12 +14,15 @@
 .include ../d2s_mpdda.spice
 .include ../d2s_bias_lp.spice
 Vdd vdd 0 3.3
+* output-stage rails (OP / ON and their replicas RP1 / RN1), here at vdd / vss
+Vddo vddo 0 3.3
+Vsso vsso 0 0
 Vcm vref 0 1.65
-Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+Xb vdd 0 vddo vsso vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
 Vd dp 0 dc 0 ac 1
 Ep vinp vref dp 0 0.5
 En vinn vref dp 0 -0.5
-Xd vdd 0 vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+Xd vdd 0 vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
 RL vout vref 1k
 CL vout 0 100p
 .control

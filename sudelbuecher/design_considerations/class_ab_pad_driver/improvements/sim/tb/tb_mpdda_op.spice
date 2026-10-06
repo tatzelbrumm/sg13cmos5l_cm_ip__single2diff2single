@@ -12,16 +12,19 @@
 .include ../d2s_mpdda.spice
 .include ../d2s_bias_lp.spice
 Vdd vdd 0 3.3
+* output-stage rails (OP / ON and their replicas RP1 / RN1), here at vdd / vss
+Vddo vddo 0 3.3
+Vsso vsso 0 0
 Vcm vref 0 1.65
-Xb vdd 0 vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+Xb vdd 0 vddo vsso vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
 Vp vinp 0 1.65
 Vn vinn 0 1.65
-Xd vdd 0 vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+Xd vdd 0 vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
 RL vout vref 1k
 CL vout 0 100p
 .control
 op
-print v(xd.x) v(xd.y) v(xd.a) v(xd.b) v(xd.l1) v(xd.l2) v(xd.pl) v(xd.pr) i(vdd)
+print v(xd.x) v(xd.y) v(xd.a) v(xd.b) v(xd.l1) v(xd.l2) v(xd.pl) v(xd.pr) i(vdd) i(vddo)
 print @n.xd.xsx.nsg13_hv_nmos[ids] @n.xd.xsx.nsg13_hv_nmos[vds] @n.xd.xsx.nsg13_hv_nmos[vdss]
 print @n.xd.xsy.nsg13_hv_nmos[ids] @n.xd.xsy.nsg13_hv_nmos[vds] @n.xd.xsy.nsg13_hv_nmos[vdss]
 print @n.xd.xcx.nsg13_hv_nmos[ids] @n.xd.xcx.nsg13_hv_nmos[vds] @n.xd.xcx.nsg13_hv_nmos[vdss]

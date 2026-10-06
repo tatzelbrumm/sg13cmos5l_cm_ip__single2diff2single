@@ -3,9 +3,10 @@
 * d2s_lc2: load-compensated (no compensation capacitor) variant with the MP-DDA front end of d2s_mpdda.
 * Case (b): output devices are NOT the pad's ESD clamps but ordinary devices in the slot,
 * so they may be cascoded. Cascode gates at vref (1.65 V): output range ~1.0 ... 2.4 V.
-* Pin list as d2s_miller; bias d2s_bias_lp; unit_r2 from units.spice.
+* Pin list as d2s_miller, plus vddo / vsso after vdd / vss: the rails of OP, DP / ON, DN (sources and
+* bulks) and of ONC's bulk (ON's tap ring); bias d2s_bias_lp; unit_r2 from units.spice.
 * d2s_lc2_nc: same without cascodes.
-.subckt d2s_lc2 vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn wdp=6.66u wdn=3.8u
+.subckt d2s_lc2 vdd vss vddo vsso vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn wdp=6.66u wdn=3.8u
 XA x y vinp vref vdd vss vbp unit_r2
 XB x y vref vinn vdd vss vbp unit_r2
 XC1 x y vref vfb vdd vss vbp unit_r2
@@ -23,15 +24,15 @@ XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1
 XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
 XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
 * output devices (half a frame each) + cascodes, cascode gates at vref
-XOP op a vdd vdd sg13_hv_pmos w=273.06u l=0.6u ng=41
+XOP op a vddo vddo sg13_hv_pmos w=273.06u l=0.6u ng=41
 XOPC vout vref op op sg13_hv_pmos w=273.06u l=0.6u ng=41
-XON on b vss vss sg13_hv_nmos w=145.2u l=1u ng=33
-XONC vout vref on vss sg13_hv_nmos w=145.2u l=0.6u ng=33
+XON on b vsso vsso sg13_hv_nmos w=145.2u l=1u ng=33
+XONC vout vref on vsso sg13_hv_nmos w=145.2u l=0.6u ng=33
 * low-impedance gate nodes: diode replicas (1/41, 1/38)
-XDP a a vdd vdd sg13_hv_pmos w={wdp} l=0.6u ng=1
-XDN b b vss vss sg13_hv_nmos w={wdn} l=1u ng=1
+XDP a a vddo vddo sg13_hv_pmos w={wdp} l=0.6u ng=1
+XDN b b vsso vsso sg13_hv_nmos w={wdn} l=1u ng=1
 .ends d2s_lc2
-.subckt d2s_lc2_nc vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn wdp=6.66u wdn=3.8u
+.subckt d2s_lc2_nc vdd vss vddo vsso vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn wdp=6.66u wdn=3.8u
 XA x y vinp vref vdd vss vbp unit_r2
 XB x y vref vinn vdd vss vbp unit_r2
 XC1 x y vref vfb vdd vss vbp unit_r2
@@ -48,8 +49,8 @@ XFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
 XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1
 XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
 XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
-XOP vout a vdd vdd sg13_hv_pmos w=273.06u l=0.6u ng=41
-XON vout b vss vss sg13_hv_nmos w=145.2u l=1u ng=33
-XDP a a vdd vdd sg13_hv_pmos w={wdp} l=0.6u ng=1
-XDN b b vss vss sg13_hv_nmos w={wdn} l=1u ng=1
+XOP vout a vddo vddo sg13_hv_pmos w=273.06u l=0.6u ng=41
+XON vout b vsso vsso sg13_hv_nmos w=145.2u l=1u ng=33
+XDP a a vddo vddo sg13_hv_pmos w={wdp} l=0.6u ng=1
+XDN b b vsso vsso sg13_hv_nmos w={wdn} l=1u ng=1
 .ends d2s_lc2_nc

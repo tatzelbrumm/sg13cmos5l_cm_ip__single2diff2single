@@ -11,8 +11,9 @@
 *     bias fixture d2s_bias_lp.
 *  4. offset: sinks 36/6, mirror 24/4 (the folding sinks dominated the offset).
 *  5. loop gain: folded and mirror cascodes at L = lcas um (default 3), W = 10 * L.
-* Pins as d2s_miller. Bias: d2s_bias_lp.
-.subckt d2s_mpdda vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn wc=16u lc=16u lcas=3 rl=50.6u
+* Pins as d2s_miller, plus vddo / vsso after vdd / vss: the rails of the output devices OP / ON
+* (sources and bulks), separate from the front end's vdd / vss. Bias: d2s_bias_lp.
+.subckt d2s_mpdda vdd vss vddo vsso vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn wc=16u lc=16u lcas=3 rl=50.6u
 XA x y vinp vref vdd vss vbp unit_r2 rl={rl}
 XB x y vref vinn vdd vss vbp unit_r2 rl={rl}
 XC1 x y vref vfb vdd vss vbp unit_r2 rl={rl}
@@ -33,8 +34,8 @@ XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1
 XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
 XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
 * --- output devices: one Clamp_P frame (L=0.6, 41 x 2 rows), two Clamp_N frames at L=1.0 (2 x 33)
-XOP vout a vdd vdd sg13_hv_pmos w=546.12u l=0.6u ng=82
-XON vout b vss vss sg13_hv_nmos w=290.4u l=1u ng=66
+XOP vout a vddo vddo sg13_hv_pmos w=546.12u l=0.6u ng=82
+XON vout b vsso vsso sg13_hv_nmos w=290.4u l=1u ng=66
 * --- Miller capacitors: hv PMOS accumulation capacitors (~5 fF/um2 C_ox; 0.4...0.8 of that in use)
 XCMA vout a vout vout sg13_hv_pmos w={wc} l={lc} ng=1
 XCMB b vout b b sg13_hv_pmos w={wc} l={lc} ng=1

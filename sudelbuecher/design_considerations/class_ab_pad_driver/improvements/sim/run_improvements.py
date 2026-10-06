@@ -27,6 +27,8 @@ V = {'baseline A': ('d2s_miller', 'd2s_bias', '', 'mom', ''),
      'MP-DDA (A sizing)': ('d2s_mp', 'd2s_bias', '', 'mom', ''),
      'MP-DDA (A sizing), MOS 18': ('d2s_mp', 'd2s_bias', '', 'mos', 'wc=18u lc=18u'),
      'd2s_mpdda': ('d2s_mpdda', 'd2s_bias_lp', '', 'mom', '')}
+# cells with the output-stage rails vddo / vsso after vdd / vss: tied to vdd / vss here (run_bias.py keeps them apart)
+RAILS = ('d2s_mpdda', 'd2s_lc2', 'd2s_lc2_nc', 'd2s_bias_lp')
 
 
 def header(v, corner='tt 27C', mc_seed=None, mm_dir=None, dpar=''):
@@ -41,8 +43,8 @@ def header(v, corner='tt 27C', mc_seed=None, mm_dir=None, dpar=''):
          f".lib {r.MODELDIR}/cornerMOShv.lib {mos}\n.lib {r.MODELDIR}/cornerRES.lib {res}\n"
          f".lib {r.MODELDIR}/cornerCAP.lib cap_typ\n.temp {temp}\n" + inc +
          f".subckt ccomp vout a b vss\nXc vout a b vss ccomp_{comp} {cpar}\n.ends ccomp\n"
-         f"Vdd vdd 0 3.3\nVcm vref 0 1.65\nXb vdd 0 vbp vbn vbpc vbnc vabp vabn {bias}\n")
-    return h, (lambda fb='vout': f"Xd vdd 0 vinp vinn vref vout {fb} vbp vbn vbpc vbnc vabp vabn {sub} {dpar}\n")
+         f"Vdd vdd 0 3.3\nVcm vref 0 1.65\nXb vdd 0 {'vdd 0 ' * (bias in RAILS)}vbp vbn vbpc vbnc vabp vabn {bias}\n")
+    return h, (lambda fb='vout': f"Xd vdd 0 {'vdd 0 ' * (sub in RAILS)}vinp vinn vref vout {fb} vbp vbn vbpc vbnc vabp vabn {sub} {dpar}\n")
 
 
 def ngspice(net, ctl, out='out.txt'):

@@ -1,8 +1,9 @@
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
 * d2s_bias_lp: bias fixture for d2s_mp2 (ideal reference currents into transistor diodes),
-* reference currents cut from 90 uA to ~26 uA. Same pins as d2s_bias.
-.subckt d2s_bias_lp vdd vss vbp vbn vbpc vbnc vabp vabn iab=5u ibnc=2u
+* reference currents cut from 90 uA to ~26 uA. Pins as d2s_bias, plus vddo / vsso after vdd / vss:
+* the class-AB replicas RP1 / RN1 sit on the output devices' rails, like OP / ON.
+.subckt d2s_bias_lp vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn iab=5u ibnc=2u
 IBP vbp vss 5u
 XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
 IBN vdd vbn 5u
@@ -13,9 +14,9 @@ IBPC vbpc vss 2u
 XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
 * class-AB translinear references: as d2s_bias
 IABP vabp vss {iab}
-XRP1 n1 n1 vdd vdd sg13_hv_pmos w=13.32u l=0.6u ng=2
+XRP1 n1 n1 vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
 XRP2 vabp vabp n1 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
 IABN vdd vabn {iab}
-XRN1 n2 n2 vss vss sg13_hv_nmos w=8.8u l=1u ng=2
+XRN1 n2 n2 vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2
 XRN2 vabn vabn n2 vss sg13_hv_nmos w=4.4u l=1u ng=1
 .ends d2s_bias_lp

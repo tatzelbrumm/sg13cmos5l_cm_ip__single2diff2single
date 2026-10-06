@@ -10,8 +10,8 @@ Usage (IIC-OSIC-TOOLS, after `source .designinit`, from this directory):
 Sections: accuracy supply startup mc driver corners rails area
 Model / OSDI paths as run_d2s.py ($MODELDIR, $OSDI_DIR).
 Bias variants: ideal (d2s_bias_lp's ideal sources on the same diodes and rails), in, out, oa, bg.
-The driver is d2s_mpdda with OP / ON moved to separate rails vddo / vsso (built from d2s_mpdda.spice
-here); ON's bulk is its frame's local substrate tap ring on vsso.
+The driver is d2s_mpdda (d2s_mpdda.spice), OP / ON on their own rails vddo / vsso; ON's bulk is its
+frame's local substrate tap ring on vsso.
 """
 import os, re, subprocess, sys
 import numpy as np
@@ -53,15 +53,6 @@ def sensed(src):
     for k, dev in DRAIN.items():
         body = re.sub(rf'^{dev} (\S+)', lambda mm: f'Vs{k} {mm.group(1)} s{k} 0\n{dev} s{k}', body, flags=re.M)
     return src.replace(m.group(0), body)
-
-
-def split_driver():
-    s = open(os.path.join(HERE, 'd2s_mpdda.spice')).read()
-    s = s.replace('.subckt d2s_mpdda vdd vss ', '.subckt d2s_mpdda_split vdd vss vddo vsso ').replace('.ends d2s_mpdda', '.ends d2s_mpdda_split')
-    s = re.sub(r'^XOP vout a vdd vdd', 'XOP vout a vddo vddo', s, flags=re.M)
-    s = re.sub(r'^XON vout b vss vss', 'XON vout b vsso vsso', s, flags=re.M)
-    assert 'XOP vout a vddo vddo' in s and 'XON vout b vsso vsso' in s
-    return s
 
 
 def vsense(k, var):
@@ -175,11 +166,11 @@ def mc(N=100):
 
 
 def driver_net(var, loop=False, ac=None, vdd=3.3, src=None, dvo=0.0, dso=0.0, **kw):
-    inc = ''.join(open(os.path.join(HERE, f)).read() for f in ('units.spice', 'ccomp.spice')) + split_driver() + (src or SRC) + IDEAL
+    inc = ''.join(open(os.path.join(HERE, f)).read() for f in ('units.spice', 'ccomp.spice', 'd2s_mpdda.spice')) + (src or SRC) + IDEAL
     rl = rails(vdd, ac).replace(f"Vvddo vddo 0 dc {vdd}", f"Vvddo vddo 0 dc {vdd + dvo}").replace("Vvsso vsso 0 dc 0", f"Vvsso vsso 0 dc {dso}")
     fb = 'fb' if loop else 'vout'
     return (header(**kw) + inc + rl + "Vcm vref 0 1.65\n" + INST[var] + "\nVp vinp vref 0\nVn vinn vref 0\n"
-            f"Xd vdd vss vddo vsso vinp vinn vref vout {fb} vbp vbn vbpc vbnc vabp vabn d2s_mpdda_split\n" +
+            f"Xd vdd vss vddo vsso vinp vinn vref vout {fb} vbp vbn vbpc vbnc vabp vabn d2s_mpdda\n" +
             ("Lb vout fb 1G\nCb fb inj 1\nVinj inj 0 dc 0 ac 1\n" if loop else '') + "RL vout vref 1k\nCL vout 0 100p\n")
 
 
