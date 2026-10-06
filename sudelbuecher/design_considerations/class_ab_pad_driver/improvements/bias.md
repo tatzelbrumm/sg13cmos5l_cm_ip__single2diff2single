@@ -37,8 +37,9 @@ driver sees. Only the currents into the diodes are generated differently.
 Bias crosses from one block to another only as currents, never as voltages.
 
 **Supply partition.** The front end and the bias run on the slot's analog supply, vdd/vss (vdd_3v3,
-vss_3v3). The output devices OP/ON get their own rails, vddo/vsso. These are iovdd/iovss when the
-frames are the pad's ESD clamps, as in case (a).
+vss_3v3). The output devices OP/ON get their own rails, vddo/vsso, now ports of every driver and bias
+cell (`vdd vss vddo vsso ...`). The slot has no separate IO supply, so vddo comes from vdd_3v3.
+Whether vsso connects to vssio or to vss_3v3 is still open.
 
 - The class-AB replicas RP1 and RN1 sit on vddo/vsso, not on the bias rails. A voltage between vdd
   and vddo adds directly to the translinear loop V_SG(OP) + V_SG(ABP) = V_SG(RP1) + V_SG(RP2).
@@ -187,7 +188,7 @@ on OP's or ON's source rail is rejected only by the loop gain:
 - −31 dB at 100 kHz and −12 dB at 1 MHz.
 - This doesn't depend on the bias. It is a property of the Miller-compensated output stage and of
   which rail it sits on.
-- If vddo/vsso are the IO ring's iovdd/iovss, IO switching noise reaches the output at those levels.
+- Whatever noise sits on vddo and on vsso (vssio or vss_3v3) reaches the output at those levels.
 - Options:
   - a quiet output-stage rail;
   - cascode (Ahuja) compensation, which unties the gates from vout. The first note chose plain Miller
