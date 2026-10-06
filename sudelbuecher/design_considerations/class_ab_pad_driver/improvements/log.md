@@ -604,3 +604,45 @@ Asked for: xschem schematics and figures of the four bias variants.
 - The reordering was done with a cloud-only scratch script, not shipped.
 - Not yet updated: the sheet legends ("separate rails from the right"), `xschem/README.md`, and
   `figures/d2s_bias_*`.
+
+## 2026-10-06 05:05 — separate output-stage rails vddo / vsso in every driver cell
+
+Asked for: vddo and vsso in `d2s_lc2`, `d2s_lc2_nc`, `d2s_mpdda`, `d2s_mpdda_flat`,
+`d2s_mpdda_biased` and `d2s_mpdda_bias_flat`, with symbols, testbenches and scripts to match. Port
+order `vdd vss vddo vsso ...`. ONC's bulk goes to ON's tap ring. Which slot pin vsso connects to
+(vssio or vss_3v3) stays open. `gen_cells.py`, `gen_testbenches.py` and the IOPadDiff2Single macro
+schematic stay as they are.
+
+- Christoph had already moved OP and ON (in `d2s_lc2` also DP, DN and ONC's bulk) onto vddo / vsso
+  in `d2s_mpdda`, `d2s_lc2` and `d2s_lc2_nc`, and RP1 / RN1 in `d2s_bias_lp`, the cell missing from
+  the list. A short between b and vabn in his first edit of `d2s_lc2_nc` was found by the check and
+  fixed by him.
+- Sources: `d2s_mpdda.spice`, both cells of `d2s_lc2.spice` and `d2s_bias_lp.spice` now have the
+  ports and rails of the sheets.
+- Sheets:
+  - The pins of the four edited sheets are in port order.
+  - `d2s_mpdda_flat` and `d2s_mpdda_bias_flat` are rewired: the vddo rail runs 40 above vdd, the
+    vsso rail 20 below vss. RP2's well and RN2's bulk are rerouted so they stay on vdd and vss.
+  - `d2s_mpdda_biased` has the two new pins.
+- Symbols: seven have vddo (top) and vsso (bottom). The driver symbols' box is 40 units wider, so
+  vout sits 40 further right.
+- Testbenches, seven decks and sheets:
+  - Each has its own sources, Vddo = 3.3 V and Vsso = 0 V.
+  - `tb_mpdda_dc`'s Idd is now vdd + vddo, and `tb_mpdda_op` also prints i(vddo).
+  - All seven decks give the same results as before in ngspice. The only difference is the time of
+    the step's maximum on its flat top: 72 ns later, at the same value.
+- Scripts:
+  - `run_bias.py` no longer builds a split copy of `d2s_mpdda`: `split_driver()` is gone, and the
+    netlist is included as it is.
+  - `run_improvements.py` ties vddo / vsso to vdd / vss for the cells that have them.
+  - `results_improvements.txt` is reproduced exactly, and so are the driver, corners and rails
+    sections of `results_bias.txt`.
+- `check_xschem.py`: its two fixture subcircuits are updated. 0 mismatches over all sheets.
+- Docs: `xschem/README.md` has the new pins, a section on the rails, and the bias sheets' current
+  layout. `bias.md`: vddo comes from vdd_3v3; vsso's pin is open.
+- Figures re-exported for the 14 changed sheets. The bias sheets and their figures are unchanged;
+  their legends still say "from the right".
+- Left in Christoph's sheets: a short dangling wire at (2160, −450…−440) in `d2s_lc2` and
+  `d2s_lc2_nc`. It connects to nothing.
+  Christoph removed both at 06:02. Afterwards `check_xschem.py` still finds 0 mismatches, and no
+  sheet has a dangling wire end; figures of both re-exported.

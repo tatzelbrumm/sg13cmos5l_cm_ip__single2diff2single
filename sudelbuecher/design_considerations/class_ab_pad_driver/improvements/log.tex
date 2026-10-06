@@ -1366,4 +1366,125 @@ sheets, review round
   \texttt{xschem/README.md}, and
   \texttt{figures/d2s\_bias\_*}.
 \end{itemize}
+
+\hypertarget{2026-10-06-0505--separate-output-stage-rails-vddo--vsso-in-every-driver-cell}{%
+\section{2026-10-06 05:05 --- separate
+output-stage rails vddo / vsso in every driver
+cell}\label{2026-10-06-0505--separate-output-stage-rails-vddo--vsso-in-every-driver-cell}}
+
+Asked for: vddo and vsso in \texttt{d2s\_lc2},
+\texttt{d2s\_lc2\_nc}, \texttt{d2s\_mpdda},
+\texttt{d2s\_mpdda\_flat},
+\texttt{d2s\_mpdda\_biased} and
+\texttt{d2s\_mpdda\_bias\_flat}, with symbols,
+testbenches and scripts to match. Port order
+\texttt{vdd\ vss\ vddo\ vsso\ ...}.
+ONC\textquotesingle s bulk goes to
+ON\textquotesingle s tap ring. Which slot pin vsso
+connects to (vssio or vss\_3v3) stays open.
+\texttt{gen\_cells.py},
+\texttt{gen\_testbenches.py} and the
+IOPadDiff2Single macro schematic stay as they are.
+
+\begin{itemize}
+\tightlist
+\item
+  Christoph had already moved OP and ON (in
+  \texttt{d2s\_lc2} also DP, DN and
+  ONC\textquotesingle s bulk) onto vddo / vsso in
+  \texttt{d2s\_mpdda}, \texttt{d2s\_lc2} and
+  \texttt{d2s\_lc2\_nc}, and RP1 / RN1 in
+  \texttt{d2s\_bias\_lp}, the cell missing from
+  the list. A short between b and vabn in his
+  first edit of \texttt{d2s\_lc2\_nc} was found by
+  the check and fixed by him.
+\item
+  Sources: \texttt{d2s\_mpdda.spice}, both cells
+  of \texttt{d2s\_lc2.spice} and
+  \texttt{d2s\_bias\_lp.spice} now have the ports
+  and rails of the sheets.
+\item
+  Sheets:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    The pins of the four edited sheets are in port
+    order.
+  \item
+    \texttt{d2s\_mpdda\_flat} and
+    \texttt{d2s\_mpdda\_bias\_flat} are rewired:
+    the vddo rail runs 40 above vdd, the vsso rail
+    20 below vss. RP2\textquotesingle s well and
+    RN2\textquotesingle s bulk are rerouted so
+    they stay on vdd and vss.
+  \item
+    \texttt{d2s\_mpdda\_biased} has the two new
+    pins.
+  \end{itemize}
+\item
+  Symbols: seven have vddo (top) and vsso
+  (bottom). The driver symbols\textquotesingle{}
+  box is 40 units wider, so vout sits 40 further
+  right.
+\item
+  Testbenches, seven decks and sheets:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Each has its own sources, Vddo = 3.3 V and
+    Vsso = 0 V.
+  \item
+    \texttt{tb\_mpdda\_dc}\textquotesingle s Idd
+    is now vdd + vddo, and \texttt{tb\_mpdda\_op}
+    also prints i(vddo).
+  \item
+    All seven decks give the same results as
+    before in ngspice. The only difference is the
+    time of the step\textquotesingle s maximum on
+    its flat top: 72 ns later, at the same value.
+  \end{itemize}
+\item
+  Scripts:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{run\_bias.py} no longer builds a split
+    copy of \texttt{d2s\_mpdda}:
+    \texttt{split\_driver()} is gone, and the
+    netlist is included as it is.
+  \item
+    \texttt{run\_improvements.py} ties vddo / vsso
+    to vdd / vss for the cells that have them.
+  \item
+    \texttt{results\_improvements.txt} is
+    reproduced exactly, and so are the driver,
+    corners and rails sections of
+    \texttt{results\_bias.txt}.
+  \end{itemize}
+\item
+  \texttt{check\_xschem.py}: its two fixture
+  subcircuits are updated. 0 mismatches over all
+  sheets.
+\item
+  Docs: \texttt{xschem/README.md} has the new
+  pins, a section on the rails, and the bias
+  sheets\textquotesingle{} current layout.
+  \texttt{bias.md}: vddo comes from vdd\_3v3;
+  vsso\textquotesingle s pin is open.
+\item
+  Figures re-exported for the 14 changed sheets.
+  The bias sheets and their figures are unchanged;
+  their legends still say "from the right".
+\item
+  Left in Christoph\textquotesingle s sheets: a
+  short dangling wire at (2160, −450\ldots−440) in
+  \texttt{d2s\_lc2} and \texttt{d2s\_lc2\_nc}. It
+  connects to nothing. Christoph removed both at
+  06:02. Afterwards \texttt{check\_xschem.py}
+  still finds 0 mismatches, and no sheet has a
+  dangling wire end; figures of both re-exported.
+\end{itemize}
 \end{document}
