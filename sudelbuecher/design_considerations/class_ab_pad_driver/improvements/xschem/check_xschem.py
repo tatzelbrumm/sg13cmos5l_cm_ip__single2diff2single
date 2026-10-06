@@ -19,13 +19,13 @@ CELLS = ['unit_r', 'unit_r2', 'unit_t', 'unit_w', 'unit_q', 'd2s_bias_lp', 'd2s_
          'd2s_lc2_nc', 'd2s_mpdda_biased', 'd2s_mpdda_flat', 'd2s_mpdda_bias_flat',
          'd2s_bias_in', 'd2s_bias_out', 'd2s_bias_oa', 'd2s_bias_bg']
 # the assemblies have no .spice source; this is what they must netlist to
-FIXTURE = """.subckt d2s_mpdda_biased vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn
-xd vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn d2s_mpdda
-xb vdd vss vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+FIXTURE = """.subckt d2s_mpdda_biased vdd vss vddo vsso vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn
+xd vdd vss vddo vsso vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+xb vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
 .ends
-.subckt d2s_mpdda_bias_flat vdd vss vinp vinn vref vout vfb
-xd vdd vss vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn d2s_mpdda
-xb vdd vss vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
+.subckt d2s_mpdda_bias_flat vdd vss vddo vsso vinp vinn vref vout vfb
+xd vdd vss vddo vsso vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+xb vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn d2s_bias_lp
 .ends"""
 # flat schematics: compared against their source with every subcircuit expanded. Devices and
 # internal nets of a DDA unit get the unit's name as suffix (Ta_A, sa_A); the assemblies below

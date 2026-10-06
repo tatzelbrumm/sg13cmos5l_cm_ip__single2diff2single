@@ -25,9 +25,9 @@ T {[6]} 2295 -1062 0 0 0.35 0.35 {layer=10}
 T {[6]} 2295 -298 0 0 0.35 0.35 {layer=10}
 T {[7]} 2170 -795 0 0 0.35 0.35 {layer=10}
 T {[7]} 2170 -545 0 0 0.35 0.35 {layer=10}
-T {d2s_mpdda: matched-pair DDA (4 x unit_r2), folded cascode, class-AB output, MOS Miller compensation (vfb = vout)} 90 -1140 0 0 0.6 0.6 {}
-T {frozen .subckt defaults: lcas = 3 (CX, CY, PCL, PCR 30u / 3u ng=2), wc = lc = 16u (CMA, CMB), rl = 50.6u (in unit_r2.sch)} 90 -1090 0 0 0.3 0.3 {}
-T {the DDA units at transistor level: d2s_mpdda_flat.sch; with the bias network: d2s_mpdda_bias_flat.sch; block descriptions: README.md} 90 -1065 0 0 0.3 0.3 {}
+T {d2s_mpdda: matched-pair DDA (4 x unit_r2), folded cascode, class-AB output, MOS Miller compensation (vfb = vout)} 90 -1160 0 0 0.6 0.6 {}
+T {frozen .subckt defaults: lcas = 3 (CX, CY, PCL, PCR 30u / 3u ng=2), wc = lc = 16u (CMA, CMB), rl = 50.6u (in unit_r2.sch)} 90 -1110 0 0 0.3 0.3 {}
+T {the DDA units at transistor level: d2s_mpdda_flat.sch; with the bias network: d2s_mpdda_bias_flat.sch; block descriptions: README.md} 90 -1085 0 0 0.3 0.3 {}
 T {[1] DDA units A, B, C1, C2: split-tail PMOS pair, rhigh between the sources. Each adds f(gp - gn) to the fold nodes: the gp device drains to y, the gn device to x.} 1250 -110 0 0 0.3 0.3 {layer=10}
 T {      A: vinp - vref,  B: vref - vinn,  C1 = C2: vref - vfb.  The loop forces f(vinp - vref) + f(vref - vinn) = 2 f(vfb - vref), so vfb - vref = (vinp - vinn)/2.} 1250 -86 0 0 0.3 0.3 {layer=10}
 T {[2] fold: sinks SX, SY (gate vbn) and NMOS cascodes CX, CY (gate vbnc). x and y are the fold nodes.} 1250 -62 0 0 0.3 0.3 {layer=10}
@@ -148,12 +148,10 @@ N 1200 -260 1200 -220 {lab=vbn}
 N 1200 -220 1220 -220 {lab=vbn}
 N 60 -1040 260 -1040 {lab=vdd}
 N 60 -140 340 -140 {lab=vss}
-N 2360 -1040 2360 -1010 {lab=vdd}
 N 2360 -980 2380 -980 {lab=vdd}
-N 2380 -1040 2380 -980 {lab=vdd}
-N 2360 -190 2360 -140 {lab=vss}
-N 2360 -220 2380 -220 {lab=vss}
-N 2380 -220 2380 -140 {lab=vss}
+N 2360 -190 2360 -120 {lab=vsso}
+N 2360 -220 2380 -220 {lab=vsso}
+N 2380 -220 2380 -120 {lab=vsso}
 N 2360 -950 2360 -740 {lab=vout}
 N 2360 -600 2440 -600 {lab=vout}
 N 2300 -770 2300 -740 {lab=vout}
@@ -208,20 +206,24 @@ N 2140 -220 2140 -140 {lab=vss}
 N 2120 -740 2220 -740 {lab=a}
 N 1500 -1040 1520 -1040 {lab=vdd}
 N 740 -1040 980 -1040 {lab=vdd}
-N 2360 -140 2380 -140 {lab=vss}
 N 2120 -140 2140 -140 {lab=vss}
 N 1280 -140 2120 -140 {lab=vss}
 N 1060 -140 1260 -140 {lab=vss}
 N 820 -140 1060 -140 {lab=vss}
-N 1900 -1040 2360 -1040 {lab=vdd}
 N 1520 -1040 1880 -1040 {lab=vdd}
 N 980 -1040 1500 -1040 {lab=vdd}
-N 2140 -140 2360 -140 {lab=vss}
 N 1260 -140 1280 -140 {lab=vss}
-N 2360 -1040 2380 -1040 {lab=vdd}
+N 2360 -1060 2380 -1060 {lab=vdd}
 N 1880 -1040 1900 -1040 {lab=vdd}
+N 2360 -120 2380 -120 {lab=vsso}
+N 60 -1060 2360 -1060 {lab=vdd}
+N 2360 -1060 2360 -1010 {lab=vdd}
+N 2380 -1060 2380 -980 {lab=vdd}
+N 60 -120 2360 -120 {lab=vsso}
 C {devices/iopin.sym} 60 -1040 0 1 {name=p1 lab=vdd}
 C {devices/iopin.sym} 60 -140 0 1 {name=p2 lab=vss}
+C {devices/iopin.sym} 60 -1060 0 1 {name=p14 lab=vddo}
+C {devices/iopin.sym} 60 -120 0 1 {name=p15 lab=vsso}
 C {devices/ipin.sym} 60 -560 0 0 {name=p3 lab=vinp}
 C {devices/ipin.sym} 60 -540 0 0 {name=p4 lab=vinn}
 C {devices/ipin.sym} 60 -520 0 0 {name=p5 lab=vref}

@@ -23,22 +23,39 @@ xschem does.
 
 | sheet | contents | pins |
 |---|---|---|
-| `d2s_mpdda_bias_flat` | the whole proposal on one sheet, all at transistor level: bias [8], DDA units [1], fold [2], mirror [3], class-AB control [4], [5], output [6], Miller capacitors [7] | vdd vss vinp vinn vref vout vfb |
-| `d2s_mpdda_flat` | `d2s_mpdda` with the four units at transistor level | as `d2s_miller` (13) |
-| `d2s_mpdda` | the proposed driver, with the units as `unit_r2` boxes | as `d2s_miller` (13) |
-| `d2s_mpdda_biased` | CACE fixture: `d2s_mpdda` and `d2s_bias_lp` as two boxes, bias nets as pins, wired like `d2s_miller_biased` | 13 |
-| `d2s_bias_lp` | the bias network [8] | vdd, vss, 6 bias outputs |
+| `d2s_mpdda_bias_flat` | the whole proposal on one sheet, all at transistor level: bias [8], DDA units [1], fold [2], mirror [3], class-AB control [4], [5], output [6], Miller capacitors [7] | vdd vss vddo vsso vinp vinn vref vout vfb |
+| `d2s_mpdda_flat` | `d2s_mpdda` with the four units at transistor level | as `d2s_mpdda` (15) |
+| `d2s_mpdda` | the proposed driver, with the units as `unit_r2` boxes | as `d2s_miller`, plus vddo vsso after vdd vss (15) |
+| `d2s_mpdda_biased` | CACE fixture: `d2s_mpdda` and `d2s_bias_lp` as two boxes, bias nets as pins, wired like `d2s_miller_biased` | 15 |
+| `d2s_bias_lp` | the bias network [8] | vdd, vss, vddo, vsso, 6 bias outputs |
 | `d2s_bias_in` | real bias, variant 1: [8] fed by a reference current into iref (external PMOS source) | vdd vss vddo vsso iref, 6 bias outputs |
 | `d2s_bias_out` | real bias, variant 2: [8] fed by a reference current out of iref (external NMOS sink) | as `d2s_bias_in` |
 | `d2s_bias_oa` | real bias, variant 3: self-contained, Oguey–Aebischer core, no resistor, no BJT | vdd vss vddo vsso, 6 bias outputs |
 | `d2s_bias_bg` | real bias, variant 4: self-contained, current-mode bandgap with pnpMPA and rhigh | as `d2s_bias_oa` |
 | `unit_r2` | one DDA unit | x y gp gn vdd vss vbp |
-| `d2s_lc2`, `d2s_lc2_nc` | case (b): output devices in the slot, load-compensated, with and without output cascodes | 13 |
+| `d2s_lc2`, `d2s_lc2_nc` | case (b): output devices in the slot, load-compensated, with and without output cascodes | 15 |
 | `unit_r`, `unit_t`, `unit_w`, `unit_q` | the unit alternatives of the proposal, Section II | 7 |
 | `tb_*` | testbenches, one per deck in `../sim/tb/` (see "Testbenches") | none |
 
 In the flat sheets, each unit's devices and internal nets carry the unit's name: `Ta_A`, `Tb_A`,
 `R_A`, `Ma_A`, `Mb_A`, `sa_A`, `sb_A`, and likewise for B, C1 and C2.
+
+## Output-stage rails vddo, vsso
+
+The output devices have rails of their own, vddo and vsso, apart from the front end's vdd and vss.
+In every cell the ports start with `vdd vss vddo vsso`.
+
+- On vddo / vsso (source and bulk): OP and ON; in `d2s_lc2` and `d2s_lc2_nc` also the diode
+  replicas DP and DN, and in `d2s_lc2` ONC's bulk (ON's tap ring); in `d2s_bias_lp` the class-AB
+  replicas RP1 and RN1, as in the real bias blocks.
+- ABP's and FPL's wells, and RP2's, stay on vdd; ABN's, FNL's and RN2's bulks on vss.
+- In the symbols, vddo is a pin on top and vsso one at the bottom, at the right end on the driver
+  symbols (whose box is 40 units wider than before, so vout sits 40 further right) and next to
+  vdd / vss on `d2s_bias_lp`. In the flat sheets, vddo and vsso run 20 to 40 units outside vdd and
+  vss, from pins at the left.
+- The testbenches have their own sources Vddo = 3.3 V and Vsso = 0 V, so every reference value in
+  the decks still holds. `tb_mpdda_dc`'s Idd is vdd + vddo.
+- Which slot pin vsso goes to (vssio or vss_3v3) is still open.
 
 ## Blocks of `d2s_mpdda`
 
@@ -80,7 +97,7 @@ Ideal reference currents flow into diode-connected devices:
 | vabp | IABP 5 µA | RP2 (size of ABP) on RP1 (2 × ABP) | ABP, FPL |
 | vabn | IABN 5 µA | RN2 (size of ABN) on RN1 (2 × ABN) | ABN, FNL |
 
-From vdd down to vabp, V_SG(OP) + V_SG(ABP) = V_SG(RP1) + V_SG(RP2). RP2 has ABP's size and
+From vddo down to vabp, V_SG(OP) + V_SG(ABP) = V_SG(RP1) + V_SG(RP2). RP2 has ABP's size and
 about ABP's current, so OP's V_SG follows RP1's. OP is 41 × RP1. The N side closes the same loop
 through ON, ABN, RN1 and RN2, with ON = 33 × RN1. The two loops together settle at 212 µA.
 
@@ -91,15 +108,18 @@ reference, mirror tree and the six diodes of [8], all at transistor level. `chec
 compares it with the flattened subcircuit.
 
 - **Columns are current branches**, rail to rail: PMOS on vdd at the top, NMOS on vss at the
-  bottom. From left to right: [S] and [C] (oa, bg only), [R], then the tree: the PMOS diodes BPC,
-  BP with their NMOS sinks, the vabp stack RP2 on RP1, the PMOS sources into the NMOS diodes BNC,
-  BN, and the vabn stack RN2 on RN1.
-- **Two gate buses** carry the reference across the tree. One PMOS gate line drives the sources
-  into the NMOS diodes, and one NMOS gate line drives the sinks out of the PMOS diodes.
-- **vddo and vsso come in from the right** and reach only RP1 (source and n-well) and RN1 (source
-  and bulk). These are the replicas of OP and ON, so they sit on the output-stage rails with them.
-  RP2's n-well stays on vdd, like ABP's.
-- The six bias outputs are pins at the right edge.
+  bottom. From left to right: [S] and [C] (oa, bg only), [R], then the tree: the vabp stack RP2 on
+  RP1, the PMOS diodes BPC and BP with their NMOS sinks, the vabn stack RN2 on RN1, and the NMOS
+  diodes BNC and BN with their PMOS sources.
+- **Each bias line leaves to the right at its own height**, to a pin at the right edge: vbp,
+  vbpc, vabp above, vabn, vbnc, vbn below.
+- **Gate lines:** in `_in`, `_oa` and `_bg`, the vbp line also carries the gates of the PMOS
+  sources, and NI's gate line (iref, at the bottom) those of the NMOS sinks. In `_out`, PI's gate
+  line (iref) carries the PMOS sources' gates and the vbn line the NMOS sinks'.
+- **iref** enters `_in` and `_out` from the left, at mid-height between the two groups of lines.
+- **vddo and vsso** run as separate rails from pins at the left and reach only RP1 (source and
+  n-well) and RN1 (source and bulk), the replicas of OP and ON. RP2's n-well stays on vdd, like
+  ABP's.
 - In `d2s_bias_bg`, Q2 is one pnpMPA symbol with m=8. The figure does not print m, so a note next
   to Q2 says it.
 

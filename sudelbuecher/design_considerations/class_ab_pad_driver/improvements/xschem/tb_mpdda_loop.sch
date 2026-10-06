@@ -35,7 +35,7 @@ N 400 20 400 170 {lab=vinn}
 N 400 20 860 20 {lab=vinn}
 N 820 60 860 60 {lab=vref}
 N 820 100 860 100 {lab=fb}
-N 1220 -20 1320 -20 {lab=vout}
+N 1260 -20 1320 -20 {lab=vout}
 N 1420 -20 1460 -20 {lab=vout}
 N 1320 -20 1320 40 {lab=vout}
 N 1320 100 1320 140 {lab=vref}
@@ -57,6 +57,14 @@ N 620 700 920 700 {lab=GND}
 N 400 700 620 700 {lab=GND}
 N 1420 700 1560 700 {lab=GND}
 N 920 700 1420 700 {lab=GND}
+N 480 130 480 170 {lab=vddo}
+N 480 230 480 700 {lab=GND}
+N 560 130 560 170 {lab=vsso}
+N 560 230 560 700 {lab=GND}
+N 1200 -120 1200 -80 {lab=vddo}
+N 1200 160 1200 200 {lab=vsso}
+N 660 260 660 300 {lab=vddo}
+N 660 620 660 660 {lab=vsso}
 C {devices/vsource.sym} 100 200 0 0 {name=Vdd value=3.3 savecurrent=false}
 C {devices/vsource.sym} 200 200 0 0 {name=Vcm value=1.65 savecurrent=false}
 C {devices/lab_pin.sym} 200 130 0 1 {name=l1 sig_type=std_logic lab=vref}
@@ -101,3 +109,11 @@ end
 .endc"}
 C {devices/lab_wire.sym} 60 -300 0 0 {name=l17 sig_type=std_logic lab=vdd}
 C {devices/gnd.sym} 800 700 0 0 {name=l0 lab=GND}
+C {devices/vsource.sym} 480 200 0 0 {name=Vddo value=3.3 savecurrent=false}
+C {devices/vsource.sym} 560 200 0 0 {name=Vsso value=0 savecurrent=false}
+C {devices/lab_pin.sym} 480 130 0 1 {name=l31 sig_type=std_logic lab=vddo}
+C {devices/lab_pin.sym} 560 130 0 1 {name=l32 sig_type=std_logic lab=vsso}
+C {devices/lab_pin.sym} 1200 -120 0 1 {name=l33 sig_type=std_logic lab=vddo}
+C {devices/lab_pin.sym} 1200 200 0 1 {name=l34 sig_type=std_logic lab=vsso}
+C {devices/lab_pin.sym} 660 260 0 1 {name=l35 sig_type=std_logic lab=vddo}
+C {devices/lab_pin.sym} 660 660 0 1 {name=l36 sig_type=std_logic lab=vsso}

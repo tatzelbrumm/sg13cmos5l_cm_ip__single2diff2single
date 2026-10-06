@@ -4,6 +4,10 @@ K {}
 V {}
 S {}
 E {}
+N 860 -160 860 -120 {lab=vddo}
+N 860 120 860 160 {lab=vsso}
+N 260 200 260 240 {lab=vddo}
+N 260 560 260 600 {lab=vsso}
 C {d2s_mpdda.sym} 700 0 0 0 {name=xd}
 C {d2s_bias_lp.sym} 300 400 0 0 {name=xb}
 N 440 300 620 300 {lab=vbp}
@@ -32,7 +36,7 @@ N 520 20 460 20 {lab=vref}
 C {devices/lab_pin.sym} 460 20 0 0 {name=l9 sig_type=std_logic lab=vref}
 N 520 60 460 60 {lab=vfb}
 C {devices/lab_pin.sym} 460 60 0 0 {name=l10 sig_type=std_logic lab=vfb}
-N 880 -60 940 -60 {lab=vout}
+N 920 -60 940 -60 {lab=vout}
 C {devices/lab_pin.sym} 940 -60 0 1 {name=l11 sig_type=std_logic lab=vout}
 N 580 -120 580 -160 {lab=vdd}
 C {devices/lab_pin.sym} 580 -160 0 1 {name=l12 sig_type=std_logic lab=vdd}
@@ -44,15 +48,21 @@ N 220 560 220 600 {lab=vss}
 C {devices/lab_pin.sym} 220 600 0 1 {name=l15 sig_type=std_logic lab=vss}
 C {devices/iopin.sym} 60 -200 0 0 {name=p0 lab=vdd}
 C {devices/iopin.sym} 60 -160 0 0 {name=p1 lab=vss}
-C {devices/ipin.sym} 60 -120 0 0 {name=p2 lab=vinp}
-C {devices/ipin.sym} 60 -80 0 0 {name=p3 lab=vinn}
-C {devices/ipin.sym} 60 -40 0 0 {name=p4 lab=vref}
-C {devices/iopin.sym} 60 0 0 0 {name=p5 lab=vout}
-C {devices/ipin.sym} 60 40 0 0 {name=p6 lab=vfb}
-C {devices/iopin.sym} 60 80 0 0 {name=p7 lab=vbp}
-C {devices/iopin.sym} 60 120 0 0 {name=p8 lab=vbn}
-C {devices/iopin.sym} 60 160 0 0 {name=p9 lab=vbpc}
-C {devices/iopin.sym} 60 200 0 0 {name=p10 lab=vbnc}
-C {devices/iopin.sym} 60 240 0 0 {name=p11 lab=vabp}
-C {devices/iopin.sym} 60 280 0 0 {name=p12 lab=vabn}
+C {devices/iopin.sym} 60 -120 0 0 {name=p2 lab=vddo}
+C {devices/iopin.sym} 60 -80 0 0 {name=p3 lab=vsso}
+C {devices/ipin.sym} 60 -40 0 0 {name=p4 lab=vinp}
+C {devices/ipin.sym} 60 0 0 0 {name=p5 lab=vinn}
+C {devices/ipin.sym} 60 40 0 0 {name=p6 lab=vref}
+C {devices/iopin.sym} 60 80 0 0 {name=p7 lab=vout}
+C {devices/ipin.sym} 60 120 0 0 {name=p8 lab=vfb}
+C {devices/iopin.sym} 60 160 0 0 {name=p9 lab=vbp}
+C {devices/iopin.sym} 60 200 0 0 {name=p10 lab=vbn}
+C {devices/iopin.sym} 60 240 0 0 {name=p11 lab=vbpc}
+C {devices/iopin.sym} 60 280 0 0 {name=p12 lab=vbnc}
+C {devices/iopin.sym} 60 320 0 0 {name=p13 lab=vabp}
+C {devices/iopin.sym} 60 360 0 0 {name=p14 lab=vabn}
 T {d2s_mpdda + d2s_bias_lp test fixture (CACE DUT); bias nets are pins for bias-quality perturbation} 60 -300 0 0 0.4 0.4 {}
+C {devices/lab_pin.sym} 860 -160 0 1 {name=l31 sig_type=std_logic lab=vddo}
+C {devices/lab_pin.sym} 860 160 0 1 {name=l32 sig_type=std_logic lab=vsso}
+C {devices/lab_pin.sym} 260 200 0 1 {name=l33 sig_type=std_logic lab=vddo}
+C {devices/lab_pin.sym} 260 600 0 1 {name=l34 sig_type=std_logic lab=vsso}

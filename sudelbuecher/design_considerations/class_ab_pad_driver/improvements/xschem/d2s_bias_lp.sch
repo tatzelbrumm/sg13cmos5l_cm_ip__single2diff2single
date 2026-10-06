@@ -44,15 +44,12 @@ N 380 -500 1200 -500 {lab=vbpc}
 N 500 -760 500 -700 {lab=n1}
 N 500 -700 540 -700 {lab=n1}
 N 540 -730 540 -700 {lab=n1}
-N 540 -840 540 -790 {lab=vdd}
-N 540 -760 560 -760 {lab=vdd}
-N 560 -840 560 -760 {lab=vdd}
+N 540 -760 560 -760 {lab=vddo}
 N 500 -640 500 -580 {lab=vabp}
 N 500 -580 540 -580 {lab=vabp}
 N 540 -610 540 -580 {lab=vabp}
 N 540 -700 540 -670 {lab=n1}
-N 540 -640 560 -640 {lab=vdd}
-N 560 -760 560 -640 {lab=vdd}
+N 540 -640 580 -640 {lab=vdd}
 N 540 -580 540 -460 {lab=vabp}
 N 540 -110 540 -60 {lab=vss}
 N 540 -460 1200 -460 {lab=vabp}
@@ -83,11 +80,10 @@ N 980 -200 980 -140 {lab=n2}
 N 980 -200 1020 -200 {lab=n2}
 N 1020 -200 1020 -170 {lab=n2}
 N 1020 -230 1020 -200 {lab=n2}
-N 1020 -110 1020 -60 {lab=vss}
-N 1020 -140 1040 -140 {lab=vss}
-N 1040 -140 1040 -60 {lab=vss}
-N 1020 -260 1040 -260 {lab=vss}
-N 1040 -260 1040 -140 {lab=vss}
+N 1020 -110 1020 -40 {lab=vsso}
+N 1020 -140 1040 -140 {lab=vsso}
+N 1040 -140 1040 -40 {lab=vsso}
+N 1020 -260 1060 -260 {lab=vss}
 N 1020 -340 1200 -340 {lab=vabn}
 N 60 -840 220 -840 {lab=vdd}
 N 60 -60 220 -60 {lab=vss}
@@ -101,20 +97,28 @@ N 220 -840 240 -840 {lab=vdd}
 N 540 -60 700 -60 {lab=vss}
 N 380 -60 540 -60 {lab=vss}
 N 220 -60 380 -60 {lab=vss}
-N 400 -840 540 -840 {lab=vdd}
+N 580 -840 700 -840 {lab=vdd}
 N 380 -840 400 -840 {lab=vdd}
 N 240 -840 380 -840 {lab=vdd}
 N 700 -60 720 -60 {lab=vss}
 N 860 -840 1020 -840 {lab=vdd}
-N 560 -840 700 -840 {lab=vdd}
-N 540 -840 560 -840 {lab=vdd}
-N 880 -60 1020 -60 {lab=vss}
 N 860 -60 880 -60 {lab=vss}
 N 720 -60 860 -60 {lab=vss}
 N 700 -840 860 -840 {lab=vdd}
-N 1020 -60 1040 -60 {lab=vss}
+N 1020 -40 1040 -40 {lab=vsso}
+N 560 -860 560 -760 {lab=vddo}
+N 540 -860 560 -860 {lab=vddo}
+N 540 -860 540 -790 {lab=vddo}
+N 60 -860 540 -860 {lab=vddo}
+N 580 -840 580 -640 {lab=vdd}
+N 400 -840 580 -840 {lab=vdd}
+N 60 -40 1020 -40 {lab=vsso}
+N 880 -60 1060 -60 {lab=vss}
+N 1060 -260 1060 -60 {lab=vss}
 C {devices/iopin.sym} 60 -840 0 1 {name=p1 lab=vdd}
 C {devices/iopin.sym} 60 -60 0 1 {name=p2 lab=vss}
+C {devices/iopin.sym} 60 -860 0 1 {name=p9 lab=vddo}
+C {devices/iopin.sym} 60 -40 0 1 {name=p10 lab=vsso}
 C {devices/opin.sym} 1200 -540 0 0 {name=p3 lab=vbp}
 C {devices/opin.sym} 1200 -420 0 0 {name=p4 lab=vbn}
 C {devices/opin.sym} 1200 -500 0 0 {name=p5 lab=vbpc}

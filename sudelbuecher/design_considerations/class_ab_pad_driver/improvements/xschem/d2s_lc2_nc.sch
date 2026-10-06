@@ -11,23 +11,19 @@ P 10 5 2040 -475 2215 -475 2215 -165 2040 -165 2040 -475 {dash=6}
 P 10 5 1370 -1030 1970 -1030 1970 -795 1370 -795 1370 -1030 {dash=6}
 P 10 5 1815 -735 2215 -735 2215 -610 1815 -610 1815 -735 {dash=6}
 P 10 5 1180 -735 1595 -735 1595 -610 1180 -610 1180 -735 {dash=6}
-P 10 5 2290 -1030 2470 -1030 2470 -925 2290 -925 2290 -1030 {dash=6}
-P 10 5 2290 -275 2470 -275 2470 -165 2290 -165 2290 -275 {dash=6}
-P 10 5 2110 -950 2230 -950 2230 -820 2110 -820 2110 -950 {dash=6}
-P 10 5 2110 -560 2230 -560 2230 -430 2110 -430 2110 -560 {dash=6}
+P 10 5 2370 -1070 2550 -1070 2550 -925 2370 -925 2370 -1070 {dash=6}
+P 10 5 2370 -275 2550 -275 2550 -165 2370 -165 2370 -275 {dash=6}
+P 10 5 2230 -1030 2350 -1030 2350 -900 2230 -900 2230 -1030 {dash=6}
+P 10 5 2230 -300 2350 -300 2350 -170 2230 -170 2230 -300 {dash=6}
 T {[1]} 155 -771 0 0 0.35 0.35 {layer=10}
 T {[2]} 1355 -420 0 0 0.35 0.35 {layer=10}
 T {[2]} 2000 -420 0 0 0.35 0.35 {layer=10}
 T {[3]} 1590 -965 0 0 0.35 0.35 {layer=10}
 T {[4]} 1820 -758 0 0 0.35 0.35 {layer=10}
 T {[5]} 1185 -758 0 0 0.35 0.35 {layer=10}
-T {[6]} 2295 -1062 0 0 0.35 0.35 {layer=10}
-T {[6]} 2410 -298 0 0 0.35 0.35 {layer=10}
-T {[9]} 2060 -950 0 0 0.35 0.35 {layer=10}
-T {[9]} 2235 -585 0 0 0.35 0.35 {layer=10}
-T {d2s_lc2_nc: d2s_lc2 without the output cascodes, load-compensated (no Miller capacitor)} 90 -1140 0 0 0.6 0.6 {}
-T {frozen .subckt defaults: lcas = 3 (CX, CY, PCL, PCR 30u / 3u ng=2), wdp = 6.66u, wdn = 3.8u; units are unit_r2 (rl = 50.6u)} 90 -1090 0 0 0.3 0.3 {}
-T {block descriptions: README.md} 90 -1065 0 0 0.3 0.3 {}
+T {d2s_lc2_nc: d2s_lc2 without the output cascodes, load-compensated (no Miller capacitor)} 90 -1160 0 0 0.6 0.6 {}
+T {frozen .subckt defaults: lcas = 3 (CX, CY, PCL, PCR 30u / 3u ng=2), wdp = 6.66u, wdn = 3.8u; units are unit_r2 (rl = 50.6u)} 90 -1110 0 0 0.3 0.3 {}
+T {block descriptions: README.md} 90 -1085 0 0 0.3 0.3 {}
 T {[1] DDA units A, B, C1, C2: split-tail PMOS pair, rhigh between the sources. Each adds f(gp - gn) to the fold nodes: the gp device drains to y, the gn device to x.} 1250 -110 0 0 0.3 0.3 {layer=10}
 T {      A: vinp - vref,  B: vref - vinn,  C1 = C2: vref - vfb.  The loop forces f(vinp - vref) + f(vref - vinn) = 2 f(vfb - vref), so vfb - vref = (vinp - vinn)/2.} 1250 -86 0 0 0.3 0.3 {layer=10}
 T {[2] fold: sinks SX, SY (gate vbn) and NMOS cascodes CX, CY (gate vbnc). x and y are the fold nodes.} 1250 -62 0 0 0.3 0.3 {layer=10}
@@ -36,6 +32,10 @@ T {[4] class-AB control: ABP (gate vabp) and ABN (gate vabn) between a and b. Wi
 T {[5] FPL, FNL: copy of [4] in the mirror input branch (between l2 and l1), so both fold branches carry the same element.} 1250 10 0 0 0.3 0.3 {layer=10}
 T {[6] output devices OP (gate a), ON (gate b): half frames, in the slot, not the pad clamps.} 1250 34 0 0 0.3 0.3 {layer=10}
 T {[9] diode replicas DP (on a), DN (on b), 1/41 and 1/38 of OP, ON: low-impedance gate nodes. No compensation capacitor: the load capacitance is the dominant pole.} 1250 58 0 0 0.3 0.3 {layer=10}
+T {[6]} 2375 -1092 0 0 0.35 0.35 {layer=10}
+T {[6]} 2490 -298 0 0 0.35 0.35 {layer=10}
+T {[9]} 2230 -1050 0 0 0.35 0.35 {layer=10}
+T {[9]} 2225 -325 0 0 0.35 0.35 {layer=10}
 N 260 -1040 260 -740 {lab=vdd}
 N 340 -920 340 -740 {lab=vbp}
 N 260 -580 260 -340 {lab=x}
@@ -109,20 +109,16 @@ N 1880 -950 1880 -850 {lab=pr}
 N 2120 -660 2140 -660 {lab=vss}
 N 2120 -420 2140 -420 {lab=vss}
 N 2120 -220 2140 -220 {lab=vss}
-N 2140 -660 2140 -480 {lab=vss}
+N 2140 -660 2140 -440 {lab=vss}
 N 2120 -190 2120 -140 {lab=vss}
 N 2120 -390 2120 -300 {lab=y}
 N 1880 -790 1880 -740 {lab=a}
 N 1880 -740 2120 -740 {lab=a}
 N 2120 -740 2120 -690 {lab=a}
-N 2220 -840 2220 -740 {lab=a}
-N 2220 -980 2320 -980 {lab=a}
 N 1880 -630 1880 -600 {lab=b}
 N 1880 -600 2120 -600 {lab=b}
 N 2120 -630 2120 -600 {lab=b}
-N 2120 -600 2120 -450 {lab=b}
-N 2220 -600 2220 -540 {lab=b}
-N 2220 -220 2320 -220 {lab=b}
+N 2120 -560 2120 -450 {lab=b}
 N 60 -780 1580 -780 {lab=vbpc}
 N 1820 -820 1820 -780 {lab=vbpc}
 N 1820 -820 1840 -820 {lab=vbpc}
@@ -132,7 +128,6 @@ N 60 -480 1700 -480 {lab=vabp}
 N 1700 -660 1700 -480 {lab=vabp}
 N 1560 -660 1700 -660 {lab=vabp}
 N 60 -460 1200 -460 {lab=vabn}
-N 2060 -660 2060 -460 {lab=vabn}
 N 2060 -660 2080 -660 {lab=vabn}
 N 1200 -660 1200 -460 {lab=vabn}
 N 1200 -660 1220 -660 {lab=vabn}
@@ -148,26 +143,8 @@ N 1200 -260 1200 -220 {lab=vbn}
 N 1200 -220 1220 -220 {lab=vbn}
 N 60 -1040 260 -1040 {lab=vdd}
 N 60 -140 340 -140 {lab=vss}
-N 2360 -1040 2360 -1010 {lab=vdd}
-N 2360 -980 2380 -980 {lab=vdd}
-N 2380 -1040 2380 -980 {lab=vdd}
-N 2360 -190 2360 -140 {lab=vss}
-N 2360 -600 2440 -600 {lab=vout}
-N 2360 -950 2360 -600 {lab=vout}
-N 2360 -220 2380 -220 {lab=vss}
-N 2380 -220 2380 -140 {lab=vss}
-N 2200 -900 2220 -900 {lab=a}
-N 2160 -870 2160 -840 {lab=a}
-N 2160 -840 2220 -840 {lab=a}
-N 2160 -1040 2160 -930 {lab=vdd}
-N 2140 -900 2160 -900 {lab=vdd}
-N 2140 -1040 2140 -900 {lab=vdd}
-N 2200 -480 2220 -480 {lab=b}
-N 2160 -540 2160 -510 {lab=b}
-N 2160 -540 2220 -540 {lab=b}
 N 2160 -450 2160 -440 {lab=vss}
 N 2140 -440 2160 -440 {lab=vss}
-N 2140 -480 2160 -480 {lab=vss}
 N 640 -520 880 -520 {lab=vref}
 N 180 -520 400 -520 {lab=vref}
 N 660 -500 900 -500 {lab=vfb}
@@ -184,12 +161,8 @@ N 1500 -980 1500 -820 {lab=vdd}
 N 1700 -980 1840 -980 {lab=l2}
 N 1900 -980 1900 -820 {lab=vdd}
 N 2140 -420 2140 -220 {lab=vss}
-N 2140 -480 2140 -440 {lab=vss}
 N 2120 -300 2120 -250 {lab=y}
 N 1880 -740 1880 -690 {lab=a}
-N 2220 -900 2220 -840 {lab=a}
-N 2120 -600 2220 -600 {lab=b}
-N 2220 -540 2220 -480 {lab=b}
 N 1580 -780 1820 -780 {lab=vbpc}
 N 1700 -660 1840 -660 {lab=vabp}
 N 1200 -460 2060 -460 {lab=vabn}
@@ -199,7 +172,6 @@ N 500 -1040 740 -1040 {lab=vdd}
 N 260 -1040 500 -1040 {lab=vdd}
 N 580 -140 820 -140 {lab=vss}
 N 340 -140 580 -140 {lab=vss}
-N 2360 -600 2360 -250 {lab=vout}
 N 400 -520 640 -520 {lab=vref}
 N 580 -920 820 -920 {lab=vbp}
 N 980 -340 1260 -340 {lab=x}
@@ -210,31 +182,61 @@ N 1520 -720 1700 -720 {lab=l2}
 N 1900 -820 1900 -660 {lab=vdd}
 N 2140 -220 2140 -140 {lab=vss}
 N 2140 -440 2140 -420 {lab=vss}
-N 2120 -740 2220 -740 {lab=a}
-N 2220 -980 2220 -900 {lab=a}
-N 2220 -480 2220 -220 {lab=b}
+N 2120 -740 2280 -740 {lab=a}
 N 1500 -1040 1520 -1040 {lab=vdd}
 N 740 -1040 980 -1040 {lab=vdd}
-N 2360 -140 2380 -140 {lab=vss}
 N 2120 -140 2140 -140 {lab=vss}
 N 1280 -140 2120 -140 {lab=vss}
 N 1060 -140 1260 -140 {lab=vss}
 N 820 -140 1060 -140 {lab=vss}
-N 2140 -1040 2160 -1040 {lab=vdd}
-N 1900 -1040 2140 -1040 {lab=vdd}
 N 1520 -1040 1880 -1040 {lab=vdd}
 N 980 -1040 1500 -1040 {lab=vdd}
-N 2140 -140 2360 -140 {lab=vss}
 N 1260 -140 1280 -140 {lab=vss}
-N 2160 -1040 2360 -1040 {lab=vdd}
 N 1880 -1040 1900 -1040 {lab=vdd}
-N 2360 -1040 2380 -1040 {lab=vdd}
+N 2440 -190 2440 -120 {lab=vsso}
+N 2440 -600 2520 -600 {lab=vout}
+N 2440 -220 2460 -220 {lab=vsso}
+N 2320 -980 2340 -980 {lab=a}
+N 2280 -950 2280 -740 {lab=a}
+N 2260 -980 2280 -980 {lab=vddo}
+N 2320 -220 2340 -220 {lab=b}
+N 2340 -980 2340 -740 {lab=a}
+N 2440 -600 2440 -250 {lab=vout}
+N 2460 -220 2460 -120 {lab=vsso}
+N 2440 -1060 2460 -1060 {lab=vddo}
+N 2260 -1060 2260 -980 {lab=vddo}
+N 2280 -1060 2280 -1010 {lab=vddo}
+N 2260 -1060 2280 -1060 {lab=vddo}
+N 2440 -1060 2440 -1010 {lab=vddo}
+N 2460 -1060 2460 -980 {lab=vddo}
+N 2280 -1060 2440 -1060 {lab=vddo}
+N 2440 -980 2460 -980 {lab=vddo}
+N 2340 -980 2400 -980 {lab=a}
+N 2440 -120 2460 -120 {lab=vsso}
+N 2280 -120 2440 -120 {lab=vsso}
+N 2280 -190 2280 -120 {lab=vsso}
+N 2260 -220 2280 -220 {lab=vsso}
+N 2260 -220 2260 -120 {lab=vsso}
+N 2340 -220 2400 -220 {lab=b}
+N 2280 -560 2280 -250 {lab=b}
+N 2340 -560 2340 -220 {lab=b}
+N 2280 -560 2340 -560 {lab=b}
+N 2060 -660 2060 -460 {lab=vabn}
+N 2280 -740 2340 -740 {lab=a}
+N 2440 -950 2440 -600 {lab=vout}
+N 2260 -120 2280 -120 {lab=vsso}
+N 60 -120 2260 -120 {lab=vsso}
+N 60 -1060 2260 -1060 {lab=vddo}
+N 2120 -560 2280 -560 {lab=b}
+N 2120 -600 2120 -560 {lab=b}
 C {devices/iopin.sym} 60 -1040 0 1 {name=p1 lab=vdd}
 C {devices/iopin.sym} 60 -140 0 1 {name=p2 lab=vss}
+C {devices/iopin.sym} 60 -1060 0 1 {name=p14 lab=vddo}
+C {devices/iopin.sym} 60 -120 0 1 {name=p15 lab=vsso}
 C {devices/ipin.sym} 60 -560 0 0 {name=p3 lab=vinp}
 C {devices/ipin.sym} 60 -540 0 0 {name=p4 lab=vinn}
 C {devices/ipin.sym} 60 -520 0 0 {name=p5 lab=vref}
-C {devices/iopin.sym} 2440 -600 0 0 {name=p6 lab=vout}
+C {devices/iopin.sym} 2520 -600 0 0 {name=p6 lab=vout}
 C {devices/ipin.sym} 60 -500 0 0 {name=p7 lab=vfb}
 C {devices/ipin.sym} 60 -920 0 0 {name=p8 lab=vbp}
 C {devices/ipin.sym} 60 -260 0 0 {name=p9 lab=vbn}
@@ -350,7 +352,8 @@ C {devices/lab_wire.sym} 1520 -900 0 0 {name=l5 sig_type=std_logic lab=pl}
 C {devices/lab_wire.sym} 1880 -900 0 1 {name=l6 sig_type=std_logic lab=pr}
 C {devices/lab_wire.sym} 2000 -740 0 0 {name=l7 sig_type=std_logic lab=a}
 C {devices/lab_wire.sym} 2000 -600 0 0 {name=l8 sig_type=std_logic lab=b}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2340 -980 0 0 {name=OP
+C {devices/title.sym} 170 -40 0 0 {name=l0 author="Christoph Maier"}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2420 -980 0 0 {name=OP
 l=0.6u
 w=273.06u
 ng=41
@@ -358,7 +361,7 @@ m=1
 mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2340 -220 0 0 {name=ON
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2420 -220 0 0 {name=ON
 l=1u
 w=145.2u
 ng=33
@@ -366,7 +369,7 @@ m=1
 mm_ok=1
 model=sg13_hv_nmos
 spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2180 -900 0 1 {name=DP
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2300 -980 0 1 {name=DP
 l=0.6u
 w=6.66u
 ng=1
@@ -374,7 +377,7 @@ m=1
 mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2180 -480 0 1 {name=DN
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2300 -220 0 1 {name=DN
 l=1u
 w=3.8u
 ng=1
@@ -382,4 +385,3 @@ m=1
 mm_ok=1
 model=sg13_hv_nmos
 spiceprefix=X}
-C {devices/title.sym} 170 -40 0 0 {name=l0 author="Christoph Maier"}
