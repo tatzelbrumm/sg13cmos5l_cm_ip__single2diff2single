@@ -62,3 +62,6 @@
 
 [2026-10-02_sonnet_edwards_cauwenberghs_log_domain_references_in_donotlitter.md](2026-10-02_sonnet_edwards_cauwenberghs_log_domain_references_in_donotlitter.md)
 : Read-only search of the user's `~/DoNotLitter` PDF collection for three Edwards & Cauwenberghs log-domain papers (ISCAS 1997, ISCAS 1998, 2000), plus a Minch-thesis lookup and a whole-collection title scan.
+
+[2026-10-02_opus_class_ab_pad_driver_improvements.md](2026-10-02_opus_class_ab_pad_driver_improvements.md)
+: Opus session, 2–8 Oct: resistor- and MOM-free improvements to the class-AB pad driver, four real bias variants with xschem sheets and figures, separate output-stage rails, hand-offs for a gf180 port and a power-down enable, and a cloud simulation environment pinned to IIC-OSIC-TOOLS 2026.09.

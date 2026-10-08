@@ -30,6 +30,9 @@ submission, so unlicensed copies of other people's docs do not belong in it.
 - [`2026-10-02_sonnet_references.md`](2026-10-02_sonnet_references.md) — the Edwards &
   Cauwenberghs log-domain search session: two earlier claude.ai chats and the user's own
   `~/DoNotLitter` PDFs and `.bib` files, indexed by path and not copied
+- [`2026-10-02_opus_references.md`](2026-10-02_opus_references.md) — the Opus class-AB pad
+  driver session: the user's own `~/DoNotLitter` papers (read in place), the PDK and tool
+  repositories and commits used in the cloud container, and IIC-OSIC-TOOLS 2026.09's pins
 
 Run logs live one level up in [`../logs/`](../logs/) and are committed to the
 branch that produced them, so their contents differ per branch. The chat log,
