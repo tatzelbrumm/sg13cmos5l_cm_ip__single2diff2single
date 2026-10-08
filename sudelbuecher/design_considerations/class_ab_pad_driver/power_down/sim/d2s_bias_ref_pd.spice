@@ -1,0 +1,123 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_bias_ref_pd: the four bias variants of ../../improvements/sim/d2s_bias_ref.spice with a digital
+* enable. Ports as there, plus en_3v3 at the end (0 ... 3.3 V on vdd / vss, active high).
+* Disabled (en_3v3 = 0), the root of every current is switched off:
+*   - _in / _out: a transmission gate cuts iref off from the input diode NI / PI, and the diode's
+*     gate line is pulled to its rail. The external reference is not relied on to switch off.
+*   - oa_core / bg_core: MS1, the always-on start-up pull-up, is gated by en_3v3_b; the PMOS mirror
+*     gate line vpg is pulled to vdd, and ks to vss.
+*   - The other bias lines only carry leakage then; they get no switch of their own.
+* Enabled: the switches are off; everything else is d2s_bias_ref unchanged.
+* d2s_bias_diodes is unchanged and identical to d2s_bias_ref.spice's.
+
+* --- the six bias diodes of d2s_bias_lp; RP1 / RN1 on the output-stage rails (unchanged)
+.subckt d2s_bias_diodes vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XBN vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1
+XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XRP1 n1 n1 vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
+XRP2 vabp vabp n1 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XRN1 n2 n2 vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2
+XRN2 vabn vabn n2 vss sg13_hv_nmos w=4.4u l=1u ng=1
+.ends d2s_bias_diodes
+
+* --- en_3v3_b for the cells below
+.subckt inv_3v3_pd vdd vss en_3v3 en_3v3_b
+XIP en_3v3_b en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIN en_3v3_b en_3v3 vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends inv_3v3_pd
+
+* --- 1 tree: NI's gate line ni drives the three sinks; BP's gate line the three sources.
+*     The transmission gate TGN / TGP sits between the port iref and ni; TDN pulls ni to vss.
+.subckt d2s_bias_in_tree_pd vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b
+XTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+XNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBP vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBPC vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+XNABP vabp ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+XPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+XPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+Xd vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn d2s_bias_diodes
+.ends d2s_bias_in_tree_pd
+
+* --- 1: I_ref into iref (external PMOS source)
+.subckt d2s_bias_in_pd vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en_3v3
+Xi vdd vss en_3v3 en_3v3_b inv_3v3_pd
+Xt vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_bias_in_tree_pd
+.ends d2s_bias_in_pd
+
+* --- 2: I_ref out of iref (external NMOS sink); TG between iref and pi, TDP pulls pi to vdd
+.subckt d2s_bias_out_pd vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en_3v3
+Xi vdd vss en_3v3 en_3v3_b inv_3v3_pd
+XTGN iref en_3v3 pi vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTGP iref en_3v3_b pi vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XTDP pi en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XPI pi pi vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBN vbn pi vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBNC vbnc pi vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+XPABN vabn pi vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XNBP vbp vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBPC vbpc vbn vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+XNABP vabp vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+Xd vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn d2s_bias_diodes
+.ends d2s_bias_out_pd
+
+* --- 3: Oguey-Aebischer core as in d2s_bias_ref.spice. Changed: MS1's gate (vss -> en_3v3_b);
+*     added SVPG (vpg to vdd) and SKS (ks to vss), both on while disabled.
+.subckt oa_core_pd vdd vss iout en_3v3 en_3v3_b
+XP0 vpg vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1
+XP0C vpc vpc vpg vdd sg13_hv_pmos w=0.5u l=2u ng=1
+XP8 c8 vpg vdd vdd sg13_hv_pmos w=16u l=8u ng=8
+XP8C vnc vpc c8 vdd sg13_hv_pmos w=4u l=2u ng=2
+XP2 c2 vpg vdd vdd sg13_hv_pmos w=4u l=8u ng=2
+XP2C vbr vpc c2 vdd sg13_hv_pmos w=1u l=2u ng=1
+XPO co vpg vdd vdd sg13_hv_pmos w=40u l=8u ng=20
+XPOC iout vpc co vdd sg13_hv_pmos w=10u l=2u ng=5
+XM11 vnc vnc vss vss sg13_hv_nmos w=90u l=1u ng=4
+XM10 d10 vnc vres vss sg13_hv_nmos w=180u l=1u ng=8
+XMC10 vpc vbr d10 vss sg13_hv_nmos w=10u l=1u ng=1
+XMCS vbr vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1
+XMCL vres vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1
+XMS1 ks en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=100u ng=1
+XMS2 ks vbr vss vss sg13_hv_nmos w=10u l=1u ng=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1
+XSVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XSKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends oa_core_pd
+.subckt d2s_bias_oa_pd vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn en_3v3
+Xi vdd vss en_3v3 en_3v3_b inv_3v3_pd
+Xc vdd vss iref en_3v3 en_3v3_b oa_core_pd
+Xt vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_bias_in_tree_pd
+.ends d2s_bias_oa_pd
+
+* --- 4: bandgap core as in d2s_bias_ref.spice, with the same three changes as oa_core_pd.
+.subckt bg_core_pd vdd vss iout en_3v3 en_3v3_b
+XPB vpg vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4
+XPBC vpc vpc vpg vdd sg13_hv_pmos w=40u l=1u ng=4
+XPA ca vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4
+XPAC g vpc ca vdd sg13_hv_pmos w=40u l=1u ng=4
+XPO co vpg vdd vdd sg13_hv_pmos w=80u l=1u ng=8
+XPOC iout vpc co vdd sg13_hv_pmos w=80u l=1u ng=8
+XNA g g ea vss sg13_hv_nmos w=20u l=4u ng=1
+XNB vpc g eb vss sg13_hv_nmos w=20u l=4u ng=1
+XQ1 vss vss ea pnpMPA a=4p p=8u
+XR1A ea vss vss rhigh w=0.5u l=109.3u
+XR0 eb e2 vss rhigh w=0.5u l=179.5u
+XQ2 vss vss e2 pnpMPA a=4p p=8u m=8
+XR1B eb vss vss rhigh w=0.5u l=99.36u
+XMS1 ks en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=100u ng=1
+XMS2 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1
+XSVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XSKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends bg_core_pd
+.subckt d2s_bias_bg_pd vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn en_3v3
+Xi vdd vss en_3v3 en_3v3_b inv_3v3_pd
+Xc vdd vss iref en_3v3 en_3v3_b bg_core_pd
+Xt vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_bias_in_tree_pd
+.ends d2s_bias_bg_pd

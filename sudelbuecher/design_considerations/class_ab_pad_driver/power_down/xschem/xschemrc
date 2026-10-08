@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0
+# Minimal project xschemrc: PDK symbols + this directory + ../../improvements/xschem (unit_r2.sym)
+if { ![info exists env(PDK_ROOT)] } { puts stderr "PDK_ROOT not set" }
+if { ![info exists env(PDK)] } { set ::env(PDK) ihp-sg13cmos5l }
+if {![info exists PDK]} { source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc }
+append XSCHEM_LIBRARY_PATH :[file dirname [info script]]
+append XSCHEM_LIBRARY_PATH :[file normalize [file join [file dirname [info script]] .. .. improvements xschem]]

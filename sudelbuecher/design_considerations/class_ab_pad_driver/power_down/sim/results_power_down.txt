@@ -1,0 +1,334 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0
+# results_power_down.txt — d2s_mpdda_pd + d2s_bias_*_pd (this directory), 2026-10-06
+#
+# Tools (sudelbuecher/cloud_environment.md, IIC-OSIC-TOOLS 2026.09 pins), built in the cloud container:
+#   ngspice-47 (danchitnis/ngspice-sf-mirror tag ngspice-47), OpenVAF 5ed9e63 (OSDI 0.4, no patch),
+#   IHP-Open-PDK iic-jku fork dev c271a7e97a7bab201c1d0a399215969d2ee19573, xschem 3.4.8RC ddc7344 (no ev7 stand-in).
+# Produced by cloud-only scratch scripts (not shipped). The decks in tb/ reproduce one case of each test;
+# their headers name the reference line of this file.
+# Disabled-state tests use the external reference of variants 1 / 2 as an ideal 5 uA into a diode on its
+# own supply vext, mirrored onto iref (so it has a compliance); vext's current is not counted.
+
+== 0. Tool check: unchanged netlists under the new tools vs the shipped results
+  run_bias.py driver, corners: identical to results_bias.txt.
+  run_bias.py startup: identical except 5 bandgap lines at t_r = 1 us, t90 longer by 0.1 ... 0.3 us
+    (tt 1.2 -> 1.3, ss 3.0V -40C 1.3 -> 1.4, ff 3.6V 125C 1.7 -> 2.0, sf -40C 1.1 -> 1.2, fs 125C 1.1 -> 1.3 us).
+  run_improvements.py table, cload, corners, noise (d2s_mpdda rows): identical to results_improvements.txt.
+
+== 1. Enabled (en_3v3 = vdd): _pd cells against the originals, same tools
+  run_improvements.py table / cload / corners / noise with d2s_mpdda_pd (bias fixture d2s_bias_lp): every
+  number identical to d2s_mpdda except the 1 nF row's 1 % settling (2687 -> 2689 ns), 300 pF PM (42.0 -> 41.9)
+  and 'tt 27C wcs' 100p T0 (102.7 -> 102.6 dB).
+  run_bias.py driver / corners / startup with the _pd bias variants and driver: DC and loop identical; over PVT
+  at most 0.15 % in I_Q and 0.02 mV in offset (oa ff 3.6V 125C: 304.6 -> 304.2 uA, 5.348 -> 5.328 mV);
+  start-up t90 within 0.3 us. Supply-to-output gain changes by at most 2.2 dB, at 1 MHz and above.
+  The driver section in full (left: original; right: _pd, shown only where it differs):
+  
+  == d2s_mpdda with each bias, OP / ON on vddo / vsso, 1k || 100p to vref, tt 27C, all rails at 3.3 V / 0
+    bias    I_Q uA  I_vdd uA  I_vddo uA  offs mV  T0 dB  fc MHz    PM
+    ideal    211.9      78.9      216.9    0.055   78.9   1.366  72.4
+    in       212.0      79.9      217.1    0.057   78.9   1.369  72.4
+    out      217.4      84.1      222.4    0.052   79.5   1.377  72.4
+    oa       212.0      88.1      217.1    0.057   78.9   1.369  72.4              | oa       212.0      88.1      217.0    0.057   78.9   1.369  72.4
+    bg       212.4      90.5      217.4    0.057   78.9   1.370  72.4
+  
+  == Supply-to-output gain |vout / v_rail|, dB, closed loop (signal gain 0.5 = -6 dB), tt 27C
+    bias   rail     1e+01   1e+03   1e+05   1e+06   1e+07
+    ideal  vdd      -84.7   -84.7   -65.4   -45.7   -45.4                          | ideal  vdd      -84.7   -84.7   -65.4   -45.6   -45.4
+    ideal  vss      -72.6   -72.6   -72.2   -60.2   -46.6                          | ideal  vss      -72.6   -72.6   -72.3   -60.4   -46.4
+    ideal  vddo     -81.2   -71.0   -31.4   -12.2   -14.0
+    ideal  vsso     -71.6   -68.6   -31.7   -12.5   -13.6
+    in     vdd      -83.5   -83.5   -66.2   -48.1   -44.9                          | in     vdd      -83.5   -83.5   -66.1   -48.3   -44.4
+    in     vss      -71.8   -71.8   -71.5   -61.0   -46.8                          | in     vss      -71.8   -71.8   -71.5   -60.3   -46.5
+    in     vddo     -80.3   -70.9   -31.5   -12.2   -14.0
+    in     vsso     -70.9   -68.3   -31.7   -12.5   -13.5
+    out    vdd      -84.5   -84.5   -64.6   -44.8   -46.4                          | out    vdd      -84.5   -84.5   -64.5   -44.7   -46.5
+    out    vss      -72.5   -72.5   -71.5   -55.7   -45.2                          | out    vss      -72.5   -72.5   -71.6   -55.4   -45.4
+    out    vddo     -81.5   -71.1   -31.5   -12.2   -13.9
+    out    vsso     -71.7   -68.7   -31.7   -12.5   -13.4
+    oa     vdd      -83.5   -83.5   -68.2   -47.4   -44.5                          | oa     vdd      -83.5   -83.5   -68.1   -47.6   -44.0
+    oa     vss      -71.8   -71.8   -70.8   -69.1   -46.7                          | oa     vss      -71.8   -71.8   -70.7   -66.9   -46.4
+    oa     vddo     -80.3   -70.9   -31.5   -12.2   -14.0
+    oa     vsso     -70.9   -68.3   -31.7   -12.5   -13.5
+    bg     vdd      -83.6   -83.5   -66.5   -50.9   -41.3                          | bg     vdd      -83.6   -83.5   -66.4   -50.7   -40.9
+    bg     vss      -71.8   -71.8   -70.0   -44.8   -39.6                          | bg     vss      -71.8   -71.8   -69.9   -44.5   -39.4
+    bg     vddo     -80.2   -70.9   -31.5   -12.2   -14.0
+    bg     vsso     -70.9   -68.3   -31.7   -12.5   -13.5
+
+== 2. Disabled: supply currents
+
+   Disabled (en_3v3 = 0), DC. Supply currents in nA (into the circuit): bias = vdd into the bias cell,
+   drv = vdd into the driver front end, vddo = output stage. vout held by a source at 0 / 1.65 / 3.3 V;
+   iOP / iON = output-device drain currents (nA). vdd = vddo = 3.3 V unless stated.
+
+-- in
+  corner          vout      bias       drv      vddo     total       iOP       iON
+  tt  -40C 3.3V  1.65     0.028     0.047     0.005     0.079     0.000     0.000
+  ss  -40C 3.3V  1.65     0.027     0.045     0.005     0.077     0.000     0.000
+  ff  -40C 3.3V  1.65     0.032     0.060     0.006     0.099     0.000     0.000
+  sf  -40C 3.3V  1.65     0.028     0.049     0.005     0.082     0.000     0.000
+  fs  -40C 3.3V  1.65     0.027     0.046     0.005     0.078     0.000     0.000
+  tt   27C 3.3V  1.65     0.030     0.054     0.020     0.104     0.014     0.002
+  ss   27C 3.3V  1.65     0.029     0.050     0.009     0.088     0.004     0.001
+  ff   27C 3.3V  1.65     0.052     0.090     0.063     0.205     0.049     0.007
+  sf   27C 3.3V  1.65     0.034     0.061     0.032     0.127     0.026     0.001
+  fs   27C 3.3V  1.65     0.029     0.052     0.013     0.094     0.008     0.004
+  tt  125C 3.3V  1.65     0.267     0.681    12.104    13.052     9.788     1.559
+  ss  125C 3.3V  1.65     0.157     0.468     6.112     6.737     4.041     0.685
+  ff  125C 3.3V  1.65     0.633     1.283    27.208    29.124    24.334     3.769
+  sf  125C 3.3V  1.65     0.269     0.722    17.902    18.893    15.410     1.033
+  fs  125C 3.3V  1.65     0.323     0.739     8.482     9.544     6.279     2.422
+  ff  125C 3.6V  0.00     0.743     1.757    41.238    43.738    26.325     0.000
+  ff  125C 3.6V  1.65     0.743     1.458    28.119    30.320    24.639     3.769
+  ff  125C 3.6V  3.30     0.743     1.499    23.770    26.013    22.756     4.519
+  fs  125C 3.6V  0.00     0.354     0.847    11.592    12.793     6.779     0.000
+  fs  125C 3.6V  1.65     0.354     0.795     8.841     9.990     6.356     2.422
+  fs  125C 3.6V  3.30     0.354     0.797     6.564     7.715     5.881     2.900
+  sf  125C 3.6V  0.00     0.322     0.917    26.244    27.484    16.659     0.000
+  sf  125C 3.6V  1.65     0.322     0.821    18.491    19.634    15.601     1.033
+  sf  125C 3.6V  3.30     0.322     0.839    15.237    16.398    14.418     1.233
+  tt   27C 3.3V  0.00     0.030     0.061     0.119     0.210     0.015     0.000
+  tt   27C 3.3V  3.30     0.030     0.054     0.004     0.088     0.000     0.002
+
+-- out
+  corner          vout      bias       drv      vddo     total       iOP       iON
+  tt  -40C 3.3V  1.65     0.029     0.071     0.005     0.104     0.000     0.000
+  ss  -40C 3.3V  1.65     0.028     0.068     0.005     0.101     0.000     0.000
+  ff  -40C 3.3V  1.65     0.041     0.101     0.006     0.148     0.000     0.000
+  sf  -40C 3.3V  1.65     0.030     0.074     0.005     0.109     0.000     0.000
+  fs  -40C 3.3V  1.65     0.029     0.070     0.005     0.103     0.000     0.000
+  tt   27C 3.3V  1.65     0.033     0.084     0.020     0.136     0.014     0.002
+  ss   27C 3.3V  1.65     0.029     0.075     0.009     0.114     0.004     0.001
+  ff   27C 3.3V  1.65     0.075     0.194     0.063     0.333     0.049     0.007
+  sf   27C 3.3V  1.65     0.040     0.102     0.032     0.175     0.026     0.001
+  fs   27C 3.3V  1.65     0.031     0.078     0.013     0.122     0.008     0.004
+  tt  125C 3.3V  1.65     0.382     0.959    12.104    13.445     9.788     1.559
+  ss  125C 3.3V  1.65     0.210     0.647     6.112     6.969     4.041     0.685
+  ff  125C 3.3V  1.65     1.006     1.944    27.208    30.159    24.334     3.769
+  sf  125C 3.3V  1.65     0.437     1.100    17.902    19.440    15.410     1.033
+  fs  125C 3.3V  1.65     0.422     0.962     8.482     9.866     6.279     2.422
+  ff  125C 3.6V  0.00     1.192     2.234    41.238    44.664    26.325     0.000
+  ff  125C 3.6V  1.65     1.192     2.366    28.119    31.677    24.639     3.769
+  ff  125C 3.6V  3.30     1.192     2.403    23.770    27.365    22.756     4.519
+  fs  125C 3.6V  0.00     0.474     1.045    11.592    13.111     6.779     0.000
+  fs  125C 3.6V  1.65     0.474     1.064     8.841    10.379     6.356     2.422
+  fs  125C 3.6V  3.30     0.474     1.088     6.564     8.126     5.881     2.900
+  sf  125C 3.6V  0.00     0.524     1.302    26.244    28.070    16.659     0.000
+  sf  125C 3.6V  1.65     0.524     1.349    18.491    20.363    15.601     1.033
+  sf  125C 3.6V  3.30     0.524     1.361    15.237    17.121    14.418     1.233
+  tt   27C 3.3V  0.00     0.033     0.084     0.119     0.235     0.015     0.000
+  tt   27C 3.3V  3.30     0.033     0.084     0.004     0.120     0.000     0.002
+
+-- oa
+  corner          vout      bias       drv      vddo     total       iOP       iON
+  tt  -40C 3.3V  1.65     0.047     0.047     0.005     0.099     0.000     0.000
+  ss  -40C 3.3V  1.65     0.046     0.045     0.005     0.097     0.000     0.000
+  ff  -40C 3.3V  1.65     0.054     0.060     0.006     0.120     0.000     0.000
+  sf  -40C 3.3V  1.65     0.048     0.049     0.005     0.102     0.000     0.000
+  fs  -40C 3.3V  1.65     0.047     0.046     0.005     0.098     0.000     0.000
+  tt   27C 3.3V  1.65     0.051     0.054     0.020     0.125     0.014     0.002
+  ss   27C 3.3V  1.65     0.049     0.050     0.009     0.109     0.004     0.001
+  ff   27C 3.3V  1.65     0.083     0.090     0.063     0.236     0.049     0.007
+  sf   27C 3.3V  1.65     0.056     0.061     0.032     0.150     0.026     0.001
+  fs   27C 3.3V  1.65     0.050     0.052     0.013     0.115     0.008     0.004
+  tt  125C 3.3V  1.65     0.431     0.681    12.104    13.216     9.788     1.559
+  ss  125C 3.3V  1.65     0.263     0.468     6.112     6.843     4.041     0.685
+  ff  125C 3.3V  1.65     0.958     1.283    27.208    29.449    24.334     3.769
+  sf  125C 3.3V  1.65     0.455     0.722    17.902    19.080    15.410     1.033
+  fs  125C 3.3V  1.65     0.492     0.739     8.482     9.713     6.279     2.422
+  ff  125C 3.6V  0.00     1.115     1.757    41.238    44.110    26.325     0.000
+  ff  125C 3.6V  1.65     1.115     1.458    28.119    30.693    24.639     3.769
+  ff  125C 3.6V  3.30     1.115     1.499    23.770    26.385    22.756     4.519
+  fs  125C 3.6V  0.00     0.537     0.847    11.592    12.976     6.779     0.000
+  fs  125C 3.6V  1.65     0.537     0.795     8.841    10.173     6.356     2.422
+  fs  125C 3.6V  3.30     0.537     0.797     6.564     7.898     5.881     2.900
+  sf  125C 3.6V  0.00     0.536     0.917    26.244    27.698    16.659     0.000
+  sf  125C 3.6V  1.65     0.536     0.821    18.491    19.848    15.601     1.033
+  sf  125C 3.6V  3.30     0.536     0.839    15.237    16.612    14.418     1.233
+  tt   27C 3.3V  0.00     0.051     0.061     0.119     0.231     0.015     0.000
+  tt   27C 3.3V  3.30     0.051     0.054     0.004     0.109     0.000     0.002
+
+-- bg
+  corner          vout      bias       drv      vddo     total       iOP       iON
+  tt  -40C 3.3V  1.65     0.046     0.047     0.005     0.097     0.000     0.000
+  ss  -40C 3.3V  1.65     0.045     0.045     0.005     0.095     0.000     0.000
+  ff  -40C 3.3V  1.65     0.072     0.060     0.006     0.138     0.000     0.000
+  sf  -40C 3.3V  1.65     0.048     0.049     0.005     0.102     0.000     0.000
+  fs  -40C 3.3V  1.65     0.045     0.046     0.005     0.096     0.000     0.000
+  tt   27C 3.3V  1.65     0.057     0.054     0.020     0.130     0.014     0.002
+  ss   27C 3.3V  1.65     0.048     0.050     0.009     0.107     0.004     0.001
+  ff   27C 3.3V  1.65     0.196     0.090     0.063     0.349     0.049     0.007
+  sf   27C 3.3V  1.65     0.081     0.061     0.032     0.175     0.026     0.001
+  fs   27C 3.3V  1.65     0.050     0.052     0.013     0.115     0.008     0.004
+  tt  125C 3.3V  1.65     1.665     0.681    12.104    14.450     9.788     1.559
+  ss  125C 3.3V  1.65     1.003     0.468     6.112     7.583     4.041     0.685
+  ff  125C 3.3V  1.65     3.645     1.283    27.208    32.136    24.334     3.769
+  sf  125C 3.3V  1.65     2.115     0.722    17.902    20.739    15.410     1.033
+  fs  125C 3.3V  1.65     1.489     0.739     8.482    10.710     6.279     2.422
+  ff  125C 3.6V  0.00     4.326     1.757    41.238    47.321    26.325     0.000
+  ff  125C 3.6V  1.65     4.326     1.458    28.119    33.903    24.639     3.769
+  ff  125C 3.6V  3.30     4.326     1.499    23.770    29.595    22.756     4.519
+  fs  125C 3.6V  0.00     1.641     0.847    11.592    14.080     6.779     0.000
+  fs  125C 3.6V  1.65     1.641     0.795     8.841    11.277     6.356     2.422
+  fs  125C 3.6V  3.30     1.641     0.797     6.564     9.002     5.881     2.900
+  sf  125C 3.6V  0.00     2.494     0.917    26.244    29.655    16.659     0.000
+  sf  125C 3.6V  1.65     2.494     0.821    18.491    21.805    15.601     1.033
+  sf  125C 3.6V  3.30     2.494     0.839    15.237    18.570    14.418     1.233
+  tt   27C 3.3V  0.00     0.057     0.061     0.119     0.236     0.015     0.000
+  tt   27C 3.3V  3.30     0.057     0.054     0.004     0.114     0.000     0.002
+
+== 3. Disabled: node voltages (V). Output gates against their rails; the unswitched bias lines sit at
+   leakage-level diode voltages from their rails
+  in  tt   27C  vddo-a 0.00e+00  b-vsso 3.02e-08  vdd-vabp 0.000  vabn 0.000  vdd-vbp 0.259  vdd-vbpc 0.298  vbn 0.196  vbnc 0.264
+  in  ff  125C  vddo-a 0.00e+00  b-vsso 1.48e-06  vdd-vabp 0.000  vabn 0.000  vdd-vbp 0.083  vdd-vbpc 0.094  vbn 0.067  vbnc 0.124
+  out tt   27C  vddo-a 0.00e+00  b-vsso 5.82e-08  vdd-vabp 0.000  vabn 0.000  vdd-vbp 0.293  vdd-vbpc 0.314  vbn 0.177  vbnc 0.253
+  out ff  125C  vddo-a 0.00e+00  b-vsso 2.00e-06  vdd-vabp 0.000  vabn 0.000  vdd-vbp 0.139  vdd-vbpc 0.148  vbn 0.056  vbnc 0.111
+  oa  tt   27C  vddo-a 0.00e+00  b-vsso 3.02e-08  vdd-vabp 0.000  vabn 0.000  vdd-vbp 0.259  vdd-vbpc 0.298  vbn 0.196  vbnc 0.264
+  oa  ff  125C  vddo-a 0.00e+00  b-vsso 1.48e-06  vdd-vabp 0.000  vabn 0.000  vdd-vbp 0.083  vdd-vbpc 0.094  vbn 0.067  vbnc 0.124
+  bg  tt   27C  vddo-a 0.00e+00  b-vsso 3.02e-08  vdd-vabp 0.000  vabn 0.000  vdd-vbp 0.259  vdd-vbpc 0.298  vbn 0.196  vbnc 0.264
+  bg  ff  125C  vddo-a 0.00e+00  b-vsso 1.48e-06  vdd-vabp 0.000  vabn 0.000  vdd-vbp 0.083  vdd-vbpc 0.094  vbn 0.067  vbnc 0.124
+
+== 4. Start-up after enable, and supply ramps
+   Start-up after enable: supplies steady at the corner voltage, operating point with en_3v3 = 0, then
+   en_3v3 0 -> vdd in 10 ns at t = 1 us. I_Q = OP's drain current;
+   t90 = time from the enable edge until I_Q stays within 10 % of its final value; final vs the enabled dc op.
+
+-- in
+  tt   27C 3.3V  final I_Q   212.4 uA (dc op   212.4)  t90     0.60 us 
+  ss  -40C 3.0V  final I_Q   201.4 uA (dc op   201.4)  t90     0.59 us 
+  ff  125C 3.6V  final I_Q   220.0 uA (dc op   220.0)  t90     0.71 us 
+  sf  -40C 3.3V  final I_Q   214.1 uA (dc op   214.1)  t90     0.54 us 
+  fs  125C 3.3V  final I_Q   211.4 uA (dc op   211.4)  t90     0.69 us 
+  tt  -40C 3.3V  final I_Q   214.3 uA (dc op   214.3)  t90     0.54 us 
+  tt  125C 3.3V  final I_Q   211.0 uA (dc op   211.0)  t90     0.69 us 
+
+-- out
+  tt   27C 3.3V  final I_Q   219.4 uA (dc op   219.4)  t90     0.79 us 
+  ss  -40C 3.0V  final I_Q   206.0 uA (dc op   206.0)  t90     0.75 us 
+  ff  125C 3.6V  final I_Q   228.3 uA (dc op   228.3)  t90     0.74 us 
+  sf  -40C 3.3V  final I_Q   221.8 uA (dc op   221.8)  t90     0.70 us 
+  fs  125C 3.3V  final I_Q   217.5 uA (dc op   217.5)  t90     0.89 us 
+  tt  -40C 3.3V  final I_Q   222.1 uA (dc op   222.1)  t90     0.70 us 
+  tt  125C 3.3V  final I_Q   217.0 uA (dc op   217.0)  t90     0.88 us 
+
+-- oa
+  tt   27C 3.3V  final I_Q   212.0 uA (dc op   212.0)  t90    10.92 us 
+  ss  -40C 3.0V  final I_Q   128.0 uA (dc op   128.0)  t90    13.40 us 
+  ff  125C 3.6V  final I_Q   304.2 uA (dc op   304.2)  t90     9.97 us 
+  sf  -40C 3.3V  final I_Q   140.7 uA (dc op   140.7)  t90    14.82 us 
+  fs  125C 3.3V  final I_Q   284.7 uA (dc op   284.7)  t90     8.32 us 
+  tt  -40C 3.3V  final I_Q   145.2 uA (dc op   145.2)  t90    14.36 us 
+  tt  125C 3.3V  final I_Q   276.3 uA (dc op   276.3)  t90     8.96 us 
+
+-- bg
+  tt   27C 3.3V  final I_Q   212.4 uA (dc op   212.4)  t90     0.57 us 
+  ss  -40C 3.0V  final I_Q   197.7 uA (dc op   197.7)  t90     0.53 us 
+  ff  125C 3.6V  final I_Q   217.2 uA (dc op   217.2)  t90     0.68 us 
+  sf  -40C 3.3V  final I_Q   210.7 uA (dc op   210.7)  t90     0.51 us 
+  fs  125C 3.3V  final I_Q   208.3 uA (dc op   208.3)  t90     0.69 us 
+  tt  -40C 3.3V  final I_Q   210.9 uA (dc op   210.9)  t90     0.50 us 
+  tt  125C 3.3V  final I_Q   208.0 uA (dc op   208.0)  t90     0.70 us 
+
+
+   Supply ramps 0 -> vdd (all nodes at 0, uic, gear), I_Q at 2 ms vs dc op:
+   (i) en_3v3 tied to vdd (enabled during the ramp); (ii) en_3v3 = 0 during the ramp, enabled at 1 ms
+  oa  tt   27C 3.3V  dc op  212.0 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  oa  ss  -40C 3.0V  dc op  128.0 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  oa  ff  125C 3.6V  dc op  304.2 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  bg  tt   27C 3.3V  dc op  212.4 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  bg  ss  -40C 3.0V  dc op  197.7 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  bg  ff  125C 3.6V  dc op  217.2 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  in  tt   27C 3.3V  dc op  212.4 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  in  ss  -40C 3.0V  dc op  201.4 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  in  ff  125C 3.6V  dc op  220.0 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  out tt   27C 3.3V  dc op  219.4 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  out ss  -40C 3.0V  dc op  206.0 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+  out ff  125C 3.6V  dc op  228.3 uA    1us/i   100.0%    1us/ii  100.0%  100us/i   100.0%  100us/ii  100.0%
+   (ii): the current during the ramp, before the enable edge, was not recorded separately; section 2 is the
+   disabled steady state.
+
+== 5. vout during enable (en_3v3 up at 10 us) and disable (down at 60 us), 10 ns edges, vinp - vinn = vd
+   'before' = vout just before enable (disabled, held by the load), 'final' = enabled value at 59 us;
+   range = min ... max of vout from 10 us to 59 us; t_1mV = time after the enable edge until vout stays
+   within 1 mV of 'final'; dis = min ... max of vout from 60 us to 62 us. ('excursion' = the larger of
+   max - final and min - final, signed.)
+  in  tt   27C 3.3V 1k||100p   vd 0.0  before 1.650  final 1.6501  en: excursion   +111.2 mV (range 1.542..1.761)  t_1mV   0.87 us  dis: 1.646..1.650
+  in  tt   27C 3.3V 1k||100p   vd 1.0  before 1.650  final 2.1487  en: excursion   -606.2 mV (range 1.543..2.176)  t_1mV   0.77 us  dis: 1.650..2.149
+  in  tt   27C 3.3V 100p||10M  vd 0.0  before 1.650  final 1.6501  en: excursion   +140.6 mV (range 1.527..1.791)  t_1mV   0.95 us  dis: 1.646..1.650
+  in  tt   27C 3.3V 100p||10M  vd 1.0  before 1.650  final 2.1488  en: excursion   -621.4 mV (range 1.527..2.255)  t_1mV   0.98 us  dis: 2.143..2.149
+  in  ss  -40C 3.0V 1k||100p   vd 0.0  before 1.650  final 1.6500  en: excursion   +114.9 mV (range 1.581..1.765)  t_1mV   0.73 us  dis: 1.645..1.650
+  in  ss  -40C 3.0V 1k||100p   vd 1.0  before 1.650  final 2.0822  en: excursion   -500.7 mV (range 1.582..2.185)  t_1mV   0.74 us  dis: 1.650..2.082
+  in  ss  -40C 3.0V 100p||10M  vd 0.0  before 1.650  final 1.6500  en: excursion   +142.0 mV (range 1.570..1.792)  t_1mV   0.92 us  dis: 1.645..1.650
+  in  ss  -40C 3.0V 100p||10M  vd 1.0  before 1.650  final 2.0823  en: excursion   -511.3 mV (range 1.571..2.269)  t_1mV   1.00 us  dis: 2.076..2.082
+  in  ff  125C 3.6V 1k||100p   vd 0.0  before 1.650  final 1.6520  en: excursion   +106.2 mV (range 1.566..1.758)  t_1mV   1.02 us  dis: 1.649..1.652
+  in  ff  125C 3.6V 1k||100p   vd 1.0  before 1.650  final 2.1505  en: excursion   -584.3 mV (range 1.566..2.177)  t_1mV   0.89 us  dis: 1.650..2.150
+  in  ff  125C 3.6V 100p||10M  vd 0.0  before 1.881  final 1.6520  en: excursion   +230.5 mV (range 1.643..1.882)  t_1mV   1.05 us  dis: 1.649..1.652
+  in  ff  125C 3.6V 100p||10M  vd 1.0  before 1.881  final 2.1520  en: excursion   -315.2 mV (range 1.837..2.256)  t_1mV   1.12 us  dis: 2.148..2.152
+  oa  tt   27C 3.3V 1k||100p   vd 0.0  before 1.650  final 1.6501  en: excursion   +223.5 mV (range 1.463..1.874)  t_1mV   1.23 us  dis: 1.646..1.650
+  oa  tt   27C 3.3V 1k||100p   vd 1.0  before 1.650  final 2.1487  en: excursion   -683.0 mV (range 1.466..2.220)  t_1mV  12.82 us  dis: 1.650..2.149
+  oa  tt   27C 3.3V 100p||10M  vd 0.0  before 1.650  final 1.6501  en: excursion   +255.5 mV (range 1.448..1.906)  t_1mV   1.19 us  dis: 1.646..1.650
+  oa  tt   27C 3.3V 100p||10M  vd 1.0  before 1.650  final 2.1488  en: excursion   -697.3 mV (range 1.451..2.293)  t_1mV  12.61 us  dis: 2.143..2.149
+  oa  ss  -40C 3.0V 1k||100p   vd 0.0  before 1.650  final 1.6500  en: excursion   +190.1 mV (range 1.558..1.840)  t_1mV   1.88 us  dis: 1.645..1.650
+  oa  ss  -40C 3.0V 1k||100p   vd 1.0  before 1.650  final 2.1249  en: excursion   -565.5 mV (range 1.559..2.222)  t_1mV  28.63 us  dis: 1.650..2.125
+  oa  ss  -40C 3.0V 100p||10M  vd 0.0  before 1.650  final 1.6500  en: excursion   +221.9 mV (range 1.549..1.872)  t_1mV   1.86 us  dis: 1.645..1.650
+  oa  ss  -40C 3.0V 100p||10M  vd 1.0  before 1.650  final 2.1250  en: excursion   -574.9 mV (range 1.550..2.316)  t_1mV  28.60 us  dis: 2.119..2.125
+  oa  ff  125C 3.6V 1k||100p   vd 0.0  before 1.650  final 1.6553  en: excursion   +298.6 mV (range 1.420..1.954)  t_1mV  12.06 us  dis: 1.650..1.655
+  oa  ff  125C 3.6V 1k||100p   vd 1.0  before 1.650  final 2.1517  en: excursion   -722.9 mV (range 1.429..2.278)  t_1mV   7.44 us  dis: 1.650..2.152
+  oa  ff  125C 3.6V 100p||10M  vd 0.0  before 1.881  final 1.6554  en: excursion   +426.3 mV (range 1.655..2.082)  t_1mV  12.10 us  dis: 1.652..1.655
+  oa  ff  125C 3.6V 100p||10M  vd 1.0  before 1.881  final 2.1552  en: excursion   -410.0 mV (range 1.745..2.409)  t_1mV  11.63 us  dis: 2.151..2.155
+
+   Same runs: how far vout goes beyond the interval between 'before' and 'final' after the enable edge
+  in  tt   27C 3.3V 1k||100p   vd 0.0  1.650 -> 1.650   below both  -108.0 mV   above both  +110.9 mV
+  in  tt   27C 3.3V 1k||100p   vd 1.0  1.650 -> 2.149   below both  -107.0 mV   above both   +27.3 mV
+  in  tt   27C 3.3V 100p||10M  vd 0.0  1.650 -> 1.650   below both  -123.0 mV   above both  +140.9 mV
+  in  tt   27C 3.3V 100p||10M  vd 1.0  1.650 -> 2.149   below both  -123.0 mV   above both  +106.2 mV
+  in  ss  -40C 3.0V 1k||100p   vd 0.0  1.650 -> 1.650   below both   -69.0 mV   above both  +115.0 mV
+  in  ss  -40C 3.0V 1k||100p   vd 1.0  1.650 -> 2.082   below both   -68.0 mV   above both  +102.8 mV
+  in  ss  -40C 3.0V 100p||10M  vd 0.0  1.650 -> 1.650   below both   -80.0 mV   above both  +142.0 mV
+  in  ss  -40C 3.0V 100p||10M  vd 1.0  1.650 -> 2.082   below both   -79.0 mV   above both  +186.7 mV
+  in  ff  125C 3.6V 1k||100p   vd 0.0  1.650 -> 1.652   below both   -84.0 mV   above both  +106.0 mV
+  in  ff  125C 3.6V 1k||100p   vd 1.0  1.650 -> 2.151   below both   -84.0 mV   above both   +26.5 mV
+  in  ff  125C 3.6V 100p||10M  vd 0.0  1.881 -> 1.652   below both    -9.0 mV   above both    +1.0 mV
+  in  ff  125C 3.6V 100p||10M  vd 1.0  1.881 -> 2.152   below both   -44.0 mV   above both  +104.0 mV
+  oa  tt   27C 3.3V 1k||100p   vd 0.0  1.650 -> 1.650   below both  -187.0 mV   above both  +223.9 mV
+  oa  tt   27C 3.3V 1k||100p   vd 1.0  1.650 -> 2.149   below both  -184.0 mV   above both   +71.3 mV
+  oa  tt   27C 3.3V 100p||10M  vd 0.0  1.650 -> 1.650   below both  -202.0 mV   above both  +255.9 mV
+  oa  tt   27C 3.3V 100p||10M  vd 1.0  1.650 -> 2.149   below both  -199.0 mV   above both  +144.2 mV
+  oa  ss  -40C 3.0V 1k||100p   vd 0.0  1.650 -> 1.650   below both   -92.0 mV   above both  +190.0 mV
+  oa  ss  -40C 3.0V 1k||100p   vd 1.0  1.650 -> 2.125   below both   -91.0 mV   above both   +97.1 mV
+  oa  ss  -40C 3.0V 100p||10M  vd 0.0  1.650 -> 1.650   below both  -101.0 mV   above both  +222.0 mV
+  oa  ss  -40C 3.0V 100p||10M  vd 1.0  1.650 -> 2.125   below both  -100.0 mV   above both  +191.0 mV
+  oa  ff  125C 3.6V 1k||100p   vd 0.0  1.650 -> 1.655   below both  -230.0 mV   above both  +298.7 mV
+  oa  ff  125C 3.6V 1k||100p   vd 1.0  1.650 -> 2.152   below both  -221.0 mV   above both  +126.3 mV
+  oa  ff  125C 3.6V 100p||10M  vd 0.0  1.881 -> 1.655   below both    -0.4 mV   above both  +201.0 mV
+  oa  ff  125C 3.6V 100p||10M  vd 1.0  1.881 -> 2.155   below both  -136.0 mV   above both  +253.8 mV
+
+== 6. Unpowered: pad (vout) driven through 1.5 kOhm (+2 pF), vss = vsso = 0, bias variant 1 (in) unpowered.
+   No pad diodes, rail clamps or snapback: this shows where the gates go, it is not an ESD simulation.
+   V_SG(OP) = vddo - a, V_GS(ON) = b - vsso, extremes over 3 us (V); peak |I_OP|, |I_ON| (mA); en_3v3 held at
+   0 V, or floating (1 GOhm, 10 fF).
+   (A) vdd = vddo = 0 V, held. (B) vdd and vddo two SEPARATE floating rails (1 GOhm, 1 nF each): not the slot's
+   wiring, kept because it shows the Miller-capacitor coupling. (C) vdd and vddo ONE floating rail (both are
+   vdd_3v3): 1 GOhm, 1 nF.
+  (A) en held  slow 0->3.3V in 1us   V_SG(OP) -0.403..-0.000  V_GS(ON) +0.000..+0.410  |I_OP|   1.588 mA  |I_ON|   0.000 mA  max vddo 0.00 V
+  (A) en held  fast 0->5V in 10ns    V_SG(OP) -0.561..-0.000  V_GS(ON) +0.000..+0.554  |I_OP|   2.508 mA  |I_ON|   0.010 mA  max vddo 0.00 V
+  (A) en held  neg 0->-1V in 10ns    V_SG(OP) +0.000..+0.370  V_GS(ON) -0.408..-0.000  |I_OP|   0.000 mA  |I_ON|   0.185 mA  max vddo 0.00 V
+  (A) en float slow 0->3.3V in 1us   V_SG(OP) -0.405..-0.000  V_GS(ON) +0.000..+0.412  |I_OP|   1.586 mA  |I_ON|   0.000 mA  max vddo 0.00 V
+  (A) en float fast 0->5V in 10ns    V_SG(OP) -0.561..-0.000  V_GS(ON) +0.000..+0.554  |I_OP|   2.504 mA  |I_ON|   0.010 mA  max vddo 0.00 V
+  (A) en float neg 0->-1V in 10ns    V_SG(OP) +0.000..+0.370  V_GS(ON) -0.408..-0.000  |I_OP|   0.000 mA  |I_ON|   0.185 mA  max vddo 0.00 V
+  (B) en held  slow 0->3.3V in 1us   V_SG(OP) -0.348..+0.904  V_GS(ON) +0.000..+0.858  |I_OP|   1.417 mA  |I_ON|   0.963 mA  max vddo 1.79 V
+  (B) en held  fast 0->5V in 10ns    V_SG(OP) -0.556..+1.309  V_GS(ON) +0.000..+1.068  |I_OP|   2.521 mA  |I_ON|   3.004 mA  max vddo 2.29 V
+  (B) en held  neg 0->-1V in 10ns    V_SG(OP) +0.000..+0.370  V_GS(ON) -0.408..-0.000  |I_OP|   0.000 mA  |I_ON|   0.185 mA  max vddo -0.00 V
+  (B) en float slow 0->3.3V in 1us   V_SG(OP) -0.343..+0.953  V_GS(ON) -0.000..+0.848  |I_OP|   1.417 mA  |I_ON|   0.897 mA  max vddo 1.84 V
+  (B) en float fast 0->5V in 10ns    V_SG(OP) -0.555..+1.364  V_GS(ON) +0.000..+1.064  |I_OP|   2.527 mA  |I_ON|   2.975 mA  max vddo 2.35 V
+  (B) en float neg 0->-1V in 10ns    V_SG(OP) +0.000..+0.370  V_GS(ON) -0.408..-0.000  |I_OP|   0.000 mA  |I_ON|   0.185 mA  max vddo -0.00 V
+
+  (C) en held  slow 0->3.3V in 1us   V_SG(OP) -0.356..+0.002  V_GS(ON) +0.000..+0.677  |I_OP|   1.274 mA  |I_ON|   0.134 mA  max vddo 2.18 V  en_b at 3us 2.18 V
+  (C) en held  fast 0->5V in 10ns    V_SG(OP) -0.558..+0.002  V_GS(ON) +0.000..+0.714  |I_OP|   2.356 mA  |I_ON|   0.227 mA  max vddo 3.83 V  en_b at 3us 3.83 V
+  (C) en float slow 0->3.3V in 1us   V_SG(OP) -0.350..+0.003  V_GS(ON) -0.000..+0.711  |I_OP|   1.239 mA  |I_ON|   0.220 mA  max vddo 2.17 V  en_b at 3us 2.13 V
+  (C) en float fast 0->5V in 10ns    V_SG(OP) -0.558..+0.003  V_GS(ON) +0.000..+0.752  |I_OP|   2.327 mA  |I_ON|   0.362 mA  max vddo 3.73 V  en_b at 3us 3.26 V
+
+== 7. Side observation, not caused by the enable: at ss 3.0 V -40 C with vd = 1 V the enabled output reaches only
+   2.082 V (variant in) / 2.125 V (oa) instead of 2.15 V; the original d2s_mpdda gives the same numbers (input
+   pairs out of headroom at vinp = 2.15 V, vdd = 3.0 V).
