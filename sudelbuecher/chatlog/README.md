@@ -65,3 +65,6 @@
 
 [2026-10-02_opus_class_ab_pad_driver_improvements.md](2026-10-02_opus_class_ab_pad_driver_improvements.md)
 : Opus session, 2–8 Oct: resistor- and MOM-free improvements to the class-AB pad driver, four real bias variants with xschem sheets and figures, separate output-stage rails, hand-offs for a gf180 port and a power-down enable, and a cloud simulation environment pinned to IIC-OSIC-TOOLS 2026.09.
+
+[2026-10-06_opus_class_ab_pad_driver_power_down.md](2026-10-06_opus_class_ab_pad_driver_power_down.md)
+: Opus session, 6–8 Oct, from the improvements session's power-down kickoff: a digital enable `en_3v3` for `d2s_mpdda` and its four bias variants, with `_pd` netlists, testbench decks and xschem sheets, simulated on the pinned cloud environment for leakage, start-up, enable glitch and the unpowered pad.
