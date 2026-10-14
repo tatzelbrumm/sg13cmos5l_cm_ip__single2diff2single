@@ -20,6 +20,10 @@
 # same code drives the KLayout PyCells (Clamp_N_code.py / Clamp_P_code.py), the batch
 # generator (gen_clamp.py) and the XOR verification (verify_clamp.py).
 #
+# The section at the end (generate_m1) builds the M1-only variants Clamp_N_M1 /
+# Clamp_P_M1 from the same array rules: no M2/M3, no tie block, variable gate
+# length, guard rings that wrap the array instead of the fixed 80 um frame.
+#
 # Shapes are tuples  (layer, purpose, kind, data)
 #   kind 'box'  : data = (x1, y1, x2, y2)
 #   kind 'poly' : data = ((x, y), (x, y), ...)
@@ -106,29 +110,34 @@ def cell_name(family, ng, tie):
 # ----------------------------------------------------------------------------------
 # Array geometry
 # ----------------------------------------------------------------------------------
-def array_extent(ng):
-    """Active x extent of the finger array. Length is 0.30 um + 1.51 um * ng for both
-    parities (odd ng ends in a 0.74 um drain instead of a 0.47 um source)."""
-    half = 150 + 755 * ng
-    return XC - half, XC + half
+def array_extent(ng, l=L_GATE, x0=None):
+    """Active x extent of the finger array. Length is 0.30 um + (l + 0.91 um) * ng for
+    both parities (odd ng ends in a 0.74 um drain instead of a 0.47 um source); for the
+    IHP cells (l = 0.6 um) that is 0.30 + 1.51 * ng. Centred on XC unless the left
+    edge x0 is given (the M1-only variants, clamp_m1_engine.py)."""
+    n = 2 * SOURCE_END - SOURCE + ng * (l + (DRAIN + SOURCE) // 2)
+    if x0 is None:
+        x0 = XC - n // 2
+    return x0, x0 + n
 
 
-def gate_lefts(ng):
-    xa0, _ = array_extent(ng)
-    return [xa0 + SOURCE_END + (i // 2) * PAIR + (i % 2) * (L_GATE + DRAIN) for i in range(ng)]
+def gate_lefts(ng, l=L_GATE, x0=None):
+    xa0, _ = array_extent(ng, l, x0)
+    pair = 2 * l + DRAIN + SOURCE          # = PAIR for l = L_GATE
+    return [xa0 + SOURCE_END + (i // 2) * pair + (i % 2) * (l + DRAIN) for i in range(ng)]
 
 
-def columns(ng):
+def columns(ng, l=L_GATE, x0=None):
     """(source_centres, drain_centres) of the contact columns."""
-    xa0, xa1 = array_extent(ng)
-    g = gate_lefts(ng)
+    xa0, xa1 = array_extent(ng, l, x0)
+    g = gate_lefts(ng, l, x0)
     src = [xa0 + END_COL]
     drn = []
     for i in range(0, ng, 2):
         if i + 1 < ng:
-            drn.append(g[i] + L_GATE + DRAIN // 2)
+            drn.append(g[i] + l + DRAIN // 2)
             if i + 2 < ng:
-                src.append(g[i + 1] + L_GATE + SOURCE // 2)
+                src.append(g[i + 1] + l + SOURCE // 2)
     if ng % 2 == 0:
         src.append(xa1 - END_COL)
     else:
@@ -350,3 +359,122 @@ def generate(family, ng, tie, refdata):
               + bus_shapes(family, tie, p['ng'], p['xs']) + p['tie_shapes'] + p['decor'])
     texts = rule_texts(family, tie, p['ng'], p['xs']) + p['tie_texts'] + p['decor_texts']
     return shapes, texts, p
+
+
+# ----------------------------------------------------------------------------------
+# M1-only variant: PCells Clamp_N_M1 / Clamp_P_M1
+#
+# Same finger array as above (1.18 um drain / 0.64 um source between the gates,
+# 0.47 um end source, 0.74 um end drain for odd ng, same contact columns, gate heads,
+# M1 gate bus, ThickGateOx, P: NWell + pSD and two device rows), but
+#   - nothing above Metal1: no Via1/Metal2/Via2/Metal3. The source columns run down
+#     in M1 into the inner ring; the drain columns are separate M1 pins 'pad', to be
+#     joined from above. In P the two device rows share one M1 column.
+#   - no gate tie-off (antenna diode or rppd): the M1 gate bus is the pin 'gate'.
+#   - gate length l is a parameter: the diffusion widths stay, the pitch grows with l.
+#   - the guard rings keep the IHP cross-section and the whole y layout, but wrap the
+#     array in x with the spacings the IHP cells have in y (device Activ -> inner
+#     ring 0.61 um, inner ring -> outer ring 1.46 um). So the array starts at
+#     x = 2.75 um as it does at y = 2.75 um, and the cell is array length + 5.5 um wide.
+# ----------------------------------------------------------------------------------
+RING_W = 340       # ring Activ / M1 width
+RING_IN = 1800     # inner ring inset from the cell edge (the outer ring has inset 0)
+ARRAY_X0 = 2750    # = RING_IN + RING_W + 610
+CONT_PITCH = 340
+
+# (inset, pin name or None, [(layer, grow outside, grow inside or None = solid box)])
+RINGS = {
+    'N': ((RING_IN, 'iovss', [('Substrate', 0, 0), ('pSD', 180, 180)]),   # p+ substrate tap
+          (0, None, [('NWell', 620, 620)])),                               # n+ tap in an NWell ring
+    'P': ((RING_IN, 'iovdd', [('NWell', 620, None)]),                      # n+ tap of the PMOS well
+          (0, 'iovss', [('Substrate', 0, 0), ('pSD', 180, 180)])),         # p+ substrate tap
+}
+
+
+def _annulus(layer, X0, Y0, X1, Y1, x0, y0, x1, y1):
+    """Rectangular ring, outer box X, inner box x, drawn as one polygon with a cut
+    line on the left like the IHP frame polygons."""
+    return (layer, 'drawing', 'poly', ((X0, Y0), (X0, y1), (x0, y1), (x0, y0), (x1, y0), (x1, y1),
+                                       (X0, y1), (X0, Y1), (X1, Y1), (X1, Y0)))
+
+
+def _cont_row(a0, a1):
+    """Lower edges of the contacts that fit on [a0, a1] at 340 nm pitch, centred."""
+    n = (a1 - a0 - CONT) // CONT_PITCH + 1
+    start = a0 + (a1 - a0 - CONT - (n - 1) * CONT_PITCH) // 2 // GRID * GRID
+    return [start + k * CONT_PITCH for k in range(n)]
+
+
+def generate_m1(family, ng, l):
+    """Complete M1-only clamp: (shapes, texts). l = gate length in nm."""
+    f = FAMILY[family]
+    if ng < 1:
+        raise ClampError('ng must be >= 1')
+    if l % GRID:
+        raise ClampError('l = %d nm is not on the %d nm grid' % (l, GRID))
+    xa0, xa1 = array_extent(ng, l, ARRAY_X0)
+    W, H = xa1 + ARRAY_X0, f['height']
+    src, drn = columns(ng, l, ARRAY_X0)
+    s, t = [], []
+
+    # finger array
+    for (y0, y1) in f['act_rows']:
+        _box(s, 'Activ', 'drawing', xa0, y0, xa1, y1)
+    ty0, ty1 = f['tgo']['D']
+    _box(s, 'ThickGateOx', 'drawing', xa0 - 340, ty0, xa1 + 340, ty1)
+    if f['nwell']:
+        d, y0, y1 = f['nwell']
+        _box(s, 'NWell', 'drawing', xa0 - d, y0, xa1 + d, y1)
+    if f['psd']:
+        d, y0, y1 = f['psd']
+        _box(s, 'pSD', 'drawing', xa0 - d, y0, xa1 + d, y1)
+
+    sd_y0, sd_y1 = f['sd_m1_rows'][0][0], f['sd_m1_rows'][-1][1]
+    for xc in src + drn:
+        for row in f['cont_rows']:
+            for y in row:
+                _box(s, 'Cont', 'drawing', xc - CONT // 2, y, xc + CONT // 2, y + CONT)
+    for xc in src:                        # down into the inner ring
+        _box(s, 'Metal1', 'drawing', xc - 105, RING_IN, xc + 105, sd_y1)
+    for xc in drn:
+        for purpose in ('drawing', 'pin'):
+            _box(s, 'Metal1', purpose, xc - 310, sd_y0, xc + 310, sd_y1)
+        t.append(('Metal1', 'text', 'pad', xc, f['pad_label_y'], 0, 'center', 'center', 'R0'))
+
+    g = gate_lefts(ng, l, ARRAY_X0)
+    dx = (l - CONT) // 2 // GRID * GRID   # gate contact and M1 strip inside the gate (220 for l = 600)
+    for gl in g:
+        _box(s, 'GatPoly', 'drawing', gl, f['poly'][0], gl + l, f['poly'][1])
+        for y in f['gate_cont']:
+            _box(s, 'Cont', 'drawing', gl + dx, y, gl + dx + CONT, y + CONT)
+        _box(s, 'Metal1', 'drawing', gl + dx, f['gate_m1'][0], gl + dx + CONT, f['gate_m1'][1])
+    bx0, bx1 = g[0] + dx, g[-1] + dx + CONT
+    by0, by1 = f['bus']
+    for purpose in ('drawing', 'pin'):
+        _box(s, 'Metal1', purpose, bx0, by0, bx1, by1)
+    t.append(('Metal1', 'text', 'gate', (bx0 + bx1) // 2 // GRID * GRID, (by0 + by1) // 2, 0, 'center', 'center', 'R0'))
+
+    # guard rings
+    for inset, net, extra in RINGS[family]:
+        X0, Y0, X1, Y1 = inset, inset, W - inset, H - inset
+        x0, y0, x1, y1 = X0 + RING_W, Y0 + RING_W, X1 - RING_W, Y1 - RING_W
+        for lay in ('Activ', 'Metal1'):
+            s.append(_annulus(lay, X0, Y0, X1, Y1, x0, y0, x1, y1))
+        for lay, go, gi in extra:
+            if gi is None:
+                _box(s, lay, 'drawing', X0 - go, Y0 - go, X1 + go, Y1 + go)
+            else:
+                s.append(_annulus(lay, X0 - go, Y0 - go, X1 + go, Y1 + go, x0 + gi, y0 + gi, x1 - gi, y1 - gi))
+        for x in _cont_row(X0 + 90, X1 - 90):                     # bottom and top side
+            for y in (Y0 + 90, Y1 - 90 - CONT):
+                _box(s, 'Cont', 'drawing', x, y, x + CONT, y + CONT)
+        for y in _cont_row(y0 + 180, y1 - 180):                   # left and right side
+            for x in (X0 + 90, X1 - 90 - CONT):
+                _box(s, 'Cont', 'drawing', x, y, x + CONT, y + CONT)
+        if net:
+            _box(s, 'Metal1', 'pin', X0, Y0, X1, y0)              # bottom side
+            t.append(('Metal1', 'text', net, (X0 + X1) // 2 // GRID * GRID, Y0 + RING_W // 2,
+                      0, 'center', 'center', 'R0'))
+        if 'Substrate' in [e[0] for e in extra]:
+            t.append(('TEXT', 'drawing', 'sub!', X0 + 170, Y0 + 170, 0, None, None, 'R0'))
+    return s, t

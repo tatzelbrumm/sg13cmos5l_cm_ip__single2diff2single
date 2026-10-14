@@ -55,6 +55,55 @@ three parts:
 and aborts if the rules produce anything the reference lacks, or leave anything
 outside the tie window. `clamp_refdata.py` is its output; don't edit it by hand.
 
+## M1-only variants: `Clamp_N_M1` / `Clamp_P_M1`
+
+These are derived from `Clamp_N` / `Clamp_P` for use inside the core, where the
+clamp gets wired by hand from above. The code is `generate_m1()` at the end of
+`clamp_engine.py` and `clamp_m1_base` in `clamp_base_code.py`.
+
+| param | values | meaning |
+|---|---|---|
+| `ng` | ≥ 1 | gate fingers |
+| `l`  | ≥ `Lmin` (N 0.45u, P 0.40u, from the PDK techparams), 5 nm grid | gate length, e.g. `0.6u` (default, as IHP) |
+
+What is the same as in the IHP cells:
+
+* **Finger array.** It keeps the 1.18 µm drain (ESD ballast) / 0.64 µm source
+  between gates, the 0.47 µm end source and, for odd `ng`, the 0.74 µm end drain.
+  Contact columns, gate heads, M1 gate bus, ThickGateOx, and for P the NWell, pSD
+  and the two device rows are all unchanged. Only the pitch grows with `l`: the
+  active length is **0.30 + ng·(l + 0.91) µm**.
+* **Guard rings.** Both rings have the same cross-section (0.34 µm Activ + Cont +
+  M1, same well and implant layers) and the same y layout. N: inner p+ substrate
+  tap `iovss`, outer n+ tap in an NWell ring (unlabelled, as in IHP's cell). P:
+  inner n+ well tap `iovdd`, outer p+ substrate tap `iovss`.
+
+What is different:
+
+* **Nothing above Metal1.** There is no Via1, M2, Via2 or M3. The source columns
+  run down in M1 into the inner ring. The drain columns are separate M1 pins
+  `pad` and must be joined from above. In P the two device rows share one M1
+  column.
+* **No tie block.** There is no antenna diode and no rppd. The M1 gate bus is
+  the pin `gate`.
+* **The rings wrap the array** instead of the fixed 80 µm frame. In x they keep
+  the spacings the IHP cells have in y: device Activ to inner ring 0.61 µm, inner
+  ring to outer ring 1.46 µm. The array starts at (2.75, 2.75) µm. The cell is
+  **5.80 + ng·(l + 0.91) µm** wide (outer ring Activ) and 9.9 µm (N) or 19.26 µm (P)
+  tall, as in IHP's cells. The NWell (N) and pSD (P) of the outer ring extend 0.62
+  or 0.18 µm beyond that.
+* Ring contacts are re-spaced on a 0.34 µm pitch, centred on each side.
+* Pins: N `gate iovss pad`, P `gate iovdd iovss pad`. Each pin is an M1 pin
+  shape plus a label: the bus, each drain column, and the bottom side of each
+  named ring.
+
+Things to watch when using them:
+
+* The `gate` net has no antenna diode in the cell. Check antenna rules once it is
+  wired.
+* The N cell's NWell guard ring is a floating net in the cell, as in IHP's. Tie it
+  to `iovdd` at the level above.
+
 ## Files
 
 | file | role |
@@ -62,7 +111,8 @@ outside the tie window. `clamp_refdata.py` is its output; don't edit it by hand.
 | `__init__.py`, `load_clamp_pcells.py` | register KLayout library **`SG13_cm_clamps`** (finds the PDK's `sg13cmos5l_pycell_lib` and `cni` via `$KLAYOUT_PATH`/`$PDKPATH` if they aren't on the path yet) |
 | `use_clamp_pcells.py` | swap `sg13cmos5l_Clamp_*` cells (static copies or `.klib` references) in an existing layout for the PCells; writes only if the flattened geometry is unchanged |
 | `clamp_base_code.py`, `Clamp_N_code.py`, `Clamp_P_code.py` | the PyCells (`DloGen`) |
-| `clamp_engine.py` | geometry rules + interpolation, pure Python, integer nm |
+| `Clamp_N_M1_code.py`, `Clamp_P_M1_code.py` | the M1-only PyCells (base class `clamp_m1_base` in `clamp_base_code.py`) |
+| `clamp_engine.py` | geometry rules + interpolation, pure Python, integer nm; `generate_m1()` for the M1-only variants |
 | `clamp_refdata.py` | extracted frames / tie blocks (generated) |
 | `extract_clamp_refdata.py` | regenerates `clamp_refdata.py` from `sg13cmos5l_io.{gds,cdl}` |
 | `clamp_netlist.py` | CDL (as in `sg13cmos5l_io.cdl`) and ngspice (as the PDK xschem symbols) subcircuits |
@@ -155,3 +205,26 @@ python3 scripts/pcells/verify_clamp.py <pdk>/libs.ref/sg13cmos5l_io/gds/sg13cmos
         --pdk-python <pdk>/libs.tech/klayout/python --sweep-gds /tmp/sweep.gds
 python3 scripts/pcells/lvs_clamp.py /tmp/sweep.gds
 ```
+
+### `Clamp_N_M1` / `Clamp_P_M1` (2026-10-14)
+
+Test set: N and P × `ng` 1, 2, 3, 8 × `l` = Lmin, Lmin + 5 nm, 0.6 µm, 1.0 µm
+(32 cells), built through the `cni` PCell path.
+
+* **`Clamp_N` / `Clamp_P` unchanged.** `verify_clamp.py` still passes after the
+  `l`/`x0` generalisation of `array_extent`/`gate_lefts`/`columns`.
+* **No layers above M1.** There are no Via1/M2/Via2/M3/Recog/PolyRes shapes.
+* **Connectivity** (scratch `klayout.db` extraction, as in `lvs_clamp.py`): each
+  cell gives one combined MOS with W = 4.4·ng (N) or 13.32·ng (P) µm and L = `l`.
+  S is on the rail, D on `pad` (drain columns joined by name), G on `gate`. The
+  `pad`, `gate`, `iovss` (and `iovdd`) nets are distinct. The engine output and
+  the PCell output are XOR-identical.
+* **DRC.** The unmodified IHP deck (`run_drc.py`, main + maximal tables, flat,
+  density off, offgrid and angle on) ran on KLayout 0.30.0: 547 rule categories,
+  **0 violations**. The same set included `Clamp_N`/`Clamp_P` ng = 8 as a
+  baseline. An injected 0.1 µm M1 gap was flagged (M1.b), and so was the ring
+  pulled to 0.21 µm from the array (pSD.d), so the deck does see these cells.
+* **Bad parameters** (`l` < Lmin, `l` off the 5 nm grid, `ng` < 1) raise an
+  error and produce an empty cell.
+* **Not yet verified.** PDK LVS (needs a schematic, KLayout ≥ 0.30.2) and ESD
+  adequacy of the ring spacing and `l` choices.

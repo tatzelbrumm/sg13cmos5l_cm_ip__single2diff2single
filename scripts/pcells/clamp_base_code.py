@@ -7,6 +7,9 @@
 # IHP pycell4klayout (cni) API in the style of the PDK's own *_base_code.py
 # (compare sg13cmos5l_pycell_lib/ihp/rfmosfet_base_code.py).
 #
+# clamp_base     -> Clamp_N, Clamp_P        (IHP cells, parameters ng, tie)
+# clamp_m1_base  -> Clamp_N_M1, Clamp_P_M1  (M1 only, no tie block, parameters ng, l)
+#
 ########################################################################
 
 __version__ = "$Revision: #1 $"
@@ -15,7 +18,7 @@ from cni.dlo import *
 from sg13cmos5l_pycell_lib.ihp.geometry import *
 from sg13cmos5l_pycell_lib.ihp.utility_functions import *
 
-from .clamp_engine import FAMILY, generate, cell_name, ClampError
+from .clamp_engine import FAMILY, generate, generate_m1, cell_name, ClampError
 from .clamp_refdata import REFDATA
 
 _ALIGN = {
@@ -64,7 +67,10 @@ class clamp_base(DloGen):
         dbReplaceProp(self, 'pcellVersion', '$Revision: 1.0 $')
         dbReplaceProp(self, 'pin#', 3 if (self.tie == 'D' or self.FAMILY == 'P') else 2)
         dbReplaceProp(self, 'cellName', cell_name(self.FAMILY, self.ng, self.tie))
+        self.draw(shapes, texts)
 
+    def draw(self, shapes, texts):
+        """Engine shapes/texts (nm) -> cni shapes (um)."""
         layers = {}
         for lay, pur, kind, d in shapes:
             key = (lay, pur)
@@ -81,3 +87,43 @@ class clamp_base(DloGen):
                 layers[key] = Layer(lay, pur)
             dbCreateLabel(self, layers[key], Point(_um(x), _um(y)), s,
                           _ALIGN.get((ha, va), 'lowerLeft'), orient, Font.EURO_STYLE, _um(size))
+
+
+class clamp_m1_base(clamp_base):
+    """M1-only clamp: no Metal2/Metal3, no gate tie-off, gate length l."""
+
+    MIN_L = {'N': 'nmosHV_minL', 'P': 'pmosHV_minL'}
+
+    @classmethod
+    def defineParamSpecs(cls, specs):
+        techparams = specs.tech.getTechParams()
+        f = FAMILY[cls.FAMILY]
+
+        specs('cdf_version', techparams['CDFVersion'], 'CDF Version')
+        specs('Display', 'Selected', 'Display', ChoiceConstraint(['All', 'Selected']))
+        specs('model', f['model'], 'Model name')
+        specs('ng', cls.DEF_NG, 'Number of gate fingers')
+        specs('l', '0.6u', 'Gate length')
+        specs('Lmin', techparams[cls.MIN_L[cls.FAMILY]], 'Lmin')
+
+    def setupParams(self, params):
+        self.ng = int(params['ng'])
+        self.l = int(round(Numeric(params['l']) * 1e9))        # nm
+        self.lmin = int(round(Numeric(params['Lmin']) * 1e9))
+
+    def genLayout(self):
+        try:
+            if self.l < self.lmin:
+                raise ClampError('l = %d nm < Lmin = %d nm' % (self.l, self.lmin))
+            shapes, texts = generate_m1(self.FAMILY, self.ng, self.l)
+        except ClampError as e:
+            raise Exception('%s: %s' % (self.__class__.__name__, e))
+
+        dbReplaceProp(self, 'ivCellType', 'graphic')
+        dbReplaceProp(self, 'viewSubType', 'maskLayoutParamCell')
+        dbReplaceProp(self, 'instNamePrefix', 'X')
+        dbReplaceProp(self, 'function', 'esd')
+        dbReplaceProp(self, 'pcellVersion', '$Revision: 1.0 $')
+        dbReplaceProp(self, 'pin#', 3 if self.FAMILY == 'N' else 4)   # gate pad iovss [iovdd]
+        dbReplaceProp(self, 'cellName', self.__class__.__name__)
+        self.draw(shapes, texts)
