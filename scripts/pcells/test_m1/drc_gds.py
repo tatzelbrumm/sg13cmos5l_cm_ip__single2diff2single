@@ -3,7 +3,8 @@
 """
 Engine-only GDS for a DRC run, no PDK needed: the same 44 Clamp_N_M1 / Clamp_P_M1
 cells as test_m1.py (32 frame 'fit', 12 frame '80u'), plus Clamp_N / Clamp_P ng = 8 (identical to IHP's N8N8D /
-P8N8D) as a baseline, all placed in top cell TOP.
+P8N8D) as a baseline, and DCNDiode / DCPDiode at l = 0.58, 1.585, 27.78 (= IHP's
+cells) and 74.505 um, all placed in top cell TOP.
 
     python3 drc_gds.py m1_drc.gds
     python3 $PDKPATH/libs.tech/klayout/tech/drc/run_drc.py --path=m1_drc.gds --topcell=TOP --run_mode=flat --no_density --run_dir=drc_run
@@ -31,4 +32,10 @@ for fam, lmin in (('N', 450), ('P', 400)):
     c = K.write_cell(ly, ly.create_cell(E.cell_name(fam, 8, 'D')), s, t)
     top.insert(db.CellInstArray(c.cell_index(), db.Trans(x, y)))
     y += 30000
+for fam in 'NP':                                   # DC diodes; l = 27.78 um is IHP's cell
+    x = 0
+    for l in (E.DIODE_L_MIN, 1585, 27780, 74505):
+        c = K.write_cell(ly, ly.create_cell('DC%sDiode_l%d' % (fam, l)), *E.generate_diode(fam, l))
+        top.insert(db.CellInstArray(c.cell_index(), db.Trans(x, y))); x += c.bbox().width() + 5000
+    y += 20000
 ly.write(sys.argv[1]); print('cells', ly.cells())

@@ -490,3 +490,118 @@ def generate_m1(family, ng, l, width=None):
         if 'Substrate' in [e[0] for e in extra]:
             t.append(('TEXT', 'drawing', 'sub!', X0 + 170, Y0 + 170, 0, None, None, 'R0'))
     return s, t
+
+
+# ----------------------------------------------------------------------------------
+# DC diodes: PCells DCNDiode / DCPDiode (IHP sg13cmos5l_DCNDiode / sg13cmos5l_DCPDiode)
+#
+# In the IHP pads these sit between the N and P clamps, and the clamps' vertical M2
+# drain (pad) and source (rail) straps run on across them, with Via1 down onto the
+# diode stripes. So the diode length l (in x, CDL 'l') has to follow the clamp array
+# when l or ng of the clamps change. Everything is rule based; at l = 27.78 um the
+# cells equal IHP's.
+#   two diode stripes, 1.26 um (CDL 'w') x l, from x = 2.64 um to 2.64 um + l
+#   a tap frame around them: three 1.26 um bars (y = 0, 4.5, 9 um) and two 1.26 um
+#     side bars, 2.64 um past the stripe ends, so the frame spans x = 0 .. l + 5.28 um
+#   a 0.34 um guard ring 1.66 um outside the frame
+#   DCNDiode: n+ stripes in the p substrate ('cathode'), p+ frame = substrate tap
+#             ('anode'), n+ guard ring in an NWell ring ('guard')
+#   DCPDiode: p+ stripes ('anode') in an NWell with an n+ frame ('cathode'),
+#             p+ guard ring = substrate tap ('guard')
+# Contacts: 340 nm pitch, centred in each bar and stripe (IHP's cell fills them exactly).
+# ----------------------------------------------------------------------------------
+DIODE_END = 2640                                  # stripe end -> frame outer edge
+DIODE_STRIPES = ((2250, 3510), (6750, 8010))      # 1.26 um each
+DIODE_BARS = ((0, 1260), (4500, 5760), (9000, 10260))
+DIODE_H = 10260                                   # frame height
+DIODE_SIDE = 1260                                 # frame side bar width
+DIODE_GUARD = 1660                                # guard ring outer edge outside the frame
+DIODE_L_MIN = 2 * 210 + CONT                      # one contact column per stripe
+
+
+def _bars(s, layer, X0, Y0, X1, Y1, hx0, hx1, holes):
+    """Box X0..X1 x Y0..Y1 minus holes hx0..hx1 x (y0, y1), as overlapping boxes."""
+    _box(s, layer, 'drawing', X0, Y0, hx0, Y1)
+    _box(s, layer, 'drawing', hx1, Y0, X1, Y1)
+    ys = [Y0] + [y for h in holes for y in h] + [Y1]
+    for y0, y1 in zip(ys[0::2], ys[1::2]):
+        _box(s, layer, 'drawing', hx0, y0, hx1, y1)
+
+
+def generate_diode(family, l):
+    """Complete DCNDiode (family 'N') / DCPDiode ('P'): (shapes, texts). l in nm."""
+    if l % GRID:
+        raise ClampError('l = %d nm is not on the %d nm grid' % (l, GRID))
+    if l < DIODE_L_MIN:
+        raise ClampError('l = %d nm < %d nm (one contact column)' % (l, DIODE_L_MIN))
+    X1, H, g = l + 2 * DIODE_END, DIODE_H, DIODE_GUARD
+    xc = X1 // 2 // GRID * GRID
+    holes = ((DIODE_BARS[0][1], DIODE_BARS[1][0]), (DIODE_BARS[1][1], DIODE_BARS[2][0]))
+    stripe_net, bar_net = ('cathode', 'anode') if family == 'N' else ('anode', 'cathode')
+    s, t = [], []
+
+    def frame(layer, d):                          # tap frame grown by d
+        _bars(s, layer, -d, -d, X1 + d, H + d, DIODE_SIDE + d, X1 - DIODE_SIDE - d,
+              [(y0 + d, y1 - d) for y0, y1 in holes])
+
+    def guard(layer, d_out, d_in):                # guard ring grown by d_out / d_in
+        s.append(_annulus(layer, -g - d_out, -g - d_out, X1 + g + d_out, H + g + d_out,
+                          -g + RING_W + d_in, -g + RING_W + d_in, X1 + g - RING_W - d_in, H + g - RING_W - d_in))
+
+    # tap frame, stripes, guard ring: Activ + M1
+    for lay in ('Activ', 'Metal1'):
+        frame(lay, 0)
+        guard(lay, 0, 0)
+    for y0, y1 in DIODE_STRIPES:
+        for lay, pur in (('Activ', 'drawing'), ('Metal1', 'drawing'), ('Metal1', 'pin')):
+            _box(s, lay, pur, DIODE_END, y0, DIODE_END + l, y1)
+        _box(s, 'Recog', 'diode', DIODE_END - 20, y0 - 20, DIODE_END + l + 20, y1 + 20)
+        t.append(('Metal1', 'text', stripe_net, xc, y0 + 630, 0, None, None, 'R0'))
+    for y0, y1 in DIODE_BARS:
+        _box(s, 'Metal1', 'pin', 0, y0, X1, y1)
+        t.append(('Metal1', 'text', bar_net, xc, y0 + 630, 0, None, None, 'R0'))
+    _box(s, 'Metal1', 'pin', -g, -g, X1 + g, -g + RING_W)
+    _box(s, 'Metal1', 'pin', -g, H + g - RING_W, X1 + g, H + g)
+    t.append(('Metal1', 'text', 'guard', xc, -g + 170, 0, None, None, 'R0'))
+    t.append(('Metal1', 'text', 'guard', xc, H + g - 170, 0, None, None, 'R0'))
+
+    # implants and wells
+    if family == 'N':
+        frame('Substrate', 0)
+        frame('pSD', 420)
+        guard('NWell', 620, 620)
+        for y0, y1 in DIODE_STRIPES:
+            t.append(('TEXT', 'drawing', 'dant', xc, y0 + 630, 0, None, None, 'R0'))
+        t.append(('TEXT', 'drawing', 'sub!', 630, 630, 0, None, None, 'R0'))
+    else:
+        _box(s, 'NWell', 'drawing', -620, -620, X1 + 620, H + 620)
+        for y0, y1 in DIODE_STRIPES:
+            _box(s, 'pSD', 'drawing', DIODE_END - 420, y0 - 420, DIODE_END + l + 420, y1 + 420)
+        guard('pSD', 180, 180)
+        guard('Substrate', 0, 0)
+        xmax = DIODE_END + l // 2 // GRID * GRID     # IHP's hand-placed labels, kept on the stripe
+        t.append(('TEXT', 'drawing', 'dpant', min(7040, xmax), 2840, 200, 'center', 'center', 'R0'))
+        t.append(('TEXT', 'drawing', 'dpant', min(7160, xmax), 7320, 200, 'center', 'center', 'R0'))
+        t.append(('TEXT', 'drawing', 'sub!', -g + 170, -300, 0, None, None, 'R0'))
+
+    # contacts
+    def cont(x, y):
+        _box(s, 'Cont', 'drawing', x, y, x + CONT, y + CONT)
+    for y0, y1 in DIODE_BARS:                                     # frame bars
+        for y in (y0 + 210, y0 + 550, y0 + 890):
+            for x in _cont_row(DIODE_SIDE + 230, X1 - DIODE_SIDE - 230):
+                cont(x, y)
+    for y in _cont_row(120, H - 120):                             # frame side bars
+        for x in (210, 550, 890, X1 - 1050, X1 - 710, X1 - 370):
+            cont(x, y)
+    for y0, y1 in DIODE_STRIPES:                                  # stripes
+        for y in (y0 + 210, y0 + 550, y0 + 890):
+            for x in _cont_row(DIODE_END + 210, DIODE_END + l - 210):
+                cont(x, y)
+    for x in _cont_row(-g + 90, X1 + g - 90):                     # guard ring
+        cont(x, -g + 90)
+        cont(x, H + g - 250)
+    for y in _cont_row(-g + RING_W + 250, H + g - RING_W - 250):
+        cont(-g + 90, y)
+        cont(X1 + g - 250, y)
+    return s, t

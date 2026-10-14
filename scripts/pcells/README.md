@@ -111,6 +111,47 @@ Things to watch when using them:
 * The N cell's NWell guard ring is a floating net in the cell, as in IHP's. Tie it
   to `iovdd` at the level above.
 
+## DC diodes: `DCNDiode` / `DCPDiode`
+
+IHP's `sg13cmos5l_DCNDiode` / `sg13cmos5l_DCPDiode`, with the diode length as
+parameter. The code is `generate_diode()` at the end of `clamp_engine.py` and
+`dcdiode_base` in `clamp_base_code.py`.
+
+| param | values | meaning |
+|---|---|---|
+| `l` | ≥ 0.58u (one contact column), 5 nm grid | diode length = stripe length in x, as `l` in the CDL. `27.78u` (default) reproduces IHP's cell |
+
+In the IHP pads (`IOPadInOut*`, `IOPadOut*`, `IOPadTriOut*`, `IOPadAnalog`) the
+diodes sit between the N and P clamps, centred on the same x = 40 µm. The clamps'
+vertical M2 straps run on across them: 0.61 µm `pad` straps over the drains, 0.2 µm
+rail straps over the sources. Via1 columns drop from them onto the diode stripes and
+frame bars. The strap positions follow the clamp's `ng` and `l`, so the stripes
+must be long enough to sit under all of them. The clamp array is
+0.30 + ng·(l + 0.91) µm long. IHP's 27.78 µm covers it up to `ng` = 18 at
+`l` = 0.6 µm. In `IOPadAnalog` the N20N0D / P20N0D arrays (30.5 µm) are already
+longer than IHP's diodes.
+
+The cells are rule based throughout; no geometry is stored:
+
+* **Two diode stripes**, 1.26 µm (CDL `w`, fixed) × `l`, at x = 2.64 µm …
+  2.64 µm + `l`, y = 2.25 and 6.75 µm.
+* **A tap frame** around them: three 1.26 µm bars (y = 0, 4.5, 9 µm) and two 1.26 µm
+  side bars, 2.64 µm past the stripe ends. The frame spans x = 0 … `l` + 5.28 µm,
+  y = 0 … 10.26 µm. The origin stays where IHP's is, so `l` = 27.78u drops into
+  the pad positions unchanged. A longer `l` grows the cell to the right.
+* **A 0.34 µm guard ring** 1.66 µm outside the frame.
+* `DCNDiode`: n+ stripes in the p substrate (`cathode`), p+ substrate-tap frame
+  (`anode`), n+ guard ring in an NWell ring (`guard`).
+  `DCPDiode`: p+ stripes (`anode`) in an NWell with an n+ frame (`cathode`), p+
+  substrate-tap guard ring (`guard`).
+* **Contacts** on a 0.34 µm pitch, centred in each bar and stripe. At 27.78 µm they
+  fill the stripes exactly, as in IHP's cell.
+* **Pins and labels** as IHP's: M1 pin shapes on the stripes, the three frame bars
+  and the guard ring's top and bottom sides, with labels at the cell's centre x.
+  The two stripes are separate pieces of M1, joined only from above, like the
+  clamp drains. P's two hand-placed `dpant` text labels keep IHP's x unless the
+  stripe is too short, then they move to its centre.
+
 ## Files
 
 | file | role |
@@ -119,7 +160,9 @@ Things to watch when using them:
 | `use_clamp_pcells.py` | swap `sg13cmos5l_Clamp_*` cells (static copies or `.klib` references) in an existing layout for the PCells; writes only if the flattened geometry is unchanged |
 | `clamp_base_code.py`, `Clamp_N_code.py`, `Clamp_P_code.py` | the PyCells (`DloGen`) |
 | `Clamp_N_M1_code.py`, `Clamp_P_M1_code.py` | the M1-only PyCells (base class `clamp_m1_base` in `clamp_base_code.py`) |
-| `clamp_engine.py` | geometry rules + interpolation, pure Python, integer nm; `generate_m1()` for the M1-only variants |
+| `DCNDiode_code.py`, `DCPDiode_code.py` | the DC diode PyCells (base class `dcdiode_base` in `clamp_base_code.py`) |
+| `clamp_engine.py` | geometry rules + interpolation, pure Python, integer nm; `generate_m1()` for the M1-only variants, `generate_diode()` for the DC diodes |
+| `test_m1/` | tests for the M1-only clamps and the DC diodes (see the verification status) |
 | `clamp_refdata.py` | extracted frames / tie blocks (generated) |
 | `extract_clamp_refdata.py` | regenerates `clamp_refdata.py` from `sg13cmos5l_io.{gds,cdl}` |
 | `clamp_netlist.py` | CDL (as in `sg13cmos5l_io.cdl`) and ngspice (as the PDK xschem symbols) subcircuits |
@@ -240,13 +283,35 @@ with `frame = fit` (32 cells), plus `ng` 1, 3, 49 × `l` = Lmin + 5 nm, 0.6 µm 
 * **Not yet verified.** PDK LVS (needs a schematic, KLayout ≥ 0.30.2) and ESD
   adequacy of the ring spacing and `l` choices.
 
+### `DCNDiode` / `DCPDiode` (2026-10-14)
+
+* **Reproduction.** At `l` = 27.78u both cells are **identical** to IHP's
+  `sg13cmos5l_DCNDiode` / `sg13cmos5l_DCPDiode`, through the engine and the `cni`
+  PCell path. That covers all 10 layers (merged XOR empty), all 1755 contacts and
+  every label.
+* **Connectivity and implants** at `l` = 0.58 µm (minimum), 1.585 µm (odd half
+  length), 27.78 µm and 74.505 µm (`klayout.db` extraction):
+  * the stripe, frame and guard nets are distinct, and each is one net once the
+    two stripes are joined by name;
+  * the stripe Activ area is 2 × 1.26 µm × `l`, and Recog.diode covers the stripes;
+  * stripes, frame and guard ring each sit on the intended side of pSD and NWell.
+* **DRC.** The same unmodified IHP deck on KLayout 0.30.0, in the same run as the
+  M1-only clamps (`drc_gds.py`), at the same four lengths: **0 violations**.
+* **Bad parameters** (`l` < 0.58 µm, `l` off the 5 nm grid) raise an error and
+  produce an empty cell.
+* **Not yet verified.** PDK LVS, and CDL/ngspice netlists for `l` ≠ 27.78u
+  (`clamp_netlist.py` doesn't cover the diodes). For a netlist, scale the
+  `dantenna`/`dpantenna` parameters as w = 1.26u, l = `l`, a = w·l, p = 2(w + l).
+  The `ptap1` area and perimeter of the frame or ring also change with `l`.
+
 The test scripts are in `test_m1/`. Run them from any working directory; they
 write their GDS there:
 
 ```sh
 python3 scripts/pcells/test_m1/test_m1.py m1_cells.gds     # PCell path + extraction (needs the PDK)
 python3 scripts/pcells/test_m1/xor_engine.py m1_cells.gds  # PCell output == engine output; 80u == Clamp_N/P
-python3 scripts/pcells/test_m1/drc_gds.py m1_drc.gds       # DRC input, + IHP baseline cells
+python3 scripts/pcells/test_m1/test_diode.py diode_cells.gds   # DC diodes: == IHP at 27.78u, extraction (needs the PDK)
+python3 scripts/pcells/test_m1/drc_gds.py m1_drc.gds       # DRC input: M1 clamps, DC diodes, IHP baseline cells
 python3 scripts/pcells/test_m1/drc_negative_gds.py m1_neg.gds   # DRC must flag these
 python3 $PDKPATH/libs.tech/klayout/tech/drc/run_drc.py --path=m1_drc.gds --topcell=TOP --run_mode=flat --no_density
 python3 $PDKPATH/libs.tech/klayout/tech/drc/run_drc.py --path=m1_neg.gds --topcell=TOP --run_mode=flat --no_density

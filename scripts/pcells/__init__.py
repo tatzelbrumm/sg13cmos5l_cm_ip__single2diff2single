@@ -4,8 +4,9 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 # KLayout library "SG13_cm_clamps" with the parametrized ESD clamps Clamp_N /
-# Clamp_P and their M1-only variants Clamp_N_M1 / Clamp_P_M1, registered the same
-# way sg13cmos5l_pycell_lib registers "SG13_dev":
+# Clamp_P, their M1-only variants Clamp_N_M1 / Clamp_P_M1, and the DC diodes
+# DCNDiode / DCPDiode, registered the same way sg13cmos5l_pycell_lib registers
+# "SG13_dev":
 # every <name>_code.py module in moduleNames provides class <name>, wrapped in
 # cni.dlo.PCellWrapper against the SG13_dev technology.
 #
@@ -29,6 +30,8 @@ moduleNames = [
     'Clamp_P_code',   # PMOS clamp pad -> iovdd
     'Clamp_N_M1_code',  # same, M1 only, no gate tie-off, gate length l
     'Clamp_P_M1_code',
+    'DCNDiode_code',    # DC diodes of the IHP pads, diode length l
+    'DCPDiode_code',
 ]
 
 

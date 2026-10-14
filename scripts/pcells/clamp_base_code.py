@@ -9,6 +9,7 @@
 #
 # clamp_base     -> Clamp_N, Clamp_P        (IHP cells, parameters ng, tie)
 # clamp_m1_base  -> Clamp_N_M1, Clamp_P_M1  (M1 only, no tie block, parameters ng, l, frame)
+# dcdiode_base   -> DCNDiode, DCPDiode       (IHP's DC diodes, parameter l = diode length)
 #
 ########################################################################
 
@@ -18,7 +19,7 @@ from cni.dlo import *
 from sg13cmos5l_pycell_lib.ihp.geometry import *
 from sg13cmos5l_pycell_lib.ihp.utility_functions import *
 
-from .clamp_engine import FAMILY, generate, generate_m1, cell_name, ClampError
+from .clamp_engine import FAMILY, generate, generate_m1, generate_diode, cell_name, ClampError
 from .clamp_refdata import REFDATA
 
 _ALIGN = {
@@ -128,5 +129,38 @@ class clamp_m1_base(clamp_base):
         dbReplaceProp(self, 'function', 'esd')
         dbReplaceProp(self, 'pcellVersion', '$Revision: 1.0 $')
         dbReplaceProp(self, 'pin#', 3 if self.FAMILY == 'N' else 4)   # gate pad iovss [iovdd]
+        dbReplaceProp(self, 'cellName', self.__class__.__name__)
+        self.draw(shapes, texts)
+
+
+class dcdiode_base(clamp_base):
+    """DC diode pair with tap frame and guard ring; subclasses set FAMILY ('N' or 'P')."""
+
+    MODEL = {'N': 'dantenna', 'P': 'dpantenna'}
+
+    @classmethod
+    def defineParamSpecs(cls, specs):
+        techparams = specs.tech.getTechParams()
+
+        specs('cdf_version', techparams['CDFVersion'], 'CDF Version')
+        specs('Display', 'Selected', 'Display', ChoiceConstraint(['All', 'Selected']))
+        specs('model', cls.MODEL[cls.FAMILY], 'Model name')
+        specs('l', '27.78u', 'Diode length (stripe length in x; w = 1.26u fixed)')
+
+    def setupParams(self, params):
+        self.l = int(round(Numeric(params['l']) * 1e9))        # nm
+
+    def genLayout(self):
+        try:
+            shapes, texts = generate_diode(self.FAMILY, self.l)
+        except ClampError as e:
+            raise Exception('%s: %s' % (self.__class__.__name__, e))
+
+        dbReplaceProp(self, 'ivCellType', 'graphic')
+        dbReplaceProp(self, 'viewSubType', 'maskLayoutParamCell')
+        dbReplaceProp(self, 'instNamePrefix', 'X')
+        dbReplaceProp(self, 'function', 'esd')
+        dbReplaceProp(self, 'pcellVersion', '$Revision: 1.0 $')
+        dbReplaceProp(self, 'pin#', 3)                               # anode cathode guard
         dbReplaceProp(self, 'cellName', self.__class__.__name__)
         self.draw(shapes, texts)
