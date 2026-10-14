@@ -65,6 +65,7 @@ clamp gets wired by hand from above. The code is `generate_m1()` at the end of
 |---|---|---|
 | `ng` | ≥ 1 | gate fingers |
 | `l`  | ≥ `Lmin` (N 0.45u, P 0.40u, from the PDK techparams), 5 nm grid | gate length, e.g. `0.6u` (default, as IHP) |
+| `frame` | `fit` (default) / `80u` | `fit`: the rings wrap the array. `80u`: IHP's fixed 80 µm frame with the array centred, as in `Clamp_N` / `Clamp_P` |
 
 What is the same as in the IHP cells:
 
@@ -86,12 +87,18 @@ What is different:
   column.
 * **No tie block.** There is no antenna diode and no rppd. The M1 gate bus is
   the pin `gate`.
-* **The rings wrap the array** instead of the fixed 80 µm frame. In x they keep
-  the spacings the IHP cells have in y: device Activ to inner ring 0.61 µm, inner
-  ring to outer ring 1.46 µm. The array starts at (2.75, 2.75) µm. The cell is
-  **5.80 + ng·(l + 0.91) µm** wide (outer ring Activ) and 9.9 µm (N) or 19.26 µm (P)
-  tall, as in IHP's cells. The NWell (N) and pSD (P) of the outer ring extend 0.62
-  or 0.18 µm beyond that.
+* **With `frame = fit` the rings wrap the array** instead of forming the fixed
+  80 µm frame. In x they keep the spacings the IHP cells have in y: device Activ
+  to inner ring 0.61 µm, inner ring to outer ring 1.46 µm. The array starts at
+  (2.75, 2.75) µm. The cell is **5.80 + ng·(l + 0.91) µm** wide (outer ring
+  Activ) and 9.9 µm (N) or 19.26 µm (P) tall, as in IHP's cells. The NWell (N)
+  and pSD (P) of the outer ring extend 0.62 or 0.18 µm beyond that.
+* **With `frame = 80u`** the rings are IHP's 80 µm frame and the array is centred
+  on x = 40 µm (snapped to the 5 nm grid when its length is an odd multiple of
+  5 nm). The array must keep 0.61 µm to the inner ring, so `ng` ≤ 49 at
+  `l` = 0.6 µm. At `l` = 0.6 µm the cell equals `Clamp_N` / `Clamp_P` (tie `D`,
+  same `ng`) on Activ, pSD, GatPoly, ThickGateOx, NWell, Substrate and the array
+  contacts, apart from the antenna diode it omits.
 * Ring contacts are re-spaced on a 0.34 µm pitch, centred on each side.
 * Pins: N `gate iovss pad`, P `gate iovdd iovss pad`. Each pin is an M1 pin
   shape plus a label: the bus, each drain column, and the bottom side of each
@@ -209,7 +216,8 @@ python3 scripts/pcells/lvs_clamp.py /tmp/sweep.gds
 ### `Clamp_N_M1` / `Clamp_P_M1` (2026-10-14)
 
 Test set: N and P × `ng` 1, 2, 3, 8 × `l` = Lmin, Lmin + 5 nm, 0.6 µm, 1.0 µm
-(32 cells), built through the `cni` PCell path.
+with `frame = fit` (32 cells), plus `ng` 1, 3, 49 × `l` = Lmin + 5 nm, 0.6 µm with
+`frame = 80u` (12 cells), built through the `cni` PCell path.
 
 * **`Clamp_N` / `Clamp_P` unchanged.** `verify_clamp.py` still passes after the
   `l`/`x0` generalisation of `array_extent`/`gate_lefts`/`columns`.
@@ -219,12 +227,27 @@ Test set: N and P × `ng` 1, 2, 3, 8 × `l` = Lmin, Lmin + 5 nm, 0.6 µm, 1.0 µ
   S is on the rail, D on `pad` (drain columns joined by name), G on `gate`. The
   `pad`, `gate`, `iovss` (and `iovdd`) nets are distinct. The engine output and
   the PCell output are XOR-identical.
+* **80 µm frame.** The array is centred (ThickGateOx symmetric about x = 40 µm
+  within the grid). At `l` = 0.6 µm the cells match `Clamp_N` / `Clamp_P` on the
+  layers listed above, for `ng` = 1, 2, 8, 15 and 42 (N) / 41 (P).
 * **DRC.** The unmodified IHP deck (`run_drc.py`, main + maximal tables, flat,
-  density off, offgrid and angle on) ran on KLayout 0.30.0: 547 rule categories,
-  **0 violations**. The same set included `Clamp_N`/`Clamp_P` ng = 8 as a
+  density off, offgrid and angle on) ran on KLayout 0.30.0 over all 44 cells:
+  547 rule categories, **0 violations**. The same set included `Clamp_N`/`Clamp_P` ng = 8 as a
   baseline. An injected 0.1 µm M1 gap was flagged (M1.b), and so was the ring
   pulled to 0.21 µm from the array (pSD.d), so the deck does see these cells.
-* **Bad parameters** (`l` < Lmin, `l` off the 5 nm grid, `ng` < 1) raise an
-  error and produce an empty cell.
+* **Bad parameters** (`l` < Lmin, `l` off the 5 nm grid, `ng` < 1, an array too
+  long for the 80 µm frame) raise an error and produce an empty cell.
 * **Not yet verified.** PDK LVS (needs a schematic, KLayout ≥ 0.30.2) and ESD
   adequacy of the ring spacing and `l` choices.
+
+The test scripts are in `test_m1/`. Run them from any working directory; they
+write their GDS there:
+
+```sh
+python3 scripts/pcells/test_m1/test_m1.py m1_cells.gds     # PCell path + extraction (needs the PDK)
+python3 scripts/pcells/test_m1/xor_engine.py m1_cells.gds  # PCell output == engine output; 80u == Clamp_N/P
+python3 scripts/pcells/test_m1/drc_gds.py m1_drc.gds       # DRC input, + IHP baseline cells
+python3 scripts/pcells/test_m1/drc_negative_gds.py m1_neg.gds   # DRC must flag these
+python3 $PDKPATH/libs.tech/klayout/tech/drc/run_drc.py --path=m1_drc.gds --topcell=TOP --run_mode=flat --no_density
+python3 $PDKPATH/libs.tech/klayout/tech/drc/run_drc.py --path=m1_neg.gds --topcell=TOP --run_mode=flat --no_density
+```

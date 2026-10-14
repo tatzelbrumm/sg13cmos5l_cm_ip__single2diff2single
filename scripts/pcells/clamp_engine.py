@@ -22,7 +22,7 @@
 #
 # The section at the end (generate_m1) builds the M1-only variants Clamp_N_M1 /
 # Clamp_P_M1 from the same array rules: no M2/M3, no tie block, variable gate
-# length, guard rings that wrap the array instead of the fixed 80 um frame.
+# length, guard rings that wrap the array or form the fixed 80 um frame.
 #
 # Shapes are tuples  (layer, purpose, kind, data)
 #   kind 'box'  : data = (x1, y1, x2, y2)
@@ -372,10 +372,12 @@ def generate(family, ng, tie, refdata):
 #     joined from above. In P the two device rows share one M1 column.
 #   - no gate tie-off (antenna diode or rppd): the M1 gate bus is the pin 'gate'.
 #   - gate length l is a parameter: the diffusion widths stay, the pitch grows with l.
-#   - the guard rings keep the IHP cross-section and the whole y layout, but wrap the
-#     array in x with the spacings the IHP cells have in y (device Activ -> inner
-#     ring 0.61 um, inner ring -> outer ring 1.46 um). So the array starts at
-#     x = 2.75 um as it does at y = 2.75 um, and the cell is array length + 5.5 um wide.
+#   - the guard rings keep the IHP cross-section and the whole y layout. By default
+#     they wrap the array in x with the spacings the IHP cells have in y (device
+#     Activ -> inner ring 0.61 um, inner ring -> outer ring 1.46 um), so the array
+#     starts at x = 2.75 um as it does at y = 2.75 um, and the cell is array length
+#     + 5.5 um wide. With width = 80000 the rings form IHP's fixed 80 um frame and
+#     the array is centred in it, as in Clamp_N / Clamp_P.
 # ----------------------------------------------------------------------------------
 RING_W = 340       # ring Activ / M1 width
 RING_IN = 1800     # inner ring inset from the cell edge (the outer ring has inset 0)
@@ -405,16 +407,26 @@ def _cont_row(a0, a1):
     return [start + k * CONT_PITCH for k in range(n)]
 
 
-def generate_m1(family, ng, l):
-    """Complete M1-only clamp: (shapes, texts). l = gate length in nm."""
+def generate_m1(family, ng, l, width=None):
+    """Complete M1-only clamp: (shapes, texts). l = gate length in nm.
+    width = None: rings wrap the array; else fixed cell width in nm (80000 as IHP),
+    array centred (on the 5 nm grid)."""
     f = FAMILY[family]
     if ng < 1:
         raise ClampError('ng must be >= 1')
     if l % GRID:
         raise ClampError('l = %d nm is not on the %d nm grid' % (l, GRID))
-    xa0, xa1 = array_extent(ng, l, ARRAY_X0)
-    W, H = xa1 + ARRAY_X0, f['height']
-    src, drn = columns(ng, l, ARRAY_X0)
+    n = array_extent(ng, l, 0)[1]                     # active length of the array
+    if width is None:
+        x0, W = ARRAY_X0, n + 2 * ARRAY_X0
+    else:
+        x0, W = (width - n) // (2 * GRID) * GRID, width
+        if x0 < ARRAY_X0:
+            raise ClampError('ng = %d, l = %d nm: array (%.2f um) does not fit in the %.0f um frame'
+                             % (ng, l, n / 1e3, width / 1e3))
+    xa0, xa1 = array_extent(ng, l, x0)
+    H = f['height']
+    src, drn = columns(ng, l, x0)
     s, t = [], []
 
     # finger array
@@ -441,7 +453,7 @@ def generate_m1(family, ng, l):
             _box(s, 'Metal1', purpose, xc - 310, sd_y0, xc + 310, sd_y1)
         t.append(('Metal1', 'text', 'pad', xc, f['pad_label_y'], 0, 'center', 'center', 'R0'))
 
-    g = gate_lefts(ng, l, ARRAY_X0)
+    g = gate_lefts(ng, l, x0)
     dx = (l - CONT) // 2 // GRID * GRID   # gate contact and M1 strip inside the gate (220 for l = 600)
     for gl in g:
         _box(s, 'GatPoly', 'drawing', gl, f['poly'][0], gl + l, f['poly'][1])

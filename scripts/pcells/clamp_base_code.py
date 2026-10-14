@@ -8,7 +8,7 @@
 # (compare sg13cmos5l_pycell_lib/ihp/rfmosfet_base_code.py).
 #
 # clamp_base     -> Clamp_N, Clamp_P        (IHP cells, parameters ng, tie)
-# clamp_m1_base  -> Clamp_N_M1, Clamp_P_M1  (M1 only, no tie block, parameters ng, l)
+# clamp_m1_base  -> Clamp_N_M1, Clamp_P_M1  (M1 only, no tie block, parameters ng, l, frame)
 #
 ########################################################################
 
@@ -104,18 +104,21 @@ class clamp_m1_base(clamp_base):
         specs('model', f['model'], 'Model name')
         specs('ng', cls.DEF_NG, 'Number of gate fingers')
         specs('l', '0.6u', 'Gate length')
+        specs('frame', 'fit', "Guard rings: fit = wrap the array, 80u = IHP's fixed 80 um frame, array centred",
+              ChoiceConstraint(['fit', '80u']))
         specs('Lmin', techparams[cls.MIN_L[cls.FAMILY]], 'Lmin')
 
     def setupParams(self, params):
         self.ng = int(params['ng'])
         self.l = int(round(Numeric(params['l']) * 1e9))        # nm
         self.lmin = int(round(Numeric(params['Lmin']) * 1e9))
+        self.frame = params['frame']
 
     def genLayout(self):
         try:
             if self.l < self.lmin:
                 raise ClampError('l = %d nm < Lmin = %d nm' % (self.l, self.lmin))
-            shapes, texts = generate_m1(self.FAMILY, self.ng, self.l)
+            shapes, texts = generate_m1(self.FAMILY, self.ng, self.l, 80000 if self.frame == '80u' else None)
         except ClampError as e:
             raise Exception('%s: %s' % (self.__class__.__name__, e))
 
