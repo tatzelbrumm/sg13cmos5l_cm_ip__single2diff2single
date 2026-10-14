@@ -80,6 +80,32 @@ confusing failure, not an error message.
 
 ---
 
+## C. PCells: activating libraries in interactive `klayout -e`
+
+Who registers what:
+
+* IHP `SG13_dev` (the PDK's own PCells): automatic. The PDK's autorun pymacro
+  (`libs.tech/klayout/tech/pymacros/autorun.lym`) runs at GUI start once `.designinit`
+  has set `KLAYOUT_PATH`. Nothing to do.
+* Your own libraries (e.g. `SG13_cm_clamps`): not autorun. Load once per session.
+  - At launch, from the repo root after `source .designinit`:
+    `klayout -e -rm scripts/pcells/load_clamp_pcells.py layout/klayout/<top>.klay.gds`
+  - Already running: Macros > Macro Development, open the loader file, run it.
+    (Menu wording from memory, not checked in the GUI.)
+* Generic template: copy `register_pcell_lib_template.py` (this folder), rename,
+  fill in the placeholders, then load it the same way as the clamp loader.
+
+Check it worked:
+
+* Library Selector lists the library name.
+* Or in the Macro Development console:
+  `pya.Library.library_by_name("<LIB>", "sg13cmos5l")` is not `None`.
+
+Batch scripts (`klayout -b`): autorun does not run, so the script must register
+its own library before placing cells.
+
+---
+
 Sources: `sg13cmos5l_cm_ip__single2diff2single/CLAUDE.md` §§2, 4, 5; `README.md`
 ("KLayout editing source" section, mixed-signal `.klib` example); the cwd-resolution
 bug as debugged in `save_from_claudes_fuckup/2026-08-30_i_claude_rename.md`.
