@@ -1,3 +1,0 @@
-# Source the project's normal xschemrc.
-# Adjust this one line if your project xschemrc lives elsewhere.
-source [file dirname [info script]]/../../xschemrc
