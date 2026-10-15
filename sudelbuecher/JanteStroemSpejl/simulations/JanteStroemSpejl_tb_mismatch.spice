@@ -37,21 +37,22 @@ VMON10 CL10 OUT10 0
 .control
   set wr_singlescale
   set wr_vecnames
+  shell rm -f JanteStroemSpejl_mismatch.dat
   set appendwrite
   let run = 0
   dowhile run < 5
     reset
     op
-  let e01 = (-i(VMON01)/100u)-1
-  let e02 = (-i(VMON02)/100u)-1
-  let e03 = (-i(VMON03)/100u)-1
-  let e04 = (-i(VMON04)/100u)-1
-  let e05 = (-i(VMON05)/100u)-1
-  let e06 = (-i(VMON06)/100u)-1
-  let e07 = (-i(VMON07)/100u)-1
-  let e08 = (-i(VMON08)/100u)-1
-  let e09 = (-i(VMON09)/100u)-1
-  let e10 = (-i(VMON10)/100u)-1
+  let e01 = (i(VMON01)/100u)-1
+  let e02 = (i(VMON02)/100u)-1
+  let e03 = (i(VMON03)/100u)-1
+  let e04 = (i(VMON04)/100u)-1
+  let e05 = (i(VMON05)/100u)-1
+  let e06 = (i(VMON06)/100u)-1
+  let e07 = (i(VMON07)/100u)-1
+  let e08 = (i(VMON08)/100u)-1
+  let e09 = (i(VMON09)/100u)-1
+  let e10 = (i(VMON10)/100u)-1
     wrdata JanteStroemSpejl_mismatch.dat run e01 e02 e03 e04 e05 e06 e07 e08 e09 e10
     let run = run + 1
   end
@@ -88,28 +89,28 @@ VMON10 CL10 OUT10 0
 
 
 **** end user architecture code
-XM_L01 OUT01 IREF S net1 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R01 OUT01 IREF S net2 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L02 S IREF S net3 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R02 S IREF S net4 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L03 S IREF S net5 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R03 S IREF S net6 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L04 S IREF S net7 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R04 S IREF S net8 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L05 S IREF S net9 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R05 S IREF S net10 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L06 S IREF S net11 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R06 S IREF S net12 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L07 S IREF S net13 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R07 S IREF S net14 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L08 S IREF S net15 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R08 S IREF S net16 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L09 S IREF S net17 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R09 S IREF S net18 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L10 S IREF S net19 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R10 S IREF S net20 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L11 S IREF S net21 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R11 S IREF S net22 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L01 OUT01 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R01 OUT01 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L02 OUT02 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R02 OUT02 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L03 OUT03 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R03 OUT03 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L04 OUT04 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R04 OUT04 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L05 OUT05 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R05 OUT05 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L06 IREF IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R06 IREF IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L07 OUT06 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R07 OUT06 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L08 OUT07 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R08 OUT07 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L09 OUT08 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R09 OUT08 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L10 OUT09 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R10 OUT09 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L11 OUT10 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R11 OUT10 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
 .ends
 
 .end

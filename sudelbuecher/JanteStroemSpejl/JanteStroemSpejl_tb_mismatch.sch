@@ -62,21 +62,22 @@ value="
 .control
   set wr_singlescale
   set wr_vecnames
+  shell rm -f JanteStroemSpejl_mismatch.dat
   set appendwrite
   let run = 0
   dowhile run < 5
     reset
     op
-  let e01 = (-i(VMON01)/100u)-1
-  let e02 = (-i(VMON02)/100u)-1
-  let e03 = (-i(VMON03)/100u)-1
-  let e04 = (-i(VMON04)/100u)-1
-  let e05 = (-i(VMON05)/100u)-1
-  let e06 = (-i(VMON06)/100u)-1
-  let e07 = (-i(VMON07)/100u)-1
-  let e08 = (-i(VMON08)/100u)-1
-  let e09 = (-i(VMON09)/100u)-1
-  let e10 = (-i(VMON10)/100u)-1
+  let e01 = (i(VMON01)/100u)-1
+  let e02 = (i(VMON02)/100u)-1
+  let e03 = (i(VMON03)/100u)-1
+  let e04 = (i(VMON04)/100u)-1
+  let e05 = (i(VMON05)/100u)-1
+  let e06 = (i(VMON06)/100u)-1
+  let e07 = (i(VMON07)/100u)-1
+  let e08 = (i(VMON08)/100u)-1
+  let e09 = (i(VMON09)/100u)-1
+  let e10 = (i(VMON10)/100u)-1
     wrdata JanteStroemSpejl_mismatch.dat run e01 e02 e03 e04 e05 e06 e07 e08 e09 e10
     let run = run + 1
   end
