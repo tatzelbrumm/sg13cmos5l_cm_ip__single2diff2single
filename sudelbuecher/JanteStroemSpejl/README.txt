@@ -4,7 +4,11 @@ CACE-only files for JanteStroemSpejl
 These files do NOT replace or modify:
   JanteStroemSpejl.sch
   JanteStroemSpejl.sym
-  JanteStroemSpejl_tb_mismatch.sch
+The development testbench JanteStroemSpejl_tb_mismatch.sch is separate.
+Its reference current is now  .param IREF=10u  (block PARAMS); the
+.control section reads the same value through  .csparam irefval=IREF .
+10u is the worst-case-safe choice: V(IREF) <= 1.11 V over
+ss/tt/ff/sf/fs x -55/27/125 C (ss, 125 C is the worst case).
 
 The dedicated CACE testbench is:
   cace/templates/JanteStroemSpejl_cace_mismatch.sch
@@ -24,7 +28,12 @@ Run, inside IIC-OSIC-TOOLS (about 10 minutes each with -j 8):
 --parallel-parameters 1: two xschem processes started at the same moment
 crashed once in five runs (Tcl_AppInit, exit -11).
 Results: runs/RUN_<date>/parameters/<parameter>/
-Write-up with all numbers: REPORT.md
+Datasheet with figures: docs/JanteStroemSpejl[HV].md and
+docs/JanteStroemSpejl[HV]_schematic.md (overwritten on every run).
+Histograms with common bin edges, for comparing peak heights:
+  python3 cace/scripts/replot_shared_bins.py runs/RUN_<date>
+  -> runs/RUN_<date>/parameters/<parameter>/<parameter>_shared_bins.svg
+Write-up with all numbers: REPORT.md (pictures in pix/, sources in ref/)
 
 
 2026-10-15 fix (Claude Opus, after ChatGPT)
@@ -60,7 +69,8 @@ What was wrong, in the order CACE would have hit it
    .include CACE\{DUT_path\} .
 
 4. Operating point outside the device ratings (inherited from the
-   development testbench JanteStroemSpejl_tb_mismatch.sch, still at 100u).
+   development testbench JanteStroemSpejl_tb_mismatch.sch, which is now
+   set to IREF = 10u as well).
    IREF = 100 uA from an ideal current source into the diode pair
    (2 x sg13_lv_nmos, W/L = 0.32u/5.12u) forced V(IREF) = 3.3 V. The
    ideal source ignores the 1.2 V VDD next to it. SG13CMOS5L process spec,
@@ -96,12 +106,17 @@ repeatable draw. Without it ngspice seeds from the process id: still
 different per run, but not reproducible. Both currents use the same seeds,
 so iteration k is the same "chip" at 3u and at 10u.
 
-Known CACE 2.11.0 quirk (cosmetic)
-----------------------------------
+Known CACE 2.11.0 quirks
+------------------------
 
-With more than one condition set CACE draws a legend and saves with
-bbox_extra_artists=[legend]. The tight bounding box then drops the plot
-title, which is in the SVG but cropped.
+Misleading histograms: every condition set gets its own ax.hist(...,
+bins="auto"), so the bin width scales with each set's own sigma and the
+peaks come out equally high. Don't compare peak heights in CACE's plots;
+use cace/scripts/replot_shared_bins.py.
+
+Cosmetic: with more than one condition set CACE draws a legend and saves
+with bbox_extra_artists=[legend]. The tight bounding box then drops the
+plot title, which is in the SVG but cropped.
 
 Unused leftover: cace/templates/xschemrc. CACE netlists with the PDK
 xschemrc, not this one.

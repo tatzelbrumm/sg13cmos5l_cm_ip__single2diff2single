@@ -13,7 +13,7 @@ N 300 -390 300 -360 {lab=IREF}
 C {JanteStroemSpejl.sym} 430 -500 0 0 {name=XJANTE}
 C {devices/gnd.sym} 200 -300 0 0 {name=GND1 lab=0}
 C {devices/vsource.sym} 200 -420 0 0 {name=VDD value=1.2}
-C {devices/isource.sym} 300 -420 0 0 {name=IREFSRC value=100u}
+C {devices/isource.sym} 300 -420 0 0 {name=IREFSRC value=\{IREF\}}
 C {devices/lab_pin.sym} 300 -360 3 0 {name=lref lab=IREF}
 C {devices/lab_pin.sym} 270 -640 0 0 {name=li lab=IREF}
 C {devices/lab_pin.sym} 270 -580 0 0 {name=ls lab=0}
@@ -28,6 +28,13 @@ C {devices/lab_pin.sym} 590 -440 2 0 {name=lout07 lab=OUT07}
 C {devices/lab_pin.sym} 590 -400 2 0 {name=lout08 lab=OUT08}
 C {devices/lab_pin.sym} 590 -360 2 0 {name=lout09 lab=OUT09}
 C {devices/lab_pin.sym} 590 -320 2 0 {name=lout10 lab=OUT10}
+T {IREF = 10u: worst case V(IREF) = 1.11 V (ss, +125 C); LV NMOS limits VGS <= 1.65 V, BVDSS >= 2.0 V.} 40 -850 0 0 0.3 0.3 {}
+T {Sweep ss/tt/ff/sf/fs x -55/27/125 C: IREF reaches 1.2 V at 11.9u, 1.65 V at 23u (ss, +125 C).} 40 -825 0 0 0.3 0.3 {}
+C {devices/code_shown.sym} 40 -260 0 0 {name=PARAMS only_toplevel=true
+value="
+.param IREF=10u
+.csparam irefval=IREF
+"}
 C {devices/code_shown.sym} 700 -780 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
 value="
@@ -68,16 +75,16 @@ value="
   dowhile run < 5
     reset
     op
-  let e01 = (i(VMON01)/100u)-1
-  let e02 = (i(VMON02)/100u)-1
-  let e03 = (i(VMON03)/100u)-1
-  let e04 = (i(VMON04)/100u)-1
-  let e05 = (i(VMON05)/100u)-1
-  let e06 = (i(VMON06)/100u)-1
-  let e07 = (i(VMON07)/100u)-1
-  let e08 = (i(VMON08)/100u)-1
-  let e09 = (i(VMON09)/100u)-1
-  let e10 = (i(VMON10)/100u)-1
+  let e01 = (i(VMON01)/irefval)-1
+  let e02 = (i(VMON02)/irefval)-1
+  let e03 = (i(VMON03)/irefval)-1
+  let e04 = (i(VMON04)/irefval)-1
+  let e05 = (i(VMON05)/irefval)-1
+  let e06 = (i(VMON06)/irefval)-1
+  let e07 = (i(VMON07)/irefval)-1
+  let e08 = (i(VMON08)/irefval)-1
+  let e09 = (i(VMON09)/irefval)-1
+  let e10 = (i(VMON10)/irefval)-1
     wrdata JanteStroemSpejl_mismatch.dat run e01 e02 e03 e04 e05 e06 e07 e08 e09 e10
     let run = run + 1
   end

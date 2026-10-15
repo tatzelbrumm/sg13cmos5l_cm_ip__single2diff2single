@@ -13,6 +13,7 @@ paths:
   schematic: .
   netlist: netlist
   runs: runs
+  documentation: docs
 
 default_conditions:
   iterations:
