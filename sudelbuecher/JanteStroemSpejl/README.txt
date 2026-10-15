@@ -9,14 +9,22 @@ These files do NOT replace or modify:
 The dedicated CACE testbench is:
   cace/templates/JanteStroemSpejl_cace_mismatch.sch
 
-It contains exactly one operating-point run. CACE performs the outer loop:
-500 iterations x 2 reference currents (iref = 3u, 10u) = 1000 ngspice runs.
-The histogram overlays the two currents, each pooling 10 outputs x 500 runs.
+It contains exactly one operating-point run. CACE performs the outer loop.
+One template serves two datasheets:
+  cace/JanteStroemSpejl.yaml    thin oxide,  sg13_lv_nmos (JanteStroemSpejl.sch)
+  cace/JanteStroemSpejlHV.yaml  thick oxide, sg13_hv_nmos (JanteStroemSpejlHV.sch)
+Each has two parameters, 500 iterations each:
+  mirror_mismatch  iref = 3u, 10u; outputs at V(IREF)     -> pooled_mismatch.svg
+  mirror_rout      iref = 3u; outputs at V(IREF)+dvds,
+                   dvds = -0.3, 0, +0.3 V                 -> rout_shift.svg
 
-Run, inside IIC-OSIC-TOOLS (about 5 minutes with -j 8):
-  cace cace/JanteStroemSpejl.yaml --source schematic -j 8
-Result:
-  runs/RUN_<date>/parameters/mirror_mismatch/pooled_mismatch.svg
+Run, inside IIC-OSIC-TOOLS (about 10 minutes each with -j 8):
+  cace cace/JanteStroemSpejl.yaml   --source schematic -j 8 --parallel-parameters 1
+  cace cace/JanteStroemSpejlHV.yaml --source schematic -j 8 --parallel-parameters 1
+--parallel-parameters 1: two xschem processes started at the same moment
+crashed once in five runs (Tcl_AppInit, exit -11).
+Results: runs/RUN_<date>/parameters/<parameter>/
+Write-up with all numbers: REPORT.md
 
 
 2026-10-15 fix (Claude Opus, after ChatGPT)

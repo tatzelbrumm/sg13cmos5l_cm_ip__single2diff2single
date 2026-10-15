@@ -7,10 +7,11 @@ F {}
 E {}
 T {CACE-only mismatch testbench; do not use as the development testbench} 40 -900 0 0 0.5 0.5 {}
 T {One OP per CACE iteration. VDUMMY is electrically isolated; it only shows the iteration. SEED makes each iteration a distinct, repeatable draw.} 40 -875 0 0 0.3 0.3 {}
+T {DUT symbol = datasheet name (JanteStroemSpejl or JanteStroemSpejlHV). Outputs sit at V(IREF)+dvds.} 40 -850 0 0 0.3 0.3 {}
 N 200 -390 200 -300 {lab=0}
 N 200 -450 300 -450 {lab=#net1}
 N 300 -390 300 -360 {lab=IREF}
-C {JanteStroemSpejl.sym} 430 -500 0 0 {name=XJANTE}
+C {CACE\{DUT_name\}.sym} 430 -500 0 0 {name=XJANTE}
 C {devices/gnd.sym} 200 -300 0 0 {name=GND1 lab=0}
 C {devices/vsource.sym} 200 -420 0 0 {name=VDD value=1.2}
 C {devices/isource.sym} 300 -420 0 0 {name=IREFSRC value=CACE\{iref\}}
@@ -38,29 +39,31 @@ C {devices/code_shown.sym} 700 -780 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
 value="
 .lib cornerMOSlv.lib mos_tt_mismatch
+.lib cornerMOShv.lib mos_tt_mismatch
 "}
 
 C {devices/code_shown.sym} 700 -690 0 0 {name=CLAMPS only_toplevel=true
 value="
-ECL01 CL01 0 IREF 0 1
+VDVDS DREF IREF CACE\{dvds=0\}
+ECL01 CL01 0 DREF 0 1
 VMON01 CL01 OUT01 0
-ECL02 CL02 0 IREF 0 1
+ECL02 CL02 0 DREF 0 1
 VMON02 CL02 OUT02 0
-ECL03 CL03 0 IREF 0 1
+ECL03 CL03 0 DREF 0 1
 VMON03 CL03 OUT03 0
-ECL04 CL04 0 IREF 0 1
+ECL04 CL04 0 DREF 0 1
 VMON04 CL04 OUT04 0
-ECL05 CL05 0 IREF 0 1
+ECL05 CL05 0 DREF 0 1
 VMON05 CL05 OUT05 0
-ECL06 CL06 0 IREF 0 1
+ECL06 CL06 0 DREF 0 1
 VMON06 CL06 OUT06 0
-ECL07 CL07 0 IREF 0 1
+ECL07 CL07 0 DREF 0 1
 VMON07 CL07 OUT07 0
-ECL08 CL08 0 IREF 0 1
+ECL08 CL08 0 DREF 0 1
 VMON08 CL08 OUT08 0
-ECL09 CL09 0 IREF 0 1
+ECL09 CL09 0 DREF 0 1
 VMON09 CL09 OUT09 0
-ECL10 CL10 0 IREF 0 1
+ECL10 CL10 0 DREF 0 1
 VMON10 CL10 OUT10 0
 "}
 

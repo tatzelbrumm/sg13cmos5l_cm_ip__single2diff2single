@@ -63,3 +63,39 @@ parameters:
       iref:
         display: Reference current
         enumerate: [3u, 10u]
+
+  mirror_rout:
+    display: Mirror output resistance
+    description: Relative output-current error at VDS(out)=VGS(ref)+dvds, IREF=3uA
+    tool:
+      ngspice:
+        template: JanteStroemSpejl_cace_mismatch.sch
+        collate: iterations
+        format: ascii
+        suffix: .data
+        variables: [e01, e02, e03, e04, e05, e06, e07, e08, e09, e10]
+        script: pool_mismatch.py
+        script_variables: [error_all]
+    variables:
+      error_all:
+        display: Relative current error
+        unit: ""
+    plot:
+      rout_shift:
+        type: histogram
+        xaxis: error_all
+        title: JanteStroemSpejl r_out vs. local mismatch
+        suffix: .svg
+        limits: false
+    conditions:
+      iterations:
+        minimum: 1
+        maximum: 500
+        step: linear
+        stepsize: 1
+      iref:
+        display: Reference current
+        enumerate: [3u]
+      dvds:
+        display: VDS(out) - VGS(ref)
+        enumerate: [-0.3, 0, 0.3]
