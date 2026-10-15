@@ -6,14 +6,14 @@ S {}
 F {}
 E {}
 T {CACE-only mismatch testbench; do not use as the development testbench} 40 -900 0 0 0.5 0.5 {}
-T {One OP per CACE iteration. VDUMMY is electrically isolated and exists only so CACE sees the iterations condition.} 40 -875 0 0 0.3 0.3 {}
+T {One OP per CACE iteration. VDUMMY is electrically isolated; it only shows the iteration. SEED makes each iteration a distinct, repeatable draw.} 40 -875 0 0 0.3 0.3 {}
 N 200 -390 200 -300 {lab=0}
 N 200 -450 300 -450 {lab=#net1}
 N 300 -390 300 -360 {lab=IREF}
 C {JanteStroemSpejl.sym} 430 -500 0 0 {name=XJANTE}
 C {devices/gnd.sym} 200 -300 0 0 {name=GND1 lab=0}
 C {devices/vsource.sym} 200 -420 0 0 {name=VDD value=1.2}
-C {devices/isource.sym} 300 -420 0 0 {name=IREFSRC value=100u}
+C {devices/isource.sym} 300 -420 0 0 {name=IREFSRC value=CACE\{iref\}}
 C {devices/lab_pin.sym} 300 -360 3 0 {name=lref lab=IREF}
 C {devices/lab_pin.sym} 270 -640 0 0 {name=li lab=IREF}
 C {devices/lab_pin.sym} 270 -580 0 0 {name=ls lab=0}
@@ -29,7 +29,7 @@ C {devices/lab_pin.sym} 590 -400 2 0 {name=lout08 lab=OUT08}
 C {devices/lab_pin.sym} 590 -360 2 0 {name=lout09 lab=OUT09}
 C {devices/lab_pin.sym} 590 -320 2 0 {name=lout10 lab=OUT10}
 
-C {devices/vsource.sym} 1040 -420 0 0 {name=VDUMMY value=CACE{iterations}}
+C {devices/vsource.sym} 1040 -420 0 0 {name=VDUMMY value=CACE\{iterations\}}
 C {devices/gnd.sym} 1040 -360 0 0 {name=GDUMMY lab=0}
 N 1040 -390 1040 -360 {lab=0}
 C {devices/lab_pin.sym} 1040 -450 1 0 {name=ldummy lab=CACE_ITERATION}
@@ -66,20 +66,22 @@ VMON10 CL10 OUT10 0
 
 C {devices/code_shown.sym} 700 -260 0 0 {name=NGSPICE only_toplevel=true
 value="
+.include CACE\{DUT_path\}
 .temp 27
+.option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 .control
   op
-  let e01 = (i(VMON01)/100u)-1
-  let e02 = (i(VMON02)/100u)-1
-  let e03 = (i(VMON03)/100u)-1
-  let e04 = (i(VMON04)/100u)-1
-  let e05 = (i(VMON05)/100u)-1
-  let e06 = (i(VMON06)/100u)-1
-  let e07 = (i(VMON07)/100u)-1
-  let e08 = (i(VMON08)/100u)-1
-  let e09 = (i(VMON09)/100u)-1
-  let e10 = (i(VMON10)/100u)-1
-  echo $&e01 $&e02 $&e03 $&e04 $&e05 $&e06 $&e07 $&e08 $&e09 $&e10 > CACE{simpath}/CACE{filename}.data
+  let e01 = (i(VMON01)/CACE\{iref\})-1
+  let e02 = (i(VMON02)/CACE\{iref\})-1
+  let e03 = (i(VMON03)/CACE\{iref\})-1
+  let e04 = (i(VMON04)/CACE\{iref\})-1
+  let e05 = (i(VMON05)/CACE\{iref\})-1
+  let e06 = (i(VMON06)/CACE\{iref\})-1
+  let e07 = (i(VMON07)/CACE\{iref\})-1
+  let e08 = (i(VMON08)/CACE\{iref\})-1
+  let e09 = (i(VMON09)/CACE\{iref\})-1
+  let e10 = (i(VMON10)/CACE\{iref\})-1
+  echo $&e01 $&e02 $&e03 $&e04 $&e05 $&e06 $&e07 $&e08 $&e09 $&e10 > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
   quit
 .endc
 "}

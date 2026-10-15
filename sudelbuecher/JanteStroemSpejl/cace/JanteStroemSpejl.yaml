@@ -23,7 +23,7 @@ default_conditions:
 parameters:
   mirror_mismatch:
     display: Mirror mismatch
-    description: Relative output-current error at VDS(out)=VGS(ref), IREF=100uA
+    description: Relative output-current error at VDS(out)=VGS(ref)
     tool:
       ngspice:
         template: JanteStroemSpejl_cace_mismatch.sch
@@ -60,3 +60,6 @@ parameters:
         maximum: 500
         step: linear
         stepsize: 1
+      iref:
+        display: Reference current
+        enumerate: [3u, 10u]
