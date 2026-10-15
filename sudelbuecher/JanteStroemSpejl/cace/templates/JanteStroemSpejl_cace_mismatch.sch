@@ -73,6 +73,7 @@ value="
 .temp 27
 .option SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 .control
+  set num_threads=1
   op
   let e01 = (i(VMON01)/CACE\{iref\})-1
   let e02 = (i(VMON02)/CACE\{iref\})-1
