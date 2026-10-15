@@ -1,0 +1,61 @@
+name: JanteStroemSpejl
+description: Ten-output Jante current mirror mismatch characterization
+PDK: ihp-sg13cmos5l
+cace_format: 5.2
+
+paths:
+  root: ..
+  schematic: .
+  netlist: netlist
+  documentation: docs
+  runs: runs
+
+default_conditions:
+  iterations:
+    display: MC run
+    description: Local mismatch Monte Carlo iteration
+    minimum: 1
+    maximum: 500
+    step: linear
+    stepsize: 1
+
+parameters:
+  mirror_mismatch:
+    display: Mirror mismatch
+    description: Relative output-current error at VDS(out)=VGS(ref), IREF=100uA
+    tool:
+      ngspice:
+        template: JanteStroemSpejl_cace_mm.sch
+        collate: iterations
+        format: ascii
+        suffix: .data
+        variables: [e01, e02, e03, e04, e05, e06, e07, e08, e09, e10]
+        script: pool_mismatch.py
+        script_variables: [error_all]
+    variables:
+      error_all:
+        display: Relative current error
+        unit: ""
+      e01: {display: OUT01 error, unit: ""}
+      e02: {display: OUT02 error, unit: ""}
+      e03: {display: OUT03 error, unit: ""}
+      e04: {display: OUT04 error, unit: ""}
+      e05: {display: OUT05 error, unit: ""}
+      e06: {display: OUT06 error, unit: ""}
+      e07: {display: OUT07 error, unit: ""}
+      e08: {display: OUT08 error, unit: ""}
+      e09: {display: OUT09 error, unit: ""}
+      e10: {display: OUT10 error, unit: ""}
+    plot:
+      pooled_mismatch:
+        type: histogram
+        xaxis: error_all
+        title: JanteStrømSpejl — pooled local mismatch
+        suffix: .svg
+        limits: false
+    conditions:
+      iterations:
+        minimum: 1
+        maximum: 500
+        step: linear
+        stepsize: 1
