@@ -5,10 +5,10 @@ V {}
 S {}
 F {}
 E {}
+T {Mismatch characterization: 10 mirror outputs at VDS = VGS(ref)} 40 -900 0 0 0.5 0.5 {}
+T {Each output is clamped by an independent unity-gain VCVS, so it does not load IREF.} 40 -875 0 0 0.3 0.3 {}
 N 200 -390 200 -300 {lab=0}
-N 200 -450 300 -450 {lab=VDD}
-N 200 -450 200 -450 {lab=VDD}
-N 300 -450 300 -450 {lab=VDD}
+N 200 -450 300 -450 {lab=#net1}
 N 300 -390 300 -360 {lab=IREF}
 C {JanteStroemSpejl.sym} 430 -500 0 0 {name=XJANTE}
 C {devices/gnd.sym} 200 -300 0 0 {name=GND1 lab=0}
@@ -64,7 +64,7 @@ value="
   set wr_vecnames
   set appendwrite
   let run = 0
-  dowhile run < 500
+  dowhile run < 5
     reset
     op
   let e01 = (-i(VMON01)/100u)-1
@@ -85,5 +85,3 @@ value="
 "}
 C {devices/launcher.sym} 1000 -820 0 0 {name=h1 descr="simulate mismatch"
 tclcommand="xschem save; xschem netlist; xschem simulate"}
-T {Mismatch characterization: 10 mirror outputs at VDS = VGS(ref)} 40 -900 0 0 0.5 0.5 {}
-T {Each output is clamped by an independent unity-gain VCVS, so it does not load IREF.} 40 -875 0 0 0.3 0.3 {}

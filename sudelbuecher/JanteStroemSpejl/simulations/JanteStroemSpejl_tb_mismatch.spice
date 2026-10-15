@@ -39,7 +39,7 @@ VMON10 CL10 OUT10 0
   set wr_vecnames
   set appendwrite
   let run = 0
-  dowhile run < 500
+  dowhile run < 5
     reset
     op
   let e01 = (-i(VMON01)/100u)-1
@@ -88,28 +88,28 @@ VMON10 CL10 OUT10 0
 
 
 **** end user architecture code
-XM_L01 net1 net2 net3 net4 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R01 net5 net6 net7 net8 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L02 net9 net10 net11 net12 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R02 net13 net14 net15 net16 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L03 net17 net18 net19 net20 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R03 net21 net22 net23 net24 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L04 net25 net26 net27 net28 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R04 net29 net30 net31 net32 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L05 net33 net34 net35 net36 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R05 net37 net38 net39 net40 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L06 net41 net42 net43 net44 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R06 net45 net46 net47 net48 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L07 net49 net50 net51 net52 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R07 net53 net54 net55 net56 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L08 net57 net58 net59 net60 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R08 net61 net62 net63 net64 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L09 net65 net66 net67 net68 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R09 net69 net70 net71 net72 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L10 net73 net74 net75 net76 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R10 net77 net78 net79 net80 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_L11 net81 net82 net83 net84 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
-XM_R11 net85 net86 net87 net88 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L01 OUT01 IREF S net1 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R01 OUT01 IREF S net2 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L02 S IREF S net3 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R02 S IREF S net4 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L03 S IREF S net5 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R03 S IREF S net6 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L04 S IREF S net7 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R04 S IREF S net8 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L05 S IREF S net9 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R05 S IREF S net10 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L06 S IREF S net11 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R06 S IREF S net12 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L07 S IREF S net13 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R07 S IREF S net14 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L08 S IREF S net15 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R08 S IREF S net16 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L09 S IREF S net17 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R09 S IREF S net18 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L10 S IREF S net19 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R10 S IREF S net20 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L11 S IREF S net21 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R11 S IREF S net22 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
 .ends
 
 .end
