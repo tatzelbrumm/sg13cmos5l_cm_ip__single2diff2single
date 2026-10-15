@@ -58,7 +58,7 @@ VMON10 CL10 OUT10 0
 "}
 C {devices/code_shown.sym} 700 -260 0 0 {name=NGSPICE only_toplevel=true
 value="
-* CACE iteration CACE{iterations}
+.param cace_iteration=CACE{iterations}
 .temp 27
 .control
   op

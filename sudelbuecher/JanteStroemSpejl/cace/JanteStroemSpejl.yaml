@@ -14,6 +14,7 @@ default_conditions:
   iterations:
     display: MC run
     description: Local mismatch Monte Carlo iteration
+    unit: ""
     minimum: 1
     maximum: 500
     step: linear
@@ -36,16 +37,6 @@ parameters:
       error_all:
         display: Relative current error
         unit: ""
-      e01: {display: OUT01 error, unit: ""}
-      e02: {display: OUT02 error, unit: ""}
-      e03: {display: OUT03 error, unit: ""}
-      e04: {display: OUT04 error, unit: ""}
-      e05: {display: OUT05 error, unit: ""}
-      e06: {display: OUT06 error, unit: ""}
-      e07: {display: OUT07 error, unit: ""}
-      e08: {display: OUT08 error, unit: ""}
-      e09: {display: OUT09 error, unit: ""}
-      e10: {display: OUT10 error, unit: ""}
     plot:
       pooled_mismatch:
         type: histogram
