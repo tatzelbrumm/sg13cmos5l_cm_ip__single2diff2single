@@ -1,0 +1,116 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/JanteStroemSpejl/JanteStroemSpejl_tb_mismatch.sch
+**.subckt JanteStroemSpejl_tb_mismatch
+XJANTE IREF 0 0 OUT01 OUT02 OUT03 OUT04 OUT05 OUT06 OUT07 OUT08 OUT09 OUT10 JanteStroemSpejl
+VDD net1 0 1.2
+IREFSRC net1 IREF 100u
+**** begin user architecture code
+
+.lib cornerMOSlv.lib mos_tt_mismatch
+
+
+
+ECL01 CL01 0 IREF 0 1
+VMON01 CL01 OUT01 0
+ECL02 CL02 0 IREF 0 1
+VMON02 CL02 OUT02 0
+ECL03 CL03 0 IREF 0 1
+VMON03 CL03 OUT03 0
+ECL04 CL04 0 IREF 0 1
+VMON04 CL04 OUT04 0
+ECL05 CL05 0 IREF 0 1
+VMON05 CL05 OUT05 0
+ECL06 CL06 0 IREF 0 1
+VMON06 CL06 OUT06 0
+ECL07 CL07 0 IREF 0 1
+VMON07 CL07 OUT07 0
+ECL08 CL08 0 IREF 0 1
+VMON08 CL08 OUT08 0
+ECL09 CL09 0 IREF 0 1
+VMON09 CL09 OUT09 0
+ECL10 CL10 0 IREF 0 1
+VMON10 CL10 OUT10 0
+
+
+
+
+.temp 27
+.control
+  set wr_singlescale
+  set wr_vecnames
+  shell rm -f JanteStroemSpejl_mismatch.dat
+  set appendwrite
+  let run = 0
+  dowhile run < 5
+    reset
+    op
+  let e01 = (i(VMON01)/100u)-1
+  let e02 = (i(VMON02)/100u)-1
+  let e03 = (i(VMON03)/100u)-1
+  let e04 = (i(VMON04)/100u)-1
+  let e05 = (i(VMON05)/100u)-1
+  let e06 = (i(VMON06)/100u)-1
+  let e07 = (i(VMON07)/100u)-1
+  let e08 = (i(VMON08)/100u)-1
+  let e09 = (i(VMON09)/100u)-1
+  let e10 = (i(VMON10)/100u)-1
+    wrdata JanteStroemSpejl_mismatch.dat run e01 e02 e03 e04 e05 e06 e07 e08 e09 e10
+    let run = run + 1
+  end
+  quit
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  JanteStroemSpejl.sym # of pins=13
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/JanteStroemSpejl/JanteStroemSpejl.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/JanteStroemSpejl/JanteStroemSpejl.sch
+.subckt JanteStroemSpejl IREF S B OUT01 OUT02 OUT03 OUT04 OUT05 OUT06 OUT07 OUT08 OUT09 OUT10
+*.iopin IREF
+*.iopin S
+*.iopin B
+*.iopin OUT01
+*.iopin OUT02
+*.iopin OUT03
+*.iopin OUT04
+*.iopin OUT05
+*.iopin OUT06
+*.iopin OUT07
+*.iopin OUT08
+*.iopin OUT09
+*.iopin OUT10
+**** begin user architecture code
+
+
+.param lambda=0.08u
+.param WJ='4*lambda'
+.param LJ='64*lambda'
+
+
+**** end user architecture code
+XM_L01 OUT01 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R01 OUT01 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L02 OUT02 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R02 OUT02 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L03 OUT03 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R03 OUT03 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L04 OUT04 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R04 OUT04 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L05 OUT05 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R05 OUT05 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L06 IREF IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R06 IREF IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L07 OUT06 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R07 OUT06 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L08 OUT07 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R08 OUT07 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L09 OUT08 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R09 OUT08 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L10 OUT09 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R10 OUT09 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L11 OUT10 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R11 OUT10 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+.ends
+
+.end

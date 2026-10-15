@@ -1,0 +1,66 @@
+* JanteStroemSpejl -- explicit 22-device ngspice topology
+*
+* Interpretation of the artwork:
+*   red   = polysilicon gate
+*   yellow= diffusion/active
+*   white = metal
+*
+* The 11 horizontal diffusion stripes cross the left and right poly fields.
+* Therefore each row contains TWO explicit NMOS devices: left and right.
+* The central vertical diffusion is the common source node S.
+* The white metal cross is GREF. Its horizontal arm crosses row 6,
+* so the two row-6 outer diffusion contacts are tied to GREF and form
+* the diode-connected reference pair.
+* The remaining 20 outer diffusion contacts are drains.
+*
+* No m and no ng are used for arraying. Every drawn MOS is instantiated once.
+*
+.param lambda=0.08u
+.param WJ='4*lambda'
+.param LJ='64*lambda'
+
+* Raw layout-faithful core.
+* Port order:
+*   GREF S B
+*   DL01 DL02 DL03 DL04 DL05 DL07 DL08 DL09 DL10 DL11
+*   DR01 DR02 DR03 DR04 DR05 DR07 DR08 DR09 DR10 DR11
+.subckt JANTE_RAW GREF S B \
++ DL01 DL02 DL03 DL04 DL05 DL07 DL08 DL09 DL10 DL11 \
++ DR01 DR02 DR03 DR04 DR05 DR07 DR08 DR09 DR10 DR11
+XJL01 DL01 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR01 DR01 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL02 DL02 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR02 DR02 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL03 DL03 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR03 DR03 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL04 DL04 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR04 DR04 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL05 DL05 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR05 DR05 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL06 GREF GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR06 GREF GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL07 DL07 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR07 DR07 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL08 DL08 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR08 DR08 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL09 DL09 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR09 DR09 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL10 DL10 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR10 DR10 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL11 DL11 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR11 DR11 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+.ends JANTE_RAW
+
+* Semantic 10-output wrapper.
+* Same-row left/right drains are externally paired to make ten 1:1 outputs.
+.subckt JANTE_MIRROR10 IREF S B OUT01 OUT02 OUT03 OUT04 OUT05 OUT06 OUT07 OUT08 OUT09 OUT10
+XJANTE IREF S B OUT01 OUT02 OUT03 OUT04 OUT05 OUT06 OUT07 OUT08 OUT09 OUT10 OUT01 OUT02 OUT03 OUT04 OUT05 OUT06 OUT07 OUT08 OUT09 OUT10 JANTE_RAW
+.ends JANTE_MIRROR10
+
+* Recommended use: tie B to S outside the subcircuit unless a separate body
+* connection is deliberately required by the testbench / well structure.
+
+* Example model include -- adapt to the installed CMOS5L/SG13 ngspice tree:
+* .lib /path/to/cornerMOSlv.lib mos_tt
+
+.end
