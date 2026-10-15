@@ -70,4 +70,4 @@
 : Opus session, 6–8 Oct, from the improvements session's power-down kickoff: a digital enable `en_3v3` for `d2s_mpdda` and its four bias variants, with `_pd` netlists, testbench decks and xschem sheets, simulated on the pinned cloud environment for leakage, start-up, enable glitch and the unpowered pad.
 
 [2026-10-14_opus_clamp_m1_pcells.md](2026-10-14_opus_clamp_m1_pcells.md)
-: Opus session, 14 Oct: M1-only clamp PCells `Clamp_N_M1` / `Clamp_P_M1` (no M2/M3, no gate tie-off, variable gate length, guard rings wrapped around the array), verified by connectivity extraction and the full IHP DRC deck on KLayout 0.30.0.
+: Opus session, 14 Oct: M1-only clamp PCells `Clamp_N_M1` / `Clamp_P_M1` (no M2/M3, no gate tie-off, variable gate length, guard rings wrapped around the array or IHP's 80 µm frame) and DC diode PCells `DCNDiode` / `DCPDiode` with the diode length as parameter, verified by connectivity extraction and the full IHP DRC deck on KLayout 0.30.0.
