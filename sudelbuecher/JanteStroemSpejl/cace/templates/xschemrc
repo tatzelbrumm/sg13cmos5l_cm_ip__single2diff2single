@@ -1,0 +1,9 @@
+# CACE-only Xschem setup.
+# Do not modify the project's normal Xschem schematics/testbench setup.
+
+if {[info exists ::env(PDK_ROOT)] && [info exists ::env(PDK)]} {
+    source $::env(PDK_ROOT)/$::env(PDK)/libs.tech/xschem/xschemrc
+}
+
+# Project root contains JanteStroemSpejl.sym / .sch
+append XSCHEM_LIBRARY_PATH :[file normalize [file join [file dirname [info script]] ../..]]

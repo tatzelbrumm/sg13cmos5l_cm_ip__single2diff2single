@@ -1,0 +1,27 @@
+Expected DUT connectivity after Xschem netlisting
+==================================================
+
+.subckt JanteStroemSpejl IREF S B OUT01 OUT02 OUT03 OUT04 OUT05 OUT06 OUT07 OUT08 OUT09 OUT10
+
+XM_L01 OUT01 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R01 OUT01 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L02 OUT02 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R02 OUT02 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L03 OUT03 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R03 OUT03 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L04 OUT04 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R04 OUT04 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L05 OUT05 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R05 OUT05 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L06 IREF  IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R06 IREF  IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L07 OUT06 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R07 OUT06 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L08 OUT07 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R08 OUT07 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L09 OUT08 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R09 OUT08 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L10 OUT09 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R10 OUT09 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L11 OUT10 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R11 OUT10 IREF S B sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
