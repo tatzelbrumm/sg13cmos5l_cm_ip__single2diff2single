@@ -28,12 +28,12 @@ C {devices/lab_pin.sym} 590 -440 2 0 {name=lout07 lab=OUT07}
 C {devices/lab_pin.sym} 590 -400 2 0 {name=lout08 lab=OUT08}
 C {devices/lab_pin.sym} 590 -360 2 0 {name=lout09 lab=OUT09}
 C {devices/lab_pin.sym} 590 -320 2 0 {name=lout10 lab=OUT10}
-C {devices/code_shown.sym} 700 -840 0 0 {name=MODEL only_toplevel=true
+C {devices/code_shown.sym} 700 -780 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
 value="
 .lib cornerMOSlv.lib mos_tt_mismatch
 "}
-C {devices/code_shown.sym} 700 -600 0 0 {name=CLAMPS only_toplevel=true
+C {devices/code_shown.sym} 700 -690 0 0 {name=CLAMPS only_toplevel=true
 value="
 ECL01 CL01 0 IREF 0 1
 VMON01 CL01 OUT01 0
