@@ -1,0 +1,55 @@
+JanteStroemSpejl contact-to-port map
+====================================
+
+Visible-contact naming convention
+---------------------------------
+DL01..DL11 : left outer yellow diffusion contacts, top to bottom
+DR01..DR11 : right outer yellow diffusion contacts, top to bottom
+S          : bottom-center yellow diffusion contact
+GTL, GBL   : upper/lower gray contact on left poly edge
+GTR, GBR   : upper/lower gray contact on right poly edge
+
+Electrical assignment
+---------------------
+S -> common source port S.  The central vertical yellow diffusion is the
+same source net.
+
+GTL, GBL, GTR, GBR -> GREF.  They are interpreted as poly contacts
+strapped together by the white vertical metal.
+
+DL06 and DR06 -> GREF.  Row 6 lies under the white horizontal metal arm,
+so its two drains are tied to the gate/reference node.  XJL06 and XJR06
+are therefore the diode-connected reference pair.
+
+DL01..DL05, DL07..DL11 -> ten left drain terminals.
+DR01..DR05, DR07..DR11 -> ten right drain terminals.
+
+RAW port version
+----------------
+Keep all twenty non-reference drain contacts independent.  This is the
+closest electrical representation of what is visibly present.
+
+MIRROR10 wrapper
+----------------
+Pair same-row contacts externally:
+  OUT01 = DL01 + DR01
+  OUT02 = DL02 + DR02
+  OUT03 = DL03 + DR03
+  OUT04 = DL04 + DR04
+  OUT05 = DL05 + DR05
+  OUT06 = DL07 + DR07
+  OUT07 = DL08 + DR08
+  OUT08 = DL09 + DR09
+  OUT09 = DL10 + DR10
+  OUT10 = DL11 + DR11
+
+This pairing is not drawn as metal in the artwork; it is a proposed port
+assignment that converts the symmetric layout into a ten-output current
+mirror.  The physical artwork itself only forces the row-6 reference
+connection and the common source/gate nets under this interpretation.
+
+Body
+----
+The body/well connection is not explicitly encoded by a visible contact
+in the artwork.  Keep B as a separate subcircuit terminal in JANTE_RAW,
+and normally connect B=S in the wrapper/testbench for an NMOS mirror.

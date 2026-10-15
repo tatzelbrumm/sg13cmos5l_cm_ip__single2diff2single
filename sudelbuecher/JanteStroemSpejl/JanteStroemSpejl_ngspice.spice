@@ -1,0 +1,66 @@
+* JanteStroemSpejl -- geometry-derived transistor netlist
+* IHP SG13 low-voltage NMOS model syntax
+*
+* Geometry normalization from the drawing:
+*   contact side = 2 lambda
+*   diffusion stripe width = 4 lambda
+*   poly extent along diffusion = 64 lambda
+*   lambda = 0.08u if contact side = 0.16u
+* => W = 0.32u, L = 5.12u
+*
+* IMPORTANT: every drawn transistor is explicit.
+* No use of m or ng for arraying; model defaults ng=1, m=1.
+*
+* Preferred electrical reading of the artwork:
+*   - central yellow vertical diffusion bus -> S
+*   - all red-poly gates -> GREF through the white metal cross
+*   - row 6 lies on the white horizontal metal bar; its two outer
+*     diffusion contacts are therefore tied to GREF (diode-connected
+*     reference pair)
+*   - the other 10 left/right outer-contact pairs are mirror outputs
+*   - body is not explicitly drawn; B is a separate net in RAW and
+*     can be tied to S in the wrapper
+
+.param lambda=0.08u
+.param WJ='4*lambda'
+.param LJ='64*lambda'
+
+* Adapt this include path to your installation.
+* Example SG13G2/CMOS5L front-end model library:
+* .lib $PDK_ROOT/$PDK/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+
+.subckt JANTE_RAW GREF S B DL1 DL2 DL3 DL4 DL5 DL6 DL7 DL8 DL9 DL10 DL11 DR1 DR2 DR3 DR4 DR5 DR6 DR7 DR8 DR9 DR10 DR11
+XJL01 DL1 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR01 DR1 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL02 DL2 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR02 DR2 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL03 DL3 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR03 DR3 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL04 DL4 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR04 DR4 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL05 DL5 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR05 DR5 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL06 GREF GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR06 GREF GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL07 DL7 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR07 DR7 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL08 DL8 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR08 DR8 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL09 DL9 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR09 DR9 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL10 DL10 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR10 DR10 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJL11 DL11 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+XJR11 DR11 GREF S B sg13_lv_nmos w={WJ} l={LJ}
+.ends JANTE_RAW
+
+* 10-output wrapper: pair the left/right contacts of each ordinary row.
+.subckt JANTE_MIRROR10 IREF S OUT1 OUT2 OUT3 OUT4 OUT5 OUT6 OUT7 OUT8 OUT9 OUT10
+XCORE IREF S S OUT1 OUT2 OUT3 OUT4 OUT5 IREF OUT6 OUT7 OUT8 OUT9 OUT10 OUT1 OUT2 OUT3 OUT4 OUT5 IREF OUT6 OUT7 OUT8 OUT9 OUT10 JANTE_RAW
+.ends JANTE_MIRROR10
+
+* With identical devices, each OUTk consists of a left/right pair
+* with total width 2*WJ, matching the two-device reference pair.
+* Ideal mirror ratio per OUTk is therefore approximately 1:1.
+
+.end

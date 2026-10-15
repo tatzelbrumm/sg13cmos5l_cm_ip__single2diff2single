@@ -1,0 +1,48 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/JanteStroemSpejl/JanteStroemSpejl.sch
+**.subckt JanteStroemSpejl IREF S B OUT01 OUT02 OUT03 OUT04 OUT05 OUT06 OUT07 OUT08 OUT09 OUT10
+*.iopin IREF
+*.iopin S
+*.iopin B
+*.iopin OUT01
+*.iopin OUT02
+*.iopin OUT03
+*.iopin OUT04
+*.iopin OUT05
+*.iopin OUT06
+*.iopin OUT07
+*.iopin OUT08
+*.iopin OUT09
+*.iopin OUT10
+XM_L01 net1 net2 net3 net4 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R01 net5 net6 net7 net8 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L02 net9 net10 net11 net12 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R02 net13 net14 net15 net16 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L03 net17 net18 net19 net20 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R03 net21 net22 net23 net24 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L04 net25 net26 net27 net28 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R04 net29 net30 net31 net32 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L05 net33 net34 net35 net36 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R05 net37 net38 net39 net40 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L06 net41 net42 net43 net44 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R06 net45 net46 net47 net48 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L07 net49 net50 net51 net52 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R07 net53 net54 net55 net56 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L08 net57 net58 net59 net60 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R08 net61 net62 net63 net64 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L09 net65 net66 net67 net68 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R09 net69 net70 net71 net72 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L10 net73 net74 net75 net76 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R10 net77 net78 net79 net80 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_L11 net81 net82 net83 net84 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+XM_R11 net85 net86 net87 net88 sg13_lv_nmos w=WJ l=LJ ng=1 m=1 mm_ok=1
+**** begin user architecture code
+
+
+.param lambda=0.08u
+.param WJ='4*lambda'
+.param LJ='64*lambda'
+
+
+**** end user architecture code
+**.ends
+.end
