@@ -41,6 +41,11 @@ Rule as in `chatlog/ref/`: index, don't copy. The only copy here is Christoph's 
     [urn:li:activity:7513177256240930817](https://www.linkedin.com/feed/update/urn:li:activity:7513177256240930817/)
 - A. Einstein, "Einstein on the Atomic Bomb", *The Atlantic*, November 1945:
   [theatlantic.com/magazine/archive/1945/11/einstein-on-the-atomic-bomb/656626/](https://www.theatlantic.com/magazine/archive/1945/11/einstein-on-the-atomic-bomb/656626/)
+- R. P. Feynman, "Personal Observations on Reliability of Shuttle", Appendix F of
+  *Report of the Presidential Commission on the Space Shuttle Challenger Accident*, Vol. 2, 1986.
+  Quoted as Appendix F of the report: "For a successful technology, reality must take
+  precedence over public relations, for nature cannot be fooled."
+  [nasa.gov/history/rogersrep/v2appf.htm](https://www.nasa.gov/history/rogersrep/v2appf.htm)
 - C. Maier, Flickr album "Quodlibet":
   [flickr.com/photos/89067995@N00/albums/72177720303647432](https://www.flickr.com/photos/89067995@N00/albums/72177720303647432/)
 - C. Maier, Flickr collection "Zur Elektrodynamik bewegter Körper", with the albums

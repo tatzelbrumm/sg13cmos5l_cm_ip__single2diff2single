@@ -341,3 +341,7 @@ Full index with all links: [ref/README.md](ref/README.md). The main ones:
 - [Eriksholm Research Centre, "Partner with Eriksholm"](https://eriksholm.com/partner-with-eriksholm/)
 - [IHP SG13CMOS5L process specification](https://github.com/iic-jku/IHP-Open-PDK/blob/c271a7e97a7bab201c1d0a399215969d2ee19573/ihp-sg13cmos5l/libs.doc/doc/SG13CMOS5L_os_process_spec.pdf), §2.1.1
 - [CACE 2.11.0 on PyPI](https://pypi.org/project/cace/2.11.0/)
+
+## Appendix F
+
+[For a successful technology, reality must take precedence over public relations, for nature cannot be fooled.](https://www.nasa.gov/history/rogersrep/v2appf.htm#:~:text=%20For%20a%20successful%20technology,for%20nature%20cannot%20be%20fooled.)
