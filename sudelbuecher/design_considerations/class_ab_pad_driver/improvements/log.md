@@ -646,3 +646,42 @@ schematic stay as they are.
   `d2s_lc2_nc`. It connects to nothing.
   Christoph removed both at 06:02. Afterwards `check_xschem.py` still finds 0 mismatches, and no
   sheet has a dangling wire end; figures of both re-exported.
+
+## 2026-10-19 17:56 — CACE verification setup: cloud tools, checks, status
+
+Asked for on 2026-10-06 (`../build_verification_suite/kickoff_build_verification_suite.md`):
+CACE testbenches for the four bias blocks alone and for each bias block with `d2s_mpdda`.
+At 02:20 the work was held until the scope is settled. Only the cloud tools were set up.
+That chat's log: `sudelbuecher/chatlog/2026-10-06_opus_class_ab_pad_driver_cace_verification_setup.md`.
+
+- Cloud environment, 2026-10-06 02:22–03:10:
+  - ngspice-42 (Ubuntu) and the IHP-Open-PDK `dev` sparse checkout at `8e07a1f` (2026-10-05).
+  - psp103, psp103_nqs, r3_cmc, mosvar, cap_cmomi and cap_cmomf are compiled with
+    OpenVAF-reloaded (`fdf2522`, LLVM 18), with the OSDI 0.4 → 0.3 patch for ngspice 42. The
+    PDK's prebuilt `cap_cmom*.osdi` are OSDI 0.4, so they were recompiled too.
+  - xschem: Ubuntu's 3.4.4 ignores `top_is_subckt`, which CACE sets. The DUT netlist then has
+    no `.subckt` line, and every run fails with "unknown subckt". xschem master (`c15c6c0`,
+    3.4.8RC) is built instead. It has `ev7`, so no stand-in is needed.
+  - CACE 2.13.0 under Python 3.12, because the container's Python 3.13 has no tkinter. The
+    2026-10-02 runs used 2.11.0.
+  - This is not the IIC-OSIC-TOOLS 2026.09 pin of the improvements chat. To be aligned before
+    real runs.
+- Checks, on cloud copies of 2026-10-06 02:30 (before the 05:05 rail change):
+  - `xschem/check_xschem.py`, unmodified: 0 mismatches.
+  - `../run_d2s.py` reproduces `../results.txt`; only the THD comment line differs.
+  - `sim/run_bias.py`, all sections, 81 s: reproduces `sim/results_bias.txt`, except the line
+    with the OSDI path.
+  - CACE, `d2s_miller_biased.yaml -s schematic -p dc_params loop_params`: about 136 of 155 runs
+    without error, then a session restart killed it. No result.
+- Status on 2026-10-19: no CACE result yet for the bias blocks or for `d2s_mpdda`. The cloud
+  copies predate the 05:05 vddo / vsso change and have to be staged again.
+- Readable CACE output in the three connected folders goes to two places:
+  - `_docs/` next to the `.yaml`: CACE's own datasheet `<cell>.md` and plots. Used by
+    `macros/OgueyAebischerBias` and `../verification/cace` (`d2s_miller`; there also the
+    hand-written `first_run_summary.md` and `performance_figures.md`).
+  - `results/<cell>/`: CSV and PNG from `scripts/cace_to_csv.py`, summarized in the README.
+    Used by `levelshifters/ls_pair` (the newest setup, 2026-10-04, with `cace.mk`) and by
+    `macros/inverter` (PNG only).
+- Open: which output convention the new setups follow; which slot pin vsso goes to; which bias
+  variants stay; spec limits or `any`; the harness `ibias`. Power-off is not in CACE. The
+  power-down chat simulated it with ngspice decks.

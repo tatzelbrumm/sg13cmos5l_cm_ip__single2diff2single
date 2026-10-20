@@ -1487,4 +1487,116 @@ IOPadDiff2Single macro schematic stay as they are.
   still finds 0 mismatches, and no sheet has a
   dangling wire end; figures of both re-exported.
 \end{itemize}
+
+\hypertarget{2026-10-19-1756--cace-verification-setup-cloud-tools-checks-status}{%
+\section{2026-10-19 17:56 --- CACE verification
+setup: cloud tools, checks,
+status}\label{2026-10-19-1756--cace-verification-setup-cloud-tools-checks-status}}
+
+Asked for on 2026-10-06
+(\texttt{../build\_verification\_suite/kickoff\_build\_verification\_suite.md}):
+CACE testbenches for the four bias blocks alone
+and for each bias block with \texttt{d2s\_mpdda}.
+At 02:20 the work was held until the scope is
+settled. Only the cloud tools were set up. That
+chat\textquotesingle s log:
+\texttt{sudelbuecher/chatlog/2026-10-06\_opus\_class\_ab\_pad\_driver\_cace\_verification\_setup.md}.
+
+\begin{itemize}
+\tightlist
+\item
+  Cloud environment, 2026-10-06 02:22--03:10:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    ngspice-42 (Ubuntu) and the IHP-Open-PDK
+    \texttt{dev} sparse checkout at
+    \texttt{8e07a1f} (2026-10-05).
+  \item
+    psp103, psp103\_nqs, r3\_cmc, mosvar,
+    cap\_cmomi and cap\_cmomf are compiled with
+    OpenVAF-reloaded (\texttt{fdf2522}, LLVM 18),
+    with the OSDI 0.4 → 0.3 patch for ngspice 42.
+    The PDK\textquotesingle s prebuilt
+    \texttt{cap\_cmom*.osdi} are OSDI 0.4, so they
+    were recompiled too.
+  \item
+    xschem: Ubuntu\textquotesingle s 3.4.4 ignores
+    \texttt{top\_is\_subckt}, which CACE sets. The
+    DUT netlist then has no \texttt{.subckt} line,
+    and every run fails with "unknown subckt".
+    xschem master (\texttt{c15c6c0}, 3.4.8RC) is
+    built instead. It has \texttt{ev7}, so no
+    stand-in is needed.
+  \item
+    CACE 2.13.0 under Python 3.12, because the
+    container\textquotesingle s Python 3.13 has no
+    tkinter. The 2026-10-02 runs used 2.11.0.
+  \item
+    This is not the IIC-OSIC-TOOLS 2026.09 pin of
+    the improvements chat. To be aligned before
+    real runs.
+  \end{itemize}
+\item
+  Checks, on cloud copies of 2026-10-06 02:30
+  (before the 05:05 rail change):
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{xschem/check\_xschem.py}, unmodified:
+    0 mismatches.
+  \item
+    \texttt{../run\_d2s.py} reproduces
+    \texttt{../results.txt}; only the THD comment
+    line differs.
+  \item
+    \texttt{sim/run\_bias.py}, all sections, 81 s:
+    reproduces \texttt{sim/results\_bias.txt},
+    except the line with the OSDI path.
+  \item
+    CACE,
+    \texttt{d2s\_miller\_biased.yaml\ -s\ schematic\ -p\ dc\_params\ loop\_params}:
+    about 136 of 155 runs without error, then a
+    session restart killed it. No result.
+  \end{itemize}
+\item
+  Status on 2026-10-19: no CACE result yet for the
+  bias blocks or for \texttt{d2s\_mpdda}. The
+  cloud copies predate the 05:05 vddo / vsso
+  change and have to be staged again.
+\item
+  Readable CACE output in the three connected
+  folders goes to two places:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{\_docs/} next to the \texttt{.yaml}:
+    CACE\textquotesingle s own datasheet
+    \texttt{\textless{}cell\textgreater{}.md} and
+    plots. Used by
+    \texttt{macros/OgueyAebischerBias} and
+    \texttt{../verification/cace}
+    (\texttt{d2s\_miller}; there also the
+    hand-written \texttt{first\_run\_summary.md}
+    and \texttt{performance\_figures.md}).
+  \item
+    \texttt{results/\textless{}cell\textgreater{}/}:
+    CSV and PNG from
+    \texttt{scripts/cace\_to\_csv.py}, summarized
+    in the README. Used by
+    \texttt{levelshifters/ls\_pair} (the newest
+    setup, 2026-10-04, with \texttt{cace.mk}) and
+    by \texttt{macros/inverter} (PNG only).
+  \end{itemize}
+\item
+  Open: which output convention the new setups
+  follow; which slot pin vsso goes to; which bias
+  variants stay; spec limits or \texttt{any}; the
+  harness \texttt{ibias}. Power-off is not in
+  CACE. The power-down chat simulated it with
+  ngspice decks.
+\end{itemize}
 \end{document}
