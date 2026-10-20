@@ -1,0 +1,41 @@
+* tb_s2d_noise: noise of s2d_mpdda referred to the input u = vin - vref, tt 27 C, 0.5 pF external load per output
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* Output: the differential voltage voutp - voutn (gain 2). inoise = onoise / gain.
+* Includes the 587 ohm series resistor of IOPadAnalog's SecondaryProtection (rppd in the IO cell)
+* as an ideal resistor between the pad source and vin.
+* Reference (results_s2d.txt, section 7): 670 nV/rtHz at 1 kHz, 151 nV/rtHz at 100 kHz (input),
+* 434 uV rms differential output 10 Hz - 10 MHz.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.include ../../../class_ab_pad_driver/improvements/sim/units.spice
+.include ../s2d_mpdda.spice
+.include ../s2d_bias.spice
+Vdd vdd 0 3.3
+Vref vref 0 1.65
+Vcm vcm 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc s2d_bias_lp
+Vu u 0 dc 0 ac 1
+Ein pad vref u 0 1
+Rpad pad vin 586.9
+Xs vdd 0 vin vref vcm voutp voutn voutp voutn vbp vbn vbpc vbnc s2d_mpdda
+CLp voutp 0 0.5p
+CLn voutn 0 0.5p
+.control
+* integrated noise first (plots noise1 = spectrum, noise2 = total), then two spot values
+noise v(voutp,voutn) Vu dec 20 10 10meg
+setplot noise2
+* onoise_total: differential output, 10 Hz - 10 MHz (inoise_total is not meaningful beyond the
+* bandwidth, where the gain falls)
+print onoise_total
+noise v(voutp,voutn) Vu lin 1 1k 1k
+noise v(voutp,voutn) Vu lin 1 100k 100k
+print noise3.inoise_spectrum noise4.inoise_spectrum
+if $?batchmode = 0
+  setplot noise1
+  plot inoise_spectrum onoise_spectrum loglog
+end
+.endc
+.end

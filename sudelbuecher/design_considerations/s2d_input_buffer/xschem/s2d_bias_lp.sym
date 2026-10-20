@@ -1,0 +1,32 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+}
+V {}
+S {}
+F {}
+E {}
+P 4 5 -100 -100 100 -100 100 100 -100 100 -100 -100 {}
+T {@symname} -10 -60 0 0 0.3 0.3 {}
+T {@name} 110 110 0 0 0.3 0.3 {}
+T {ideal references into the s2d bias diodes} -10 -30 0 0 0.15 0.15 {}
+L 4 -60 -120 -60 -100 {}
+T {vdd} -65 -95 0 0 0.2 0.2 {}
+B 5 -62.5 -122.5 -57.5 -117.5 {name=vdd dir=inout}
+L 4 -60 100 -60 120 {}
+T {vss} -55 80 1 0 0.2 0.2 {}
+B 5 -62.5 117.5 -57.5 122.5 {name=vss dir=inout}
+L 4 100 -60 120 -60 {}
+T {vbp} 95 -66 0 1 0.2 0.2 {}
+B 5 117.5 -62.5 122.5 -57.5 {name=vbp dir=inout}
+L 4 100 -20 120 -20 {}
+T {vbn} 95 -26 0 1 0.2 0.2 {}
+B 5 117.5 -22.5 122.5 -17.5 {name=vbn dir=inout}
+L 4 100 20 120 20 {}
+T {vbpc} 95 14 0 1 0.2 0.2 {}
+B 5 117.5 17.5 122.5 22.5 {name=vbpc dir=inout}
+L 4 100 60 120 60 {}
+T {vbnc} 95 54 0 1 0.2 0.2 {}
+B 5 117.5 57.5 122.5 62.5 {name=vbnc dir=inout}

@@ -1,0 +1,252 @@
+# results_s2d.txt: every number in s2d_input_buffer.md
+# Produced by cloud-only scratch scripts (not shipped); the decks in sim/tb/ reproduce one case of each test.
+# Tools: ngspice-47 (danchitnis/ngspice-sf-mirror tag ngspice-47), OpenVAF 5ed9e63 (OSDI into libs.tech/ngspice/osdi),
+#        IHP-Open-PDK iic-jku fork c271a7e9 (= IIC-OSIC-TOOLS 2026.09), xschem ddc7344; sudelbuecher/cloud_environment.md.
+# Tool check: improvements/sim/tb/tb_mpdda_loop.spice gives T0 78.9 dB, fc 1.366 MHz, PM 72.4 deg, and tb_mpdda_dc.spice
+#             gain 0.49994, offset 0.055 mV, nonlin 1.24 mV, Idd 295.8 uA: the references in results_improvements.txt.
+# Conventions: vdd 3.3 V, vref = vcm = 1.65 V, external load 0.5 pF per output (on top of the built-in 2 x 12 x 12 um
+# MOS capacitors), bias fixture s2d_bias_lp (ideal references into the diodes), unless a line says otherwise.
+# u = vin - vref; vd = voutp - voutn (ideally 2u); vc = (voutp + voutn)/2 - vcm. Offsets and nonlinearity are
+# referred to the input u: off = vd(0)/gain, nonlin = max |vd - fit|/gain over |u| <= 0.5 V, fit over |u| <= 0.1 V.
+# Corner names: mos corner, temperature; 'wcs'/'bcs' = rhigh corner (else res_typ, and res_wcs at ss 125C, res_bcs at ff -40C).
+
+== 1. Operating point, tt 27 C (|vds| - vdss = saturation margin)
+  vref = vcm = vin = 1.65 V:  v(voutp)=1.661  v(voutn)=1.661  v(xs.x)=0.3781  v(xs.xc)=0.3794
+    XSX       ids= 29.61 uA  |vds|=0.378  vdss=0.282  margin= 0.097 V
+    XCX       ids=  9.64 uA  |vds|=1.283  vdss=0.166  margin= 1.117 V
+    XLP       ids=  9.64 uA  |vds|=0.336  vdss=0.248  margin= 0.089 V
+    XLPC      ids=  9.64 uA  |vds|=1.303  vdss=0.213  margin= 1.090 V
+    XSXC      ids= 19.74 uA  |vds|=0.379  vdss=0.282  margin= 0.098 V
+    XCXC      ids=  9.63 uA  |vds|=1.928  vdss=0.166  margin= 1.762 V
+    XD        ids=  9.64 uA  |vds|=0.336  vdss=0.248  margin= 0.088 V
+    XDC       ids=  9.64 uA  |vds|=0.657  vdss=0.213  margin= 0.444 V
+    XA1.XTa   ids=  4.99 uA  |vds|=0.911  vdss=0.431  margin= 0.480 V
+    XA1.XMa   ids=  4.99 uA  |vds|=2.011  vdss=0.139  margin= 1.872 V
+    XA1.XMb   ids=  4.99 uA  |vds|=2.011  vdss=0.139  margin= 1.872 V
+    XF1.XTa   ids=  4.99 uA  |vds|=0.910  vdss=0.431  margin= 0.479 V
+    XF1.XMa   ids=  5.05 uA  |vds|=2.012  vdss=0.139  margin= 1.873 V
+    XF1.XMb   ids=  4.93 uA  |vds|=2.021  vdss=0.139  margin= 1.882 V
+    XM1.XTa   ids=  4.99 uA  |vds|=0.901  vdss=0.431  margin= 0.470 V
+    XM1.XMa   ids=  4.93 uA  |vds|=2.020  vdss=0.139  margin= 1.881 V
+    XM1.XMb   ids=  5.05 uA  |vds|=2.011  vdss=0.139  margin= 1.871 V
+    XSY       ids= 29.61 uA  |vds|=0.378  vdss=0.282  margin= 0.097 V
+    XCY       ids=  9.64 uA  |vds|=1.283  vdss=0.166  margin= 1.117 V
+    XLN       ids=  9.64 uA  |vds|=0.336  vdss=0.248  margin= 0.089 V
+    XLNC      ids=  9.64 uA  |vds|=1.303  vdss=0.213  margin= 1.090 V
+  vref = vcm = vin = 1.2 V:  v(voutp)=1.212  v(voutn)=1.212  v(xs.x)=0.3772  v(xs.xc)=0.3797
+    XSX       ids= 29.60 uA  |vds|=0.377  vdss=0.282  margin= 0.096 V
+    XCX       ids=  9.60 uA  |vds|=0.835  vdss=0.166  margin= 0.669 V
+    XLP       ids=  9.60 uA  |vds|=0.337  vdss=0.247  margin= 0.089 V
+    XLPC      ids=  9.60 uA  |vds|=1.751  vdss=0.213  margin= 1.538 V
+    XSXC      ids= 19.74 uA  |vds|=0.380  vdss=0.282  margin= 0.098 V
+    XCXC      ids=  9.60 uA  |vds|=1.928  vdss=0.165  margin= 1.763 V
+    XD        ids=  9.60 uA  |vds|=0.336  vdss=0.247  margin= 0.089 V
+    XDC       ids=  9.60 uA  |vds|=0.656  vdss=0.213  margin= 0.443 V
+    XA1.XTa   ids=  5.00 uA  |vds|=1.360  vdss=0.431  margin= 0.929 V
+    XA1.XMa   ids=  5.00 uA  |vds|=1.563  vdss=0.139  margin= 1.423 V
+    XA1.XMb   ids=  5.00 uA  |vds|=1.563  vdss=0.139  margin= 1.423 V
+    XF1.XTa   ids=  5.00 uA  |vds|=1.359  vdss=0.431  margin= 0.928 V
+    XF1.XMa   ids=  5.07 uA  |vds|=1.564  vdss=0.140  margin= 1.424 V
+    XF1.XMb   ids=  4.93 uA  |vds|=1.574  vdss=0.139  margin= 1.435 V
+    XM1.XTa   ids=  5.00 uA  |vds|=1.349  vdss=0.431  margin= 0.918 V
+    XM1.XMa   ids=  4.93 uA  |vds|=1.572  vdss=0.139  margin= 1.433 V
+    XM1.XMb   ids=  5.07 uA  |vds|=1.561  vdss=0.140  margin= 1.422 V
+    XSY       ids= 29.60 uA  |vds|=0.377  vdss=0.282  margin= 0.096 V
+    XCY       ids=  9.60 uA  |vds|=0.835  vdss=0.166  margin= 0.669 V
+    XLN       ids=  9.60 uA  |vds|=0.337  vdss=0.247  margin= 0.089 V
+    XLNC      ids=  9.60 uA  |vds|=1.751  vdss=0.213  margin= 1.538 V
+
+== 2. DC transfer over corners, vdd = 3.3 V (s2d_bias_lp)
+  vref = vcm = 1.65 V
+    tt 27C      gain=1.999  off=0.004358  nonlin=1.405  cm=10.86  cmmax=11.44  idd=112.7
+    ss 125C     gain=1.999  off=0.004877  nonlin=1.783  cm=8.262  cmmax=8.783  idd=113
+    ff -40C     gain=1.999  off=0.003345  nonlin=0.5522  cm=11.69  cmmax=12.48  idd=112.5
+    sf 27C      gain=1.999  off=0.003858  nonlin=0.8906  cm=11.16  cmmax=11.8  idd=112.7
+    fs 27C      gain=1.999  off=0.005014  nonlin=2.29  cm=10.53  cmmax=11.05  idd=112.8
+    ss -40C     gain=1.999  off=0.007755  nonlin=7.281  cm=14.03  cmmax=14.48  idd=112.5
+    ff 125C     gain=1.999  off=0.001999  nonlin=0.2149  cm=7.143  cmmax=8.29  idd=113.1
+    tt -40C     gain=1.999  off=0.005819  nonlin=2.551  cm=14.24  cmmax=14.75  idd=112.5
+    tt 125C     gain=1.999  off=0.002489  nonlin=0.411  cm=7.076  cmmax=8.077  idd=113.1
+    tt 27C wcs  gain=1.999  off=0.005936  nonlin=2.33  cm=13.13  cmmax=13.66  idd=112.7
+    tt 27C bcs  gain=1.999  off=0.003003  nonlin=0.7015  cm=8.946  cmmax=9.818  idd=112.7
+  vref = vcm = 1.2 V
+    tt 27C      gain=1.999  off=0.001591  nonlin=0.1428  cm=12.44  cmmax=13.43  idd=112.7
+    ss 125C     gain=1.999  off=0.001706  nonlin=0.1972  cm=9.908  cmmax=10.92  idd=113
+    ff -40C     gain=1.999  off=0.001372  nonlin=0.1101  cm=13.06  cmmax=14.13  idd=112.5
+    sf 27C      gain=1.999  off=0.001549  nonlin=0.1392  cm=12.68  cmmax=13.68  idd=112.7
+    fs 27C      gain=1.999  off=0.00164  nonlin=0.1472  cm=12.18  cmmax=13.17  idd=112.8
+    ss -40C     gain=1.999  off=0.002092  nonlin=0.19  cm=15.99  cmmax=16.87  idd=112.5
+    ff 125C     gain=1.999  off=0.001317  nonlin=0.134  cm=8.345  cmmax=9.549  idd=113.1
+    tt -40C     gain=1.999  off=0.001905  nonlin=0.1719  cm=16.05  cmmax=16.91  idd=112.5
+    tt 125C     gain=1.999  off=0.001325  nonlin=0.1388  cm=8.358  cmmax=9.59  idd=113.1
+    tt 27C wcs  gain=1.999  off=0.002022  nonlin=0.1916  cm=15.05  cmmax=15.9  idd=112.7
+    tt 27C bcs  gain=1.999  off=0.001223  nonlin=0.08884  cm=10.25  cmmax=11.59  idd=112.7
+  units: gain V/V; off, nonlin, cm (output CM error at u = 0), cmmax (largest |vc| over |u| <= 0.5 V) in mV; idd in uA
+  (idd = vdd current of s2d_mpdda + the fixture's 14 uA of diode current from vdd)
+
+== 3. Supply and internal common mode: nonlin (mV) vs vref = vcm, at 3.0 / 3.3 / 3.6 V
+  3.0 V tt 27C    1.0:   0.47  1.2:   0.31  1.3:   0.70  1.4:   3.22  1.5:  16.54  1.65:  62.46
+  3.0 V ss -40C   1.0:   0.35  1.2:   0.69  1.3:   3.09  1.4:  19.10  1.5:  62.06  1.65: 139.74
+  3.0 V ss 125C   1.0:   3.04  1.2:   0.41  1.3:   0.94  1.4:   3.66  1.5:  14.96  1.65:  49.02
+  3.0 V fs 27C    1.0:   0.45  1.2:   0.37  1.3:   1.05  1.4:   5.21  1.5:  23.57  1.65:  71.99
+  3.0 V ff 125C   1.0:   2.00  1.2:   0.17  1.3:   0.19  1.4:   0.39  1.5:   1.55  1.65:  12.23
+  3.3 V tt 27C    1.0:   0.42  1.2:   0.14  1.3:   0.15  1.4:   0.18  1.5:   0.27  1.65:   1.40
+  3.3 V ss -40C   1.0:   0.25  1.2:   0.19  1.3:   0.22  1.4:   0.31  1.5:   0.66  1.65:   7.28
+  3.3 V ss 125C   1.0:   2.96  1.2:   0.20  1.3:   0.17  1.4:   0.19  1.5:   0.32  1.65:   1.78
+  3.3 V fs 27C    1.0:   0.39  1.2:   0.15  1.3:   0.16  1.4:   0.20  1.5:   0.33  1.65:   2.29
+  3.3 V ff 125C   1.0:   1.97  1.2:   0.13  1.3:   0.10  1.4:   0.09  1.5:   0.10  1.65:   0.21
+  3.6 V tt 27C    1.0:   0.41  1.2:   0.11  1.3:   0.10  1.4:   0.10  1.5:   0.11  1.65:   0.14
+  3.6 V ss -40C   1.0:   0.23  1.2:   0.13  1.3:   0.13  1.4:   0.14  1.5:   0.16  1.65:   0.25
+  3.6 V ss 125C   1.0:   2.92  1.2:   0.17  1.3:   0.12  1.4:   0.11  1.5:   0.11  1.65:   0.14
+  3.6 V fs 27C    1.0:   0.38  1.2:   0.11  1.3:   0.10  1.4:   0.10  1.5:   0.11  1.65:   0.15
+  3.6 V ff 125C   1.0:   1.94  1.2:   0.13  1.3:   0.09  1.4:   0.07  1.5:   0.06  1.65:   0.06
+
+== 4. Pad reference vref different from vcm (vin = vref +- 0.5 V)
+  vcm=1.2 vref=0.5 tt 27C   3.3 V  gain=1.998  off=0.002236  nonlin=0.2936  cm=13.66
+  vcm=1.2 vref=0.5 ss -40C  3.0 V  gain=1.997  off=0.001996  nonlin=0.6324  cm=16.81
+  vcm=1.2 vref=0.5 ff 125C  3.6 V  gain=1.997  off=0.005143  nonlin=3.193  cm=9.885
+  vcm=1.2 vref=0.8 tt 27C   3.3 V  gain=1.998  off=0.001543  nonlin=0.1557  cm=13.22
+  vcm=1.2 vref=0.8 ss -40C  3.0 V  gain=1.997  off=0.002073  nonlin=0.601  cm=16.15
+  vcm=1.2 vref=0.8 ff 125C  3.6 V  gain=1.998  off=0.002111  nonlin=0.2642  cm=9.575
+  vcm=1.2 vref=1.2 tt 27C   3.3 V  gain=1.999  off=0.001591  nonlin=0.1428  cm=12.44
+  vcm=1.2 vref=1.2 ss -40C  3.0 V  gain=1.999  off=0.004319  nonlin=0.6885  cm=14.87
+  vcm=1.2 vref=1.2 ff 125C  3.6 V  gain=1.999  off=0.001162  nonlin=0.1268  cm=9.074
+  vcm=1.2 vref=1.65 tt 27C   3.3 V  gain=2  off=0.004343  nonlin=2.187  cm=11.07
+  vcm=1.2 vref=1.65 ss -40C  3.0 V  gain=2.028  off=0.3876  nonlin=156.6  cm=10.81
+  vcm=1.2 vref=1.65 ff 125C  3.6 V  gain=2  off=0.001044  nonlin=0.1325  cm=8.306
+  vcm=1.65 vref=0.5 tt 27C   3.3 V  gain=1.997  off=0.002244  nonlin=1.46  cm=13.46
+  vcm=1.65 vref=0.5 ss -40C  3.0 V  gain=1.959  off=0.002861  nonlin=56.22  cm=16.41
+  vcm=1.65 vref=0.5 ff 125C  3.6 V  gain=1.997  off=0.005161  nonlin=3.167  cm=9.719
+  vcm=1.65 vref=0.8 tt 27C   3.3 V  gain=1.997  off=0.001549  nonlin=1.32  cm=13.01
+  vcm=1.65 vref=0.8 ss -40C  3.0 V  gain=1.96  off=0.003272  nonlin=56.2  cm=15.76
+  vcm=1.65 vref=0.8 ff 125C  3.6 V  gain=1.998  off=0.002115  nonlin=0.1934  cm=9.409
+  vcm=1.65 vref=1.2 tt 27C   3.3 V  gain=1.998  off=0.001599  nonlin=1.297  cm=12.23
+  vcm=1.65 vref=1.2 ss -40C  3.0 V  gain=1.962  off=0.006434  nonlin=56.29  cm=14.5
+  vcm=1.65 vref=1.2 ff 125C  3.6 V  gain=1.999  off=0.001163  nonlin=0.08205  cm=8.907
+  vcm=1.65 vref=1.65 tt 27C   3.3 V  gain=1.999  off=0.004358  nonlin=1.405  cm=10.86
+  vcm=1.65 vref=1.65 ss -40C  3.0 V  gain=1.994  off=0.4063  nonlin=139.7  cm=10.49
+  vcm=1.65 vref=1.65 ff 125C  3.6 V  gain=1.999  off=0.001046  nonlin=0.06011  cm=8.14
+
+== 5. Loop gain: T0 (dB), fc (MHz), PM (deg), GM (dB), differential (dm) and common mode (cm)
+  vs external load per output, tt 27 C:
+    1f    dm:  67.6 dB  2.666 MHz  87.2 deg GM  31.6 dB  cm:  67.8 dB  2.624 MHz  70.1 deg GM  17.2 dB
+    0.1p  dm:  67.6 dB  2.312 MHz  87.5 deg GM  32.9 dB  cm:  67.8 dB  2.287 MHz  72.7 deg GM  18.4 dB
+    0.5p  dm:  67.6 dB  1.504 MHz  88.4 deg GM  36.6 dB  cm:  67.8 dB  1.502 MHz  78.6 deg GM  22.2 dB
+    2p    dm:  67.6 dB  0.651 MHz  89.3 deg GM  43.9 dB  cm:  67.8 dB  0.653 MHz  85.1 deg GM  29.4 dB
+    10p   dm:  67.5 dB  0.162 MHz  89.8 deg GM  56.0 dB  cm:  67.7 dB  0.162 MHz  88.8 deg GM  41.5 dB
+    50p   dm:  65.9 dB  0.034 MHz  90.0 deg GM  69.5 dB  cm:  66.0 dB  0.034 MHz  89.8 deg GM  55.1 dB
+  vs corner, external load 0 and 0.5 pF (vdd 3.3 V; last two lines 3.0 V, vref = vcm = 1.2 V):
+    tt 27C    1f   dm:  67.6 dB  2.666 MHz  87.2 deg GM  31.6 dB  cm:  67.8 dB  2.624 MHz  70.1 deg GM  17.2 dB
+    tt 27C    0.5p dm:  67.6 dB  1.504 MHz  88.4 deg GM  36.6 dB  cm:  67.8 dB  1.502 MHz  78.6 deg GM  22.2 dB
+    ss 125C   1f   dm:  68.3 dB  2.669 MHz  86.8 deg GM  31.0 dB  cm:  68.5 dB  2.605 MHz  66.8 deg GM  15.6 dB
+    ss 125C   0.5p dm:  68.3 dB  1.475 MHz  88.2 deg GM  35.7 dB  cm:  68.5 dB  1.470 MHz  76.9 deg GM  20.7 dB
+    ff -40C   1f   dm:  68.2 dB  2.836 MHz  87.2 deg GM  32.0 dB  cm:  68.4 dB  2.797 MHz  71.1 deg GM  17.2 dB
+    ff -40C   0.5p dm:  68.2 dB  1.631 MHz  88.4 deg GM  36.8 dB  cm:  68.4 dB  1.629 MHz  79.0 deg GM  22.0 dB
+    sf 27C    1f   dm:  67.7 dB  2.721 MHz  87.1 deg GM  31.5 dB  cm:  67.9 dB  2.675 MHz  69.7 deg GM  17.0 dB
+    sf 27C    0.5p dm:  67.7 dB  1.522 MHz  88.4 deg GM  36.5 dB  cm:  67.9 dB  1.520 MHz  78.4 deg GM  22.1 dB
+    fs 27C    1f   dm:  67.4 dB  2.612 MHz  87.2 deg GM  31.8 dB  cm:  67.6 dB  2.572 MHz  70.6 deg GM  17.4 dB
+    fs 27C    0.5p dm:  67.4 dB  1.485 MHz  88.4 deg GM  36.7 dB  cm:  67.6 dB  1.483 MHz  78.8 deg GM  22.3 dB
+    ss -40C   1f   dm:  66.8 dB  2.476 MHz  87.6 deg GM  32.9 dB  cm:  67.0 dB  2.453 MHz  73.8 deg GM  19.1 dB
+    ss -40C   0.5p dm:  66.8 dB  1.379 MHz  88.7 deg GM  38.0 dB  cm:  67.0 dB  1.379 MHz  80.9 deg GM  24.1 dB
+    ff 125C   1f   dm:  69.3 dB  2.973 MHz  86.4 deg GM  29.8 dB  cm:  69.5 dB  2.882 MHz  63.9 deg GM  14.7 dB
+    ff 125C   0.5p dm:  69.3 dB  1.698 MHz  87.9 deg GM  34.6 dB  cm:  69.5 dB  1.686 MHz  74.6 deg GM  19.5 dB
+    ss -40C   1f   3.0 V dm:  64.6 dB  2.526 MHz  87.5 deg GM  32.7 dB  cm:  64.8 dB  2.501 MHz  73.4 deg GM  18.9 dB
+    ff 125C   1f   3.0 V dm:  66.9 dB  3.041 MHz  86.3 deg GM  29.6 dB  cm:  67.2 dB  2.943 MHz  63.3 deg GM  14.5 dB
+  s2d loaded only by d2s_mpdda's unit gates plus wiring (DM loop): 
+    wiring 1f  : T0 67.6 dB  fc 2.63 MHz  PM 87.2 deg
+    wiring 0.1p: T0 67.6 dB  fc 2.28 MHz  PM 87.6 deg
+    wiring 0.5p: T0 67.6 dB  fc 1.49 MHz  PM 88.4 deg
+
+== 6. Closed loop: small-signal gain, -3 dB bandwidth, peaking; step u = -0.25 -> +0.25 V (vd -0.5 -> +0.5 V)
+  1f    gain 1.9991  f3dB 2.754 MHz  peak 0.00 dB  |  rise 10-90 128 ns  (6.25 V/us)  settle 1 % 271 ns  overshoot 0.00 %  vc 7.9..12.4 mV
+  0.5p  gain 1.9991  f3dB 1.585 MHz  peak 0.00 dB  |  rise 10-90 230 ns  (3.48 V/us)  settle 1 % 485 ns  overshoot 0.00 %  vc 9.1..11.9 mV
+  2p    gain 1.9991  f3dB 0.661 MHz  peak 0.00 dB  |  rise 10-90 536 ns  (1.49 V/us)  settle 1 % 1127 ns  overshoot 0.00 %  vc 10.1..11.6 mV
+  10p   gain 1.9991  f3dB 0.166 MHz  peak 0.00 dB  |  rise 10-90 2010 ns  (0.39 V/us)  settle 1 % 3493 ns  overshoot 0.19 %  vc 10.2..11.4 mV
+  0.5p ss 125C: rise 234 ns  settle 1 % 495 ns  overshoot 0.00 %
+  0.5p ff -40C: rise 212 ns  settle 1 % 447 ns  overshoot 0.00 %
+
+== 7. Noise referred to u (includes the 586.9 ohm pad series resistor), tt 27 C
+  load 0.5p Rpad  586.9: 7589 nV/rtHz @10 Hz  670 @1 kHz  151 @100 kHz  input 10 Hz-1 MHz 155.7 uV rms;  output vd 10 Hz-10 MHz 433.8 uV rms
+  load 0.5p Rpad  0.001: 7589 nV/rtHz @10 Hz  670 @1 kHz  151 @100 kHz  input 10 Hz-1 MHz 155.7 uV rms;  output vd 10 Hz-10 MHz 433.7 uV rms
+  load 2p   Rpad  586.9: 7589 nV/rtHz @10 Hz  670 @1 kHz  151 @100 kHz  input 10 Hz-1 MHz 155.7 uV rms;  output vd 10 Hz-10 MHz 309.0 uV rms
+
+== 8. Rejection. Without mismatch the cell is symmetric and the differential rejection is numerically infinite
+  (-250...-310 dB in ngspice), so the differential numbers below come from the mismatch Monte Carlo (20 seeds,
+  mos_tt_mismatch, res_typ_mismatch, bias s2d_bias_out + ideal 5 uA sink with its tree mismatched too).
+  input-referred: |vd / v_source| / 2, in dB (lower is better); output CM response: |vc / v_source| in dB.
+  nominal output CM response (no mismatch), 10 Hz / 1 kHz / 100 kHz / 1 MHz:
+    vdd                           -38.7 /  -38.7 /  -38.3 /  -31.2
+    vss                           -43.1 /  -43.1 /  -23.7 /   -4.7
+    vin and vref together         -47.4 /  -47.4 /  -47.3 /  -43.1
+    vcm (tracks: 0 dB wanted)      -0.0 /   -0.0 /   -0.0 /   -1.1
+  differential, input-referred, median and worst of 20 seeds, 10 Hz / 1 kHz / 100 kHz / 1 MHz:
+    vdd (PSRR)                     median  -83.5 /  -83.5 /  -83.2 /  -77.6   worst  -76.4 /  -76.4 /  -76.1 /  -71.2
+    vss (PSRR)                     median  -87.2 /  -87.1 /  -69.1 /  -51.7   worst  -80.4 /  -80.4 /  -61.9 /  -44.5
+    vin and vref together (CMRR)   median  -92.6 /  -92.6 /  -92.5 /  -89.0   worst  -85.3 /  -85.3 /  -85.2 /  -82.4
+    vcm                            median  -95.2 /  -95.1 /  -68.9 /  -51.5   worst  -88.9 /  -88.8 /  -61.7 /  -44.3
+
+== 9. Mismatch Monte Carlo (mos_tt_mismatch, res_typ_mismatch, mm_ok=1 on every MOS and rhigh), tt 27 C
+  s2d_bias_lp (bias ideal, cell mismatch only), 30 seeds: offset sd 5.89 mV (mean 0.26, -9.25..12.68)  gain sd 1.07 % (1.9571..2.0535)  CM sd 12.9 mV (mean 8.4)  nonlin max 2.06 mV
+  s2d_bias_out + ideal 5 uA (tree mismatch included), 30 seeds: offset sd 6.01 mV (mean -1.70, -15.90..9.25)  gain sd 0.79 % (1.9613..2.0272)  CM sd 13.4 mV (mean 19.8)  nonlin max 3.32 mV
+  budget, mismatch on one group at a time, 20 seeds (bias ideal):
+    unit tails XTa XTb         offset sd  1.42 mV  gain sd  0.02 %  CM sd  2.16 mV
+    unit pairs XMa XMb         offset sd  1.72 mV  gain sd  0.01 %  CM sd  0.79 mV
+    unit rhigh XR              offset sd  0.06 mV  gain sd  0.84 %  CM sd  0.07 mV
+    fold sinks XSX XSY         offset sd  4.27 mV  gain sd  0.00 %  CM sd  6.92 mV
+    fold cascodes XCX XCY      offset sd  0.06 mV  gain sd  0.00 %  CM sd  0.09 mV
+    loads XLP XLN XLPC XLNC    offset sd  1.34 mV  gain sd  0.00 %  CM sd  2.11 mV
+    CMFB fold and diode        offset sd  0.00 mV  gain sd  0.00 %  CM sd  8.02 mV
+
+== 10. Real bias: s2d_bias_out fed by an ideal 5 uA sink, over corners
+  tt 27C    gain=1.999  off=0.004498  nonlin=1.714  cm=19.94  idd=118
+  ss 125C   gain=1.999  off=0.005051  nonlin=2.069  cm=15.59  idd=118.3
+  ff -40C   gain=1.999  off=0.003449  nonlin=0.6478  cm=21.93  idd=117.9
+  sf 27C    gain=1.999  off=0.003971  nonlin=1.06  cm=20.03  idd=118
+  fs 27C    gain=1.999  off=0.005194  nonlin=2.816  cm=19.85  idd=118
+  (idd = s2d_mpdda + tree incl. the 5 uA reference through PI)
+
+== 11. Round trip vin -> s2d_mpdda -> d2s_mpdda -> vout (1 kOhm || 100 pF to vref), 0.5 pF wiring per s2d output
+  shared root: oa_core -> bias_fanout_n -> s2d_bias_out / d2s_bias_out; ideal: s2d_bias_lp / d2s_bias_lp
+  tt 27C    vcm=vref=1.65  root: gain=0.9995  off=0.05322  nonlin=0.01813  idd=437   ideal: gain=0.9995  off=0.05476  nonlin=0.0199  idd=408.6
+  tt 27C    vcm=vref=1.2  root: gain=0.9994  off=0.05432  nonlin=0.03757  idd=434.3   ideal: gain=0.9993  off=0.05591  nonlin=0.0416  idd=405.9
+  ss 125C   vcm=vref=1.65  root: gain=0.9977  off=1.413  nonlin=0.2045  idd=538   ideal: gain=0.9988  off=0.4584  nonlin=0.06801  idd=403.9
+  ss 125C   vcm=vref=1.2  root: gain=0.9976  off=1.425  nonlin=0.2468  idd=536   ideal: gain=0.9987  off=0.4629  nonlin=0.03605  idd=402.1
+  ff -40C   vcm=vref=1.65  root: gain=0.9996  off=0.02555  nonlin=0.04941  idd=320.6   ideal: gain=0.9995  off=0.03784  nonlin=0.02586  idd=415.1
+  ff -40C   vcm=vref=1.2  root: gain=0.9995  off=0.02619  nonlin=0.05835  idd=317.6   ideal: gain=0.9994  off=0.03878  nonlin=0.03896  idd=411.6
+  sf 27C    vcm=vref=1.65  root: gain=0.9995  off=0.04813  nonlin=0.01927  idd=424.5   ideal: gain=0.9995  off=0.05183  nonlin=0.02019  idd=408.3
+  sf 27C    vcm=vref=1.2  root: gain=0.9994  off=0.04911  nonlin=0.03847  idd=421.9   ideal: gain=0.9994  off=0.05291  nonlin=0.04268  idd=405.7
+  fs 27C    vcm=vref=1.65  root: gain=0.9995  off=0.0614  nonlin=0.01672  idd=450.7   ideal: gain=0.9995  off=0.05939  nonlin=0.01946  idd=408.8
+  fs 27C    vcm=vref=1.2  root: gain=0.9994  off=0.06264  nonlin=0.03618  idd=448   ideal: gain=0.9993  off=0.06064  nonlin=0.0402  idd=406.2
+  gain V/V, off (vout - vref at u = 0) and nonlin (|u| <= 0.5 V) in mV, idd = all vdd current incl. root, trees, d2s output stage (uA)
+  mismatch, 20 seeds, shared root, everything mismatched: offset sd 7.95 mV (-19.72..10.94), gain sd 1.39 % (0.9801..1.0262)
+
+== 12. Enable en_3v3 (s2d_mpdda_pd + s2d_bias_out_pd, reference leg from bias_fanout_n)
+  disabled, cells only (vin as listed, vref = vcm = 1.65 V, outputs tied to vcm): idd, current from vcm, voutp - vcm
+    tt 27C    3.3 V vin=0.0: idd    0.141 nA  i(vcm)    -5.93 pA  voutp-vcm    0.01 uV
+    tt 27C    3.3 V vin=2.0: idd    0.141 nA  i(vcm)    -5.93 pA  voutp-vcm    0.01 uV
+    tt 27C    3.3 V vin=3.3: idd    0.141 nA  i(vcm)    -5.93 pA  voutp-vcm    0.01 uV
+    ff -40C   3.6 V vin=0.0: idd    0.245 nA  i(vcm)   -18.60 pA  voutp-vcm    0.02 uV
+    ff -40C   3.6 V vin=2.0: idd    0.245 nA  i(vcm)   -18.60 pA  voutp-vcm    0.02 uV
+    ff -40C   3.6 V vin=3.3: idd    0.245 nA  i(vcm)   -18.60 pA  voutp-vcm    0.02 uV
+    ss 125C   3.0 V vin=0.0: idd    1.262 nA  i(vcm)  -306.22 pA  voutp-vcm    1.13 uV
+    ss 125C   3.0 V vin=2.0: idd    1.258 nA  i(vcm)  -306.22 pA  voutp-vcm    1.13 uV
+    ss 125C   3.0 V vin=3.3: idd    1.258 nA  i(vcm)  -306.22 pA  voutp-vcm    1.13 uV
+    ff 125C   3.6 V vin=0.0: idd    5.041 nA  i(vcm)  -602.77 pA  voutp-vcm    0.52 uV
+    ff 125C   3.6 V vin=2.0: idd    5.023 nA  i(vcm)  -592.33 pA  voutp-vcm    1.35 uV
+    ff 125C   3.6 V vin=3.3: idd    5.027 nA  i(vcm)  -596.62 pA  voutp-vcm    1.07 uV
+    tt 125C   3.3 V vin=0.0: idd    2.086 nA  i(vcm)  -416.84 pA  voutp-vcm    0.83 uV
+    tt 125C   3.3 V vin=2.0: idd    2.072 nA  i(vcm)  -409.57 pA  voutp-vcm    0.99 uV
+    tt 125C   3.3 V vin=3.3: idd    2.074 nA  i(vcm)  -411.35 pA  voutp-vcm    0.92 uV
+  enable at 1 us, vref = vcm (1.65 V; 1.2 V at 3.0 V), vin = vcm + 0.25 V: time until vd within 1 mV of final, output CM excursion, vd 2 us after disable
+    tt 27C    3.3 V edge 10n: vd final 0.5000 V  t_on 1.49 us  vc -1623..1089 mV  vd off 0.01 uV
+    ss 125C   3.0 V edge 10n: vd final 0.4999 V  t_on 1.52 us  vc -1189..1036 mV  vd off -0.01 uV
+    ff -40C   3.6 V edge 10n: vd final 0.4999 V  t_on 1.23 us  vc -1616..893 mV  vd off 0.00 uV
+    ss -40C   3.0 V edge 10n: vd final 0.4999 V  t_on 1.29 us  vc -1181..1019 mV  vd off -0.28 uV
+    tt 27C    3.3 V edge 1u : vd final 0.5000 V  t_on 2.23 us  vc -1623..1089 mV  vd off 0.01 uV
+
+== 13. Input admittance of vin (AC source on vin, vref = vcm, tt 27 C): |i(vin)| / (2 pi f)
+  vref = vcm = 1.65 V: 17.1 fF at 1 kHz, 17.1 fF at 500 kHz, 17.3 fF at 1 MHz
+  vref = vcm = 1.2 V:  17.1 fF at 1 kHz, 17.2 fF at 500 kHz, 17.3 fF at 1 MHz
+  (two unit gates, bootstrapped by their source followers; the pad cell, its clamps and the routing are not included)
+
+# run time: sections 1-7 about 6 min, sections 8-12 239 s, section 13 seconds (2 cores)

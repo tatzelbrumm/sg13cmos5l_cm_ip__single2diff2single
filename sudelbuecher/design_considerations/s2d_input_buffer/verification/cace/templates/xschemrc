@@ -1,0 +1,4 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0
+# For opening the templates interactively; CACE itself uses the PDK xschemrc.
+source [file normalize [file join [file dirname [info script]] ../../../xschem/xschemrc]]

@@ -1,0 +1,40 @@
+* tb_s2d_pd_leak: s2d_mpdda_pd + s2d_bias_out_pd disabled (en_3v3 = 0), tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc).
+* Run from this directory: ngspice -b <deck>
+* The 5 uA reference leg (one leg of bias_fanout_n) stays on, as it would while the output buffer
+* still runs. Root and fan-out sit on their own source Vddr, so idd is the current of the two
+* disabled cells alone. Also printed: the current drawn from vcm through the output ties, the
+* output offsets from vcm, the leg's drain voltage, and the bias lines.
+* Reference (results_s2d.txt, section 12): idd 0.14 nA, i(vcm) -5.9 pA, outputs at vcm within 0.01 uV.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.include ../../../class_ab_pad_driver/improvements/sim/units.spice
+.include ../s2d_mpdda.spice
+.include ../s2d_bias.spice
+.include ../s2d_pd.spice
+Vdd vdd 0 3.3
+Vref vref 0 1.65
+Vcm vcm 0 1.65
+Vin vin 0 2.0
+Ven en 0 0
+* the reference leg: one leg of bias_fanout_n, the root idealized as a 5 uA source into it
+Vddr vddr 0 3.3
+Iroot vddr iin 5u
+Xf vddr 0 iin ir io2 bias_fanout_n
+Vio2 io2 vddr 0
+Xb vdd 0 ir vbp vbn vbpc vbnc en s2d_bias_out_pd
+Xs vdd 0 vin vref vcm voutp voutn voutp voutn vbp vbn vbpc vbnc en s2d_mpdda_pd
+CLp voutp 0 0.5p
+CLn voutn 0 0.5p
+.control
+op
+let idd = -i(vdd)
+let icm = -i(vcm)
+let dp = v(voutp) - v(vcm)
+let dn = v(voutn) - v(vcm)
+print idd icm dp dn v(ir)
+print v(vbp) v(vbn) v(vbpc) v(vbnc) v(xs.xs.vcmfb)
+.endc
+.end
