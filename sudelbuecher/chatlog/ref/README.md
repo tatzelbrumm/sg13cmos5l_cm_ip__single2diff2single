@@ -37,6 +37,9 @@ submission, so unlicensed copies of other people's docs do not belong in it.
 - [`2026-10-06_opus_references.md`](2026-10-06_opus_references.md) — the Opus power-down session: the
   project files it read, IHP's `sg13cmos5l_io.cdl` and the tool and PDK commits of the pinned cloud
   environment
+- [`2026-10-20_opus_references.md`](2026-10-20_opus_references.md) — the Opus pad input buffer session:
+  the project and harness files it read, the PDK model and tool sources checked in the cloud container,
+  and the literature cited from memory
 
 Run logs live one level up in [`../logs/`](../logs/) and are committed to the
 branch that produced them, so their contents differ per branch. The chat log,

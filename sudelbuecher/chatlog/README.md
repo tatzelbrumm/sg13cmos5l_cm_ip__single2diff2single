@@ -74,3 +74,9 @@
 
 [2026-10-14_opus_clamp_m1_pcells.md](2026-10-14_opus_clamp_m1_pcells.md)
 : Opus session, 14 Oct: M1-only clamp PCells `Clamp_N_M1` / `Clamp_P_M1` (no M2/M3, no gate tie-off, variable gate length, guard rings wrapped around the array or IHP's 80 µm frame) and DC diode PCells `DCNDiode` / `DCPDiode` with the diode length as parameter, verified by connectivity extraction and the full IHP DRC deck on KLayout 0.30.0.
+
+[2026-10-20_opus_s2d_input_buffer_architecture_and_verification.md](2026-10-20_opus_s2d_input_buffer_architecture_and_verification.md)
+: Opus session, 20 Oct: architecture, specification and verification suites (ngspice decks, CACE) for the pad input buffer `s2d_mpdda`, the mirror image of `d2s_mpdda` on the driver's bias lines, in `design_considerations/s2d_input_buffer/`.
+
+[2026-10-20_opus_slot7_consolidation_into_macros.md](2026-10-20_opus_slot7_consolidation_into_macros.md)
+: Opus session, 20 Oct: consolidation of the slot7 design into `sg13cmos5l_cm_ip__single2diff2single/macros` (pad macros `sg13cmos5l_IOPadDiff2Single` and the `sg13cmos5l_IOPadSingle2Diff` scaffold, bias reference, enable and level-shifter macros with CACE suites, the slot7-compatible `slot`), with the running log in `design_considerations/consolidation/log.md`.
