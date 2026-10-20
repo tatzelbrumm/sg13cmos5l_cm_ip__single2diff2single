@@ -1,0 +1,58 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/tb_units.sch
+**.subckt tb_units
+Vdd vdd GND 3.3
+Vref vref GND 1.65
+Vx xd GND 0
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+IBP vbp GND 5u
+XUA x1 y1 gpa vref vdd GND vbp unit_r2
+Vfx1 x1 GND 0.45
+Vfy1 y1 GND 0.45
+EpA gpa vref xd GND 1
+XUB x2 y2 vref gnb vdd GND vbp unit_r2
+Vfx2 x2 GND 0.45
+Vfy2 y2 GND 0.45
+EnB gnb vref xd GND -1
+**** begin user architecture code
+
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.param wwi=4u lwi=4u
+.control
+dc Vx -0.8 0.8 0.005
+let fA = i(Vfx1) - i(Vfy1)
+let fB = i(Vfx2) - i(Vfy2)
+meas dc fa05 find fA at=0.5
+meas dc fb05 find fB at=0.5
+meas dc fam05 find fA at=-0.5
+meas dc fbm05 find fB at=-0.5
+print fa05 fb05 fam05 fbm05
+if $?batchmode = 0
+  plot fA fB
+  plot fA-fB
+end
+.endc
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  unit_r2.sym # of pins=7
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/unit_r2.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/unit_r2.sch
+.subckt unit_r2 x y gp gn vdd vss vbp
+*.opin x
+*.opin y
+*.ipin gp
+*.ipin gn
+*.iopin vdd
+*.iopin vss
+*.ipin vbp
+XTa sa vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XTb sb vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XR sa sb vss rhigh w=0.5u l=50.6u m=1 b=0 mm_ok=1
+.ends
+
+.GLOBAL GND
+.end

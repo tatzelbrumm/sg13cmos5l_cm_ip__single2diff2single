@@ -1,0 +1,30 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/d2s_bias_out.sch
+**.subckt d2s_bias_out vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn
+*.iopin vdd
+*.iopin vss
+*.iopin vddo
+*.iopin vsso
+*.iopin iref
+*.opin vbp
+*.opin vbn
+*.opin vbpc
+*.opin vbnc
+*.opin vabp
+*.opin vabn
+XPI iref iref vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1 mm_ok=1
+XNBPC vbpc vbn vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1 mm_ok=1
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XNBP vbp vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1 mm_ok=1
+XRP1 n1 n1 vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2 m=1 mm_ok=1
+XRP2 vabp vabp n1 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+XNABP vabp vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1 mm_ok=1
+XPBNC vbnc iref vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1 mm_ok=1
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1 mm_ok=1
+XPBN vbn iref vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XBN vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1 mm_ok=1
+XPABN vabn iref vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XRN2 vabn vabn n2 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XRN1 n2 n2 vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2 m=1 mm_ok=1
+**.ends
+.end

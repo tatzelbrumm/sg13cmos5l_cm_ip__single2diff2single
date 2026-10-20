@@ -1,0 +1,16 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/unit_r.sch
+**.subckt unit_r x y gp gn vdd vss vbp
+*.opin x
+*.opin y
+*.ipin gp
+*.ipin gn
+*.iopin vdd
+*.iopin vss
+*.ipin vbp
+XTa sa vbp vdd vdd sg13_hv_pmos w=10u l=2u ng=1 m=1 mm_ok=1
+XTb sb vbp vdd vdd sg13_hv_pmos w=10u l=2u ng=1 m=1 mm_ok=1
+XMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XR sa sb vss rhigh w=0.5u l=36.4u m=1 b=0 mm_ok=1
+**.ends
+.end

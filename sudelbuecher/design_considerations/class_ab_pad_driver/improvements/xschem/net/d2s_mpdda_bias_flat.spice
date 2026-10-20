@@ -1,0 +1,63 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/improvements/xschem/d2s_mpdda_bias_flat.sch
+**.subckt d2s_mpdda_bias_flat vdd vss vddo vsso vinp vinn vref vout vfb
+*.iopin vdd
+*.iopin vss
+*.iopin vddo
+*.iopin vsso
+*.ipin vinp
+*.ipin vinn
+*.ipin vref
+*.iopin vout
+*.ipin vfb
+XRP1 n1 n1 vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2 m=1 mm_ok=1
+XRP2 vabp vabp n1 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+IABP vabp vss 5u
+XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1 mm_ok=1
+IBPC vbpc vss 2u
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+IBP vbp vss 5u
+IABN vdd vabn 5u
+XRN2 vabn vabn n2 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XRN1 n2 n2 vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2 m=1 mm_ok=1
+IBNC vdd vbnc 2u
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1 mm_ok=1
+IBN vdd vbn 5u
+XBN vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1 mm_ok=1
+XTa_A sa_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XTb_A sb_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XR_A sa_A sb_A vss rhigh w=0.5u l=50.6u m=1 b=0 mm_ok=1
+XMa_A y vinp sa_A sa_A sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XMb_A x vref sb_A sb_A sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XTa_B sa_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XTb_B sb_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XR_B sa_B sb_B vss rhigh w=0.5u l=50.6u m=1 b=0 mm_ok=1
+XMa_B y vref sa_B sa_B sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XMb_B x vinn sb_B sb_B sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XTa_C1 sa_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XTb_C1 sb_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XR_C1 sa_C1 sb_C1 vss rhigh w=0.5u l=50.6u m=1 b=0 mm_ok=1
+XMa_C1 y vref sa_C1 sa_C1 sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XMb_C1 x vfb sb_C1 sb_C1 sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XTa_C2 sa_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XTb_C2 sb_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XR_C2 sa_C2 sb_C2 vss rhigh w=0.5u l=50.6u m=1 b=0 mm_ok=1
+XMa_C2 y vref sa_C2 sa_C2 sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XMb_C2 x vfb sb_C2 sb_C2 sg13_hv_pmos w=20u l=1u ng=2 m=1 mm_ok=1
+XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XCX l1 vbnc x vss sg13_hv_nmos w=30u l=3u ng=2 m=1 mm_ok=1
+XSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=4 m=1 mm_ok=1
+XPL pl l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4 m=1 mm_ok=1
+XPCL l2 vbpc pl vdd sg13_hv_pmos w=30u l=3u ng=2 m=1 mm_ok=1
+XFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+XPR pr l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4 m=1 mm_ok=1
+XPCR a vbpc pr vdd sg13_hv_pmos w=30u l=3u ng=2 m=1 mm_ok=1
+XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XCY b vbnc y vss sg13_hv_nmos w=30u l=3u ng=2 m=1 mm_ok=1
+XSY y vbn vss vss sg13_hv_nmos w=36u l=6u ng=4 m=1 mm_ok=1
+XOP vout a vddo vddo sg13_hv_pmos w=546.12u l=0.6u ng=82 m=1 mm_ok=1
+XON vout b vsso vsso sg13_hv_nmos w=290.4u l=1u ng=66 m=1 mm_ok=1
+XCMA vout a vout vout sg13_hv_pmos w=16u l=16u ng=1 m=1 mm_ok=1
+XCMB b vout b b sg13_hv_pmos w=16u l=16u ng=1 m=1 mm_ok=1
+**.ends
+.end
