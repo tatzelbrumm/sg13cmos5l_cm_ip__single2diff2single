@@ -1,0 +1,9 @@
+{
+    "technology": "",
+    "statements": [
+        {
+            "lib_name": "sg13cmos5l_io",
+            "lib_path": "$PDK_ROOT/ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/gds/sg13cmos5l_io.gds"
+        }
+    ]
+}
