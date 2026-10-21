@@ -1,0 +1,52 @@
+[07:05:01] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
+[07:05:02] INFO     Working directory set to '..'                                                           parameter_manager.py:153
+                    ('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias').                               
+[07:05:02] INFO     Starting a new run with tag 'RUN_2026-09-04_07-05-02'.                                  parameter_manager.py:624
+[07:05:02] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
+[07:05:02] INFO     Running parameters: ac_psrr_params                                                               cace_cli.py:327
+[07:05:02] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
+────────────────────────────────────────────────────── Started ac_psrr_params ──────────────────────────────────────────────────────
+[07:05:02] INFO     Parameter ac_psrr_params: Generating simulation files…                                  parameter_ngspice.py:211
+[07:05:02] INFO     Parameter ac_psrr_params: Running simulations…                                          parameter_ngspice.py:564
+[07:05:02] INFO     Parameter ac_psrr_params: Collecting results…                                           parameter_ngspice.py:663
+[07:05:02] INFO     Parameter ac_psrr_params: Saving simulation summary as                                  parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_07-05-02/parameters/ac_psrr_params/simulation_summary.md'…                           
+                                               Simulation Summary for ac_psrr_params                                                
+
+                 
+ run    PSRR_vbr 
+ ─────────────── 
+ run_0    24.348 
+                 
+──────────────────────────────────────────────── Completed ac_psrr_params: Fail ❌ ─────────────────────────────────────────────────
+
+[07:05:02] INFO     Done with CACE simulations and evaluations in 0:00:00.                                           cace_cli.py:371
+                                                     CACE Summary for reference                                                     
+
+netlist source: schematic                                                                                                           
+
+                                                                                                                                    
+ Parameter                     Tool     Result          Min Limit  Min Value   Typ Target  Typ Value  Max Limit  Max Value  Status  
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ PMOS mirror bias voltage      ngspice  Vbp_val               any           ​          any           ​        any           ​  Skip 🟧 
+ NMOS mirror bias voltage      ngspice  Vbn_val               any           ​          any           ​        any           ​  Skip 🟧 
+ Resistor-free reference       ngspice  Vbr_val               any           ​          any           ​        any           ​  Skip 🟧 
+ voltage                                                                                                                            
+ Core reference current        ngspice  Ibias_val          200 nA           ​          any           ​    1000 nA           ​  Skip 🟧 
+ Start-up time                 ngspice  t_startup             any           ​       2e-5 s           ​     4e-5 s           ​  Skip 🟧 
+ Settled vbp                   ngspice  Vbp_final             any           ​          any           ​        any           ​  Skip 🟧 
+ Settled vbn                   ngspice  Vbn_final             any           ​          any           ​        any           ​  Skip 🟧 
+ Settled vbr                   ngspice  Vbr_final             any           ​          any           ​        any           ​  Skip 🟧 
+ PSRR of vbr at 1kHz           ngspice  PSRR_vbr            50 dB  24.348 dB        60 dB  24.348 dB        any  24.348 dB  Fail ❌ 
+ Output current noise density  ngspice  Ibias_noise           any           ​  0.5 nA/rtHz           ​  1 nA/rtHz           ​  Skip 🟧 
+ Turn-off time                 ngspice  t_disable             any           ​          any           ​        any           ​  Skip 🟧 
+ Quiescent supply current,     ngspice  Iq_enabled            any           ​        10 uA           ​      20 uA           ​  Skip 🟧 
+ enabled                                                                                                                            
+ Quiescent supply current,     ngspice  Iq_disabled           any           ​        10 nA           ​      20 nA           ​  Skip 🟧 
+ disabled                                                                                                                           
+ Core current accuracy -       ngspice  Ibias_accuracy       -2 %           ​          0 %           ​        2 %           ​  Skip 🟧 
+ Mismatch                                                                                                                           
+ Leg-to-leg current matching   ngspice  Leg_matching         -1 %           ​          0 %           ​        1 %           ​  Skip 🟧 
+ - Mismatch                                                                                                                         
+                                                                                                                                    
+[07:05:03] INFO     CACE failed, skipping documentation generation.                                                  cace_cli.py:404

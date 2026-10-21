@@ -1,0 +1,61 @@
+[08:22:44] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
+[08:22:44] INFO     Working directory set to '..'                                                           parameter_manager.py:153
+                    ('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias').                               
+[08:22:44] INFO     Starting a new run with tag 'RUN_2026-09-04_08-22-44'.                                  parameter_manager.py:624
+[08:22:44] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
+[08:22:44] INFO     Running parameters: noise_params                                                                 cace_cli.py:327
+[08:22:44] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
+─────────────────────────────────────────────────────── Started noise_params ───────────────────────────────────────────────────────
+[08:22:44] INFO     Parameter noise_params: Generating simulation files…                                    parameter_ngspice.py:211
+[08:22:44] INFO     Parameter noise_params: Running simulations…                                            parameter_ngspice.py:564
+[08:22:45] INFO     Parameter noise_params: Collecting results…                                             parameter_ngspice.py:663
+[08:22:45] INFO     Parameter noise_params: Saving simulation summary as                                    parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_08-22-44/parameters/noise_params/simulation_summary.md'…                             
+                                                Simulation Summary for noise_params                                                 
+
+                    
+ run    Ibias_noise 
+ ────────────────── 
+ run_0    5.210e-10 
+                    
+───────────────────────────────────────────────── Completed noise_params: Pass ✅ ──────────────────────────────────────────────────
+
+[08:22:45] INFO     Done with CACE simulations and evaluations in 0:00:00.                                           cace_cli.py:371
+                                                     CACE Summary for reference                                                     
+
+netlist source: schematic                                                                                                           
+
+                                                                                                                                    
+ Parameter         Tool     Result          Min Limit      Min Value   Typ Target      Typ Value  Max Limit      Max Value  Status  
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ PMOS mirror bias  ngspice  Vbp_val               any               ​          any               ​        any               ​  Skip 🟧 
+ voltage                                                                                                                            
+ NMOS mirror bias  ngspice  Vbn_val               any               ​          any               ​        any               ​  Skip 🟧 
+ voltage                                                                                                                            
+ Resistor-free     ngspice  Vbr_val               any               ​          any               ​        any               ​  Skip 🟧 
+ reference                                                                                                                          
+ voltage                                                                                                                            
+ Core reference    ngspice  Ibias_val          200 nA               ​          any               ​    1000 nA               ​  Skip 🟧 
+ current                                                                                                                            
+ Start-up time     ngspice  t_startup             any               ​     20000 ns               ​   40000 ns               ​  Skip 🟧 
+ Settled vbp       ngspice  Vbp_final             any               ​          any               ​        any               ​  Skip 🟧 
+ Settled vbn       ngspice  Vbn_final             any               ​          any               ​        any               ​  Skip 🟧 
+ Settled vbr       ngspice  Vbr_final             any               ​          any               ​        any               ​  Skip 🟧 
+ PSRR of vbr at    ngspice  PSRR_vbr            50 dB               ​        60 dB               ​        any               ​  Skip 🟧 
+ 1kHz                                                                                                                               
+ Output current    ngspice  Ibias_noise           any  0.521 nA/rtHz  0.5 nA/rtHz  0.521 nA/rtHz  1 nA/rtHz  0.521 nA/rtHz  Pass ✅ 
+ noise density                                                                                                                      
+ Turn-off time     ngspice  t_disable             any               ​          any               ​        any               ​  Skip 🟧 
+ Quiescent supply  ngspice  Iq_enabled            any               ​        10 uA               ​      20 uA               ​  Skip 🟧 
+ current, enabled                                                                                                                   
+ Quiescent supply  ngspice  Iq_disabled           any               ​        10 nA               ​      20 nA               ​  Skip 🟧 
+ current,                                                                                                                           
+ disabled                                                                                                                           
+ Core current      ngspice  Ibias_accuracy       -2 %               ​          0 %               ​        2 %               ​  Skip 🟧 
+ accuracy -                                                                                                                         
+ Mismatch                                                                                                                           
+ Leg-to-leg        ngspice  Leg_matching         -1 %               ​          0 %               ​        1 %               ​  Skip 🟧 
+ current matching                                                                                                                   
+ - Mismatch                                                                                                                         
+                                                                                                                                    
+[08:22:45] INFO     Generating documentation in 'cace/_docs'                                                parameter_manager.py:255

@@ -1,0 +1,208 @@
+[08:27:47] INFO     Maximum number of jobs is 8.                                                            parameter_manager.py:105
+[08:27:47] INFO     Working directory set to '..'                                                           parameter_manager.py:153
+                    ('/foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/OgueyAebischerBias').                               
+[08:27:47] INFO     Starting a new run with tag 'RUN_2026-09-04_08-27-47'.                                  parameter_manager.py:624
+[08:27:47] INFO     PDK root is '/foss/pdks'.                                                               parameter_manager.py:637
+[08:27:47] INFO     Running parameters: dc_params, tran_startup_params, ac_psrr_params, noise_params,                cace_cli.py:327
+                    disable_params, mm_params                                                                                       
+[08:27:47] INFO     Generating simulation netlist from schematic…                                             cace_regenerate.py:562
+──────────────────────────────────────────────────────── Started dc_params ─────────────────────────────────────────────────────────
+─────────────────────────────────────────────────── Started tran_startup_params ────────────────────────────────────────────────────
+────────────────────────────────────────────────────── Started ac_psrr_params ──────────────────────────────────────────────────────
+─────────────────────────────────────────────────────── Started noise_params ───────────────────────────────────────────────────────
+[08:27:47] INFO     Parameter noise_params: Generating simulation files…                                    parameter_ngspice.py:211
+[08:27:47] INFO     Parameter dc_params: Generating simulation files…                                       parameter_ngspice.py:211
+[08:27:47] INFO     Parameter ac_psrr_params: Generating simulation files…                                  parameter_ngspice.py:211
+[08:27:47] INFO     Parameter tran_startup_params: Generating simulation files…                             parameter_ngspice.py:211
+[08:27:47] INFO     Parameter ac_psrr_params: Running simulations…                                          parameter_ngspice.py:564
+[08:27:47] INFO     Parameter noise_params: Running simulations…                                            parameter_ngspice.py:564
+[08:27:49] INFO     Parameter ac_psrr_params: Collecting results…                                           parameter_ngspice.py:663
+[08:27:49] INFO     Parameter ac_psrr_params: Saving simulation summary as                                  parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/ac_psrr_params/simulation_summary.md'…                           
+                                               Simulation Summary for ac_psrr_params                                                
+
+                 
+ run    PSRR_vbr 
+ ─────────────── 
+ run_0    24.348 
+                 
+──────────────────────────────────────────────── Completed ac_psrr_params: Fail ❌ ─────────────────────────────────────────────────
+────────────────────────────────────────────────────── Started disable_params ──────────────────────────────────────────────────────
+[08:27:49] INFO     Parameter disable_params: Generating simulation files…                                  parameter_ngspice.py:211
+[08:27:50] INFO     Parameter disable_params: Running simulations…                                          parameter_ngspice.py:564
+[08:27:50] INFO     Parameter tran_startup_params: Running simulations…                                     parameter_ngspice.py:564
+[08:27:51] INFO     Parameter noise_params: Collecting results…                                             parameter_ngspice.py:663
+[08:27:51] INFO     Parameter noise_params: Saving simulation summary as                                    parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/noise_params/simulation_summary.md'…                             
+                                                Simulation Summary for noise_params                                                 
+
+                    
+ run    Ibias_noise 
+ ────────────────── 
+ run_0    5.210e-10 
+                    
+───────────────────────────────────────────────── Completed noise_params: Pass ✅ ──────────────────────────────────────────────────
+──────────────────────────────────────────────────────── Started mm_params ─────────────────────────────────────────────────────────
+[08:27:52] INFO     Parameter mm_params: Generating simulation files…                                       parameter_ngspice.py:211
+[08:27:52] INFO     Collating results using condition "iterations"                                          parameter_ngspice.py:314
+[08:28:01] INFO     Parameter dc_params: Running simulations…                                               parameter_ngspice.py:564
+[08:29:18] INFO     Parameter mm_params: Running simulations…                                               parameter_ngspice.py:564
+[08:29:53] INFO     Parameter tran_startup_params: Collecting results…                                      parameter_ngspice.py:663
+[08:29:53] INFO     Parameter tran_startup_params: Saving simulation summary as                             parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/tran_startup_params/simulation_summary.m                         
+                    d'…                                                                                                             
+                                             Simulation Summary for tran_startup_params                                             
+
+                                                                      
+ run     temp  corner_mos  t_startup  Vbp_final  Vbn_final  Vbr_final 
+ ──────────────────────────────────────────────────────────────────── 
+ run_00   -40          ss  2.849e-07      2.559      0.689      1.007 
+ run_01    27          ss  2.647e-07      2.624      0.656      1.049 
+ run_02    85          ss  2.441e-07      2.694      0.616      1.075 
+ run_03   -40          sf  2.507e-07      2.639      0.668      0.992 
+ run_04    27          sf  2.310e-07      2.703      0.635      1.035 
+ run_05    85          sf  2.114e-07      2.772      0.596      1.061 
+ run_06   -40          tt  2.623e-07      2.610      0.646      0.970 
+ run_07    27          tt  2.422e-07      2.674      0.614      1.012 
+ run_08    85          tt  2.222e-07      2.743      0.574      1.038 
+ run_09   -40          fs  2.733e-07      2.582      0.622      0.946 
+ run_10    27          fs  2.536e-07      2.645      0.591      0.989 
+ run_11    85          fs  2.328e-07      2.715      0.552      1.015 
+ run_12   -40          ff  2.390e-07      2.662      0.601      0.930 
+ run_13    27          ff  2.196e-07      2.724      0.570      0.974 
+ run_14    85          ff  2.007e-07      2.792      0.531      1.000 
+                                                                      
+[08:29:53] INFO     Parameter tran_startup_params: Plotting t_startup_vs_corner_mos to                              parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/tran_startup_params'…                                            
+[08:29:53] INFO     Parameter tran_startup_params: Plotting t_startup_vs_temp to                                    parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/tran_startup_params'…                                            
+────────────────────────────────────────────── Completed tran_startup_params: Pass ✅ ──────────────────────────────────────────────
+[08:29:58] INFO     Parameter dc_params: Collecting results…                                                parameter_ngspice.py:663
+[08:29:58] INFO     Parameter dc_params: Saving simulation summary as                                       parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/dc_params/simulation_summary.md'…                                
+                                                  Simulation Summary for dc_params                                                  
+
+                                                                     
+ run     vdd  temp  corner_mos  Vbp_val  Vbn_val  Vbr_val  Ibias_val 
+ ─────────────────────────────────────────────────────────────────── 
+ run_00  3.0   -40          ss    2.262    0.686    0.991  2.690e-08 
+ run_01  3.3   -40          ss    2.559    0.689    1.007  2.962e-08 
+ run_02  3.6   -40          ss    2.855    0.692    1.025  3.287e-08 
+ run_03  3.0    27          ss    2.328    0.652    1.033  3.971e-08 
+ run_04  3.3    27          ss    2.624    0.656    1.049  4.284e-08 
+ run_05  3.6    27          ss    2.919    0.660    1.068  4.660e-08 
+ run_06  3.0    85          ss    2.398    0.612    1.058  4.775e-08 
+ run_07  3.3    85          ss    2.694    0.616    1.075  5.087e-08 
+ run_08  3.6    85          ss    2.990    0.620    1.094  5.471e-08 
+ run_09  3.0   -40          sf    2.343    0.665    0.975  2.877e-08 
+ run_10  3.3   -40          sf    2.639    0.668    0.992  3.176e-08 
+ run_11  3.6   -40          sf    2.935    0.672    1.011  3.538e-08 
+ run_12  3.0    27          sf    2.407    0.632    1.017  4.208e-08 
+ run_13  3.3    27          sf    2.703    0.635    1.035  4.549e-08 
+ run_14  3.6    27          sf    2.998    0.640    1.055  4.967e-08 
+ run_15  3.0    85          sf    2.476    0.592    1.043  5.029e-08 
+ run_16  3.3    85          sf    2.772    0.596    1.061  5.371e-08 
+ run_17  3.6    85          sf    3.067    0.601    1.082  5.799e-08 
+ run_18  3.0   -40          tt    2.314    0.642    0.953  2.956e-08 
+ run_19  3.3   -40          tt    2.610    0.646    0.970  3.261e-08 
+ run_20  3.6   -40          tt    2.906    0.649    0.988  3.629e-08 
+ run_21  3.0    27          tt    2.378    0.610    0.995  4.318e-08 
+ run_22  3.3    27          tt    2.674    0.614    1.012  4.665e-08 
+ run_23  3.6    27          tt    2.970    0.618    1.032  5.089e-08 
+ run_24  3.0    85          tt    2.447    0.570    1.021  5.155e-08 
+ run_25  3.3    85          tt    2.743    0.574    1.038  5.501e-08 
+ run_26  3.6    85          tt    3.038    0.579    1.059  5.932e-08 
+ run_27  3.0   -40          fs    2.285    0.619    0.929  3.043e-08 
+ run_28  3.3   -40          fs    2.582    0.622    0.946  3.356e-08 
+ run_29  3.6   -40          fs    2.877    0.626    0.965  3.731e-08 
+ run_30  3.0    27          fs    2.349    0.587    0.972  4.442e-08 
+ run_31  3.3    27          fs    2.645    0.591    0.989  4.796e-08 
+ run_32  3.6    27          fs    2.941    0.595    1.008  5.225e-08 
+ run_33  3.0    85          fs    2.419    0.548    0.997  5.297e-08 
+ run_34  3.3    85          fs    2.715    0.552    1.015  5.649e-08 
+ run_35  3.6    85          fs    3.010    0.556    1.035  6.084e-08 
+ run_36  3.0   -40          ff    2.366    0.597    0.913  3.268e-08 
+ run_37  3.3   -40          ff    2.662    0.601    0.930  3.612e-08 
+ run_38  3.6   -40          ff    2.958    0.605    0.950  4.033e-08 
+ run_39  3.0    27          ff    2.428    0.566    0.956  4.723e-08 
+ run_40  3.3    27          ff    2.724    0.570    0.974  5.111e-08 
+ run_41  3.6    27          ff    3.020    0.574    0.994  5.592e-08 
+ run_42  3.0    85          ff    2.496    0.527    0.982  5.599e-08 
+ run_43  3.3    85          ff    2.792    0.531    1.000  5.985e-08 
+ run_44  3.6    85          ff    3.087    0.536    1.022  6.473e-08 
+                                                                     
+[08:29:58] INFO     Parameter dc_params: Plotting Vbp_vs_vdd to                                                     parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/dc_params'…                                                      
+[08:29:59] INFO     Parameter dc_params: Plotting Vbn_vs_vdd to                                                     parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/dc_params'…                                                      
+[08:30:00] INFO     Parameter dc_params: Plotting Vbr_vs_vdd to                                                     parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/dc_params'…                                                      
+[08:30:01] INFO     Parameter dc_params: Plotting Ibias_vs_vdd to                                                   parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/dc_params'…                                                      
+[08:30:01] INFO     Parameter dc_params: Plotting Ibias_vs_temp to                                                  parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/dc_params'…                                                      
+[08:30:02] INFO     Parameter dc_params: Plotting Ibias_vs_corner_mos to                                            parameter.py:929
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/dc_params'…                                                      
+─────────────────────────────────────────────────── Completed dc_params: Fail ❌ ───────────────────────────────────────────────────
+[08:31:50] INFO     Parameter mm_params: Collecting results…                                                parameter_ngspice.py:663
+[08:31:50] INFO     Parameter mm_params: Saving simulation summary as                                       parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/mm_params/simulation_summary.md'…                                
+                                                  Simulation Summary for mm_params                                                  
+
+                                                                                                  
+ run                  iterations                Ibias_accuracy                       Leg_matching 
+ ──────────────────────────────────────────────────────────────────────────────────────────────── 
+ run_0  [1.000, 2.000, 3.000, …]  [0.155, 1.236e-02, 0.164, …]  [0.150, 5.752e-02, -3.194e-03, …] 
+                                                                                                  
+─────────────────────────────────────────────────── Completed mm_params: Fail ❌ ───────────────────────────────────────────────────
+[08:31:50] INFO     Parameter disable_params: Collecting results…                                           parameter_ngspice.py:663
+[08:31:50] INFO     Parameter disable_params: Saving simulation summary as                                  parameter_ngspice.py:846
+                    'cace/_runs/RUN_2026-09-04_08-27-47/parameters/disable_params/simulation_summary.md'…                           
+                                               Simulation Summary for disable_params                                                
+
+                                           
+ run    t_disable  Iq_enabled  Iq_disabled 
+ ───────────────────────────────────────── 
+ run_0  3.530e-08   3.379e-07    6.621e-11 
+                                           
+──────────────────────────────────────────────── Completed disable_params: Pass ✅ ─────────────────────────────────────────────────
+
+[08:31:50] INFO     Done with CACE simulations and evaluations in 0:04:03.                                           cace_cli.py:371
+                                                     CACE Summary for reference                                                     
+
+netlist source: schematic                                                                                                           
+
+                                                                                                                                    
+ Parameter         Tool     Result          Min Limit      Min Value   Typ Target      Typ Value  Max Limit      Max Value  Status  
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+ PMOS mirror bias  ngspice  Vbp_val               any        2.262 V          any        2.674 V        any        3.087 V  Pass ✅ 
+ voltage                                                                                                                            
+ NMOS mirror bias  ngspice  Vbn_val               any        0.527 V          any        0.612 V        any        0.692 V  Pass ✅ 
+ voltage                                                                                                                            
+ Resistor-free     ngspice  Vbr_val               any        0.913 V          any        1.008 V        any        1.094 V  Pass ✅ 
+ reference                                                                                                                          
+ voltage                                                                                                                            
+ Core reference    ngspice  Ibias_val          200 nA      26.900 nA          any      46.652 nA    1000 nA      64.730 nA  Fail ❌ 
+ current                                                                                                                            
+ Start-up time     ngspice  t_startup             any     200.689 ns     20000 ns     242.236 ns   40000 ns     284.878 ns  Pass ✅ 
+ Settled vbp       ngspice  Vbp_final             any        2.559 V          any        2.674 V        any        2.792 V  Pass ✅ 
+ Settled vbn       ngspice  Vbn_final             any        0.531 V          any        0.614 V        any        0.689 V  Pass ✅ 
+ Settled vbr       ngspice  Vbr_final             any        0.930 V          any        1.007 V        any        1.075 V  Pass ✅ 
+ PSRR of vbr at    ngspice  PSRR_vbr            50 dB      24.348 dB        60 dB      24.348 dB        any      24.348 dB  Fail ❌ 
+ 1kHz                                                                                                                               
+ Output current    ngspice  Ibias_noise           any  0.521 nA/rtHz  0.5 nA/rtHz  0.521 nA/rtHz  1 nA/rtHz  0.521 nA/rtHz  Pass ✅ 
+ noise density                                                                                                                      
+ Turn-off time     ngspice  t_disable             any      35.300 ns          any      35.300 ns        any      35.300 ns  Pass ✅ 
+ Quiescent supply  ngspice  Iq_enabled            any       0.338 uA        10 uA       0.338 uA      20 uA       0.338 uA  Pass ✅ 
+ current, enabled                                                                                                                   
+ Quiescent supply  ngspice  Iq_disabled           any       0.066 nA        10 nA       0.066 nA      20 nA       0.066 nA  Pass ✅ 
+ current,                                                                                                                           
+ disabled                                                                                                                           
+ Core current      ngspice  Ibias_accuracy       -2 %      -76.324 %          0 %        1.306 %        2 %      148.048 %  Fail ❌ 
+ accuracy -                                                                                                                         
+ Mismatch                                                                                                                           
+ Leg-to-leg        ngspice  Leg_matching         -1 %      -17.305 %          0 %        5.568 %        1 %       39.645 %  Fail ❌ 
+ current matching                                                                                                                   
+ - Mismatch                                                                                                                         
+                                                                                                                                    
+[08:31:51] INFO     CACE failed, skipping documentation generation.                                                  cace_cli.py:404
