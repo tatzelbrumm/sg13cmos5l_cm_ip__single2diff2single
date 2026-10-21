@@ -207,3 +207,26 @@ Four macros with CACE suites (dc, mm, psrr, startup, pd; bg also rhigh × pnpMPA
   twice from outside. Three agents in one container each cleaned up "stray" simulator processes; every
   affected group was rerun, and the committed results are complete.
 - Not done for any macro: layout, extraction; for the harness path, iDAC compliance and noise.
+
+## 2026-10-22 01:15 — one xschemrc for all macros
+
+`macros/xschemrc` (new): the template's PDK and library-path preamble, then every
+`macros/*/schematic/xschem`, every `macros/*/testbenches/xschem`, and the top cell's
+`schematic/xschem` and `testbenches/xschem`, located from the file's own path; the template's
+netlist-directory pinning at the end. The per-macro xschemrc files are unchanged and not sourced.
+Start with `cd macros && xschem`, or `xschem --rcfile <repo>/macros/xschemrc` from anywhere.
+Checked before writing: no `.sch` / `.sym` basename occurs in two of those folders, and project
+symbols are referenced by bare name, so one flat path is unambiguous. Test on a fresh copy of the 90
+sheet and symbol files from the computer: all 47 sheets netlist with no "IS MISSING", started outside
+the tree; `slot.sch` from `macros/` without `--rcfile` contains all 17 sub-circuits down to the
+`hv_logic` gates; control: `slot.sch` with the inverter's own rc gives 31 missing markers. (A first
+version of the test grepped only xschem's console output and missed the markers, which xschem writes
+into the netlist.)
+Correction (01:20): `macros/xschemrc` already existed when the live session wrote it. A conversation
+branch the live session could not see (user messages 00:26–00:58 that ended in API errors; listed in
+the chat log's appendix) had written a first version at 00:57:44: only the `schematic/xschem` folders,
+netlist directory pinned to the top testbenches. The live session answered "no cross-referencing
+xschemrc exists yet" and then replaced it, without an existence check, by the version above (also
+the testbench folders, template pinning), which is the tested one. No other file on the computer was
+written by those branches; a branch did overwrite the cloud-side copy of the chat log, which is why the
+continuation was built on the copy from the computer.
