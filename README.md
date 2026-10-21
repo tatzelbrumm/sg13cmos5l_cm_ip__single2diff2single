@@ -239,6 +239,9 @@ Xschem reads exactly one `xschemrc` at start-up, and that file decides which sym
 | [`macros/inverter/verification/cace/templates/xschemrc`](macros/inverter/verification/cace/templates/xschemrc) | CACE testbench templates |
 | [`macros/counter/schematic/xschem/xschemrc`](macros/counter/schematic/xschem/xschemrc) | counter schematics |
 | [`macros/counter/testbenches/xschem/xschemrc`](macros/counter/testbenches/xschem/xschemrc) | counter testbenches |
+| [`macros/OgueyAebischerBias/schematic/xschem/xschemrc`](macros/OgueyAebischerBias/schematic/xschem/xschemrc) | OgueyAebischerBias schematics |
+| [`macros/OgueyAebischerBias/testbenches/xschem/xschemrc`](macros/OgueyAebischerBias/testbenches/xschem/xschemrc) | OgueyAebischerBias testbenches |
+| [`macros/OgueyAebischerBias/verification/cace/templates/xschemrc`](macros/OgueyAebischerBias/verification/cace/templates/xschemrc) | OgueyAebischerBias CACE testbench templates |
 
 ### What Every File Does
 
@@ -259,15 +262,19 @@ The top level pulls in everything below it:
 testbenches/xschem/xschemrc
 └─ source schematic/xschem/xschemrc
    ├─ source macros/inverter/schematic/xschem/xschemrc
-   └─ source macros/counter/schematic/xschem/xschemrc
+   ├─ source macros/counter/schematic/xschem/xschemrc
+   └─ source macros/OgueyAebischerBias/schematic/xschem/xschemrc
 
 macros/inverter/verification/cace/templates/xschemrc
 └─ source macros/inverter/schematic/xschem/xschemrc
+
+macros/OgueyAebischerBias/verification/cace/templates/xschemrc
+└─ source macros/OgueyAebischerBias/schematic/xschem/xschemrc
 ```
 
-Each schematic folder puts itself and its sibling testbenches folder on the library path, and each testbenches folder does the reverse. The top level therefore sees all six schematic and testbench folders, which is what lets `sg13cmos5l_cm_ip__single2diff2single.sch` instantiate `inverter.sym` and `counter_top.sym`, and what lets you open a macro testbench from a top-level session. The macro files do not source each other or the top level, so a macro can be opened and simulated on its own.
+Each schematic folder puts itself and its sibling testbenches folder on the library path, and each testbenches folder does the reverse. The top level therefore sees all eight schematic and testbench folders, which is what lets `sg13cmos5l_cm_ip__single2diff2single.sch` instantiate `inverter.sym`, `counter_top.sym` and (once wired in) `reference.sym`, and what lets you open a macro testbench from a top-level session. The macro files do not source each other or the top level, so a macro can be opened and simulated on its own.
 
-Add a further sub-macro to the top level by sourcing its `schematic/xschem/xschemrc` from [`schematic/xschem/xschemrc`](schematic/xschem/xschemrc), next to the `inverter` and `counter` lines.
+Add a further sub-macro to the top level by sourcing its `schematic/xschem/xschemrc` from [`schematic/xschem/xschemrc`](schematic/xschem/xschemrc), next to the `inverter`, `counter` and `OgueyAebischerBias` lines — this is exactly the line that was missing for `OgueyAebischerBias` until this session (its own `schematic/xschem/xschemrc` and `testbenches/xschem/xschemrc` already matched the `inverter`/`counter` convention; only the top-level chain-in was absent, which is what caused missing-symbol errors when opening its schematics from a top-level session).
 
 ### Where Netlists and Simulation Output Go
 
