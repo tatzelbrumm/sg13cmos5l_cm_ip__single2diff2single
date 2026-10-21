@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """
 Engine-only GDS for a DRC run, no PDK needed: the same 44 Clamp_N_M1 / Clamp_P_M1
-cells as test_m1.py (32 frame 'fit', 12 frame '80u'), plus Clamp_N / Clamp_P ng = 8 (identical to IHP's N8N8D /
+cells as test_m1.py (40 frame 'fit', 12 frame '80u'), plus Clamp_N / Clamp_P ng = 8 (identical to IHP's N8N8D /
 P8N8D) as a baseline, and DCNDiode / DCPDiode at l = 0.58, 1.585, 27.78 (= IHP's
 cells) and 74.505 um, all placed in top cell TOP.
 
@@ -10,7 +10,8 @@ cells) and 74.505 um, all placed in top cell TOP.
     python3 $PDKPATH/libs.tech/klayout/tech/drc/run_drc.py --path=m1_drc.gds --topcell=TOP --run_mode=flat --no_density --run_dir=drc_run
 
 Result on 2026-10-14 (KLayout 0.30.0, unmodified deck, main + maximal tables):
-547 rule categories, 0 violations.
+547 rule categories, 0 violations. Re-run 2026-10-15 with the adaptive gate
+contacts (l = 0.64 um added): 0 violations.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # scripts/pcells
@@ -20,7 +21,7 @@ ly = db.Layout(); ly.dbu = 0.001
 top = ly.create_cell('TOP'); y = 0
 for fam, lmin in (('N', 450), ('P', 400)):
     x = 0
-    for l in (lmin, lmin + 5, 600, 1000):
+    for l in (lmin, lmin + 5, 600, 640, 1000):
         for ng in (1, 2, 3, 8):
             c = K.write_cell(ly, ly.create_cell('%s_M1_ng%d_l%d' % (fam, ng, l)), *E.generate_m1(fam, ng, l))
             top.insert(db.CellInstArray(c.cell_index(), db.Trans(x, y))); x += c.bbox().width() + 5000

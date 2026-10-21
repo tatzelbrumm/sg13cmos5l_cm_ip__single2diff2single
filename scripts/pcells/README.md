@@ -74,6 +74,13 @@ What is the same as in the IHP cells:
   Contact columns, gate heads, M1 gate bus, ThickGateOx, and for P the NWell, pSD
   and the two device rows are all unchanged. Only the pitch grows with `l`: the
   active length is **0.30 + ng·(l + 0.91) µm**.
+* **Gate contacts adapt to `l`.** Each gate head gets as many contacts side by side
+  as fit inside the poly with the 0.07 µm minimum enclosure, at a 0.34 µm pitch,
+  centred: 1 below `l` = 0.64 µm (exactly IHP's position at 0.6 µm), 2 from
+  0.64 µm, 3 from 0.98 µm. The M1 strip over the gate widens to cover them. Drain
+  and source keep one contact column each. Their widths are fixed, and a second
+  drain column would sit closer to the gate than IHP's 0.51 µm, which is the drain
+  ballast for ESD.
 * **Guard rings.** Both rings have the same cross-section (0.34 µm Activ + Cont +
   M1, same well and implant layers) and the same y layout. N: inner p+ substrate
   tap `iovss`, outer n+ tap in an NWell ring (unlabelled, as in IHP's cell). P:
@@ -258,8 +265,8 @@ python3 scripts/pcells/lvs_clamp.py /tmp/sweep.gds
 
 ### `Clamp_N_M1` / `Clamp_P_M1` (2026-10-14)
 
-Test set: N and P × `ng` 1, 2, 3, 8 × `l` = Lmin, Lmin + 5 nm, 0.6 µm, 1.0 µm
-with `frame = fit` (32 cells), plus `ng` 1, 3, 49 × `l` = Lmin + 5 nm, 0.6 µm with
+Test set: N and P × `ng` 1, 2, 3, 8 × `l` = Lmin, Lmin + 5 nm, 0.6 µm, 0.64 µm,
+1.0 µm with `frame = fit` (40 cells), plus `ng` 1, 3, 49 × `l` = Lmin + 5 nm, 0.6 µm with
 `frame = 80u` (12 cells), built through the `cni` PCell path.
 
 * **`Clamp_N` / `Clamp_P` unchanged.** `verify_clamp.py` still passes after the
@@ -268,14 +275,16 @@ with `frame = fit` (32 cells), plus `ng` 1, 3, 49 × `l` = Lmin + 5 nm, 0.6 µm 
 * **Connectivity** (scratch `klayout.db` extraction, as in `lvs_clamp.py`): each
   cell gives one combined MOS with W = 4.4·ng (N) or 13.32·ng (P) µm and L = `l`.
   S is on the rail, D on `pad` (drain columns joined by name), G on `gate`. The
-  `pad`, `gate`, `iovss` (and `iovdd`) nets are distinct. The engine output and
-  the PCell output are XOR-identical.
+  `pad`, `gate`, `iovss` (and `iovdd`) nets are distinct. Each gate head has the
+  expected number of contacts. The engine output and the PCell output are
+  XOR-identical.
 * **80 µm frame.** The array is centred (ThickGateOx symmetric about x = 40 µm
   within the grid). At `l` = 0.6 µm the cells match `Clamp_N` / `Clamp_P` on the
   layers listed above, for `ng` = 1, 2, 8, 15 and 42 (N) / 41 (P).
 * **DRC.** The unmodified IHP deck (`run_drc.py`, main + maximal tables, flat,
-  density off, offgrid and angle on) ran on KLayout 0.30.0 over all 44 cells:
-  547 rule categories, **0 violations**. The same set included `Clamp_N`/`Clamp_P` ng = 8 as a
+  density off, offgrid and angle on) ran on KLayout 0.30.0 over all 52 cells:
+  547 rule categories, **0 violations** (re-run 2026-10-15 with the adaptive gate
+  contacts). The same set included `Clamp_N`/`Clamp_P` ng = 8 as a
   baseline. An injected 0.1 µm M1 gap was flagged (M1.b), and so was the ring
   pulled to 0.21 µm from the array (pSD.d), so the deck does see these cells.
 * **Bad parameters** (`l` < Lmin, `l` off the 5 nm grid, `ng` < 1, an array too

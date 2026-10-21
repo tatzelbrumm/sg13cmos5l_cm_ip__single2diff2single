@@ -383,6 +383,7 @@ RING_W = 340       # ring Activ / M1 width
 RING_IN = 1800     # inner ring inset from the cell edge (the outer ring has inset 0)
 ARRAY_X0 = 2750    # = RING_IN + RING_W + 610
 CONT_PITCH = 340
+GATE_ENC = 70       # GatPoly enclosure of a gate contact (rule minimum)
 
 # (inset, pin name or None, [(layer, grow outside, grow inside or None = solid box)])
 RINGS = {
@@ -454,13 +455,20 @@ def generate_m1(family, ng, l, width=None):
         t.append(('Metal1', 'text', 'pad', xc, f['pad_label_y'], 0, 'center', 'center', 'R0'))
 
     g = gate_lefts(ng, l, x0)
-    dx = (l - CONT) // 2 // GRID * GRID   # gate contact and M1 strip inside the gate (220 for l = 600)
+    # Gate heads get as many contact columns side by side as fit inside the poly with the
+    # 0.07 um enclosure, at 0.34 um pitch, centred: 1 up to l = 0.635 um (IHP: one, 0.22 um
+    # in for l = 0.6 um), 2 from 0.64 um, 3 from 0.98 um. The M1 strip over the gate covers
+    # them. Drain and source keep one column: their widths are fixed, and a second drain
+    # column would come closer to the gate than IHP's 0.51 um (the ESD ballast).
     for gl in g:
         _box(s, 'GatPoly', 'drawing', gl, f['poly'][0], gl + l, f['poly'][1])
+        xs = _cont_row(gl + GATE_ENC, gl + l - GATE_ENC)
         for y in f['gate_cont']:
-            _box(s, 'Cont', 'drawing', gl + dx, y, gl + dx + CONT, y + CONT)
-        _box(s, 'Metal1', 'drawing', gl + dx, f['gate_m1'][0], gl + dx + CONT, f['gate_m1'][1])
-    bx0, bx1 = g[0] + dx, g[-1] + dx + CONT
+            for x in xs:
+                _box(s, 'Cont', 'drawing', x, y, x + CONT, y + CONT)
+        _box(s, 'Metal1', 'drawing', xs[0], f['gate_m1'][0], xs[-1] + CONT, f['gate_m1'][1])
+    xs0 = _cont_row(g[0] + GATE_ENC, g[0] + l - GATE_ENC)
+    bx0, bx1 = xs0[0], g[-1] + (xs0[-1] - g[0]) + CONT
     by0, by1 = f['bus']
     for purpose in ('drawing', 'pin'):
         _box(s, 'Metal1', purpose, bx0, by0, bx1, by1)

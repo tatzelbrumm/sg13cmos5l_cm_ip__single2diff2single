@@ -6,10 +6,11 @@ Test Clamp_N_M1 / Clamp_P_M1 through the real PCell path (library SG13_cm_clamps
     python3 test_m1.py [out.gds]          # default out.gds: m1_cells.gds
 
 Needs the PDK found via $KLAYOUT_PATH or $PDKPATH (source .designinit), like
-load_clamp_pcells.py. For N and P x ng 1, 2, 3, 8 x l = Lmin, Lmin + 5 nm, 0.6, 1.0 um
+load_clamp_pcells.py. For N and P x ng 1, 2, 3, 8 x l = Lmin, Lmin + 5 nm, 0.6, 0.64, 1.0 um
 (frame 'fit'), and ng 1, 3, 49 x l = Lmin + 5 nm, 0.6 um (frame '80u', 49 is the largest
 ng that fits at 0.6 um): no layer above M1, Activ bbox as expected, array centred in the
-80 um frame, and a klayout.db extraction (as in
+80 um frame, gate contacts side by side as fit (1 below l = 0.64 um, 2 from 0.64,
+3 from 0.98 um), and a klayout.db extraction (as in
 lvs_clamp.py) giving one MOS with W = 4.4*ng (N) / 13.32*ng (P) um and L = l,
 S on the rail, D on 'pad', G on 'gate'. Then four bad parameter sets, which must
 give empty cells (the cni framework prints their tracebacks; that is expected).
@@ -42,6 +43,10 @@ def check(fam, ng, l, width, cell):
     act = cell.bbox_per_layer(ly.layer(1, 0))
     if (act.left, act.bottom, act.right, act.top) != (0, 0, cw, E.FAMILY[fam]['height']):
         errs.append('Activ bbox %s' % act)
+    n_gc = (l - 2 * E.GATE_ENC - E.CONT) // E.CONT_PITCH + 1       # gate contacts side by side
+    gc = db.Region(cell.begin_shapes_rec(ly.layer(6, 0))).interacting(db.Region(cell.begin_shapes_rec(ly.layer(5, 0))))
+    if gc.count() != ng * len(E.FAMILY[fam]['gate_cont']) * n_gc:
+        errs.append('%d gate contacts, expected %d' % (gc.count(), ng * len(E.FAMILY[fam]['gate_cont']) * n_gc))
     tgo = cell.bbox_per_layer(ly.layer(44, 0))                      # = array +- 0.34 um
     if width and abs(tgo.left + tgo.right - width) > 2 * E.GRID:
         errs.append('array not centred: ThickGateOx %d..%d nm' % (tgo.left, tgo.right))
@@ -89,7 +94,7 @@ y = 0
 bad = 0
 for fam, lmin in (('N', 450), ('P', 400)):
     x = 0
-    cases = [(l, ng, 'fit') for l in (lmin, lmin + 5, 600, 1000) for ng in (1, 2, 3, 8)]
+    cases = [(l, ng, 'fit') for l in (lmin, lmin + 5, 600, 640, 1000) for ng in (1, 2, 3, 8)]
     cases += [(l, ng, '80u') for l in (lmin + 5, 600) for ng in (1, 3, 49)]
     for l, ng, frame in cases:
         pc = ly.create_cell('Clamp_%s_M1' % fam, 'SG13_cm_clamps', {'ng': ng, 'l': '%gu' % (l / 1000), 'frame': frame})
