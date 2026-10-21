@@ -1,0 +1,26 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* en_ctrl_3v3: fail-safe enable and select bits for the 3.3 V pad circuits.
+*   en_3v3   = en_1v2 AND (vdd1v2_sense present) AND (vdd3v3_sense present)
+*   sel*_3v3 = level-shifted sel*_1v2 (gated by en_3v3 in d2s_bias_sel_pd)
+* Ports: vddh (3.3 V: iovdd in the pad, vdd_3v3 in the slot fallback), vddl (1.2 V for the input
+* inverters of ls_up: the core ring vdd in the pad, vdd_1v2 in the fallback), vss.
+* pg_det needs no vddl: an hv NMOS with its gate on the sensed supply against a weak hv PMOS pull-up.
+* With vddl = 0 the ls_up latches are undefined; pg_det of vdd_1v2 forces en_3v3 low then.
+* RD pulls a floating (gated-off) sense input low. PU and RD conduct only while the enable is
+* requested (ena = level-shifted en_1v2): with en_1v2 = 0 the cell draws leakage only. If ena is
+* undefined (vddl = 0), either en_ls_b is high and the NOR is low anyway, or PU is on and pg_b is high.
+.subckt pg_det vddh vss sense pg_b ena ena_b
+XPU pg_b ena_b vddh vddh sg13_hv_pmos w=0.3u l=50u ng=1
+XND pg_b sense vss vss sg13_hv_nmos w=2u l=0.45u ng=1
+XRD sense ena vss vss sg13_hv_nmos w=0.3u l=100u ng=1
+.ends pg_det
+.subckt en_ctrl_3v3 vddh vddl vss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3
+XLE vss vddl vddh en_ls en_1v2 ls_up_1v2_3v3
+XL0 vss vddl vddh sel0_3v3 sel0_1v2 ls_up_1v2_3v3
+XL1 vss vddl vddh sel1_3v3 sel1_1v2 ls_up_1v2_3v3
+XIE vddh vss en_ls en_ls_b inv_hv
+XG1 vddh vss vdd1v2_sense pg1_b en_ls en_ls_b pg_det
+XG3 vddh vss vdd3v3_sense pg3_b en_ls en_ls_b pg_det
+XNO vddh vss en_ls_b pg1_b pg3_b en_3v3 nor3_hv
+.ends en_ctrl_3v3

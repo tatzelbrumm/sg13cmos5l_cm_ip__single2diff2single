@@ -1,0 +1,119 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Real bias for d2s_mpdda: the ideal reference currents of d2s_bias_lp replaced by transistors.
+* All variants keep d2s_bias_lp's six diodes (d2s_bias_diodes) and outputs vbp vbn vbpc vbnc vabp
+* vabn, nominal currents 5 / 5 / 2 / 2 / 5 / 5 uA.
+*   d2s_bias_in   1: reference current flows INTO iref, from an external PMOS source (5 uA)
+*   d2s_bias_out  2: reference current flows OUT of iref, into an external NMOS sink (5 uA)
+*   d2s_bias_oa   3: self-contained, no resistor, no BJT (Oguey-Aebischer core oa_core)
+*   d2s_bias_bg   4: self-contained, vertical PNP + rhigh (current-mode bandgap core bg_core)
+* Supplies: vdd / vss feed the bias (slot analog supply). vddo / vsso are the output stage's rails:
+* the class-AB replicas RP1 and RN1 must sit on the same rails as OP and ON, because any voltage
+* between the two vdd's (or vss's) adds to the translinear loop and moves the quiescent current.
+* Tie vddo = vdd and vsso = vss when the output stage shares the slot supply.
+* NMOS bulks are the common p-substrate (vss), except RN1: like ON in its clamp frame, it needs a
+* local substrate tap ring on vsso. RP2's n-well is on vdd, like ABP's.
+
+* --- the six bias diodes of d2s_bias_lp; RP1 / RN1 on the output-stage rails
+.subckt d2s_bias_diodes vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XBN vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1
+XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XRP1 n1 n1 vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
+XRP2 vabp vabp n1 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XRN1 n2 n2 vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2
+XRN2 vabn vabn n2 vss sg13_hv_nmos w=4.4u l=1u ng=1
+.ends d2s_bias_diodes
+
+* --- 1: I_ref into iref (external PMOS source) -> NMOS input diode NI (a copy of BN).
+*     NI's gate line drives the three sinks out of the PMOS diodes; BP's gate line drives the
+*     three sources into the NMOS diodes. iref is a separate node, not one of the driver's gate lines.
+.subckt d2s_bias_in vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn
+XNI iref iref vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBP vbp iref vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBPC vbpc iref vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+XNABP vabp iref vss vss sg13_hv_nmos w=6u l=6u ng=1
+XPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+XPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+Xd vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn d2s_bias_diodes
+.ends d2s_bias_in
+
+* --- 2: I_ref out of iref (external NMOS sink) <- PMOS input diode PI (a copy of BP).
+*     PI's gate line drives the three sources into the NMOS diodes; BN's gate line drives the
+*     three sinks out of the PMOS diodes.
+.subckt d2s_bias_out vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn
+XPI iref iref vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBN vbn iref vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBNC vbnc iref vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+XPABN vabn iref vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XNBP vbp vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBPC vbpc vbn vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+XNABP vabp vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+Xd vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn d2s_bias_diodes
+.ends d2s_bias_out
+
+* --- 3: Oguey-Aebischer core (E. Vittoz' specific-current principle; H. J. Oguey, D. Aebischer,
+*     "CMOS current reference without resistance", IEEE JSSC 32(7), 1997), re-sized for sg13_hv.
+*     M11 (8 I0) and M10 (2 x M11, I0) in weak inversion share their gate, so the source of M10
+*     sits at vres = U_T ln 16 = 72 mV. The composite pair MCS (diode, 2 I0) and MCL (triode, I0)
+*     share gate vbr and the same size; MCL drops vres only at one inversion level, so
+*     I0 = const * 2 n mu Cox U_T^2 * (W/L)_C, independent of V_T. I0 = 0.25 uA, iout = 20 I0.
+*     MC10 cascodes M10. Start-up: MS1 (weak, always on) pulls ks high while vbr is low; MS3 then
+*     pulls vpc down and the mirror charges vnc and vbr; MS2 releases it once vbr is up.
+.subckt oa_core vdd vss iout
+* PMOS mirror with stacked-diode cascodes: P0 / P0C diodes set vpg / vpc; every output copies P0's
+* V_DS, so the ratios do not depend on vdd. The cascodes need P0C's W/L, not its L: L = 2 um.
+XP0 vpg vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1
+XP0C vpc vpc vpg vdd sg13_hv_pmos w=0.5u l=2u ng=1
+XP8 c8 vpg vdd vdd sg13_hv_pmos w=16u l=8u ng=8
+XP8C vnc vpc c8 vdd sg13_hv_pmos w=4u l=2u ng=2
+XP2 c2 vpg vdd vdd sg13_hv_pmos w=4u l=8u ng=2
+XP2C vbr vpc c2 vdd sg13_hv_pmos w=1u l=2u ng=1
+XPO co vpg vdd vdd sg13_hv_pmos w=40u l=8u ng=20
+XPOC iout vpc co vdd sg13_hv_pmos w=10u l=2u ng=5
+XM11 vnc vnc vss vss sg13_hv_nmos w=90u l=1u ng=4
+XM10 d10 vnc vres vss sg13_hv_nmos w=180u l=1u ng=8
+XMC10 vpc vbr d10 vss sg13_hv_nmos w=10u l=1u ng=1
+XMCS vbr vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1
+XMCL vres vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1
+XMS1 ks vss vdd vdd sg13_hv_pmos w=0.5u l=100u ng=1
+XMS2 ks vbr vss vss sg13_hv_nmos w=10u l=1u ng=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1
+.ends oa_core
+.subckt d2s_bias_oa vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn
+Xc vdd vss iref oa_core
+Xt vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn d2s_bias_in
+.ends d2s_bias_oa
+
+* --- 4: current-mode bandgap (Banba type) with vertical PNPs and rhigh, no op-amp.
+*     The NMOS pair NA / NB (equal currents from the PMOS mirror) forces ea = eb, so each branch
+*     carries V_BE1 / R1 + U_T ln 8 / R0; R1 and R0 are rhigh, whose -0.22 %/K nearly cancels V_BE's
+*     slope already, so the PTAT share is small. Output 2 x the branch current = 5 uA.
+*     R1A is 10 % longer than R1B: with both PNPs off the loop gain is then > 1 and the core cannot
+*     rest in the resistor-only state (with R1A = R1B it can, e.g. at -40 C).
+*     PMOS mirror with stacked-diode cascodes, moderate inversion for headroom at 3.0 V / ss / -40 C.
+*     Start-up as in oa_core, sensing the NMOS gate line g.
+.subckt bg_core vdd vss iout
+XPB vpg vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4
+XPBC vpc vpc vpg vdd sg13_hv_pmos w=40u l=1u ng=4
+XPA ca vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4
+XPAC g vpc ca vdd sg13_hv_pmos w=40u l=1u ng=4
+XPO co vpg vdd vdd sg13_hv_pmos w=80u l=1u ng=8
+XPOC iout vpc co vdd sg13_hv_pmos w=80u l=1u ng=8
+XNA g g ea vss sg13_hv_nmos w=20u l=4u ng=1
+XNB vpc g eb vss sg13_hv_nmos w=20u l=4u ng=1
+XQ1 vss vss ea pnpMPA a=4p p=8u
+XR1A ea vss vss rhigh w=0.5u l=109.3u
+XR0 eb e2 vss rhigh w=0.5u l=179.5u
+XQ2 vss vss e2 pnpMPA a=4p p=8u m=8
+XR1B eb vss vss rhigh w=0.5u l=99.36u
+XMS1 ks vss vdd vdd sg13_hv_pmos w=0.5u l=100u ng=1
+XMS2 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1
+.ends bg_core
+.subckt d2s_bias_bg vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn
+Xc vdd vss iref bg_core
+Xt vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn d2s_bias_in
+.ends d2s_bias_bg

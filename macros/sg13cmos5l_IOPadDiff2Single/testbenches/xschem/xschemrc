@@ -1,4 +1,4 @@
-﻿# Set default PDK_ROOT
+# Set default PDK_ROOT
 if { ![info exists env(PDK_ROOT)] } {
   puts stderr "Warning: PDK_ROOT env. var. not found or empty, trying to find an open_pdks install"
   if {[file isdir /usr/share/pdk]} {set ::env(PDK_ROOT) /usr/share/pdk
@@ -41,6 +41,10 @@ if {![llength [info commands append_xschem_library_path_unique]]} {
 
 # Add current directory to xschem library path
 append_xschem_library_path_unique [file join [file dirname [info script]] ../../schematic/xschem]
+# sub-macros (2026-10-20)
+foreach dep {en_ctrl_3v3 d2s_bias_sel_pd ls_up_1v2_3v3 hv_logic IOPad d2s_bias_in_pd d2s_bias_out_pd d2s_bias_oa_pd d2s_bias_bg_pd} {
+  append_xschem_library_path_unique [file join [file dirname [info script]] ../../../$dep/schematic/xschem]
+}
 append_xschem_library_path_unique [file dirname [info script]]
 
 # Pin the netlist directory to the simulations folder of the loaded schematic

@@ -1,0 +1,380 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0
+#
+# CACE file of d2s_mpdda_pd_sel, the loop-gain fixture of sg13cmos5l_IOPadDiff2Single (driver +
+# selectable bias, vfb as a pin). The pad cell itself ties vfb to pad, so its loop cannot be opened.
+# Reference (results_improvements.txt, ideal bias): 78.9 dB, 1.37 MHz, 72.4 deg at tt, 1 kOhm || 100 pF.
+# LIMITS ARE PROPOSALS (worst case of the 2026-10-20 runs plus margin; see ../README.md).
+# Specified load range 10 ... 300 pF; loop_1nF_params is report only. Run: cace d2s_mpdda_pd_sel.yaml -s schematic
+
+name:           d2s_mpdda_pd_sel
+description:    Loop-gain fixture of the IOPadDiff2Single driver with its selectable bias
+PDK:            ihp-sg13cmos5l
+
+cace_format:    5.2
+
+authorship:
+  designer:         Christoph Maier
+  creation_date:    October 20, 2026
+  license:          Apache-2.0
+
+paths:
+  root:             ..
+  schematic:        ../schematic/xschem
+  netlist:          cace/netlist
+  documentation:    cace/_docs
+  runs:             cace/_runs
+
+pins:
+  vdd:
+    description: vdd rail
+    type: power
+    direction: inout
+  vss:
+    description: vss rail
+    type: ground
+    direction: inout
+  vddo:
+    description: vddo rail
+    type: power
+    direction: inout
+  vsso:
+    description: vsso rail
+    type: ground
+    direction: inout
+  vinp:
+    description: vinp
+    type: signal
+    direction: input
+  vinn:
+    description: vinn
+    type: signal
+    direction: input
+  vref:
+    description: vref
+    type: signal
+    direction: input
+  vfb:
+    description: vfb
+    type: signal
+    direction: input
+  ibias:
+    description: ibias
+    type: signal
+    direction: input
+  en_3v3:
+    description: en_3v3
+    type: signal
+    direction: input
+  sel0_3v3:
+    description: sel0_3v3
+    type: signal
+    direction: input
+  sel1_3v3:
+    description: sel1_3v3
+    type: signal
+    direction: input
+  vout:
+    description: output (pad)
+    type: signal
+    direction: inout
+
+default_conditions:
+  vdd:
+    description: Supply (iovdd)
+    display: Supply (iovdd)
+    unit: V
+    typical: 3.3
+  vref:
+    description: Output reference
+    display: Output reference
+    unit: V
+    typical: 1.65
+  vicm:
+    description: Input common mode
+    display: Input common mode
+    unit: V
+    typical: 1.65
+  corner_mos:
+    description: Process corner MOSFET
+    display: Process corner MOSFET
+    typical: tt
+  corner_r:
+    description: Process corner resistor
+    display: Process corner resistor
+    typical: typ
+  corner_pnp:
+    description: Process corner PNP
+    display: Process corner PNP
+    typical: typ
+  temp:
+    description: Temperature
+    display: Temperature
+    unit: °C
+    typical: 27
+  sel:
+    description: Bias selection
+    display: Bias selection
+    typical: 0
+  ibias:
+    description: Harness bias current
+    display: Harness bias current
+    unit: A
+    typical: 5e-06
+  rload:
+    description: Load resistance
+    display: Load resistance
+    unit: Ω
+    typical: 1000
+  vterm:
+    description: Load termination
+    display: Load termination
+    unit: V
+    typical: 1.65
+  cload:
+    description: Load capacitance
+    display: Load capacitance
+    unit: F
+    typical: 1e-10
+
+parameters:
+
+  loop_params:
+    spec:
+      T0:
+        display: Loop gain
+        description: At 10 Hz
+        unit: dB
+        minimum:
+          value: 40
+        typical:
+          value: any
+        maximum:
+          value: any
+      fc:
+        display: Unity-gain frequency
+        description: Loop crossover
+        unit: MHz
+        minimum:
+          value: 1
+        typical:
+          value: any
+        maximum:
+          value: any
+      PM:
+        display: Phase margin
+        description: At fc
+        unit: °
+        minimum:
+          value: 60
+        typical:
+          value: any
+        maximum:
+          value: any
+      GM:
+        display: Gain margin
+        description: At -180 deg
+        unit: dB
+        minimum:
+          value: 15
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: d2s_mpdda_pd_sel_tb_loop.sch
+        format: ascii
+        suffix: .data
+        variables: [T0, fc, PM, GM]
+    plot:
+      PM_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: PM
+      fc_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: fc
+    conditions:
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 27, 125]
+
+  loop_load_params:
+    spec:
+      T0:
+        display: Loop gain
+        description: At 10 Hz
+        unit: dB
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      fc:
+        display: Unity-gain frequency
+        description: Loop crossover
+        unit: MHz
+        minimum:
+          value: 0.8
+        typical:
+          value: any
+        maximum:
+          value: any
+      PM:
+        display: Phase margin
+        description: At fc
+        unit: °
+        minimum:
+          value: 40
+        typical:
+          value: any
+        maximum:
+          value: any
+      GM:
+        display: Gain margin
+        description: At -180 deg
+        unit: dB
+        minimum:
+          value: 15
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: d2s_mpdda_pd_sel_tb_loop.sch
+        format: ascii
+        suffix: .data
+        variables: [T0, fc, PM, GM]
+    plot:
+      PM_vs_cload:
+        type: xyplot
+        xaxis: cload
+        yaxis: PM
+    conditions:
+      cload:
+        enumerate: [1e-11, 1e-10, 3e-10]
+      rload:
+        enumerate: [1000, 1000000000.0]
+
+  loop_1nF_params:
+    spec:
+      T0:
+        display: Loop gain
+        description: At 10 Hz
+        unit: dB
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      fc:
+        display: Unity-gain frequency
+        description: Loop crossover
+        unit: MHz
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      PM:
+        display: Phase margin
+        description: At fc
+        unit: °
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      GM:
+        display: Gain margin
+        description: At -180 deg
+        unit: dB
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: d2s_mpdda_pd_sel_tb_loop.sch
+        format: ascii
+        suffix: .data
+        variables: [T0, fc, PM, GM]
+    plot:
+      PM_vs_cload:
+        type: xyplot
+        xaxis: cload
+        yaxis: PM
+    conditions:
+      cload:
+        enumerate: [1e-09]
+      rload:
+        enumerate: [1000, 1000000000.0]
+
+  loop_sel_params:
+    spec:
+      T0:
+        display: Loop gain
+        description: At 10 Hz
+        unit: dB
+        minimum:
+          value: 30
+        typical:
+          value: any
+        maximum:
+          value: any
+      fc:
+        display: Unity-gain frequency
+        description: Loop crossover
+        unit: MHz
+        minimum:
+          value: 1
+        typical:
+          value: any
+        maximum:
+          value: any
+      PM:
+        display: Phase margin
+        description: At fc
+        unit: °
+        minimum:
+          value: 60
+        typical:
+          value: any
+        maximum:
+          value: any
+      GM:
+        display: Gain margin
+        description: At -180 deg
+        unit: dB
+        minimum:
+          value: 15
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: d2s_mpdda_pd_sel_tb_loop.sch
+        format: ascii
+        suffix: .data
+        variables: [T0, fc, PM, GM]
+    plot:
+      PM_vs_sel:
+        type: xyplot
+        xaxis: sel
+        yaxis: PM
+    conditions:
+      sel:
+        enumerate: [0, 1, 2, 3]
+      temp:
+        enumerate: [-40, 125]

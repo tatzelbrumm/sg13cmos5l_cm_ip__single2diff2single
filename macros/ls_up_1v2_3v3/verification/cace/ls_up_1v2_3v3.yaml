@@ -1,0 +1,952 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0
+#
+#--------------------------------------------------------------
+# CACE circuit characterization file: ls_up_1v2_3v3
+#
+# Scaffolded by scripts/gen_cace.py, then meant to be edited by hand.
+# The LIMITS below are PROPOSALS, set with margin above the worst case of the pre-layout PVT
+# results in simulation/iq_summary.txt (schematic netlist, no parasitics).  Tighten or relax them as the design
+# requirements become known; "any" means characterized but not specified.
+# Sign convention of all currents and charges: positive = delivered by the source.
+#--------------------------------------------------------------
+
+name:           ls_up_1v2_3v3
+description:    Level shifter up, 1.2 V -> 3.3 V (SAR ADC cross-coupled shifter, non-inverting)
+PDK:            ihp-sg13cmos5l
+
+cace_format:    5.2
+
+authorship:
+  designer:         Christoph Maier
+  creation_date:    October 4, 2026
+  license:          Apache-2.0
+
+paths:
+  root:             ..
+  schematic:        ../schematic/xschem
+  netlist:          cace/netlist
+  documentation:    cace/_docs
+  runs:             cace/_runs
+
+pins:
+  VDDL:
+    description: Low-voltage supply (1.2 V domain)
+    type: power
+    direction: inout
+    Vmin: 1.08
+    Vmax: 1.32
+  VDDH:
+    description: High-voltage supply (3.3 V domain)
+    type: power
+    direction: inout
+    Vmin: 3.0
+    Vmax: 3.6
+  VSS:
+    description: Ground
+    type: ground
+    direction: inout
+  in:
+    description: Logic input, swing 0 .. VDDL
+    type: signal
+    direction: input
+  out:
+    description: Logic output, swing 0 .. VDDH
+    type: signal
+    direction: output
+
+default_conditions:
+  corner_mos:
+    description: Process corner MOSFET
+    display: Corner MOSFET
+    typical: tt
+  vddl:
+    description: Low-voltage supply
+    display: VDDL
+    unit: V
+    typical: 1.2
+  vddh:
+    description: High-voltage supply
+    display: VDDH
+    unit: V
+    typical: 3.3
+  temp:
+    description: Ambient temperature
+    display: Temperature
+    unit: °C
+    typical: 27
+  tr:
+    description: Input transition time (rise = fall), 0 to full swing
+    display: Input transition time
+    unit: ps
+    typical: 100
+  cload:
+    description: Load capacitance at out
+    display: Cload
+    unit: fF
+    typical: 20
+
+parameters:
+  # PVT: 5 MOS corners x 3 temperatures x 3 VDDL x 3 VDDH = 135 runs, tr 100 ps, cload 20 fF
+  pvt_params:
+    spec:
+      td_r:
+        display: Delay, input rising
+        description: 50 % input to 50 % output, input rising edge
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 10
+      td_f:
+        display: Delay, input falling
+        description: 50 % input to 50 % output, input falling edge
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 14
+      Voh:
+        display: Output high level
+        description: Settled output voltage, high state
+        unit: V
+        minimum:
+          value: 2.85
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vol:
+        display: Output low level
+        description: Settled output voltage, low state
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.05
+      Iq_vddl_inlo:
+        display: Iq VDDL, input low
+        description: Quiescent current delivered by VDDL, input low
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2.5e+04
+      Iq_vddl_inhi:
+        display: Iq VDDL, input high
+        description: Quiescent current delivered by VDDL, input high
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2.5e+04
+      Iq_vddh_inlo:
+        display: Iq VDDH, input low
+        description: Quiescent current delivered by VDDH, input low
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 4000
+      Iq_vddh_inhi:
+        display: Iq VDDH, input high
+        description: Quiescent current delivered by VDDH, input high
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 4000
+      Iq_in_inlo:
+        display: Iq input, input low
+        description: Magnitude of the quiescent input current, input low
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 300
+      Iq_in_inhi:
+        display: Iq input, input high
+        description: Magnitude of the quiescent input current, input high
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 300
+      Q_vddl_r:
+        display: Q VDDL, input rising
+        description: Net charge delivered by VDDL during the input rising edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 300
+      Q_vddl_f:
+        display: Q VDDL, input falling
+        description: Net charge delivered by VDDL during the input falling edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+      Q_vddh_r:
+        display: Q VDDH, input rising
+        description: Net charge delivered by VDDH during the input rising edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 3000
+      Q_vddh_f:
+        display: Q VDDH, input falling
+        description: Net charge delivered by VDDH during the input falling edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 4000
+      Q_in_r:
+        display: Q input, input rising
+        description: Magnitude of the net charge of the input source, rising edge
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+      Q_in_f:
+        display: Q input, input falling
+        description: Magnitude of the net charge of the input source, falling edge
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+      Ipk_vddl_r:
+        display: Ipk VDDL, input rising
+        description: Peak current magnitude of VDDL, rising edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 30
+      Ipk_vddl_f:
+        display: Ipk VDDL, input falling
+        description: Peak current magnitude of VDDL, falling edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 450
+      Ipk_vddh_r:
+        display: Ipk VDDH, input rising
+        description: Peak current magnitude of VDDH, rising edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2200
+      Ipk_vddh_f:
+        display: Ipk VDDH, input falling
+        description: Peak current magnitude of VDDH, falling edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 1200
+      Ipk_in_r:
+        display: Ipk input, input rising
+        description: Peak current magnitude of the input source, rising edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 500
+      Ipk_in_f:
+        display: Ipk input, input falling
+        description: Peak current magnitude of the input source, falling edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 400
+      E_cycle:
+        display: Energy per cycle
+        description: Energy drawn from the supplies per input cycle, includes the load C*V^2
+        unit: fW⋅s
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2.6e+04
+    tool:
+      ngspice:
+        template: ls_up_1v2_3v3_tb_tran.sch
+        format: ascii
+        suffix: .data
+        variables: [td_r, td_f, Voh, Vol, Iq_vddl_inlo, Iq_vddl_inhi, Iq_vddh_inlo, Iq_vddh_inhi, Iq_in_inlo, Iq_in_inhi, Q_vddl_r, Q_vddl_f, Q_vddh_r, Q_vddh_f, Q_in_r, Q_in_f, Ipk_vddl_r, Ipk_vddl_f, Ipk_vddh_r, Ipk_vddh_f, Ipk_in_r, Ipk_in_f, E_cycle]
+    plot:
+      Q_vddh_r_vs_vddl:
+        type: xyplot
+        xaxis: vddl
+        yaxis: Q_vddh_r
+        limits: auto
+      Q_vddh_r_vs_corner_mos:
+        type: xyplot
+        xaxis: corner_mos
+        yaxis: Q_vddh_r
+        limits: auto
+      Q_vddh_r_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: Q_vddh_r
+        limits: auto
+      Ipk_vddh_r_vs_vddl:
+        type: xyplot
+        xaxis: vddl
+        yaxis: Ipk_vddh_r
+        limits: auto
+      Ipk_in_r_vs_vddl:
+        type: xyplot
+        xaxis: vddl
+        yaxis: Ipk_in_r
+        limits: auto
+      Iq_vddl_inhi_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: Iq_vddl_inhi
+        limits: auto
+      td_r_vs_vddl:
+        type: xyplot
+        xaxis: vddl
+        yaxis: td_r
+        limits: auto
+      td_f_vs_vddl:
+        type: xyplot
+        xaxis: vddl
+        yaxis: td_f
+        limits: auto
+      E_cycle_vs_vddl:
+        type: xyplot
+        xaxis: vddl
+        yaxis: E_cycle
+        limits: auto
+    conditions:
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      vddl:
+        minimum: 1.08
+        typical: 1.2
+        maximum: 1.32
+      vddh:
+        minimum: 3.0
+        typical: 3.3
+        maximum: 3.6
+      temp:
+        minimum: -40
+        typical: 27
+        maximum: 125
+      tr:
+        typical: 100
+      cload:
+        typical: 20
+
+  # Input transition time sweep at tt, 27 C, nominal supplies, cload 20 fF
+  tr_params:
+    spec:
+      td_r:
+        display: Delay, input rising
+        description: 50 % input to 50 % output, input rising edge
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      td_f:
+        display: Delay, input falling
+        description: 50 % input to 50 % output, input falling edge
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Voh:
+        display: Output high level
+        description: Settled output voltage, high state
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vol:
+        display: Output low level
+        description: Settled output voltage, low state
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_vddl_inlo:
+        display: Iq VDDL, input low
+        description: Quiescent current delivered by VDDL, input low
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_vddl_inhi:
+        display: Iq VDDL, input high
+        description: Quiescent current delivered by VDDL, input high
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_vddh_inlo:
+        display: Iq VDDH, input low
+        description: Quiescent current delivered by VDDH, input low
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_vddh_inhi:
+        display: Iq VDDH, input high
+        description: Quiescent current delivered by VDDH, input high
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_in_inlo:
+        display: Iq input, input low
+        description: Magnitude of the quiescent input current, input low
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_in_inhi:
+        display: Iq input, input high
+        description: Magnitude of the quiescent input current, input high
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_vddl_r:
+        display: Q VDDL, input rising
+        description: Net charge delivered by VDDL during the input rising edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_vddl_f:
+        display: Q VDDL, input falling
+        description: Net charge delivered by VDDL during the input falling edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_vddh_r:
+        display: Q VDDH, input rising
+        description: Net charge delivered by VDDH during the input rising edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_vddh_f:
+        display: Q VDDH, input falling
+        description: Net charge delivered by VDDH during the input falling edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_in_r:
+        display: Q input, input rising
+        description: Magnitude of the net charge of the input source, rising edge
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_in_f:
+        display: Q input, input falling
+        description: Magnitude of the net charge of the input source, falling edge
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_vddl_r:
+        display: Ipk VDDL, input rising
+        description: Peak current magnitude of VDDL, rising edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_vddl_f:
+        display: Ipk VDDL, input falling
+        description: Peak current magnitude of VDDL, falling edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_vddh_r:
+        display: Ipk VDDH, input rising
+        description: Peak current magnitude of VDDH, rising edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_vddh_f:
+        display: Ipk VDDH, input falling
+        description: Peak current magnitude of VDDH, falling edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_in_r:
+        display: Ipk input, input rising
+        description: Peak current magnitude of the input source, rising edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_in_f:
+        display: Ipk input, input falling
+        description: Peak current magnitude of the input source, falling edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      E_cycle:
+        display: Energy per cycle
+        description: Energy drawn from the supplies per input cycle, includes the load C*V^2
+        unit: fW⋅s
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: ls_up_1v2_3v3_tb_tran.sch
+        format: ascii
+        suffix: .data
+        variables: [td_r, td_f, Voh, Vol, Iq_vddl_inlo, Iq_vddl_inhi, Iq_vddh_inlo, Iq_vddh_inhi, Iq_in_inlo, Iq_in_inhi, Q_vddl_r, Q_vddl_f, Q_vddh_r, Q_vddh_f, Q_in_r, Q_in_f, Ipk_vddl_r, Ipk_vddl_f, Ipk_vddh_r, Ipk_vddh_f, Ipk_in_r, Ipk_in_f, E_cycle]
+    plot:
+      Q_vddh_r_vs_tr:
+        type: xyplot
+        xaxis: tr
+        yaxis: Q_vddh_r
+        limits: auto
+      Q_vddh_f_vs_tr:
+        type: xyplot
+        xaxis: tr
+        yaxis: Q_vddh_f
+        limits: auto
+      Ipk_in_r_vs_tr:
+        type: xyplot
+        xaxis: tr
+        yaxis: Ipk_in_r
+        limits: auto
+      Ipk_vddh_r_vs_tr:
+        type: xyplot
+        xaxis: tr
+        yaxis: Ipk_vddh_r
+        limits: auto
+      Q_in_r_vs_tr:
+        type: xyplot
+        xaxis: tr
+        yaxis: Q_in_r
+        limits: auto
+      td_r_vs_tr:
+        type: xyplot
+        xaxis: tr
+        yaxis: td_r
+        limits: auto
+    conditions:
+      corner_mos:
+        typical: tt
+      vddl:
+        typical: 1.2
+      vddh:
+        typical: 3.3
+      temp:
+        typical: 27
+      tr:
+        enumerate: [20, 50, 100, 300, 1000, 3000, 10000]
+      cload:
+        typical: 20
+
+  # Load sweep at tt, 27 C, nominal supplies, tr 100 ps (separates load charge from intrinsic charge)
+  cload_params:
+    spec:
+      td_r:
+        display: Delay, input rising
+        description: 50 % input to 50 % output, input rising edge
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      td_f:
+        display: Delay, input falling
+        description: 50 % input to 50 % output, input falling edge
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Voh:
+        display: Output high level
+        description: Settled output voltage, high state
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vol:
+        display: Output low level
+        description: Settled output voltage, low state
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_vddl_inlo:
+        display: Iq VDDL, input low
+        description: Quiescent current delivered by VDDL, input low
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_vddl_inhi:
+        display: Iq VDDL, input high
+        description: Quiescent current delivered by VDDL, input high
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_vddh_inlo:
+        display: Iq VDDH, input low
+        description: Quiescent current delivered by VDDH, input low
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_vddh_inhi:
+        display: Iq VDDH, input high
+        description: Quiescent current delivered by VDDH, input high
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_in_inlo:
+        display: Iq input, input low
+        description: Magnitude of the quiescent input current, input low
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iq_in_inhi:
+        display: Iq input, input high
+        description: Magnitude of the quiescent input current, input high
+        unit: pA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_vddl_r:
+        display: Q VDDL, input rising
+        description: Net charge delivered by VDDL during the input rising edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_vddl_f:
+        display: Q VDDL, input falling
+        description: Net charge delivered by VDDL during the input falling edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_vddh_r:
+        display: Q VDDH, input rising
+        description: Net charge delivered by VDDH during the input rising edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_vddh_f:
+        display: Q VDDH, input falling
+        description: Net charge delivered by VDDH during the input falling edge (baseline removed)
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_in_r:
+        display: Q input, input rising
+        description: Magnitude of the net charge of the input source, rising edge
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Q_in_f:
+        display: Q input, input falling
+        description: Magnitude of the net charge of the input source, falling edge
+        unit: fC
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_vddl_r:
+        display: Ipk VDDL, input rising
+        description: Peak current magnitude of VDDL, rising edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_vddl_f:
+        display: Ipk VDDL, input falling
+        description: Peak current magnitude of VDDL, falling edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_vddh_r:
+        display: Ipk VDDH, input rising
+        description: Peak current magnitude of VDDH, rising edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_vddh_f:
+        display: Ipk VDDH, input falling
+        description: Peak current magnitude of VDDH, falling edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_in_r:
+        display: Ipk input, input rising
+        description: Peak current magnitude of the input source, rising edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipk_in_f:
+        display: Ipk input, input falling
+        description: Peak current magnitude of the input source, falling edge
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      E_cycle:
+        display: Energy per cycle
+        description: Energy drawn from the supplies per input cycle, includes the load C*V^2
+        unit: fW⋅s
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: ls_up_1v2_3v3_tb_tran.sch
+        format: ascii
+        suffix: .data
+        variables: [td_r, td_f, Voh, Vol, Iq_vddl_inlo, Iq_vddl_inhi, Iq_vddh_inlo, Iq_vddh_inhi, Iq_in_inlo, Iq_in_inhi, Q_vddl_r, Q_vddl_f, Q_vddh_r, Q_vddh_f, Q_in_r, Q_in_f, Ipk_vddl_r, Ipk_vddl_f, Ipk_vddh_r, Ipk_vddh_f, Ipk_in_r, Ipk_in_f, E_cycle]
+    plot:
+      Q_vddh_r_vs_cload:
+        type: xyplot
+        xaxis: cload
+        yaxis: Q_vddh_r
+        limits: auto
+      Q_vddl_f_vs_cload:
+        type: xyplot
+        xaxis: cload
+        yaxis: Q_vddl_f
+        limits: auto
+      E_cycle_vs_cload:
+        type: xyplot
+        xaxis: cload
+        yaxis: E_cycle
+        limits: auto
+      td_r_vs_cload:
+        type: xyplot
+        xaxis: cload
+        yaxis: td_r
+        limits: auto
+    conditions:
+      corner_mos:
+        typical: tt
+      vddl:
+        typical: 1.2
+      vddh:
+        typical: 3.3
+      temp:
+        typical: 27
+      tr:
+        typical: 100
+      cload:
+        enumerate: [1, 20, 50, 100]
+

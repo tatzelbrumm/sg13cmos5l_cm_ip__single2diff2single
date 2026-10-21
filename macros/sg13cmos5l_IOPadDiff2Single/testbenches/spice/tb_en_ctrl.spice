@@ -1,0 +1,55 @@
+* tb_en_ctrl: truth table of en_ctrl_3v3, DC, incl. vdd_1v2 off / floating cases
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Run from this directory with the PDK .spiceinit copied here: ngspice -b <deck>
+.lib cornerMOShv.lib mos_tt
+.lib cornerMOSlv.lib mos_tt
+.include ../../../hv_logic/netlist/source/hv_logic.spice
+.include ../../../ls_up_1v2_3v3/netlist/source/ls_up_1v2_3v3.spice
+.include ../../../en_ctrl_3v3/netlist/source/en_ctrl_3v3.spice
+.param pe=1.2 ps1=1.2 ps3=3.3 pl=1.2 ph=3.3
+Vh vddh 0 {ph}
+Vl vddl 0 {pl}
+Ve en 0 {pe}
+Vs0 s0 0 0
+Vs1 s1 0 1.2
+Vp1 s12 0 {ps1}
+Vp3 s33 0 {ps3}
+X1 vddh vddl 0 en s0 s1 s12 s33 en3 s03 s13 en_ctrl_3v3
+.control
+foreach case 0 1 2 3 4 5 6
+  if $case = 0
+    alter vl dc=1.2
+  end
+  if $case = 1
+    alter ve dc=0
+  end
+  if $case = 2
+    alter ve dc=1.2
+    alter vp1 dc=0
+  end
+  if $case = 3
+    alter vp1 dc=1.2
+    alter vp3 dc=0
+  end
+  if $case = 4
+    alter vp3 dc=3.3
+    alter vl dc=0
+    alter vp1 dc=0
+  end
+  if $case = 5
+    alter vl dc=1.08
+    alter vp1 dc=1.08
+    alter vh dc=3.0
+  end
+  if $case = 6
+    alter vl dc=1.2
+    alter vh dc=3.3
+    alter vp1 dc=1.2
+  end
+  op
+  print $case v(en) v(s12) v(s33) v(vddl) v(en3) v(s03) v(s13) i(vh) i(vp1) i(vp3)
+  destroy all
+end
+.endc
+.end

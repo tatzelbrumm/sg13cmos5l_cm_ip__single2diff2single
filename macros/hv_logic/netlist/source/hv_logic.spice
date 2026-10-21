@@ -1,0 +1,27 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* hv_logic: minimal 3.3 V static CMOS gates (sg13_hv), same 1u / 0.45u devices as inv_3v3_pd.
+.subckt inv_hv vdd vss a y
+XP y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XN y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends inv_hv
+.subckt nand2_hv vdd vss a b y
+XPA y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XPB y b vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XNA y a n1 vss sg13_hv_nmos w=1u l=0.45u ng=1
+XNB n1 b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends nand2_hv
+.subckt nor2_hv vdd vss a b y
+XPA p1 a vdd vdd sg13_hv_pmos w=2u l=0.45u ng=1
+XPB y b p1 vdd sg13_hv_pmos w=2u l=0.45u ng=1
+XNA y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+XNB y b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends nor2_hv
+.subckt nor3_hv vdd vss a b c y
+XPA p1 a vdd vdd sg13_hv_pmos w=3u l=0.45u ng=1
+XPB p2 b p1 vdd sg13_hv_pmos w=3u l=0.45u ng=1
+XPC y c p2 vdd sg13_hv_pmos w=3u l=0.45u ng=1
+XNA y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+XNB y b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+XNC y c vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends nor3_hv

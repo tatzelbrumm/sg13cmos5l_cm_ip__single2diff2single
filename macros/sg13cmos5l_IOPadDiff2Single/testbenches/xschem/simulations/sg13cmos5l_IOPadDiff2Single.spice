@@ -1,0 +1,6 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/sg13cmos5l_IOPadDiff2Single.sch
+**.subckt sg13cmos5l_IOPadDiff2Single vdd inp vcm inn vss
+XM1 net1 net4 net2 net2 sg13_hv_nmos w=4.4u l=0.6u ng=1 m=15 mm_ok=1
+XM2 net1 net5 net3 net3 sg13_hv_pmos w=6.66u l=0.6u ng=2 m=15 mm_ok=1
+**.ends
+.end

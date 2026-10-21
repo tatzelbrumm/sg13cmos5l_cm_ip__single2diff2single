@@ -1,0 +1,385 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0
+#
+#--------------------------------------------------------------
+# CACE circuit characterization file: sg13cmos5l_IOPadSingle2Diff -- SCAFFOLD (2026-10-20)
+#--------------------------------------------------------------
+# Single-ended pad in, differential out: outp - vcm = vcm - outn = pad - vref.
+# Same structure as ../../../sg13cmos5l_IOPadDiff2Single/verification/cace/sg13cmos5l_IOPadDiff2Single.yaml.
+# The DUT's core xa (s2d_core_ideal) is a BEHAVIOURAL PLACEHOLDER: these groups run end to end, but the
+# numbers describe ideal E sources until the real input buffer is drawn. All limits are "any" (fill in).
+# Still to add (see ../../FILL_IN.md): noise, tran (step, slew), THD, enable transient, mismatch, input
+# leakage over the full pad range with the slot powered down.
+
+name:           sg13cmos5l_IOPadSingle2Diff
+description:    Single-ended-in, differential-out buffered input pad (SCAFFOLD, placeholder core)
+PDK:            ihp-sg13cmos5l
+
+cace_format:    5.2
+
+authorship:
+  designer:         Christoph Maier
+  creation_date:    October 20, 2026
+  license:          Apache-2.0
+
+paths:
+  root:             ..
+  schematic:        ../schematic/xschem
+  netlist:          cace/netlist
+  documentation:    cace/_docs
+  runs:             cace/_runs
+
+pins:
+  iovdd:
+    description: IO ring supply
+    type: power
+    direction: inout
+  iovss:
+    description: IO ring ground
+    type: ground
+    direction: inout
+  vdd:
+    description: 1.2 V core ring (level-shifter inputs)
+    type: power
+    direction: inout
+  vss:
+    description: core ring ground
+    type: ground
+    direction: inout
+  pad:
+    description: Pad (input)
+    type: signal
+    direction: inout
+  outp:
+    description: Differential output, positive
+    type: signal
+    direction: output
+  outn:
+    description: Differential output, negative
+    type: signal
+    direction: output
+  vcm:
+    description: Output common-mode reference
+    type: signal
+    direction: input
+  vref:
+    description: Input reference
+    type: signal
+    direction: input
+  ibias:
+    description: Harness bias current (sourced into the cell)
+    type: signal
+    direction: input
+  en_1v2:
+    description: Enable, 1.2 V logic
+    type: digital
+    direction: input
+  sel0_1v2:
+    description: Bias select bit 0
+    type: digital
+    direction: input
+  sel1_1v2:
+    description: Bias select bit 1
+    type: digital
+    direction: input
+  vdd1v2_sense:
+    description: Slot 1.2 V supply (presence sense)
+    type: signal
+    direction: input
+  vdd3v3_sense:
+    description: Slot 3.3 V supply (presence sense)
+    type: signal
+    direction: input
+
+default_conditions:
+  vdd:
+    description: IO ring supply voltage
+    display: IOVDD
+    unit: V
+    typical: 3.3
+  vddl:
+    description: Core ring supply voltage
+    display: VDD core
+    unit: V
+    typical: 1.2
+  vref:
+    description: Input reference
+    display: Vref
+    unit: V
+    typical: 1.65
+  vcm:
+    description: Output common mode
+    display: Vcm
+    unit: V
+    typical: 1.65
+  corner_mos:
+    description: Process corner MOSFET
+    display: Corner MOSFET
+    typical: tt
+  temp:
+    description: Ambient temperature
+    display: Temperature
+    unit: °C
+    typical: 27
+  sel:
+    description: Bias selection
+    display: Bias select
+    typical: 0
+  ibias:
+    description: Harness bias current
+    display: Ibias
+    unit: A
+    typical: 5e-06
+  rsrc:
+    description: Source resistance
+    display: Rsrc
+    unit: Ω
+    typical: 50
+  cload:
+    description: Load per output
+    display: Cload
+    unit: F
+    typical: 1e-12
+
+parameters:
+
+  dc_params:
+    spec:
+      Gp:
+        display: Gain, positive output
+        description: d(outp - vcm)/d(pad), nominal +1
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Gn:
+        display: Gain, negative output
+        description: d(outn - vcm)/d(pad), nominal -1
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vos_p:
+        display: Offset, positive output
+        description: outp - vcm at pad = vref
+        unit: mV
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vos_n:
+        display: Offset, negative output
+        description: outn - vcm at pad = vref
+        unit: mV
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vcm_err:
+        display: Common-mode error
+        description: (outp + outn)/2 - vcm
+        unit: mV
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iio:
+        display: IO ring supply current
+        description: From iovdd
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Gp, Gn, Vos_p, Vos_n, Vcm_err, Iio]
+    plot:
+      Gp_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: Gp
+    conditions:
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 27, 125]
+
+  range_params:
+    spec:
+      Vin_min:
+        display: Input range, low end
+        description: Lowest pad voltage with gain error < 1 % (must reach iovss)
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vin_max:
+        display: Input range, high end
+        description: Highest pad voltage with gain error < 1 % (should reach iovdd)
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_range.sch
+        format: ascii
+        suffix: .data
+        variables: [Vin_min, Vin_max]
+    plot:
+      Vin_max_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: Vin_max
+    conditions:
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 27, 125]
+
+  ac_params:
+    spec:
+      Ad_dB:
+        display: Differential gain
+        description: (outp - outn)/pad at 1 kHz, nominal +6.02 dB
+        unit: dB
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      f3dB:
+        display: Bandwidth
+        description: -3 dB, differential
+        unit: MHz
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      PSRR_1k:
+        display: PSRR iovdd 1 kHz
+        description: -20 log|(outp - outn)/iovdd|
+        unit: dB
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      PSRR_100k:
+        display: PSRR iovdd 100 kHz
+        description: -20 log|(outp - outn)/iovdd|
+        unit: dB
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_ac.sch
+        format: ascii
+        suffix: .data
+        variables: [Ad_dB, f3dB, PSRR_1k, PSRR_100k]
+    plot:
+      f3dB_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: f3dB
+    conditions:
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 27, 125]
+
+  pd_params:
+    spec:
+      Iio_pd:
+        display: IO ring current, off
+        description: Per power-down state
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Icore_pd:
+        display: Core ring current, off
+        description: Per power-down state
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ipad_pd:
+        display: Pad input leakage, off
+        description: Into the pad from the source holding it
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ven3:
+        display: Internal enable
+        description: en_3v3, must be low in every power-down state
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_pd.sch
+        format: ascii
+        suffix: .data
+        variables: [Iio_pd, Icore_pd, Ipad_pd, Ven3]
+    plot:
+      Ipad_pd_vs_vpad:
+        type: xyplot
+        xaxis: vpad
+        yaxis: Ipad_pd
+    conditions:
+      pdstate:
+        description: Power-down state (0 en low, 1 slot vdd_1v2 off, 2 slot vdd_3v3 off, 3 chip core 1.2 V off)
+        display: PD state
+        enumerate: [0, 1, 2, 3]
+      vpad:
+        description: Pad voltage held by an external source
+        display: Vpad
+        unit: V
+        enumerate: [0, 1.65, 3.3]
+      temp:
+        enumerate: [27, 125]

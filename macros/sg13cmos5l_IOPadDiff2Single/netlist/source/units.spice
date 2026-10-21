@@ -1,0 +1,42 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* DDA input units for the matched-pair DDA (MP-DDA). All units: x += f(gp - gn).
+* Pins: x y gp gn vdd vss vbp. Device on gp drains to y, device on gn drains to x.
+*
+* unit_r: split-tail PMOS pair, rhigh between the sources (the existing degeneration, unit value)
+.subckt unit_r x y gp gn vdd vss vbp rl=36.4u
+XTa sa vbp vdd vdd sg13_hv_pmos w=10u l=2u ng=1
+XTb sb vbp vdd vdd sg13_hv_pmos w=10u l=2u ng=1
+XR sa sb vss rhigh w=0.5u l={rl}
+XMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2
+XMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2
+.ends unit_r
+* unit_r2: unit_r at 2 x 5 uA (long-L tails), R = 150 kOhm: the unit of d2s_mpdda
+.subckt unit_r2 x y gp gn vdd vss vbp rl=50.6u
+XTa sa vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XTb sb vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XR sa sb vss rhigh w=0.5u l={rl}
+XMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2
+XMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2
+.ends unit_r2
+* unit_t: as unit_r, degeneration = triode hv PMOS, gate at vss (no resistor)
+.subckt unit_t x y gp gn vdd vss vbp wt=0.5u lt=3u
+XTa sa vbp vdd vdd sg13_hv_pmos w=10u l=2u ng=1
+XTb sb vbp vdd vdd sg13_hv_pmos w=10u l=2u ng=1
+XD sa vss sb vdd sg13_hv_pmos w={wt} l={lt} ng=1
+XMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2
+XMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2
+.ends unit_t
+* unit_w: well-input (bulk-driven) PMOS pair after Sarpeshkar 1997 ch. 3, single tail,
+* gates at vss, inputs on the n-wells; no degeneration element at all
+.subckt unit_w x y gp gn vdd vss vbp
+XT s vbp vdd vdd sg13_hv_pmos w=20u l=2u ng=2
+XMa y vss s gp sg13_hv_pmos w=wwi l=lwi ng=1
+XMb x vss s gn sg13_hv_pmos w=wwi l=lwi ng=1
+.ends unit_w
+* unit_q: undegenerated square-law pair (long L, large overdrive), single tail, no R at all
+.subckt unit_q x y gp gn vdd vss vbp
+XT s vbp vdd vdd sg13_hv_pmos w=10u l=2u ng=1
+XMa y gp s s sg13_hv_pmos w=2u l=6u ng=1
+XMb x gn s s sg13_hv_pmos w=2u l=6u ng=1
+.ends unit_q

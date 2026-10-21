@@ -1,0 +1,48 @@
+* tb_pd_leak: d2s_mpdda_pd + d2s_bias_in_pd disabled (en_3v3 = 0), supply currents, tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive) or ngspice -b <deck> (batch: prints)
+* Reference (results_power_down.txt), vout held at 1.65 V: tt 27 C: bias 0.030 nA, driver front end
+* 0.054 nA, vddo 0.020 nA, total 0.104 nA; ff 125 C: 0.633 / 1.283 / 27.21 nA, total 29.1 nA.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.temp 27
+.include ../../netlist/source/units.spice
+.include ../../netlist/source/ccomp.spice
+.include ../../netlist/source/d2s_mpdda_pd.spice
+.include ../../netlist/source/d2s_bias_ref_pd.spice
+Vvdd vdd 0 3.3
+Vvss vss 0 0
+* output-stage rails
+Vvddo vddo 0 3.3
+Vvsso vsso 0 0
+* enable (0 = disabled; edit to 3.3 for enabled)
+Ven en 0 0
+* external 5 uA reference on its own supply vext, mirrored onto iref (it collapses when the TG opens)
+Vext vext 0 3.3
+Iext xg 0 5u
+XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XEm iref xg vext vext sg13_hv_pmos w=5u l=6u
+* the bias gets vdd through a 0 V source, so its current is i(vsb)
+Vsb vdd vddb 0
+Xb vddb vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en d2s_bias_in_pd
+Vcm vref 0 1.65
+Vp vinp vref 0
+Vn vinn vref 0
+Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en d2s_mpdda_pd
+* pad held by a source (edit: 0, 1.65 or 3.3 V)
+Vo vout 0 1.65
+.control
+op
+let ibias = i(vsb)
+let idrv = -i(vvdd) - i(vsb)
+let iddo = -i(vvddo)
+let itot = -i(vvdd) - i(vvddo)
+let vsg_op = v(vddo) - v(xd.a)
+let vgs_on = v(xd.b) - v(vsso)
+print ibias idrv iddo itot vsg_op vgs_on
+print v(vbp) v(vbpc) v(vabp) v(vabn) v(vbn) v(vbnc)
+.endc
+.end
