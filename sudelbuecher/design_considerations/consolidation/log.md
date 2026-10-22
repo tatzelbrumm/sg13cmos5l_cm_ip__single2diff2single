@@ -230,3 +230,13 @@ xschemrc exists yet" and then replaced it, without an existence check, by the ve
 the testbench folders, template pinning), which is the tested one. No other file on the computer was
 written by those branches; a branch did overwrite the cloud-side copy of the chat log, which is why the
 continuation was built on the copy from the computer.
+
+## 2026-10-22 01:25 — session closed
+
+Christoph continues in a new session. Start there from `macros/README.md` and this log. Open items:
+the top cell has to become or instantiate `slot`; layout, extraction and LVS of all new macros; the
+harness changes for the custom-padframe route (`macros/slot/README.md`); the inverter / counter
+teardown (CLAUDE.md §7); the sheet faults in the 8–9 Oct hand edits in `power_down/xschem/`
+(16:35 entry); `Makefile.new` renames where not yet done. Chat log of this session:
+`sudelbuecher/chatlog/2026-10-20_opus_slot7_consolidation_into_macros.md`, live path up to 01:24
+plus an appendix of the branches that ended in API errors.
