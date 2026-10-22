@@ -80,3 +80,6 @@
 
 [2026-10-20_opus_slot7_consolidation_into_macros.md](2026-10-20_opus_slot7_consolidation_into_macros.md)
 : Opus session, 20 Oct: consolidation of the slot7 design into `sg13cmos5l_cm_ip__single2diff2single/macros` (pad macros `sg13cmos5l_IOPadDiff2Single` and the `sg13cmos5l_IOPadSingle2Diff` scaffold, bias reference, enable and level-shifter macros with CACE suites, the slot7-compatible `slot`), with the running log in `design_considerations/consolidation/log.md`; continued 22 Oct with the folder-access check, Heine's *Buch Le Grand* Capitel XII (saved to `texte/`), the shared `macros/xschemrc`, and an appendix of the conversation branches that ended in API errors.
+
+[2026-10-21_opus_banba_bandgap_schematics_and_bg_core_cleanup.md](2026-10-21_opus_banba_bandgap_schematics_and_bg_core_cleanup.md)
+: Opus session, 21–22 Oct: the Banba current-mode bandgap (literature, principle, corrections from the JSSC paper), its Fig. 2 drawn with the analog-schematic skill and compared with the xschem sheets `d2s_bias_bg_pd` / `bg_core_pd`, removal of the leftover en_3v3_b wires in `bg_core_pd`, and the kickoff `class_ab_pad_driver/hand_edit_transfer/kickoff_hand_edit_transfer.md` for redrawing `d2s_bias_oa_pd` in the hand-edited bg style.
