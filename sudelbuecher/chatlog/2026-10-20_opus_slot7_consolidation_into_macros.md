@@ -673,7 +673,7 @@ The transfer tool refuses to write files named `Makefile`.
 
 *[Ran in the cloud container: `cd /home/claude/scratch/chatlog && python3 - <<'EOF'`.]*
 
-*[Continuation, exported 2026-10-22 by the session itself and appended to the export of 2026-10-20 16:41: the live conversation path from the record after that export up to and including record `d712d7a1-42b5-4a62-a967-28222bcb37e9`; the reply that closes this turn is not included. Messages that went to branches off that path (2026-10-22 00:26–00:58, most of them ending in an API error) are in the appendix at the end, in time order. Two more passages of the assistant's output were withheld by a safety classifier, one on 20 Oct after the first export and one on 22 Oct during the xschemrc work; what was withheld is not in the transcript and not in this file.]*
+*[Continuation, exported 2026-10-22 and again 2026-10-25 by the session itself and appended to the export of 2026-10-20 16:41: the live conversation path from the record after that export up to and including record `37d0d56f-d038-4e23-8b9c-daeda7381d20`; the reply that closes this turn is not included. Messages that went to branches off that path (2026-10-22 00:26–00:58, most of them ending in an API error) are in the appendix at the end, in time order. Two more passages of the assistant's output were withheld by a safety classifier, one on 20 Oct after the first export and two on 22 Oct (during the xschemrc work and while the logs were being completed); what was withheld is not in the transcript and not in this file.]*
 
 *[Ran in the cloud container: `note='Export made 2026-10-20 16:41 by the session itself, up to and including record `769cfe94-aab3-456c-843a-319deb57eb66` (the summary message to th…`.]*  
 *[Ran in the cloud container: `cd /mnt/user-data/outputs/chatlog && sed -i 's/ during the session (16:31 and 16:38);/ near the end of the session;/' 2026-10-20_opus_slot7_consolidat…`.]*  
@@ -925,7 +925,633 @@ One last thing: which file, exactly (something about chatlog recovery) seems to 
 *[Ran in the cloud container: `cd /home/claude/scratch/chatlog && sha256sum /mnt/user-data/outputs/chatlog2/2026-10-20_opus_slot7_consolidation_into_macros.md | cut -c1-16 && cp /ro…`.]*  
 *[Ran on the linked computer: `ls -la $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/verbatim_chatlog_recovery/; stat -c '%s' $HOME/mnt/sg13cmos5l_cm_ip__s…`.]*  
 *[Called device_list_dir.]*  
-*[Ran in the cloud container: `B=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-20_opus_slot7_consolidation_into_macros.md && …`.]*
+*[Ran in the cloud container: `B=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-20_opus_slot7_consolidation_into_macros.md && …`.]*  
+*[Committed 1 files to the linked computer.]*  
+*[Ran in the cloud container: `cd /home/claude/work/out_log/consolidation && cat >> log.md <<'EOF'`.]*  
+*[Committed 1 files to the linked computer.]*  
+*[Ran on the linked computer: `sleep 2; cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher && sha256sum chatlog/2026-10-20_opus_slot7_consolidation_into_mac…`.]*
+
+**Assistant:** Both logs are complete on your computer, and their checksums match the cloud copies. The chat log covers the conversation up to 01:24 and keeps the appendix with the seven messages that went to branches and ended in API errors. The running log ends with a handover entry that lists the open items for the next session. A safety classifier stopped one more of my replies during this last step; the logs were finished after it, so nothing is missing from them.
+
+The file you mean is:
+
+`/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/verbatim_chatlog_recovery/verbatim-chatlog-export.md`
+
+`CLAUDE.md` §6 points to it as the guide for asking for and building a verbatim chat log without tripping the `[reasoning_extraction]` stop. The same folder also has `chat-recovery-after-compaction.md`.
+
+For the new session, a good opening is to have it read `macros/README.md` and `sudelbuecher/design_considerations/consolidation/log.md`, plus that export guide if you want a verbatim log again.
+
+
+## Turn 11 — 2026-10-22 06:40
+
+**User:** Looking at the schematics, `pg_det.sch` has prohibitively long transistors. What is this circuit supposed to do?
+
+*[Ran in the cloud container: `grep -E '^C \{|^N |^T ' /mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/pg_det.sch | grep -E '^C' | se…`.]*  
+*[Ran in the cloud container: `grep -oE 'name=(PU|ND|RD)[^}]*' /mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/pg_det.sch | tr '\n' '…`.]*  
+*[Ran in the cloud container: `grep -A8 -E 'name=(PU|ND|RD)$' /mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/pg_det.sch | grep -E 'n…`.]*
+
+**Assistant:** `pg_det` is a power-good detector. It tells `en_ctrl_3v3` whether a supply is really up, running only from the 3.3 V IO supply (`vddh`). It exists because with `vdd_1v2` off, the `ls_up` level shifters have no defined output and can't be trusted. There are two instances, one sensing `vdd1v2_sense` and one sensing `vdd3v3_sense`. Each output `pg_b` goes into the `nor3_hv` together with `en_ls_b`, so `pg_b` high (supply absent) forces `en_3v3` low.
+
+**The three devices:**
+- **ND** (HV NMOS 2/0.45) is the detector itself. Its gate is the sensed supply; when that supply is up, ND pulls `pg_b` low.
+- **PU** (HV PMOS 0.3/50) is a weak ratioed pull-up, so `pg_b` goes high when ND is off. ND has to win at the lowest valid sense level: about 1.08 V on the 1.2 V rail at ss/−40 °C, where an HV NMOS has little overdrive. Hence a W/L ratio of roughly 700:1.
+- **RD** (HV NMOS 0.3/100) is a weak pull-down on the sense pin. A floating or unpowered rail then reads as absent instead of leaving ND's gate floating.
+
+PU and RD are gated by the level-shifted enable, so a disabled pad draws about 60 pA. This stays fail-safe even though the enable itself is undefined when `vdd_1v2` is off:
+- If the undefined latch reads low, `en_ls_b` is high and the `nor3` already holds `en_3v3` low.
+- If it reads high, PU and RD are on, the detector sees the dead rail, and `pg_b` forces `en_3v3` low.
+
+**Why the lengths:** PU and RD are really transistors used as resistors of a few MΩ, sized to keep the enabled current near 1 µA per rail. The CACE run measured 1.43 µA on the `vdd1v2_sense` pin, 1.73 µA on `vdd3v3_sense`, and 1.94 µA from `vddh` for the whole `en_ctrl_3v3`. Supply loss drives `en_3v3` low in 0.40–0.92 µs. I picked that current budget without weighing it against layout, and it costs you 50 and 100 µm channels.
+
+**Ways out:**
+1. **Spend more current (simplest).** Shortening the channels by k raises the current by about k. At L of about 5 µm for PU and 10 µm for RD, that is roughly 10 µA per rail, against a pad quiescent current of 207–227 µA. If PU gets stronger, ND must be widened to keep the ratio. Then rerun the `en_ctrl_3v3` CACE groups (truth, pvt, vddl_off, float, tran).
+2. **Keep the current, fold the length.** Split each device into a series stack of 10 µm segments laid out as a meander. The behaviour stays nearly the same, but each split costs an HV source/drain extension.
+3. **A high-resistance poly resistor instead of RD** doesn't help. It needs about as many squares, and it would also need an enable switch in series.
+
+I'd pick option 1. Getting the micro-amp numbers back from shorter devices isn't worth 100 µm channels inside a pad that already draws over 200 µA. If you agree, I or the next session can resize it and rerun the `en_ctrl_3v3` suite.
+
+
+## Turn 12 — 2026-10-22 14:53
+
+**User:** I have hand edited quite a bit of the schematics and symbols you created for me. How can you (or I) check that I didn't mess up the underlying schematic connectivity? Also, if you look at my hand edits, how can Claude update its schematic drawing skill?
+
+**Assistant:** I'll compare your edited sheets against the versions I drew, netlisting both and matching them device by device. Then I'll look at what you changed, to see what a drawing skill could learn from it.
+
+*[Ran in the cloud container: `d=$(dirname $(grep -rl '^name: *xschem-analog-schematic' /root/.claude/skills --include=SKILL.md | head -1)); echo "$d"; ls -R "$d" | head -40; which …`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && find macros/*/schematic/xschem macros/*/testbenches/xschem schematic/xschem testbenches/xschem -m…`.]*
+
+**Assistant:** Since 01:06 this morning you changed 13 files: 8 sheets and 5 symbols. I have the 01:06 versions in the cloud, so I'll save them before bringing over your edited ones.
+
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; rm -rf $S/base0106 && cp -r /mnt/user-data/uploads/sg13cmos5l_cm_ip__sin…`.]*  
+*[Ran in the cloud container: `head -30 /home/claude/scratch/cmpnet.py; echo ===; head -20 /home/claude/forkA/scr/cmp.py; echo ===; head -15 /home/claude/forkA/scr/xcheck.py`.]*  
+*[Read `/root/.claude/skills/synced/551a5048-b9f4-49a4-8bc6-58f9f44d750e_f6b8ab18-dce1-4f48-a33c-b4ddb91ea84a/xschem-analog-schematic/SKILL.md` in the cloud container.]*  
+*[Staged 13 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; M=/home/claude/work/sg13cmos5l_cm_ip__single2diff2single; cd $S/base0106…`.]*  
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; M=/home/claude/work/sg13cmos5l_cm_ip__single2diff2single`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad`.]*  
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; cd $S && python3 -I - <<'EOF'`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; rm -rf $S/ts; mkdir -p $S/ts; cd /tmp && PWD…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; grep -rhoE 'top_[a-z_]*subckt[a-z_]*' $(dirn…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; ls $PDK_ROOT/$PDK/libs.tech/netgen/ 2>&1 | head`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && grep -n -i 'netgen' Makefile | head -8`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && sed -n '288,320p' Makefile | grep -n -i -E 'netgen|setup|top_is_subckt|xschem' | head -10`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && grep -n -E 'netgen +-|setup\.tcl|NETGEN' Makefile | head -5`.]*  
+*[Ran in the cloud container: `cd /home/claude/work/out_log/consolidation && cat >> log.md <<'EOF'`.]*  
+*[Called device_list_dir.]*  
+*[Committed 1 files to the linked computer.]*  
+*[Ran on the linked computer: `sleep 2; sha256sum $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/consolidation/log.md | cut -c1-64`.]*
+
+**Assistant:** Your hand edits did break connectivity in three places. Everything else you changed is topologically identical to what I delivered.
+
+**What broke**
+1. **`d2s_bias_oa_pd.sch`**, an edit inside the sheet:
+   - `vnc` is shorted to `vpc` (XM10 gate, XM11, XP8C drain);
+   - `vpg` is shorted to `c8`, which makes XP8 diode-connected and moves XP0, XP0C, XP2, XPO and XSVPG onto `c8`;
+   - XTGN's bulk is on `vdd`, and XTGP's bulk is floating.
+2. **`inv_hv.sym`**: you moved all four pins. `d2s_bias_sel_pd.sch`, which you didn't redraw, now has its three decode inverters (XDB, XDD, XDG) on unconnected nets.
+3. **`d2s_bias_sel_pd.sym`** is the worst one. You moved five pins, and in the three sheets that use it (both pad sheets and `d2s_mpdda_pd_sel.sch`) the old wires now meet *other* pins. The five bias lines are rotated among themselves: vbn→vabn, vbpc→vbn, vbnc→vabp, vabp→vbpc, vabn→vbnc. Nothing dangles and nothing is missing, so looking at the sheet or grepping the netlist won't show it.
+
+These are fine: `d2s_bias_in_pd`, `d2s_bias_bg_pd`, `bg_core_pd`, `en_ctrl_3v3`, `pg_det`, `inv_hv`, `nor3_hv`, and everything below them. In `s2d_core_ideal` you swapped both terminal pairs of the E source, which gives the same equation. No symbol changed its pin order. I haven't repaired anything, and the findings are in the running log.
+
+**How to check it yourself**
+- **Netlist both versions in batch mode:** your last commit (a `git worktree` of HEAD) and the working tree, with `xschem -n -s -q -x --no_x --rcfile <tree>/macros/xschemrc --tcl 'set top_is_subckt 1' -o <dir> <sheet>.sch`.
+- **Compare them as graphs, not by name.** Ignore instance and internal net names, anchor the ports by name, let drain/source swap, and compare the sizes. `netgen lvs` does that, but MOS source/drain swaps need a setup file. I couldn't confirm which one your Magic LVS flow uses.
+- **Compare the symbols by pin position, not only pin order.** A moved pin breaks every sheet you didn't redraw, and xschem doesn't warn about it.
+
+The comparator I ran does all of that in about a minute for the whole `macros/` tree. It's a small Python script, and I can put it into `scripts/` with a make target that checks against the last commit.
+
+**Updating the drawing skill**
+
+`xschem-analog-schematic` is your own skill: its style section was written from your hand-drawn `d2s_miller` and `d2s_loadcomp`. I can propose a complete updated version, which appears here as a review card that you save. It would take the style differences between my 14 drawings and your edits, plus two lessons from today: re-wire every user after moving symbol pins, and check by topology rather than by name.
+
+Which first: repair the three faults, add the comparator to the repo, or draft the skill update?
+
+
+## Turn 13 — 2026-10-22 16:25
+
+**User:** first, check whether I fixed d2s_bias_oa_pd.sch AND errors in d2s_bias_bg_pd.sch. I really messed up the transmission gate.
+next, as i dive into d2s_bias_sel_pd.sch, are there duplicate schematics and symbols in the _sudelbuecher and in the toplevel macros, and do symbols for standard logic exist somewhere in the ihp design kit that I should be using instead of having you reinvent wheels?
+
+**Assistant:** I'll check your current `d2s_bias_oa_pd.sch` and `d2s_bias_bg_pd.sch` against the delivered, verified versions. In parallel I'll look for duplicate sheets between the two worktrees and for logic symbols in the IHP kit.
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && echo "--- changed since 14:50 local:"; find macros schematic testbenches -newermt '2026-10-22 12:…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; P=$PDK_ROOT/$PDK; ls $P/libs.tech/xschem/; echo ---; ls -d $P/libs.tech/xschem/*std* $P/libs.tech/xschem/*/ 2>/dev/null; e…`.]*  
+*[Staged 9 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; P=$PDK_ROOT/$PDK; echo "--- IO library symbols:"; ls $P/libs.tech/xschem/sg13cmos5l_io | tr '\n' ' '; echo; echo "--- lack…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*
+
+**Assistant:** `d2s_bias_bg_pd` is now equivalent to the repaired version, so your transmission-gate fix there worked. `d2s_bias_oa_pd` and `d2s_bias_sel_pd` still differ. Here is what remains:
+
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; f=$(ls $PDK_ROOT/$PDK/libs.ref/sg13cmos5l_io/spice/*.spi* | head -1); python3 -I - "$f" <<'EOF'`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && for g in macros/IOPad/*.gds macros/IOPad/*/*.gds macros/slot/reference/*.gds; do [ -f "$g" ] || c…`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && find macros/IOPad macros/slot -name '*.gds' -printf '%s %p\n' | head; for g in $(find macros/IOPa…`.]*
+
+**Assistant:** Your bandgap fix worked. `d2s_bias_bg_pd.sch` is now topologically identical to the repaired version, transmission gate included.
+
+**`d2s_bias_oa_pd.sch` is fixed except for one thing.** The two shorts and both bulk errors are gone. What remains: XTGP's gate is unconnected (it should be on `en_3v3_b`). Its drain and source are swapped, which doesn't matter.
+
+**`d2s_bias_sel_pd`, still in progress:**
+- In `d2s_bias_sel_pd.sch`, XDB and XDD have their `vss` pins unconnected, and XDG has all four pins unconnected. Everything else in the sheet is equivalent, including the sub-sheets whose symbols you edited this afternoon.
+- The three sheets that use `d2s_bias_sel_pd.sym` still have its five bias lines rotated: `sg13cmos5l_IOPadDiff2Single.sch`, `d2s_mpdda_pd_sel.sch` and `sg13cmos5l_IOPadSingle2Diff.sch`.
+
+**Duplicates**
+- **Between the two worktrees** there are 16 file names in both places, mostly in `_sudelbuecher/…/class_ab_pad_driver/power_down/xschem/`.
+  - 12 are identical.
+  - The four that differ are `d2s_bias_{in,out,oa,bg}_pd.sch`. The `macros/` copies are the repaired ones plus your edits; the `_sudelbuecher` copies still have the 8–9 Oct faults.
+  - The `_sudelbuecher` folder isn't on the `macros/xschemrc` path, so it only bites if you start xschem in `power_down/xschem`. I'd treat `macros/` as the master and leave the old copies as the record.
+- **Inside `macros/`:**
+  - `inv_3v3_pd` (in `d2s_bias_sel_pd`) is the same circuit as `inv_hv`: both are 1/0.45 µm HV devices.
+  - `bg_core_pd`, `oa_core_pd` and `d2s_bias_in_tree_pd` were cut out of the flat power-down sheets. So the same circuits are drawn twice, and an edit to one copy doesn't reach the other.
+  - The cleanup would be one `inv_hv`, with the flat reference macros instantiating the sub-sheets.
+
+**Standard logic in the IHP kit**
+- **The stdcells (`sg13cmos5l_stdcells`, 84 cells with xschem symbols)** include inv, nand2, nor2, nor3, buf and tie, but use 1.2 V LV devices only. They are fine for logic on `vdd_1v2`, not on iovdd.
+- **The kit has no 3.3 V gates.** The IO library's `io_inv_x1`, `io_nand2_x1` and `io_nor2_x1` are LV as well: they're the core-side logic inside the pads. So `hv_logic` isn't reinventing anything the kit has.
+- **It does have a level shifter you could use.** `sg13cmos5l_LevelUp` and `LevelUpInv` (ports `o i iovdd vdd vss`) are IHP's own 1.2 V to 3.3 V up-shifters. Their layout is already a sub-cell of `macros/IOPad/layout/klayout/sg13cmos5l_IOPadInOut30mA.gds`, so you'd get a proven layout instead of drawing `ls_up_1v2_3v3`. It has no xschem symbol, and it's sized for driving the output stage. It would need to go through the `ls_up` CACE suite, including the `vdd_1v2`-off case, before replacing anything.
+- **`LevelDown` isn't a general 3.3 V to 1.2 V shifter.** It's the pad's input receiver with secondary ESD protection, so `ls_dn_3v3_1v2` stays.
+
+The useful next step would be a symbol for `LevelUp`, run through the `ls_up` suite, to see whether it can replace yours.
+
+
+## Turn 14 — 2026-10-22 16:39
+
+**User:** Did I fix `d2s_bias_oa_pd.sch` ? Did `d2s_bias_bg_pd.sch` NEED fixing?
+Re:
+The `_sudelbuecher` folder isn’t on the `macros/xschemrc` path, so it only bites if you start xschem in `power_down/xschem`. I’d treat `macros/` as the master and leave the old copies as the record.
+IHP uses symlinks into their full feature design kits from the cmos5l version.
+Is this feasible here, too?
+
+**Assistant:** I'll re-check your current `d2s_bias_oa_pd.sch`, and compare the old `_sudelbuecher` copies against the repaired versions to show where the transmission-gate faults actually are. I'll also check how IHP's links are set up.
+
+*[Staged 6 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; cd $PDK_ROOT/$PDK && find . -maxdepth 4 -type l -printf '%p -> %l\n' 2>/dev/null | head -12; echo "links total: $(find . -…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads; SB=$U/sg13cmos5l_c…`.]*
+
+**Assistant:** **Yes, you fixed `d2s_bias_oa_pd.sch`.** It is now equivalent to the delivered version. The only difference left is XTGP's drain and source swapped, which doesn't matter for a transmission gate.
+
+**No, the `d2s_bias_bg_pd.sch` in `macros/` never needed fixing.** It was already the repaired copy on 20 Oct, and both of your edits today left it equivalent. My "your fix worked" earlier was misleading. The broken transmission gate is in the old copy in `_sudelbuecher/…/power_down/xschem/`:
+- the vss rail is open, so the sources of XBN, XBNC, XNABP, XNBP and XNBPC, and one end of XRN2, float;
+- XTGN has its bulk on vdd and its iref end open;
+- XTGP has its source on vdd and its bulk on vss;
+- XPOC's iref end is open.
+
+Of the other old copies, `d2s_bias_in_pd` has TDN's gate floating, `d2s_bias_out_pd` has TGN's iref end open, and `d2s_bias_oa_pd` is fine.
+
+**Symlinks: yes, they work here the same way IHP uses them.** The cmos5l kit has 128 relative links such as `../../../../ihp-sg13g2/libs.tech/ngspice/models/…`, which rely on the two kits sitting side by side. Your two worktrees sit side by side under `~/EDA` and under `/foss/designs` in the container. So a link in `power_down/xschem/` would be `../../../../../../sg13cmos5l_cm_ip__single2diff2single/macros/<macro>/schematic/xschem/<file>`.
+
+Things to settle before doing it:
+- **Links point from `_sudelbuecher` into `macros/`, never the other way.** The submission repo has to stay self-contained, and a link out of it breaks clones and the precheck.
+- **The four old bias sheets would vanish from the working tree.** They're the record of the 8–9 Oct faults and would survive only in the `sudel_buecher` history, if they're committed there. The 12 identical duplicates lose nothing.
+- **A link resolves relative paths from its own folder.** Xschem treats a linked testbench as living in `power_down/xschem`, so its relative includes must work from there. Each linked `tb_pd_*.sch` needs a check.
+- **Cloning only the `sudel_buecher` branch leaves dangling links.** That's the same as the cmos5l kit without `ihp-sg13g2` next to it.
+- **Duplicates inside `macros/` shouldn't be links.** For example, `d2s_bias_sel_pd.sch` should simply place `inv_hv.sym` instead of `inv_3v3_pd`; the library path already makes that possible.
+
+Making the links means removing the existing files in `_sudelbuecher`, so you'll get a delete-permission prompt, and you commit afterwards. Shall I link the 12 identical duplicates now, and should the four old bias sheets be linked too or kept as the record?
+
+*[Ran in the cloud container: `cd /home/claude/pdk/IHP-Open-PDK && git rev-parse --show-toplevel && git remote -v | head -2 && git status --short | head -8 && echo "changed entries:…`.]*
+
+**Assistant:** I didn't commit or push anything. An automatic check after my reply flagged uncommitted changes, but they're in the cloud copy of the IHP PDK (`iic-jku/IHP-Open-PDK`), not in your project. They are two model files, `cap_cmomf.osdi` and `cap_cmomi.osdi`, which I recompiled when I set up the simulation tools. They're local build output and don't belong in IHP's repository. Your own worktrees haven't been touched by git, as `CLAUDE.md` requires.
+
+My question from above still stands: shall I replace the 12 identical duplicates in `_sudelbuecher` with links, and should the four old bias sheets be linked too or kept as the record of the 8–9 Oct faults?
+
+
+## Turn 15 — 2026-10-22 16:46
+
+**User:** Remind me what the four old bias sheets even are ... path and filenames.
+For now, don't use symlinks but keep duplicates and list them.
+Are the macros versions consistently ahead of the _sudelbuecher versions?
+
+**Assistant:** The four old sheets are the power-down versions of the four bias references, before the 20 Oct repairs. I'll check their dates, and widen the duplicate search from sheets to all file types, so the list and the "who is ahead" question cover everything.
+
+*[Ran on the linked computer: `cd $HOME/mnt && M=sg13cmos5l_cm_ip__single2diff2single; S=sg13cmos5l_cm_ip__single2diff2single_sudelbuecher`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt && M=sg13cmos5l_cm_ip__single2diff2single; S=sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher`.]*
+
+**Assistant:** The macros copies are ahead everywhere: in every pair that differs, the `macros/` copy is the newer one, and no `_sudelbuecher` copy was changed after being copied over. The one caveat is the annotated PCell code (group 2 below).
+
+**The four old bias sheets** are the power-down versions of the four bias references, as you hand-edited them before the 20 Oct repairs. They're all in
+`/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/power_down/xschem/`
+
+| file | date | state |
+|---|---|---|
+| `d2s_bias_in_pd.sch` | 9 Oct | TDN gate floating |
+| `d2s_bias_out_pd.sch` | 8 Oct | TGN iref end open |
+| `d2s_bias_oa_pd.sch` | 6 Oct | no fault |
+| `d2s_bias_bg_pd.sch` | 9 Oct | vss rail open, both TG bulks wrong, TGP source on vdd, XPOC iref open |
+
+The masters are `macros/d2s_bias_{in,out,oa,bg}_pd/schematic/xschem/`. I was wrong earlier to lump all four under "8–9 Oct faults": the OA sheet is from 6 Oct and was fine.
+
+**Duplicates, kept as they are, no links.** Paths are relative to the two worktree roots; `cabd` = `sudelbuecher/design_considerations/class_ab_pad_driver`.
+
+*Identical (23 files):*
+- `cabd/power_down/xschem/` ↔ `macros/…`:
+  - `d2s_bias_{in,out,oa,bg}_pd.sym`
+  - `d2s_mpdda_pd.sch`, `d2s_mpdda_pd.sym`
+  - `tb_pd_{enable,leak,startup_oa,unpowered}.sch`
+- `cabd/improvements/xschem/` ↔ `macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/`: `unit_r2.sch`, `unit_r2.sym`
+- `cabd/improvements/sim/` and `cabd/power_down/sim/` ↔ `macros/sg13cmos5l_IOPadDiff2Single/netlist/source/`:
+  - `ccomp.spice`, `units.spice`
+  - `d2s_bias_lp.spice`, `d2s_bias_ref.spice`, `d2s_bias_ref_pd.spice`
+  - `d2s_mpdda.spice`, `d2s_mpdda_pd.spice`
+- `cabd/improvements/size_mockup/` ↔ `macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/size_mockup/`: `d2s_mpdda_size_mockup.py`, `d2s_mpdda_size_mockup.gds`
+- `sudelbuecher/transistor_only_reference_sizing/doc/` ↔ `macros/OgueyAebischerBias/doc/`: `trouble_spots.png`, `trouble_spots.svg`
+
+*Different, `macros/` copy newer in every case (15 files):*
+1. **The four bias sheets above.** `in`, `out` and `bg` are the old sheets plus the repairs and your edits; `oa` differs only in the drawing.
+2. **`scripts/pcells/` ↔ `sudelbuecher/clamp_pcell_code_annotated/`.** The annotated folder is a commented snapshot from 30 Sep.
+   - `Clamp_N_code.py` and `Clamp_P_code.py`: same code, the annotated copy just has the comments.
+   - `clamp_base_code.py`, `clamp_engine.py`, `clamp_refdata.py`: the working code changed afterwards (65, 214 and 660 differing code lines). The annotations now describe outdated code, and the working code doesn't have them.
+3. **`macros/sg13cmos5l_IOPadDiff2Single/testbenches/spice/tb_pd_{enable,leak,startup_oa,unpowered}.spice` ↔ `cabd/power_down/sim/tb/`.** Only the include paths differ, rewritten on purpose when I copied them.
+4. **`trouble_spots.py`.** The `macros/` copy adds the SPDX header and usage notes.
+
+*Same name only, not duplicates:* the LibreLane and CACE run logs (`flow.log`, `error.log`, `warning.log`), and the xschem output netlists in `cabd/improvements/xschem/net/`.
+
+**Assistant:** I didn't commit or push anything. This is the same automatic check as before, and it's again about the two recompiled model files in the cloud copy of IHP's PDK, which don't belong in IHP's repository. Your own worktrees still have no git changes from me.
+
+
+## Turn 16 — 2026-10-24 15:08
+
+**User:** check my latest manual edits to the macro schematics. Do you use a script for testing correctness that I could use myself?
+
+**Assistant:** I'll find what you've edited since my last check on Thursday and run the same topology comparison. Then I'll turn the checker into a script you can run yourself.
+
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; ls -d $S/treeA $S/treeB $S/topocmp.py /home/claude/env.sh 2>&1; source /…`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && find macros schematic testbenches -type f \( -name '*.sch' -o -name '*.sym' -o -name xschemrc \) …`.]*
+
+**Assistant:** You've changed 12 files today, mostly in `d2s_bias_sel_pd` and the gate symbols. I'll bring them over and run the full comparison.
+
+*[Staged 12 files from the linked computer into the cloud container.]*  
+*[Wrote `/mnt/user-data/outputs/scripts/xschem/sheet_equiv.py` in the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*
+
+**Assistant:** The run already shows real findings, but it crashed on a behavioural E source (an expression instead of a gain). I'll fix that and rerun, and look at why `inv_3v3_pd` differs.
+
+*[Edited `/mnt/user-data/outputs/scripts/xschem/sheet_equiv.py` in the cloud container.]*  
+*[Edited `/mnt/user-data/outputs/scripts/xschem/sheet_equiv.py` in the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; cd $S && python3 -I /mnt/user-data/outputs/s…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; for t in treeA treeB; do mkdir -p $S/h_$t; r…`.]*  
+*[Committed 1 files to the linked computer.]*  
+*[Called device_list_dir.]*  
+*[Ran in the cloud container: `sha256sum /mnt/user-data/outputs/scripts/xschem/sheet_equiv.py | cut -c1-64; cd /home/claude/work/out_log/consolidation && cat >> log.md <<'EOF'`.]*  
+*[Committed 1 files to the linked computer.]*  
+*[Ran on the linked computer: `sleep 2; sha256sum $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/scripts/xschem/sheet_equiv.py $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbu…`.]*
+
+**Assistant:** You've fixed two things since Thursday: `d2s_bias_oa_pd.sch` is equivalent again, and so are the three `inv_hv` decode inverters in `d2s_bias_sel_pd.sch`. Five problems are still open; the first two are new from today's edits.
+
+**Open problems**
+1. **Both inverters are now open inside.** `inv_hv.sch` and `inv_3v3_pd.sch` both have ports `en_3v3` / `en_3v3_b`, but their transistors sit on internal nets `a` / `y`. Neither gate nor output reaches a port, so every inverter in `en_ctrl_3v3` and `d2s_bias_sel_pd` is dead. `inv_hv` was also renamed from `a` / `y`, while `hv_logic.spice` still declares `inv_hv vdd vss a y`.
+2. **The transmission gate is broken in `d2s_bias_in_tree_pd.sch`.** XTGN's drain is on `vdd` and its bulk floats. XTGP now sits between `ni` and `vdd`. `iref` no longer reaches the gate at all.
+3. **`en_ctrl_3v3.sch`:** you moved `vdd` in `inv_hv.sym`, so XIE's supply pin is dangling.
+4. **`d2s_bias_sel_pd.sch`:** you moved pins in `inv_3v3_pd.sym`, so Xi's `en_3v3` / `en_3v3_b` are dangling.
+5. **Still from Thursday:** the five bias lines are still rotated in all three sheets that place `d2s_bias_sel_pd.sym`.
+
+`slot.sch` differs only because of these. Everything else is equivalent, including the sheets where you moved pins on `nand2_hv`, `nor2_hv`, `d2s_bias_in_tree_pd`, `bg_core_pd` and `oa_core_pd` and then re-wired.
+
+**Yes, the script is now in your repo** as `scripts/xschem/sheet_equiv.py`. I just ran exactly this version for the check above, and its checksum matches on your computer. Usage:
+
+```sh
+cd /foss/designs/sg13cmos5l_cm_ip__single2diff2single
+source .designinit
+git worktree add /tmp/ref <known-good commit>
+python3 scripts/xschem/sheet_equiv.py /tmp/ref .
+git worktree remove /tmp/ref
+```
+
+- **Output:** first the symbols whose pins moved, were renamed or reordered, with every sheet that places them, marked "(not re-edited)" where you haven't touched the sheet since. Then one line per sheet, equivalent or DIFFERENT. For a DIFFERENT sheet it lists the instances whose nets changed, as above.
+- **Runtime and exit status:** about 15 seconds for all 44 sheets; exit status 1 if anything differs.
+- **Requirement:** it needs `networkx`. If your container lacks it, run `pip install --user networkx`.
+- **What it can't do:** it compares two versions, it doesn't judge which one is right. Use a reference commit you know is good, here the one with my 20 Oct versions, not a commit that already contains edits you're unsure of. A deliberate interface change, like the `inv_hv` port rename, also shows as DIFFERENT.
+
+I've added today's findings and the script to the running log.
+
+
+## Turn 17 — 2026-10-24 16:02
+
+**User:** I think inv3v3_pd and inv1_hv are functionally identical. So there's no reason for inv3v3_pd to exist.
+is it possible to avoid having to install networx into the IIC-OSIC-TOOLS container?
+
+**Assistant:** Yes on both. `inv_3v3_pd` and `inv_hv` were the same circuit as delivered: one HV PMOS and one HV NMOS, both 1/0.45 µm, so one of them can go. And `networkx` can be dropped: I'll replace it with an exact graph match in plain Python and confirm that it gives the same verdicts on all your sheets. First a check of the "inv1_hv" name.
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && ls macros/hv_logic/schematic/xschem/ macros/d2s_bias_sel_pd/schematic/xschem/; echo "--- referenc…`.]*  
+*[Ran in the cloud container: `cp /mnt/user-data/outputs/scripts/xschem/sheet_equiv.py /tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad/sheet_equiv_nx.py &…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; cd $S`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; cd $S`.]*  
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; mkdir -p $S/sym && cd $S/sym && cat > ring6.spice <<'EOF'`.]*  
+*[Ran in the cloud container: `cd /tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad/sym && for f in ring6 ring6b tri2; do sed 's/^\*\*\.subckt t p$/**.subck…`.]*  
+*[Called device_list_dir.]*  
+*[Committed 1 files to the linked computer.]*  
+*[Ran in the cloud container: `sha256sum /mnt/user-data/outputs/scripts/xschem/sheet_equiv.py | cut -c1-64; head -30 /mnt/user-data/outputs/scripts/xschem/sheet_equiv.py | tail -8`.]*  
+*[Ran on the linked computer: `sha256sum $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/scripts/xschem/sheet_equiv.py | cut -c1-64`.]*
+
+**Assistant:** You're right about `inv_3v3_pd`. As I delivered them, it and `inv_hv` are the same circuit: two HV transistors of 1/0.45 µm with the same port order, `vdd vss in out`. And the checker no longer needs networkx. The updated `scripts/xschem/sheet_equiv.py` is on your computer, and its checksum matches the cloud copy.
+
+**What removing `inv_3v3_pd` involves**
+1. **Fix `inv_hv.sch` first.** As of today its two transistors aren't connected to its ports.
+2. **Three sheets place `inv_3v3_pd`:** `d2s_bias_sel_pd.sch`, `oa_core_pd.sch` and `bg_core_pd.sch`. In each, switch the instance to `inv_hv.sym` and re-wire it, because the pins are in different places.
+3. **Delete `inv_3v3_pd.sch` and `inv_3v3_pd.sym`.**
+4. **Rename it in the text files.** In `d2s_bias_sel_pd.spice` and `d2s_bias_ref_pd.spice`, the instance lines only need the new name, since the port order is the same. The comment in `hv_logic.spice` and the `d2s_bias_sel_pd` README also mention it.
+
+The checker flattens everything to transistors. So once the merge is done, those three sheets should come out as equivalent against the 20 Oct reference, which confirms that removing the duplicate changed nothing electrically. I can do step 4 if you like; the sheets are yours to re-wire.
+
+**The networkx-free version**
+- The comparison is now an exact graph match in plain Python 3. On all four pairs of sheet versions I tried, 176 comparisons, it gave the same verdicts as the networkx version.
+- It runs with Python's add-on packages switched off, so the IIC-OSIC-TOOLS container needs nothing installed. It takes about 14 seconds for all 44 sheets.
+- I also tested it on two circuits that look the same to a simple neighbourhood comparison but aren't: a ring of six equal resistors against two rings of three. It tells them apart correctly.
+- Usage is unchanged: `python3 scripts/xschem/sheet_equiv.py <reference worktree> .`
+
+
+## Turn 18 — 2026-10-24 16:31
+
+**User:** What do I pick as <reference worktree>? In the meantime, check my manual edits, and tell me where swapping pin orders in symbols created follow-up errors.
+
+**Assistant:** The best reference is a commit that holds my 20 Oct versions before any of your hand edits; the git commands are at the end. Now your new edits, and the pin orders:
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && echo "--- changed since the last check (13:06 UTC today):"; find macros schematic testbenches -ty…`.]*  
+*[Staged 4 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; cd $S; echo "--- port-order notes in the run…`.]*
+
+**Assistant:** You didn't swap any pin orders. The port order xschem uses is unchanged for all 19 cells used as sub-blocks (taken from the `.sym`) and all 32 sheets netlisted on their own (taken from the `.sch`). So the hand-written SPICE netlists and testbenches still line up. What you changed are pin **positions**, and that's what causes the follow-up errors: the old wires no longer meet the pins, or meet different ones.
+
+**Follow-up errors from moved pins, still open**
+1. **`d2s_bias_sel_pd.sym`** (vbn, vbpc, vbnc, vabp, vabn moved): the five bias lines are still rotated in `d2s_mpdda_pd_sel.sch`, `sg13cmos5l_IOPadDiff2Single.sch` and `sg13cmos5l_IOPadSingle2Diff.sch`. `slot.sch` inherits the error.
+2. **`inv_hv.sym`** (vdd moved again at 16:27): in `en_ctrl_3v3.sch`, XIE's supply pin is dangling. In `d2s_bias_sel_pd.sch` you re-wired it correctly.
+
+**Re-wired correctly after the moves:** `bg_core_pd`, `oa_core_pd`, `d2s_bias_in_tree_pd`, `inv_3v3_pd`, `nand2_hv` and `nor2_hv` in `d2s_bias_sel_pd.sch`; `pg_det` and `nor3_hv` in `en_ctrl_3v3.sch`.
+
+**Errors inside sheets, unrelated to symbols**
+3. **`d2s_bias_in_tree_pd.sch`:** the transmission gate is unchanged since this afternoon. XTGN's drain is on vdd and its bulk floats; XTGP sits between ni and vdd; iref doesn't reach the gate.
+4. **`inv_3v3_pd.sch`:** the transistors are still on internal nets `a` / `y`, not on its ports. This becomes irrelevant once it goes; for now Xi in `d2s_bias_sel_pd` uses it.
+
+**Fixed since this afternoon:** `inv_hv.sch` is equivalent again, and Xi's pins in `d2s_bias_sel_pd.sch` are connected. That sheet's own changes are now only drain/source swaps on XTEN and XTEP, which don't matter. It still shows as DIFFERENT only because of items 3 and 4.
+
+**The reference worktree**
+- **Now:** use the commit that has my 20 Oct versions from before your hand edits. If you committed the consolidation before editing, it's the commit that added the macros:
+  ```sh
+  git log --date=short --format='%h %ad %s' -- macros/d2s_bias_sel_pd/schematic/xschem/d2s_bias_sel_pd.sch
+  git worktree add /tmp/ref <oldest hash in that list>
+  ```
+  If you edited before committing (`bg_core_pd.sch` was changed before Thursday 01:06), that commit isn't clean. In that case I can put the delivered sheets I've been checking against into a folder on your computer, and you use that folder as the reference.
+- **Afterwards:** once everything passes, commit. From then on, check against `HEAD` before each commit: `git worktree add /tmp/ref HEAD`.
+
+
+## Turn 19 — 2026-10-24 21:49
+
+**User:** If you edited before committing (`bg_core_pd.sch` was changed before Thursday 01:06), that commit isn’t clean. In that case I can put the delivered sheets I’ve been checking against into a folder on your computer, and you use that folder as the reference.
+Do it.
+
+**Assistant:** I'll write the delivered sheets I've been checking against into a reference folder on your computer, laid out like the repository, so the script takes it directly as its reference. I'll test it first.
+
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; R=/mnt/user-data/outputs/ref/reference_sheets_2026-10-20; rm -rf /mnt/us…`.  
+Result: error, `The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file…`]*
+
+
+## Turn 20 — 2026-10-24 21:49
+
+**User:** [Request interrupted by user for tool use]
+
+**User:** I think your export should live in the sudelbuecher
+
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; R=/mnt/user-data/outputs/sb/sudelbuecher/design_considerations/consolida…`.]*  
+*[Ran on the linked computer: `ls -d $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/consolidation/reference_sheets_2026-10-20 2>&1 | …`.]*  
+*[Ran in the cloud container: `cat /tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad/ref1.json`.]*
+
+
+## Turn 21 — 2026-10-24 21:51
+
+**User:** [Request interrupted by user]
+
+**User:** also tell me how to compare against a prior git commit. gotcha: the docker doesn't have git.
+
+*[Ran in the cloud container: `python3 - <<'EOF'`.]*  
+*[Committed 50 files to the linked computer.]*  
+*[Committed 41 files to the linked computer.]*  
+*[Called device_list_dir.]*  
+*[Committed 1 files to the linked computer.]*  
+*[Ran on the linked computer: `sleep 2; cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher && echo "reference folder: $(find sudelbuecher/design_considerations/consolida…`.]*
+
+**Assistant:** The reference folder is in the `_sudelbuecher` worktree at `sudelbuecher/design_considerations/consolidation/reference_sheets_2026-10-20/`, laid out like the repository. It holds the 90 sheets and symbols as delivered on 20 Oct, plus a short README; its checksum matches the cloud copy. Used as the reference, it gives the same result as my checks so far: 8 of 44 sheets differ.
+
+**To check your working tree against it**, in the container:
+```sh
+cd /foss/designs/sg13cmos5l_cm_ip__single2diff2single
+source .designinit
+python3 scripts/xschem/sheet_equiv.py \
+  ../sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/consolidation/reference_sheets_2026-10-20 .
+```
+
+**To compare against an earlier git commit**, run git on the host and the script in the container. The container sees `~/EDA` as `/foss/designs`, so export the commit into a folder there. `git archive` copies only the files, with no worktree to clean up afterwards.
+```sh
+# host
+cd ~/EDA/sg13cmos5l_cm_ip__single2diff2single
+git log --date=short --format='%h %ad %s' -- macros/d2s_bias_sel_pd   # pick <commit>
+mkdir ~/EDA/ref_<commit>
+git archive <commit> macros schematic testbenches | tar -x -C ~/EDA/ref_<commit>
+
+# container
+python3 scripts/xschem/sheet_equiv.py ../ref_<commit> .
+
+# host, afterwards
+rm -r ~/EDA/ref_<commit>
+```
+My earlier `/tmp/ref` suggestion wouldn't have worked, because the container can't see the host's `/tmp`. I've corrected that in the folder's README and in the script's usage text; the updated script is on your computer and its checksum matches.
+
+The new folder isn't committed yet; it goes in with your next commit on `sudel_buecher`.
+
+
+## Turn 22 — 2026-10-24 23:51
+
+**User:** check sg13cmos5l_IOPadSingle2Diff.sch
+
+**Assistant:** I'll bring over your current `sg13cmos5l_IOPadSingle2Diff.sch` and anything else you've changed since this afternoon, and check it against the 20 Oct reference.
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && find macros schematic testbenches -type f \( -name '*.sch' -o -name '*.sym' \) -newermt '2026-10-…`.  
+Result: error, `The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file…`]*
+
+
+## Turn 23 — 2026-10-24 23:51
+
+**User:** [Request interrupted by user for tool use]
+
+**User:** While you're at it, check the implications of changed symbols in the schematic.
+
+**Assistant:** I'll check `sg13cmos5l_IOPadSingle2Diff.sch` together with every symbol it places: whether any of them changed, and what that does to the sheet's connections.
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && echo "--- changed since 14:29 UTC:"; find macros schematic testbenches -type f \( -name '*.sch' -…`.]*  
+*[Staged 15 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && for s in sg13cmos5l_Clamp_N20N0D sg13cmos5l_Clamp_P20N0D sg13cmos5l_DCNDiode sg13cmos5l_DCPDiode …`.]*
+
+**Assistant:** Two CACE templates place `d2s_bias_sel_pd.sym` and haven't been touched since you moved all its pins at 17:10. I'll check whether their connections survived.
+
+*[Staged 2 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; M=/home/claude/work/sg13cmos5l_cm_ip__single…`.]*
+
+**Assistant:** `sg13cmos5l_IOPadSingle2Diff.sch` itself is fine. Seven of the symbols it places had pins moved: the five IHP IO cells, `d2s_bias_sel_pd` and `s2d_core_ideal`. `en_ctrl_3v3.sym` changed only in its graphics. Every instance in the sheet still connects exactly as delivered, and no pin order changed, so the netlist lines still match IHP's IO subcircuits and the hand-written netlists.
+
+The sheet still shows as DIFFERENT, but only because of two faults inside `d2s_bias_sel_pd`:
+- the transmission gate in `d2s_bias_in_tree_pd.sch`;
+- `inv_3v3_pd.sch`, whose transistors still don't reach its ports.
+
+Fixed since this afternoon: XIE in `en_ctrl_3v3.sch` is connected again.
+
+**What your symbol changes broke elsewhere**
+1. **`sg13cmos5l_IOPadDiff2Single.sch` is now disconnected almost completely.** XDN, XDP, xb and xd all sit on unnamed nets; only xc (`en_ctrl_3v3`) still connects.
+   - The output pad has no ESD diodes, no bias block and no driver hooked up.
+   - xd's two ground pins now land on the core `vss` and on a stray `vsso` net instead of `iovss`.
+   - Causes: the moved pins in `sg13cmos5l_DCNDiode.sym` and `sg13cmos5l_DCPDiode.sym` (both after your 17:24 edit of this sheet), plus `d2s_bias_sel_pd.sym` and `d2s_mpdda_pd.sym`.
+2. **Both CACE templates of `d2s_bias_sel_pd` are broken** (`d2s_bias_sel_pd_tb_dc.sch` and `d2s_bias_sel_pd_tb_tran.sch`). You haven't touched them, but after the moves in `d2s_bias_sel_pd.sym` the DUT `x1` is disconnected on all 14 pins. A `make sim-cace` there would simulate a floating block.
+3. **All four power-down testbenches `tb_pd_{enable,leak,startup_oa,unpowered}.sch` are broken.** Since the pin moves in `d2s_mpdda_pd.sym`, `Xd` is disconnected and its `vbpc` pin is shorted onto `vbn`.
+
+`d2s_mpdda_pd_sel.sch`, which you re-wired at 17:12, is correct at its own level and differs only through `d2s_bias_sel_pd`'s inside.
+
+**A gap in the checker:** by default it compares only the `schematic/` and `testbenches/` sheets, so the two broken CACE templates above showed up only in this extra check. I can add `verification/cace/templates/` to its default list, and the delivered templates to the reference folder, so it catches cases like these from now on.
+
+
+## Turn 24 — 2026-10-25 00:00
+
+**User:** is d2s_bias_in_tree_pd.sch fixed now? Fix inv3v3_pd.sch.
+Answer in just 2...4 lines and comment longer after I repaired the other errors you flagged.
+
+*[Staged 2 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; X=macros/d2s_bias_sel_pd/schematic/xschem; O…`.]*  
+*[Committed 1 files to the linked computer.]*  
+*[Ran on the linked computer: `sleep 2; sha256sum $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/inv_3v3_pd.sch | cut -c1-64`.]*
+
+**Assistant:** No, `d2s_bias_in_tree_pd.sch` isn't fixed yet. XTGN's bulk is back on vss, but its drain is on vdd, and XTGP still sits between ni and vdd, so iref never reaches the transmission gate.
+`inv_3v3_pd.sch` is fixed and on your computer. Its pins and wire labels were `a`/`y` while the symbol's pins are `en_3v3`/`en_3v3_b`, so I renamed them to match; the drawing is untouched, and the sheet is now equivalent to the 20 Oct version.
+
+
+## Turn 25 — 2026-10-25 00:06
+
+**User:** add the cace testbenches to the check, recheck d2s_bias_in_tree_pd.sch and inv3v3_pd.* Answer with "fixed" or "not fixed", nothing more.
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && ls macros/*/verification/cace/templates/*.sch | wc -l; for f in macros/*/verification/cace/templa…`.]*  
+*[Ran in the cloud container: `cd /home/claude/work/sg13cmos5l_cm_ip__single2diff2single && ls macros/*/verification/cace/templates/*.sch | wc -l; for f in macros/*/verification/cac…`.]*  
+*[Ran on the linked computer: `cut -d' ' -f2 /tmp/tpl.txt | sed 's#^#/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/#' | python3 -c "import sys,json; print(json.dumps([l.stri…`.]*  
+*[Staged 46 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; M=/home/claude/work/sg13cmos5l_cm_ip__single…`.]*  
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; grep -E '(equivalent|DIFFERENT)  macros/d2s_bias_sel_pd/schematic' $S/ru…`.]*  
+*[Ran in the cloud container: `sed -n 2p /tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad/tpl_commit.txt`.]*  
+*[Called device_list_dir.]*  
+*[Called device_list_dir.]*  
+*[Committed 44 files to the linked computer.]*  
+*[Committed 1 files to the linked computer.]*  
+*[Ran on the linked computer: `sleep 2; cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher && echo "$(find sudelbuecher/design_considerations/consolidation/reference_she…`.]*
+
+**Assistant:** `d2s_bias_in_tree_pd.sch`: fixed
+`inv_3v3_pd.*`: fixed
+
+
+## Turn 26 — 2026-10-25 00:19
+
+**User:** Path[s] of All four power-down testbenches `tb_pd_{enable,leak,startup_oa,unpowered}.sch` only, please. One liner.
+
+**Assistant:** `/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_{enable,leak,startup_oa,unpowered}.sch`
+
+
+## Turn 27 — 2026-10-25 00:21
+
+**User:** Both CACE templates of `d2s_bias_sel_pd` fixed? Yes/no.
+
+*[Staged 4 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*
+
+**Assistant:** Yes.
+
+
+## Turn 28 — 2026-10-25 00:54
+
+**User:** `sg13cmos5l_IOPadDiff2Single.sch` correct? Yes/No.
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && find macros -type f \( -name '*.sch' -o -name '*.sym' \) -newermt '2026-10-24 22:20' -printf '%p\…`.]*  
+*[Staged 4 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*
+
+**Assistant:** Yes.
+
+
+## Turn 29 — 2026-10-25 00:56
+
+**User:** Follow-up errors in other schematics, residual errors in test benches? Why is vss not used at all in `sg13cmos5l_IOPadDiff2Single.sch` ?
+
+**Assistant:** I'll bring over any sheet or symbol that differs from my last copy, run the full check including testbenches and CACE templates, and look at how `vss` is used in the output pad.
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && for f in macros/*/schematic/xschem/*.s[cy][hm] macros/*/testbenches/xschem/*.sch macros/*/verific…`.]*  
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; cd $S/treeB && cat > $S/dev_now.txt <<'EOF'`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && find macros schematic testbenches -type f \( -name '*.sch' -o -name '*.sym' \) -newermt '2026-10-…`.]*  
+*[Staged 9 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*
+
+**Assistant:** Your symbol changes left five broken sheets and one CACE template. `vss` is unused in the output pad because I designed it that way, and that comes at a cost.
+
+**Follow-up errors, all from the pins you moved in `d2s_mpdda_pd.sym` at 00:44**
+- **`d2s_mpdda_pd_sel.sch`:** `xd` is disconnected, and its pins land on the wrong nets: `vinp` sits on `vinn`, and `en_3v3` sits on `vinp`.
+- **`tb_pd_{enable,leak,startup_oa,unpowered}.sch`:** the same thing happens to `Xd` in all four.
+- **CACE template `d2s_mpdda_pd_sel_tb_loop.sch`:** broken through `d2s_mpdda_pd_sel.sch`.
+
+Everything else is equivalent to 20 Oct: `sg13cmos5l_IOPadDiff2Single.sch`, `sg13cmos5l_IOPadSingle2Diff.sch`, `slot.sch` and the other 42 CACE templates, including the eight output-pad templates that were broken an hour ago. `inv_3v3_pd.sch` differs only by the port rename to `a`/`y`, and the sheets using it are equivalent.
+
+**Why `vss` isn't used**
+
+On 20 Oct I put everything in the output pad on iovdd/iovss, following your "preferably iovdd/iovss". The core ring `vdd` feeds only the 1.2 V input inverters of the three level shifters. But `ls_up_1v2_3v3` has a single ground pin (`vss vddl vddh out in`), shared by its 1.2 V input inverter and its 3.3 V latch, and `en_ctrl_3v3` has one too. I tied both to iovss, so the pad's `vss` port passes straight through with nothing attached.
+
+The consequence is that the 1.2 V input stages and the `pg_det` presence detectors measure against iovss. The signals they receive (`en_1v2`, `sel*_1v2`, `vdd1v2_sense`) are referenced to core `vss`. Any offset or bounce between the two grounds therefore comes straight off the 1.2 V input stage's noise margin. The CACE testbenches tie both grounds to one node, so they never tested that.
+
+The usual fix is a split ground in the level shifter: input inverter on `vss`, latch on iovss. That means one more pin on `ls_up_1v2_3v3` and `en_ctrl_3v3`, `xc` connected to `vss`, and both CACE suites rerun. The alternative is to keep it as it is and document that `vss` and iovss must be the same node, but I haven't checked whether the IHP pad ring connects them anywhere.
+
+
+## Turn 30 — 2026-10-25 01:11
+
+**User:** I've started flipping labels in `macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_*.sch`. Flip them, mutatis mutandis, in the remaining test benches with essentially the same schematic.
+
+**Assistant:** I'll look at which of the eight output-pad templates you've edited and exactly which labels you flipped, then apply the same flips to the unedited ones.
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates && ls -l --time-style=+%m-%d_%H:%M sg…`.]*  
+*[Staged 8 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `M=/home/claude/work/sg13cmos5l_cm_ip__single2diff2single; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single; T=macros/sg13cmos5l_IOPadDiff…`.]*  
+*[Ran in the cloud container: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single; T=macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates`.]*
+
+**Assistant:** The four unedited templates have the identical column, so I'll apply exactly the same eight flips there and confirm that connectivity is unchanged.
+
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*  
+*[Committed 4 files to the linked computer.]*  
+*[Ran on the linked computer: `sleep 2; cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates && for t in noise pd thd tra…`.]*
+
+**Assistant:** I've flipped the same eight labels in the four templates you hadn't edited yet: `sg13cmos5l_IOPadDiff2Single_tb_{noise,pd,thd,tran}.sch`. They're on your computer and the checksums match.
+
+These are the labels in the column at x = 980 (lp5–lp8 `vinp vinn vref ibias`, lp10–lp13 `s0 s1 s12 s33`), changed from flip 1 to flip 0 exactly as you did in `ac`, `dc`, `drive` and `enable`. Nothing else in the files changed, and all eight output-pad templates still have the same connectivity as the 20 Oct versions.
+
+
+## Turn 31 — 2026-10-25 01:16
+
+**User:** Thanks. `macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd_sel.sch`
+ fixed?
+
+*[Staged 3 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__s…`.]*
+
+**Assistant:** Yes, it's fixed: `d2s_mpdda_pd_sel.sch` has the same connectivity as the 20 Oct version again, and so does its CACE template `d2s_mpdda_pd_sel_tb_loop.sch`.
+
+
+## Turn 32 — 2026-10-25 01:17
+
+**User:** log [y]our work since the last log, to the extent that your corporate censors allow you to do so.
+
+**Assistant:** I'll add an entry to the running log for everything since its last entry (Saturday 15:20), then extend the verbatim chat log from where it stopped (Thursday 01:24).
+
+*[Called device_list_dir.]*  
+*[Called device_list_dir.]*  
+*[Ran in the cloud container: `sha256sum /home/claude/work/out_log/consolidation/log.md /mnt/user-data/outputs/log/consolidation/log.md | cut -c1-16; tail -5 /home/claude/work/out_l…`.]*  
+*[Ran in the cloud container: `cd /home/claude/work/out_log/consolidation && cat >> log.md <<'EOF'`.]*  
+*[Committed 1 files to the linked computer.]*
+
+**Assistant:** The running log entry is on your computer. Now the chat log continuation, built from the session transcript the same way as before:
+
+*[Ran in the cloud container: `cd /home/claude/scratch/chatlog && cp /root/.claude/projects/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07.jsonl snap7.jsonl && python3 build.py s…`.]*
 
 ## Appendix — branches off the live path, 2026-10-22
 

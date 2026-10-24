@@ -240,3 +240,83 @@ teardown (CLAUDE.md §7); the sheet faults in the 8–9 Oct hand edits in `power
 (16:35 entry); `Makefile.new` renames where not yet done. Chat log of this session:
 `sudelbuecher/chatlog/2026-10-20_opus_slot7_consolidation_into_macros.md`, live path up to 01:24
 plus an appendix of the branches that ended in API errors.
+
+## 2026-10-22 15:10 — connectivity check of Christoph's hand edits (since 2026-10-21 01:06)
+
+14 files differ from what was delivered on 20 Oct (13 edited today, `bg_core_pd.sch` earlier).
+Method: netlist every macro sheet with `macros/xschemrc` in two trees (as delivered / now), flatten to
+primitives, compare as graphs (networkx isomorphism; instance and internal net names ignored, ports
+anchored by name, MOS D/S and R/C ends interchangeable, sizes compared); symbols compared by pin name,
+order, direction and position. Equivalent: `d2s_bias_bg_pd`, `d2s_bias_in_pd`, `bg_core_pd`,
+`en_ctrl_3v3`, `pg_det`, `inv_hv`, `nor3_hv`, and every sheet below them. `s2d_core_ideal`: both
+terminal pairs of `En` swapped, same equation (checker false positive). Faults:
+- `d2s_bias_oa_pd.sch`: `vnc` shorted to `vpc` (XM10 gate, XM11, XP8C drain); `vpg` shorted to `c8`
+  (XP8 now diode-connected; XP0, XP0C, XP2, XPO, XSVPG on `c8`); XTGN bulk on `vdd`; XTGP bulk floating.
+- `inv_hv.sym`: all four pins moved. `d2s_bias_sel_pd.sch` (not re-edited) now has its three decode
+  inverters XDB, XDD, XDG on unconnected nets.
+- `d2s_bias_sel_pd.sym`: pins vbn, vbpc, vbnc, vabp, vabn moved. In the three users (not re-edited:
+  `sg13cmos5l_IOPadDiff2Single.sch`, `d2s_mpdda_pd_sel.sch`, `sg13cmos5l_IOPadSingle2Diff.sch`) the old
+  wires now meet other pins: vbn→vabn, vbpc→vbn, vbnc→vabp, vabp→vbpc, vabn→vbnc. No dangling net, so
+  only the topology comparison shows it.
+Pin order of all five edited symbols unchanged; `en_ctrl_3v3.sym`, `nor3_hv.sym`, `pg_det.sym` edits are
+harmless for their users. Nothing repaired yet.
+
+## 2026-10-24 15:20 — check of the edits of 22 Oct afternoon and 24 Oct; `scripts/xschem/sheet_equiv.py`
+
+New in the repo: `scripts/xschem/sheet_equiv.py OLD_ROOT NEW_ROOT [SHEET ...]` — the topology comparison
+of 22 Oct as one script (own library path per root, so any old commit works; E/G sources may swap both
+terminal pairs; symbol pin changes listed with their users). Run on delivered (20 Oct) vs now:
+fixed since 22 Oct: `d2s_bias_oa_pd` (equivalent), the three `inv_hv` instances in `d2s_bias_sel_pd`.
+Open:
+- `inv_hv.sch` and `inv_3v3_pd.sch`: ports now `en_3v3` / `en_3v3_b` (inv_hv: renamed from `a` / `y`),
+  but both transistors sit on internal nets `a` / `y` — gate and output no longer reach the ports.
+  `hv_logic.spice` still declares `inv_hv vdd vss a y`.
+- `d2s_bias_in_tree_pd.sch`: transmission gate wrong — XTGN drain on `vdd`, bulk floating; XTGP between
+  `ni` and `vdd`; `iref` no longer reaches the gate.
+- `inv_hv.sym` vdd moved: `en_ctrl_3v3.sch` XIE vdd dangling. `inv_3v3_pd.sym` pins moved:
+  `d2s_bias_sel_pd.sch` Xi en_3v3 / en_3v3_b dangling.
+- `d2s_bias_sel_pd.sym`: bias-line rotation in its three users unchanged since 22 Oct.
+
+## 2026-10-24 16:10 … 2026-10-25 01:16 — more edit checks, checker without networkx, reference sheets, CACE templates
+
+- `scripts/xschem/sheet_equiv.py`: networkx replaced by an exact plain-Python match (joint colour
+  refinement plus individualisation search). Same verdicts as the networkx version on four tree pairs
+  (176 comparisons); a ring of six equal resistors against two rings of three, without ports (colour
+  refinement alone cannot separate them), decided correctly; runs under `python3 -I -S`, about 14 s
+  for all sheets. Usage text: IIC-OSIC-TOOLS has no git, so a commit is exported on the host with
+  `git archive <commit> macros schematic testbenches | tar -x -C ~/EDA/ref_<commit>` (the earlier
+  `/tmp/ref` advice was wrong: the container does not see the host's /tmp). The default sheet list now
+  includes `macros/*/verification/cace/templates`.
+- `reference_sheets_2026-10-20/` (next to this log): the 90 sheets and symbols as delivered, the 43 CACE
+  templates (36 delivered here, all identical to the delivered copies; 7 template examples unchanged
+  since August / 20 Oct) and a README; 134 files.
+- 24 Oct 16:31: no pin order changed in any symbol (port order from the `.sym` for 19 sub-cells, from
+  the `.sch` for 32 sheets); every follow-up error came from moved pin positions.
+- 24 Oct 23:51, `sg13cmos5l_IOPadSingle2Diff.sch`: top level intact although seven of its symbols had
+  moved pins. Follow-up errors found elsewhere: `sg13cmos5l_IOPadDiff2Single.sch` XDN, XDP, xb, xd
+  disconnected; both `d2s_bias_sel_pd` CACE templates with the DUT disconnected; `tb_pd_*` Xd broken.
+- 25 Oct 00:00: `inv_3v3_pd.sch` pins and wire labels `a` / `y` renamed to the symbol's `en_3v3` /
+  `en_3v3_b` (labels only). Christoph then renamed sheet and symbol consistently to `a` / `y`;
+  equivalent once flattened.
+- 25 Oct 01:11: the eight labels of the x = 980 column (lp5–lp8, lp10–lp13) flipped 1 → 0 in
+  `sg13cmos5l_IOPadDiff2Single_tb_{noise,pd,thd,tran}.sch`, as Christoph did in `ac`, `dc`, `drive`,
+  `enable`; connectivity unchanged.
+- Status at 01:16 against the reference. Fixed: `d2s_bias_in_tree_pd.sch`, `inv_3v3_pd.*`,
+  `d2s_bias_sel_pd.sch` and its two CACE templates, `sg13cmos5l_IOPadDiff2Single.sch` and its eight
+  templates, `d2s_mpdda_pd_sel.sch` with `d2s_mpdda_pd_sel_tb_loop.sch`, `sg13cmos5l_IOPadSingle2Diff.sch`,
+  `slot.sch`. Last seen broken at 00:56 (pins moved in `d2s_mpdda_pd.sym`), not rechecked since:
+  `tb_pd_{enable,leak,startup_oa,unpowered}.sch` — Xd disconnected, `vinp` on `vinn`, `en` on `vinp`.
+- `vss` unused in `sg13cmos5l_IOPadDiff2Single`: by the design of 20 Oct. `ls_up_1v2_3v3` and
+  `en_ctrl_3v3` have one ground pin each, tied to iovss, so the 1.2 V input stages and `pg_det` measure
+  against iovss while their inputs refer to core vss; the CACE testbenches tie both grounds together.
+  Options: split ground in `ls_up_1v2_3v3` (input inverter on vss, latch on iovss) plus reruns of the
+  ls_up and en_ctrl suites, or document vss ≡ iovss (whether the IHP ring connects them is unchecked).
+
+Not logged earlier (22 Oct):
+- `pg_det`: PU (0.3/50) and RD (0.3/100) are MΩ resistors for about 1 µA per sensed rail; shortening
+  them about tenfold costs about 10 µA per rail against the pad's 207–227 µA quiescent current.
+- IHP kit: the stdcells and the IO-internal gates (`io_inv_x1`, `io_nand2_x1`, `io_nor2_x1`) are LV only;
+  `sg13cmos5l_LevelUp` / `LevelUpInv` (1.2 → 3.3 V, layout as sub-cell of `sg13cmos5l_IOPadInOut30mA.gds`)
+  are candidates for `ls_up_1v2_3v3`; `LevelDown` is the pad's input receiver, not a general down-shifter.
+- Duplicates between `macros/` and `_sudelbuecher` listed (23 identical, 15 differing, the `macros/`
+  copy newer in every pair); kept, no symlinks for now.
