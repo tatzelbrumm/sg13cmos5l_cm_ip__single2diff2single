@@ -83,3 +83,6 @@
 
 [2026-10-21_opus_banba_bandgap_schematics_and_bg_core_cleanup.md](2026-10-21_opus_banba_bandgap_schematics_and_bg_core_cleanup.md)
 : Opus session, 21–22 Oct: the Banba current-mode bandgap (literature, principle, corrections from the JSSC paper), its Fig. 2 drawn with the analog-schematic skill and compared with the xschem sheets `d2s_bias_bg_pd` / `bg_core_pd`, removal of the leftover en_3v3_b wires in `bg_core_pd`, and the kickoff `class_ab_pad_driver/hand_edit_transfer/kickoff_hand_edit_transfer.md` for redrawing `d2s_bias_oa_pd` in the hand-edited bg style.
+
+[2026-10-26_opus_pad_buffer_layout_primitives.md](2026-10-26_opus_pad_buffer_layout_primitives.md)
+: Opus session, 26 Oct: layout primitives for the shared structures of the two pad buffers (`d2s_mpdda`, `s2d_mpdda`): grouping by component (input-device tubs, tail row, rhigh block, sink row), class-AB replicas inside the clamp frames, a floorplan in the 80 × 180 µm IO cell and common-centroid maps, in `design_considerations/pad_buffer_layout/` (`layout_primitives.md`, running log `log.md`); the first attempt ended in an API error and is in the appendix.

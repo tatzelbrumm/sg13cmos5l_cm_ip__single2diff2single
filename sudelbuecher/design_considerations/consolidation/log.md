@@ -522,3 +522,81 @@ by wire instead of label (so the tb_pd XIB vss / vdd routes and the en_ctrl vddh
 
 - 22:49 / 22:50 CET, Christoph: the stale `lab=#net1` in tran_pg now reads en_3v3_b, and the pad top's iovdd wire
   ends on DP's pin (-540). Both equivalent to the verified versions; the structural check is clean for both.
+
+## 2026-10-25 23:16 … 2026-10-26 00:15 CET — S2D input buffer consolidated into `macros/sg13cmos5l_IOPadSingle2Diff`
+
+Christoph's request (23:16): the macro still uses a placeholder for the buffer amplifier; the worked-out design in
+`design_considerations/s2d_input_buffer` is to be consolidated into it. 23:17: "In case of conflict, the scaffold
+may need adaptation." Plan sent at about 23:30; files on the computer at 00:11 … 00:13 CET (mtime-guarded, checksums
+equal). The macro's files as they were before are in `design_considerations/consolidation/s2d_2026-10-25/before/`.
+
+- Taken over:
+  - `s2d_mpdda.sch` / `.sym`: Christoph's sheet of 2026-10-23 23:01, unchanged except the netlist-path text.
+    Its xschem netlist is equivalent to `sim/s2d_mpdda.spice` (46 flattened devices; a planted fault in the source
+    is caught).
+  - `sim/s2d_mpdda.spice`, `sim/s2d_bias.spice`: copied unchanged to `netlist/source/`. `sim/s2d_pd.spice` copied
+    with one change: `s2d_mpdda_pd` takes `en_3v3_b` as its last port, and its inverter `Xi` is removed, as for
+    `d2s_mpdda_pd` since 18:40. The bias wrappers and `inv_3v3_s2d` stay, for the decks.
+  - The eight decks of `sim/tb` go to `testbenches/spice/` with their includes rewritten. `unit_r2` comes from
+    `../sg13cmos5l_IOPadDiff2Single` and is not copied. The two `pd` decks make `en_3v3_b` with the design's
+    inverter at the top level.
+- New:
+  - `s2d_mpdda_pd.sch` / `.sym`: `s2d_mpdda` plus the four output-to-vcm ties, wired. The symbol keeps the
+    placeholder's pin positions.
+  - `s2d_mpdda_pd_sel.sch` / `.sym`: a CACE fixture, buffer + `d2s_bias_sel_pd` with `vfbp` / `vfbn` as pins.
+  - `tb_pad_dc.spice`.
+  - CACE: `sg13cmos5l_IOPadSingle2Diff.yaml` with 14 groups and 7 templates, and `s2d_mpdda_pd_sel.yaml`
+    (loop_params).
+  - `Makefile`: `CACE_GROUPS` lists the 14 groups (that one line edited in place). `README.md`, `FILL_IN.md`,
+    `macros/README.md` and the open-points line of the output pad's README are updated.
+- Top sheet: `xa` is now `s2d_mpdda_pd`.
+  - `vfbp` / `vfbn` are tied to `outp` / `outn` next to the buffer.
+  - `en_3v3_b` is wired from `xc` (x = 560, under the en_3v3 line).
+  - `xb`'s `vabp` / `vabn` end in labelled stubs.
+  - The pad symbol and its port order are unchanged, so `slot.sch` and the chip top need no edit; both netlist
+    with the new buffer and no missing symbol.
+- Conflicts, resolved by adapting the scaffold (`README.md`, "Changes against the scaffold"):
+  - `xa`'s port list;
+  - `en_3v3_b` as a port;
+  - rail-to-rail input → the design's signal window;
+  - vref = vcm = 1.2 V (was 1.65 V);
+  - load 0.5 pF (was 1 pF);
+  - the CACE suite.
+  - Kept against the design: `d2s_bias_sel_pd` instead of the design's own small tree. vabp / vabn are unused,
+    so about 10 µA runs in the class-AB legs.
+- Christoph asked (23:43) whether the bias could be shared between the pads and further blocks. Answer: yes, as
+  currents — one root per slot and one fan-out leg per consumer. 23:48: a tree for a *sunk* current already exists
+  (`d2s_bias_out_pd`, `s2d_bias_out_pd`), so one mirror stage is enough. 23:50: continue as it stands for now.
+  The item is in `FILL_IN.md`.
+- Checks:
+  - xschem netlists against the source netlists:
+    - `s2d_mpdda` 46, `s2d_mpdda_pd` 50 and the pad 173 flattened devices: equivalent;
+    - the pad's instance lines are identical to the source.
+  - The structure check of the three new and changed sheets is clean, except the pad top's two old notes
+    (SP.plus label only, the iovss wire through CN), which predate the change.
+  - All eight decks reproduce the reference values in their headers:
+    - dc: gain 1.99914, INL 1.409 mV, CM 10.86 mV, 112.7 µA;
+    - loop: 67.6 dB / 1.50 MHz / 88.4° dm, 67.8 dB / 1.50 MHz / 78.6° cm;
+    - step: 230 / 486 ns;
+    - noise: 670 / 151 nV/√Hz, 433 µV;
+    - loopback: 0.9995, 0.053 mV, 0.018 mV, 437 µA;
+    - leak: 0.141 nA;
+    - enable: 1.50 µs, −1.62 / +1.09 V;
+    - op: 1.6609 V.
+  - CACE on the schematic: 574 runs of the pad in 14 groups and 60 of the fixture; all 65 results pass the proposed limits (tables in the macro README).
+    - Against the design's own run (ideal bias fixture, no pad cell): gain, loop gain, bandwidth and step agree to within a few tenths of
+      a percent, INL within 3 %, noise within 1 %. The output CM error is lower (at most 18.0 against 21.1 mV), PSRR iovdd at 1 kHz is
+      lower (worst 79.1 against 86.2 dB), and the supply current at tt is 125.6 against 112.7 µA.
+    - Mismatch over the whole pad (100 seeds): offset σ 6.19 mV, gain σ 0.74 %, CM σ 12.2 mV.
+    - Enable: 1.27 … 1.31 µs to 1 mV; the output CM rises by +0.21 … +0.27 V and dips by at most −17 mV. The design's decks show
+      −1.62 / +1.09 V with their tree and a direct 10 ns edge; the difference is not analysed.
+    - Pad range at vref = 0.5 V: from 0 V (0.013 … 0.087 V at 125 °C) up to 1.06 … 1.30 V.
+- The pad-range template had to be redone twice:
+  - The scaffold's criterion, the numerical derivative of vd within 1 % of 2, is noisy at 10 mV steps
+    (reltol 1e-4): windows of 0 V width appeared at three corners.
+  - Tighter reltol (1e-6) broke the operating point at tt / −40 °C.
+  - Now: the contiguous range around pad = vref in which vd/Gain stays within 1 mV of the small-signal line,
+    from the last crossing below u = 0 and the first above.
+- Not done: layout; the open points of the design note (vcm source, pad reference, offset, CMFB dump branch,
+  output capacitors); `testbenches/xschem/simulations/sg13cmos5l_IOPadSingle2Diff.spice` (Christoph's generated
+  netlist of 2026-10-20, still with the placeholder) not regenerated; `s2d_core_ideal.{sch,sym}` kept, no longer used.
