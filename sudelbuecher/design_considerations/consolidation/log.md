@@ -380,3 +380,45 @@ The clocks went back at 03:00 CEST, so times before the change are marked CEST a
   decide which supply domains go where and whether the power-on detection needs revising.
 - Chat log continued. The stretch 01:18–02:56 CEST is not in it: the raw transcript of that stretch
   no longer exists in the cloud container.
+
+## 2026-10-25 03:14 … 18:40 CET — mismatch characterization of the pad buffers, enable rework started, chat-log gap
+
+- Local-mismatch Monte Carlo of both pad buffers (cloud container, 12:56–13:20 CET), with the per-group
+  split `all` / `R_unit` / `sinks` / `loads`. Everything is in
+  `design_considerations/consolidation/mismatch_2026-10-25/`: `README.md` (conditions, models, results,
+  file list), `pad_buffer_mismatch.html` (charts and tables; opens offline in any browser), the per-seed
+  data as `pad_mc.csv`, `s2d_mc.csv`, `budget_20seeds.csv`, and the raw `.json`. On the computer at
+  13:40 (json) and 16:40 CET (the rest). The same page as a private claude.ai artifact, "Pad buffer
+  mismatch".
+  - Output pad `sg13cmos5l_IOPadDiff2Single`, 150 seeds: offset σ 6.09 mV, gain σ 0.75 %. The rhigh unit
+    resistors set the gain spread (0.77 %) and add no offset; the sinks `XSX`/`XSY` give 5.40 mV, the
+    loads `XPL`/`XPR` 1.70 mV.
+  - Input buffer `s2d_mpdda_biased` (sudelbuecher draft), 100 seeds: input offset σ 6.73 mV, gain σ
+    0.90 %; rhigh 0.77 % gain, sinks 5.30 mV.
+  - rhigh model in the PDK (`cornerRES.lib` `res_typ_mismatch`) is about 1.5× more pessimistic than
+    IHP's process spec (MATRHIGH).
+- Christoph's question on how to partition the layout (source-degenerated PMOS pairs as separate
+  cells, or the degeneration resistors and pair transistors grouped as common-centroid arrays with
+  dummies) and the reply to it are in the lost stretch of the chat (see below); neither is recorded here.
+- `git log` is allowed from now on, as long as no lock file is left behind (Christoph, ~13:22 CET).
+- `d2s_mpdda_pd.sch` on the computer (17:40 CET): same connectivity as the 20 Oct reference; Christoph
+  added frames and `[E]` texts.
+- 18:16 CET, enable switches in `d2s_mpdda_pd`: Christoph asked for the enable transistors not to be
+  crammed into the existing sheet and connected by labels, and whether the 3.3 V inverter
+  `en_3v3` → `en_3v3_b` should come out of the sheets. Chosen in the question dialog: pull it out.
+  Plan:
+  - `en_ctrl_3v3` makes `en_3v3_b` with one `inv_hv` and gets an `en_3v3_b` output;
+  - `d2s_mpdda_pd` and `d2s_bias_sel_pd` get an `en_3v3_b` input pin; their local inverters
+    (`XIP`/`XIN`, `Xi` = `inv_3v3_pd`) go;
+  - in `d2s_mpdda_pd` the PMOS switches (`SA`, `SABP`) sit along the top rails on an `en_3v3` line and
+    the NMOS switches (`SB`, `SABN`) along the bottom rails on an `en_3v3_b` line, each wired from its
+    own pin;
+  - the sheets that place the three changed symbols are rewired and checked; `inv_3v3_pd` is left
+    in place, unused.
+  Nothing edited yet at the time of this entry.
+- Chat log: the raw transcript of 03:14–18:29 CET no longer exists in the cloud container. A context
+  compaction shortly before 18:30 rewrote the transcript file, which now begins at 18:29 CET, and the
+  claude.ai copy of the chat came back redacted ("chat flagged by safety classifier"). The chat log
+  marks the gap; it uses nothing from the model-written compaction summary. From 18:35 CET the session
+  keeps an append-only copy of the transcript records in the cloud container (cloud-only helper, not
+  shipped), and the chat log is to be exported at milestones from now on, as Christoph asked (18:31).
