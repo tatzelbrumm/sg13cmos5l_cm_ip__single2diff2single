@@ -1,0 +1,49 @@
+* tb_s2d_step: step response of s2d_mpdda, tt 27 C, 0.5 pF external load per output
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Macro copy of sudelbuecher/design_considerations/s2d_input_buffer/sim/tb (2026-10-25): includes rewritten.
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* vin steps vref - 0.25 V -> vref + 0.25 V (1 ns edge); vd = voutp - voutn goes -0.5 V -> +0.5 V.
+* Prints the 10-90 % rise time and the 1 % settling time after the edge, and the output common-mode
+* excursion during the step (the output CM error at rest is the systematic CM offset).
+* Reference (results_s2d.txt, section 6): rise 230 ns, settling 486 ns, CM 9.1 ... 11.9 mV.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice
+.include ../../netlist/source/s2d_mpdda.spice
+.include ../../netlist/source/s2d_bias.spice
+Vdd vdd 0 3.3
+Vref vref 0 1.65
+Vcm vcm 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc s2d_bias_lp
+Vu u 0 pulse(-0.25 0.25 1u 1n 1n 4u 10u)
+Ein pad vref u 0 1
+Rpad pad vin 586.9
+Xs vdd 0 vin vref vcm voutp voutn voutp voutn vbp vbn vbpc vbnc s2d_mpdda
+CLp voutp 0 0.5p
+CLn voutn 0 0.5p
+.control
+tran 1n 4u
+let vd = v(voutp) - v(voutn)
+let vc = (v(voutp) + v(voutn))/2 - v(vcm)
+meas tran vlo find vd at=0.99u
+meas tran vhi find vd at=3.9u
+let v10 = vlo + 0.1*(vhi - vlo)
+let v90 = vlo + 0.9*(vhi - vlo)
+meas tran t10 when vd=v10 rise=1
+meas tran t90 when vd=v90 rise=1
+let trise = t90 - t10
+let band = 0.01*abs(vhi - vlo)
+let dev = abs(vd - vhi)
+meas tran tlast when dev=band cross=last
+let tset = tlast - 1.0005u
+meas tran vcmax max vc from=1u to=3.9u
+meas tran vcmin min vc from=1u to=3.9u
+print vlo vhi trise tset vcmax vcmin
+if $?batchmode = 0
+  plot vd
+  plot vc
+end
+.endc
+.end

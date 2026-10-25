@@ -5,9 +5,10 @@ V {}
 S {}
 F {}
 E {}
-T {CACE template (SCAFFOLD): input range: pad swept 0 .. iovdd, gain error < 1 %} 0 -600 0 0 0.6 0.6 {}
-T {sg13cmos5l_IOPadSingle2Diff.  Sources and analysis are in the code blocks.} 0 -540 0 0 0.3 0.3 {}
-T {run directory: CACE\{simpath\}} 0 -510 0 0 0.25 0.25 {}
+T {CACE template: pad range, pad swept 0 .. iovdd, linear to 1 mV (input-referred)} 0 -600 0 0 0.6 0.6 {}
+T {sg13cmos5l_IOPadSingle2Diff: outp - outn = 2 (pad - vref), CM = vcm.  Sources and analysis are in the code blocks.} 0 -560 0 0 0.3 0.3 {}
+T {Vin_min / Vin_max: the ends of the range around u = 0 in which vd/Gain stays within 1 mV of the small-signal line through u = 0.} 0 -530 0 0 0.3 0.3 {}
+T {run directory: CACE\{simpath\}} 0 -480 0 0 0.25 0.25 {}
 C {sg13cmos5l_IOPadSingle2Diff.sym} 1200 0 0 0 {name=x1}
 C {devices/lab_pin.sym} 1160 -180 0 1 {name=lp0 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 1160 180 0 1 {name=lp1 sig_type=std_logic lab=0}
@@ -37,44 +38,53 @@ value="
 "}
 C {devices/code_shown.sym} 0 -260 0 0 {name=SOURCES only_toplevel=false
 value="
+* ---- supplies: iovdd = IO ring 3.3 V (buffer, bias, control), vcore = 1.2 V core ring
 Vio iovdd 0 dc CACE\{vdd\} ac 0
-Ven en 0 CACE\{en=1.2\}
-Vs12 s12 0 CACE\{vs12=1.2\}
-Vs33 s33 0 CACE\{vs33=3.3\}
 Vcore vcore 0 CACE\{vddl=1.2\}
+* ---- slot-side controls (1.2 V logic) and the slot supplies seen by the presence detectors
+Ven en 0 CACE\{en=1.2\}
 Vs0 s0 0 CACE[(CACE\{sel=0\} % 2)*CACE\{vddl=1.2\}]
 Vs1 s1 0 CACE[floor(CACE\{sel=0\} / 2)*CACE\{vddl=1.2\}]
-* harness iDAC: sourced current from a PMOS mirror on its own 3.3 V supply
+Vs12 s12 0 CACE\{vs12=1.2\}
+Vs33 s33 0 CACE\{vs33=3.3\}
+* ---- harness iDAC: a sourced current from a PMOS mirror on its own 3.3 V supply
 Vext vext 0 3.3
 Iext xg 0 CACE\{ibias=5e-6\}
 XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
 XEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
-Vref vref 0 CACE\{vref=1.65\}
-Vcm vcm 0 CACE\{vcm=1.65\}
-* input: source with series resistance rsrc into the pad
-Vin vsrc 0 dc CACE\{vref=1.65\} ac 0
+* ---- references (gates only) and the input: pad source = vref + u, through rsrc
+Vref vref 0 dc CACE\{vref=1.2\} ac 0
+Vcm vcm 0 CACE\{vcm=1.2\}
+Vu u 0 dc 0
+Ein vsrc vref u 0 1
 Rsrc vsrc pad CACE\{rsrc=50\}
-* differential load (internal next stage)
-Cp outp 0 CACE\{cload=1e-12\}
-Cn outn 0 CACE\{cload=1e-12\}
+* ---- load per output (gates of the next stage, routing), on top of the buffer's built-in CLP / CLN
+Cp outp 0 CACE\{cload=0.5e-12\}
+Cn outn 0 CACE\{cload=0.5e-12\}
 "}
 C {devices/code_shown.sym} 1700 -460 0 0 {name=NGSPICE simulator=ngspice only_toplevel=false
 value="
 .include CACE\{DUT_path\}
 .temp CACE\{temp\}
-.options savecurrents klu method=gear reltol=1e-4 abstol=1e-15 gmin=1e-15
+.options savecurrents klu method=gear reltol=1e-4 abstol=1e-15 gmin=1e-15 SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 .option warn=1
 .control
-save v(pad) v(outp) v(outn) v(vcm)
-dc Vin 0 CACE\{vdd\} 0.01
-let dd = v(outp) - v(outn)
-let g = deriv(dd) / 2
-let ge = abs(g - 1)
-* defaults: the whole sweep, if the gain error never exceeds 1 %
+save v(pad) v(outp) v(outn) v(u)
+dc Vu CACE[-CACE\{vref=1.2\}] CACE[CACE\{vdd\} - CACE\{vref=1.2\}] 0.01
+let vd = v(outp) - v(outn)
+meas dc vdp find vd at=0.1
+meas dc vdm find vd at=-0.1
+meas dc vd0 find vd at=0
+let Gain = (vdp - vdm)/0.2
+let err = abs(vd - vd0 - Gain*v(u))/Gain
+* defaults: the ends of the sweep, if the error stays below 1 mV there
 let vlo = 0
 let vhi = CACE\{vdd\}
-meas dc vlo when ge=0.01 fall=1
-meas dc vhi when ge=0.01 rise=last
+* the contiguous range around u = 0: last crossing below u = 0, first crossing above it
+meas dc ulo when err=1m fall=last to=0
+meas dc uhi when err=1m rise=1 from=0
+let vlo = ulo + CACE\{vref=1.2\}
+let vhi = uhi + CACE\{vref=1.2\}
 let Vin_min = vlo
 let Vin_max = vhi
 echo $&Vin_min $&Vin_max > CACE\{filename\}_CACE\{N\}.data

@@ -1,0 +1,61 @@
+* tb_s2d_loop: differential and common-mode loop gain of s2d_mpdda, tt 27 C, 0.5 pF external load per output
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Macro copy of sudelbuecher/design_considerations/s2d_input_buffer/sim/tb (2026-10-25): includes rewritten.
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* Both loops are broken at vfbp / vfbn, which drive only MOS gates (feedback units F1 / F2 and the
+* CMFB units M1 / M2): DC closed through 1 GH, AC injected through 1 F. Two copies of the buffer
+* share the bias: Xd gets a differential injection (+1 / -1), Xc a common one (+1 / +1).
+*   Tdm = -(voutp - voutn) / (vfbp - vfbn),   Tcm = -(voutp + voutn) / (vfbp + vfbn)
+* For a symmetric circuit the two loops decouple, so each is measured with the other one open.
+* Reference (results_s2d.txt, section 5): dm 67.6 dB, 1.50 MHz, 88.4 deg; cm 67.8 dB, 1.50 MHz, 78.6 deg.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice
+.include ../../netlist/source/s2d_mpdda.spice
+.include ../../netlist/source/s2d_bias.spice
+.param cl=0.5p
+Vdd vdd 0 3.3
+Vref vref 0 1.65
+Vcm vcm 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc s2d_bias_lp
+* --- differential loop
+Xd vdd 0 vref vref vcm dp dn dfp dfn vbp vbn vbpc vbnc s2d_mpdda
+Ldp dp dfp 1G
+Ldn dn dfn 1G
+Cdp dfp dip 1
+Cdn dfn din 1
+Vdip dip 0 dc 0 ac 1
+Vdin din 0 dc 0 ac -1
+CLdp dp 0 {cl}
+CLdn dn 0 {cl}
+* --- common-mode loop
+Xc vdd 0 vref vref vcm cp cn cfp cfn vbp vbn vbpc vbnc s2d_mpdda
+Lcp cp cfp 1G
+Lcn cn cfn 1G
+Ccp cfp cip 1
+Ccn cfn cin 1
+Vcip cip 0 dc 0 ac 1
+Vcin cin 0 dc 0 ac 1
+CLcp cp 0 {cl}
+CLcn cn 0 {cl}
+.control
+ac dec 50 10 1G
+let Tdm = -(v(dp) - v(dn))/(v(dfp) - v(dfn))
+let Tcm = -(v(cp) + v(cn))/(v(cfp) + v(cfn))
+meas ac T0dm find vdb(Tdm) at=10
+meas ac fcdm when vdb(Tdm)=0
+meas ac pdm find vp(Tdm) when vdb(Tdm)=0
+meas ac T0cm find vdb(Tcm) at=10
+meas ac fccm when vdb(Tcm)=0
+meas ac pcm find vp(Tcm) when vdb(Tcm)=0
+let pmdm = 180/pi*pdm + 180
+let pmcm = 180/pi*pcm + 180
+print T0dm fcdm pmdm T0cm fccm pmcm
+if $?batchmode = 0
+  plot vdb(Tdm) vdb(Tcm)
+  plot 180/pi*vp(Tdm) 180/pi*vp(Tcm)
+end
+.endc
+.end

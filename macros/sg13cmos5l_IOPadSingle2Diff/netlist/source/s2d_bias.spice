@@ -1,0 +1,65 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Bias for s2d_mpdda, shared with d2s_mpdda's bias (../../class_ab_pad_driver/improvements/sim/
+* d2s_bias_ref.spice, d2s_bias_lp.spice). s2d_mpdda uses four of d2s_mpdda's six lines, with the
+* same diodes at the same currents, so its gate voltages are copies of the driver's:
+*   vbp  5 uA out of BP  5/6  (unit tails)       vbn  5 uA into BN  6/6  (fold sinks)
+*   vbpc 2 uA out of BPC 1/4  (PMOS cascodes)    vbnc 2 uA into BNC 1/8  (NMOS cascodes)
+* Sharing rule (bias.md): bias crosses from one block to another only as currents. Each buffer
+* keeps its own diodes and its own tree, fed by ONE reference current; the shared part is the
+* root (harness ibias, oa_core or bg_core) and a fan-out with one 5 uA leg per consumer.
+*   root (PMOS source, e.g. oa_core / bg_core iout) -> bias_fanout_n -> *_bias_out trees
+*   root (NMOS sink, e.g. a harness sink)           -> bias_fanout_p -> *_bias_in trees
+* NMOS bulks on vss (common p-substrate); PMOS n-wells on vdd.
+
+* --- the four diodes of d2s_bias_diodes that s2d_mpdda needs (same devices, same currents)
+.subckt s2d_bias_diodes vdd vss vbp vbn vbpc vbnc
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XBN vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1
+XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+.ends s2d_bias_diodes
+
+* --- test fixture: ideal reference currents into the diodes (as d2s_bias_lp, without class AB)
+.subckt s2d_bias_lp vdd vss vbp vbn vbpc vbnc ibnc=2u
+IBP vbp vss 5u
+IBN vdd vbn 5u
+IBNC vdd vbnc {ibnc}
+IBPC vbpc vss 2u
+Xd vdd vss vbp vbn vbpc vbnc s2d_bias_diodes
+.ends s2d_bias_lp
+
+* --- tree, reference current INTO iref (external PMOS source): d2s_bias_in without NABP / PABN
+.subckt s2d_bias_in vdd vss iref vbp vbn vbpc vbnc
+XNI iref iref vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBP vbp iref vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBPC vbpc iref vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+XPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+Xd vdd vss vbp vbn vbpc vbnc s2d_bias_diodes
+.ends s2d_bias_in
+
+* --- tree, reference current OUT of iref (external NMOS sink): d2s_bias_out without PABN / NABP
+.subckt s2d_bias_out vdd vss iref vbp vbn vbpc vbnc
+XPI iref iref vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBN vbn iref vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBNC vbnc iref vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+XNBP vbp vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBPC vbpc vbn vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+Xd vdd vss vbp vbn vbpc vbnc s2d_bias_diodes
+.ends s2d_bias_out
+
+* --- fan-out of the shared root: one input diode, one 5 uA leg per consumer.
+*     _n: the root SOURCES 5 uA into iin (oa_core, bg_core); legs sink 5 uA out of *_bias_out trees.
+*     _p: the root SINKS 5 uA out of iin; legs source 5 uA into *_bias_in trees.
+*     Two legs here (s2d and d2s); add one device per further consumer (gmC stage, vcm reference).
+.subckt bias_fanout_n vdd vss iin io1 io2
+XNF iin iin vss vss sg13_hv_nmos w=6u l=6u ng=1
+XN1 io1 iin vss vss sg13_hv_nmos w=6u l=6u ng=1
+XN2 io2 iin vss vss sg13_hv_nmos w=6u l=6u ng=1
+.ends bias_fanout_n
+.subckt bias_fanout_p vdd vss iin io1 io2
+XPF iin iin vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XP1 io1 iin vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XP2 io2 iin vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+.ends bias_fanout_p

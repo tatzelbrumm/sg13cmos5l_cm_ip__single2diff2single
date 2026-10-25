@@ -2,17 +2,32 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 #--------------------------------------------------------------
-# CACE circuit characterization file: sg13cmos5l_IOPadSingle2Diff -- SCAFFOLD (2026-10-20)
+# CACE circuit characterization file: sg13cmos5l_IOPadSingle2Diff
 #--------------------------------------------------------------
-# Single-ended pad in, differential out: outp - vcm = vcm - outn = pad - vref.
-# Same structure as ../../../sg13cmos5l_IOPadDiff2Single/verification/cace/sg13cmos5l_IOPadDiff2Single.yaml.
-# The DUT's core xa (s2d_core_ideal) is a BEHAVIOURAL PLACEHOLDER: these groups run end to end, but the
-# numbers describe ideal E sources until the real input buffer is drawn. All limits are "any" (fill in).
-# Still to add (see ../../FILL_IN.md): noise, tran (step, slew), THD, enable transient, mismatch, input
-# leakage over the full pad range with the slot powered down.
+# Single-ended pad in, differential out: outp - outn = 2 (pad - vref), (outp + outn)/2 = vcm.
+# Input buffer s2d_mpdda_pd (the matched-pair DDA of sudelbuecher/design_considerations/s2d_input_buffer,
+# s2d_input_buffer.md), selectable bias d2s_bias_sel_pd, fail-safe enable en_ctrl_3v3, IHP input
+# protection as in sg13cmos5l_IOPadAnalog (primary diodes, gate-tied clamps, 587 Ohm secondary protection).
+# Everything on the ring rails iovdd / iovss; the 1.2 V core ring vdd only feeds the level shifters.
+# vfbp / vfbn are tied to outp / outn inside the cell: the loop gain is characterized on the fixture
+# s2d_mpdda_pd_sel (s2d_mpdda_pd_sel.yaml).
+# The groups follow the design's suite (sudelbuecher .../s2d_input_buffer/verification/cace/s2d_mpdda_biased.yaml,
+# DUT s2d_mpdda + ideal bias fixture); here the DUT is the whole pad with its real bias.
+#
+# Conditions: vref (pad reference) and vcm (internal common mode), default 1.2 V each (s2d_input_buffer.md
+# section IV: the PMOS units need their gates at most about vdd - 1.3 V); cload = load per output on top
+# of the built-in 2 x 12 x 12 um MOS capacitors (default 0.5 pF); rsrc = source resistance into the pad;
+# u = pad source - vref; sel = bias selection (0 harness ibias, 1 Oguey-Aebischer, 2 bandgap, 3 both);
+# pdstate (pd group) = 0 en_1v2 low, 1 slot vdd_1v2 off, 2 slot vdd_3v3 off, 3 chip core 1.2 V off.
+# Harness ibias = sourced current from a PMOS mirror (the harness iDAC: 250 nA steps, code 20 = 5 uA).
+#
+# LIMITS ARE PROPOSALS: the buffer limits are those of s2d_input_buffer.md section VII; the pad-level
+# ones (Iio, window, power-down, enable) are the worst case of the first full run (2026-10-25) plus margin.
+# "any" = report only. Run on the schematic netlist only (-s schematic); mismatch is vacuous on extracted
+# netlists.
 
 name:           sg13cmos5l_IOPadSingle2Diff
-description:    Single-ended-in, differential-out buffered input pad (SCAFFOLD, placeholder core)
+description:    Single-ended-in, differential-out buffered input pad (matched-pair DDA, gain 2) with selectable bias and fail-safe enable
 PDK:            ihp-sg13cmos5l
 
 cace_format:    5.2
@@ -34,6 +49,8 @@ pins:
     description: IO ring supply
     type: power
     direction: inout
+    Vmin: 3.0
+    Vmax: 3.6
   iovss:
     description: IO ring ground
     type: ground
@@ -47,11 +64,11 @@ pins:
     type: ground
     direction: inout
   pad:
-    description: Pad (input)
+    description: Pad (input); the buffer sees it at padres, behind the 587 Ohm secondary protection
     type: signal
     direction: inout
   outp:
-    description: Differential output, positive
+    description: Differential output, positive (outp - outn = 2 (pad - vref))
     type: signal
     direction: output
   outn:
@@ -59,11 +76,11 @@ pins:
     type: signal
     direction: output
   vcm:
-    description: Output common-mode reference
+    description: Internal (output) common mode; gate only
     type: signal
     direction: input
   vref:
-    description: Input reference
+    description: Pad reference; gate only
     type: signal
     direction: input
   ibias:
@@ -103,26 +120,34 @@ default_conditions:
     unit: V
     typical: 1.2
   vref:
-    description: Input reference
+    description: Pad reference
     display: Vref
     unit: V
-    typical: 1.65
+    typical: 1.2
   vcm:
-    description: Output common mode
+    description: Internal common mode
     display: Vcm
     unit: V
-    typical: 1.65
+    typical: 1.2
   corner_mos:
     description: Process corner MOSFET
     display: Corner MOSFET
     typical: tt
+  corner_r:
+    description: Process corner resistor (rhigh, rppd)
+    display: Corner R
+    typical: typ
+  corner_pnp:
+    description: Process corner PNP (bandgap core)
+    display: Corner PNP
+    typical: typ
   temp:
     description: Ambient temperature
     display: Temperature
     unit: °C
     typical: 27
   sel:
-    description: Bias selection
+    description: Bias selection (0 harness, 1 OA core, 2 bandgap, 3 both)
     display: Bias select
     typical: 0
   ibias:
@@ -131,51 +156,130 @@ default_conditions:
     unit: A
     typical: 5e-06
   rsrc:
-    description: Source resistance
+    description: Source resistance into the pad
     display: Rsrc
     unit: Ω
     typical: 50
   cload:
-    description: Load per output
+    description: External load per output, to ground (next stage, routing)
     display: Cload
-    unit: F
-    typical: 1e-12
+    unit: pF
+    typical: 0.5
 
 parameters:
 
+  #------------------------------------------------------------ DC, PVT
   dc_params:
     spec:
-      Gp:
-        display: Gain, positive output
-        description: d(outp - vcm)/d(pad), nominal +1
+      Gain:
+        display: Gain
+        description: d(outp - outn)/d(pad - vref) from u = +-0.1 V (ideal 2)
         minimum:
-          value: any
+          value: 1.99
         typical:
-          value: any
+          value: 2
         maximum:
-          value: any
-      Gn:
-        display: Gain, negative output
-        description: d(outn - vcm)/d(pad), nominal -1
+          value: 2.01
+      Vos_in:
+        display: Input offset (systematic)
+        description: vd(u = 0) / Gain
+        unit: mV
         minimum:
-          value: any
+          value: -1
         typical:
-          value: any
+          value: 0
         maximum:
-          value: any
-      Vos_p:
-        display: Offset, positive output
-        description: outp - vcm at pad = vref
+          value: 1
+      INL:
+        display: Integral nonlinearity
+        description: Max deviation from the small-signal line, u = +-0.5 V, referred to the input
         unit: mV
         minimum:
           value: any
         typical:
           value: any
         maximum:
+          value: 2
+      Vcm_err:
+        display: Output common-mode error
+        description: (outp + outn)/2 - vcm at u = 0
+        unit: mV
+        minimum:
+          value: -30
+        typical:
           value: any
-      Vos_n:
-        display: Offset, negative output
-        description: outn - vcm at pad = vref
+        maximum:
+          value: 30
+      Iio:
+        display: IO ring current
+        description: From iovdd at u = 0 (buffer, bias tree and reference, enable control)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 135
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Gain, Vos_in, INL, Vcm_err, Iio]
+    plot:
+      INL_vs_vdd:
+        type: xyplot
+        xaxis: vdd
+        yaxis: INL
+        limits: auto
+      INL_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: INL
+        limits: auto
+      Gain_vs_corner_r:
+        type: xyplot
+        xaxis: corner_r
+        yaxis: Gain
+        limits: auto
+      Vcm_err_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: Vcm_err
+        limits: auto
+      Iio_vs_corner_mos:
+        type: xyplot
+        xaxis: corner_mos
+        yaxis: Iio
+        limits: auto
+    conditions:
+      vdd:
+        minimum: 3.0
+        typical: 3.3
+        maximum: 3.6
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      corner_r:
+        enumerate: [bcs, typ, wcs]
+      temp:
+        minimum: -40
+        typical: 27
+        maximum: 125
+  #------------------------------------------------------------ DC, signal window vs vref and vcm (report only)
+  range_params:
+    spec:
+      Gain:
+        display: Gain vs vref and vcm
+        description: As dc_params, at iovdd = 3.0 V, swept over the pad reference and the internal common mode
+        minimum:
+          value: any
+        typical:
+          value: 2
+        maximum:
+          value: any
+      INL:
+        display: Integral nonlinearity vs vref and vcm
+        description: Shows the PMOS-unit headroom limit, unit gates <= about vdd - 1.3 V at ss / -40 C
         unit: mV
         minimum:
           value: any
@@ -184,8 +288,192 @@ parameters:
         maximum:
           value: any
       Vcm_err:
-        display: Common-mode error
-        description: (outp + outn)/2 - vcm
+        display: Output common-mode error vs vref and vcm
+        unit: mV
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Gain, null, INL, Vcm_err, null]
+    plot:
+      INL_vs_vcm:
+        type: xyplot
+        xaxis: vcm
+        yaxis: INL
+        limits: auto
+      Gain_vs_vref:
+        type: xyplot
+        xaxis: vref
+        yaxis: Gain
+        limits: auto
+    conditions:
+      vdd:
+        typical: 3.0
+      vref:
+        enumerate: [0.5, 0.8, 1.2, 1.65]
+      vcm:
+        enumerate: [1.0, 1.2, 1.4, 1.65]
+      corner_mos:
+        enumerate: [ss, tt, ff]
+      temp:
+        enumerate: [-40, 125]
+  #------------------------------------------------------------ pad range at vref = 0.5 V (pad 0 ... 1 V, including iovss)
+  window_params:
+    spec:
+      Vin_min:
+        display: Input range, low end
+        description: Low end of the range around pad = vref that is linear to 1 mV (input-referred); 0 = the sweep start
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      Vin_max:
+        display: Input range, high end
+        description: High end of the range around pad = vref that is linear to 1 mV (input-referred)
+        unit: V
+        minimum:
+          value: 1.0
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_range.sch
+        format: ascii
+        suffix: .data
+        variables: [Vin_min, Vin_max]
+    plot:
+      Vin_min_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: Vin_min
+        limits: auto
+    conditions:
+      vref:
+        typical: 0.5
+      vdd:
+        enumerate: [3.0, 3.3, 3.6]
+      corner_mos:
+        enumerate: [ss, tt, ff]
+      temp:
+        enumerate: [-40, 27, 125]
+  #------------------------------------------------------------ DC, bias selection 00 / 01 / 10
+  dc_sel_params:
+    spec:
+      Gain:
+        display: Gain vs bias select
+        description: d(outp - outn)/d(pad - vref) from u = +-0.1 V (ideal 2)
+        minimum:
+          value: 1.99
+        typical:
+          value: 2
+        maximum:
+          value: 2.01
+      Vos_in:
+        display: Input offset (systematic) vs bias select
+        description: vd(u = 0) / Gain
+        unit: mV
+        minimum:
+          value: -1
+        typical:
+          value: 0
+        maximum:
+          value: 1
+      INL:
+        display: Integral nonlinearity vs bias select
+        description: Max deviation from the small-signal line, u = +-0.5 V, referred to the input
+        unit: mV
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2
+      Vcm_err:
+        display: Output common-mode error vs bias select
+        description: (outp + outn)/2 - vcm at u = 0
+        unit: mV
+        minimum:
+          value: -30
+        typical:
+          value: any
+        maximum:
+          value: 30
+      Iio:
+        display: IO ring current vs bias select
+        description: From iovdd at u = 0 (buffer, bias tree and reference, enable control)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 220
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Gain, Vos_in, INL, Vcm_err, Iio]
+    plot:
+      Iio_vs_sel:
+        type: xyplot
+        xaxis: sel
+        yaxis: Iio
+        limits: auto
+    conditions:
+      sel:
+        enumerate: [0, 1, 2]
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 27, 125]
+  #------------------------------------------------------------ DC, bias selection 11 (both cores, test mode, report only)
+  dc_sel3_params:
+    spec:
+      Gain:
+        display: Gain, sel 11
+        description: d(outp - outn)/d(pad - vref) from u = +-0.1 V (ideal 2)
+        minimum:
+          value: any
+        typical:
+          value: 2
+        maximum:
+          value: any
+      Vos_in:
+        display: Input offset (systematic), sel 11
+        description: vd(u = 0) / Gain
+        unit: mV
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      INL:
+        display: Integral nonlinearity, sel 11
+        description: Max deviation from the small-signal line, u = +-0.5 V, referred to the input
+        unit: mV
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vcm_err:
+        display: Output common-mode error, sel 11
+        description: (outp + outn)/2 - vcm at u = 0
         unit: mV
         minimum:
           value: any
@@ -194,8 +482,8 @@ parameters:
         maximum:
           value: any
       Iio:
-        display: IO ring supply current
-        description: From iovdd
+        display: IO ring current, sel 11
+        description: From iovdd at u = 0 (buffer, bias tree and reference, enable control)
         unit: uA
         minimum:
           value: any
@@ -208,34 +496,60 @@ parameters:
         template: sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
         format: ascii
         suffix: .data
-        variables: [Gp, Gn, Vos_p, Vos_n, Vcm_err, Iio]
-    plot:
-      Gp_vs_temp:
-        type: xyplot
-        xaxis: temp
-        yaxis: Gp
+        variables: [Gain, Vos_in, INL, Vcm_err, Iio]
     conditions:
+      sel:
+        typical: 3
       corner_mos:
         enumerate: [ss, sf, tt, fs, ff]
       temp:
         enumerate: [-40, 27, 125]
-
-  range_params:
+  #------------------------------------------------------------ DC, harness ibias 3 ... 7 uA (sel 00)
+  dc_ibias_params:
     spec:
-      Vin_min:
-        display: Input range, low end
-        description: Lowest pad voltage with gain error < 1 % (must reach iovss)
-        unit: V
+      Gain:
+        display: Gain vs ibias
+        description: d(outp - outn)/d(pad - vref) from u = +-0.1 V (ideal 2)
+        minimum:
+          value: 1.99
+        typical:
+          value: 2
+        maximum:
+          value: 2.01
+      Vos_in:
+        display: Input offset (systematic) vs ibias
+        description: vd(u = 0) / Gain
+        unit: mV
+        minimum:
+          value: -1
+        typical:
+          value: 0
+        maximum:
+          value: 1
+      INL:
+        display: Integral nonlinearity vs ibias
+        description: Max deviation from the small-signal line, u = +-0.5 V, referred to the input
+        unit: mV
         minimum:
           value: any
         typical:
           value: any
         maximum:
           value: any
-      Vin_max:
-        display: Input range, high end
-        description: Highest pad voltage with gain error < 1 % (should reach iovdd)
-        unit: V
+      Vcm_err:
+        display: Output common-mode error vs ibias
+        description: (outp + outn)/2 - vcm at u = 0
+        unit: mV
+        minimum:
+          value: -30
+        typical:
+          value: any
+        maximum:
+          value: 30
+      Iio:
+        display: IO ring current vs ibias
+        description: From iovdd at u = 0 (buffer, bias tree and reference, enable control)
+        unit: uA
         minimum:
           value: any
         typical:
@@ -244,26 +558,89 @@ parameters:
           value: any
     tool:
       ngspice:
-        template: sg13cmos5l_IOPadSingle2Diff_tb_range.sch
+        template: sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
         format: ascii
         suffix: .data
-        variables: [Vin_min, Vin_max]
+        variables: [Gain, Vos_in, INL, Vcm_err, Iio]
     plot:
-      Vin_max_vs_temp:
+      Iio_vs_ibias:
+        type: xyplot
+        xaxis: ibias
+        yaxis: Iio
+        limits: auto
+      Vcm_err_vs_ibias:
+        type: xyplot
+        xaxis: ibias
+        yaxis: Vcm_err
+        limits: auto
+    conditions:
+      ibias:
+        enumerate: [3e-06, 4e-06, 5e-06, 6e-06, 7e-06]
+      corner_mos:
+        enumerate: [ss, tt, ff]
+  #------------------------------------------------------------ closed-loop AC
+  ac_params:
+    spec:
+      Acl_dB:
+        display: Closed-loop gain at 1 kHz
+        description: 20 log |(outp - outn)/u|, ideal 6.02 dB
+        unit: dB
+        minimum:
+          value: any
+        typical:
+          value: 6.02
+        maximum:
+          value: any
+      f3dB:
+        display: Closed-loop -3 dB bandwidth
+        unit: MHz
+        minimum:
+          value: 1
+        typical:
+          value: any
+        maximum:
+          value: any
+      CMvdd_1k:
+        display: Output common-mode response to iovdd at 1 kHz
+        description: 20 log |vc / iovdd|; the differential rejections need mismatch (ac_mm_params)
+        unit: dB
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: -30
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_ac.sch
+        format: ascii
+        suffix: .data
+        variables: [Acl_dB, f3dB, null, null, null, null, null, CMvdd_1k]
+    plot:
+      f3dB_vs_temp:
         type: xyplot
         xaxis: temp
-        yaxis: Vin_max
+        yaxis: f3dB
+        limits: auto
     conditions:
       corner_mos:
         enumerate: [ss, sf, tt, fs, ff]
       temp:
         enumerate: [-40, 27, 125]
-
-  ac_params:
+  #------------------------------------------------------------ rejection under mismatch
+  ac_mm_params:
     spec:
-      Ad_dB:
-        display: Differential gain
-        description: (outp - outn)/pad at 1 kHz, nominal +6.02 dB
+      PSRRp_1k:
+        display: PSRR iovdd at 1 kHz (input-referred), mismatch
+        unit: dB
+        minimum:
+          value: 60
+        typical:
+          value: any
+        maximum:
+          value: any
+      PSRRp_100k:
+        display: PSRR iovdd at 100 kHz (input-referred), mismatch
         unit: dB
         minimum:
           value: any
@@ -271,19 +648,17 @@ parameters:
           value: any
         maximum:
           value: any
-      f3dB:
-        display: Bandwidth
-        description: -3 dB, differential
-        unit: MHz
+      PSRRn_1k:
+        display: PSRR iovss at 1 kHz (input-referred), mismatch
+        unit: dB
         minimum:
-          value: any
+          value: 60
         typical:
           value: any
         maximum:
           value: any
-      PSRR_1k:
-        display: PSRR iovdd 1 kHz
-        description: -20 log|(outp - outn)/iovdd|
+      PSRRn_100k:
+        display: PSRR iovss at 100 kHz (input-referred), mismatch
         unit: dB
         minimum:
           value: any
@@ -291,12 +666,11 @@ parameters:
           value: any
         maximum:
           value: any
-      PSRR_100k:
-        display: PSRR iovdd 100 kHz
-        description: -20 log|(outp - outn)/iovdd|
+      CMRR_1k:
+        display: CMRR at 1 kHz (pad and vref together), mismatch
         unit: dB
         minimum:
-          value: any
+          value: 70
         typical:
           value: any
         maximum:
@@ -304,32 +678,143 @@ parameters:
     tool:
       ngspice:
         template: sg13cmos5l_IOPadSingle2Diff_tb_ac.sch
+        collate: iterations
         format: ascii
         suffix: .data
-        variables: [Ad_dB, f3dB, PSRR_1k, PSRR_100k]
-    plot:
-      f3dB_vs_temp:
-        type: xyplot
-        xaxis: temp
-        yaxis: f3dB
+        variables: [null, null, PSRRp_1k, PSRRp_100k, PSRRn_1k, PSRRn_100k, CMRR_1k, null]
     conditions:
+      iterations:
+        description: Iterations to run
+        display: Iterations
+        minimum: 1
+        maximum: 30
+        step: linear
+        stepsize: 1
       corner_mos:
-        enumerate: [ss, sf, tt, fs, ff]
+        typical: tt_mismatch
+      corner_r:
+        typical: typ_mismatch
       temp:
-        enumerate: [-40, 27, 125]
-
-  pd_params:
+        typical: 27
+  #------------------------------------------------------------ step response
+  tran_params:
     spec:
-      Iio_pd:
-        display: IO ring current, off
-        description: Per power-down state
-        unit: nA
+      t_rise:
+        display: Rise time 10-90 %
+        unit: ns
         minimum:
           value: any
         typical:
           value: any
         maximum:
           value: any
+      t_settle:
+        display: Settling time to 1 %
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 1000
+      Overshoot:
+        display: Overshoot
+        unit: '%'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 5
+      Vcm_dev:
+        display: Largest output common-mode deviation during the step
+        unit: mV
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_tran.sch
+        format: ascii
+        suffix: .data
+        variables: [t_rise, t_settle, Overshoot, Vcm_dev]
+    plot:
+      t_settle_vs_cload:
+        type: xyplot
+        xaxis: cload
+        yaxis: t_settle
+        limits: auto
+    conditions:
+      # the 1 us limit is for 0.5 pF or less (2 pF: 1.13 us, results_s2d.txt section 6)
+      cload:
+        enumerate: [0.001, 0.5]
+      corner_mos:
+        enumerate: [ss, tt, ff]
+      temp:
+        enumerate: [-40, 27, 125]
+  #------------------------------------------------------------ noise, referred to u (includes rsrc and the 587 Ohm rppd)
+  noise_params:
+    spec:
+      En_1k:
+        display: Input noise density at 1 kHz
+        unit: nV/rtHz
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 1000
+      En_100k:
+        display: Input noise density at 100 kHz
+        unit: nV/rtHz
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 250
+      Vn_out:
+        display: Differential output noise, 10 Hz - 10 MHz
+        unit: uV
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 1000
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_noise.sch
+        format: ascii
+        suffix: .data
+        variables: [En_1k, En_100k, Vn_out]
+    plot:
+      En_1k_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: En_1k
+        limits: auto
+    conditions:
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 27, 125]
+  #------------------------------------------------------------ power down
+  pd_params:
+    spec:
+      Iio_pd:
+        display: IO ring current, off
+        description: Per power-down state; states 1 and 2 include the presence detector (about 0.6 uA)
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 1000
       Icore_pd:
         display: Core ring current, off
         description: Per power-down state
@@ -339,17 +824,17 @@ parameters:
         typical:
           value: any
         maximum:
-          value: any
+          value: 100
       Ipad_pd:
         display: Pad input leakage, off
         description: Into the pad from the source holding it
         unit: nA
         minimum:
-          value: any
+          value: -100
         typical:
           value: any
         maximum:
-          value: any
+          value: 100
       Ven3:
         display: Internal enable
         description: en_3v3, must be low in every power-down state
@@ -359,18 +844,39 @@ parameters:
         typical:
           value: any
         maximum:
+          value: 0.1
+      Vod_pd:
+        display: Differential output, off
+        description: outp - outn (tied to vcm)
+        unit: mV
+        minimum:
+          value: -1
+        typical:
           value: any
+        maximum:
+          value: 1
+      Voc_pd:
+        display: Output common mode, off
+        description: (outp + outn)/2 - vcm
+        unit: mV
+        minimum:
+          value: -1
+        typical:
+          value: any
+        maximum:
+          value: 1
     tool:
       ngspice:
         template: sg13cmos5l_IOPadSingle2Diff_tb_pd.sch
         format: ascii
         suffix: .data
-        variables: [Iio_pd, Icore_pd, Ipad_pd, Ven3]
+        variables: [Iio_pd, Icore_pd, Ipad_pd, Ven3, Vod_pd, Voc_pd]
     plot:
       Ipad_pd_vs_vpad:
         type: xyplot
         xaxis: vpad
         yaxis: Ipad_pd
+        limits: auto
     conditions:
       pdstate:
         description: Power-down state (0 en low, 1 slot vdd_1v2 off, 2 slot vdd_3v3 off, 3 chip core 1.2 V off)
@@ -383,3 +889,175 @@ parameters:
         enumerate: [0, 1.65, 3.3]
       temp:
         enumerate: [27, 125]
+  #------------------------------------------------------------ enable transient (en_1v2 0 -> 1.2 V at 1 us, u = +0.25 V)
+  enable_params:
+    spec:
+      t_on:
+        display: Enable time
+        description: en_1v2 edge to vd within 1 mV of its end value
+        unit: us
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 3
+      Vc_max:
+        display: Output CM glitch, high
+        description: max (outp + outn)/2 - vcm after the edge
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vc_min:
+        display: Output CM glitch, low
+        description: min (outp + outn)/2 - vcm after the edge
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Vd_end:
+        display: Differential output at the end
+        description: ideal 0.5 V
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: 0.5
+        maximum:
+          value: any
+      Iio_on:
+        display: IO ring current, enabled
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_enable.sch
+        format: ascii
+        suffix: .data
+        variables: [t_on, Vc_max, Vc_min, Vd_end, Iio_on]
+    plot:
+      t_on_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: t_on
+        limits: auto
+    conditions:
+      corner_mos:
+        enumerate: [ss, tt, ff]
+      temp:
+        enumerate: [-40, 27, 125]
+  #------------------------------------------------------------ mismatch Monte Carlo
+  mm_params:
+    spec:
+      Vos_in:
+        display: Input offset - Mismatch
+        unit: mV
+        minimum:
+          value: -20
+        typical:
+          value: any
+        maximum:
+          value: 20
+      Gain:
+        display: Gain - Mismatch
+        minimum:
+          value: 1.93
+        typical:
+          value: any
+        maximum:
+          value: 2.07
+      Vcm_err:
+        display: Output common-mode error - Mismatch
+        unit: mV
+        minimum:
+          value: -60
+        typical:
+          value: any
+        maximum:
+          value: 60
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
+        collate: iterations
+        format: ascii
+        suffix: .data
+        variables: [Gain, Vos_in, INL, Vcm_err, Iio]
+    conditions:
+      iterations:
+        description: Iterations to run
+        display: Iterations
+        minimum: 1
+        maximum: 100
+        step: linear
+        stepsize: 1
+      corner_mos:
+        typical: tt_mismatch
+      corner_r:
+        typical: typ_mismatch
+      temp:
+        typical: 27
+  #------------------------------------------------------------ process Monte Carlo
+  mc_params:
+    spec:
+      Vos_in:
+        display: Input offset - Process MC
+        unit: mV
+        minimum:
+          value: -5
+        typical:
+          value: any
+        maximum:
+          value: 5
+      Gain:
+        display: Gain - Process MC
+        minimum:
+          value: 1.99
+        typical:
+          value: any
+        maximum:
+          value: 2.01
+      Vcm_err:
+        display: Output common-mode error - Process MC
+        unit: mV
+        minimum:
+          value: -30
+        typical:
+          value: any
+        maximum:
+          value: 30
+    tool:
+      ngspice:
+        template: sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
+        collate: iterations
+        format: ascii
+        suffix: .data
+        variables: [Gain, Vos_in, INL, Vcm_err, Iio]
+    conditions:
+      iterations:
+        description: Iterations to run
+        display: Iterations
+        minimum: 1
+        maximum: 30
+        step: linear
+        stepsize: 1
+      corner_mos:
+        typical: tt_stat
+      # rhigh stays at typ: the PDK's res_stat draws its "global" sheet-resistance deviation in a .model
+      # inside the rhigh subcircuit, so every instance draws its own (acts as 5 % unit mismatch; see the
+      # design's verification/cace/README.md).
+      corner_r:
+        typical: typ
+      temp:
+        typical: 27

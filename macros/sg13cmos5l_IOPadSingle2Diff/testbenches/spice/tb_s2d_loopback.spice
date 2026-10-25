@@ -1,0 +1,55 @@
+* tb_s2d_loopback: vin -> s2d_mpdda -> d2s_mpdda -> vout (test 4 of s2d_d2s_pinbuffers.md), tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Macro copy of sudelbuecher/design_considerations/s2d_input_buffer/sim/tb (2026-10-25): includes rewritten.
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* Shared bias, as proposed: ONE root (oa_core of d2s_bias_ref.spice) -> bias_fanout_n -> one
+* 5 uA leg into each buffer's own tree (s2d_bias_out, d2s_bias_out) and diodes.
+* Round-trip gain vout - vref_out = (voutp - voutn)/2 = vin - vref_in, ideally 1.
+* d2s_mpdda: output devices on vddo / vsso, here tied to vdd / vss; load 1 kOhm to vref || 100 pF.
+* s2d outputs see only the d2s unit gates plus 0.5 pF of routing each.
+* Reference (results_s2d.txt, section 11): gain 0.9995, offset 0.053 mV, nonlin 0.018 mV, idd 437 uA.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice
+.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/d2s_mpdda.spice
+.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/d2s_bias_ref.spice
+.include ../../netlist/source/s2d_mpdda.spice
+.include ../../netlist/source/s2d_bias.spice
+Vdd vdd 0 3.3
+Vref vref 0 1.65
+Vcm vcm 0 1.65
+* --- shared bias root and fan-out; each buffer keeps its own tree and diodes
+Xroot vdd 0 iroot oa_core
+Xfan vdd 0 iroot is2d id2s bias_fanout_n
+Xbs vdd 0 is2d sbp sbn sbpc sbnc s2d_bias_out
+Xbd vdd 0 vdd 0 id2s vbp vbn vbpc vbnc vabp vabn d2s_bias_out
+* --- signal path
+Vu u 0 0
+Ein vin vref u 0 1
+Xs vdd 0 vin vref vcm vp vn vp vn sbp sbn sbpc sbnc s2d_mpdda
+Cwp vp 0 0.5p
+Cwn vn 0 0.5p
+Xd vdd 0 vdd 0 vp vn vref vout vout vbp vbn vbpc vbnc vabp vabn d2s_mpdda
+RL vout vref 1k
+CL vout 0 100p
+.control
+dc Vu -0.5 0.5 0.01
+let vo = v(vout) - v(vref)
+let iroot = -i(vdd)
+meas dc vop find vo at=0.1
+meas dc vom find vo at=-0.1
+meas dc vo0 find vo at=0
+let gain = (vop - vom)/0.2
+let err = vo - vo0 - gain*v(u)
+let nonlin = vecmax(abs(err))
+meas dc iddq find iroot at=0
+print gain vo0 nonlin iddq
+if $?batchmode = 0
+  plot vo
+  plot err
+end
+.endc
+.end

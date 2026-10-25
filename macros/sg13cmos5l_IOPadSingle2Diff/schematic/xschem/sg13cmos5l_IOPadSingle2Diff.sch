@@ -5,18 +5,16 @@ V {}
 S {}
 F {}
 E {}
-T {sg13cmos5l_IOPadSingle2Diff (SCAFFOLD): single-ended pad in, differential out, outp - vcm = vcm - outn = pad - vref} 0 -1020 0 0 0.5 0.5 {}
+T {sg13cmos5l_IOPadSingle2Diff: single-ended pad in, differential out, outp - vcm = vcm - outn = pad - vref} 0 -1020 0 0 0.5 0.5 {}
 T {Same ring / control / bias infrastructure as sg13cmos5l_IOPadDiff2Single. Input protection as IHP's sg13cmos5l_IOPadAnalog (clamps gate-tied, primary diodes,} 0 -970 0 0 0.3 0.3 {}
-T {secondary protection with its 587 Ohm rppd between pad and padres). xa = s2d_core_ideal is a BEHAVIOURAL PLACEHOLDER: replace it by the real input buffer.} 0 -940 0 0 0.3 0.3 {}
+T {secondary protection with its 587 Ohm rppd between pad and padres). xa = s2d_mpdda_pd, the matched-pair DDA input buffer (gain 2, vfbp / vfbn tied to outp / outn).} 0 -940 0 0 0.3 0.3 {}
 T {[C] enable / bias select} 220 -350 0 0 0.3 0.3 {}
 T {[B] bias} 620 -410 0 0 0.3 0.3 {}
-T {[A] input buffer core (placeholder)} 910 -640 0 0 0.3 0.3 {}
+T {[A] input buffer s2d_mpdda_pd} 910 -640 0 0 0.3 0.3 {}
 T {[P] input protection (IHP IO cells)} 730 -780 0 0 0.3 0.3 {}
 N 880 -100 1040 -100 {lab=iovss}
 N 1100 -360 1100 -320 {lab=vbp}
 N 1120 -360 1120 -300 {lab=vbpc}
-N 1140 -360 1140 -280 {lab=vabp}
-N 1180 -360 1180 -260 {lab=vabn}
 N 1200 -360 1200 -240 {lab=vbnc}
 N 1220 -360 1220 -220 {lab=vbn}
 N 680 -100 720 -100 {lab=iovss}
@@ -33,16 +31,22 @@ N 680 -180 680 -100 {lab=iovss}
 N 720 -180 720 -100 {lab=iovss}
 N 1040 -360 1040 -100 {lab=iovss}
 N 540 -280 540 -260 {lab=en_3v3}
-N 1340 -520 1380 -520 {lab=outp}
-N 1340 -480 1380 -480 {lab=outn}
+N 1340 -520 1360 -520 {lab=outp}
+N 1360 -520 1380 -520 {lab=outp}
+N 1360 -560 1360 -520 {lab=outp}
+N 1340 -560 1360 -560 {lab=outp}
+N 1340 -480 1360 -480 {lab=outn}
+N 1360 -480 1380 -480 {lab=outn}
+N 1360 -480 1360 -440 {lab=outn}
+N 1340 -440 1360 -440 {lab=outn}
 N 540 -420 540 -280 {lab=en_3v3}
 N 520 -200 620 -200 {lab=sel1_3v3}
 N 140 -500 980 -500 {lab=vref}
 N 140 -460 980 -460 {lab=vcm}
 N 820 -320 1100 -320 {lab=vbp}
 N 820 -300 1120 -300 {lab=vbpc}
-N 820 -280 1140 -280 {lab=vabp}
-N 820 -260 1180 -260 {lab=vabn}
+N 820 -280 860 -280 {lab=vabp}
+N 820 -260 860 -260 {lab=vabn}
 N 820 -240 1200 -240 {lab=vbnc}
 N 820 -220 1220 -220 {lab=vbn}
 N 720 -100 880 -100 {lab=iovss}
@@ -85,6 +89,8 @@ N 220 -900 300 -900 {lab=iovdd}
 N 620 -900 620 -840 {lab=iovdd}
 N 360 -900 620 -900 {lab=iovdd}
 N 560 -260 560 -240 {lab=en_3v3_b}
+N 560 -400 560 -260 {lab=en_3v3_b}
+N 560 -400 980 -400 {lab=en_3v3_b}
 N 540 -420 980 -420 {lab=en_3v3}
 N 540 -280 640 -280 {lab=en_3v3}
 N 520 -260 540 -260 {lab=en_3v3}
@@ -126,7 +132,7 @@ C {devices/lab_pin.sym} 700 -360 0 0 {name=l11 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 680 -180 0 0 {name=l12 sig_type=std_logic lab=iovss}
 C {devices/lab_pin.sym} 740 -360 0 1 {name=l13 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 720 -180 0 1 {name=l14 sig_type=std_logic lab=iovss}
-C {s2d_core_ideal.sym} 1160 -480 0 0 {name=xa}
+C {s2d_mpdda_pd.sym} 1160 -480 0 0 {name=xa}
 C {devices/lab_pin.sym} 1060 -600 0 0 {name=l25 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 1040 -360 0 0 {name=l26 sig_type=std_logic lab=iovss}
 C {devices/lab_pin.sym} 960 -540 0 0 {name=l27 sig_type=std_logic lab=padres}
@@ -159,6 +165,6 @@ C {devices/lab_pin.sym} 1100 -320 0 1 {name=l54 sig_type=std_logic lab=vbp}
 C {devices/lab_pin.sym} 1220 -220 0 1 {name=l55 sig_type=std_logic lab=vbn}
 C {devices/lab_pin.sym} 1120 -300 0 1 {name=l56 sig_type=std_logic lab=vbpc}
 C {devices/lab_pin.sym} 1200 -240 0 1 {name=l57 sig_type=std_logic lab=vbnc}
-C {devices/lab_pin.sym} 1140 -280 0 1 {name=l58 sig_type=std_logic lab=vabp}
-C {devices/lab_pin.sym} 1180 -260 0 1 {name=l59 sig_type=std_logic lab=vabn}
+C {devices/lab_pin.sym} 860 -280 0 1 {name=l58 sig_type=std_logic lab=vabp}
+C {devices/lab_pin.sym} 860 -260 0 1 {name=l59 sig_type=std_logic lab=vabn}
 C {devices/lab_wire.sym} 520 -260 0 1 {name=l8 sig_type=std_logic lab=en_3v3}

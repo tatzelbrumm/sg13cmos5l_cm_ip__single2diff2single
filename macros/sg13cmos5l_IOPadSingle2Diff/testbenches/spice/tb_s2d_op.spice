@@ -1,0 +1,41 @@
+* tb_s2d_op: operating point of s2d_mpdda, tt 27 C, vin = vref = vcm = 1.65 V
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Macro copy of sudelbuecher/design_considerations/s2d_input_buffer/sim/tb (2026-10-25): includes rewritten.
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc).
+* Run from this directory: ngspice -b <deck>
+* Prints node voltages and, per device, |ids|, |vds| and vdss: saturation margin = |vds| - vdss.
+* Reference (results_s2d.txt, section 1): voutp = voutn = 1.6609 V, idd 112.7 uA.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice
+.include ../../netlist/source/s2d_mpdda.spice
+.include ../../netlist/source/s2d_bias.spice
+Vdd vdd 0 3.3
+Vref vref 0 1.65
+Vcm vcm 0 1.65
+Vin vin 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc s2d_bias_lp
+Xs vdd 0 vin vref vcm voutp voutn voutp voutn vbp vbn vbpc vbnc s2d_mpdda
+CLp voutp 0 0.5p
+CLn voutn 0 0.5p
+.control
+op
+print v(voutp) v(voutn) v(xs.x) v(xs.y) v(xs.xc) v(xs.yc) v(xs.vcmfb)
+print v(vbp) v(vbn) v(vbpc) v(vbnc)
+let idd = -i(vdd)
+print idd
+print @n.xs.xsx.nsg13_hv_nmos[ids] @n.xs.xsx.nsg13_hv_nmos[vds] @n.xs.xsx.nsg13_hv_nmos[vdss]
+print @n.xs.xcx.nsg13_hv_nmos[ids] @n.xs.xcx.nsg13_hv_nmos[vds] @n.xs.xcx.nsg13_hv_nmos[vdss]
+print @n.xs.xlp.nsg13_hv_pmos[ids] @n.xs.xlp.nsg13_hv_pmos[vds] @n.xs.xlp.nsg13_hv_pmos[vdss]
+print @n.xs.xlpc.nsg13_hv_pmos[ids] @n.xs.xlpc.nsg13_hv_pmos[vds] @n.xs.xlpc.nsg13_hv_pmos[vdss]
+print @n.xs.xsxc.nsg13_hv_nmos[ids] @n.xs.xsxc.nsg13_hv_nmos[vds] @n.xs.xsxc.nsg13_hv_nmos[vdss]
+print @n.xs.xcxc.nsg13_hv_nmos[ids] @n.xs.xcxc.nsg13_hv_nmos[vds] @n.xs.xcxc.nsg13_hv_nmos[vdss]
+print @n.xs.xd.nsg13_hv_pmos[ids] @n.xs.xd.nsg13_hv_pmos[vds] @n.xs.xd.nsg13_hv_pmos[vdss]
+print @n.xs.xdc.nsg13_hv_pmos[ids] @n.xs.xdc.nsg13_hv_pmos[vds] @n.xs.xdc.nsg13_hv_pmos[vdss]
+print @n.xs.xa1.xta.nsg13_hv_pmos[ids] @n.xs.xa1.xta.nsg13_hv_pmos[vds] @n.xs.xa1.xta.nsg13_hv_pmos[vdss]
+print @n.xs.xa1.xma.nsg13_hv_pmos[ids] @n.xs.xa1.xma.nsg13_hv_pmos[vds] @n.xs.xa1.xma.nsg13_hv_pmos[vdss]
+print @n.xs.xf1.xma.nsg13_hv_pmos[ids] @n.xs.xf1.xma.nsg13_hv_pmos[vds] @n.xs.xf1.xma.nsg13_hv_pmos[vdss]
+print @n.xs.xm1.xma.nsg13_hv_pmos[ids] @n.xs.xm1.xma.nsg13_hv_pmos[vds] @n.xs.xm1.xma.nsg13_hv_pmos[vdss]
+.endc
+.end

@@ -12,7 +12,8 @@ not write a file named `Makefile`): `for f in macros/*/Makefile.new; do mv "$f" 
 
 ```
 slot  (slot7_wrapper-compatible; fallback wiring of both pads)
-├── sg13cmos5l_IOPadSingle2Diff   (input pad: SCAFFOLD, placeholder core)
+├── sg13cmos5l_IOPadSingle2Diff   (input pad: matched-pair DDA s2d_mpdda_pd, gain 2)
+│   ├── s2d_mpdda_pd ── s2d_mpdda ── unit_r2 (in sg13cmos5l_IOPadDiff2Single)
 │   ├── en_ctrl_3v3 ── ls_up_1v2_3v3, hv_logic
 │   ├── d2s_bias_sel_pd ── hv_logic (oa_core_pd, bg_core_pd, d2s_bias_in_tree_pd inside)
 │   └── IOPad (IHP IO sub-cell symbols: clamps, diodes, secondary protection)
@@ -25,7 +26,7 @@ slot  (slot7_wrapper-compatible; fallback wiring of both pads)
 | macro | what | status 2026-10-20 |
 |---|---|---|
 | `sg13cmos5l_IOPadDiff2Single` | differential in, single-ended out, class-AB pad, gain 1/2; selectable bias, fail-safe enable | sheets + CACE (13 groups + loop fixture), limits proposed; no layout (size mockup only) |
-| `sg13cmos5l_IOPadSingle2Diff` | single-ended pad in, differential out, ±1 | scaffold: infrastructure real, core placeholder; `FILL_IN.md` |
+| `sg13cmos5l_IOPadSingle2Diff` | single-ended pad in, differential out, outp − outn = 2 (pad − vref) | 2026-10-25: input buffer of `s2d_input_buffer` consolidated; sheets + CACE (14 groups + loop fixture), limits proposed; open points in `FILL_IN.md`; no layout |
 | `slot` | slot7_wrapper frame (layout = harness frame) with both pads, fallback wiring | sheet; `README.md` lists the harness changes for the custom-padframe route |
 | `d2s_bias_sel_pd` | the pads' bias: one mirror tree, reference = harness ibias / Oguey–Aebischer / bandgap | sheets + CACE |
 | `d2s_bias_in_pd`, `_out_pd`, `_oa_pd`, `_bg_pd` | the four reference circuits on their own, with power-down | sheets (from `power_down/xschem`) + CACE |
@@ -37,7 +38,8 @@ slot  (slot7_wrapper-compatible; fallback wiring of both pads)
 | `inverter`, `counter` | template examples | still to be torn out (CLAUDE.md §7) |
 
 Sources of the consolidated pieces (originals unchanged, in the `_sudelbuecher` worktree):
-`sudelbuecher/design_considerations/class_ab_pad_driver/{improvements,power_down}` and
+`sudelbuecher/design_considerations/class_ab_pad_driver/{improvements,power_down}`,
+`sudelbuecher/design_considerations/s2d_input_buffer` and
 `chipalooza2/levelshifters/ls_pair`. Record of the consolidation:
 `sudelbuecher/design_considerations/consolidation/log.md`.
 
