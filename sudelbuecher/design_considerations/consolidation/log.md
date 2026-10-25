@@ -320,3 +320,63 @@ Not logged earlier (22 Oct):
   are candidates for `ls_up_1v2_3v3`; `LevelDown` is the pad's input receiver, not a general down-shifter.
 - Duplicates between `macros/` and `_sudelbuecher` listed (23 identical, 15 differing, the `macros/`
   copy newer in every pair); kept, no symlinks for now.
+
+## 2026-10-25 01:18 CEST … 03:09 CET — tb_pd redraws, CACE templates of the bias macros, full check, skill versions
+
+The clocks went back at 03:00 CEST, so times before the change are marked CEST and times after it CET.
+
+- `tb_pd_enable.sch` (Christoph's redraw, 02:34 CEST): the same circuit as the 20 Oct reference except
+  that `Iext` returns to vss instead of GND. That is harmless: `Vvss` is 0 V from vss to GND, and no
+  measurement reads `i(Vvss)`. Instance properties and code block identical; otherwise only the
+  drawing changed.
+- `tb_pd_leak`, `tb_pd_startup_oa`, `tb_pd_unpowered` redrawn in that layout with a cloud-only helper
+  (not shipped): his instance positions and wires kept, the sibling's extra instances added, his wires
+  cut only where they would now connect wrongly, wire ends left dangling by the edit trimmed, his own
+  overshoots left alone. Checked by topology against the reference: startup_oa identical; leak and
+  unpowered identical except `Iext` → vss, carried over from enable. On the computer at 02:13 CET.
+- At Christoph's suggestion (02:15 CET) the `vref` bus was shortened on the right in leak and
+  unpowered, which made room to wire the added sources instead of labelling them:
+  - leak: `Vsb` in series in Xb's supply line under the `vdd` rail (`+` to the rail; net `vddb` named
+    by a `lab_wire`), `Vo` straight down to the GND bus;
+  - unpowered: `Vtie` in the `vddo` column, tied across to the `vdd` column; `Cvdd` below it in the
+    freed source slot; `Vpad` in the source row under `Rpad` (flipped so that its pwl text clears
+    CL's ground wire); net `padsrc` named by a `lab_wire`.
+  Still equivalent. The vref-only commit that Christoph cancelled reached the disk anyway; the files
+  there were byte-identical to it, so nothing of his was overwritten, and the wired versions replaced
+  them. At 02:41 CET he moved the texts and merged GND segments in startup_oa and unpowered himself;
+  connectivity unchanged.
+- xschem drawing skill: proposed update of `xschem-analog-schematic` (testbench layout from
+  tb_pd_enable; redrawing sibling testbenches with the sources wired in; label orientation; symbol
+  pin moves including the CACE templates; `.sym`/`.sch` pin names; topology check against a reference
+  snapshot; pins on wire interiors; the headless render command that works). Before, after and a
+  unified diff in `_sudelbuecher/Claude/skill_versions/xschem-analog-schematic/`:
+  `SKILL_2026-10-01_before.md` (the skill in use, identical to `Claude/skills/xschem-analog-schematic/SKILL.md`,
+  which is untouched), `SKILL_2026-10-25_after.md` (the proposal), `SKILL_2026-10-01_to_2026-10-25.diff`.
+- CACE templates of `d2s_bias_in_pd` and `d2s_bias_oa_pd`, broken by the pin moves in both symbols:
+  Christoph fixed `d2s_bias_in_pd_tb_dc.sch` (02:48 CET) by moving the `x1` pin labels to the new pin
+  positions. The same move in the other seven, rotation and flip kept: 12 labels each in
+  `d2s_bias_in_pd_tb_{pd,psrr,startup}`, 11 each in `d2s_bias_oa_pd_tb_{dc,pd,psrr,startup}` (no
+  `iref`). All eight equivalent to the reference.
+- Full check of the current tree (02:57 CET): 87 sheets equivalent to the reference except the
+  intended changes (`inv_3v3_pd` ports `a`/`y`; `Iext` → vss in tb_pd_enable, leak, unpowered). Every
+  sheet that places one of the 19 symbols with moved pins is re-wired. Structural checks:
+  - `schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch`: `xinbuf`, `xoutbuf` and the IHP pads
+    `x1` (IOPadAnalog) and `x2` (IOPadInOut16mA) are placed but not wired (43 pins), the 22 ports reach
+    none of them. Top-level integration still to do; whether the two IHP pads stay is open, since
+    both macros carry their own ESD protection.
+  - `ls_dn_3v3_1v2`: `VH` drives a `vddh` net that nothing uses (the shifter has no 3.3 V pin), so
+    `ih_lo`/`ih_hi` = `i(VH)` in `tb_ls_dn.sch` are always 0; the CACE template has the same unused source.
+  - `macros/IOPad`: `DCNdiode.sym`, `DCPdiode.sym`, `sg13cmos5l_ClampN15N15.sym`,
+    `sg13cmos5l_ClampP15N15.sym` are primitive device symbols whose pins differ from the same-named
+    sheets; no sheet uses them.
+  - By design: the `spice_ignore` example instances in the counter and inverter testbenches; CACE
+    templates whose `x1` pins sit on labels only (the sources are in the code block).
+  - Sudelbuecher `s2d_input_buffer`, including the 22/23 Oct edits of `s2d_bias_lp.sch` and
+    `s2d_mpdda.sch`: no floating pins, symbol and sheet ports match (`CLP`/`CLN` are MOS capacitors on
+    vss); there is no 20 Oct copy to compare the edits against. `class_ab_pad_driver/*`: the frozen
+    predecessors of the macros, behind `macros/` by design.
+- Next, as Christoph stated (03:09 CET): simulate some of the circuits by hand, then look at their
+  layout implications — devices that are unrealistically large or need splitting up. Layout will
+  decide which supply domains go where and whether the power-on detection needs revising.
+- Chat log continued. The stretch 01:18–02:56 CEST is not in it: the raw transcript of that stretch
+  no longer exists in the cloud container.
