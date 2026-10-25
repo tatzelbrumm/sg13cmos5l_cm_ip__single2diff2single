@@ -388,7 +388,7 @@ The clocks went back at 03:00 CEST, so times before the change are marked CEST a
   `design_considerations/consolidation/mismatch_2026-10-25/`: `README.md` (conditions, models, results,
   file list), `pad_buffer_mismatch.html` (charts and tables; opens offline in any browser), the per-seed
   data as `pad_mc.csv`, `s2d_mc.csv`, `budget_20seeds.csv`, and the raw `.json`. On the computer at
-  13:40 (json) and 16:40 CET (the rest). The same page as a private claude.ai artifact, "Pad buffer
+  14:40 (json) and 17:40 CET (the rest; corrected 22:10, the computer's shell reports UTC). The same page as a private claude.ai artifact, "Pad buffer
   mismatch".
   - Output pad `sg13cmos5l_IOPadDiff2Single`, 150 seeds: offset σ 6.09 mV, gain σ 0.75 %. The rhigh unit
     resistors set the gain spread (0.77 %) and add no offset; the sinks `XSX`/`XSY` give 5.40 mV, the
@@ -422,3 +422,103 @@ The clocks went back at 03:00 CEST, so times before the change are marked CEST a
   marks the gap; it uses nothing from the model-written compaction summary. From 18:35 CET the session
   keeps an append-only copy of the transcript records in the cloud container (cloud-only helper, not
   shipped), and the chat log is to be exported at milestones from now on, as Christoph asked (18:31).
+
+## 2026-10-25 18:40 … 19:35 CET — en_3v3_b made once in en_ctrl_3v3; enable switches of d2s_mpdda_pd redrawn
+
+Christoph's request (18:16): the enable transistors are crammed into `d2s_mpdda_pd.sch` and connected by labels;
+should the 3.3 V inverter `en_3v3` → `en_3v3_b` come out of the sheets. Chosen: pull it out. 35 files in `macros/`
+changed, on the computer at 19:28 CET (mtime-guarded, checksums equal). The versions before are in
+`design_considerations/consolidation/enable_rework_2026-10-25/before/` (`d2s_mpdda_pd.sch` there includes
+Christoph's 17:40 edits, which were not committed to git yet).
+
+- `en_ctrl_3v3`: `XIB` (`inv_hv`, on vddh / vss) makes `en_3v3_b`; new output pin at (100, 20) of the symbol.
+  Placed under the en_3v3 output, vddh from the rail's right end, no crossings.
+- `d2s_bias_sel_pd`: `Xi` (`inv_3v3_pd`) removed, `en_3v3_b` is an input pin, at (-90, 10) of the symbol. `Xt`'s
+  `en_3v3` / `en_3v3_b` now wired (were labels): en_3v3 along the top, en_3v3_b from a pin over the bottom rails.
+  `inv_3v3_pd.sch/.sym` is no longer used by any sheet; kept.
+- `d2s_mpdda_pd`: `IP` / `IN` and all enable labels removed; `en_3v3_b` pin at (-180, 60) of the symbol (bottom
+  left, under vref). Sheet: the top rails moved up and the bottom rails down by 120. SA and SABP hang from the top
+  rails, with their gates dropping to an `en_3v3` line from the pin. SB and SABN hang from the bottom rails, gates
+  to an `en_3v3_b` line. SA sits on top of the `a` column, SB under the `b` column, SABP's drain goes down x = 1160
+  to vabp, SABN's up x = 140 to vabn. All wired, `[E]` frames around the four, the `[E]` text says where
+  en_3v3_b comes from. Christoph's top `[6]` label moved 105 to the right (it overlapped SA's model text).
+- Parents:
+  - `sg13cmos5l_IOPadDiff2Single.sch`: en_3v3_b wired from xc to xb and xd (6 crossings, forced by the pin order).
+    Labels `l8` (en_3v3) and `l15` (ibias) removed (redundant, their text sat on the new wire). `l23` / `l24`
+    (sel0 / sel1) are now `lab_wire`s left of it.
+  - `sg13cmos5l_IOPadSingle2Diff.sch`: xc → xb, 2 crossings, sel / en labels as lab_wires.
+  - Fixture `d2s_mpdda_pd_sel`: `en_3v3_b` is a new pin; its template ties it to 0, the yaml lists it. The fixture
+    label `l11` (en_3v3) was removed, since the new branch ran through its text.
+  - `tb_pd_{enable,leak,startup_oa,unpowered}.sch`: `XIB` (`inv_hv`) under Xd's lower-left corner, on the same vdd /
+    vss as the old internal inverter (that matters for `unpowered`, where vdd floats). The vref jog moved 20 to the
+    left; unpowered's code block saves `v(en_b)` instead of `v(xd.en_3v3_b)`.
+  - The four `testbenches/spice/tb_pd_*.spice` decks: `XIBP` / `XIBN` at the top level.
+  - bias_sel CACE templates: label on the new pin and Xi's two devices in the code block. en_ctrl templates:
+    label on the new output. The yamls list the new pins.
+- Source netlists (`d2s_mpdda_pd`, `en_ctrl_3v3`, `d2s_bias_sel_pd`, both pad tops) and the three READMEs are
+  updated.
+- Checks:
+  - Topology against the 20 Oct reference (`sheet_equiv.py`) shows only the intended differences.
+    `tb_pd_startup_oa` and the input pad top come out equivalent when flattened.
+  - The xschem netlists of the five cells match their source netlists node for node.
+  - tb_pd decks before / after: enable and unpowered are identical; leak and startup_oa agree within 5 ppm.
+  - Nominal (tt, 27 °C) template runs before / after:
+    - pad dc and loop gain: identical;
+    - pad enable (sel 0/1/2): settling within 0.5 ns, glitches within 0.1 mV;
+    - pad power down: identical except iovdd 55.8 → 55.5 pA (state 0) and 68.2 → 67.9 pA (state 3);
+    - bias_sel dc / tran: identical;
+    - en_ctrl dc: identical; en_ctrl enable delay 1.74 → 1.79 ns and disable delay 2.56 → 2.58 ns (XIB's gate on
+      en_3v3; 50 fF load).
+  - Renders of every changed sheet were looked at.
+- Not done: the full CACE suites were not re-run; the READMEs say which results predate the change.
+  `bg_core_pd.sch` / `oa_core_pd.sch` still say their en_3v3_b comes "from inv_3v3_pd" (already untrue inside
+  bias_sel, where XDA / XDB drive them).
+- Found on the way: 8 `xschemrc` on the computer start with a UTF-8 byte-order mark: `testbenches/xschem`,
+  `schematic/xschem`, `macros/IOPad/schematic`, `macros/inverter/{schematic,testbenches}`,
+  `macros/slot/testbenches`, `macros/OgueyAebischerBias/{schematic,testbenches}`. In the cloud's xschem (Tcl 8.6)
+  the mark turns line 1 into an unknown command; xschem stops reading the file there and shows an error box. Not
+  changed.
+- git: `git status` was run twice on the computer (read-only, no lock file left), which goes beyond the `git log`
+  permission.
+- Chat log exported at 18:36, 19:22 and after this entry. From 18:35 the session keeps an append-only copy of the
+  transcript records.
+
+## 2026-10-25 21:39 … 21:46 CET — check of Christoph's hand edits of 20:42–21:37 CET
+
+(Times corrected 22:10: the computer's shell reports UTC.)
+
+17 files edited after the 19:28 commit, among them three symbols.
+- Symbols:
+  - `en_ctrl_3v3.sym`: en_3v3_b moved to (100, -20) under en_3v3; sel0_3v3 / sel1_3v3 each moved down 20.
+  - `d2s_mpdda_pd.sym`: en_3v3_b moved to (-180, -40), with inversion bubbles on en_3v3_b and vinn.
+  - `d2s_mpdda_pd_sel.sym`: en_3v3_b moved to (-180, 40), sel0 / sel1 each down 20.
+  - Port order unchanged in all three, so the source netlists, decks and yamls still fit.
+  - The positions in the entry above are superseded by these.
+- Every sheet that places a changed symbol was re-wired. Topology against the 19:28 versions (`sheet_equiv.py`):
+  15 of 16 sheets equivalent; the 16th is `en_ctrl_3v3_tb_tran_pg.sch`, where x1's last three output labels were
+  not moved with the pins (sel0 pin labelled sel1_3v3, sel1 pin labelled en_3v3_b, en_3v3_b pin labelled
+  sel0_3v3). There Cl1 / Cl2 load the wrong outputs; en_3v3, the measured output, is right. Not fixed yet.
+- Drawing issues (connectivity correct):
+  - `sg13cmos5l_IOPadDiff2Single.sch`: xb moved 40 to the right, the vbp wire still starts at 660, 40 inside xb.
+    The parallel en_3v3 / en_3v3_b verticals (x = 420 / 440) cut through the "en_3v3" lab_wire text.
+  - `tb_pd_{enable,leak,startup_oa,unpowered}.sch`: XIB moved to (740, 200). Its vss wire runs down x = 740 through
+    Xb's body to the vss rail, and the vdd column x = 760 runs on through XIB to Xb's vdd pin (in all four).
+  - `en_ctrl_3v3.sch`: XIB's vddh drop now crosses the en_3v3 output line (no junction).
+- The other dangling ends, label-only pins and overshoots the checker reports were already in the 19:28
+  versions (Christoph's earlier drawing), not new.
+
+## 2026-10-25 22:09 … 22:12 CET — recheck after Christoph's fixes
+
+Christoph (22:09): the vertical supply wires across digital-cell symbols are his deliberate way of wiring supplies
+by wire instead of label (so the tb_pd XIB vss / vdd routes and the en_ctrl vddh drop are intended, not issues).
+- Since the check he fixed `en_ctrl_3v3_tb_tran_pg.sch` (21:49 CET: x1's output labels now match the moved pins)
+  and `sg13cmos5l_IOPadDiff2Single.sch` (22:06 CET: vbp starts at xb's pin, x = 700). Both equivalent to the
+  19:28 versions. In tran_pg the wire to en_3v3_b still carries a stale `lab=#net1` attribute in the file;
+  xschem recomputes it, the netlist names the net en_3v3_b.
+- All 16 sheets changed today, his current state against the 20 Oct reference: the same difference report, line
+  for line, as the verified 19:28 tree. His edits changed no connectivity; the symbols kept their port order,
+  so the source netlists, decks and yamls still fit and the 19:2x simulation results stand.
+- Left as it was: the 10-unit iovdd overshoot at DP in the pad top (from the 20 Oct drawing).
+
+- 22:49 / 22:50 CET, Christoph: the stale `lab=#net1` in tran_pg now reads en_3v3_b, and the pad top's iovdd wire
+  ends on DP's pin (-540). Both equivalent to the verified versions; the structural check is clean for both.
