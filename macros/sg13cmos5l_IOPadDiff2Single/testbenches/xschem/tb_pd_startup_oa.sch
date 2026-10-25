@@ -10,102 +10,112 @@ T {DUT and bias from the schematics in this directory; code block = the deck's .
 T {The operating point is taken with en_3v3 = 0, so the transient starts from the disabled state.} 60 -420 0 0 0.25 0.25 {}
 T {Reference (results_power_down.txt): final I_Q 212.0 uA (enabled dc op 212.0 uA); I_Q stays within} 60 -398 0 0 0.25 0.25 {}
 T {10 % of it from 10.9 us after the enable edge.} 60 -376 0 0 0.25 0.25 {}
-C {devices/vsource.sym} 100 200 0 0 {name=Vvdd value=3.3 savecurrent=false}
-N 100 -300 100 170 {lab=vdd}
-N 100 230 100 700 {lab=GND}
-C {devices/vsource.sym} 200 200 0 0 {name=Vvss value=0 savecurrent=false}
-N 200 130 200 170 {lab=vss}
-C {devices/lab_pin.sym} 200 130 0 1 {name=l1 sig_type=std_logic lab=vss}
-N 200 230 200 700 {lab=GND}
-C {devices/vsource.sym} 300 200 0 0 {name=Vvddo value=3.3 savecurrent=false}
-N 300 130 300 170 {lab=vddo}
-C {devices/lab_pin.sym} 300 130 0 1 {name=l2 sig_type=std_logic lab=vddo}
-N 300 230 300 700 {lab=GND}
-C {devices/vsource.sym} 400 200 0 0 {name=Vvsso value=0 savecurrent=false}
-N 400 130 400 170 {lab=vsso}
-C {devices/lab_pin.sym} 400 130 0 1 {name=l3 sig_type=std_logic lab=vsso}
-N 400 230 400 700 {lab=GND}
-C {devices/vsource.sym} 500 200 0 0 {name=Ven value="pwl(0 0 1u 0 1.01u 3.3)" savecurrent=false}
-N 500 130 500 170 {lab=en}
-C {devices/lab_pin.sym} 500 130 0 1 {name=l4 sig_type=std_logic lab=en}
-N 500 230 500 700 {lab=GND}
-C {devices/vsource.sym} 600 200 0 0 {name=Vcm value=1.65 savecurrent=false}
-N 600 130 600 170 {lab=vref}
-C {devices/lab_pin.sym} 600 130 0 1 {name=l5 sig_type=std_logic lab=vref}
-N 600 230 600 700 {lab=GND}
-N 60 -300 100 -300 {lab=vdd}
-C {devices/lab_wire.sym} 60 -300 0 0 {name=l6 sig_type=std_logic lab=vdd}
-C {d2s_bias_oa_pd.sym} 1300 460 0 0 {name=Xb}
-C {d2s_mpdda_pd.sym} 1640 40 0 0 {name=Xd}
-N 100 -300 1220 -300 {lab=vdd}
-N 1220 -300 1520 -300 {lab=vdd}
-N 1220 -300 1220 280 {lab=vdd}
-N 1520 -300 1520 -80 {lab=vdd}
-N 100 700 2020 700 {lab=GND}
-C {devices/gnd.sym} 1500 700 0 0 {name=l0 lab=GND}
-N 1220 640 1220 680 {lab=vss}
-C {devices/lab_pin.sym} 1220 680 0 1 {name=l7 sig_type=std_logic lab=vss}
-N 1380 280 1380 240 {lab=vddo}
-C {devices/lab_pin.sym} 1380 240 0 1 {name=l8 sig_type=std_logic lab=vddo}
-N 1380 640 1380 680 {lab=vsso}
-C {devices/lab_pin.sym} 1380 680 0 1 {name=l9 sig_type=std_logic lab=vsso}
-N 1120 560 1160 560 {lab=en}
-C {devices/lab_pin.sym} 1120 560 0 0 {name=l10 sig_type=std_logic lab=en}
-N 1440 360 1560 360 {lab=vbp}
-N 1560 360 1560 160 {lab=vbp}
-C {devices/lab_wire.sym} 1560 360 0 0 {name=l11 sig_type=std_logic lab=vbp}
-N 1440 400 1600 400 {lab=vbn}
-N 1600 400 1600 160 {lab=vbn}
-C {devices/lab_wire.sym} 1600 400 0 0 {name=l12 sig_type=std_logic lab=vbn}
-N 1440 440 1640 440 {lab=vbpc}
-N 1640 440 1640 160 {lab=vbpc}
-C {devices/lab_wire.sym} 1640 440 0 0 {name=l13 sig_type=std_logic lab=vbpc}
-N 1440 480 1680 480 {lab=vbnc}
-N 1680 480 1680 160 {lab=vbnc}
-C {devices/lab_wire.sym} 1680 480 0 0 {name=l14 sig_type=std_logic lab=vbnc}
-N 1440 520 1720 520 {lab=vabp}
-N 1720 520 1720 160 {lab=vabp}
-C {devices/lab_wire.sym} 1720 520 0 0 {name=l15 sig_type=std_logic lab=vabp}
-N 1440 560 1760 560 {lab=vabn}
-N 1760 560 1760 160 {lab=vabn}
-C {devices/lab_wire.sym} 1760 560 0 0 {name=l16 sig_type=std_logic lab=vabn}
-N 1520 160 1520 200 {lab=vss}
-C {devices/lab_pin.sym} 1520 200 0 1 {name=l17 sig_type=std_logic lab=vss}
-N 1800 -80 1800 -120 {lab=vddo}
-C {devices/lab_pin.sym} 1800 -120 0 1 {name=l18 sig_type=std_logic lab=vddo}
-N 1800 160 1800 200 {lab=vsso}
-C {devices/lab_pin.sym} 1800 200 0 1 {name=l19 sig_type=std_logic lab=vsso}
-N 1420 -40 1460 -40 {lab=en}
-C {devices/lab_pin.sym} 1420 -40 0 0 {name=l20 sig_type=std_logic lab=en}
-N 1420 60 1460 60 {lab=vref}
-C {devices/lab_pin.sym} 1420 60 0 0 {name=l21 sig_type=std_logic lab=vref}
-N 1420 100 1460 100 {lab=vout}
-C {devices/lab_pin.sym} 1420 100 0 0 {name=l22 sig_type=std_logic lab=vout}
-C {devices/vsource.sym} 1160 -120 0 0 {name=Vp value=0 savecurrent=false}
-N 1160 -150 1240 -150 {lab=vinp}
-N 1240 -150 1240 -20 {lab=vinp}
-N 1240 -20 1460 -20 {lab=vinp}
-C {devices/lab_wire.sym} 1240 -150 0 0 {name=l23 sig_type=std_logic lab=vinp}
-N 1160 -90 1160 -60 {lab=vref}
-C {devices/lab_pin.sym} 1160 -60 0 1 {name=l24 sig_type=std_logic lab=vref}
-C {devices/vsource.sym} 1160 60 0 0 {name=Vn value=0 savecurrent=false}
-N 1160 30 1260 30 {lab=vinn}
-N 1260 30 1260 20 {lab=vinn}
-N 1260 20 1460 20 {lab=vinn}
-C {devices/lab_wire.sym} 1260 30 0 0 {name=l25 sig_type=std_logic lab=vinn}
-N 1160 90 1160 120 {lab=vref}
-C {devices/lab_pin.sym} 1160 120 0 1 {name=l26 sig_type=std_logic lab=vref}
-N 1860 -20 1920 -20 {lab=vout}
-N 1920 -20 1920 40 {lab=vout}
-C {devices/res.sym} 1920 70 0 0 {name=RL value=1k m=1}
-N 1920 100 1920 140 {lab=vref}
-C {devices/lab_pin.sym} 1920 140 0 1 {name=l27 sig_type=std_logic lab=vref}
-N 1920 -20 2020 -20 {lab=vout}
-N 2020 -20 2020 40 {lab=vout}
-C {devices/capa.sym} 2020 70 0 0 {name=CL value=100p m=1}
-N 2020 100 2020 700 {lab=GND}
-N 2020 -20 2060 -20 {lab=vout}
-C {devices/lab_pin.sym} 2060 -20 0 1 {name=l28 sig_type=std_logic lab=vout}
+N 200 -300 200 620 {lab=vdd}
+N 440 580 440 620 {lab=vss}
+N 840 600 840 620 {lab=vsso}
+N 760 -300 1040 -300 {lab=vdd}
+N 760 -300 760 320 {lab=vdd}
+N 740 520 740 580 {lab=vss}
+N 840 520 840 600 {lab=vsso}
+N 900 480 1200 480 {lab=vbn}
+N 900 380 1100 380 {lab=vbpc}
+N 1180 120 1180 460 {lab=vbnc}
+N 900 440 1160 440 {lab=vabn}
+N 1020 120 1020 580 {lab=vss}
+N 1240 120 1240 600 {lab=vsso}
+N 940 60 960 60 {lab=vref}
+N 500 100 500 140 {lab=vref}
+N 600 100 600 140 {lab=vref}
+N 1320 0 1380 0 {lab=vout}
+N 1380 20 1380 60 {lab=vout}
+N 1380 0 1480 0 {lab=vout}
+N 1480 0 1480 60 {lab=vout}
+N 1060 700 1480 700 {lab=GND}
+N 1100 120 1100 380 {lab=vbpc}
+N 1120 120 1120 400 {lab=vabp}
+N 900 400 1120 400 {lab=vabp}
+N 900 460 1180 460 {lab=vbnc}
+N 1080 120 1080 360 {lab=vbp}
+N 900 360 1080 360 {lab=vbp}
+N 1160 120 1160 440 {lab=vabn}
+N 1200 120 1200 480 {lab=vbn}
+N 200 680 200 700 {lab=GND}
+N 440 680 440 700 {lab=GND}
+N 120 680 120 700 {lab=GND}
+N 840 680 840 700 {lab=GND}
+N 660 680 660 700 {lab=GND}
+N 280 680 280 700 {lab=GND}
+N 1480 120 1480 700 {lab=GND}
+N 840 600 1240 600 {lab=vsso}
+N 120 700 200 700 {lab=GND}
+N 740 580 1020 580 {lab=vss}
+N 440 580 740 580 {lab=vss}
+N 120 -320 120 620 {lab=vddo}
+N 860 -320 1260 -320 {lab=vddo}
+N 1260 -320 1260 -80 {lab=vddo}
+N 1320 20 1380 20 {lab=vout}
+N 1380 0 1380 20 {lab=vout}
+N 1040 -300 1040 -70 {lab=vdd}
+N 860 -320 860 320 {lab=vddo}
+N 120 -320 860 -320 {lab=vddo}
+N 660 460 660 620 {lab=en}
+N 660 460 710 460 {lab=en}
+N 600 20 600 40 {lab=vinn}
+N 940 140 1380 140 {lab=vref}
+N 1380 120 1380 140 {lab=vref}
+N 940 60 940 140 {lab=vref}
+N 200 -300 760 -300 {lab=vdd}
+N 500 0 500 40 {lab=vinp}
+N 280 140 280 620 {lab=vref}
+N 500 140 600 140 {lab=vref}
+N 660 700 840 700 {lab=GND}
+N 440 700 660 700 {lab=GND}
+N 500 0 960 0 {lab=vinp}
+N 600 20 960 20 {lab=vinn}
+N 600 140 940 140 {lab=vref}
+N 280 140 500 140 {lab=vref}
+N 280 700 440 700 {lab=GND}
+N 200 700 280 700 {lab=GND}
+N 660 -40 660 460 {lab=en}
+N 660 -40 960 -40 {lab=en}
+N 1060 700 1060 720 {}
+N 840 700 1060 700 {lab=GND}
+C {devices/vsource.sym} 200 650 0 0 {name=Vvdd value=3.3 savecurrent=false}
+C {devices/vsource.sym} 440 650 0 0 {name=Vvss value=0 savecurrent=false}
+C {devices/lab_pin.sym} 440 580 0 0 {name=l1 sig_type=std_logic lab=vss}
+C {devices/vsource.sym} 120 650 0 0 {name=Vvddo value=3.3 savecurrent=false}
+C {devices/lab_pin.sym} 120 -320 0 0 {name=l2 sig_type=std_logic lab=vddo}
+C {devices/vsource.sym} 840 650 0 0 {name=Vvsso value=0 savecurrent=false}
+C {devices/lab_pin.sym} 840 600 0 0 {name=l3 sig_type=std_logic lab=vsso}
+C {devices/vsource.sym} 660 650 0 0 {name=Ven value="pwl(0 0 1u 0 1.01u 3.3)" savecurrent=false}
+C {devices/lab_pin.sym} 660 460 0 0 {name=l4 sig_type=std_logic lab=en}
+C {devices/vsource.sym} 280 650 0 0 {name=Vcm value=1.65 savecurrent=false}
+C {devices/lab_pin.sym} 280 140 0 0 {name=l6 sig_type=std_logic lab=vref}
+C {d2s_bias_oa_pd.sym} 800 420 0 0 {name=Xb}
+C {d2s_mpdda_pd.sym} 1140 20 0 0 {name=Xd}
+C {devices/gnd.sym} 1060 720 0 0 {name=l0 lab=GND}
+C {devices/lab_pin.sym} 740 530 0 1 {name=l8 sig_type=std_logic lab=vss}
+C {devices/lab_pin.sym} 860 310 0 1 {name=l9 sig_type=std_logic lab=vddo}
+C {devices/lab_pin.sym} 840 530 0 1 {name=l10 sig_type=std_logic lab=vsso}
+C {devices/lab_wire.sym} 1080 360 0 1 {name=l12 sig_type=std_logic lab=vbp}
+C {devices/lab_wire.sym} 1200 480 0 1 {name=l13 sig_type=std_logic lab=vbn}
+C {devices/lab_wire.sym} 1100 380 0 1 {name=l14 sig_type=std_logic lab=vbpc}
+C {devices/lab_wire.sym} 1180 460 0 1 {name=l15 sig_type=std_logic lab=vbnc}
+C {devices/lab_wire.sym} 1120 400 0 1 {name=l16 sig_type=std_logic lab=vabp}
+C {devices/lab_wire.sym} 1160 440 0 1 {name=l17 sig_type=std_logic lab=vabn}
+C {devices/lab_pin.sym} 1020 580 0 1 {name=l18 sig_type=std_logic lab=vss}
+C {devices/lab_pin.sym} 1260 -320 0 1 {name=l19 sig_type=std_logic lab=vddo}
+C {devices/lab_pin.sym} 1240 600 0 1 {name=l20 sig_type=std_logic lab=vsso}
+C {devices/lab_pin.sym} 660 -40 0 0 {name=l21 sig_type=std_logic lab=en}
+C {devices/lab_pin.sym} 940 60 0 0 {name=l22 sig_type=std_logic lab=vref}
+C {devices/vsource.sym} 500 70 0 0 {name=Vp value=0 savecurrent=false}
+C {devices/lab_wire.sym} 500 0 0 0 {name=l24 sig_type=std_logic lab=vinp}
+C {devices/vsource.sym} 600 70 0 0 {name=Vn value=0 savecurrent=false}
+C {devices/lab_wire.sym} 600 20 0 0 {name=l26 sig_type=std_logic lab=vinn}
+C {devices/res.sym} 1380 90 0 0 {name=RL value=1k m=1}
+C {devices/lab_pin.sym} 1380 140 0 1 {name=l31 sig_type=std_logic lab=vref}
+C {devices/capa.sym} 1480 90 0 0 {name=CL value=100p m=1}
+C {devices/lab_pin.sym} 1480 0 0 1 {name=l32 sig_type=std_logic lab=vout}
 C {devices/code_shown.sym} 60 820 0 0 {name=s1 only_toplevel=false value=".lib cornerMOShv.lib mos_tt
 .lib cornerRES.lib res_typ
 .lib cornerCAP.lib cap_typ
@@ -126,3 +136,5 @@ if $?batchmode = 0
   plot v(vout) v(xb.xc.vbr) v(xb.xc.ks) xlimit 0 50u
 end
 .endc"}
+C {devices/lab_pin.sym} 200 -300 0 0 {name=l23 sig_type=std_logic lab=vdd}
+C {devices/lab_pin.sym} 1040 -300 0 1 {name=l7 sig_type=std_logic lab=vdd}

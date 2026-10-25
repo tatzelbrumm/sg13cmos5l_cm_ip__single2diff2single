@@ -10,18 +10,18 @@ T {SPDX-License-Identifier: Apache-2.0} -560 -410 0 0 0.25 0.25 {}
 T {CACE template: d2s_bias_in_pd, dc: bias currents, supply currents, line sensitivity} -560 -370 0 0 0.4 0.4 {}
 T {DUT pins carry net labels only; every source and measurement is in the code block below.} -560 -320 0 0 0.25 0.25 {}
 C {d2s_bias_in_pd.sym} 0 0 0 0 {name=x1}
-C {devices/lab_pin.sym} -80 -180 0 0 {name=p1 sig_type=std_logic lab=vdd}
-C {devices/lab_pin.sym} -80 180 0 0 {name=p2 sig_type=std_logic lab=vss}
-C {devices/lab_pin.sym} 80 -180 2 0 {name=p3 sig_type=std_logic lab=vddo}
-C {devices/lab_pin.sym} 80 180 2 0 {name=p4 sig_type=std_logic lab=vsso}
-C {devices/lab_pin.sym} -140 0 0 0 {name=p5 sig_type=std_logic lab=iref}
-C {devices/lab_pin.sym} 140 -100 2 0 {name=p6 sig_type=std_logic lab=vbp}
-C {devices/lab_pin.sym} 140 -60 2 0 {name=p7 sig_type=std_logic lab=vbn}
-C {devices/lab_pin.sym} 140 -20 2 0 {name=p8 sig_type=std_logic lab=vbpc}
-C {devices/lab_pin.sym} 140 20 2 0 {name=p9 sig_type=std_logic lab=vbnc}
-C {devices/lab_pin.sym} 140 60 2 0 {name=p10 sig_type=std_logic lab=vabp}
-C {devices/lab_pin.sym} 140 100 2 0 {name=p11 sig_type=std_logic lab=vabn}
-C {devices/lab_pin.sym} -140 100 0 0 {name=p12 sig_type=std_logic lab=en_3v3}
+C {devices/lab_pin.sym} -40 -100 0 0 {name=p1 sig_type=std_logic lab=vdd}
+C {devices/lab_pin.sym} -60 100 0 0 {name=p2 sig_type=std_logic lab=vss}
+C {devices/lab_pin.sym} 60 -100 2 0 {name=p3 sig_type=std_logic lab=vddo}
+C {devices/lab_pin.sym} 40 100 2 0 {name=p4 sig_type=std_logic lab=vsso}
+C {devices/lab_pin.sym} -100 -40 0 0 {name=p5 sig_type=std_logic lab=iref}
+C {devices/lab_pin.sym} 100 -60 2 0 {name=p6 sig_type=std_logic lab=vbp}
+C {devices/lab_pin.sym} 100 60 2 0 {name=p7 sig_type=std_logic lab=vbn}
+C {devices/lab_pin.sym} 100 -40 2 0 {name=p8 sig_type=std_logic lab=vbpc}
+C {devices/lab_pin.sym} 100 40 2 0 {name=p9 sig_type=std_logic lab=vbnc}
+C {devices/lab_pin.sym} 100 -20 2 0 {name=p10 sig_type=std_logic lab=vabp}
+C {devices/lab_pin.sym} 100 20 2 0 {name=p11 sig_type=std_logic lab=vabn}
+C {devices/lab_pin.sym} -100 40 0 0 {name=p12 sig_type=std_logic lab=en_3v3}
 C {devices/vsource.sym} -400 100 0 0 {name=Ven value="0" savecurrent=false}
 C {devices/lab_pin.sym} -400 70 0 0 {name=pv1 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} -400 130 0 0 {name=pv2 sig_type=std_logic lab=en_3v3}

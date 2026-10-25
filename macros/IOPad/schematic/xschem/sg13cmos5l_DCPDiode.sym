@@ -9,16 +9,24 @@ V {}
 S {}
 F {}
 E {}
-T {IHP sg13cmos5l_io cell sg13cmos5l_DCPDiode: subcircuit from libs.ref/sg13cmos5l_io (spice / cdl); include sg13cmos5l_io.spice in the testbench} -100 90 0 0 0.15 0.15 {}
-P 4 5 -80 -10 80 -10 80 80 -80 80 -80 -10 {}
-T {sg13cmos5l_DCPDiode} -75 -30 0 0 0.2 0.2 {}
-T {@name} -75 65 0 0 0.2 0.2 {}
-L 4 -100 10 -80 10 {}
-B 5 -102.5 7.5 -97.5 12.5 {name=anode dir=inout}
-T {anode} -75 4 0 0 0.2 0.2 {}
-L 4 -100 30 -80 30 {}
-B 5 -102.5 27.5 -97.5 32.5 {name=cathode dir=inout}
-T {cathode} -75 24 0 0 0.2 0.2 {}
-L 4 -100 50 -80 50 {}
-B 5 -102.5 47.5 -97.5 52.5 {name=guard dir=inout}
-T {guard} -75 44 0 0 0.2 0.2 {}
+L 4 -40 0 0 0 {}
+L 4 0 -40 10 -40 {}
+L 4 0 -60 0 -25 {}
+L 4 0 -15 0 0 {}
+L 4 -10 -25 10 -25 {}
+L 4 10 -40 10 5 {}
+L 4 10 15 10 30 {}
+L 4 0 5 20 5 {}
+L 4 -0 30 -0 40 {}
+B 5 -42.5 -2.5 -37.5 2.5 {name=anode dir=inout}
+B 5 -2.5 -62.5 2.5 -57.5 {name=cathode dir=inout}
+B 5 -2.5 37.5 2.5 42.5 {name=guard dir=inout}
+P 4 5 -20 -50 20 -50 20 30 -20 30 -20 -50 {}
+P 4 4 0 -25 -10 -15 10 -15 0 -25 {fill=true}
+P 4 4 10 5 0 15 20 15 10 5 {fill=true}
+T {IHP sg13cmos5l_io cell sg13cmos5l_DCPDiode: subcircuit from libs.ref/sg13cmos5l_io (spice / cdl); include sg13cmos5l_io.spice in the testbench} -40 50 0 0 0.15 0.15 {}
+T {@symname} -15 -60 0 0 0.2 0.2 {}
+T {@name} -15 35 0 0 0.2 0.2 {}
+T {anode} -15 -6 0 0 0.2 0.2 {}
+T {cathode} -15 -36 0 0 0.2 0.2 {}
+T {guard} -15 14 0 0 0.2 0.2 {}

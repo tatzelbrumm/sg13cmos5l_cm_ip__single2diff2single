@@ -14,15 +14,15 @@ C {devices/lab_pin.sym} 1160 180 0 1 {name=lp1 sig_type=std_logic lab=0}
 C {devices/lab_pin.sym} 1240 -180 0 1 {name=lp2 sig_type=std_logic lab=vcore}
 C {devices/lab_pin.sym} 1240 180 0 1 {name=lp3 sig_type=std_logic lab=0}
 C {devices/lab_pin.sym} 1420 0 0 1 {name=lp4 sig_type=std_logic lab=pad}
-C {devices/lab_pin.sym} 980 -120 0 1 {name=lp5 sig_type=std_logic lab=vinp}
-C {devices/lab_pin.sym} 980 -100 0 1 {name=lp6 sig_type=std_logic lab=vinn}
-C {devices/lab_pin.sym} 980 -80 0 1 {name=lp7 sig_type=std_logic lab=vref}
-C {devices/lab_pin.sym} 980 -40 0 1 {name=lp8 sig_type=std_logic lab=ibias}
+C {devices/lab_pin.sym} 980 -120 0 0 {name=lp5 sig_type=std_logic lab=vinp}
+C {devices/lab_pin.sym} 980 -100 0 0 {name=lp6 sig_type=std_logic lab=vinn}
+C {devices/lab_pin.sym} 980 -80 0 0 {name=lp7 sig_type=std_logic lab=vref}
+C {devices/lab_pin.sym} 980 -40 0 0 {name=lp8 sig_type=std_logic lab=ibias}
 C {devices/lab_pin.sym} 980 0 0 0 {name=lp9 sig_type=std_logic lab=en}
-C {devices/lab_pin.sym} 980 20 0 1 {name=lp10 sig_type=std_logic lab=s0}
-C {devices/lab_pin.sym} 980 40 0 1 {name=lp11 sig_type=std_logic lab=s1}
-C {devices/lab_pin.sym} 980 80 0 1 {name=lp12 sig_type=std_logic lab=s12}
-C {devices/lab_pin.sym} 980 100 0 1 {name=lp13 sig_type=std_logic lab=s33}
+C {devices/lab_pin.sym} 980 20 0 0 {name=lp10 sig_type=std_logic lab=s0}
+C {devices/lab_pin.sym} 980 40 0 0 {name=lp11 sig_type=std_logic lab=s1}
+C {devices/lab_pin.sym} 980 80 0 0 {name=lp12 sig_type=std_logic lab=s12}
+C {devices/lab_pin.sym} 980 100 0 0 {name=lp13 sig_type=std_logic lab=s33}
 C {devices/code_shown.sym} 0 -460 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
 value="

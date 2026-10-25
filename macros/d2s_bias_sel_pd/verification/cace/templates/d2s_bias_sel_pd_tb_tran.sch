@@ -5,36 +5,21 @@ V {}
 S {}
 F {}
 E {}
-T {CACE template, settling after enable / sel change: d2s_bias_sel_pd. Conditions: step, corner_mos, temp, vdd, iref} 0 -60 0 0 0.4 0.4 {}
-C {d2s_bias_sel_pd.sym} 400 0 0 0 {name=x1}
-N 330 -90 330 -130 {lab=vdd}
-C {devices/lab_pin.sym} 330 -130 0 1 {name=l1 sig_type=std_logic lab=vdd}
-N 330 90 330 130 {lab=GND}
-C {devices/lab_pin.sym} 330 130 0 1 {name=l2 sig_type=std_logic lab=GND}
-N 350 -90 350 -130 {lab=vddo}
-C {devices/lab_pin.sym} 350 -130 0 1 {name=l3 sig_type=std_logic lab=vddo}
-N 350 90 350 130 {lab=vsso}
-C {devices/lab_pin.sym} 350 130 0 1 {name=l4 sig_type=std_logic lab=vsso}
-N 290 -50 250 -50 {lab=ibias}
-C {devices/lab_pin.sym} 250 -50 0 0 {name=l5 sig_type=std_logic lab=ibias}
-N 510 -50 550 -50 {lab=vbp}
-C {devices/lab_pin.sym} 550 -50 0 1 {name=l6 sig_type=std_logic lab=vbp}
-N 510 -30 550 -30 {lab=vbn}
-C {devices/lab_pin.sym} 550 -30 0 1 {name=l7 sig_type=std_logic lab=vbn}
-N 510 -10 550 -10 {lab=vbpc}
-C {devices/lab_pin.sym} 550 -10 0 1 {name=l8 sig_type=std_logic lab=vbpc}
-N 510 10 550 10 {lab=vbnc}
-C {devices/lab_pin.sym} 550 10 0 1 {name=l9 sig_type=std_logic lab=vbnc}
-N 510 30 550 30 {lab=vabp}
-C {devices/lab_pin.sym} 550 30 0 1 {name=l10 sig_type=std_logic lab=vabp}
-N 510 50 550 50 {lab=vabn}
-C {devices/lab_pin.sym} 550 50 0 1 {name=l11 sig_type=std_logic lab=vabn}
-N 290 -30 250 -30 {lab=en_3v3}
-C {devices/lab_pin.sym} 250 -30 0 0 {name=l12 sig_type=std_logic lab=en_3v3}
-N 290 -10 250 -10 {lab=sel0_3v3}
-C {devices/lab_pin.sym} 250 -10 0 0 {name=l13 sig_type=std_logic lab=sel0_3v3}
-N 290 10 250 10 {lab=sel1_3v3}
-C {devices/lab_pin.sym} 250 10 0 0 {name=l14 sig_type=std_logic lab=sel1_3v3}
+T {CACE template, settling after enable / sel change: d2s_bias_sel_pd. Conditions: step, corner_mos, temp, vdd, iref} 0 -40 0 0 0.4 0.4 {}
+N 200 0 200 40 {lab=vdd}
+N 180 220 180 260 {lab=GND}
+N 240 0 240 40 {lab=vddo}
+N 220 220 220 260 {lab=vsso}
+N 100 80 140 80 {lab=ibias}
+N 320 80 360 80 {lab=vbp}
+N 320 180 360 180 {lab=vbn}
+N 320 100 360 100 {lab=vbpc}
+N 320 160 360 160 {lab=vbnc}
+N 320 120 360 120 {lab=vabp}
+N 320 140 360 140 {lab=vabn}
+N 100 120 140 120 {lab=en_3v3}
+N 100 160 140 160 {lab=sel0_3v3}
+N 100 180 140 180 {lab=sel1_3v3}
 C {devices/code_shown.sym} 0 300 0 0 {name=MODEL only_toplevel=true format="tcleval( @value )" value="
 .lib cornerMOShv.lib mos_CACE\{corner_mos\}
 .lib cornerRES.lib res_CACE\{corner_r\}
@@ -101,3 +86,18 @@ let t_settle = tx - tev
 echo $&t_settle $&Ibp_end > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
 .endc
 "}
+C {d2s_bias_sel_pd.sym} 230 130 0 0 {name=x1}
+C {devices/lab_pin.sym} 200 0 0 0 {name=l1 sig_type=std_logic lab=vdd}
+C {devices/lab_pin.sym} 180 260 0 0 {name=l2 sig_type=std_logic lab=GND}
+C {devices/lab_pin.sym} 240 0 0 1 {name=l3 sig_type=std_logic lab=vddo}
+C {devices/lab_pin.sym} 220 260 0 1 {name=l4 sig_type=std_logic lab=vsso}
+C {devices/lab_pin.sym} 100 80 0 0 {name=l5 sig_type=std_logic lab=ibias}
+C {devices/lab_pin.sym} 360 80 0 1 {name=l6 sig_type=std_logic lab=vbp}
+C {devices/lab_pin.sym} 360 180 0 1 {name=l7 sig_type=std_logic lab=vbn}
+C {devices/lab_pin.sym} 360 100 0 1 {name=l8 sig_type=std_logic lab=vbpc}
+C {devices/lab_pin.sym} 360 160 0 1 {name=l9 sig_type=std_logic lab=vbnc}
+C {devices/lab_pin.sym} 360 120 0 1 {name=l10 sig_type=std_logic lab=vabp}
+C {devices/lab_pin.sym} 360 140 0 1 {name=l11 sig_type=std_logic lab=vabn}
+C {devices/lab_pin.sym} 100 120 0 0 {name=l12 sig_type=std_logic lab=en_3v3}
+C {devices/lab_pin.sym} 100 160 0 0 {name=l13 sig_type=std_logic lab=sel0_3v3}
+C {devices/lab_pin.sym} 100 180 0 0 {name=l14 sig_type=std_logic lab=sel1_3v3}
