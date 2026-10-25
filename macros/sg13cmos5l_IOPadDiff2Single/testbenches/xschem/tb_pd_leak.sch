@@ -5,17 +5,18 @@ V {}
 S {}
 F {}
 E {}
+T {tb_pd_leak: d2s_mpdda_pd + d2s_bias_in_pd disabled (en_3v3 = 0), supply currents, tt 27 C} 60 -500 0 0 0.5 0.5 {}
+T {DUT and bias from the schematics in this directory; code block = the deck's .lib / .temp / .option / .param / .save lines and its .control section} 60 -455 0 0 0.3 0.3 {}
+T {Reference (results_power_down.txt), vout held at 1.65 V: tt 27 C: bias 0.030 nA, driver front end} 60 -420 0 0 0.25 0.25 {}
+T {0.054 nA, vddo 0.020 nA, total 0.104 nA; ff 125 C: 0.633 / 1.283 / 27.21 nA, total 29.1 nA.} 60 -398 0 0 0.25 0.25 {}
 N 200 -300 200 620 {lab=vdd}
 N 440 580 440 620 {lab=vss}
 N 840 600 840 620 {lab=vsso}
-N 760 -300 1040 -300 {lab=vdd}
-N 740 520 740 580 {lab=vss}
 N 840 520 840 600 {lab=vsso}
 N 900 480 1200 480 {lab=vbn}
 N 900 380 1100 380 {lab=vbpc}
 N 1180 120 1180 460 {lab=vbnc}
 N 900 440 1160 440 {lab=vabn}
-N 1020 120 1020 580 {lab=vss}
 N 1240 120 1240 600 {lab=vsso}
 N 920 60 960 60 {lab=vref}
 N 500 100 500 140 {lab=vref}
@@ -74,7 +75,7 @@ N 660 460 660 620 {lab=en}
 N 660 460 710 460 {lab=en}
 N 600 20 600 40 {lab=vinn}
 N 920 60 920 140 {lab=vref}
-N 200 -300 760 -300 {lab=vdd}
+N 760 -300 1040 -300 {lab=vdd}
 N 500 0 500 40 {lab=vinp}
 N 280 140 280 620 {lab=vref}
 N 500 140 600 140 {lab=vref}
@@ -87,18 +88,22 @@ N 600 140 920 140 {lab=vref}
 N 280 140 500 140 {lab=vref}
 N 280 700 360 700 {lab=GND}
 N 200 700 280 700 {lab=GND}
-N 660 -40 660 460 {lab=en}
 N 660 -40 960 -40 {lab=en}
-N 1060 700 1060 720 {}
+N 1060 700 1060 720 {lab=GND}
 N 840 700 1060 700 {lab=GND}
-N 660 280 920 280 {lab=en}
-N 980 260 980 180 {lab=vdd}
-N 760 180 980 180 {lab=vdd}
-N 960 300 1020 300 {lab=vss}
-N 1000 280 1000 160 {lab=en_b}
-N 940 160 1000 160 {lab=en_b}
-N 940 80 940 160 {lab=en_b}
-N 940 80 960 80 {lab=en_b}
+N 1380 120 1380 700 {lab=GND}
+N 1060 700 1380 700 {lab=GND}
+N 1020 120 1020 580 {lab=vss}
+N 800 -20 960 -20 {lab=en_b}
+N 780 80 800 80 {lab=en_b}
+N 660 80 700 80 {lab=en}
+N 660 80 660 460 {lab=en}
+N 740 100 740 580 {lab=vss}
+N 800 -20 800 80 {lab=en_b}
+N 660 -40 660 80 {lab=en}
+N 760 260 760 320 {lab=vddb}
+N 760 -300 760 200 {lab=vdd}
+N 200 -300 760 -300 {lab=vdd}
 C {devices/vsource.sym} 200 650 0 0 {name=Vvdd value=3.3 savecurrent=false}
 C {devices/vsource.sym} 440 650 0 0 {name=Vvss value=0 savecurrent=false}
 C {devices/lab_pin.sym} 440 580 0 0 {name=l1 sig_type=std_logic lab=vss}
@@ -170,16 +175,9 @@ print v(vbp) v(vbpc) v(vabp) v(vabn) v(vbn) v(vbnc)
 .endc"}
 C {devices/lab_pin.sym} 200 -300 0 0 {name=l23 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 1040 -300 0 1 {name=l7 sig_type=std_logic lab=vdd}
-T {tb_pd_leak: d2s_mpdda_pd + d2s_bias_in_pd disabled (en_3v3 = 0), supply currents, tt 27 C} 60 -500 0 0 0.5 0.5 {}
-T {DUT and bias from the schematics in this directory; code block = the deck's .lib / .temp / .option / .param / .save lines and its .control section} 60 -455 0 0 0.3 0.3 {}
-T {Reference (results_power_down.txt), vout held at 1.65 V: tt 27 C: bias 0.030 nA, driver front end} 60 -420 0 0 0.25 0.25 {}
-T {0.054 nA, vddo 0.020 nA, total 0.104 nA; ff 125 C: 0.633 / 1.283 / 27.21 nA, total 29.1 nA.} 60 -398 0 0 0.25 0.25 {}
 C {devices/vsource.sym} 760 230 0 0 {name=Vsb value=0 savecurrent=false}
 C {devices/vsource.sym} 1380 90 0 0 {name=Vo value=1.65 savecurrent=false}
-N 760 -300 760 200 {lab=vdd}
-N 760 260 760 320 {lab=vddb}
-N 1380 120 1380 700 {lab=GND}
-N 1060 700 1380 700 {lab=GND}
-C {devices/lab_wire.sym} 760 280 0 0 {name=l40 sig_type=std_logic lab=vddb}
-C {inv_hv.sym} 960 280 0 0 {name=XIB}
-C {devices/lab_wire.sym} 990 160 0 1 {name=lxib sig_type=std_logic lab=en_b}
+C {devices/lab_wire.sym} 760 290 0 0 {name=l40 sig_type=std_logic lab=vddb}
+C {inv_hv.sym} 740 80 0 0 {name=XIB}
+C {devices/lab_wire.sym} 800 80 0 1 {name=lxib1 sig_type=std_logic lab=en_b}
+C {devices/lab_pin.sym} 800 -20 0 0 {name=l11 sig_type=std_logic lab=en_b}

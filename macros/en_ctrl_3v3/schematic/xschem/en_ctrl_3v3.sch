@@ -22,14 +22,10 @@ N 780 -360 820 -360 {lab=pg3_b}
 N 640 -340 660 -340 {lab=en_ls}
 N 860 -320 880 -320 {lab=en_ls_b}
 N 1000 -280 1020 -280 {lab=en_3v3}
-N 1020 -280 1040 -280 {lab=en_3v3}
 N 1020 -280 1020 -180 {lab=en_3v3}
-N 1020 -180 1080 -180 {lab=en_3v3}
-N 1160 -180 1200 -180 {lab=en_3v3_b}
-N 1140 -200 1140 -660 {lab=vddh}
-N 960 -660 1140 -660 {lab=vddh}
-N 1120 -160 1120 -100 {lab=vss}
-N 940 -100 1120 -100 {lab=vss}
+N 1120 -180 1160 -180 {lab=en_3v3_b}
+N 1100 -660 1100 -200 {lab=vddh}
+N 1080 -160 1080 -100 {lab=vss}
 N 230 -620 230 -210 {lab=vddl}
 N 160 -180 200 -180 {lab=sel0_1v2}
 N 160 -100 240 -100 {lab=vss}
@@ -67,6 +63,10 @@ N 860 -460 860 -320 {lab=en_ls_b}
 N 740 -100 940 -100 {lab=vss}
 N 960 -660 960 -320 {lab=vddh}
 N 940 -240 940 -100 {lab=vss}
+N 960 -660 1100 -660 {lab=vddh}
+N 940 -100 1080 -100 {lab=vss}
+N 1020 -280 1160 -280 {lab=en_3v3}
+N 1020 -180 1040 -180 {lab=en_3v3}
 C {devices/iopin.sym} 160 -660 0 1 {name=p0 lab=vddh}
 C {devices/iopin.sym} 160 -620 0 1 {name=p1 lab=vddl}
 C {devices/iopin.sym} 160 -100 0 1 {name=p2 lab=vss}
@@ -75,7 +75,7 @@ C {devices/ipin.sym} 160 -180 0 0 {name=p4 lab=sel0_1v2}
 C {devices/ipin.sym} 160 -360 0 0 {name=p5 lab=sel1_1v2}
 C {devices/ipin.sym} 580 -200 0 0 {name=p6 lab=vdd1v2_sense}
 C {devices/ipin.sym} 580 -360 0 0 {name=p7 lab=vdd3v3_sense}
-C {devices/opin.sym} 1040 -280 0 0 {name=p8 lab=en_3v3}
+C {devices/opin.sym} 1160 -280 0 0 {name=p8 lab=en_3v3}
 C {devices/opin.sym} 320 -180 0 0 {name=p9 lab=sel0_3v3}
 C {devices/opin.sym} 320 -360 0 0 {name=p10 lab=sel1_3v3}
 C {ls_up_1v2_3v3.sym} 240 -540 0 0 {name=XLE}
@@ -89,7 +89,7 @@ C {pg_det.sym} 720 -340 0 0 {name=XG3}
 C {devices/lab_pin.sym} 820 -360 0 1 {name=l29 sig_type=std_logic lab=pg3_b}
 C {nor3_hv.sym} 940 -280 0 0 {name=XNO}
 C {devices/title.sym} 160 -40 0 0 {name=l0 author="Christoph Maier"}
-C {inv_hv.sym} 1120 -180 0 0 {name=XIB}
-C {devices/opin.sym} 1200 -180 0 0 {name=p13 lab=en_3v3_b}
+C {inv_hv.sym} 1080 -180 0 0 {name=XIB}
+C {devices/opin.sym} 1160 -180 0 0 {name=p13 lab=en_3v3_b}
 C {lab_wire.sym} 780 -460 0 0 {name=p11 lab=en_ls_b}
 C {lab_wire.sym} 580 -540 0 0 {name=p12 lab=en_ls}

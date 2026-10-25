@@ -18,9 +18,9 @@ C {devices/lab_pin.sym} 1020 -40 0 0 {name=lp6 sig_type=std_logic lab=vref}
 C {devices/lab_pin.sym} 1020 -20 0 0 {name=lp7 sig_type=std_logic lab=fb}
 C {devices/lab_pin.sym} 1020 0 0 0 {name=lp8 sig_type=std_logic lab=ibias}
 C {devices/lab_pin.sym} 1020 20 0 0 {name=lp9 sig_type=std_logic lab=vdd}
-C {devices/lab_pin.sym} 1020 40 0 0 {name=lp10 sig_type=std_logic lab=s0}
-C {devices/lab_pin.sym} 1020 60 0 0 {name=lp11 sig_type=std_logic lab=s1}
-C {devices/lab_pin.sym} 1020 80 0 0 {name=lp13 sig_type=std_logic lab=0}
+C {devices/lab_pin.sym} 1020 60 0 0 {name=lp10 sig_type=std_logic lab=s0}
+C {devices/lab_pin.sym} 1020 80 0 0 {name=lp11 sig_type=std_logic lab=s1}
+C {devices/lab_pin.sym} 1020 40 0 0 {name=lp13 sig_type=std_logic lab=0}
 C {devices/lab_pin.sym} 1380 0 0 1 {name=lp12 sig_type=std_logic lab=vout}
 C {devices/code_shown.sym} 0 -460 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"

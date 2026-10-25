@@ -19,8 +19,7 @@ N 1380 -640 1400 -640 {lab=vabp}
 N 1380 -620 1400 -620 {lab=vabn}
 N 1160 -660 1180 -660 {lab=en_3v3}
 N 1140 -640 1180 -640 {lab=en_3v3_b}
-N 60 -200 1140 -200 {lab=en_3v3_b}
-N 1140 -200 1140 -640 {lab=en_3v3_b}
+N 60 -820 1140 -820 {lab=en_3v3_b}
 N 520 -670 520 -180 {lab=vss}
 N 620 -700 660 -700 {lab=en_oa_b}
 N 740 -700 840 -700 {lab=en_oa}
@@ -94,6 +93,7 @@ N 540 -920 540 -410 {lab=vdd}
 N 300 -920 540 -920 {lab=vdd}
 N 960 -180 1220 -180 {lab=vss}
 N 60 -160 1260 -160 {lab=vsso}
+N 1140 -820 1140 -640 {}
 C {devices/iopin.sym} 60 -920 0 1 {name=p0 lab=vdd}
 C {devices/iopin.sym} 60 -180 0 1 {name=p1 lab=vss}
 C {devices/iopin.sym} 60 -940 0 1 {name=p2 lab=vddo}
@@ -108,7 +108,7 @@ C {devices/opin.sym} 1400 -620 0 0 {name=p10 lab=vabn}
 C {devices/ipin.sym} 60 -840 0 0 {name=p11 lab=en_3v3}
 C {devices/ipin.sym} 60 -680 0 0 {name=p12 lab=sel0_3v3}
 C {devices/ipin.sym} 60 -520 0 0 {name=p13 lab=sel1_3v3}
-C {devices/ipin.sym} 60 -200 0 0 {name=p14 lab=en_3v3_b}
+C {devices/ipin.sym} 60 -820 0 0 {name=p14 lab=en_3v3_b}
 C {d2s_bias_in_tree_pd.sym} 1280 -630 0 0 {name=Xt}
 C {devices/lab_pin.sym} 1240 -740 0 1 {name=l5 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 1220 -520 0 1 {name=l6 sig_type=std_logic lab=vss}

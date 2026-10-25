@@ -47,10 +47,10 @@ N 140 -480 140 -240 {lab=en_3v3}
 N 100 -480 140 -480 {lab=en_3v3}
 N 140 -240 160 -240 {lab=en_3v3}
 N 780 -420 820 -420 {lab=vfb}
-N 100 -360 120 -360 {lab=en_3v3_b}
-N 120 -360 420 -360 {lab=en_3v3_b}
-N 120 -360 120 -220 {lab=en_3v3_b}
+N 100 -460 120 -460 {lab=en_3v3_b}
+N 120 -460 420 -460 {lab=en_3v3_b}
 N 120 -220 160 -220 {lab=en_3v3_b}
+N 120 -460 120 -220 {}
 C {devices/iopin.sym} 100 -540 0 1 {name=p1 lab=vdd}
 C {devices/iopin.sym} 100 -120 0 1 {name=p2 lab=vss}
 C {devices/iopin.sym} 100 -560 0 1 {name=p3 lab=vddo}
@@ -64,7 +64,7 @@ C {devices/ipin.sym} 100 -280 0 0 {name=p10 lab=ibias}
 C {devices/ipin.sym} 100 -480 0 0 {name=p11 lab=en_3v3}
 C {devices/ipin.sym} 100 -200 0 0 {name=p12 lab=sel0_3v3}
 C {devices/ipin.sym} 100 -180 0 0 {name=p13 lab=sel1_3v3}
-C {devices/ipin.sym} 100 -360 0 0 {name=p14 lab=en_3v3_b}
+C {devices/ipin.sym} 100 -460 0 0 {name=p14 lab=en_3v3_b}
 C {d2s_bias_sel_pd.sym} 250 -230 0 0 {name=xb}
 C {devices/lab_pin.sym} 220 -320 0 0 {name=l0 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 200 -140 0 0 {name=l1 sig_type=std_logic lab=vss}
