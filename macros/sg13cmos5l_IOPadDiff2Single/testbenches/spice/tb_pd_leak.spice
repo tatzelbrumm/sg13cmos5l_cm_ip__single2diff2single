@@ -31,7 +31,10 @@ Xb vddb vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en d2s_bias_in_pd
 Vcm vref 0 1.65
 Vp vinp vref 0
 Vn vinn vref 0
-Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en d2s_mpdda_pd
+* en_3v3_b for Xd: the inverter that was inside d2s_mpdda_pd (XIB in en_ctrl_3v3 in the pad)
+XIBP en_b en vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIBN en_b en vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en en_b d2s_mpdda_pd
 * pad held by a source (edit: 0, 1.65 or 3.3 V)
 Vo vout 0 1.65
 .control

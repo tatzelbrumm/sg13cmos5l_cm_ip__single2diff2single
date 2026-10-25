@@ -30,12 +30,15 @@ Xb vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en d2s_bias_in_pd
 Vcm vref 0 0
 Vp vinp vref 0
 Vn vinn vref 0
-Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en d2s_mpdda_pd
+* en_3v3_b for Xd: the inverter that was inside d2s_mpdda_pd (XIB in en_ctrl_3v3 in the pad)
+XIBP en_b en vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIBN en_b en vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en en_b d2s_mpdda_pd
 * pad source (edit)
 Vpad padsrc 0 pwl(0 0 10n 5 3u 5)
 Rpad padsrc vout 1.5k
 CL vout 0 2p
-.save v(vout) v(xd.a) v(xd.b) v(vddo) v(xd.en_3v3_b) @n.xd.xop.nsg13_hv_pmos[ids] @n.xd.xon.nsg13_hv_nmos[ids]
+.save v(vout) v(xd.a) v(xd.b) v(vddo) v(en_b) @n.xd.xop.nsg13_hv_pmos[ids] @n.xd.xon.nsg13_hv_nmos[ids]
 .control
 tran 1n 3u uic
 let vsg_op = v(vddo) - v(xd.a)
@@ -51,7 +54,7 @@ meas tran inm max inn
 meas tran vddm max v(vddo)
 print pmin pmax nmin nmax ipm inm vddm
 if $?batchmode = 0
-  plot v(vout) v(vddo) v(xd.a) v(xd.b) v(xd.en_3v3_b)
+  plot v(vout) v(vddo) v(xd.a) v(xd.b) v(en_b)
 end
 .endc
 .end

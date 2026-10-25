@@ -12,8 +12,8 @@ Ep outp vcm padres vref 1
 En outn vcm vref padres 1
 .ends s2d_core_ideal
 .subckt sg13cmos5l_IOPadSingle2Diff iovdd iovss vdd vss pad outp outn vcm vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
-Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_ctrl_3v3
-Xb iovdd iovss iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 d2s_bias_sel_pd
+Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
+Xb iovdd iovss iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 en_3v3_b d2s_bias_sel_pd
 Xa iovdd iovss padres vref vcm outp outn vbp vbn vbpc vbnc vabp vabn en_3v3 s2d_core_ideal
 * input protection, as in sg13cmos5l_IOPadAnalog (iovdd iovss pad padres vdd vss)
 XCP iovdd iovss pad sg13cmos5l_Clamp_P20N0D

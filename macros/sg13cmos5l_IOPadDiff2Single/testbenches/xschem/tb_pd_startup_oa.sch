@@ -23,7 +23,7 @@ N 1180 120 1180 460 {lab=vbnc}
 N 900 440 1160 440 {lab=vabn}
 N 1020 120 1020 580 {lab=vss}
 N 1240 120 1240 600 {lab=vsso}
-N 940 60 960 60 {lab=vref}
+N 920 60 960 60 {lab=vref}
 N 500 100 500 140 {lab=vref}
 N 600 100 600 140 {lab=vref}
 N 1320 0 1380 0 {lab=vout}
@@ -61,9 +61,9 @@ N 120 -320 860 -320 {lab=vddo}
 N 660 460 660 620 {lab=en}
 N 660 460 710 460 {lab=en}
 N 600 20 600 40 {lab=vinn}
-N 940 140 1380 140 {lab=vref}
+N 920 140 1380 140 {lab=vref}
 N 1380 120 1380 140 {lab=vref}
-N 940 60 940 140 {lab=vref}
+N 920 60 920 140 {lab=vref}
 N 200 -300 760 -300 {lab=vdd}
 N 500 0 500 40 {lab=vinp}
 N 280 140 280 620 {lab=vref}
@@ -72,7 +72,7 @@ N 660 700 840 700 {lab=GND}
 N 440 700 660 700 {lab=GND}
 N 500 0 960 0 {lab=vinp}
 N 600 20 960 20 {lab=vinn}
-N 600 140 940 140 {lab=vref}
+N 600 140 920 140 {lab=vref}
 N 280 140 500 140 {lab=vref}
 N 280 700 440 700 {lab=GND}
 N 200 700 280 700 {lab=GND}
@@ -80,6 +80,14 @@ N 660 -40 660 460 {lab=en}
 N 660 -40 960 -40 {lab=en}
 N 1060 700 1060 720 {}
 N 840 700 1060 700 {lab=GND}
+N 660 280 920 280 {lab=en}
+N 980 260 980 180 {lab=vdd}
+N 760 180 980 180 {lab=vdd}
+N 960 300 1020 300 {lab=vss}
+N 1000 280 1000 160 {lab=en_b}
+N 940 160 1000 160 {lab=en_b}
+N 940 80 940 160 {lab=en_b}
+N 940 80 960 80 {lab=en_b}
 C {devices/vsource.sym} 200 650 0 0 {name=Vvdd value=3.3 savecurrent=false}
 C {devices/vsource.sym} 440 650 0 0 {name=Vvss value=0 savecurrent=false}
 C {devices/lab_pin.sym} 440 580 0 0 {name=l1 sig_type=std_logic lab=vss}
@@ -107,7 +115,7 @@ C {devices/lab_pin.sym} 1020 580 0 1 {name=l18 sig_type=std_logic lab=vss}
 C {devices/lab_pin.sym} 1260 -320 0 1 {name=l19 sig_type=std_logic lab=vddo}
 C {devices/lab_pin.sym} 1240 600 0 1 {name=l20 sig_type=std_logic lab=vsso}
 C {devices/lab_pin.sym} 660 -40 0 0 {name=l21 sig_type=std_logic lab=en}
-C {devices/lab_pin.sym} 940 60 0 0 {name=l22 sig_type=std_logic lab=vref}
+C {devices/lab_pin.sym} 920 60 0 0 {name=l22 sig_type=std_logic lab=vref}
 C {devices/vsource.sym} 500 70 0 0 {name=Vp value=0 savecurrent=false}
 C {devices/lab_wire.sym} 500 0 0 0 {name=l24 sig_type=std_logic lab=vinp}
 C {devices/vsource.sym} 600 70 0 0 {name=Vn value=0 savecurrent=false}
@@ -138,3 +146,5 @@ end
 .endc"}
 C {devices/lab_pin.sym} 200 -300 0 0 {name=l23 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 1040 -300 0 1 {name=l7 sig_type=std_logic lab=vdd}
+C {inv_hv.sym} 960 280 0 0 {name=XIB}
+C {devices/lab_wire.sym} 990 160 0 1 {name=lxib sig_type=std_logic lab=en_b}

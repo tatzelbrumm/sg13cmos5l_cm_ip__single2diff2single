@@ -41,6 +41,9 @@ N 580 -280 640 -280 {lab=en_3v3}
 N 520 -260 580 -260 {lab=en_3v3}
 N 580 -420 580 -280 {lab=en_3v3}
 N 580 -420 980 -420 {lab=en_3v3}
+N 520 -200 600 -200 {lab=en_3v3_b}
+N 600 -260 600 -200 {lab=en_3v3_b}
+N 600 -260 640 -260 {lab=en_3v3_b}
 N 140 -500 980 -500 {lab=vref}
 N 140 -460 980 -460 {lab=vcm}
 N 820 -320 1100 -320 {lab=vbp}
@@ -112,9 +115,8 @@ C {devices/lab_pin.sym} 320 -240 0 0 {name=l4 sig_type=std_logic lab=sel0_1v2}
 C {devices/lab_pin.sym} 320 -220 0 0 {name=l5 sig_type=std_logic lab=sel1_1v2}
 C {devices/lab_pin.sym} 320 -200 0 0 {name=l6 sig_type=std_logic lab=vdd1v2_sense}
 C {devices/lab_pin.sym} 320 -180 0 0 {name=l7 sig_type=std_logic lab=vdd3v3_sense}
-C {devices/lab_pin.sym} 520 -260 0 1 {name=l8 sig_type=std_logic lab=en_3v3}
-C {devices/lab_pin.sym} 520 -240 0 1 {name=l9 sig_type=std_logic lab=sel0_3v3}
-C {devices/lab_pin.sym} 520 -220 0 1 {name=l10 sig_type=std_logic lab=sel1_3v3}
+C {devices/lab_wire.sym} 580 -240 0 0 {name=l9 sig_type=std_logic lab=sel0_3v3}
+C {devices/lab_wire.sym} 580 -220 0 0 {name=l10 sig_type=std_logic lab=sel1_3v3}
 C {d2s_bias_sel_pd.sym} 730 -270 0 0 {name=xb}
 C {devices/lab_pin.sym} 700 -360 0 0 {name=l11 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 680 -180 0 0 {name=l12 sig_type=std_logic lab=iovss}
@@ -148,6 +150,7 @@ C {devices/lab_pin.sym} 880 -660 0 0 {name=l51 sig_type=std_logic lab=iovss}
 C {devices/lab_pin.sym} 820 -700 0 0 {name=l52 sig_type=std_logic lab=pad}
 C {devices/lab_pin.sym} 880 -740 0 0 {name=l53 sig_type=std_logic lab=iovdd}
 C {devices/title.sym} 160 -40 0 0 {name=l_title author="Christoph Maier"}
+C {devices/lab_wire.sym} 580 -200 0 0 {name=l60 sig_type=std_logic lab=en_3v3_b}
 C {devices/lab_pin.sym} 1100 -320 0 1 {name=l54 sig_type=std_logic lab=vbp}
 C {devices/lab_pin.sym} 1220 -220 0 1 {name=l55 sig_type=std_logic lab=vbn}
 C {devices/lab_pin.sym} 1120 -300 0 1 {name=l56 sig_type=std_logic lab=vbpc}

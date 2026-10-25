@@ -79,6 +79,10 @@ pins:
     description: Select bit 1, 0 .. vddh
     type: digital
     direction: output
+  en_3v3_b:
+    description: NOT en_3v3, 0 .. vddh
+    type: digital
+    direction: output
 
 default_conditions:
   corner_mos:

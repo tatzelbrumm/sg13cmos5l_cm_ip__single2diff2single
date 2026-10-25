@@ -35,6 +35,11 @@ N 440 -280 440 -260 {lab=en_3v3}
 N 440 -520 740 -520 {lab=en_3v3}
 N 440 -280 480 -280 {lab=en_3v3}
 N 440 -520 440 -280 {lab=en_3v3}
+N 400 -200 460 -200 {lab=en_3v3_b}
+N 460 -260 460 -200 {lab=en_3v3_b}
+N 460 -260 480 -260 {lab=en_3v3_b}
+N 460 -400 460 -260 {lab=en_3v3_b}
+N 460 -400 740 -400 {lab=en_3v3_b}
 N 400 -240 480 -240 {lab=sel0_3v3}
 N 400 -220 480 -220 {lab=sel1_3v3}
 N 520 -180 520 -100 {lab=iovss}
@@ -97,16 +102,14 @@ C {en_ctrl_3v3.sym} 300 -220 0 0 {name=xc}
 C {devices/lab_pin.sym} 240 -300 0 0 {name=l0 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 260 -300 0 1 {name=l1 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 240 -140 0 1 {name=l2 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 440 -260 0 1 {name=l8 sig_type=std_logic lab=en_3v3}
 C {d2s_bias_sel_pd.sym} 570 -270 0 0 {name=xb}
 C {devices/lab_pin.sym} 540 -360 0 0 {name=l11 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 520 -180 0 0 {name=l12 sig_type=std_logic lab=iovss}
 C {devices/lab_pin.sym} 580 -360 0 1 {name=l13 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 560 -180 0 1 {name=l14 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 480 -320 0 0 {name=l15 sig_type=std_logic lab=ibias}
 C {devices/lab_pin.sym} 440 -280 0 0 {name=l22 sig_type=std_logic lab=en_3v3}
-C {devices/lab_pin.sym} 480 -240 0 0 {name=l23 sig_type=std_logic lab=sel0_3v3}
-C {devices/lab_pin.sym} 480 -220 0 0 {name=l24 sig_type=std_logic lab=sel1_3v3}
+C {devices/lab_wire.sym} 450 -240 0 0 {name=l23 sig_type=std_logic lab=sel0_3v3}
+C {devices/lab_wire.sym} 450 -220 0 0 {name=l24 sig_type=std_logic lab=sel1_3v3}
 C {d2s_mpdda_pd.sym} 920 -460 0 0 {name=xd}
 C {devices/lab_pin.sym} 820 -560 0 0 {name=l25 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 800 -360 0 0 {name=l26 sig_type=std_logic lab=iovss}
@@ -126,6 +129,7 @@ C {devices/lab_pin.sym} 1200 -480 0 0 {name=l44 sig_type=std_logic lab=pad}
 C {devices/lab_pin.sym} 1240 -540 0 0 {name=l45 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 1240 -440 0 0 {name=l46 sig_type=std_logic lab=iovss}
 C {devices/title.sym} 160 -40 0 0 {name=l_title author="Christoph Maier"}
+C {devices/lab_pin.sym} 740 -400 0 0 {name=l53 sig_type=std_logic lab=en_3v3_b}
 C {devices/lab_pin.sym} 860 -320 0 1 {name=l47 sig_type=std_logic lab=vbp}
 C {devices/lab_pin.sym} 980 -220 0 1 {name=l48 sig_type=std_logic lab=vbn}
 C {devices/lab_pin.sym} 880 -300 0 1 {name=l49 sig_type=std_logic lab=vbpc}

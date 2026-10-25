@@ -74,6 +74,10 @@ pins:
     description: sel1_3v3
     type: signal
     direction: input
+  en_3v3_b:
+    description: en_3v3_b (complement of en_3v3)
+    type: signal
+    direction: input
   vout:
     description: output (pad)
     type: signal

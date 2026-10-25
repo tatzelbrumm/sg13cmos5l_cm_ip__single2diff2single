@@ -7,7 +7,7 @@ F {}
 E {}
 T {d2s_bias_sel_pd: pad-driver bias with a selectable reference current into one mirror tree} 0 -980 0 0 0.4 0.4 {}
 T {sel1 sel0 = 0 0: harness ibias (sourced, ~5 uA = iDAC code 20 at 250 nA/step) through TEN / TEP;  0 1: Oguey-Aebischer core;} 60 -150 0 0 0.25 0.25 {}
-T {1 0: bandgap core;  1 1: both cores (currents add). en_3v3 = 0: everything off (tree TG and TDN, both cores, TEN / TEP open).} 60 -126 0 0 0.25 0.25 {}
+T {1 0: bandgap core;  1 1: both cores (currents add). en_3v3 = 0: everything off (tree TG and TDN, both cores, TEN / TEP open); en_3v3_b = NOT en_3v3, from en_ctrl_3v3.} 60 -126 0 0 0.25 0.25 {}
 T {A disabled core output (POC drain) is off, so the cores share the tree input ir without a switch. Source: netlist/source/d2s_bias_sel_pd.spice} 60 -102 0 0 0.25 0.25 {}
 N 1220 -540 1220 -180 {lab=vss}
 N 1260 -540 1260 -160 {lab=vsso}
@@ -18,7 +18,9 @@ N 1380 -600 1400 -600 {lab=vbnc}
 N 1380 -640 1400 -640 {lab=vabp}
 N 1380 -620 1400 -620 {lab=vabn}
 N 1160 -660 1180 -660 {lab=en_3v3}
-N 1160 -640 1180 -640 {lab=en_3v3_b}
+N 1140 -640 1180 -640 {lab=en_3v3_b}
+N 60 -200 1140 -200 {lab=en_3v3_b}
+N 1140 -200 1140 -640 {lab=en_3v3_b}
 N 520 -670 520 -180 {lab=vss}
 N 620 -700 660 -700 {lab=en_oa_b}
 N 740 -700 840 -700 {lab=en_oa}
@@ -37,8 +39,8 @@ N 960 -380 960 -360 {lab=en_ext}
 N 920 -320 930 -320 {lab=ibias}
 N 960 -320 960 -180 {lab=vss}
 N 1020 -240 1020 -220 {lab=en_ext_b}
-N 740 -840 780 -840 {lab=en_3v3_b}
-N 380 -840 660 -840 {lab=en_3v3}
+N 380 -840 1160 -840 {lab=en_3v3}
+N 1160 -840 1160 -660 {lab=en_3v3}
 N 380 -560 380 -400 {lab=en_3v3}
 N 60 -840 380 -840 {lab=en_3v3}
 N 380 -400 460 -400 {lab=en_3v3}
@@ -66,7 +68,7 @@ N 920 -320 920 -280 {lab=ibias}
 N 920 -280 990 -280 {lab=ibias}
 N 1050 -280 1060 -280 {lab=ir}
 N 1060 -320 1060 -280 {lab=ir}
-N 700 -820 700 -180 {lab=vss}
+N 700 -680 700 -180 {lab=vss}
 N 620 -380 620 -220 {lab=en_ext_b}
 N 620 -220 1020 -220 {lab=en_ext_b}
 N 900 -180 960 -180 {lab=vss}
@@ -106,16 +108,12 @@ C {devices/opin.sym} 1400 -620 0 0 {name=p10 lab=vabn}
 C {devices/ipin.sym} 60 -840 0 0 {name=p11 lab=en_3v3}
 C {devices/ipin.sym} 60 -680 0 0 {name=p12 lab=sel0_3v3}
 C {devices/ipin.sym} 60 -520 0 0 {name=p13 lab=sel1_3v3}
-C {inv_3v3_pd.sym} 700 -840 0 0 {name=Xi}
-C {devices/lab_pin.sym} 700 -800 0 1 {name=l2 sig_type=std_logic lab=vss}
-C {devices/lab_pin.sym} 780 -840 0 1 {name=l4 sig_type=std_logic lab=en_3v3_b}
+C {devices/ipin.sym} 60 -200 0 0 {name=p14 lab=en_3v3_b}
 C {d2s_bias_in_tree_pd.sym} 1280 -630 0 0 {name=Xt}
 C {devices/lab_pin.sym} 1240 -740 0 1 {name=l5 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 1220 -520 0 1 {name=l6 sig_type=std_logic lab=vss}
 C {devices/lab_pin.sym} 1280 -740 0 1 {name=l7 sig_type=std_logic lab=vddo}
 C {devices/lab_pin.sym} 1260 -520 0 1 {name=l8 sig_type=std_logic lab=vsso}
-C {devices/lab_pin.sym} 1160 -660 0 0 {name=l16 sig_type=std_logic lab=en_3v3}
-C {devices/lab_pin.sym} 1160 -640 0 0 {name=l17 sig_type=std_logic lab=en_3v3_b}
 C {nand2_hv.sym} 520 -700 0 0 {name=XDA}
 C {devices/lab_pin.sym} 540 -750 0 1 {name=l18 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 520 -650 0 1 {name=l19 sig_type=std_logic lab=vss}

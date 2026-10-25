@@ -7,9 +7,10 @@ SPDX-License-Identifier: Apache-2.0
 ```
 en_3v3   = en_1v2  AND  (vdd_1v2 present)  AND  (vdd_3v3 present)
 sel*_3v3 = sel*_1v2, level-shifted (gated with en_3v3 in d2s_bias_sel_pd)
+en_3v3_b = NOT en_3v3 (XIB), for d2s_mpdda_pd and d2s_bias_sel_pd
 ```
 
-Ports (order): `vddh vddl vss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3`.
+Ports (order): `vddh vddl vss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b`.
 
 | port | in the custom pad cell | in the slot fallback |
 |---|---|---|
@@ -28,6 +29,9 @@ Ports (order): `vddh vddl vss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
   draws leakage only.
 - `nor3_hv(en_ls_b, pg1_b, pg3_b)` gives en_3v3. With vddl = 0 the ls_up latches are undefined; pg_det of vdd_1v2
   then forces en_3v3 low either way (if en_ls_b is high the NOR is low; if it is low, PU is on and pg1_b is high).
+- `XIB` (inv_hv, 1u / 0.45u) makes `en_3v3_b` from en_3v3, once for the pad (since 2026-10-25; before, d2s_mpdda_pd
+  and d2s_bias_sel_pd each had their own inverter). It adds one gate to the en_3v3 load: nominal (tt, 27 C, 50 fF)
+  enable delay 1.74 -> 1.79 ns, disable 2.56 -> 2.58 ns; the results below were simulated without it.
 - `hv_logic` (`macros/hv_logic`) supplies inv_hv and nor3_hv. IHP's `sg13cmos5l_LevelUp` can replace ls_up_1v2_3v3
   in the pad cell (same topology, foundry layout in the IO GDS).
 

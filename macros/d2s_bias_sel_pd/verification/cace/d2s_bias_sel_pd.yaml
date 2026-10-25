@@ -93,6 +93,10 @@ pins:
     description: Select bit 1, 0 .. vdd
     type: digital
     direction: input
+  en_3v3_b:
+    description: NOT en_3v3 (from en_ctrl_3v3), 0 .. vdd
+    type: digital
+    direction: input
 
 default_conditions:
   vdd:

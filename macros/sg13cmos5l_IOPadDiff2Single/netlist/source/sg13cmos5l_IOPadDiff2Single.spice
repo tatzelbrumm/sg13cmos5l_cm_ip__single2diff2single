@@ -11,9 +11,9 @@
 * Slot fallback (no padframe change): iovdd = vdd_3v3, iovss = vss_3v3, vdd = vdd_1v2, vss = vss_1v2,
 * pad = s7_an[1] (the harness IOPadAnalog pad).
 .subckt sg13cmos5l_IOPadDiff2Single iovdd iovss vdd vss pad vinp vinn vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
-Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_ctrl_3v3
-Xb iovdd iovss iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 d2s_bias_sel_pd
-Xd iovdd iovss iovdd iovss vinp vinn vref pad pad vbp vbn vbpc vbnc vabp vabn en_3v3 d2s_mpdda_pd
+Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
+Xb iovdd iovss iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 en_3v3_b d2s_bias_sel_pd
+Xd iovdd iovss iovdd iovss vinp vinn vref pad pad vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
 XDN iovss pad iovdd sg13cmos5l_DCNDiode
 XDP pad iovdd iovss sg13cmos5l_DCPDiode
 .ends sg13cmos5l_IOPadDiff2Single

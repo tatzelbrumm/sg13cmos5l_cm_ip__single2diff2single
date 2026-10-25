@@ -15,10 +15,13 @@ six bias diodes (`d2s_bias_in_tree_pd`, the tree of `d2s_bias_in_pd`) is fed by 
 | 1 1 | both cores | currents add (about 2x bias) |
 
 en_3v3 = 0 switches everything off: the tree's own TG and TDN, both cores (MS1, SKS, SVPG), and TEN / TEP.
+`en_3v3_b` = NOT en_3v3 comes in as a port, from `XIB` in `en_ctrl_3v3` (until 2026-10-25 the local inverter `Xi`
+= `inv_3v3_pd` made it here). The CACE templates carry Xi's two devices in their code block (XIBP / XIBN, same vdd
+and ground), so the results below still hold: nominal dc (sel 0-3 enabled, sel 3 disabled) and tran identical.
 A disabled core's output (POC drain) is off, so the cores share the tree input `ir` without a switch.
 `d2s_bias_out_pd` (external NMOS sink) is not used here: nothing in the slot sinks a reference current.
 
-Ports (order): `vdd vss vddo vsso ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3`.
+Ports (order): `vdd vss vddo vsso ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 en_3v3_b`.
 In the pad cell vdd = vddo = iovdd and vss = vsso = iovss; RP1 / RN1 still need Kelvin connections to OP's / ON's
 source rails (see `bias.md` in the notes worktree, `design_considerations/class_ab_pad_driver/improvements/`).
 
@@ -30,7 +33,7 @@ netlist/source/d2s_bias_sel_pd.spice     source netlist (uses d2s_bias_ref_pd.sp
 schematic/xschem/d2s_bias_sel_pd.sch/.sym       top sheet (label style) and symbol
 schematic/xschem/d2s_bias_in_tree_pd.sch/.sym   tree + the six diodes: d2s_bias_in_pd's sheet without its inverter
 schematic/xschem/oa_core_pd.sch/.sym, bg_core_pd.sch/.sym   the cores, cut from d2s_bias_oa_pd / d2s_bias_bg_pd
-schematic/xschem/inv_3v3_pd.sch/.sym     en_3v3_b
+schematic/xschem/inv_3v3_pd.sch/.sym     unused since 2026-10-25 (en_3v3_b is a port); kept
 verification/cace/d2s_bias_sel_pd.yaml   CACE suite, groups below
 verification/cace/results/d2s_bias_sel_pd/   CSV and CACE summaries of the last `make sim-cace`
 ```

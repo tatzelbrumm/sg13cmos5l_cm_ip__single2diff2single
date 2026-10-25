@@ -13,7 +13,7 @@ selectable bias, a fail-safe enable and a CACE suite whose output follows
 
 | instance | cell (macro) | function |
 |---|---|---|
-| `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*` |
+| `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` = NOT `en_3v3` for `xb` and `xd` |
 | `xb` | `d2s_bias_sel_pd` (`../d2s_bias_sel_pd`) | six bias lines from one mirror tree; reference selected by `sel1 sel0` |
 | `xd` | `d2s_mpdda_pd` (here) | Miller-compensated class-AB driver (MP-DDA front end), power-down switches |
 | `DN`, `DP` | IHP `sg13cmos5l_DCNDiode` / `DCPDiode` | primary ESD diodes, as in `sg13cmos5l_IOPadAnalog` |
@@ -21,6 +21,17 @@ selectable bias, a fail-safe enable and a CACE suite whose output follows
 `schematic/xschem/sg13cmos5l_IOPadDiff2Single.sch` (drawn from `netlist/source/sg13cmos5l_IOPadDiff2Single.spice`),
 `d2s_mpdda_pd.sch` and `unit_r2.sch` (Christoph's sheets from `power_down/xschem` and `improvements/xschem`),
 and `d2s_mpdda_pd_sel.sch`, a CACE-only fixture (driver + bias with `vfb` as a pin, for the loop gain).
+
+**Enable complement (2026-10-25).** `en_3v3_b` is made once, by `XIB` (`inv_hv`) in `en_ctrl_3v3`, and goes to
+`d2s_bias_sel_pd` and `d2s_mpdda_pd` as a port; their own inverters (`Xi` = `inv_3v3_pd`, `XIP` / `XIN`) are gone.
+In `d2s_mpdda_pd.sch` the PMOS switches SA, SABP hang from the top rails with their gates on an `en_3v3` line, the
+NMOS switches SB, SABN from the bottom rails on an `en_3v3_b` line, all wired from the pins. The fixture
+`d2s_mpdda_pd_sel` has `en_3v3_b` as a pin (its template ties it to 0); `tb_pd_*` (sheets and decks) carry the
+inverter that used to sit inside `d2s_mpdda_pd`, on the same vdd / vss. The results further down are from before
+this change. Nominal (tt, 27 °C) template runs before / after: dc and loop gain identical; enable settling within
+0.5 ns, glitches within 0.1 mV (sel 0 / 1 / 2); power down identical except iovdd 55.8 → 55.5 pA (state 0) and
+68.2 → 67.9 pA (state 3), one inverter fewer. The `tb_pd_*` decks reproduce their numbers (enable, unpowered
+identical; leak, startup_oa within 5 ppm).
 
 | port | dir | |
 |---|---|---|

@@ -29,6 +29,8 @@ N 500 -20 540 -20 {lab=sel0_3v3}
 C {devices/lab_pin.sym} 540 -20 0 1 {name=l10 sig_type=std_logic lab=sel0_3v3}
 N 500 0 540 0 {lab=sel1_3v3}
 C {devices/lab_pin.sym} 540 0 0 1 {name=l11 sig_type=std_logic lab=sel1_3v3}
+N 500 20 540 20 {lab=en_3v3_b}
+C {devices/lab_pin.sym} 540 20 0 1 {name=l12 sig_type=std_logic lab=en_3v3_b}
 C {devices/code_shown.sym} 0 300 0 0 {name=MODEL only_toplevel=true format="tcleval( @value )" value="
 .lib cornerMOSlv.lib mos_CACE\{corner_mos\}
 .lib cornerMOShv.lib mos_CACE\{corner_mos\}

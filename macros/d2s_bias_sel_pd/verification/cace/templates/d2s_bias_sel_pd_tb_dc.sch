@@ -20,6 +20,7 @@ N 320 140 360 140 {lab=vabn}
 N 100 120 140 120 {lab=en_3v3}
 N 100 160 140 160 {lab=sel0_3v3}
 N 100 180 140 180 {lab=sel1_3v3}
+N 100 140 140 140 {lab=en_3v3_b}
 C {d2s_bias_sel_pd.sym} 230 130 0 0 {name=x1}
 C {devices/lab_pin.sym} 200 0 0 0 {name=l1 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 180 260 0 0 {name=l2 sig_type=std_logic lab=GND}
@@ -35,6 +36,7 @@ C {devices/lab_pin.sym} 360 140 0 1 {name=l11 sig_type=std_logic lab=vabn}
 C {devices/lab_pin.sym} 100 120 0 0 {name=l12 sig_type=std_logic lab=en_3v3}
 C {devices/lab_pin.sym} 100 160 0 0 {name=l13 sig_type=std_logic lab=sel0_3v3}
 C {devices/lab_pin.sym} 100 180 0 0 {name=l14 sig_type=std_logic lab=sel1_3v3}
+C {devices/lab_pin.sym} 100 140 0 0 {name=l15 sig_type=std_logic lab=en_3v3_b}
 C {devices/code_shown.sym} 0 300 0 0 {name=MODEL only_toplevel=true format="tcleval( @value )" value="
 .lib cornerMOShv.lib mos_CACE\{corner_mos\}
 .lib cornerRES.lib res_CACE\{corner_r\}
@@ -82,6 +84,9 @@ Vmabn dabn eabn 0
 .param s0='(sl==1 || sl==3) ? vd : 0'
 .param s1='(sl==2 || sl==3) ? vd : 0'
 Ven en_3v3 0 \{en*vd\}
+* en_3v3_b: the inverter that was inside d2s_bias_sel_pd (XIB in en_ctrl_3v3 in the pad)
+XIBP en_3v3_b en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIBN en_3v3_b en_3v3 0 0 sg13_hv_nmos w=1u l=0.45u ng=1
 Vs0 sel0_3v3 0 \{s0\}
 Vs1 sel1_3v3 0 \{s1\}
 .control
