@@ -12,6 +12,7 @@ macro yet.
 |---|---|
 | `pad_buffer_cells.py` | the generator: one script, IHP SG13_dev PCells plus drawn geometry, comments say why |
 | `pad_buffer_cells.gds` | all cells; top cell `pad_buffer_cells` shows them in three columns plus the fit checks |
+| `cell_tree.md` | the cell hierarchy of the GDS as a tree: primitive → rows → devices (start here) |
 | `pad_buffer_cells.cdl` | reference netlist per wired cell, written by the same script from the same device lists |
 | `verification.md` | DRC and LVS with IHP's decks: DRC clean, LVS 39 of 39 wired cells match; options, fixes, how to repeat |
 

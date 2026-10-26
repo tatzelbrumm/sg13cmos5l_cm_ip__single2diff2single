@@ -268,3 +268,13 @@ Reading taken, since Christoph was asleep:
   `2defcc31…`, `verification.md` `ef11c5c6…`. The same on both sides; transferred under fresh names
   (`outputs/klayout_v2/v2_*`).
 - `layout_primitives.md`: one line pointing to `klayout/README.md` (`895efdbc…`).
+
+## 13:54: question (Christoph, verbatim)
+
+> "Looking at `pad_buffer_cells.gds` unsystematically ... do you have a tree view of the layout primitives
+> you generated? That would make it more systematic, and maybe you already made this information available
+> with lots of other information, and I can't handle the low SNDR."
+
+There was none (the README has a table). `klayout/cell_tree.md` was made from the GDS: primitive → rows →
+devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on both sides.
+`klayout/README.md` lists it.
