@@ -1,0 +1,445 @@
+* Reference netlists of the wired cells in pad_buffer_cells.gds, written by pad_buffer_cells.py.
+* One .SUBCKT per cell; pins are the labelled nets. Dummies are listed (S = D or shorted).
+
+.SUBCKT bg_misc_n en_3v3_b g ks vpc vss
+Mbg_misc_n_MS2_0 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Mbg_misc_n_MS3_1 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1
+Mbg_misc_n_SKS_2 ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS bg_misc_n
+
+.SUBCKT bg_misc_p en_3v3 en_3v3_b ks ms1 ms2 ms3 ms4 ms5 ms6 ms7 vdd vpg
+Mbg_misc_p_r1_MS1_0_0 ms1 en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_misc_p_r1_MS1_1_1 ms2 en_3v3_b ms1 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_misc_p_r1_MS1_2_2 ms3 en_3v3_b ms2 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_misc_p_r1_MS1_3_3 ms4 en_3v3_b ms3 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_misc_p_r2_MS1_4_0 ms5 en_3v3_b ms4 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_misc_p_r2_MS1_5_1 ms6 en_3v3_b ms5 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_misc_p_r2_MS1_6_2 ms7 en_3v3_b ms6 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_misc_p_r2_MS1_7_3 ks en_3v3_b ms7 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_misc_p_r2_SVPG_4 vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS bg_misc_p
+
+.SUBCKT bg_nab ea eb g vpc vss
+Mbg_nab_dummy_0 vss g vss vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mbg_nab_NA_1 g g ea vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mbg_nab_NB_2 vpc g eb vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mbg_nab_NB_3 vpc g eb vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mbg_nab_NA_4 g g ea vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mbg_nab_dummy_5 vss g vss vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+.ENDS bg_nab
+
+.SUBCKT bg_pcas ca co g iout vdd vpc vpg
+Mbg_pcas_r1_POC_0 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r1_PAC_1 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r1_POC_2 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r1_PAC_3 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r1_PBC_4 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r1_POC_5 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r1_PBC_6 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r1_POC_7 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r1_dummy_8 vdd vpc vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r2_dummy_0 vdd vpc vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r2_POC_1 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r2_PBC_2 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r2_POC_3 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r2_PBC_4 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r2_PAC_5 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r2_POC_6 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r2_PAC_7 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pcas_r2_POC_8 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+.ENDS bg_pcas
+
+.SUBCKT bg_pmir ca co vdd vpg
+Mbg_pmir_r1_PO_0 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r1_PA_1 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r1_PO_2 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r1_PA_3 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r1_PB_4 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r1_PO_5 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r1_PB_6 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r1_PO_7 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r1_dummy_8 vdd vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r2_dummy_0 vdd vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r2_PO_1 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r2_PB_2 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r2_PO_3 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r2_PB_4 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r2_PA_5 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r2_PO_6 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r2_PA_7 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_r2_PO_8 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+.ENDS bg_pmir
+
+.SUBCKT bias_tree_n ni vabp vbp vbpc vss
+Mbias_tree_n_dummy_0 vss ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mbias_tree_n_NBP_1 vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mbias_tree_n_NI_2 ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mbias_tree_n_NABP_3 vabp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mbias_tree_n_dummy_4 vss ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mbias_tree_n_NBPC_5 vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+.ENDS bias_tree_n
+
+.SUBCKT bias_tree_p vabn vbn vbnc vbp vdd
+Mbias_tree_p_dummy_0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Mbias_tree_p_PBN_1 vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Mbias_tree_p_PABN_2 vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Mbias_tree_p_dummy_3 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Mbias_tree_p_PBNC_4 vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+.ENDS bias_tree_p
+
+.SUBCKT bias_tree_sw en_3v3 en_3v3_b iref ni vss
+Mbias_tree_sw_TGN_0 ni en_3v3 iref vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+Mbias_tree_sw_TDN_1 ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS bias_tree_sw
+
+.SUBCKT bias_tree_swp en_3v3_b iref ni vdd
+Mbias_tree_swp_TGP_0 ni en_3v3_b iref vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS bias_tree_swp
+
+.SUBCKT d2s_ab_n a b l1 l2 n2 vabn vss
+Md2s_ab_n_RN1_0 n2 n2 vss vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+Md2s_ab_n_RN1_1 n2 n2 vss vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+Md2s_ab_n_RN2_2 vabn vabn n2 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+Md2s_ab_n_FNL_3 l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+Md2s_ab_n_ABN_4 a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+.ENDS d2s_ab_n
+
+.SUBCKT d2s_ab_p a b l1 l2 n1 vabp vdd
+Md2s_ab_p_RP1_0 n1 n1 vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+Md2s_ab_p_RP1_1 n1 n1 vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+Md2s_ab_p_RP2_2 vabp vabp n1 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+Md2s_ab_p_FPL_3 l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+Md2s_ab_p_ABP_4 b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+.ENDS d2s_ab_p
+
+.SUBCKT d2s_casc_n b l1 vbnc vss x y
+Md2s_casc_n_CX_0 l1 vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Md2s_casc_n_CY_1 b vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Md2s_casc_n_CY_2 b vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Md2s_casc_n_CX_3 l1 vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Md2s_casc_n_BNC_4 vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1
+.ENDS d2s_casc_n
+
+.SUBCKT d2s_casc_p a l2 pl pr vbpc vdd
+Md2s_casc_p_PCL_0 l2 vbpc pl vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Md2s_casc_p_PCR_1 a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Md2s_casc_p_PCR_2 a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Md2s_casc_p_PCL_3 l2 vbpc pl vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Md2s_casc_p_BPC_4 vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS d2s_casc_p
+
+.SUBCKT d2s_cma a vout
+Md2s_cma_CMA_0 vout a vout vout sg13_hv_pmos w=16u l=16u ng=1 m=1
+.ENDS d2s_cma
+
+.SUBCKT d2s_cmb b vout
+Md2s_cmb_CMB_0 b vout b b sg13_hv_pmos w=16u l=16u ng=1 m=1
+.ENDS d2s_cmb
+
+.SUBCKT d2s_loads l2 pl pr vdd
+Md2s_loads_dummy_0 vdd l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md2s_loads_PL_1 pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md2s_loads_PR_2 pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md2s_loads_PR_3 pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md2s_loads_PL_4 pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md2s_loads_PL_5 pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md2s_loads_PR_6 pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md2s_loads_PR_7 pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md2s_loads_PL_8 pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md2s_loads_dummy_9 vdd l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+.ENDS d2s_loads
+
+.SUBCKT d2s_pd_n b en_3v3_b vabn vss
+Md2s_pd_n_SB_0 b en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+Md2s_pd_n_SABN_1 vabn en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_pd_n
+
+.SUBCKT d2s_pd_p a en_3v3 vabp vdd
+Md2s_pd_p_SA_0 a en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+Md2s_pd_p_SABP_1 vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_pd_p
+
+.SUBCKT d2s_rhigh sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vss
+Rd2s_rhigh_A_0 sa_A A_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_A_1 A_t1 A_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_A_2 A_b2 A_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_A_3 A_t3 sb_A vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_B_0 sa_B B_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_B_1 B_t1 B_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_B_2 B_b2 B_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_B_3 B_t3 sb_B vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_C1_0 sa_C1 C1_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_C1_1 C1_t1 C1_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_C1_2 C1_b2 C1_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_C1_3 C1_t3 sb_C1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_C2_0 sa_C2 C2_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_C2_1 C2_t1 C2_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_C2_2 C2_b2 C2_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_C2_3 C2_t3 sb_C2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_dummy_0 vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+Rd2s_rhigh_dummy_1 vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+.ENDS d2s_rhigh
+
+.SUBCKT d2s_tails sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vbp vdd
+Md2s_tails_r1_Tdummy_0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r1_TAa_1 sa_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r1_TC2b_2 sb_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r1_TC1b_3 sb_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r1_TBa_4 sa_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r1_BP_5 vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r2_Tdummy_0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r2_TBb_1 sb_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r2_TC1a_2 sa_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r2_TC2a_3 sa_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r2_TAb_4 sb_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Md2s_tails_r2_Tdummy_5 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS d2s_tails
+
+.SUBCKT oa_mcs vbr vres vss
+Moa_mcs_MCS_0 vbr vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1
+Moa_mcs_MCL_1 vres vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1
+.ENDS oa_mcs
+
+.SUBCKT oa_misc_n d10 en_3v3_b ks vbr vpc vss
+Moa_misc_n_MC10_0 vpc vbr d10 vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_misc_n_MS2_1 ks vbr vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_misc_n_MS3_2 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1
+Moa_misc_n_SKS_3 ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS oa_misc_n
+
+.SUBCKT oa_misc_p en_3v3 en_3v3_b ks ms1 ms2 ms3 ms4 ms5 ms6 ms7 vdd vpg
+Moa_misc_p_r1_MS1_0_0 ms1 en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r1_MS1_1_1 ms2 en_3v3_b ms1 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r1_MS1_2_2 ms3 en_3v3_b ms2 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r1_MS1_3_3 ms4 en_3v3_b ms3 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_MS1_4_0 ms5 en_3v3_b ms4 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_MS1_5_1 ms6 en_3v3_b ms5 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_MS1_6_2 ms7 en_3v3_b ms6 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_MS1_7_3 ks en_3v3_b ms7 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_SVPG_4 vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS oa_misc_p
+
+.SUBCKT oa_nmir d10 vnc vres vss
+Moa_nmir_r1_M11_0 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_1 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_2 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M11_3 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_4 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_5 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M11_6 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_7 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M11_8 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_9 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_10 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M11_11 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_12 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_13 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_0 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_1 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M11_2 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_3 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_4 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M11_5 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_6 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_dummy_7 vss vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_8 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_9 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M11_10 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_11 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_12 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M11_13 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+.ENDS oa_nmir
+
+.SUBCKT oa_pcas c2 c8 co iout vbr vdd vnc vpc vpg
+Moa_pcas_POC_0 iout vpc co vdd sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_POC_1 iout vpc co vdd sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_P8C_2 vnc vpc c8 vdd sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_POC_3 iout vpc co vdd sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_P0C_4 vpc vpc vpg vdd sg13_hv_pmos w=0.5u l=2u ng=1 m=1
+Moa_pcas_P2C_5 vbr vpc c2 vdd sg13_hv_pmos w=1u l=2u ng=1 m=1
+Moa_pcas_POC_6 iout vpc co vdd sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_P8C_7 vnc vpc c8 vdd sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_POC_8 iout vpc co vdd sg13_hv_pmos w=2u l=2u ng=1 m=1
+.ENDS oa_pcas
+
+.SUBCKT oa_pmir_a c2 c8 co vdd vpg
+Moa_pmir_a_r1_PO_0 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r1_PO_1 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r1_PO_2 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r1_P8_3 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r1_PO_4 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r1_PO_5 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r1_P8_6 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r1_PO_7 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r2_PO_0 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r2_P8_1 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r2_PO_2 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r2_P0_3 vpg vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r2_P2_4 c2 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r2_P8_5 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r2_PO_6 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_a_r2_PO_7 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+.ENDS oa_pmir_a
+
+.SUBCKT oa_pmir_b c2 c8 co vdd vpg
+Moa_pmir_b_r1_PO_0 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r1_PO_1 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r1_P8_2 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r1_P2_3 c2 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r1_dummy_4 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r1_PO_5 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r1_P8_6 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r1_PO_7 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r2_PO_0 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r2_P8_1 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r2_PO_2 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r2_PO_3 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r2_P8_4 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r2_PO_5 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r2_PO_6 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_b_r2_PO_7 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+.ENDS oa_pmir_b
+
+.SUBCKT s2d_casc_n vbnc vcmfb vdd voutn voutp vss x xc y yc
+Ms2d_casc_n_CX_0 voutp vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Ms2d_casc_n_CY_1 voutn vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Ms2d_casc_n_CY_2 voutn vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Ms2d_casc_n_CX_3 voutp vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Ms2d_casc_n_CXC_4 vcmfb vbnc xc vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Ms2d_casc_n_CYC_5 vdd vbnc yc vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Ms2d_casc_n_CYC_6 vdd vbnc yc vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Ms2d_casc_n_CXC_7 vcmfb vbnc xc vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Ms2d_casc_n_BNC_8 vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1
+.ENDS s2d_casc_n
+
+.SUBCKT s2d_casc_p dd ln lp vbpc vcmfb vdd voutn voutp
+Ms2d_casc_p_LPC_0 voutp vbpc lp vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Ms2d_casc_p_LNC_1 voutn vbpc ln vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Ms2d_casc_p_DC_2 vcmfb vbpc dd vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Ms2d_casc_p_DC_3 vcmfb vbpc dd vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Ms2d_casc_p_LNC_4 voutn vbpc ln vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Ms2d_casc_p_LPC_5 voutp vbpc lp vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+Ms2d_casc_p_BPC_6 vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS s2d_casc_p
+
+.SUBCKT s2d_cload voutn voutp vss
+Ms2d_cload_CLP_0 vss voutp vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+Ms2d_cload_CLN_1 vss voutn vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+.ENDS s2d_cload
+
+.SUBCKT s2d_loads dd ln lp vcmfb vdd
+Ms2d_loads_dummy_0 vdd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_LP_1 lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_LN_2 ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_D_3 dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_D_4 dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_LN_5 ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_LP_6 lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_LP_7 lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_LN_8 ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_D_9 dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_D_10 dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_LN_11 ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_LP_12 lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Ms2d_loads_dummy_13 vdd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+.ENDS s2d_loads
+
+.SUBCKT s2d_pd_n en_3v3_b vcm voutn voutp vss
+Ms2d_pd_n_TPN_0 vcm en_3v3_b voutp vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+Ms2d_pd_n_TNN_1 vcm en_3v3_b voutn vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS s2d_pd_n
+
+.SUBCKT s2d_pd_p en_3v3 vcm vdd voutn voutp
+Ms2d_pd_p_TPP_0 vcm en_3v3 voutp vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+Ms2d_pd_p_TNP_1 vcm en_3v3 voutn vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS s2d_pd_p
+
+.SUBCKT s2d_rhigh sa_A1 sa_A2 sa_F1 sa_F2 sa_M1 sa_M2 sb_A1 sb_A2 sb_F1 sb_F2 sb_M1 sb_M2 vss
+Rs2d_rhigh_A1_0 sa_A1 A1_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_A1_1 A1_t1 A1_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_A1_2 A1_b2 A1_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_A1_3 A1_t3 sb_A1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_A2_0 sa_A2 A2_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_A2_1 A2_t1 A2_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_A2_2 A2_b2 A2_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_A2_3 A2_t3 sb_A2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_F1_0 sa_F1 F1_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_F1_1 F1_t1 F1_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_F1_2 F1_b2 F1_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_F1_3 F1_t3 sb_F1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_F2_0 sa_F2 F2_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_F2_1 F2_t1 F2_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_F2_2 F2_b2 F2_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_F2_3 F2_t3 sb_F2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_M1_0 sa_M1 M1_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_M1_1 M1_t1 M1_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_M1_2 M1_b2 M1_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_M1_3 M1_t3 sb_M1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_M2_0 sa_M2 M2_t1 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_M2_1 M2_t1 M2_b2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_M2_2 M2_b2 M2_t3 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_M2_3 M2_t3 sb_M2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_dummy_0 vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+Rs2d_rhigh_dummy_1 vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+.ENDS s2d_rhigh
+
+.SUBCKT s2d_sinks_cmfb vbn vss xc yc
+Ms2d_sinks_cmfb_r1_dummy_0 vss vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r1_SXC_1 xc vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r1_SYC_2 yc vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r1_SYC_3 yc vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r1_SXC_4 xc vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r1_dummy_5 vss vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r2_dummy_0 vss vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r2_SYC_1 yc vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r2_SXC_2 xc vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r2_SXC_3 xc vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r2_SYC_4 yc vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Ms2d_sinks_cmfb_r2_dummy_5 vss vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+.ENDS s2d_sinks_cmfb
+
+.SUBCKT s2d_tails sa_A1 sa_A2 sa_F1 sa_F2 sa_M1 sa_M2 sb_A1 sb_A2 sb_F1 sb_F2 sb_M1 sb_M2 vbp vdd
+Ms2d_tails_r1_Tdummy_0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r1_TA1a_1 sa_A1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r1_TF2b_2 sb_F2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r1_TF1b_3 sb_F1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r1_TA2a_4 sa_A2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r1_TM1a_5 sa_M1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r1_TM2b_6 sb_M2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r1_BP_7 vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r2_Tdummy_0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r2_TA2b_1 sb_A2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r2_TF1a_2 sa_F1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r2_TF2a_3 sa_F2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r2_TA1b_4 sb_A1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r2_TM1b_5 sb_M1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r2_TM2a_6 sa_M2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+Ms2d_tails_r2_Tdummy_7 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS s2d_tails
+
+.SUBCKT sinks_6x6 vbn vss x y
+Msinks_6x6_r1_dummy_0 vss vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r1_SX_1 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r1_SY_2 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r1_SY_3 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r1_SX_4 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r1_SX_5 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r1_SY_6 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r1_BN_7 vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r2_dummy_0 vss vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r2_SY_1 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r2_SX_2 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r2_SX_3 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r2_SY_4 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r2_SY_5 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r2_SX_6 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Msinks_6x6_r2_dummy_7 vss vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+.ENDS sinks_6x6
+
+.SUBCKT tub_p20x1 d g s
+Mtub_p20x1_M_0 d g s s sg13_hv_pmos w=20u l=1u ng=2 m=1
+.ENDS tub_p20x1
+
+.SUBCKT tub_p20x1_dummy s
+Mtub_p20x1_dummy_Mdummy_0 s s s s sg13_hv_pmos w=20u l=1u ng=2 m=1
+.ENDS tub_p20x1_dummy

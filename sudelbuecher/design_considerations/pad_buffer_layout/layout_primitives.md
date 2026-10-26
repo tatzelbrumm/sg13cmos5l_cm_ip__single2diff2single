@@ -4,7 +4,8 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # Layout primitives for the two pad buffers (`d2s_mpdda`, `s2d_mpdda`)
 
-2026-10-26. A proposal written by Claude (Opus 5.5) for Christoph Maier. Nothing here is drawn yet.
+2026-10-26. A proposal written by Claude (Opus 5.5) for Christoph Maier. Drawn the same night as
+KLayout cells, DRC clean and LVS checked: `klayout/README.md`.
 
 Sources:
 - devices: `macros/*/netlist/source/` (`units.spice`, `d2s_mpdda.spice`, `d2s_bias_lp.spice`,
@@ -70,6 +71,12 @@ ring tied to the source (well = source = sa / sb).
 - Every copy has identical geometry: the same gate-to-well-edge distance on all four sides (well
   proximity) and the same ring. Its position in the array then changes only its gradient.
 - Dummies are the same tub, switched off (gate, source and well on iovdd).
+- Shared wells checked 2026-10-26 (`wells/results_wells.md`); they cost more than they save:
+  - a centre-tap well per unit cuts Gm by 29 %, so noise rises by 40 % and the offset σ from 5.3 to 9.1 mV;
+  - bulks on vdd break the MP-DDA cancellation (INL 1.2 → 17 mV, THD −36 dB);
+  - either saves only 170–510 µm² per pad.
+- Keep one well per device. Butted source ties are the compact way to make well = source.
+- Free sharing exists only where source nodes can be joined: C1 / C2 in d2s, A1 / A2 in s2d.
 - Pins g, d, s; parameters nf, W, L.
 - The well-to-substrate capacitance lands on sa / sb, the same for every unit. Substrate noise
   then couples in as common mode, provided the wells are identical and cross-coupled.
@@ -179,10 +186,19 @@ wells and guard rings make it 1.5–2× larger.
 
 - d2s: plausible but tight. The Miller capacitors are the first to move, up into the logic band or
   out of the cell.
-- s2d: it does not fit, because it has 1.5× the units, seven cascodes, three loads and the full input
-  protection. Its input `padres` drives gates only, so moving parts of it out of the pad cell costs a
-  wire, nothing electrical. Keep the protection and the signal units (A1, A2, F1, F2 with their tails,
-  R and sinks) in the cell, and move the CMFB units M1 / M2, their sinks and the load capacitors out.
+- s2d (estimate corrected 2026-10-26): `s2d_mpdda_pd` alone needs about 5500 µm² with spacing, against
+  about 6500 µm² above the ESD after guard rings and the secondary protection. It is borderline. What
+  breaks it is `bias_ctrl`, which carries its own OA core and bandgap core in every pad.
+- Levers, biggest first:
+  1. one bias root per slot, with a 5 µA leg per pad (`FILL_IN.md` point 1);
+  2. cascodes at L = 2 (about −500 µm²; in d2s, L 3 → 2 cost 3.5 dB of loop gain; s2d's limit is 60 dB
+     and its worst case is 64.5 dB);
+  3. the load capacitors outside the cell (about −400 µm²);
+  4. half-size CMFB units (about −500 µm², but more output common-mode error);
+  5. smaller input pairs (only about −350 / −500 µm² at W = 10 / 5, because of the well overhead; costs
+     headroom and possibly 1/f noise).
+- Its input `padres` drives gates only, so anything moved out of the pad cell costs a wire, nothing
+  electrical.
 
 ## 5. Common-centroid maps
 
@@ -220,7 +236,12 @@ Notation: unit half `a` is the device on gp (drain to y), `b` the device on gn (
 
 ## 7. Decisions this needs
 
-1. Harmonise d2s SX / SY to 6 × 6/6 (re-simulate).
+1. Harmonise d2s SX / SY to 6 × 6/6 (re-simulate). Simulated 2026-10-26, see
+   `sink_6x6/results_sink_6x6.md`:
+   - mismatch, noise, loop and linearity are unchanged;
+   - I_Q rises from 212 to 219 µA (+3.4 %), because the sink-to-BN ratio loses an accidental compensation
+     (+1.2 % from the finger width against −1.3 % from the sinks' low Vds);
+   - an exact ratio needs BN biased at the sinks' Vds.
 2. rhigh at w = 1.0 µm: gain σ from 0.77 % to ≈ 0.4 %, about +320 / +480 µm².
 3. Sinks at 4× area: offset ≈ 6.1 → 3.9 mV, but they no longer fit in the pad cell.
 4. Move BP, BN, BPC and BNC from `d2s_bias_sel_pd` into the buffer sheets, so the layout and schematic

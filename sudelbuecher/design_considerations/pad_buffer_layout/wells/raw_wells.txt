@@ -1,0 +1,51 @@
+##### bulk = source (d2s_mpdda, unit_r2)
+unit 3.3 V: Gm0 10.97 uS  Gm CM sensitivity    0.4 %/V  compression at |x|=0.5  1.2 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5:   -1.25 /   -0.09 /   -0.09 /   -1.21 mV
+unit 3.0 V: Gm0 11.00 uS  Gm CM sensitivity   43.3 %/V  compression at |x|=0.5 15.0 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5:  -43.27 /   -5.23 /   -4.51 /  -33.88 mV
+bulk = source              1k||100p      gain=0.4999 off=  0.05mV nonlin= 1.24mV IqP/N= 212/ 212uA Idd=  296uA Imin= 102uA | T0= 78.9dB fc= 1.37MHz PM= 72.4 | OS= 0.0% t1%=  327ns | THD 10k/100k=-58.5/-51.3dB
+  100p loop: T0=104.3dB fc= 1.77MHz PM= 62.0
+  tt 27C   3.3 V  gain=0.4999 off=  0.05mV INL(+-1V)=  1.24mV Iq= 212uA T0= 78.9dB fc= 1.37MHz PM= 72.4
+  tt 27C   3.0 V  gain=0.4999 off= -0.03mV INL(+-1V)= 43.14mV Iq= 206uA 
+  ss 125C  3.3 V  gain=0.4996 off=  0.45mV INL(+-1V)=  1.75mV Iq= 207uA T0= 62.0dB fc= 1.20MHz PM= 71.8
+  ss 125C  3.0 V  gain=0.4996 off=  0.33mV INL(+-1V)= 34.98mV Iq= 202uA 
+  ff -40C  3.3 V  gain=0.5000 off=  0.03mV INL(+-1V)=  0.48mV Iq= 219uA T0= 82.7dB fc= 1.56MHz PM= 72.0
+  ff -40C  3.0 V  gain=0.5000 off=  0.01mV INL(+-1V)= 34.93mV Iq= 212uA 
+  ss 27C   3.3 V  gain=0.4999 off=  0.04mV INL(+-1V)=  3.50mV Iq= 208uA T0= 79.6dB fc= 1.42MHz PM= 71.4
+  ss 27C   3.0 V  gain=0.5000 off= -0.23mV INL(+-1V)= 53.15mV Iq= 202uA 
+  tt 125C  3.3 V  gain=0.4992 off=  0.83mV INL(+-1V)=  0.55mV Iq= 210uA T0= 56.3dB fc= 1.36MHz PM= 69.9
+  tt -40C  3.3 V  gain=0.5000 off=  0.03mV INL(+-1V)=  2.15mV Iq= 214uA T0= 81.0dB fc= 1.35MHz PM= 74.0
+  noise 1 kHz  676.0 nV/rtHz  100 kHz  152.1 nV/rtHz  10 Hz-10 MHz  230.8 uV
+  MC 30 seeds: offset sd  5.26 mV (range  -9.20.. 12.19)  gain sd 1.11 %
+##### well = centre tap (d2s_mpdda_ct, unit_r2_ct)
+unit 3.3 V: Gm0  7.81 uS  Gm CM sensitivity    0.5 %/V  compression at |x|=0.5  0.6 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5:   -0.88 /   -0.11 /   -0.11 /   -0.87 mV
+unit 3.0 V: Gm0  7.84 uS  Gm CM sensitivity   47.4 %/V  compression at |x|=0.5 20.6 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5:  -54.93 /   -4.55 /   -3.99 /  -35.01 mV
+well = centre tap          1k||100p      gain=0.4999 off=  0.07mV nonlin= 0.88mV IqP/N= 212/ 212uA Idd=  296uA Imin= 102uA | T0= 76.0dB fc= 0.99MHz PM= 77.4 | OS= 0.0% t1%=  555ns | THD 10k/100k=-60.7/-48.2dB
+  100p loop: T0=101.4dB fc= 1.30MHz PM= 69.2
+  tt 27C   3.3 V  gain=0.4999 off=  0.07mV INL(+-1V)=  0.88mV Iq= 212uA T0= 76.0dB fc= 0.99MHz PM= 77.4
+  tt 27C   3.0 V  gain=0.4999 off= -0.02mV INL(+-1V)= 54.79mV Iq= 206uA 
+  ss 125C  3.3 V  gain=0.4994 off=  0.65mV INL(+-1V)=  1.41mV Iq= 207uA T0= 58.9dB fc= 0.85MHz PM= 77.2
+  ss 125C  3.0 V  gain=0.4994 off=  0.52mV INL(+-1V)= 46.72mV Iq= 202uA 
+  ff -40C  3.3 V  gain=0.5000 off=  0.05mV INL(+-1V)=  0.45mV Iq= 219uA T0= 80.0dB fc= 1.15MHz PM= 76.8
+  ff -40C  3.0 V  gain=0.4999 off=  0.02mV INL(+-1V)= 41.00mV Iq= 212uA 
+  ss 27C   3.3 V  gain=0.4999 off=  0.06mV INL(+-1V)=  2.12mV Iq= 208uA T0= 76.6dB fc= 1.02MHz PM= 76.7
+  ss 27C   3.0 V  gain=0.5000 off= -0.23mV INL(+-1V)= 77.64mV Iq= 202uA 
+  tt 125C  3.3 V  gain=0.4989 off=  1.15mV INL(+-1V)=  0.78mV Iq= 210uA T0= 53.4dB fc= 0.98MHz PM= 75.4
+  tt -40C  3.3 V  gain=0.4999 off=  0.05mV INL(+-1V)=  1.17mV Iq= 214uA T0= 78.1dB fc= 0.97MHz PM= 78.6
+  noise 1 kHz  945.5 nV/rtHz  100 kHz  214.9 nV/rtHz  10 Hz-10 MHz  276.8 uV
+  MC 30 seeds: offset sd  9.10 mV (range -19.07.. 18.43)  gain sd 1.19 %
+##### bulk = vdd (d2s_mpdda_vdd, unit_r2_vdd)
+unit 3.3 V: Gm0  8.36 uS  Gm CM sensitivity    4.8 %/V  compression at |x|=0.5  7.1 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5:  -16.83 /    0.12 /    0.12 /  -13.17 mV
+unit 3.0 V: Gm0  9.01 uS  Gm CM sensitivity   83.9 %/V  compression at |x|=0.5 24.8 %  MP-DDA error at u = -0.5/-0.25/+0.25/+0.5:  -87.90 /  -31.66 /  -22.12 /  -63.95 mV
+bulk = vdd                 1k||100p      gain=0.4999 off=  0.12mV nonlin=16.85mV IqP/N= 211/ 211uA Idd=  295uA Imin=  93uA | T0= 76.5dB fc= 1.05MHz PM= 76.5 | OS= 0.0% t1%=  499ns | THD 10k/100k=-35.9/-35.4dB
+  100p loop: T0=101.9dB fc= 1.38MHz PM= 67.9
+  tt 27C   3.3 V  gain=0.4999 off=  0.12mV INL(+-1V)= 16.85mV Iq= 211uA T0= 76.5dB fc= 1.05MHz PM= 76.5
+  tt 27C   3.0 V  gain=0.5015 off= -1.76mV INL(+-1V)= 84.40mV Iq= 200uA 
+  ss 125C  3.3 V  gain=0.4995 off=  0.58mV INL(+-1V)= 22.42mV Iq= 206uA T0= 59.4dB fc= 0.93MHz PM= 76.1
+  ss 125C  3.0 V  gain=0.5004 off= -0.86mV INL(+-1V)= 66.54mV Iq= 189uA 
+  ff -40C  3.3 V  gain=0.5000 off=  0.11mV INL(+-1V)=  5.03mV Iq= 218uA T0= 80.4dB fc= 1.21MHz PM= 76.0
+  ff -40C  3.0 V  gain=0.5002 off= -0.63mV INL(+-1V)= 76.35mV Iq= 210uA 
+  ss 27C   3.3 V  gain=0.4999 off=  0.05mV INL(+-1V)= 30.27mV Iq= 207uA T0= 77.1dB fc= 1.09MHz PM= 75.8
+  ss 27C   3.0 V  gain=0.5025 off= -2.28mV INL(+-1V)= 88.48mV Iq= 189uA 
+  tt 125C  3.3 V  gain=0.4990 off=  1.13mV INL(+-1V)=  7.05mV Iq= 209uA T0= 53.9dB fc= 1.07MHz PM= 74.2
+  tt -40C  3.3 V  gain=0.4999 off=  0.10mV INL(+-1V)= 24.11mV Iq= 213uA T0= 78.5dB fc= 1.03MHz PM= 77.9
+  noise 1 kHz  884.3 nV/rtHz  100 kHz  200.7 nV/rtHz  10 Hz-10 MHz  266.6 uV
+  MC 30 seeds: offset sd  6.93 mV (range -12.31.. 15.96)  gain sd 1.16 %

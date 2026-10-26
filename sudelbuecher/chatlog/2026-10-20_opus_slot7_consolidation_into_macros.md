@@ -673,7 +673,7 @@ The transfer tool refuses to write files named `Makefile`.
 
 *[Ran in the cloud container: `cd /home/claude/scratch/chatlog && python3 - <<'EOF'`.]*
 
-*[Continuation, exported by the session itself on 2026-10-22, on 2026-10-25 (01:18 CEST, 03:14 CET, 18:36, 19:22, 19:32, 21:44, 22:11 and 22:51 CET) and on 2026-10-26 (00:16 CET), appended to the export of 2026-10-20 16:41: the live conversation path from the record after that export up to and including record `0562d1b0-0a9d-423b-8189-182419fcb83c` (the command that built this export); the reply after it is not included. Three stretches are missing: 2026-10-25 01:18–02:56 CEST (see the note after Turn 32), 2026-10-25 03:14–18:29 CET (see the note after Turn 41) and 2026-10-25 23:16–23:18 CET (see the note in Turn 48). The clocks went back at 03:00 CEST on 25 Oct, so turn times from there on carry the time zone. Messages that went to branches off that path (2026-10-22 00:26–00:58, most of them ending in an API error) are in the appendix at the end, in time order. Two more passages of the assistant's output were withheld by a safety classifier, one on 20 Oct after the first export and two on 22 Oct (during the xschemrc work and while the logs were being completed); what was withheld is not in the transcript and not in this file.]*
+*[Continuation, exported by the session itself on 2026-10-22, on 2026-10-25 (01:18 CEST, 03:14 CET, 18:36, 19:22, 19:32, 21:44, 22:11 and 22:51 CET) and on 2026-10-26 (00:16 and 02:30 CET), appended to the export of 2026-10-20 16:41: the live conversation path from the record after that export up to and including record `d5d777ec-ee76-44e1-9ab7-fbbfdcb3d6b6` (the command that built this export); the reply after it is not included. Three stretches are missing: 2026-10-25 01:18–02:56 CEST (see the note after Turn 32), 2026-10-25 03:14–18:29 CET (see the note after Turn 41) and 2026-10-25 23:16–23:18 CET (see the note in Turn 48). The clocks went back at 03:00 CEST on 25 Oct, so turn times from there on carry the time zone. Messages that went to branches off that path (2026-10-22 00:26–00:58, most of them ending in an API error) are in the appendix at the end, in time order. Two more passages of the assistant's output were withheld by a safety classifier, one on 20 Oct after the first export and two on 22 Oct (during the xschemrc work and while the logs were being completed); what was withheld is not in the transcript and not in this file.]*
 
 *[Ran in the cloud container: `note='Export made 2026-10-20 16:41 by the session itself, up to and including record `769cfe94-aab3-456c-843a-319deb57eb66` (the summary message to th…`.]*  
 *[Ran in the cloud container: `cd /mnt/user-data/outputs/chatlog && sed -i 's/ during the session (16:31 and 16:38);/ near the end of the session;/' 2026-10-20_opus_slot7_consolidat…`.]*  
@@ -2599,7 +2599,75 @@ Result: error, `Exit code 1`]*
 *[Ran in the cloud container: `python3 - << 'EOF'`.]*  
 *[Ran in the cloud container: `grep -o 'exported by the session itself[^)]*)' /mnt/user-data/outputs/chatlog9/2026-10-20_opus_slot7_consolidation_into_macros.md | head -2; grep -c '…`.]*  
 *[Ran in the cloud container: `python3 - << 'EOF'`.]*  
-*[Ran in the cloud container: `python3 arch/merge.py /root/.claude/projects/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07.jsonl arch/archive.jsonl && now=$(TZ=Europe/Berlin date…`.]*
+*[Ran in the cloud container: `python3 arch/merge.py /root/.claude/projects/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07.jsonl arch/archive.jsonl && now=$(TZ=Europe/Berlin date…`.]*  
+*[Ran in the cloud container: `python3 - << 'EOF'`.]*  
+*[Ran in the cloud container: `F=/mnt/user-data/outputs/chatlog10/2026-10-20_opus_slot7_consolidation_into_macros.md; sed -n 1826,1832p $F | cut -c1-200; echo ...; sed -n 2283,2296p…`.]*  
+*[Committed 2 files to the linked computer.]*  
+*[Ran in the cloud container: `sha256sum /mnt/user-data/outputs/chatlog10/log.md /mnt/user-data/outputs/chatlog10/2026-10-20_opus_slot7_consolidation_into_macros.md | cut -c1-8`.]*  
+*[Task list: task 14 -> completed.]*  
+*[Task list: task 15 -> completed.]*  
+*[Task list: task 16 -> completed.]*  
+*[Task list: task 17 -> completed.]*  
+*[Task list: task 18 -> completed.]*
+
+**Assistant:** The worked-out S2D buffer from sudelbuecher is now the real `xa` in `macros/sg13cmos5l_IOPadSingle2Diff`, replacing the placeholder. Its full CACE suite, 574 runs on the pad and 60 on the loop fixture, passes all 65 proposed limits. Everything is on your computer and the checksums match.
+
+- **Design taken over:**
+  - Your `s2d_mpdda.sch` of 23 Oct is in the macro with only its netlist-path text changed, and it netlists equivalent to the design's `s2d_mpdda.spice`.
+  - The three design netlists are in `netlist/source`. `s2d_pd.spice` has one change: `en_3v3_b` is now a port, as on the output pad.
+  - All eight design decks are in `testbenches/spice` and reproduce their reference numbers.
+- **New sheets:** `s2d_mpdda_pd` (your sheet plus the four output-to-vcm ties) and the loop-gain fixture `s2d_mpdda_pd_sel`. I placed both with a script, so they will probably want your tidying.
+- **Top sheet:** the new symbol keeps the placeholder's pin positions, so your wiring stayed. Added are the `vfbp`/`vfbn` ties to the outputs and the `en_3v3_b` wire from `xc`. The pad's port list is unchanged, so `slot` and the chip top needed no edits.
+- **Scaffold adapted where it conflicted with the design:**
+  - the rail-to-rail input requirement became the design's signal window;
+  - vref and vcm default to 1.2 V;
+  - the load is 0.5 pF per output;
+  - the four placeholder CACE groups became 14 groups plus the loop fixture.
+
+Pad results against the design's own CACE run (ideal bias, no pad cell):
+
+| | pad | design |
+|---|---|---|
+| Gain | 1.9985 … 1.9993 | 1.9984 … 1.9993 |
+| INL, worst | 1.06 mV | 1.04 mV |
+| Common-mode phase margin, worst | 62.1° | 62.0° |
+| Settling to 1 %, worst | 543 ns | 544 ns |
+| Noise at 1 kHz, worst | 723 nV/√Hz | 717 nV/√Hz |
+| Supply current at tt | 125.6 µA | 112.7 µA |
+
+The higher supply current comes mostly from the unused class-AB legs in `d2s_bias_sel_pd`. Over 100 mismatch seeds of the whole pad, offset σ is 6.2 mV.
+
+Three things behave differently from what you might expect:
+- **Enable glitch:** the output common mode rises only +0.27 V, compared with −1.6 / +1.1 V in the design's own deck. I haven't analysed why.
+- **Pad range at vref = 0.5 V:** it starts at 0 V, except at 125 °C, where it starts at 0.01 … 0.09 V.
+- **Range template:** the scaffold's measure (local gain within 1 % of 2) gave nonsense at some corners. It now measures the range in which the output stays within 1 mV of linear.
+
+`s2d_core_ideal.{sch,sym}` are no longer used. I left them in place rather than delete anything; remove them when convenient. Shared bias and the other open points are listed in `FILL_IN.md`.
+
+The before copies of every replaced file are in `consolidation/s2d_2026-10-25/before/`. The log entry and the chat-log export are written. The chat log has a gap from 23:16 to 23:18, because the context was compacted before the transcript was copied. Your 23:17 message survives verbatim in a record written by the app rather than the model, and it is quoted in the gap note.
+
+
+## Turn 51 — 2026-10-26 02:27 CET
+
+**User:** In one of the CACE testbenches for sg13cmos5l_IOPadSingle2Diff, I flipped the direction of labels to improve readabililty. Check that I didn't change connectivity, if the check passes, correct the labels in the other sg13cmos5l_IOPadSingle2Diff_tb_*.sch accordingly.
+
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates && for f in *.sch; do echo "$(stat -c…`.]*  
+*[Ran in the cloud container: `cd /mnt/user-data/outputs/s2d_commit/repo/macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates && md5sum *.sch | cut -c1-8,33-`.]*
+
+**Assistant:** Only `tb_ac` changed (02:24). Staging it.
+
+*[Staged 1 files from the linked computer into the cloud container.]*  
+*[Ran in the cloud container: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Di…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; rm -rf $S/tH && cp -a $S/tG $S/tH && T=macro…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; T=macros/sg13cmos5l_IOPadSingle2Diff/verific…`.]*  
+*[Ran in the cloud container: `source /home/claude/env.sh; S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; T=$S/tH/macros/sg13cmos5l_IOPadSingle2Diff/v…`.]*  
+*[Read `/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad/img/s2d/tpl_dc.png` in the cloud container.]*  
+*[Ran in the cloud container: `S=/tmp/claude-0/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07/scratchpad; T=macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates; O=/mnt…`.]*  
+*[Committed 6 files to the linked computer.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates && md5sum sg13cmos5l_IOPadSingle2Diff…`.]*  
+*[Ran in the cloud container: `cat >> /home/claude/work/out_log/consolidation/log.md << 'EOF'`.]*  
+*[Ran on the linked computer: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates && TZ=Europe/Berlin date -d @$(stat -…`.]*  
+*[Ran in the cloud container: `cd /home/claude/scratch/chatlog && python3 arch/merge.py /root/.claude/projects/-home-claude/a0b9e322-5866-5a10-a8e8-c1062c82af07.jsonl arch/archive.j…`.]*
 
 ## Appendix — branches off the live path, 2026-10-22
 

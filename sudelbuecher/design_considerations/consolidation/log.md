@@ -600,3 +600,35 @@ equal). The macro's files as they were before are in `design_considerations/cons
 - Not done: layout; the open points of the design note (vcm source, pad reference, offset, CMFB dump branch,
   output capacitors); `testbenches/xschem/simulations/sg13cmos5l_IOPadSingle2Diff.spice` (Christoph's generated
   netlist of 2026-10-20, still with the placeholder) not regenerated; `s2d_core_ideal.{sch,sym}` kept, no longer used.
+
+## 2026-10-26 02:27 … 02:29 CET — label directions in the S2D CACE templates
+
+Christoph flipped the seven left-hand labels of `sg13cmos5l_IOPadSingle2Diff_tb_ac.sch` (pad, vref, ibias, s0, s1, s12,
+s33: flip 1 → 0, same positions; edited 02:24 CET). Connectivity unchanged: `sheet_equiv.py` equivalent, and the
+xschem netlist is identical apart from its path comments. The same seven lines are flipped in the other six pad templates
+(dc, enable, noise, pd, range, tran); each netlists identically to before, all seven are equivalent. On the computer at
+02:29 CET, mtime-guarded, checksums equal. The loop template `s2d_mpdda_pd_sel_tb_loop.sch` already had its left-hand
+labels that way; unchanged.
+
+## 2026-10-26 02:31 … 02:36 CET — check of Christoph's hand edits of 01:04–01:45 CET
+
+Five files edited after the 00:13 commit: `s2d_mpdda_pd_sel.sch` (01:04), `s2d_mpdda_pd.sym` (01:18), the pad top
+(01:19), `s2d_mpdda.sym` (01:20), `s2d_mpdda_pd.sch` (01:44). Both symbols are smaller, with pins moved (left side now
+vcm / vin / vref from the top); pin names, directions and order are unchanged, so the source netlists still fit.
+Topology against the committed versions (`sheet_equiv.py`) and the xschem netlists:
+- `s2d_mpdda.sch`, and the pad top's own instance lines: unchanged (xa still
+  `iovdd iovss padres vref vcm outp outn outp outn vbp vbn vbpc vbnc en_3v3 en_3v3_b`).
+- `s2d_mpdda_pd.sch`: **the gates of TPP and TNP are on vdd instead of en_3v3.** xs's vdd drop at x = 260 is split
+  at y = -600, where the en_3v3 rail is also split, so the en_3v3 pin joins vdd; the en_3v3 port is left unused
+  inside the cell. The PMOS halves of the output ties would never conduct (NMOS halves still tie the outputs to
+  vcm when disabled).
+- `s2d_mpdda_pd_sel.sch`: **vin, vref and vcm reach the wrong pins of xa** (xa.vin = vref, xa.vref = vcm,
+  xa.vcm = vin). The sheet was edited at 01:04, before the symbol's left pins were reordered at 01:18. With the
+  loop template's default conditions (all three at 1.2 V) the results would not show it.
+- Everything above them (pad templates, loop template, slot) differs only through these two cells.
+- The structural check finds nothing new (the two old notes on the pad top remain).
+
+- 02:36 / 02:38 CET, Christoph fixed both: TPP / TNP gates on en_3v3 again, and the fixture's vin / vref / vcm on the
+  right pins. All 13 sheets that contain the two cells (the cells, pad top, fixture, eight templates, slot) are now
+  equivalent to the verified 00:13 versions; `s2d_mpdda_pd` and the pad match their source netlists device for
+  device; the structural check is clean for both sheets. The 00:13 simulation results stand.
