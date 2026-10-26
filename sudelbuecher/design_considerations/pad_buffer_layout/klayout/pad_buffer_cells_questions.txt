@@ -1,0 +1,25 @@
+Specific questions:
+why do bg_pcas, bg_pmir in pad_buffer_cells have dummies only on one side each of the transistor arrays? 
+Why separate bg_pcas_r1 _r2 and bg_pmir_r1 _r2?
+pad_buffer_cells.gds : 9 instances or array instance of pnpMPA? could the guard ring TIEs be abutted?
+bg_res : Can the resistors be abutted?
+bias_tree_n, bias_tree_p ; d2s_casc_n, d2s_casc_p, s2d_casc_n, s2d_casc_p : should the cascode transistors be part of the array or be placed separately? should the transistors be rotated by 90 deg to abut gates? should metal2 wires go over the entire transistor array, for symmetry? should the bulk taps be laid out as guard ring structure?
+bias_tree_sw : can TDN be connected by abutment, by abutting the drains? (orientation of digital or switch transistors is uncritical)
+d2s_ab_n , d2s_ab_p ; ds_pd_n , ds_pd_p, s2d_pd_n, s2d_pd_p : can the transistors be flipped to abut source contacts? are some of these layout blocks identical?
+d2s_cma , d2s_cmb : make pcell with area and aspect ratio as parameters, maybe even with capacitance as parameter?
+d2s_inputs , s2d_inputs : why the narrow poly connections? could the transistors be rotated? could the individual transistors be common centroided?
+d2s_loads , s2d_loads : why the narrow poly connections? should the transistors be rotated to abut gates? should metal2 wires go over the entire transistor array, for symmetry?
+d2s_rhigh , s2d_rhigh : can the nSD, pSD, SalBlock, EXTBlock of the resistors get abutted? (keep PolyRes separated) Does it hurt accuracy if the metal2 connections are above the poly resistors? Substrate tap as guard ring around the resistor array?
+d2s_tails , s2d_tails , sinks_6x6 : why only 3 dummies? can the transistors be rotated 90 deg to abut poly? well tap as guard ring?
+fit_bias_tree_oa_bg , fit_d2s_front , fit_d2s_front_caps, fit_s2d_front , fit_sd2_front_caps : what are these fits for?
+oa_mcs : why not rotate by 90 deg? why narrow poly contacts? why not substrate contact as guard ring?
+oa_misc_n : why narrow poly contacts? why are the transistors side by side? MS3 and SKS could at least be stacked vertically.
+oa_misc_p : can the transistors be rotated 90 deg? 
+oa_nmir : why the dummy in the middle? why not substrate tap(s) on the outside as guard ring? why not poly connections on the inside, by abutment?
+oa_pcas : can the transistors be rotated 90 deg to allow poly abutment?
+oa_pmir_a : can the transistors be rotated 90 deg to allow poly abutment? why not well tap(s) on the outside as guard ring? why not poly connections on the inside, by abutment?
+oa_pmir_b : can the transistors be rotated 90 deg to allow poly abutment? why not well tap(s) on the outside as guard ring? why not poly connections on the inside, by abutment? why one dummy? what's the difference between oa_pmir_a and oa_pmir_b, anyhow?
+s2d_cload: why the poly chokepoint contacts? can the source contacts be abutted? can the substrate tap be left and right instead of at the bottom?
+s2d_sinks_cmfb : why the narrow poly connections? should the transistors be rotated to abut gates? should metal2 wires go over the entire transistor array, for symmetry?
+zone_80x94 : where exactly in the IHP IO pad is this placed?
+

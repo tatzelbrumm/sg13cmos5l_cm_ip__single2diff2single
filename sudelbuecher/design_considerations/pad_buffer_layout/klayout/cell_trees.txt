@@ -1,0 +1,16 @@
+d2s amplifier                        s2d amplifier
+|- d2s_inputs   P1 input devices     |- s2d_inputs      P1 input devices
+|- d2s_tails    P2 tails + BP        |- s2d_tails       P2 tails + BP
+|- d2s_rhigh    P3 degeneration R    |- s2d_rhigh       P3 degeneration R
+|- sinks_6x6    P4 fold sinks + BN   |  (sinks_6x6 shared with d2s)
+|- d2s_loads    P5 loads             |- s2d_sinks_cmfb  P4 CMFB sinks
+|- d2s_casc_n/p P6 cascodes          |- s2d_loads       P5 loads
+|- d2s_ab_p/n   P7 class AB          |- s2d_casc_n/p    P6 cascodes
+|- d2s_cma/cmb  P9 Miller caps       |- s2d_cload       P9 load caps
+`- d2s_pd_p/n   power-down           `- s2d_pd_n/p      output ties
+
+bias tree                  OA core                     bandgap core
+|- bias_tree_n             |- oa_pmir_a, oa_pmir_b     |- bg_pmir, bg_pcas
+|- bias_tree_p             |- oa_pcas, oa_nmir         |- bg_nab
+`- bias_tree_sw, _swp      |- oa_mcs                   |- bg_misc_n, bg_misc_p
+                           `- oa_misc_n, oa_misc_p     `- bg_pnp, bg_res (placed only)

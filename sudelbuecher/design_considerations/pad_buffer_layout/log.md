@@ -278,3 +278,30 @@ Reading taken, since Christoph was asleep:
 There was none (the README has a table). `klayout/cell_tree.md` was made from the GDS: primitive → rows →
 devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on both sides.
 `klayout/README.md` lists it.
+
+## 15:33: questions (Christoph, verbatim)
+
+> "Remind me why .cdl and not .spice ? Seems to be a useful convention I'm not quite familiar with. I went
+> through your generated layouts and have a lot of questions ... they're not hand optimized quite yet:
+> sudelbuecher/design_considerations/pad_buffer_layout/klayout/pad_buffer_cells_questions.txt  We might
+> build some layout pattern skill from iterating this."
+
+- `.cdl`: answered in the chat (LVS netlist with primitive devices vs. simulation netlist with subcircuit calls).
+- `klayout/pad_buffer_cells_answers.md`: answers to every question, six generator shortcuts (A–F) behind
+  most of them, eleven layout patterns as candidates for a skill. sha256 `af99218a…`, the same on both sides.
+- Checked against the GDS while answering: `d2s_pd_n` / `s2d_pd_n` / `bias_tree_sw` are not identical
+  (XOR differs in M1 / Via1 / M2, poly for `bias_tree_sw`); no M1 / M2 over any PolyRes body; pnpMPA
+  instances 1.0 µm apart.
+
+## 15:46: request (Christoph, verbatim)
+
+> "first of all, take my pad_buffer_cells_questions.txt text, group them meaningfully, and make a markdown Q&A file
+> with your answers. Also mention the gds of the subcells the question and answer is about."
+
+- `klayout/pad_buffer_cells_qa.md`: the questions verbatim, in 11 topic groups (cell structure, dummies, gate
+  orientation, shared diffusion, rings, metal, special devices, resistors, PNPs, MOS caps, fit / zone), each with
+  the GDS cells, subcells, devices and sizes it concerns. Replaces `klayout/pad_buffer_cells_answers.md`.
+  sha256 `eaadf085…`, the same on both sides.
+- New in it, checked against the GDS: `d2s_cma` = `d2s_cmb` and `oa_misc_p` = `bg_misc_p` (identical geometry);
+  rotated input tubs would make a d2s row 87 µm wide; pnpMPA collector rings (Activ) 1.4 µm apart, `bg_pnp` about
+  22.9 × 18.5 µm with touching rings; the cascode question answered for the bias devices (NBPC, PBNC, BNC, BPC) too.
