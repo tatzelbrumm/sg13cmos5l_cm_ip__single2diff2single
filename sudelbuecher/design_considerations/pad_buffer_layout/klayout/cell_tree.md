@@ -27,8 +27,8 @@ d2s amplifier (sg13cmos5l_IOPadDiff2Single)
 |- d2s_ab_n  (P7 class AB, N side)  [11.3 x 7.0 um]  nmosHV 4.4/1 x5, ptap1
 |- d2s_cma  (P9 Miller cap A)  [17.9 x 19.0 um]  pmosHV 16/16, ntap1
 |- d2s_cmb  (P9 Miller cap B)  [17.9 x 19.0 um]  pmosHV 16/16, ntap1
-|- d2s_pd_p  (power-down)  [4.1 x 4.0 um]  pmosHV 1/0.45 x2, ntap1
-`- d2s_pd_n  (power-down)  [3.4 x 3.6 um]  nmosHV 1/0.45 x2, ptap1
+|- d2s_pd_p  (power-down)  [3.2 x 2.2 um]  pmosHV 1/0.45 1 x 2 array, shared vdd, no tap
+`- d2s_pd_n  (power-down)  [2.5 x 2.0 um]  nmosHV 1/0.45 1 x 2 array, shared vss, no tap
 
 s2d amplifier (sg13cmos5l_IOPadSingle2Diff); sinks_6x6 shared with d2s
 |- s2d_inputs  (P1 input devices)  [47.0 x 28.8 um]
@@ -45,13 +45,13 @@ s2d amplifier (sg13cmos5l_IOPadSingle2Diff); sinks_6x6 shared with d2s
 |- s2d_casc_n  (P6 cascodes + BNC)  [43.5 x 17.6 um]  nmosHV 15/3 x8, nmosHV 1/8, ptap1
 |- s2d_casc_p  (P6 cascodes + BPC)  [31.6 x 18.0 um]  pmosHV 15/3 x6, pmosHV 1/4, ntap1
 |- s2d_cload  (P9 load caps)  [26.5 x 14.6 um]  nmosHV 12/12 x2, ptap1
-|- s2d_pd_n  (output ties)  [3.4 x 3.6 um]  nmosHV 1/0.45 x2, ptap1
-`- s2d_pd_p  (output ties)  [4.1 x 4.0 um]  pmosHV 1/0.45 x2, ntap1
+|- s2d_pd_n  (output ties)  [2.5 x 2.0 um]  nmosHV 1/0.45 1 x 2 array, shared vcm, no tap
+`- s2d_pd_p  (output ties)  [3.2 x 2.2 um]  pmosHV 1/0.45 1 x 2 array, shared vcm, no tap
 
 bias tree (d2s_bias_in_tree_pd without BP / BN)
 |- bias_tree_n  (NMOS mirror (gate ni))  [43.6 x 8.6 um]  nmosHV 6/6 x5, nmosHV 2.4/6, ptap1
 |- bias_tree_p  (PMOS mirror (gate vbp))  [37.0 x 8.0 um]  pmosHV 5/6 x4, pmosHV 2/6, ntap1
-|- bias_tree_sw  (iref TG + pull-down)  [3.4 x 3.6 um]  nmosHV 1/0.45 x2, ptap1
+|- bias_tree_sw  (iref TG + pull-down)  [2.5 x 2.0 um]  nmosHV 1/0.45 1 x 2 array, shared ni, no tap
 `- bias_tree_swp  (iref TG)  [2.4 x 4.0 um]  pmosHV 1/0.45, ntap1
 
 Oguey-Aebischer core (oa_core_pd)
@@ -83,7 +83,7 @@ bandgap core (bg_core_pd)
 |- bg_misc_p  (MS1 chain, SVPG)  [58.2 x 5.5 um]
 |  |- bg_misc_p_r1  [57.1 x 3.5 um]  pmosHV 0.5/12.5 x4, ntap1
 |  `- bg_misc_p_r2  [57.5 x 4.0 um]  pmosHV 0.5/12.5 x4, pmosHV 1/0.45, ntap1
-|- bg_pnp  (Q1 + 8 Q2 (placed only))  [25.7 x 21.6 um]  pnpMPA 2x2 x9
+|- bg_pnp  (Q1 + 8 Q2 (placed only))  [22.2 x 17.8 um]  pnpMPA 2x2, 3 x 3 array, shared collector rings
 `- bg_res  (R1A / R1B / R0 (placed only))  [56.9 x 11.2 um]  rhigh 0.5x9.94 x41
 
 fit checks (arrangements of the cells above, no new geometry): fit_bias_tree_oa_bg, fit_s2d_front_caps, fit_s2d_front, fit_d2s_front_caps, fit_d2s_front

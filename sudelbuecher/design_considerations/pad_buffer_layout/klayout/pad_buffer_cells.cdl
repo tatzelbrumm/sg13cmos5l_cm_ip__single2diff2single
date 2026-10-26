@@ -1,5 +1,8 @@
 * Reference netlists of the wired cells in pad_buffer_cells.gds, written by pad_buffer_cells.py.
 * One .SUBCKT per cell; pins are the labelled nets. Dummies are listed (S = D or shorted).
+* 2026-10-26: d2s_pd_n, s2d_pd_n, d2s_pd_p, s2d_pd_p, bias_tree_sw edited by hand for the compact,
+* tap-less versions (Christoph); pad_buffer_cells.py does not produce them yet.
+* 2026-10-26: bg_res added by hand for the wired, ring-guarded bg_res.gds (not yet in pad_buffer_cells.gds).
 
 .SUBCKT bg_misc_n en_3v3_b g ks vpc vss
 Mbg_misc_n_MS2_0 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
@@ -70,6 +73,52 @@ Mbg_pmir_r2_PA_7 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
 Mbg_pmir_r2_PO_8 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
 .ENDS bg_pmir
 
+.SUBCKT bg_res e2 ea eb vss
+* bandgap R0 (eb-e2, 18 x 9.94 um), R1A (ea-vss, 11), R1B (eb-vss, 10) as series rhigh segments,
+* chained left to right through the interleaved row; dummies on vss; bulk = substrate ring (vss)
+Rbg_res_R0_0 e2 R0_1 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_1 R0_1 R0_2 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_2 R0_2 R0_3 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_3 R0_3 R0_4 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_4 R0_4 R0_5 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_5 R0_5 R0_6 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_6 R0_6 R0_7 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_7 R0_7 R0_8 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_8 R0_8 R0_9 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_9 R0_9 R0_10 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_10 R0_10 R0_11 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_11 R0_11 R0_12 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_12 R0_12 R0_13 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_13 R0_13 R0_14 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_14 R0_14 R0_15 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_15 R0_15 R0_16 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_16 R0_16 R0_17 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R0_17 R0_17 eb vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_0 vss R1A_1 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_1 R1A_1 R1A_2 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_2 R1A_2 R1A_3 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_3 R1A_3 R1A_4 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_4 R1A_4 R1A_5 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_5 R1A_5 R1A_6 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_6 R1A_6 R1A_7 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_7 R1A_7 R1A_8 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_8 R1A_8 R1A_9 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_9 R1A_9 R1A_10 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1A_10 R1A_10 ea vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_0 vss R1B_1 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_1 R1B_1 R1B_2 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_2 R1B_2 R1B_3 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_3 R1B_3 R1B_4 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_4 R1B_4 R1B_5 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_5 R1B_5 R1B_6 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_6 R1B_6 R1B_7 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_7 R1B_7 R1B_8 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_8 R1B_8 R1B_9 vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_R1B_9 R1B_9 eb vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_dummy_0 vss vss vss rhigh w=0.5u l=9.94u m=1 b=0
+Rbg_res_dummy_1 vss vss vss rhigh w=0.5u l=9.94u m=1 b=0
+.ENDS bg_res
+
 .SUBCKT bias_tree_n ni vabp vbp vbpc vss
 Mbias_tree_n_dummy_0 vss ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
 Mbias_tree_n_NBP_1 vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
@@ -88,8 +137,9 @@ Mbias_tree_p_PBNC_4 vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
 .ENDS bias_tree_p
 
 .SUBCKT bias_tree_sw en_3v3 en_3v3_b iref ni vss
-Mbias_tree_sw_TGN_0 ni en_3v3 iref vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
-Mbias_tree_sw_TDN_1 ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+* no tap in the cell (bulk on net sub, tied by the parent); ni shared between TGN and TDN
+Mbias_tree_sw_TGN_0 ni en_3v3 iref sub sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+Mbias_tree_sw_TDN_1 ni en_3v3_b vss sub sg13_hv_nmos w=1u l=0.45u ng=1 m=1
 .ENDS bias_tree_sw
 
 .SUBCKT bias_tree_swp en_3v3_b iref ni vdd
@@ -150,13 +200,15 @@ Md2s_loads_dummy_9 vdd l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
 .ENDS d2s_loads
 
 .SUBCKT d2s_pd_n b en_3v3_b vabn vss
-Md2s_pd_n_SB_0 b en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
-Md2s_pd_n_SABN_1 vabn en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+* no tap in the cell (bulk on net sub, tied by the parent); vss shared between SB and SABN
+Md2s_pd_n_SB_0 b en_3v3_b vss sub sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+Md2s_pd_n_SABN_1 vabn en_3v3_b vss sub sg13_hv_nmos w=1u l=0.45u ng=1 m=1
 .ENDS d2s_pd_n
 
 .SUBCKT d2s_pd_p a en_3v3 vabp vdd
-Md2s_pd_p_SA_0 a en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
-Md2s_pd_p_SABP_1 vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+* no tap in the cell (bulk on net nw, tied by the parent); vdd shared between SA and SABP
+Md2s_pd_p_SA_0 a en_3v3 vdd nw sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+Md2s_pd_p_SABP_1 vabp en_3v3 vdd nw sg13_hv_pmos w=1u l=0.45u ng=1 m=1
 .ENDS d2s_pd_p
 
 .SUBCKT d2s_rhigh sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vss
@@ -344,14 +396,16 @@ Ms2d_loads_LP_12 lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
 Ms2d_loads_dummy_13 vdd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
 .ENDS s2d_loads
 
-.SUBCKT s2d_pd_n en_3v3_b vcm voutn voutp vss
-Ms2d_pd_n_TPN_0 vcm en_3v3_b voutp vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
-Ms2d_pd_n_TNN_1 vcm en_3v3_b voutn vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.SUBCKT s2d_pd_n en_3v3_b vcm voutn voutp
+* no tap in the cell (bulk on net sub, tied by the parent); vcm shared between TPN and TNN
+Ms2d_pd_n_TPN_0 vcm en_3v3_b voutp sub sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+Ms2d_pd_n_TNN_1 vcm en_3v3_b voutn sub sg13_hv_nmos w=1u l=0.45u ng=1 m=1
 .ENDS s2d_pd_n
 
-.SUBCKT s2d_pd_p en_3v3 vcm vdd voutn voutp
-Ms2d_pd_p_TPP_0 vcm en_3v3 voutp vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
-Ms2d_pd_p_TNP_1 vcm en_3v3 voutn vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.SUBCKT s2d_pd_p en_3v3 vcm voutn voutp
+* no tap in the cell (bulk on net nw, tied by the parent); vcm shared between TPP and TNP
+Ms2d_pd_p_TPP_0 vcm en_3v3 voutp nw sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+Ms2d_pd_p_TNP_1 vcm en_3v3 voutn nw sg13_hv_pmos w=1u l=0.45u ng=1 m=1
 .ENDS s2d_pd_p
 
 .SUBCKT s2d_rhigh sa_A1 sa_A2 sa_F1 sa_F2 sa_M1 sa_M2 sb_A1 sb_A2 sb_F1 sb_F2 sb_M1 sb_M2 vss

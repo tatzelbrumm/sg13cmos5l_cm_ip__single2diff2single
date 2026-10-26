@@ -5,7 +5,7 @@
 - Source: the raw transcript `~/.claude/projects/-home-claude/0e0e7b46-5835-5dad-9984-169b95157232.jsonl` in the cloud container, extracted by script. The main part has the records in file order from the prompt of 00:23 on. The first attempt (00:15–00:21, a branch that ended in an API error) is in the appendix.
 - User messages are verbatim, without system reminders and the app's file-delivery notices. Visible replies and `SendUserMessage` messages are verbatim. Tool calls are `*[ ]*` summaries: the first line of each command cut at 150 characters, plus errors. Background-task notifications are summaries. The internal reasoning is not included.
 - In the first attempt a safety classifier stopped one reply (00:17). What was withheld is not in the transcript and not in this file. The attempt ended at 00:21 with "API Error … `[reasoning_extraction]`". The prompt of 00:15 was sent again at 00:23 with one sentence added at the end.
-- Export made 2026-10-26 00:41, 02:10, 02:22, 03:54, 13:58, 15:41 and 15:52 by the session itself, each time up to and including the command that built it. The replies after it are not included.
+- Export made 2026-10-26 00:41, 02:10, 02:22, 03:54, 13:58, 15:41, 15:52, 21:31 and 22:33 by the session itself, each time up to and including the command that built it. The replies after it are not included.
 - At 15:38 the session reached its context limit and the transcript was compacted. The records from the 13:58 export to 15:36 (the rest of the reply to turn 10, the user message of 15:33 and the first file reads of turn 11) are no longer in it. The 15:33 message below is taken from the compaction summary, which quotes it verbatim; it matches `log.md`.
 - Times are Europe/Berlin (CET).
 
@@ -1013,6 +1013,895 @@ Next step, if you want it: try lining up the gates on one shared poly line and s
 *[Bash: `sha256sum /mnt/user-data/outputs/v11/pad_buffer_cells_qa.md`]*
 
 *[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/pad_buffer_ce`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/0e0e7b46-5835-5dad-9984-169b95157232/scratchpad; T=/root/.claude/projects/-home-claude/0e0e7b46-5835-5dad-9984-169b951572`]*
+
+*[Bash: `O=/mnt/user-data/outputs/v11/chatlog_v11.md; sed -n '882,890p' $O | cut -c1-150; sed -n '975,990p' $O | cut -c1-150`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v11/chatlog_v11.md", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbu]*
+
+*[mcp__remote-devices__device_bash: `sha256sum $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-26_opus_pad_buffer_layout_primitives.md`]*
+
+**Assistant:** I made the Q&A file: `klayout/pad_buffer_cells_qa.md`, next to your questions. It has all your questions verbatim, sorted into 11 topics:
+
+1. cell structure
+2. dummies
+3. gate orientation and poly connections
+4. shared diffusion
+5. guard rings
+6. metal over the arrays
+7. where the special devices go
+8. resistors
+9. PNPs
+10. MOS caps
+11. fit checks and the zone
+
+A line with several questions shows up under each topic it touches, with `…` marking the cut. Under each question there's a "GDS:" line naming the cells in `pad_buffer_cells.gds` it's about: subcells, devices and size.
+
+I checked the answers against the GDS again, and some things changed from the earlier answers file:
+- **Identical cells:** `d2s_cma` and `d2s_cmb` have identical geometry, and so do `oa_misc_p` and `bg_misc_p`.
+- **Inputs:** rotating the input tubs would make a d2s row 87 µm wide, more than the 80 µm cell. So for the inputs I'd keep the orientation and only widen the gate connections.
+- **Cascode question:** I answered it both ways. One reading is the bias devices at the row ends (NBPC, PBNC, BNC, BPC); the other is the 15/3 cascodes themselves.
+- **PNP size:** the collector rings are 1.4 µm apart. With the rings touching, `bg_pnp` shrinks to about 22.9 × 18.5 µm.
+
+The new file replaces `pad_buffer_cells_answers.md`. Should I remove the old one? I need your OK to delete files on your computer.
+
+The running log has an entry for this turn, and the chatlog is updated to 15:52; both copies match mine.
+
+## Turn 13 — 2026-10-26 16:31
+
+**User:** Kept pad_buffer_cells_answers.md and marked as superseded by _qa.md.
+
+Let's get to work. I exported the PNP array and abutment seems DRC legal. Verify, and place the labels in the gap between tie and pwell, upper left region, aligned with the array.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher && find . -newer sudelbuecher/design_considerations/pad_buffer_layout/klayout/pad_buffe`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && which klayout python3; `]*
+
+*[mcp__remote-devices__device_stage_files: ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/bg_pnp.gds", "/home/]*
+
+*[Bash: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout; mkdir -p /opt`]*
+
+*[[Request interrupted by user]]*
+
+## Turn 14 — 2026-10-26 16:32
+
+**User:** Check LvS while you're at it.
+
+*[Bash: `ls /opt/eda; find / -path /proc -prune -o -type d -name 'ihp-sg13cmos5l' -print 2>/dev/null | head; cd /opt/eda/pnp && python3 -c "`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/lvs && ls; grep -rn -i 'pnp' rule_decks/*.lvs rule_decks/*.rb 2>/dev/null | head -30; g`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/lvs; cat testing/testcases/unit/bjt_devices/netlist/pnpMPA.cdl | head -40; sed -n 1,140`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/lvs; sed -n 140,330p rule_decks/custom_bjt_extractor.lvs | grep -v '^\s*#' | grep -v '^`]*
+
+*[Bash: `cat /opt/eda/klshim/klayout | head -30; ls /opt/eda/runs | head`]*
+
+*[Bash: `cd /opt/eda/pnp && export PATH=/opt/eda/klshim:$PATH PDK_ROOT=/opt/eda/IHP-Open-PDK PDK=ihp-sg13cmos5l && timeout 900 python3 $PDK_ROOT/$PDK/libs.tech`]*
+
+*[Bash: `cd /opt/eda/pnp && grep -c 'Executing rule\|rule' drc/bg_pnp_bg_pnp_main.log | head -2; U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_`]*
+
+*[Bash: `grep -rln "NW\.b" /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ | head; grep -rn -A4 "NW\.b" /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/l`]*
+
+*[Bash: `cd /opt/eda/pnp; grep -n 'NW.b' drc/bg_pnp_bg_pnp_main.log | head; grep -rn 'nwell_nets *=' -A12 /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayou`]*
+
+*[Bash: `grep -rn 'nwell_nets' /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ | grep -v 'space\|forget' | head;`]*
+
+*[Bash: `sed -n 380,420p /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc; grep -n 'NW_b1\|"NW_b"' /opt/eda/IHP-Open-PDK/ihp-`]*
+
+*[Bash: `cd /opt/eda/pnp && python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher && grep -rn --include=*.spice --include=*.cdl --include=*.sch -i 'pnpMPA' . 2>/dev/null`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/lvs; grep -rn "63, *0\|text_drw\|(63" rule_decks/*.lvs | head -5; grep -n "add_argument`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/lvs; grep -rn "varicap_patt *=\|nmoscap_patt *=\|text_drw *=" rule_decks/ sg13cmos5l.lv`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/lvs; grep -rn "varicap_patt\|nmoscap_patt\|text_drw" rule_decks/*.lvs sg13cmos5l.lvs | `]*
+
+## Turn 15 — 2026-10-26 16:36
+
+**User:** Your response above was cut off mid-stream. Resume directly from where it stops — no apology, no recap. If none of it survived, answer the request from the start.
+
+*[Bash: `cd /opt/eda/pnp && python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/pnp && cat > bg_pnp.cdl <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/pnp && grep -v '^\*' lvs_bg_pnp_labels/bg_pnp_labels_extracted.cir | head -30`]*
+
+*[[Request interrupted by user]]*
+
+## Turn 16 — 2026-10-26 16:37
+
+**User:** I'm surprised this takes you so long. I did the layout already; moving the labels should be trivial ... ?
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v12 && cp /opt/eda/pnp/bg_pnp_labels.gds /mnt/user-data/outputs/v12/bg_pnp_v12.gds && sha256sum /mnt/user-data/outputs`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v12/bg_pnp_v12.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbu]*
+
+*[mcp__remote-devices__device_bash: `sha256sum $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/bg_pnp.gds`]*
+
+*[Bash: `cd /opt/eda/pnp && grep -i -E "net|device|pin|circuit" lvs_bg_pnp_labels/bg_pnp_labels.log | grep -i -E "mismatch|not match|no match|unmatched|error|w`]*
+
+*[Bash: `cd /opt/eda/pnp && python3 - <<'EOF'`]*
+
+*[error: Exit code 1]*
+
+*[Bash: `cd /opt/eda/pnp && python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && cat >> log.md <<'EOF'`]*
+
+**Assistant:** The labels are moved, and `bg_pnp.gds` is updated in place; reload it in KLayout. The abutment is DRC-legal only once the bases are wired to vss; until then a flattened check flags it.
+
+**Labels:** all 9 now sit at the same spot relative to each device. That's the upper-left corner of the gap between the TIE ring and the NWell (I took your "pwell" to mean that gap). Q1 (ea) is in the middle and Q2 (e2) on the other eight, left-aligned, 0.4 µm high. The 9 old labels further left are deleted, and nothing else changed (checked by XOR).
+
+**DRC:**
+- Your hierarchical run is clean, and my rerun with IHP's deck agrees.
+- When I flattened the array, DRC flags NW.b1 12 times. The NWell gaps are 1.75 µm, and the rule for wells on different nets is 1.80 µm. The hierarchical run misses this because all 9 wells sit inside one arrayed cell, so the deck sees them as the same net.
+- In the schematic all bases are on vss (`Q1 vss vss ea`, `Q2 vss vss e2 m=8`). Once you wire the bases, all wells are one net, the 0.62 µm rule applies, and 1.75 µm is legal.
+
+**LVS:** I ran it against a netlist of 9 unwired pnpMPA with a shared collector.
+- **Devices:** all 9 match, emitter area 4p and perimeter 8u. The shared collector rings are fine: there's one collector net and no lost devices.
+- **Verdict:** the run still says "don't match". The only flagged items are the 9 bases, which float and get matched only with warnings, so I expect a real pass once the bases go to vss and the Q2 emitters to e2.
+
+## Turn 17 — 2026-10-26 16:45
+
+**User:** ok reimport the changed bg_pnp.gds into pad_buffer_cells.gds
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && sha256sum pad_buffer_ce`]*
+
+*[Bash: `sha256sum /opt/eda/lay/pad_buffer_cells.gds`]*
+
+*[Bash: `mkdir -p /opt/eda/reimport && cd /opt/eda/reimport && python3 - <<'EOF'`]*
+
+*[error: Exit code 1]*
+
+*[Bash: `cd /opt/eda/reimport && python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/reimport && python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/reimport && export PATH=/opt/eda/klshim:$PATH PDK_ROOT=/opt/eda/IHP-Open-PDK PDK=ihp-sg13cmos5l && timeout 900 python3 $PDK_ROOT/$PDK/libs`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v13/pad_buffer_cells_v13.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuech]*
+
+*[error: {"written":[],"rejected":[{"devicePath":"/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/pad_buffer_cells.gds","reason":]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v13/pad_buffer_cells_v13.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuech]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/pad_buffer_ce`]*
+
+**Assistant:** Your `bg_pnp` is now in `pad_buffer_cells.gds`, replacing the old one; reload the library in KLayout.
+
+- **What changed:** it's the same 3 × 3 array with shared collector rings and the new labels, now 22.2 × 17.8 µm instead of 25.7 × 21.6 µm. It uses the library's existing `pnpMPA` cell, which I checked is identical to the one in your export.
+- **Rest of the library:** I compared shapes and instances in all 130 other cells, and nothing else changed. DRC on `bg_pnp` inside the library is clean.
+- **Placement:** the top cell and `fit_bias_tree_oa_bg` keep `bg_pnp` at its old position, so there's now a gap of about 3.5 µm next to it. I didn't redo the fit packing.
+- **Generator:** `pad_buffer_cells.py` still builds the old nine separate instances, so rerunning it would overwrite your version. I can update it to draw the array your way.
+
+I also updated the `bg_pnp` line in `cell_tree.md` and added an entry to the running log.
+
+## Turn 18 — 2026-10-26 16:59
+
+**User:** move by coordinates in interactive klayout?
+
+**Assistant:** KLayout has three ways to do this. All of them need editor mode (File → Editor Mode), and you need to select the instance at the right level: for `bg_pnp`, select the instance in the top cell, not its contents.
+
+- **Move by an offset:** Edit → Selection → Move By… and type dx and dy in µm.
+- **Move to an absolute position:** Edit → Selection → Move To… and type the target x and y. You also choose which point of the selection's bounding box (a corner or the centre) goes there.
+- **Set the instance origin directly:** select the instance, open Edit → Properties (usually the Q key) and type the position. For an array instance, the same dialog also shows its pitch and counts.
+
+For `bg_pnp`, Move By 0 / +3.8 µm puts its top edge back where the old cell's top edge was. That works in the top cell and in `fit_bias_tree_oa_bg`, because both placed it by its old top edge (6.72 µm, now 2.92 µm).
+
+## Turn 19 — 2026-10-26 17:30
+
+**User:** I exported d2s_pd_p, d2s_pd_n, s2d_pd_p, s2d_pd_n and compacted the bias_tree_sw layouts. Align the TDN label in it I omitted the substrate contact, because for putting together a layout bottom up, the substrate or well contact is a hindrance. Compact the other layouts d2s_pd_p, d2s_pd_n, s2d_pd_p, s2d_pd_n mutatis mutandis, omit substrate or well tap. Where metal2 wires and pins become unnecessary, put the pins from metal2 to metal1 and adjust pin size.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && ls -la --time-style=+%H`]*
+
+*[mcp__remote-devices__device_stage_files: ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/bias_tree_sw.gds", "]*
+
+*[Bash: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout; mkdir -p /opt`]*
+
+*[Bash: `cd /opt/eda/sw && python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/sw && python3 - <<'EOF'`]*
+
+*[[Request interrupted by user]]*
+
+## Turn 20 — 2026-10-26 17:31
+
+**User:** The DRCs will complain about missing nwell or substrate taps. That's ok.
+
+*[Bash: `cd /opt/eda/sw && mkdir -p out && python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/sw/out && cat > sw.cdl <<'EOF'`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v14 && cd /opt/eda/sw/out && for c in d2s_pd_n s2d_pd_n d2s_pd_p s2d_pd_p bias_tree_sw; do cp $c.gds /mnt/user-data/ou`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v14/d2s_pd_n_v14.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudel]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/{bias_tree_sw`]*
+
+**Assistant:** I've compacted the four switch cells to match your `bias_tree_sw` and aligned its TDN label. All five files are overwritten in place, so reload them in KLayout.
+
+- **`bias_tree_sw`:** only the TDN label moved, to x = 0.83, so it sits on the second device the way TGN sits on the first.
+- **`d2s_pd_n`, `s2d_pd_n`, `d2s_pd_p`, `s2d_pd_p`:** each is a 1 × 2 array at 0.83 µm pitch, like yours. The shared node sits in the shared middle diffusion: vss, vdd or vcm. There are no taps.
+  - **Gates:** both gates are on one net, so there is one poly pad and one M1 bar over both contacts. The gate pin stays at the left end.
+  - **Pins:** in the s2d cells the M2 wire, via and pin for vcm are gone. vcm is now an M1 pin on the middle stripe, the same size as the other source/drain pins.
+  - **Size:** 2.5 × 2.3 µm for the n cells and 3.2 × 2.4 µm for the p cells.
+- **Duplicates:** `d2s_pd_n`/`s2d_pd_n` and `d2s_pd_p`/`s2d_pd_p` are now identical apart from labels. One cell per pair could serve both.
+- **DRC:** the only violations are the latch-up tap rules (LU.b on the NMOS cells, LU.a on the PMOS cells), as you expected.
+- **LVS:** all five match, with the bulk treated as its own net.
+
+`bias_tree_sw` still has a small M1 square on ni, left over from the old via. It's harmless, and I left it because you only asked for the label.
+
+The running log has an entry for this.
+
+## Turn 21 — 2026-10-26 17:43
+
+**User:** thanks for telling me about the M1 square. I deleted it. For these transistor arrays, how much closer can you push the poly contact on top to the transistors? Looks like this is much more than minimum distance. 
+It's probably prudent to leave more space than absolutely necessary, but can this be made smaller?
+
+*[Bash: `J=/opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json; python3 - <<EOF`]*
+
+*[[Request interrupted by user]]*
+
+## Turn 22 — 2026-10-26 17:43
+
+**User:** A metal2 via should fit without DRC violations.
+
+*[Bash: `J=/opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json; python3 - <<EOF`]*
+
+*[Bash: `grep -rn -h "# Rule M2\|# Rule Mn\|# Rule Gat\.\|# Rule TGO\." /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/ | sed 's/^ `]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && sha256sum {bias_tree_sw`]*
+
+*[mcp__remote-devices__device_stage_files: ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/bias_tree_sw.gds"]]*
+
+*[mcp__remote-devices__device_list_dir: "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout"]*
+
+*[Bash: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout; mkdir -p /opt`]*
+
+*[Bash: `cd /opt/eda/sw2 && mkdir -p out test && python3 - <<'EOF'`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v15 && cd /opt/eda/sw2/out && for c in d2s_pd_n s2d_pd_n d2s_pd_p s2d_pd_p bias_tree_sw; do cp $c.gds /mnt/user-data/o`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v15/d2s_pd_n_v15.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudel]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/{bias_tree_sw`]*
+
+**Assistant:** Yes, it can be a lot smaller. I moved the gate contacts from 0.52 µm above the transistors to 0.18 µm in all five cells. They're overwritten in place, so reload them in KLayout.
+
+- **Limits:** the hard rule is contact-on-poly to Activ ≥ 0.14 µm (Cnt.e). What actually sets 0.18 is the gate's M1, which must stay 0.18 µm from the source/drain M1 stripes. Those stripes come from the PCell and end at the top of the transistor. So I'm already at the floor; there's no extra margin left in there.
+- **Gate geometry:**
+  - In the four pd cells there's one poly cap and one M1 bar over both gates.
+  - In `bias_tree_sw` each gate gets its own poly cap and M1 pad. The pads are 0.53 µm wide so they meet the M1 minimum area.
+  - Gate pins are 0.29 × 0.21 µm, sitting on the contacts.
+- **Size:** the poly now ends at y = 1.41 instead of 1.78. Each cell now ends at the transistor's own outline, y = 1.52 for n and 1.62 for p, so about 0.26 µm (n) and 0.16 µm (p) less height.
+- **Via:** on copies, I put a Via1 directly on each gate contact with a minimum M2 pad (0.29 × 0.5 µm), and they're DRC-clean. The cells I delivered have no via.
+- **Checks:** DRC shows only the latch-up tap rules you expect, and LVS matches for all five.
+
+Your `bias_tree_sw` edit, with the M1 square removed, is kept. The running log has an entry for this.
+
+## Turn 23 — 2026-10-26 18:12
+
+**User:** Good job! Now reimport to pad_buffer_cells.gds
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && sha256sum pad_buffer_ce`]*
+
+*[Bash: `mkdir -p /opt/eda/reimport2 && cd /opt/eda/reimport2 && python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/reimport2 && python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v16/pad_buffer_cells_v16.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuech]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/pad_buffer_ce`]*
+
+**Assistant:** The five compact switch cells are now in `pad_buffer_cells.gds`, replacing the old versions: `d2s_pd_n`, `s2d_pd_n`, `d2s_pd_p`, `s2d_pd_p` and `bias_tree_sw`.
+
+**Reload it before your next save if you have the library open in KLayout.** Its autosave backups suggest it was open, and saving the old session would overwrite this.
+
+- **The cells:** they're the same as your separate GDS files. They use the library's existing transistor cells, which I checked are identical to the ones in your exports.
+- **Tap cells:** `ptap1$8` and `ntap1$9` were used only by these five cells, so I removed them; otherwise they'd show up as extra top cells.
+- **Rest of the library:** every other cell is unchanged, including its shapes and instances. The cells keep their old positions in the top cell and the fit cells; I didn't repack.
+- **DRC:** inside the library it shows only the latch-up tap rules, as before.
+- **Updated:** the five lines in `cell_tree.md`, and the running log has an entry.
+- **Not updated:** `pad_buffer_cells.cdl` still describes these cells with their taps, so LVS of the whole library against it would fail for them. `pad_buffer_cells.py` still generates the old versions. Say if you want either brought up to date.
+
+## Turn 24 — 2026-10-26 18:21
+
+**User:** update the .cdl for now. more changes will be coming for the .py file.
+
+For now, push bg_res.gds horizontally to minimum distance of the poly resistors. Surrounding layers may overlap if consistent with DRC and LvS.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && ls -la --time-style=+%H`]*
+
+*[Bash: `cd /opt/eda/lay && sha256sum pad_buffer_cells.cdl | cut -c1-12; for c in d2s_pd_n s2d_pd_n d2s_pd_p s2d_pd_p bias_tree_sw; do awk -v c=$c '$1==".SUBCK`]*
+
+*[[Request interrupted by user]]*
+
+## Turn 25 — 2026-10-26 18:22
+
+**User:** I mean the exported .gds, not the one in your collection (quite yet).
+
+*[mcp__remote-devices__device_stage_files: ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/bg_res.gds", "/home/]*
+
+*[Bash: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout; mkdir -p /opt`]*
+
+*[Bash: `D=/opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks; ls $D $D/*/ | head -60; grep -rn -h "# Rule \(Rhi\|Sal\|EXTB\|pSD\|nSD\|`]*
+
+*[Bash: `D=/opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc; grep -n -i "rhi\|salblock\|sal\.\|extb\|polyres\|# Rule" $D/rule_decks/sg13cmos5l_m`]*
+
+*[Bash: `D=/opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc; sed -n 2105,2200p $D/rule_decks/sg13cmos5l_maximal.drc | grep -n "output\|ext_" | g`]*
+
+*[Bash: `D=/opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc; grep -n 'output("\(Rhi\|Rppd\|pSD\|nSD\)[^"]*", "[^"]*")' $D/rule_decks/sg13cmos5l_`]*
+
+*[Bash: `D=/opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc; grep -rn -i "b1\b\|Gat.b1\|Gat_b1" $D/rule_decks/feol/5_8_gatpoly.drc $D/rule_decks`]*
+
+*[Bash: `mkdir -p /opt/eda/cdl && cd /opt/eda/cdl && cp /mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerat`]*
+
+*[Bash: `cd /opt/eda/cdl && sed -i 's/^\* 2026-10-26 18:2x: /* 2026-10-26: /' pad_buffer_cells.cdl && sed -n 1,5p pad_buffer_cells.cdl && mkdir -p /mnt/user-da`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v17/pad_buffer_cells_v17.cdl", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuech]*
+
+*[Bash: `cd /opt/eda/res && python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/res && tail -n 15 lvs_bg_res_068.log; ls lvs_bg_res_068`]*
+
+*[Bash: `grep -m2 'rhigh' /opt/eda/cdl/pad_buffer_cells.cdl; cd /opt/eda/res && sed -i 's/^R\([0-9]*\) a\([0-9]*\) b\([0-9]*\) rhigh/R\1 a\2 b\3 sub rhigh/' bg`]*
+
+*[Bash: `cd /opt/eda/res && python3 - <<'EOF'`]*
+
+*[Bash: `cp /opt/eda/res/bg_res_068.gds /mnt/user-data/outputs/v17/bg_res_v17.gds && sha256sum /mnt/user-data/outputs/v17/bg_res_v17.gds | cut -c1-12`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v17/bg_res_v17.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbu]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/bg_res.gds kl`]*
+
+**Assistant:** Both are done.
+
+**`.cdl`:** I rewrote the five switch subcircuits for the cells without taps. The bulk is now an internal net (`sub` for NMOS, `nw` for PMOS) that the parent ties. `s2d_pd_n` and `s2d_pd_p` lose their vss/vdd pin. A header line says the file was edited by hand and that the `.py` doesn't produce these versions yet. LVS of all five against the library GDS passes.
+
+**`bg_res.gds`** (your export, updated in place, not yet in the library):
+- **Pitch:** 1.4 → 0.68 µm, which halves the width from 56.9 to 28.1 µm. The limit is poly-to-poly spacing: 0.5 µm body + 0.18 µm. The metal1 heads would allow 0.64 and the contacts 0.54.
+- **Surrounding layers:** pSD/nSD, SalBlock and EXTBlock now overlap and merge into one region. The PolyRes marker stays separate per segment. The labels moved with their resistors.
+- **DRC:** clean, including the high-resistance poly (Rhi), SalBlock (Sal) and EXTBlock (EXTB) rules in the maximal deck. The implant, SalBlock and EXTBlock spacing rules only matter while the layers are apart. At 0.68 µm they overlap, so those rules no longer apply.
+- **LVS:** the extraction still finds 41 rhigh segments of 0.5 × 9.94 µm, the same as at 1.4 µm pitch. The resistors aren't wired yet, so their 82 end nets float. As with the PNP array, LVS matches them only with ambiguity warnings and the overall result reads FAIL. That's the same before and after the change.
+
+This is the absolute minimum spacing. If you want some margin for matching, a pitch of about 0.8 µm would still keep the layers merged.
+
+## Turn 26 — 2026-10-26 18:28
+
+**User:** For best matching of these most critical devices, isn't minimum distance beneficial here, even though in general, minimum design for analog circuits isn't recommended?
+
+**Assistant:** Yes. For this array, minimum spacing is the right choice. The usual advice against minimum dimensions in analog design is mostly about minimum widths and lengths, not about the gap between identical, interleaved segments.
+
+- **Random mismatch** depends on each resistor's area (W·L) and edge roughness, not on the spacing. A tighter pitch costs nothing here.
+- **Gradients** (oxide, doping, stress, temperature) get better. The interleaved sequence already cancels linear gradients. A narrower array shrinks the distances between the segments of R0, R1A and R1B, so higher-order and thermal gradients leave smaller differences.
+- **Edges** get better too. With pSD/nSD, SalBlock and EXTBlock merged, the inner segments no longer have their own implant and SalBlock edges 0.2 µm away; those edges exist only at the array boundary. That is more uniform.
+- **Etch and lithography proximity:** at minimum poly space the line width may come out slightly different. It's the same for every inner segment, so it shifts the absolute value of R but not the ratios, which are what the bandgap depends on.
+
+The conditions are what matter, not the number:
+- the same pitch everywhere, including to the end dummies;
+- the end dummies themselves, which are already there;
+- identical metal around and over every segment once it's wired.
+
+The real "minimum" concern in this array is the **width**. 0.5 µm is the rhigh minimum (Rhi.a), so ΔW/W is large. If Monte Carlo shows the R0 : R1 ratio isn't accurate enough, widening the segments is the lever. It's expensive, though: at the same R the length scales with W, so the area grows with W².
+
+Minimum pitch also leaves room for the wiring. At 0.68 µm, a Via1 with an M2 pad on each head leaves about 0.39 µm between M2 pads, against the 0.21 µm minimum. That's from the geometry; I haven't run DRC on it.
+
+## Turn 27 — 2026-10-26 18:32
+
+**User:** ok as a first step, compactify the exported d2s_high and s2d_high the same way. more refinements will follow, but that's an obvious start.
+
+*[mcp__remote-devices__device_stage_files: ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/d2s_rhigh.gds", "/ho]*
+
+*[Bash: `sed -n 343,400p /opt/eda/lay/pad_buffer_cells.py`]*
+
+*[Bash: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout; mkdir -p /opt`]*
+
+*[Bash: `mkdir -p /opt/eda/rh/gen && cd /opt/eda/rh/gen && cp /opt/eda/lay/pad_buffer_cells.py . && sed -i 's/^RPITCH = 1.4  .*/RPITCH = 0.68              # rh`]*
+
+*[Bash: `grep -n "sys.path\|PDK_ROOT\|environ" /opt/eda/lay/pad_buffer_cells.py | head; grep -rn "PYTHONPATH\|pycell" /opt/eda/lay/*.sh 2>/dev/null | head -3; `]*
+
+*[Bash: `cd /opt/eda/rh/gen && (PDK_ROOT=/opt/eda/IHP-Open-PDK PDK=ihp-sg13cmos5l timeout 900 python3 pad_buffer_cells.py > gen.log 2>&1; echo exit $?); tail -`]*
+
+*[Bash: `cd /opt/eda/rh && export PATH=/opt/eda/klshim:$PATH PDK_ROOT=/opt/eda/IHP-Open-PDK PDK=ihp-sg13cmos5l && for c in d2s_rhigh s2d_rhigh; do`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v18 && cp /opt/eda/rh/d2s_rhigh_068.gds /mnt/user-data/outputs/v18/d2s_rhigh_v18.gds && cp /opt/eda/rh/s2d_rhigh_068.g`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v18/d2s_rhigh_v18.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sude]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/d2s_rhigh.gds`]*
+
+**Assistant:** Both resistor blocks are now at the 0.68 µm pitch, and your exported files are overwritten in place. Neither is in `pad_buffer_cells.gds` yet.
+
+- **`d2s_rhigh`** shrinks from 27.7 to 14.7 µm wide.
+- **`s2d_rhigh`** shrinks from 38.9 to 20.1 µm wide.
+
+Your exports were identical to the library cells. Rather than move the wiring by hand, I regenerated both cells with a copy of the generator in my workspace, changing only the resistor pitch. `pad_buffer_cells.py` on your computer is untouched.
+
+The structure is the same as before:
+- four segments per resistor, in the same interleaved order;
+- nested M2 jumpers over the heads, and M1 between neighbouring segments;
+- dummies at both ends, shorted to the substrate tap strip below.
+
+As in `bg_res`, the surrounding implant, SalBlock and EXTBlock layers merge.
+
+DRC is clean on both decks, and LVS matches both cells against `pad_buffer_cells.cdl`.
+
+I kept the substrate tap strip, because the dummies and the vss pin connect to it. It could go the same way as the switch taps if you want that.
+
+## Turn 28 — 2026-10-26 20:56
+
+**User:** I've started editing the exported d2s_rhigh.gds : I've moved the substrate tap to the side. Adjust its height. How close can it be moved to the resistor array?  Adjust the metal1 vss wiring (and pin) accordingly. Make a recommendation how much distance to the resistor array from minimum design rule distance I should keep, and give your reason.
+
+*[mcp__remote-devices__device_stage_files: ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/d2s_rhigh.gds"]]*
+
+*[Bash: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout; mkdir -p /opt`]*
+
+*[Bash: `sed -n 25,75p /opt/eda/lay/pad_buffer_cells.py; cd /opt/eda/rh2 && python3 -c "`]*
+
+*[[Request interrupted by user]]*
+
+## Turn 29 — 2026-10-26 20:58
+
+**User:** Eventually, I want a tie left and right, but figure out the existing one first.
+
+*[Bash: `cd /opt/eda/rh2 && PDK_ROOT=/opt/eda/IHP-Open-PDK PDK=ihp-sg13cmos5l python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/rh2 && awk '$1==".SUBCKT"&&$2=="d2s_rhigh"{p=1} p{print} p&&$1==".ENDS"{p=0}' /opt/eda/cdl/pad_buffer_cells.cdl > d2s_rhigh_ref.cdl && gre`]*
+
+*[Bash: `cd /opt/eda/rh2 && sed 's/^Rd2s_rhigh_dummy_1 vss vss vss/Rd2s_rhigh_dummy_1 dr dr vss/' d2s_rhigh_ref.cdl > d2s_rhigh_ref_rfloat.cdl && export PATH=/`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v19 && cp /opt/eda/rh2/d2s_rhigh_tie.gds /mnt/user-data/outputs/v19/d2s_rhigh_v19.gds && sha256sum /mnt/user-data/outp`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v19/d2s_rhigh_v19.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sude]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/d2s_rhigh.gds`]*
+
+**Assistant:** I've updated the left tie in `d2s_rhigh.gds`, overwritten in place; reload it in KLayout.
+
+- **Height:** the tie now spans the full height of the resistor array. Its implant lines up with the resistors' implant edges, y = −0.61 to 13.26 µm.
+- **How close:** the tie's active area now ends at x = −0.54 µm, 0.54 µm from the dummy's poly. That's exactly the DRC minimum. The limiting rule is EXTB.c: the tie's pSD must stay 0.31 µm from the resistors' EXTBlock. A test copy 5 nm closer fails it. The next limits would be pSD spacing (0.33 µm here) and SalBlock-to-active (0.34 µm).
+- **vss wiring:**
+  - The left dummy's head straps now run straight into the tie's M1.
+  - The long strap down to the old tie position is gone, so the block's bottom edge moves up by 1.4 µm.
+  - The vss pin moved to the bottom end of the tie's M1, 0.5 × 0.4 µm.
+- **Right dummy:** it keeps the strap shorting its two ends but floats until the right tie is in.
+- **Checks:** DRC is clean. LVS matches when the right dummy is allowed to float. Against `pad_buffer_cells.cdl`, the only mismatch is that dummy, which the right tie will fix.
+
+**Recommendation:** keep exactly the minimum distance, no extra margin. The segment next to the tie is a dummy, and it's there to absorb the edge effects: the tie's p+ implant edge, and the change in field oxide and stress around its active area. EXTB.c already keeps the tie's p+ implant away from the resistor's implant region. The nearest matched segment is already 1.22 µm from the tie. It sees an identical neighbour whatever the gap, so extra space doesn't improve matching.
+
+If you want more safety for the matched segments, spend it on a second dummy rather than on spacing. Another 0.68 µm buys an identical environment instead of empty field. When the right tie goes in, place it at the same 0.54 µm so the two ends mirror each other.
+
+## Turn 30 — 2026-10-26 21:05
+
+**User:** Looks good. Now reproduce the substrate tap on the right side of the resistor array. I've git staged your work up to now.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && sha256sum d2s_rhigh.gds`]*
+
+*[Bash: `cd /opt/eda/rh2 && python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_list_dir: "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout"]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v20 && cp /opt/eda/rh2/d2s_rhigh_2ties.gds /mnt/user-data/outputs/v20/d2s_rhigh_v20.gds && sha256sum /mnt/user-data/ou`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v20/d2s_rhigh_v20.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sude]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/d2s_rhigh.gds`]*
+
+**Assistant:** The right substrate tap is in `d2s_rhigh.gds`, overwritten in place. It's the left one mirrored about the centre of the array: the same height, and the same 0.54 µm from the right dummy's poly.
+
+- **Right dummy:** its head straps now run into the new tap's M1, mirroring the left side. The vertical strap that joined its two heads is gone, because the tap now does that.
+- **Pin:** the right tap has its own vss pin, so the cell can be connected from either side.
+- **Size:** the cell is now 14.76 × 18.56 µm.
+- **Checks:** DRC is clean. LVS now matches `pad_buffer_cells.cdl` as it stands, with both dummies on vss. The two taps are one vss net through the substrate.
+
+## Turn 31 — 2026-10-26 21:11
+
+**User:** Looking very good. I git staged your work. Now extend the taps left and right to a closed subtrate tap ring around the resistor array. Is there a reason not to put the top and bottom substrate taps farther away than minimum DRC rules?
+
+*[[Request interrupted by user]]*
+
+## Turn 32 — 2026-10-26 21:12
+
+**User:** While you're doing this, CPU and core temperatures of my ancient W520 stay low, but Package id0 and System temp1 go near boiling point. Why?
+
+**Assistant (message):** On the W520: my heavy work (KLayout, DRC, LVS) runs in the cloud, not on your laptop. Locally there's only the Claude desktop app, the small Linux VM it uses to read and write your files, and your own KLayout. So I can't see your sensors, but here is the likely pattern.
+
+- **Package id 0** is the hottest point of the whole CPU package. That includes the integrated GPU (HD 3000) and the uncore (cache, memory controller), not just the four cores. When the package reads near 100 °C while the cores stay cool, the heat is usually coming from the iGPU or the uncore, not from computation. Typical causes are screen rendering by the Electron app (the desktop app) or KLayout redraws.
+- **System temp1** is probably an ACPI or ThinkPad board sensor. On the W520, the CPU and the Quadro (if Optimus or discrete graphics is active) share one heat pipe and one fan.
+- **Quick checks:**
+  - `sensors` shows which chip temp1 belongs to.
+  - `intel_gpu_top` or `nvidia-smi` shows which GPU is busy.
+  - `top` shows which process is busy (the app's GPU process, or the VM).
+  - Check the fan level.
+- **Likely fixes:** turn off hardware acceleration in the app, and check the fan and dust. After 15 years the thermal paste on a W520 is usually dried out, and that shows up first at the hottest spot, the package.
+
+I'm continuing with the tap ring.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && sha256sum d2s_rhigh.gds`]*
+
+*[Bash: `cd /opt/eda/rh2 && python3 - 2>&1 <<'EOF' | grep -v tkinter`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v21 && cp /opt/eda/rh2/d2s_rhigh_ring.gds /mnt/user-data/outputs/v21/d2s_rhigh_v21.gds && sha256sum /mnt/user-data/out`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && python3 -c "import os;p`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v21/d2s_rhigh_v21.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sude]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/d2s_rhigh.gds`]*
+
+**Assistant:** The tap ring is closed in `d2s_rhigh.gds`, overwritten in place.
+
+- **Layout:** four substrate taps make the ring, and the top and bottom strips sit at the same rule distance as the sides: 0.31 µm from the resistors' EXTBlock. Their active area meets the side taps' at the corners, and I bridged the M1 at the four joints.
+- **Size:** the strips lie under the M2 jumpers, so the cell is still 14.76 × 18.56 µm.
+- **Pins:** the vss pins on the side taps are unchanged.
+- **Checks:** DRC is clean, and LVS matches `pad_buffer_cells.cdl`.
+
+**Top and bottom farther away:** you can, and it doesn't hurt matching. The top and bottom strips run parallel to the row of resistor heads. Every segment's ends see the same distance, near or far. That's unlike the sides, where only the dummies sit next to the tap.
+
+- **Within the jumper wiring, distance is free.** The strips are under the M2 jumper tracks, so you can move them anywhere up to the outermost jumper track without changing the outline. Beyond that, each strip adds about 1.1 µm of height: 0.78 µm of tap plus spacing.
+- **The one small cost of keeping them close:** the M2 jumpers now run over the vss M1, which adds a little capacitance to the nodes between segments. The nested jumpers differ in length from one resistor to the next, so that capacitance differs slightly between them. From the overlap areas I estimate it at a few hundredths of a fF, though I haven't extracted it. That puts any pole far above the buffer's few MHz, and it doesn't matter at all for the bandgap resistors.
+- **M1 access:** the ring blocks M1 between the heads and the outside, but all connections here are already on M2.
+
+So I'd leave them at minimum. If you'd rather not have vss under the jumpers, move the strips out to just under the outermost jumper track; that's still free.
+
+## Turn 33 — 2026-10-26 21:22
+
+**User:** Very nice! git staged. Now, three connections of immediately adjacent resistors are through metal1. Arguments pro and con doing these connections through metal2 like the other connections ... for symmetry reasons? Also, arguments pro and con connecting the dummies to the substrate ring through thin horisontal metal1, maybe wider vertical metal1, or by a metal1 rectangle covering the corners?
+
+*[Bash: `grep -n 'rblock("' /opt/eda/lay/pad_buffer_cells.py; cd /opt/eda/rh2 && python3 -c "`]*
+
+*[[Request interrupted by user]]*
+
+## Turn 34 — 2026-10-26 21:23
+
+**User:** Arguments pro and con replacing the metal2 boxes by paths?
+
+**Assistant:** Short version: a small yes to M2 for the three links, keep the thin dummy straps, and paths are fine for the M2 jumpers. Nothing changed in the files.
+
+**1. The three M1 links (C2 at both top junctions, A at the bottom) through M2 instead?**
+- **For:**
+  - Every junction would be built the same way: via, M2, via. All four resistors would then carry the same series metal and vias and the same parasitic capacitance.
+  - Every head would have the same M1 around it. Right now three of the gaps between heads have M1 in them and the rest are empty.
+  - The generator gets simpler: one rule, no special case for neighbours.
+- **Against:**
+  - It adds six single Via1s in series, a small yield and reliability cost.
+  - It adds a little more M2 and capacitance.
+  - Electrically the asymmetry today is tiny. A via plus a few squares of M2 is a few Ω against 150 kΩ, around 10⁻⁵, far below the random mismatch of 0.5 µm rhigh.
+- **Cost if you do it:** an M2 bar straight over the two adjacent heads, with a via on each. It needs no new track level, because the neighbouring M2 stubs stay about 0.39 µm away.
+- **Verdict:** weak arguments either way. I'd lean towards M2, for uniformity and the simpler rule.
+
+**2. Dummies to the ring**
+- Dummies carry no current, so the strap's width doesn't matter electrically. What matters:
+  - the dummy is tied to a defined potential;
+  - from the inside, the dummy looks exactly like an active segment: same head pad, nothing extra on its inner side, no metal over its body.
+- **Thin horizontal M1 at head level, going outward (what's there now):** meets all of that with the least metal, and top and bottom are mirror images. **I recommend keeping this.**
+- **Wider vertical M1 along the dummy:** it would sit in the 0.54 µm gap next to the dummy body, or over it. That changes the dummy's surroundings, which the first active segment partly sees (stress, hydrogen passivation). It gains nothing.
+- **M1 rectangle over the corner:** harmless and quick to draw, if it stays outside the body (above y = 12.65 µm, below y = 0) and doesn't reach past the dummy head's inner edge. No benefit beyond the strap.
+
+**3. M2 boxes → paths**
+- **For:**
+  - One path per jumper instead of three boxes, so it's much easier to edit by hand in KLayout: move points, change the width in one place.
+  - The centreline stays on the vias.
+  - With square ends, the path's half-width extension of 0.145 µm gives exactly the 0.05 µm Via1 enclosure.
+- **Against (manageable):**
+  - The half-width must sit on the 5 nm grid, so the width must be a multiple of 10 nm. 0.29 µm works; 0.295 µm would put the edges off-grid.
+  - Keep it Manhattan with square ends. Round ends or 45° segments cause off-grid vertices.
+  - Path end types (flush, square, variable) are handled differently by some older tools. KLayout and IHP's decks merge paths to polygons, so DRC and LVS see no difference.
+- **Verdict:** paths for the M2 jumpers, since you're editing by hand now. Vias and pins stay as boxes.
+
+## Turn 35 — 2026-10-26 21:28
+
+**User:** Your recommendations look good to me. Keep the metal1 dummy straps, metal2 for adjacent resistors for symmetry, make paths for the M2 jumpers.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && python3 -c "import os;p`]*
+
+*[Bash: `cd /opt/eda/rh2 && python3 - <<'EOF'`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v22 && cp /opt/eda/rh2/d2s_rhigh_paths.gds /mnt/user-data/outputs/v22/d2s_rhigh_v22.gds && sha256sum /mnt/user-data/ou`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v22/d2s_rhigh_v22.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sude]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/d2s_rhigh.gds`]*
+
+**Assistant:** `d2s_rhigh.gds` is updated in place with the M2 neighbour links and the path jumpers.
+
+- **Neighbour links:** C2's two top junctions and A's bottom junction are now a Via1 on each head with a straight M2 path between them. Every junction in the array is now via – M2 – via, with one Via1 on every head (32 in all).
+- **Paths:** all M2 is now paths, 0.29 µm wide with square ends.
+  - Each jumper is a single U-shaped path with four points. The three neighbour links are straight paths.
+  - The eight drops down to the sa/sb pins are straight paths too. The pins themselves stay boxes.
+  - Apart from the three new links, the merged M2 is identical to before.
+- **Dummy straps:** unchanged.
+- **Checks:** DRC is clean, and LVS matches `pad_buffer_cells.cdl`.
+
+The running log has an entry for this.
+
+## Turn 36 — 2026-10-26 21:30
+
+**User:** do you also keep a chatlog?
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog && sha256sum 2026-10-26_opus_pad_buffer_layout_primitives.md | cut`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/0e0e7b46-5835-5dad-9984-169b95157232/scratchpad; T=/root/.claude/projects/-home-claude/0e0e7b46-5835-5dad-9984-169b951572`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v23/chatlog_v23.md", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbu]*
+
+*[mcp__remote-devices__device_bash: `sha256sum $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-26_opus_pad_buffer_layout_primitives.md | cut -c1-1`]*
+
+**Assistant:** Yes, there's a verbatim chatlog: `sudelbuecher/chatlog/2026-10-26_opus_pad_buffer_layout_primitives.md`. I hadn't updated it since 15:52, though; since then only the running log `log.md` was kept current.
+
+I've brought it up to now. It runs through this question as turn 36, and the copy on your computer matches mine.
+
+The format is the same as before:
+- your messages and my visible replies, verbatim;
+- one-line summaries of tool calls;
+- no internal reasoning.
+
+The note about the gap from the 15:38 context cut is still in the header.
+
+## Turn 37 — 2026-10-26 21:35
+
+**User:** The context cut can probably not be helped ex post facto.
+Now that metal2 are paths, I shortened the metal2 connections a bit. Any reason against moving the metal2 pins so close to the resistor array, or does the guard ring enforce sufficient distance, anyhow?
+
+*[mcp__remote-devices__device_stage_files: ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/d2s_rhigh.gds"]]*
+
+*[Bash: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout; cp $U/d2s_rhi`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && cat >> log.md <<'EOF'`]*
+
+**Assistant:** There's no reason against it. I checked your current file: DRC is clean and LVS matches. The guard ring doesn't set any distance for M2.
+
+- **No rule links M2 to the ring or the resistors.** The ring is active area, implant, contacts and M1; M2 runs above all of it. The only constraint on the pins is M2-to-M2 spacing (0.21 µm). The nearest neighbour is the lowest bottom jumper track, 0.39 µm away.
+- **Matching:** what matters is that no metal crosses a resistor body. Your drops run down from the bottom heads, so that still holds. They do cross the bottom ring strip, M2 over vss M1, and so do the jumper tracks. With all eight drops now 2.0 µm long, every resistor sees the same crossing, and the capacitance is a few hundredths of a fF at most.
+- **Area:** the pins now sit at the level of the lowest bottom jumper track, which is the cell's bottom edge anyway. That's as low as the cell can be, 14.76 × 17.50 µm. The pins are on the outer edge, so the parent can reach them from below. A Via2 fits on a 0.29 × 0.4 µm pin.
+- **For later:** the pins are now tied to the lowest jumper level. `s2d_rhigh` has 6 resistors and two more jumper levels, so there the pin row goes correspondingly lower.
+
+The running log has an entry for this.
+
+## Turn 38 — 2026-10-26 21:48
+
+**User:** apply the changes mutatis mutandis to s2d_rhigh.gds. I think you already guessed that this is the next step.
+Next question: What, if anything, should guard bg_res.gds? Pros and cons of a guard ring.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && sha256sum s2d_rhigh.gds`]*
+
+*[mcp__remote-devices__device_stage_files: ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/d2s_rhigh.gds"]]*
+
+*[Bash: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout; sha256sum /op`]*
+
+*[Bash: `mkdir -p /opt/eda/rh3 && cd /opt/eda/rh3 && cat > ringify.py <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/rh3 && python3 ringify.py /opt/eda/rh/s2d_rhigh_068.gds s2d_rhigh 6 s2d_rhigh_ring.gds 2>&1 | grep -v tkinter`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v24 && cp /opt/eda/rh3/s2d_rhigh_ring.gds /mnt/user-data/outputs/v24/s2d_rhigh_v24.gds && sha256sum /mnt/user-data/out`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v24/s2d_rhigh_v24.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sude]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/s2d_rhigh.gds`]*
+
+**Assistant:** I've applied all the `d2s_rhigh` changes to `s2d_rhigh.gds`, overwritten in place. Before applying them, I checked that the same edits reproduce your current `d2s_rhigh.gds` exactly, geometry and labels.
+
+**`s2d_rhigh`**, with its 6 resistors:
+- **Tap ring:** at the rule distance, with the dummy M1 straps running into it and a vss pin on each side strip.
+- **Junctions:** every junction is now via – M2 – via, with 48 Via1, one per head.
+- **M2:** all 30 M2 shapes are paths. The end drops stop at the lowest bottom jumper track (y = −3.48), and the pins sit there.
+- **Size:** 20.2 × 19.9 µm, down from 20.1 × 22.4 µm.
+- **Checks:** DRC is clean, and LVS matches `pad_buffer_cells.cdl`.
+
+**What should guard `bg_res`?** I'd use the same tap ring as `d2s_rhigh`/`s2d_rhigh`, tied to the bandgap's own ground. It already has dummies at both ends.
+
+For a ring:
+- **Defined substrate under every segment.** rhigh has a bulk terminal: its value shifts slightly with the voltage to the substrate below the field oxide. A ring holds one substrate potential under all 41 segments, so substrate voltage drops can't turn into an R0 : R1 ratio error.
+- **Substrate noise.** In a pad, the output driver and ESD clamps make the substrate noisy. The bandgap nodes are high-impedance, around 100 kΩ. The poly-to-substrate capacitance couples that noise in, and the ring shunts it around the array.
+- **PNP collector current.** The substrate PNPs' collector current flows to the nearest p+ taps. With its own ring, `bg_res` doesn't share a return path with them.
+- **Cheap and consistent.** It's the same pattern as the other two arrays. The sides add about 2 × 1.32 µm, so 28.1 → about 30.7 µm. Top and bottom cost nothing once the M2 wiring sits over them.
+
+Against a ring:
+- **It's only as quiet as its ground.** Tied to a vss shared with the output stage, or to the IO ground (iovss), it injects that noise right next to the resistors. Give it the bandgap's own return.
+- **About 9 % more width.**
+- **It doesn't help against coupling from above.** If `bg_res` ends up under the IO ring's M3/M4 rails, either one rail should cover the whole array evenly or none should. The array's long side should run parallel to the rail edges, and a quiet rail (vdd/vss) beats iovdd/iovss.
+
+Not from a ring, but just as important:
+- **Distance from heat sources.** Keep the array away from the output stage. The mirror-symmetric sequence cancels linear temperature gradients along the row, and gradients along the segments affect all of them equally. Curved gradients near a heat source are not cancelled.
+- **An n-well under the array** would isolate it from the substrate more strongly than a ring. I haven't checked whether IHP allows or models rhigh over n-well, so I wouldn't count on it without looking it up.
+
+## Turn 39 — 2026-10-26 21:56
+
+**User:** Look up the possibility of nwell under the array please.
+Also, reimport the d2s_rhigh.gds and s2d_rhigh.gds into pad_buffer_cells.gds.
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK && git log --oneline -1 2>/dev/null; ls; ls ihp-sg13cmos5l; ls ihp-sg13cmos5l/libs.doc 2>/dev/null | head; find . -iname "*la`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK && ls ihp-sg13g2 ihp-sg13g2/libs.doc 2>/dev/null | head -30; ls ihp-sg13cmos5l/libs.tech; grep -rln -i "rhigh" ihp-sg13cmos5l`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech && ls ngspice ngspice/* | head -30; grep -rn -i -l "rhigh" ngspice | head`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/ngspice/models && grep -n -i -A30 "subckt rhigh" resistors_mod.lib | head -60`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/ngspice/models && sed -n 136,190p resistors_mod.lib`]*
+
+*[Bash: `cd /opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/lvs/rule_decks && ls; grep -n -i "rhigh" *.lvs | head -30`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout && sha256sum pad_buffer_ce`]*
+
+*[Bash: `mkdir -p /opt/eda/reimport3 && cd /opt/eda/reimport3 && python3 - <<'EOF'`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v25 && cp /opt/eda/reimport3/pad_buffer_cells.gds /mnt/user-data/outputs/v25/pad_buffer_cells_v25.gds && sha256sum /mn`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v25/pad_buffer_cells_v25.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuech]*
+
+*[Bash: `mkdir -p /opt/eda/nw && cd /opt/eda/nw && python3 - 2>&1 <<'EOF' | grep -v tkinter`]*
+
+*[WebSearch: "IHP SG13G2 layout rules Rhigh resistor NWell underneath"]*
+
+*[WebFetch]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/pad_buffer_ce`]*
+
+**Assistant:** Both resistor blocks are in `pad_buffer_cells.gds`; reload it in KLayout. An n-well under the array is possible and supported by IHP's own decks.
+
+**Reimport:** `d2s_rhigh` and `s2d_rhigh` replace the old versions.
+- **Cells:** they use the library's existing `rhigh` segment cell, which is identical. The ring strips came in as new tap cells. The two old bottom-tie cells were no longer used, so I removed them.
+- **Rest of the library:** every other cell is unchanged.
+- **Checks:** DRC is clean for both cells, and LVS matches `pad_buffer_cells.cdl`.
+
+**N-well under the array:**
+- **LVS:** IHP's deck explicitly connects the rhigh bulk terminal to the p-substrate, the isolated p-well *and* the n-well (`res_connections.lvs`: `connect(rhigh_sub, nwell_drw)`). So rhigh over n-well is anticipated, and the bulk terminal becomes the well's net.
+- **DRC:** no rule forbids it. I tested on a copy of `bg_res`: one n-well under the whole array, with an n-tap ring where the p-tap ring would sit. It's clean on both decks.
+- **Extraction:** in the same test, all 41 segments come out with their bulk terminal on the well net, and LVS matches.
+- **Model:** `rhigh` is an `r3_cmc` resistor with a bulk node `bn` (`resistors_mod.lib`). The bulk node carries only the parasitic area and perimeter capacitance; its voltage dependence is set to practically zero. The oxide under the poly is the same either way, so R and C don't change. Only where the capacitance goes changes: into a well you tie to a quiet node, instead of into the substrate.
+- **Not confirmed:** whether IHP characterized rhigh (statistics and mismatch) over n-well. The full layout rule manual isn't in this PDK checkout. The online docs ([layout rules](https://ihp-open-pdk-docs.readthedocs.io/en/latest/layout_rules/01_general.html), [LVS](https://ihp-open-pdk-docs.readthedocs.io/en/main/verification/lvs/01_general_lvs.html)) only have the general sections. Asking on the IHP-Open-PDK GitHub would settle it.
+
+**Pros and cons for `bg_res`:**
+- **Pro:** a shield under every segment, not just a ring at the edge. Substrate noise under the middle of the array is shunted into the well, where a p-tap ring can't reach it. In a pad environment, that's the stronger guard.
+- **Con: well spacing.** An n-well on a net different from its neighbours' wells needs 1.8 µm spacing to them (NW.b1). The bias block has many PMOS wells. Tied to vss, the same net as the PNP bases, the spacing to `bg_pnp` drops to 0.62 µm.
+- **Con: area.** The n-tap ring plus a 0.24 µm well overlap is roughly the same as the p-tap ring.
+- **Con: substrate ties.** An n-tap ring doesn't tie the substrate, so the neighbouring NMOS still need p-taps nearby for latch-up.
+- **Maximum isolation:** n-well with an n-tap ring inside and a p-tap ring outside, at the cost of more area.
+
+My preference for `bg_res` is the n-well under the array, tied to the bandgap's quiet ground through an n-tap ring, provided the 1.8 µm well spacing fits the floorplan. Otherwise a p-tap ring like the other two arrays.
+
+## Turn 40 — 2026-10-26 22:01
+
+**User:** Does this also apply for the cmos5l variant?
+
+*[Bash: `P=/opt/eda/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech; ls -d $P/klayout/tech/lvs/rule_decks/res_connections.lvs $P/ngspice/models/resistors_mod.lib; grep -`]*
+
+**Assistant:** Yes. Everything I checked was the SG13CMOS5L variant itself, not SG13G2:
+- the LVS deck: `ihp-sg13cmos5l/.../lvs/rule_decks/res_connections.lvs`;
+- the DRC run, main and maximal tables;
+- the rhigh model: `ihp-sg13cmos5l/libs.tech/ngspice/models/resistors_mod.lib`.
+
+The test on the `bg_res` copy also ran with the cmos5l decks: DRC clean, and all 41 segments came out with their bulk on the n-well.
+
+There's one cmos5l-specific difference. The deck also lists an isolated p-well as a possible bulk. That needs nBuLay, which is a forbidden layer in cmos5l (`3_2_forbidden_cmos5l.drc`), so the option doesn't exist there. In cmos5l the n-well is the only well that can sit under rhigh as a shield, and the deck supports it.
+
+The caveat is the same as for G2: neither the decks nor the model say whether rhigh's statistics and mismatch were characterized over n-well.
+
+## Turn 41 — 2026-10-26 22:11
+
+**User:** Looking at the position of the resistors in the bandgap schematic, a substrate guard ring looks appropriate. Also, this resistor array is part of a reference circuit, and it looks like they need to go onto core7, not the pads. So follow precedent from the other hi res poly arrays and put an nwell tap ring around bg_res.gds. Start thinking about connecting the unit resistors to R0, R1a, and R1b in the bandgap circuit, but draw the guard ring first and let me git stage it before connecting them.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations && sha256sum pad_buffer_layout/klayout/bg_res.gds | `]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher && grep -rln "R1A\|R0 \|XR0" --include=*.spice . 2>/dev/null | grep -v skunkworx | head`]*
+
+*[Bash: `cd /opt/eda/res && python3 -c "`]*
+
+*[Bash: `mkdir -p /opt/eda/bgr && cd /opt/eda/bgr && python3 - 2>&1 <<'EOF' | grep -v tkinter`]*
+
+*[mcp__remote-devices__device_stage_files: ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/bg_res.gds"]]*
+
+*[Bash: `U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/bg_res.gds; sh`]*
+
+*[error: {"staged":[{"devicePath":"/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/bg_res.gds","ok":false,"error":"upload failed"]*
+
+*[Bash: `cd /opt/eda/bgr && python3 - 2>&1 <<'EOF' | grep -v tkinter`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/v26 && cp /opt/eda/bgr/bg_res_ring.gds /mnt/user-data/outputs/v26/bg_res_v26.gds && sha256sum /mnt/user-data/outputs/v`]*
+
+*[mcp__remote-devices__device_commit_files: [{"stagedPath": "/mnt/user-data/outputs/v26/bg_res_v26.gds", "devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbu]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout && sha256sum klayout/bg_res.gds | `]*
+
+*[Bash: `cd /opt/eda/bgr && python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/bgr && python3 - <<'EOF'`]*
+
+*[Bash: `cd /opt/eda/bgr && python3 - <<'EOF'`]*
+
+**Assistant:** The ring is drawn in `bg_res.gds`, overwritten in place, and it's ready for you to stage.
+
+**One assumption to check:** you wrote both "substrate guard ring" and "nwell tap ring". I followed the precedent of the other two arrays and drew a p-tap (substrate) ring. If you meant an n-well with an n-tap ring, say so and I'll swap it.
+
+- **Layout:** like `d2s_rhigh`/`s2d_rhigh`. It's at the rule distance, with the M1 bridged at the corners, both dummies strapped into the side strips at top and bottom, and a vss pin on each side strip.
+- **Size:** 30.4 × 13.5 µm.
+- **Checks:** DRC is clean. LVS matches against 39 unwired segments with both dummies on vss.
+- **Library:** not yet in `pad_buffer_cells.gds`.
+
+**Thinking ahead to the wiring (nothing drawn yet):**
+
+From the netlist: R1A runs ea → vss (11 segments), R1B eb → vss (10), and R0 eb → e2 (18).
+
+- **The current interleaving can't be wired crossing-free on M2 alone.** I tried chaining each resistor's segments in order, and in a mirror order like `d2s_rhigh`. Each resistor on its own is crossing-free, but any two of the three cross. Even two layers per side don't fix it with those orders.
+- **What does work is the standard two-layer scheme.** M2 vertical stubs go up from each head (Via1). M3 horizontal tracks connect them (Via2). Horizontal and vertical are on different layers, so crossings don't matter.
+  - Each resistor is chained left to right, alternating top and bottom.
+  - Each resistor needs exactly one track per side, because its own arcs never overlap. That's 3 tracks above and 3 below, about 2 µm per side, comparable to `d2s_rhigh`.
+  - Every junction gets the same via stack, and there's no metal over any body.
+- **The chain ends land at the array ends**, which suits external connections. eb joins R0 and R1B at one end, close together. e2 sits at the other end, and the vss and ea ends of R1A/R1B are on the outside as well.
+
+Before I draw it, I need three decisions from you:
+1. **Is M3 free over the bandgap in core7**, or does the power grid use it? If M3 isn't available, the only M2-only route is a different interleaving designed for nested wiring, as in `d2s_rhigh`. That would cost some centroid quality, because R0, R1A and R1B have different segment counts.
+2. **Where do the vss ends of R1A/R1B connect?** I'd use a separate vss line joined to the ring at one point, not the ring directly. The ring carries substrate current, and that shouldn't flow in the reference's ground path.
+3. **R0's length:** it's 178.9 µm instead of 179.5 µm (−0.33 %), because every segment is 9.94 µm. Keep it, or trim it in simulation?
+
+## Turn 42 — 2026-10-26 22:23
+
+**User:** You could use vertical M2 paths and horizontal M1 paths. Consided pros and cons of having the paths inside or outside the substrate guard rings. If a unit resistor of R0 needs to be stretched a bit, provide room for it within the substrate guard ring. bg_res.gds may also be a good example for proof-of-concept bottom-up parasitic extraction, if that's what you mean with "trim it in simulation".
+
+*[Bash: `cd /opt/eda/bgr && python3 - <<'EOF'`]*
+
+**Assistant:** M1 horizontal plus M2 vertical works, and no M3 is needed. Every left-to-right chain needs exactly 3 horizontal tracks above and 3 below, whichever side each chain starts on. Every junction gets the same stack: Via1 on the head, M2 stub, Via1, M1 track, Via1, M2 stub, Via1 on the head.
+
+**Tracks inside or outside the ring?** I recommend inside.
+- **Inside: for**
+  - All the resistor junction nodes are wired over the quiet substrate that the ring holds, and they're shielded from neighbouring circuits and their wiring.
+  - The ring is the cell boundary, so neighbouring rings can abut it.
+  - Only the four terminals leave the ring, as M2 crossing it.
+- **Inside: against**
+  - The top and bottom strips move out. For matching that makes no difference, as we discussed.
+  - The tracks run parallel to the ring strips, which adds a little capacitance to vss.
+  - Height grows from 13.5 to about 15.8 µm: three M1 tracks at 0.44 µm pitch, plus room to stretch R0 at the top.
+- **Outside: for**
+  - The ring stays at minimum distance.
+  - The tracks can be changed without touching the ring.
+- **Outside: against**
+  - The junction nodes lie outside the guard, exposed to the general substrate and whatever is routed next to the block.
+  - The area is about the same either way.
+
+**Room for R0:** I'd reserve 0.6 µm above the top heads inside the ring. That covers stretching a single R0 segment by the full 0.58 µm. I'd rather stretch all 18 R0 segments by 0.03 µm each, giving 179.46 µm (−0.02 %), or a mirror-symmetric pair by 0.29 µm each. Either keeps the centroid and the identical segments.
+
+With identical segments, the R0 : R1A : R1B ratio is exactly 18 : 11 : 10, whatever the head and contact resistance. Stretching makes it depend on the head resistance only to about 10⁻⁵.
+
+**Terminals:** start all three chains on the top. Then:
+- e2 is at the bottom of position 1;
+- the two vss ends, R1A at position 2 and R1B at position 4, sit at the bottom left, next to each other;
+- eb is R0 at 39 and R1B at 36, bottom right;
+- ea is R1A at 38, top right.
+
+The pins are short M2 runs out through the ring. vss gets its own line, joined to the ring at one point.
+
+**"Trim it in simulation":** I meant simulating the bandgap with each resistor as a series chain of the actual 9.94 µm segments. The model then includes two heads per segment, which the schematic's single 179.5 µm device leaves out. That would show whether −0.33 % on R0 matters before choosing the stretch.
+
+Bottom-up extraction is the better version of this, and `bg_res` suits a proof of concept: small, regular, and with a known answer. The wiring adds a few Ω and a few fF against hundreds of kΩ, so I expect the result to confirm the stretch decision rather than change it.
+
+A possible tool is KLayout-PEX (kpex), which ships with IIC-OSIC-TOOLS. I'd have to check whether it has an SG13CMOS5L technology; cmos5l has fewer metals than SG13G2.
+
+Once you've staged the ring, I'll draw this unless you want something changed. Do you prefer the uniform +0.03 µm on all R0 segments, or just the reserved room for now?
+
+## Turn 43 — 2026-10-26 22:30
+
+**User:** I think I staged the bg_res.gds. Do a sneak look into the sudelbuecher git worktree. Try not to leave dangling git locks. If it's staged, draw it. interconnects inside the guard ring, just the reserved room for now.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher && export GIT_OPTIONAL_LOCKS=0 && G=$(git rev-parse --git-dir) && echo "gi`]*
+
+*[error: Exit code 128]*
+
+*[mcp__remote-devices__device_bash: `ls $HOME/mnt/; cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher && cat .git 2>/dev/null; ls -la | head -5; find . -maxdepth 2 -name .git`]*
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; W=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher; export GIT_OPTIONAL_LOCKS=0 GIT_DIR=$`]*
+
+*[[Request interrupted by user]]*
+
+## Turn 44 — 2026-10-26 22:33
+
+**User:** Don't let chatlog run into a compaction.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog && sha256sum 2026-10-26_opus_pad_buffer_layout_primitives.md | cut`]*
 
 *[Bash: `S=/tmp/claude-0/-home-claude/0e0e7b46-5835-5dad-9984-169b95157232/scratchpad; T=/root/.claude/projects/-home-claude/0e0e7b46-5835-5dad-9984-169b951572`]*
 

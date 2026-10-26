@@ -305,3 +305,208 @@ devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on
 - New in it, checked against the GDS: `d2s_cma` = `d2s_cmb` and `oa_misc_p` = `bg_misc_p` (identical geometry);
   rotated input tubs would make a d2s row 87 µm wide; pnpMPA collector rings (Activ) 1.4 µm apart, `bg_pnp` about
   22.9 × 18.5 µm with touching rings; the cascode question answered for the bias devices (NBPC, PBNC, BNC, BPC) too.
+
+## 16:31: bg_pnp check (Christoph's abutted array)
+
+> "Let's get to work. I exported the PNP array and abutment seems DRC legal. Verify, and place the labels in the gap
+> between tie and pwell, upper left region, aligned with the array." / "Check LvS while you're at it."
+
+- `klayout/bg_pnp.gds`: 3 × 3 AREF of pnpMPA, pitch 7.15 × 5.67 µm, collector rings fully shared (0.35 µm).
+- DRC (IHP deck, main + maximal): clean hierarchically. Flattened: 12 × NW.b1 (NWell gap 1.75 < 1.80 µm, different
+  nets), because the bases are not wired yet. Schematic has B = vss for Q1 and Q2: once wired, the NWells are one
+  net and NW.b (0.62 µm) applies.
+- LVS (reference: 9 unwired pnpMPA, shared collector): all 9 devices match, A = 4p, P = 8u, one collector net;
+  the 9 floating base nets match only with ambiguity warnings, and the run reports FAIL.
+- Labels: the 9 stale 63/0 labels replaced by "Q1 (ea)" / "Q2 (e2)", size 0.4 µm, left / centre aligned at
+  (−3.30, +2.31) from each device centre (upper-left corner of the gap between TIE ring and NWell). Geometry XOR
+  unchanged. sha256 `d2c0dc6a…`, the same on both sides.
+
+## 16:45: bg_pnp back into the library (Christoph: "ok reimport the changed bg_pnp.gds into pad_buffer_cells.gds")
+
+- `klayout/pad_buffer_cells.gds`: cell `bg_pnp` replaced by the one in `bg_pnp.gds` (3 × 3 AREF, shared collector
+  rings, new labels), on the library's own `pnpMPA` cell (geometry identical, checked). Size 25.7 × 21.6 →
+  22.2 × 17.8 µm. All other 130 cells unchanged (shapes and instances compared). Its instances in the top cell
+  and in `fit_bias_tree_oa_bg` keep their positions; the fit packing was not redone. DRC of `bg_pnp` in the
+  library: clean. sha256 `5fd32afb…`, the same on both sides.
+- `klayout/cell_tree.md`: the `bg_pnp` line updated.
+- `pad_buffer_cells.py` still generates the old 9-instance `bg_pnp`.
+
+## 17:30: switch cells compacted (Christoph: bias_tree_sw compacted by him, the others "mutatis mutandis", no taps)
+
+- `klayout/bias_tree_sw.gds`: only the TDN label moved to x = 0.83 (second device of the 1 × 2 array).
+- `klayout/d2s_pd_n.gds`, `s2d_pd_n.gds`, `d2s_pd_p.gds`, `s2d_pd_p.gds`: rebuilt like his bias_tree_sw. 1 × 2
+  array of the 1/0.45 device at 0.83 µm pitch, shared middle diffusion (vss, vcm, vdd, vcm), no tap, common gate
+  as one poly pad and one M1 bar over both contacts. s2d: the vcm M2 trunk, Via1 and M2 pin are gone; vcm is an M1
+  pin on the middle stripe. All S/D pins on M1, stripe width × 0.5 µm. 2.5 × 2.3 µm (n), 3.2 × 2.4 µm (p).
+  d2s_pd_n / s2d_pd_n and d2s_pd_p / s2d_pd_p now differ only in labels.
+- DRC (IHP deck): only LU.b (NMOS) / LU.a (PMOS), the missing taps, as intended. LVS: all five match (bulk as
+  its own net; reference netlist in the container, not saved here).
+
+## 17:43: gate contacts closer to the devices (Christoph; "A metal2 via should fit without DRC violations.")
+
+- All five switch cells (bias_tree_sw after his removal of the ni M1 square): gate contact 0.18 µm above Activ
+  instead of 0.52 µm (y 1.18–1.34 instead of 1.52–1.68). Limits: Cnt.e 0.14 (contact on poly to Activ) and,
+  binding, M1.b 0.18 from the gate M1 to the S/D stripes ending at y = 1.0. Poly cap to 1.41 (Cnt.d 0.07).
+  pd cells: one poly cap and one M1 bar (0.42–1.54 × 1.18–1.39) over both gates; bias_tree_sw: separate caps and
+  0.53 × 0.21 µm M1 pads (M1.d area). Gate pins 0.29 × 0.21 µm on the contacts. Cells now end at the PCell
+  outline (y 1.52 n, 1.62 p) instead of 1.78.
+- Via1 fit: test copies with Via1 on each gate contact and a minimum M2 pad (0.29 × 0.5 µm) pass DRC; the
+  delivered cells have no via.
+- DRC: only LU.a / LU.b (no taps). LVS: all five match.
+
+## 18:12: switch cells back into the library (Christoph: "Good job! Now reimport to pad_buffer_cells.gds")
+
+- `klayout/pad_buffer_cells.gds`: `d2s_pd_n`, `s2d_pd_n`, `d2s_pd_p`, `s2d_pd_p`, `bias_tree_sw` replaced by the
+  compact versions (1 × 2 arrays of the library's own `nmosHV$5` / `pmosHV$7`, geometry checked identical),
+  identical to the separate GDS files. `ptap1$8` and `ntap1$9`, now unused, removed. All other cells unchanged
+  (own shapes and instances); placements in the top cell and the fit cells kept, not repacked. DRC in the
+  library: only LU.a / LU.b. sha256 `7100f3de…`, the same on both sides.
+- `klayout/cell_tree.md`: the five lines updated.
+- Not updated: `pad_buffer_cells.cdl` (still has the tap bulks for these cells) and `pad_buffer_cells.py`.
+
+## 18:21: .cdl updated; bg_res repitched (Christoph: "update the .cdl for now ... push bg_res.gds horizontally to
+## minimum distance of the poly resistors. Surrounding layers may overlap if consistent with DRC and LvS." /
+## "I mean the exported .gds, not the one in your collection (quite yet).")
+
+- `klayout/pad_buffer_cells.cdl`: the five switch subcircuits rewritten by hand for the tap-less cells (bulk on an
+  internal net sub / nw; s2d_pd_n / s2d_pd_p lose the vss / vdd pin). LVS of the five against the library GDS:
+  all match. sha256 `94346504…`.
+- `klayout/bg_res.gds` (his export): resistor pitch 1.4 → 0.68 µm (rhigh 0.5 + Gat.b 0.18; M1 heads would allow
+  0.64, contacts 0.54). pSD / nSD / SalBlock / EXTBlock now overlap and merge; PolyRes stays per segment. Labels
+  moved with their resistors. 56.9 → 28.1 µm wide. DRC (main + maximal, incl. Rhi / Sal / EXTB): clean.
+  LVS extraction: 41 × rhigh 0.5 / 9.94 µm, as before; the unwired nets match only with ambiguity warnings,
+  so the verdict is FAIL, before and after alike. sha256 `0766d12e…`. Not yet in `pad_buffer_cells.gds`.
+
+## 18:32: d2s_rhigh / s2d_rhigh compacted (Christoph: "compactify the exported d2s_high and s2d_high the same way")
+
+- His exports were identical to the library cells. Regenerated with a container copy of `pad_buffer_cells.py`
+  with RPITCH 1.4 → 0.68 µm (the file on the computer is unchanged), cells copied out into
+  `klayout/d2s_rhigh.gds` (27.7 → 14.7 µm wide) and `klayout/s2d_rhigh.gds` (38.9 → 20.1 µm). Same structure:
+  4 segments per unit, nested M2 jumpers, M1 between neighbours, dummies shorted to the ptap strip below.
+- DRC (main + maximal): clean. LVS against `pad_buffer_cells.cdl`: both match. sha256 `1b0da5da…`, `77b837e3…`.
+  Not yet in `pad_buffer_cells.gds`.
+
+## 20:56: d2s_rhigh side tie (Christoph moved the ptap to the left; "Adjust its height. How close can it be moved to
+## the resistor array? Adjust the metal1 vss wiring (and pin) accordingly." / "Eventually, I want a tie left and
+## right, but figure out the existing one first.")
+
+- `klayout/d2s_rhigh.gds`: ptap1 0.78 × 13.81 µm (Activ y −0.58 … 13.23, pSD aligned with the rhigh implants
+  −0.61 … 13.26), Activ right edge at x = −0.54. Binding rule EXTB.c (pSD ≥ 0.31 from the rhigh EXTBlock at
+  −0.2); next pSD.b (0.33 to the rhigh pSD); Sal.d 0.34. A probe 5 nm closer fails EXTB.c.
+- vss: the left dummy's head straps run straight into the tie M1; the strap down to the old tie and the old pin
+  are gone; vss pin 0.5 × 0.4 µm at the bottom of the tie M1. The right dummy keeps its head-to-head strap and
+  floats until the right tie comes. Cell bottom −4.89 → −3.48 µm (old tie region freed).
+- DRC clean. LVS: matches with the right dummy floating; against `pad_buffer_cells.cdl` (dummy on vss) the only
+  difference is that dummy. sha256 `1aa3e280…`.
+
+## 21:05: d2s_rhigh right tie (Christoph: "reproduce the substrate tap on the right side of the resistor array";
+## he has git-staged the work so far)
+
+- `klayout/d2s_rhigh.gds`: the left tie mirrored about the array centre (x = 6.03): Activ 12.60 … 13.38, i.e.
+  0.54 µm from the right dummy's poly, same height; right dummy head straps mirrored into its M1, its vertical
+  strap removed; second vss pin and label, mirrored. Cell 14.76 × 18.56 µm.
+- DRC clean. LVS against `pad_buffer_cells.cdl` (both dummies on vss): match; the two ties are one vss net
+  through the substrate. sha256 `0c7ddf10…`.
+
+## 21:11: d2s_rhigh closed tap ring (Christoph: "extend the taps left and right to a closed substrate tap ring
+## around the resistor array. Is there a reason not to put the top and bottom substrate taps farther away than
+## minimum DRC rules?" / 21:12 question on W520 package temperature, answered in the chat)
+
+- `klayout/d2s_rhigh.gds`: ring of four ptap1 (sides 0.78 × 16.11 µm, top / bottom 13.14 × 0.78 µm, Activ
+  butting at the corners, M1 bridged at the four joints). Top / bottom strips at the same rule distance as the
+  sides: pSD 0.31 from the array's EXTBlock (Activ y 13.60 … 14.38 and −1.73 … −0.95). They lie under the M2
+  jumper tracks; cell outline unchanged (14.76 × 18.56 µm). vss pins unchanged on the side strips.
+- DRC clean. LVS against `pad_buffer_cells.cdl`: match. sha256 `6d624b31…`.
+
+## 21:22–21:28: d2s_rhigh interconnect (Christoph asked pros / cons of M2 for the three neighbour links, of the
+## dummy-to-ring straps, of M2 paths instead of boxes; decided: "Keep the metal1 dummy straps, metal2 for adjacent
+## resistors for symmetry, make paths for the M2 jumpers.")
+
+- `klayout/d2s_rhigh.gds`: the three M1 links between neighbouring heads (C2 at both top junctions, A at the
+  bottom) replaced by a Via1 on each head and a straight M2 path; now every junction is via – M2 – via (32 Via1,
+  one per head). All M2 as paths, width 0.29 µm, square ends (0.145 µm extension = Via1 enclosure 0.05): 12
+  jumpers (U-shaped, 4 points; the 3 neighbour links straight) and 8 end drops; M2 pins stay boxes. Merged M2
+  identical to before plus the 3 new links. Dummy M1 straps unchanged.
+- DRC clean. LVS against `pad_buffer_cells.cdl`: match. sha256 `2f32bfdb…`.
+
+## 21:35: d2s_rhigh pins (Christoph shortened the M2 end drops; "Any reason against moving the metal2 pins so close
+## to the resistor array, or does the guard ring enforce sufficient distance, anyhow?")
+
+- His `klayout/d2s_rhigh.gds` (staged 21:33): end drops end at y −2.28, the level of the lowest bottom jumper
+  track; M2 pins 0.29 × 0.4 µm at −2.425 … −2.025, the cell's bottom edge. Cell 14.76 × 17.50 µm.
+  DRC clean, LVS against `pad_buffer_cells.cdl`: match (checked here, file unchanged). Answer in the chat: no
+  rule links M2 to the ring or the resistors; M2 spacing to the lowest track 0.39 µm; no metal over bodies.
+
+## 21:48: s2d_rhigh like d2s_rhigh (Christoph: "apply the changes mutatis mutandis to s2d_rhigh.gds"; question on
+## guarding bg_res, answered in the chat)
+
+- The d2s_rhigh edits written as one procedure (container only) and checked first: applied to the generator's
+  0.68 µm d2s_rhigh it reproduces Christoph's current `d2s_rhigh.gds` exactly (geometry and labels).
+- `klayout/s2d_rhigh.gds` (n = 6): ptap ring at the rule distance (Activ x −1.32 … −0.54 and 18.04 … 18.82,
+  y −1.73 … −0.95 and 13.60 … 14.38), dummy M1 straps into the ring, vss pins on both side strips, the M1
+  neighbour links replaced by Via1 + M2 (48 Via1, one per head), all M2 as paths (30), end drops to the lowest
+  bottom track (y −3.48), M2 pins there. 20.2 × 19.9 µm (was 20.1 × 22.4).
+- DRC clean. LVS against `pad_buffer_cells.cdl`: match. sha256 `c90abfb2…`.
+
+## 21:56: rhigh blocks into the library; NWell under rhigh looked up (Christoph: "Look up the possibility of nwell
+## under the array please. Also, reimport the d2s_rhigh.gds and s2d_rhigh.gds into pad_buffer_cells.gds.")
+
+- `klayout/pad_buffer_cells.gds`: `d2s_rhigh` (his file, 45d3c6c6) and `s2d_rhigh` (c90abfb2) replaced; library
+  `rhigh` reused (identical), the ring strips added as new ptap1 variants; old ties `ptap1`, `ptap1$1` removed
+  (unused). All other cells unchanged (own shapes and instances). DRC of both cells clean, LVS both match.
+  sha256 `737220b2…`.
+- NWell under rhigh (container test on bg_res, not delivered): IHP's LVS deck connects the rhigh bulk marker to
+  pwell, iso_pwell and nwell_drw (`res_connections.lvs`); no DRC rule forbids it. bg_res with one NWell under
+  array + ntap1 ring at the ptap positions: DRC clean (main + maximal); LVS extracts all 41 rhigh with bulk on the
+  NWell net, match. Model `rhigh` (`resistors_mod.lib`): r3_cmc, bulk node bn carries only the parasitic area /
+  perimeter capacitance (dfinf 1e-4: no voltage dependence). Rule manual not in this PDK checkout; the online
+  docs have only the general sections. Characterization over NWell not documented.
+
+## 22:11: bg_res tap ring (Christoph: substrate guard ring appropriate; the bandgap resistors go onto core7, not the
+## pads; "follow precedent from the other hi res poly arrays and put an nwell tap ring around bg_res.gds";
+## connections to be thought about, drawn only after he has git-staged the ring)
+
+- Read as the precedent: p-tap (substrate) ring as in d2s_rhigh / s2d_rhigh ("substrate guard ring"); said so in
+  the chat, n-well variant on request.
+- `klayout/bg_res.gds`: ring of four ptap1 at the rule distance (Activ x −1.32 … −0.54 and 28.24 … 29.02, y −1.73
+  … −0.95 and 10.89 … 11.67), M1 bridged at the joints, both dummies' heads strapped into the side strips in M1,
+  vss pins on both side strips. 30.4 × 13.5 µm. DRC clean; LVS (39 unwired segments, dummies on vss): match.
+  sha256 `d4967381…`. Not yet in `pad_buffer_cells.gds`.
+
+## 22:23–22:33: bg_res series wiring (Christoph: "vertical M2 paths and horizontal M1 paths"; interconnect inside
+## the guard ring; "just the reserved room for now" for stretching R0; bg_res as a candidate for bottom-up
+## parasitic extraction; "Don't let chatlog run into a compaction.")
+
+- Git (read-only, optional locks off, via the main repository's worktree entry): `bg_res.gds` staged, index =
+  working file; no lock files before or after. Chatlog exported at 22:33 before drawing.
+- `klayout/bg_res.gds`: chains left to right, first arc on top. M2 vertical path from every head (Via1),
+  M1 horizontal path per resistor and side (Via1), width 0.29 µm, square ends; tracks below the bottom heads at
+  y −0.735 (R0), −1.205 (R1A), −1.675 (R1B), above the top heads at 11.275 / 11.745 / 12.215 after 0.6 µm
+  reserved for a stretched R0 segment. Ring top / bottom strips moved out to keep the tracks inside (Activ
+  −2.87 … −2.09 and 12.63 … 13.41). Terminals in M2 over the ring strips: e2 (R0 at 1), vss (R1A at 2 + R1B at 4,
+  one Via1 to the ring = the only join), eb (R1B at 36 + R0 at 39), ea (R1A at 38, top). 30.4 × 16.3 µm.
+- DRC clean. LVS: match; extracted R0 eb–e2 178.92 µm, R1A ea–vss 109.34 µm, R1B eb–vss 99.4 µm, dummies on vss.
+  sha256 `0a7cd280…`. Not yet in `pad_buffer_cells.gds`; `.cdl` has no bg_res subcircuit yet.
+
+## 22:42: bg_res nitpicks + .cdl (Christoph: ring M1 not flush, "Nudge the vertical guards out a little"; reserve
+## symmetric top and bottom; "Also update pad_buffer_cells.cdl.")
+
+- Cause of the M1 step: the ptap1 PCell's M1 end inset along a long strip depends on the strip length (contact
+  array): 0.02 µm at 16.28 µm, 0.15 µm at 16.88 µm, while across a short strip it is always 0.09 µm. Moving the
+  side strips can't make Activ and M1 flush together, so the M1 step at the top and bottom edges is filled
+  (0.06 µm high, full ring width): the M1 ring is now one rectangular frame (outer −1.18 … 28.88 × −3.38 …
+  13.32, hole −0.68 … 28.38 × −2.78 … 12.72), Activ frame unchanged.
+- Reserve now 0.6 µm below the bottom heads too; bottom tracks at −1.335 / −1.805 / −2.275, ring bottom strip
+  Activ −3.47 … −2.69. Cell 30.4 × 16.9 µm.
+- `klayout/pad_buffer_cells.cdl`: subcircuit `bg_res` (e2 ea eb vss) added by hand, segment chains as drawn,
+  header line added. `bg_res.gds` against it: DRC clean, LVS match. sha256 bg_res `c9d02408…`, .cdl `b09bda73…`.
+  The library's `bg_res` is still the old unwired cell until reimported.
+
+## 22:51: bg_res into the library (Christoph: "Yes, reimport bg_res into pad_buffer_cells.gds."; question on PEX
+## options, IIC-OSIC-TOOLS 2026.09 vs 2026.10, answered in the chat)
+
+- `klayout/pad_buffer_cells.gds`: `bg_res` replaced by the wired, ring-guarded cell (c9d02408), on the library's
+  `rhigh$1`; ring strips as ptap1 variants. The library still had the 1.4 µm-pitch, unwired bg_res (56.9 ×
+  11.2 µm), now 30.4 × 16.9 µm. All other cells unchanged. DRC clean, LVS against `pad_buffer_cells.cdl` match.
+  sha256 `099b188f…`. Fit cells not repacked: in `fit_bias_tree_oa_bg` bg_res now overlaps bg_nab and
+  bias_tree_p (bounding boxes); the top-cell placement has no overlap.
