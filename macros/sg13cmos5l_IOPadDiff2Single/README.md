@@ -260,4 +260,5 @@ schematic netlist. The plots are not shipped; `make sim-cace` regenerates them.
 - Layout: only `layout/klayout/size_mockup/` (device areas; the pad cell itself has none yet).
 - LVS, PEX, post-layout CACE; ESD and latch-up simulation; the unpowered-pad case of
   `testbenches/spice/tb_pd_unpowered.spice` is not in CACE.
-- The S2D counterpart: `../sg13cmos5l_IOPadSingle2Diff` is a scaffold.
+- The S2D counterpart `../sg13cmos5l_IOPadSingle2Diff` has its input buffer since 2026-10-25; it proposes vcm = 1.2 V for both
+  buffers (`s2d_input_buffer.md` section IV), and this suite still runs at vref = vicm = 1.65 V.
