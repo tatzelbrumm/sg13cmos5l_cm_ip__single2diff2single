@@ -14,10 +14,10 @@
 *   - The pad side (vin, vref) is gates only, enabled or not.
 * Switches and inverters are 1u / 0.45u hv devices, as in power_down/.
 * Macro copy (macros/sg13cmos5l_IOPadSingle2Diff, 2026-10-25): s2d_mpdda_pd takes en_3v3_b as a port,
-* last in its list, instead of making it with its own inverter Xi, as d2s_mpdda_pd and d2s_bias_sel_pd
+* last in its list, instead of making it with its own inverter Xi, as d2s_mpdda_pd and bias_sel_pd
 * do since 2026-10-25 (en_3v3_b is made once, by XIB in en_ctrl_3v3). The pad uses s2d_mpdda_pd only;
 * s2d_bias_out_pd, s2d_bias_in_pd and inv_3v3_s2d stay as in the design for the decks in
-* ../../testbenches/spice (the pad's bias is d2s_bias_sel_pd). Original:
+* ../../testbenches/spice (the pad's bias is bias_sel_pd). Original:
 * sudelbuecher/design_considerations/s2d_input_buffer/sim/s2d_pd.spice.
 
 .subckt inv_3v3_s2d vdd vss en_3v3 en_3v3_b

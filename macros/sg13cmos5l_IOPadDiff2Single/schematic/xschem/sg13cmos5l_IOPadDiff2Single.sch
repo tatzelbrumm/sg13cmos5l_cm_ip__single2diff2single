@@ -33,7 +33,6 @@ N 420 -280 420 -260 {lab=en_3v3}
 N 420 -520 420 -280 {lab=en_3v3}
 N 400 -200 500 -200 {lab=sel1_3v3}
 N 560 -180 560 -100 {lab=iovss}
-N 600 -180 600 -100 {lab=iovss}
 N 560 -100 600 -100 {lab=iovss}
 N 1120 -280 1140 -280 {lab=pad}
 N 1120 -340 1120 -280 {lab=pad}
@@ -67,7 +66,6 @@ N 1040 -600 1040 -560 {lab=iovdd}
 N 820 -600 1040 -600 {lab=iovdd}
 N 820 -600 820 -560 {lab=iovdd}
 N 620 -600 820 -600 {lab=iovdd}
-N 620 -600 620 -360 {lab=iovdd}
 N 580 -600 580 -360 {lab=iovdd}
 N 440 -500 440 -260 {lab=en_3v3_b}
 N 420 -520 740 -520 {lab=en_3v3}
@@ -106,11 +104,9 @@ C {en_ctrl_3v3.sym} 300 -220 0 0 {name=xc}
 C {devices/lab_pin.sym} 240 -300 0 0 {name=l0 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 260 -300 0 1 {name=l1 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 240 -140 0 1 {name=l2 sig_type=std_logic lab=iovss}
-C {d2s_bias_sel_pd.sym} 610 -270 0 0 {name=xb}
+C {bias_sel_pd.sym} 610 -270 0 0 {name=xb}
 C {devices/lab_pin.sym} 580 -360 0 0 {name=l11 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 560 -180 0 0 {name=l12 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 620 -360 0 1 {name=l13 sig_type=std_logic lab=iovdd}
-C {devices/lab_pin.sym} 600 -180 0 1 {name=l14 sig_type=std_logic lab=iovss}
 C {devices/lab_wire.sym} 400 -220 0 1 {name=l23 sig_type=std_logic lab=sel0_3v3}
 C {devices/lab_wire.sym} 400 -200 0 1 {name=l24 sig_type=std_logic lab=sel1_3v3}
 C {d2s_mpdda_pd.sym} 920 -460 0 0 {name=xd}

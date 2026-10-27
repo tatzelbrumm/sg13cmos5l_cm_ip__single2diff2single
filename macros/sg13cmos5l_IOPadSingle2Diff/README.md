@@ -16,7 +16,7 @@ unit `unit_r2`. Open points are in [`FILL_IN.md`](FILL_IN.md).
 | instance | cell (macro) | function |
 |---|---|---|
 | `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` for `xb` and `xa` |
-| `xb` | `d2s_bias_sel_pd` (`../d2s_bias_sel_pd`) | bias lines from one mirror tree; reference selected by `sel1 sel0`; `xa` uses vbp vbn vbpc vbnc, vabp / vabn stay unused |
+| `xb` | `bias_sel_noab_pd` (`../bias_sel_noab_pd`) | four bias lines vbp vbn vbpc vbnc from one mirror tree; reference selected by `sel1 sel0`; until 2026-10-27 `bias_sel_pd`, whose class-AB legs stayed unused here |
 | `xa` | `s2d_mpdda_pd` (here) | `s2d_mpdda` + four output-to-vcm ties; `vfbp` / `vfbn` tied to `outp` / `outn` on the top sheet |
 | `CP`, `CN`, `DN`, `DP`, `SP` | IHP IO sub-cells | input protection exactly as `sg13cmos5l_IOPadAnalog`: gate-tied clamps, primary diodes, secondary protection (587 Ω rppd) from `pad` to `padres` |
 
@@ -33,7 +33,7 @@ Sheets in `schematic/xschem/`:
 | `sg13cmos5l_IOPadSingle2Diff.{sch,sym}` | top sheet; symbol and port order unchanged since 2026-10-20 |
 | `s2d_mpdda.{sch,sym}` | Christoph's sheet of 2026-10-23 from `s2d_input_buffer/xschem` (only the netlist-path text changed) |
 | `s2d_mpdda_pd.{sch,sym}` | wrapper: `s2d_mpdda` + TPN / TPP, TNN / TNP (1 / 0.45 µm hv TGs, outputs to vcm while disabled) |
-| `s2d_mpdda_pd_sel.{sch,sym}` | CACE-only fixture: `s2d_mpdda_pd` + `d2s_bias_sel_pd`, `vfbp` / `vfbn` as pins (loop gain) |
+| `s2d_mpdda_pd_sel.{sch,sym}` | CACE-only fixture: `s2d_mpdda_pd` + `bias_sel_noab_pd`, `vfbp` / `vfbn` as pins (loop gain) |
 | `s2d_core_ideal.{sch,sym}` | the 2026-10-20 placeholder (two E sources), no longer used |
 | `xschemrc` | PDK + this folder + the sub-macros; `sg13cmos5l_IOPadDiff2Single` added for `unit_r2` |
 
@@ -79,10 +79,11 @@ is off (every tail, sink, cascode and the CMFB diode with it), and `outp`, `outn
   `vfbp` / `vfbn` ties next to the outputs and the `en_3v3_b` wire from `xc`. The class-AB lines of
   `xb` end in labelled stubs.
 - `en_3v3_b`: the design's `s2d_mpdda_pd` made it with its own inverter; here it comes from `xc`, as for
-  `d2s_mpdda_pd` and `d2s_bias_sel_pd` since 2026-10-25.
+  `d2s_mpdda_pd` and `bias_sel_pd` since 2026-10-25.
 - Bias: the design proposes a shared root with one 5 µA fan-out leg per buffer into its own small tree
-  (`s2d_bias_out` / `_in`, four lines). The pads keep their `d2s_bias_sel_pd` (same four diodes at the
-  same currents, plus the unused class-AB legs); see `FILL_IN.md`.
+  (`s2d_bias_out` / `_in`, four lines). The pads keep their `bias_sel_pd` (same four diodes at the
+  same currents, plus the unused class-AB legs); see `FILL_IN.md`. Since 2026-10-27 the s2d pad has
+  `bias_sel_noab_pd`, without those legs (10 uA less from iovdd; the CACE results here are older).
 - Input range: the scaffold asked for rail-to-rail inputs including iovss; the design has a signal
   window instead (unit gates ≤ about iovdd − 1.3 V). With vref = 0.5 V the pad range is 0 … 1 V and
   includes iovss (`window_params`). vref and vcm default to 1.2 V (scaffold: 1.65 V).
@@ -210,7 +211,7 @@ Observations:
 - **Enable**: vd within 1 mV after 1.27 … 1.31 µs; the output common mode rises by +0.21 … +0.27 V and
   dips by at most −17 mV while enabling. The design's decks, with the `s2d_bias_out_pd` tree and a 10 ns edge
   on `en_3v3` directly, show −1.62 / +1.09 V (`tb_s2d_pd_enable.spice` reproduces that); here the edge comes
-  through `en_ctrl_3v3` and the bias is `d2s_bias_sel_pd`. The difference is not analysed.
+  through `en_ctrl_3v3` and the bias is `bias_sel_pd`. The difference is not analysed.
 - **Power down**: iovdd 0.05 … 16 nA in states 0 and 3; 0.45 … 0.60 µA in states 1 and 2 (the presence
   detector, as in the output pad); pad leakage −7.6 … +8.4 nA (125 °C, 0 … 3.3 V); outputs at vcm within
   0.7 µV.

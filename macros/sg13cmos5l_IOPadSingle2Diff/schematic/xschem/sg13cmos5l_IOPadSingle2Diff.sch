@@ -28,7 +28,6 @@ N 140 -260 320 -260 {lab=en_1v2}
 N 360 -140 360 -100 {lab=iovss}
 N 140 -320 640 -320 {lab=ibias}
 N 680 -180 680 -100 {lab=iovss}
-N 720 -180 720 -100 {lab=iovss}
 N 1040 -360 1040 -100 {lab=iovss}
 N 540 -280 540 -260 {lab=en_3v3}
 N 1260 -500 1280 -500 {lab=outp}
@@ -42,8 +41,6 @@ N 540 -420 540 -280 {lab=en_3v3}
 N 520 -200 620 -200 {lab=sel1_3v3}
 N 820 -320 1100 -320 {lab=vbp}
 N 820 -300 1120 -300 {lab=vbpc}
-N 820 -280 860 -280 {lab=vabp}
-N 820 -260 860 -260 {lab=vabn}
 N 720 -100 880 -100 {lab=iovss}
 N 940 -700 960 -700 {lab=padres}
 N 960 -500 980 -500 {lab=padres}
@@ -75,7 +72,6 @@ N 360 -900 360 -300 {lab=iovdd}
 N 300 -900 360 -900 {lab=iovdd}
 N 700 -900 700 -360 {lab=iovdd}
 N 620 -900 700 -900 {lab=iovdd}
-N 740 -900 740 -360 {lab=iovdd}
 N 700 -900 740 -900 {lab=iovdd}
 N 220 -900 220 -840 {lab=iovdd}
 N 140 -900 220 -900 {lab=iovdd}
@@ -127,11 +123,9 @@ C {devices/lab_pin.sym} 320 -200 0 0 {name=l6 sig_type=std_logic lab=vdd1v2_sens
 C {devices/lab_pin.sym} 320 -180 0 0 {name=l7 sig_type=std_logic lab=vdd3v3_sense}
 C {devices/lab_wire.sym} 520 -220 0 1 {name=l9 sig_type=std_logic lab=sel0_3v3}
 C {devices/lab_wire.sym} 520 -200 0 1 {name=l10 sig_type=std_logic lab=sel1_3v3}
-C {d2s_bias_sel_pd.sym} 730 -270 0 0 {name=xb}
+C {bias_sel_noab_pd.sym} 730 -270 0 0 {name=xb}
 C {devices/lab_pin.sym} 700 -360 0 0 {name=l11 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 680 -180 0 0 {name=l12 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 740 -360 0 1 {name=l13 sig_type=std_logic lab=iovdd}
-C {devices/lab_pin.sym} 720 -180 0 1 {name=l14 sig_type=std_logic lab=iovss}
 C {s2d_mpdda_pd.sym} 1120 -480 0 0 {name=xa}
 C {devices/lab_pin.sym} 1060 -600 0 0 {name=l25 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 1040 -360 0 0 {name=l26 sig_type=std_logic lab=iovss}
@@ -165,6 +159,4 @@ C {devices/lab_pin.sym} 1100 -320 0 1 {name=l54 sig_type=std_logic lab=vbp}
 C {devices/lab_pin.sym} 1180 -220 0 1 {name=l55 sig_type=std_logic lab=vbn}
 C {devices/lab_pin.sym} 1120 -300 0 1 {name=l56 sig_type=std_logic lab=vbpc}
 C {devices/lab_pin.sym} 1160 -240 0 1 {name=l57 sig_type=std_logic lab=vbnc}
-C {devices/lab_pin.sym} 860 -280 0 1 {name=l58 sig_type=std_logic lab=vabp}
-C {devices/lab_pin.sym} 860 -260 0 1 {name=l59 sig_type=std_logic lab=vabn}
 C {devices/lab_wire.sym} 520 -260 0 1 {name=l8 sig_type=std_logic lab=en_3v3}

@@ -5,7 +5,7 @@ V {}
 S {}
 F {}
 E {}
-T {tb_pd_enable: vout of d2s_mpdda_pd + d2s_bias_in_pd while en_3v3 rises at 10 us and falls at 60 us, tt 27 C} 60 -500 0 0 0.5 0.5 {}
+T {tb_pd_enable: vout of d2s_mpdda_pd + bias_in_pd while en_3v3 rises at 10 us and falls at 60 us, tt 27 C} 60 -500 0 0 0.5 0.5 {}
 T {DUT and bias from the schematics in this directory; code block = the deck's .lib / .temp / .option / .param / .save lines and its .control section} 60 -455 0 0 0.3 0.3 {}
 T {vinp = vinn = vref, so vout should sit at vref = 1.65 V when enabled; disabled, RL holds it there.} 60 -420 0 0 0.25 0.25 {}
 T {Reference (results_power_down.txt), 1k||100p: after the enable edge vout spans 1.542 ... 1.761 V and is} 60 -398 0 0 0.25 0.25 {}
@@ -14,7 +14,6 @@ N 200 -300 200 620 {lab=vdd}
 N 440 580 440 620 {lab=vss}
 N 840 600 840 620 {lab=vsso}
 N 760 -300 1040 -300 {lab=vdd}
-N 840 520 840 600 {lab=vsso}
 N 900 480 1200 480 {lab=vbn}
 N 900 380 1100 380 {lab=vbpc}
 N 1180 120 1180 460 {lab=vbnc}
@@ -72,7 +71,6 @@ N 1260 -320 1260 -80 {lab=vddo}
 N 1320 20 1380 20 {lab=vout}
 N 1380 0 1380 20 {lab=vout}
 N 1040 -300 1040 -70 {lab=vdd}
-N 860 -320 860 320 {lab=vddo}
 N 120 -320 860 -320 {lab=vddo}
 N 360 260 360 620 {lab=vext}
 N 360 260 420 260 {lab=vext}
@@ -120,7 +118,7 @@ C {devices/vsource.sym} 360 650 0 0 {name=Vext value=3.3 savecurrent=false}
 C {devices/lab_pin.sym} 360 260 0 0 {name=l5 sig_type=std_logic lab=vext}
 C {devices/vsource.sym} 280 650 0 0 {name=Vcm value=1.65 savecurrent=false}
 C {devices/lab_pin.sym} 280 140 0 0 {name=l6 sig_type=std_logic lab=vref}
-C {d2s_bias_in_pd.sym} 800 420 0 0 {name=Xb}
+C {bias_in_pd.sym} 800 420 0 0 {name=Xb}
 C {d2s_mpdda_pd.sym} 1140 20 0 0 {name=Xd}
 C {devices/gnd.sym} 1060 720 0 0 {name=l0 lab=GND}
 C {devices/lab_pin.sym} 740 530 0 1 {name=l8 sig_type=std_logic lab=vss}

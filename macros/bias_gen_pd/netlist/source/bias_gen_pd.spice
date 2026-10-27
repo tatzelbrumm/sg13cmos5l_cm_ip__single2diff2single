@@ -1,0 +1,23 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias_gen_pd: the reference-current selector of bias_sel_pd without its mirror tree (2026-10-27).
+*   sel1 sel0 = 0 0: harness ibias (sourced) through TEN / TEP;  0 1: Oguey-Aebischer core (oa_core_pd);
+*               1 0: Banba bandgap core (bg_core_pd);  1 1: both cores (currents add).
+* iref is a sourced current: it goes into an NMOS input diode, i.e. a bias_tree_pd (NI behind its TG) or the
+* input of bias_dist_pd. en_3v3 = 0: both cores off, TEN / TEP open, iref high-Z.
+* Uses oa_core_pd / bg_core_pd (../../bias_tree_pd/netlist/source/bias_ref_pd.spice) and the hv_logic gates.
+.subckt bias_gen_pd vdd vss ibias iref en_3v3 sel0_3v3 sel1_3v3
+* decode
+XDA vdd vss en_3v3 sel0_3v3 en_oa_b nand2_hv
+XDB vdd vss en_oa_b en_oa inv_hv
+XDC vdd vss en_3v3 sel1_3v3 en_bg_b nand2_hv
+XDD vdd vss en_bg_b en_bg inv_hv
+XDE vdd vss sel0_3v3 sel1_3v3 s00 nor2_hv
+XDF vdd vss en_3v3 s00 en_ext_b nand2_hv
+XDG vdd vss en_ext_b en_ext inv_hv
+* reference sources into iref
+Xoa vdd vss iref en_oa en_oa_b oa_core_pd
+Xbg vdd vss iref en_bg en_bg_b bg_core_pd
+XTEN ibias en_ext iref vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTEP ibias en_ext_b iref vdd sg13_hv_pmos w=1u l=0.45u ng=1
+.ends bias_gen_pd

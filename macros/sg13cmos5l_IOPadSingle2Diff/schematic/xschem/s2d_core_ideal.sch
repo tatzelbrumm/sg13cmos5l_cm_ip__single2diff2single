@@ -6,7 +6,7 @@ S {}
 F {}
 E {}
 T {s2d_core_ideal: BEHAVIOURAL PLACEHOLDER for the input buffer core of sg13cmos5l_IOPadSingle2Diff} 0 -640 0 0 0.4 0.4 {}
-T {outp = vcm + (padres - vref), outn = vcm - (padres - vref). Replace by the transistor-level buffer; keep the port list (bias lines from d2s_bias_sel_pd, en_3v3).} 0 -600 0 0 0.25 0.25 {}
+T {outp = vcm + (padres - vref), outn = vcm - (padres - vref). Replace by the transistor-level buffer; keep the port list (bias lines from bias_sel_pd, en_3v3).} 0 -600 0 0 0.25 0.25 {}
 N 640 -440 640 -410 {lab=outp}
 N 640 -440 700 -440 {lab=outp}
 N 640 -320 700 -320 {lab=vcm}

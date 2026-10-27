@@ -4,7 +4,7 @@
 * Macro copy of sudelbuecher/design_considerations/s2d_input_buffer/sim/tb (2026-10-25): includes rewritten.
 * Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc).
 * Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
-* Shared bias, as proposed: ONE root (oa_core of d2s_bias_ref.spice) -> bias_fanout_n -> one
+* Shared bias, as proposed: ONE root (oa_core of bias_ref.spice) -> bias_fanout_n -> one
 * 5 uA leg into each buffer's own tree (s2d_bias_out, d2s_bias_out) and diodes.
 * Round-trip gain vout - vref_out = (voutp - voutn)/2 = vin - vref_in, ideally 1.
 * d2s_mpdda: output devices on vddo / vsso, here tied to vdd / vss; load 1 kOhm to vref || 100 pF.
@@ -15,7 +15,7 @@
 .lib cornerCAP.lib cap_typ
 .include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice
 .include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/d2s_mpdda.spice
-.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/d2s_bias_ref.spice
+.include ../../../bias_tree_pd/netlist/source/bias_ref.spice
 .include ../../netlist/source/s2d_mpdda.spice
 .include ../../netlist/source/s2d_bias.spice
 Vdd vdd 0 3.3

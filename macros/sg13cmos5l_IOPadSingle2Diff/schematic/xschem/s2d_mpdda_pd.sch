@@ -6,7 +6,7 @@ S {}
 F {}
 E {}
 T {s2d_mpdda_pd: s2d_mpdda with a digital enable (en_3v3: 0 ... 3.3 V on vdd / vss, active high; en_3v3_b from en_ctrl_3v3)} 0 -760 0 0 0.4 0.4 {}
-T {Disabled: TPN / TPP and TNN / TNP tie voutp and voutn to vcm; the bias (d2s_bias_sel_pd) switches off every tail, sink, cascode and the CMFB diode.} 0 -710 0 0 0.25 0.25 {}
+T {Disabled: TPN / TPP and TNN / TNP tie voutp and voutn to vcm; the bias (bias_sel_pd) switches off every tail, sink, cascode and the CMFB diode.} 0 -710 0 0 0.25 0.25 {}
 T {Enabled: the four switches are off; s2d_mpdda unchanged. vin, vref, vcm drive gates only. Source: ../../netlist/source/s2d_pd.spice} 0 -680 0 0 0.25 0.25 {}
 T {SPDX-FileCopyrightText: 2026 Christoph Maier   SPDX-License-Identifier: Apache-2.0} 80 -100 0 0 0.2 0.2 {}
 N 620 -470 620 -360 {lab=voutp}

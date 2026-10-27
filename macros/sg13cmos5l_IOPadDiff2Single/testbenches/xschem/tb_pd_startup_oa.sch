@@ -5,7 +5,7 @@ V {}
 S {}
 F {}
 E {}
-T {tb_pd_startup_oa: d2s_mpdda_pd + d2s_bias_oa_pd (self-contained), supplies steady, en_3v3 0 -> 3.3 V at 1 us, tt 27 C} 60 -500 0 0 0.5 0.5 {}
+T {tb_pd_startup_oa: d2s_mpdda_pd + bias_oa_pd (self-contained), supplies steady, en_3v3 0 -> 3.3 V at 1 us, tt 27 C} 60 -500 0 0 0.5 0.5 {}
 T {DUT and bias from the schematics in this directory; code block = the deck's .lib / .temp / .option / .param / .save lines and its .control section} 60 -455 0 0 0.3 0.3 {}
 T {The operating point is taken with en_3v3 = 0, so the transient starts from the disabled state.} 60 -420 0 0 0.25 0.25 {}
 T {Reference (results_power_down.txt): final I_Q 212.0 uA (enabled dc op 212.0 uA); I_Q stays within} 60 -398 0 0 0.25 0.25 {}
@@ -14,7 +14,6 @@ N 200 -300 200 620 {lab=vdd}
 N 440 580 440 620 {lab=vss}
 N 840 600 840 620 {lab=vsso}
 N 760 -300 1040 -300 {lab=vdd}
-N 840 520 840 600 {lab=vsso}
 N 900 480 1200 480 {lab=vbn}
 N 900 380 1100 380 {lab=vbpc}
 N 1180 120 1180 460 {lab=vbnc}
@@ -53,7 +52,6 @@ N 1260 -320 1260 -80 {lab=vddo}
 N 1320 20 1380 20 {lab=vout}
 N 1380 0 1380 20 {lab=vout}
 N 1040 -300 1040 -70 {lab=vdd}
-N 860 -320 860 320 {lab=vddo}
 N 120 -320 860 -320 {lab=vddo}
 N 660 460 660 620 {lab=en}
 N 660 460 710 460 {lab=en}
@@ -96,7 +94,7 @@ C {devices/vsource.sym} 660 650 0 0 {name=Ven value="pwl(0 0 1u 0 1.01u 3.3)" sa
 C {devices/lab_pin.sym} 660 460 0 0 {name=l4 sig_type=std_logic lab=en}
 C {devices/vsource.sym} 280 650 0 0 {name=Vcm value=1.65 savecurrent=false}
 C {devices/lab_pin.sym} 280 140 0 0 {name=l6 sig_type=std_logic lab=vref}
-C {d2s_bias_oa_pd.sym} 800 420 0 0 {name=Xb}
+C {bias_oa_pd.sym} 800 420 0 0 {name=Xb}
 C {d2s_mpdda_pd.sym} 1140 20 0 0 {name=Xd}
 C {devices/gnd.sym} 1060 720 0 0 {name=l0 lab=GND}
 C {devices/lab_pin.sym} 740 530 0 1 {name=l8 sig_type=std_logic lab=vss}

@@ -1,7 +1,7 @@
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
 * Bias for s2d_mpdda, shared with d2s_mpdda's bias (../../class_ab_pad_driver/improvements/sim/
-* d2s_bias_ref.spice, d2s_bias_lp.spice). s2d_mpdda uses four of d2s_mpdda's six lines, with the
+* bias_ref.spice, bias_lp.spice). s2d_mpdda uses four of d2s_mpdda's six lines, with the
 * same diodes at the same currents, so its gate voltages are copies of the driver's:
 *   vbp  5 uA out of BP  5/6  (unit tails)       vbn  5 uA into BN  6/6  (fold sinks)
 *   vbpc 2 uA out of BPC 1/4  (PMOS cascodes)    vbnc 2 uA into BNC 1/8  (NMOS cascodes)

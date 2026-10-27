@@ -66,6 +66,7 @@ clamp gets wired by hand from above. The code is `generate_m1()` at the end of
 | `ng` | ≥ 1 | gate fingers |
 | `l`  | ≥ `Lmin` (N 0.45u, P 0.40u, from the PDK techparams), 5 nm grid | gate length, e.g. `0.6u` (default, as IHP) |
 | `frame` | `fit` (default) / `80u` | `fit`: the rings wrap the array. `80u`: IHP's fixed 80 µm frame with the array centred, as in `Clamp_N` / `Clamp_P` |
+| `wiring` | `internal` (default) / `external` | `internal`: one gate bus, pins `gate` / `pad` (the cell as before). `external`: every finger alike, no bus, no `gate` / `pad` names; a `Clamp_*_M1_wiring` cell on top decides which fingers are outputs, replicas or dummies (2026-10-27) |
 
 What is the same as in the IHP cells:
 
@@ -118,6 +119,38 @@ Things to watch when using them:
 * The N cell's NWell guard ring is a floating net in the cell, as in IHP's. Tie it
   to `iovdd` at the level above.
 
+### Replicas and dummies: `wiring = external` + `Clamp_N_M1_wiring` / `Clamp_P_M1_wiring` (2026-10-27)
+
+The clamp generator stays agnostic of what a finger is used for. With `wiring = external` it
+draws every finger alike: all gate contacts, each gate strip up to the top of the bus row,
+sources down into the inner ring (the rail), drain strips; no gate bus, no `gate` / `pad`
+pins or labels (the rings keep theirs). The symmetry breaking is the job of a wiring-only cell
+placed at the same origin with the same `ng`, `l` and `frame` (`generate_m1_wiring()`):
+
+| param | meaning |
+|---|---|
+| `roles` | e.g. `21:rep 20:dummy`: gate index from the left (0-based) and role; every other gate is an output |
+| `gate_net` | name of the gate bus segments over the output gates (default `gate`) |
+| `rep_net` | name of the replica's gate and drain (default `rep`) |
+| `pad_net` | name of the output drains (default `pad`) |
+
+* **Output gates:** one M1 bus segment (pin + label `gate_net`) per run of adjacent output gates. A
+  replica in the array splits the bus; feed each segment from its own end (joining them across
+  the replica would cross whatever leaves the replica drain upwards).
+* **`rep`:** a 0.30 µm M1 jumper in the top of the strips joins the gate strip to the drain it
+  shares (gate i sits next to drain i // 2); that drain gets pin + label `rep_net`. Two `rep` gates
+  at one drain make an S-G-D-G-S pair.
+* **`dummy`:** the same jumper to its other neighbour, a source on the rail: gate = source, off.
+* **Drains** of output (or output + dummy) gates get pin + label `pad_net`; a drain shared by an output
+  and a replica gate is refused (it would short the two nets).
+* With no roles, clamp + wiring cell equal the `wiring = internal` cell exactly (merged geometry and
+  labels). `centre_roles(family, ng, l, width, 'single' | 'pair')` in `clamp_engine.py` gives the
+  roles for a replica at the array centre (single: the gate nearest the centre, plus its drain
+  partner as a dummy; pair: both gates of the drain nearest the centre).
+* In `sg13cmos5l_IOPadDiff2Single`: Clamp_P_M1 ng 43, l 0.6u, 80u with roles `20:dummy 21:rep`
+  (OP 82 fingers, RP1 2, dummy 2; `a` / `dabp`), both Clamp_N_M1 ng 35, l 1u, 80u, the upper one with
+  `16:rep 17:rep` (ON 68 in all, RN1 2; `b` / `dabn`).
+
 ## DC diodes: `DCNDiode` / `DCPDiode`
 
 IHP's `sg13cmos5l_DCNDiode` / `sg13cmos5l_DCPDiode`, with the diode length as
@@ -167,8 +200,9 @@ The cells are rule based throughout; no geometry is stored:
 | `use_clamp_pcells.py` | swap `sg13cmos5l_Clamp_*` cells (static copies or `.klib` references) in an existing layout for the PCells; writes only if the flattened geometry is unchanged |
 | `clamp_base_code.py`, `Clamp_N_code.py`, `Clamp_P_code.py` | the PyCells (`DloGen`) |
 | `Clamp_N_M1_code.py`, `Clamp_P_M1_code.py` | the M1-only PyCells (base class `clamp_m1_base` in `clamp_base_code.py`) |
+| `Clamp_N_M1_wiring_code.py`, `Clamp_P_M1_wiring_code.py` | the wiring-only PyCells for `wiring = external` (base class `clamp_m1_wiring_base`) |
 | `DCNDiode_code.py`, `DCPDiode_code.py` | the DC diode PyCells (base class `dcdiode_base` in `clamp_base_code.py`) |
-| `clamp_engine.py` | geometry rules + interpolation, pure Python, integer nm; `generate_m1()` for the M1-only variants, `generate_diode()` for the DC diodes |
+| `clamp_engine.py` | geometry rules + interpolation, pure Python, integer nm; `generate_m1()` for the M1-only variants, `generate_m1_wiring()` / `centre_roles()` for their wiring cells, `generate_diode()` for the DC diodes |
 | `test_m1/` | tests for the M1-only clamps and the DC diodes (see the verification status) |
 | `clamp_refdata.py` | extracted frames / tie blocks (generated) |
 | `extract_clamp_refdata.py` | regenerates `clamp_refdata.py` from `sg13cmos5l_io.{gds,cdl}` |
@@ -291,6 +325,23 @@ Test set: N and P × `ng` 1, 2, 3, 8 × `l` = Lmin, Lmin + 5 nm, 0.6 µm, 0.64 �
   long for the 80 µm frame) raise an error and produce an empty cell.
 * **Not yet verified.** PDK LVS (needs a schematic, KLayout ≥ 0.30.2) and ESD
   adequacy of the ring spacing and `l` choices.
+
+### `wiring = external` and the wiring cells (2026-10-27)
+
+Run in the cloud workspace with KLayout's Python module 0.30.12 and this PDK's `sg13cmos5l_pycell_lib`
+and `cni` (copied from `IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python`):
+
+* **Default unchanged.** `generate_m1()` with `wiring = internal` returns exactly the old shapes and
+  texts for 50 parameter sets (the test set above plus N 34 / 35 at 1u and P 41 / 43 at 0.6u, 80u);
+  `test_m1.py` passes (failures 0) and its 53 cells are XOR- and label-identical to the old code's.
+* **No roles = internal.** Engine: clamp + wiring cell merge to the internal cell for all 50 sets.
+* **`test_m1/test_wiring.py`** (PCell path): P ng 43 / 0.6u / 80u with `20:dummy 21:rep`, N ng 35 / 1u / 80u
+  with `16:rep 17:rep` and without roles, P ng 8 with the replica at the array end, N ng 8 / 0.64u with a
+  replica + dummy: PCell = engine (XOR and labels); extraction W out / rep / dummy = 546.12 / 13.32 /
+  13.32 µm (P 43), 145.2 / 8.8 / 0 µm (N 35), replica gate = drain on `rep_net`, dummy gate = source on
+  the rail; Metal1 width / space clean, Metal1.e (0.22 µm next to lines over 0.30 µm, run over 1 µm)
+  clean; nothing above Metal1. It writes `wiring_cells.gds` for a DRC run.
+* **Not run:** the IHP DRC deck (needs KLayout ≥ 0.29.11; the cloud has 0.28.16), PDK LVS.
 
 ### `DCNDiode` / `DCPDiode` (2026-10-14)
 

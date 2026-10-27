@@ -9,7 +9,8 @@
 *     clamp frames).
 *   - vabp is pulled to vdd and vabn to vss. Otherwise ABP / ABN, which sit between a (now at
 *     vddo) and b (now at vsso), would conduct from one pull into the other.
-*   - The bias (d2s_bias_*_pd) switches off the tails, sinks, mirror and cascodes.
+*   - The bias (bias_tree_pd) switches off the tails, sinks, mirror and cascodes, and the currents
+*     into the class-AB diode stacks RP1 + RP2 / RN1 + RN2.
 * Enabled (en_3v3 = vdd): the four switches are off; everything else is d2s_mpdda unchanged.
 * unit_r2 from units.spice, as for d2s_mpdda.
 .subckt d2s_mpdda_pd vdd vss vddo vsso vinp vinn vref vout vfb vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b wc=16u lc=16u lcas=3 rl=50.6u
@@ -33,6 +34,14 @@ XOP vout a vddo vddo sg13_hv_pmos w=546.12u l=0.6u ng=82
 XON vout b vsso vsso sg13_hv_nmos w=299.2u l=1u ng=68
 XCMA vout a vout vout sg13_hv_pmos w={wc} l={lc} ng=1
 XCMB b vout b b sg13_hv_pmos w={wc} l={lc} ng=1
+* --- class-AB diode stacks (in bias_tree_pd until 2026-10-27): the tree sinks 5 uA from vabp and sources 5 uA into vabn.
+*     RP1 / RN1 are replicas of OP / ON in the clamp frames (net dabp / dabn), RP2 / RN2 of ABP / ABN;
+*     RPD is the P frame's dummy next to RP1: gate on vddo (off), drain on dabp.
+XRP1 dabp dabp vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
+XRPD dabp vddo vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
+XRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XRN1 dabn dabn vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2
+XRN2 vabn vabn dabn vss sg13_hv_nmos w=4.4u l=1u ng=1
 * --- disable switches: output gates to their own rails, class-AB lines off
 XSA a en_3v3 vddo vddo sg13_hv_pmos w=1u l=0.45u ng=1
 XSB b en_3v3_b vsso vsso sg13_hv_nmos w=1u l=0.45u ng=1

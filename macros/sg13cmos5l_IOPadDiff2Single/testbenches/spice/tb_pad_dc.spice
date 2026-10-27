@@ -14,8 +14,8 @@
 .include ../../netlist/source/units.spice
 .include ../../netlist/source/ccomp.spice
 .include ../../netlist/source/d2s_mpdda_pd.spice
-.include ../../netlist/source/d2s_bias_ref_pd.spice
-.include ../../../d2s_bias_sel_pd/netlist/source/d2s_bias_sel_pd.spice
+.include ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice
+.include ../../../bias_sel_pd/netlist/source/bias_sel_pd.spice
 .include ../../netlist/source/sg13cmos5l_IOPadDiff2Single.spice
 * sg13cmos5l_io.spice is on the sourcepath of the PDK .spiceinit
 .include sg13cmos5l_io.spice

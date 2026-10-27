@@ -30,6 +30,8 @@ moduleNames = [
     'Clamp_P_code',   # PMOS clamp pad -> iovdd
     'Clamp_N_M1_code',  # same, M1 only, no gate tie-off, gate length l
     'Clamp_P_M1_code',
+    'Clamp_N_M1_wiring_code',  # wiring-only cells on top of a wiring = external M1 clamp
+    'Clamp_P_M1_wiring_code',
     'DCNDiode_code',    # DC diodes of the IHP pads, diode length l
     'DCPDiode_code',
 ]

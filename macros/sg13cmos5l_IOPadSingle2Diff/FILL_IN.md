@@ -24,10 +24,10 @@ list are done; how the scaffold was adapted where it conflicted with the design 
 
 ## Still open
 
-1. **Bias sharing.** `xb` = `d2s_bias_sel_pd` makes all six of the driver's lines; the buffer uses
+1. **Bias sharing.** `xb` = `bias_sel_pd` makes all six of the driver's lines; the buffer uses
    four. The class-AB legs (NABP, PABN, about 10 µA with their diodes) run for nothing here. Options:
    an `s2d` variant of the tree without them, or one root per slot with a fan-out leg per consumer
-   into `_out` trees (`d2s_bias_out_pd`, `s2d_bias_out_pd`), as `s2d_input_buffer.md` section III
+   into `_out` trees (`bias_out_pd`, `s2d_bias_out_pd`), as `s2d_input_buffer.md` section III
    proposes and `testbenches/spice/tb_s2d_loopback.spice` simulates.
 2. **Internal common mode** 1.2 V for both buffers (`s2d_input_buffer.md` section IV and open point 1):
    the output pad's CACE suite still uses vref = vicm = 1.65 V; and where vcm comes from (the vcm pin,
@@ -36,7 +36,7 @@ list are done; how the scaffold was adapted where it conflicted with the design 
    internal ~0.5 V reference so that the pad range includes iovss.
 4. **Offset**: whether 6–7 mV σ is enough, or the fold sinks SX / SY get 4× the area (open point 4).
 5. **Enable glitch** (open point 5): the design saw −1.6 / +1.1 V of output common mode for about
-   1 µs with its `s2d_bias_out_pd` tree; in this pad (en_ctrl_3v3 + d2s_bias_sel_pd) see
+   1 µs with its `s2d_bias_out_pd` tree; in this pad (en_ctrl_3v3 + bias_sel_pd) see
    `enable_params`.
 6. **CMFB dump branch, built-in output capacitors** (open points 7, 8 of the design note).
 7. **Sheets**: `s2d_mpdda_pd.sch` and `s2d_mpdda_pd_sel.sch` are generator-placed (2026-10-25) and may

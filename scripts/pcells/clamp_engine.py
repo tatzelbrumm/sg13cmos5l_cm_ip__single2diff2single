@@ -23,6 +23,9 @@
 # The section at the end (generate_m1) builds the M1-only variants Clamp_N_M1 /
 # Clamp_P_M1 from the same array rules: no M2/M3, no tie block, variable gate
 # length, guard rings that wrap the array or form the fixed 80 um frame.
+# generate_m1(..., wiring='external') draws every finger alike and leaves the gate bus and
+# the gate / pad names to a wiring-only cell on top (generate_m1_wiring), which decides per
+# gate whether it is an output finger, a diode-connected replica or a dummy (2026-10-27).
 #
 # Shapes are tuples  (layer, purpose, kind, data)
 #   kind 'box'  : data = (x1, y1, x2, y2)
@@ -408,11 +411,34 @@ def _cont_row(a0, a1):
     return [start + k * CONT_PITCH for k in range(n)]
 
 
-def generate_m1(family, ng, l, width=None):
+def _m1_frame(family, ng, l, width):
+    """Array origin x0 and cell width W of an M1-only clamp (checks ng, l, width)."""
+    if ng < 1:
+        raise ClampError('ng must be >= 1')
+    if l % GRID:
+        raise ClampError('l = %d nm is not on the %d nm grid' % (l, GRID))
+    n = array_extent(ng, l, 0)[1]
+    if width is None:
+        return ARRAY_X0, n + 2 * ARRAY_X0
+    x0 = (width - n) // (2 * GRID) * GRID
+    if x0 < ARRAY_X0:
+        raise ClampError('ng = %d, l = %d nm: array (%.2f um) does not fit in the %.0f um frame'
+                         % (ng, l, n / 1e3, width / 1e3))
+    return x0, width
+
+
+def generate_m1(family, ng, l, width=None, wiring='internal'):
     """Complete M1-only clamp: (shapes, texts). l = gate length in nm.
     width = None: rings wrap the array; else fixed cell width in nm (80000 as IHP),
-    array centred (on the 5 nm grid)."""
+    array centred (on the 5 nm grid).
+    wiring = 'internal': one gate bus over all gates, pins / labels 'gate' and 'pad' (as before).
+    wiring = 'external': every finger alike; each gate strip runs up to the top of the bus row
+    (so that bus segments drawn on top merge with it exactly as the internal bus does), no bus,
+    no 'gate' / 'pad' pins or labels. The rings keep theirs. See generate_m1_wiring()."""
     f = FAMILY[family]
+    if wiring not in ('internal', 'external'):
+        raise ClampError("wiring must be 'internal' or 'external'")
+    ext = wiring == 'external'
     if ng < 1:
         raise ClampError('ng must be >= 1')
     if l % GRID:
@@ -450,9 +476,10 @@ def generate_m1(family, ng, l, width=None):
     for xc in src:                        # down into the inner ring
         _box(s, 'Metal1', 'drawing', xc - 105, RING_IN, xc + 105, sd_y1)
     for xc in drn:
-        for purpose in ('drawing', 'pin'):
+        for purpose in (('drawing',) if ext else ('drawing', 'pin')):
             _box(s, 'Metal1', purpose, xc - 310, sd_y0, xc + 310, sd_y1)
-        t.append(('Metal1', 'text', 'pad', xc, f['pad_label_y'], 0, 'center', 'center', 'R0'))
+        if not ext:
+            t.append(('Metal1', 'text', 'pad', xc, f['pad_label_y'], 0, 'center', 'center', 'R0'))
 
     g = gate_lefts(ng, l, x0)
     # Gate heads get as many contact columns side by side as fit inside the poly with the
@@ -466,13 +493,14 @@ def generate_m1(family, ng, l, width=None):
         for y in f['gate_cont']:
             for x in xs:
                 _box(s, 'Cont', 'drawing', x, y, x + CONT, y + CONT)
-        _box(s, 'Metal1', 'drawing', xs[0], f['gate_m1'][0], xs[-1] + CONT, f['gate_m1'][1])
-    xs0 = _cont_row(g[0] + GATE_ENC, g[0] + l - GATE_ENC)
-    bx0, bx1 = xs0[0], g[-1] + (xs0[-1] - g[0]) + CONT
-    by0, by1 = f['bus']
-    for purpose in ('drawing', 'pin'):
-        _box(s, 'Metal1', purpose, bx0, by0, bx1, by1)
-    t.append(('Metal1', 'text', 'gate', (bx0 + bx1) // 2 // GRID * GRID, (by0 + by1) // 2, 0, 'center', 'center', 'R0'))
+        _box(s, 'Metal1', 'drawing', xs[0], f['gate_m1'][0], xs[-1] + CONT, f['bus'][1] if ext else f['gate_m1'][1])
+    if not ext:
+        xs0 = _cont_row(g[0] + GATE_ENC, g[0] + l - GATE_ENC)
+        bx0, bx1 = xs0[0], g[-1] + (xs0[-1] - g[0]) + CONT
+        by0, by1 = f['bus']
+        for purpose in ('drawing', 'pin'):
+            _box(s, 'Metal1', purpose, bx0, by0, bx1, by1)
+        t.append(('Metal1', 'text', 'gate', (bx0 + bx1) // 2 // GRID * GRID, (by0 + by1) // 2, 0, 'center', 'center', 'R0'))
 
     # guard rings
     for inset, net, extra in RINGS[family]:
@@ -497,6 +525,138 @@ def generate_m1(family, ng, l, width=None):
                       0, 'center', 'center', 'R0'))
         if 'Substrate' in [e[0] for e in extra]:
             t.append(('TEXT', 'drawing', 'sub!', X0 + 170, Y0 + 170, 0, None, None, 'R0'))
+    return s, t
+
+
+# ----------------------------------------------------------------------------------
+# Wiring-only cell for an M1-only clamp drawn with wiring='external' (2026-10-27).
+#
+# Placed at the same origin as the clamp, it decides per gate (index 0 = leftmost):
+#   'out'   (default) output finger: its gate strip is joined by a gate bus segment
+#           (pin + label gate_net); every maximal run of output gates gets one segment, so
+#           with no other roles the cell plus the clamp equal wiring='internal' exactly.
+#   'rep'   diode-connected replica: an M1 jumper joins the gate strip to the drain it
+#           shares (gate i sits next to drain i // 2); that drain gets pin + label rep_net.
+#   'dummy' an M1 jumper joins the gate strip to its other neighbour, a source (on the
+#           inner ring, i.e. the rail): gate = source, the finger stays off.
+# A drain whose gates are output and replica would short pad and rep_net: refused.
+# Drains of output (or output + dummy) gates get pin + label pad_net, as in 'internal'.
+# Jumpers sit in the top 0.30 um of the source / drain M1 strips, 0.33 um or more below
+# the bus row, and only between a gate strip and its own neighbour strip.
+# The bus segments are fed separately (each from its own end of the array); joining
+# them across a replica would cross whatever leaves the replica drain upwards.
+# ----------------------------------------------------------------------------------
+JUMPER_H = 300
+
+
+def parse_roles(roles):
+    """'21:rep 22:dummy' (or a dict {21: 'rep', 22: 'dummy'}) -> dict {int: role}."""
+    if roles is None or roles == '':
+        return {}
+    if isinstance(roles, dict):
+        items = roles.items()
+    else:
+        items = []
+        for tok in str(roles).replace(',', ' ').split():
+            i, _, r = tok.partition(':')
+            items.append((i, r))
+    out = {}
+    for i, r in items:
+        try:
+            i = int(i)
+        except ValueError:
+            raise ClampError('roles: gate index %r is not an integer' % (i,))
+        if r not in ('out', 'rep', 'dummy'):
+            raise ClampError("roles: %r is not 'out', 'rep' or 'dummy'" % (r,))
+        out[i] = r
+    return out
+
+
+def centre_roles(family, ng, l, width=None, mode='single'):
+    """Roles for a replica at the array centre.
+    'pair'  : both gates of the drain column nearest the centre (S-G-D-G-S), no dummy.
+    'single': the gate nearest the centre; the other gate of its drain becomes a dummy
+              (none if that drain is the 0.74 um end drain of an odd ng)."""
+    x0, _ = _m1_frame(family, ng, l, width)
+    xa0, xa1 = array_extent(ng, l, x0)
+    g = gate_lefts(ng, l, x0)
+    _, drn = columns(ng, l, x0)
+    xm2 = xa0 + xa1
+    gates = lambda k: [i for i in (2 * k, 2 * k + 1) if i < ng]
+    if mode == 'pair':
+        ks = [k for k in range(len(drn)) if len(gates(k)) == 2]
+        if not ks:
+            raise ClampError('ng = %d: no drain column with two gates' % ng)
+        k = min(ks, key=lambda k: (abs(2 * drn[k] - xm2), k))
+        return {i: 'rep' for i in gates(k)}
+    if mode != 'single':
+        raise ClampError("mode must be 'pair' or 'single'")
+    i = min(range(ng), key=lambda i: (abs(2 * g[i] + l - xm2), i))
+    r = {i: 'rep'}
+    for j in gates(i // 2):
+        if j != i:
+            r[j] = 'dummy'
+    return r
+
+
+def generate_m1_wiring(family, ng, l, width=None, roles=None, gate_net='gate', rep_net='rep', pad_net='pad'):
+    """Metal1 wiring for generate_m1(family, ng, l, width, wiring='external'): (shapes, texts)."""
+    f = FAMILY[family]
+    x0, W = _m1_frame(family, ng, l, width)
+    role = parse_roles(roles)
+    for i in role:
+        if not 0 <= i < ng:
+            raise ClampError('roles: gate %d does not exist (0 .. %d)' % (i, ng - 1))
+    rl = [role.get(i, 'out') for i in range(ng)]
+    if 'out' not in rl:
+        raise ClampError('no output gate left')
+    src, drn = columns(ng, l, x0)
+    g = gate_lefts(ng, l, x0)
+    sd_y0, sd_y1 = f['sd_m1_rows'][0][0], f['sd_m1_rows'][-1][1]
+    by0, by1 = f['bus']
+    strip = []
+    for gl in g:
+        xs = _cont_row(gl + GATE_ENC, gl + l - GATE_ENC)
+        strip.append((xs[0], xs[-1] + CONT))
+    s, t = [], []
+    # drains: which gates sit at drain k (gate 2k left of it, 2k + 1 right of it)
+    for k, xc in enumerate(drn):
+        gk = [rl[i] for i in (2 * k, 2 * k + 1) if i < ng]
+        if 'rep' in gk and 'out' in gk:
+            raise ClampError('drain %d: output gate and replica gate share it' % k)
+        net = rep_net if 'rep' in gk else pad_net
+        _box(s, 'Metal1', 'pin', xc - 310, sd_y0, xc + 310, sd_y1)
+        t.append(('Metal1', 'text', net, xc, f['pad_label_y'], 0, 'center', 'center', 'R0'))
+    # source neighbour of a gate: gate 2k has source k on its left, gate 2k + 1 source k + 1 on its right
+    for i, r in enumerate(rl):
+        k = i // 2
+        ya, yb = sd_y1 - JUMPER_H, sd_y1
+        if r == 'rep':                                  # gate strip <-> its drain
+            xd = drn[k]
+            if i % 2 == 0:
+                _box(s, 'Metal1', 'drawing', strip[i][0], ya, xd + 310, yb)
+            else:
+                _box(s, 'Metal1', 'drawing', xd - 310, ya, strip[i][1], yb)
+        elif r == 'dummy':                              # gate strip <-> its source (the rail)
+            xsrc = src[k] if i % 2 == 0 else src[k + 1]
+            if i % 2 == 0:
+                _box(s, 'Metal1', 'drawing', xsrc - 105, ya, strip[i][1], yb)
+            else:
+                _box(s, 'Metal1', 'drawing', strip[i][0], ya, xsrc + 105, yb)
+    # gate bus: one segment per maximal run of output gates
+    i = 0
+    while i < ng:
+        if rl[i] != 'out':
+            i += 1
+            continue
+        j = i
+        while j + 1 < ng and rl[j + 1] == 'out':
+            j += 1
+        bx0, bx1 = strip[i][0], strip[j][1]
+        for purpose in ('drawing', 'pin'):
+            _box(s, 'Metal1', purpose, bx0, by0, bx1, by1)
+        t.append(('Metal1', 'text', gate_net, (bx0 + bx1) // 2 // GRID * GRID, (by0 + by1) // 2, 0, 'center', 'center', 'R0'))
+        i = j + 1
     return s, t
 
 

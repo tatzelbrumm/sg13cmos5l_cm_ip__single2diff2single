@@ -1,4 +1,4 @@
-* tb_pd_unpowered: d2s_mpdda_pd + d2s_bias_in_pd unpowered, pad driven 0 -> 5 V in 10 ns through 1.5 kOhm, tt 27 C
+* tb_pd_unpowered: d2s_mpdda_pd + bias_in_pd unpowered, pad driven 0 -> 5 V in 10 ns through 1.5 kOhm, tt 27 C
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
 * Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
@@ -15,7 +15,7 @@
 .include ../../netlist/source/units.spice
 .include ../../netlist/source/ccomp.spice
 .include ../../netlist/source/d2s_mpdda_pd.spice
-.include ../../netlist/source/d2s_bias_ref_pd.spice
+.include ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice
 Rvdd vdd 0 1g
 Cvdd vdd 0 1n
 Vtie vdd vddo 0
@@ -26,7 +26,7 @@ Rext vext 0 1g
 Iext xg 0 5u
 XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
 XEm iref xg vext vext sg13_hv_pmos w=5u l=6u
-Xb vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en d2s_bias_in_pd
+Xb vdd vss iref vbp vbn vbpc vbnc vabp vabn en bias_in_pd
 Vcm vref 0 0
 Vp vinp vref 0
 Vn vinn vref 0

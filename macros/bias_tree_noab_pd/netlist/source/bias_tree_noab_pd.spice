@@ -1,0 +1,15 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias_tree_noab_pd: bias_tree_pd without the class-AB branches NABP / PABN (2026-10-27), for the s2d pad, whose
+* buffer uses vbp vbn vbpc vbnc only. Uses bias_diodes of ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice.
+.subckt bias_tree_noab_pd vdd vss iref vbp vbn vbpc vbnc en_3v3 en_3v3_b
+XTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+XNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBP vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBPC vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+XPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+Xd vdd vss vbp vbn vbpc vbnc bias_diodes
+.ends bias_tree_noab_pd

@@ -1,4 +1,4 @@
-* tb_pd_startup_oa: d2s_mpdda_pd + d2s_bias_oa_pd (self-contained), supplies steady, en_3v3 0 -> 3.3 V at 1 us, tt 27 C
+* tb_pd_startup_oa: d2s_mpdda_pd + bias_oa_pd (self-contained), supplies steady, en_3v3 0 -> 3.3 V at 1 us, tt 27 C
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
 * Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
@@ -14,13 +14,13 @@
 .include ../../netlist/source/units.spice
 .include ../../netlist/source/ccomp.spice
 .include ../../netlist/source/d2s_mpdda_pd.spice
-.include ../../netlist/source/d2s_bias_ref_pd.spice
+.include ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice
 Vvdd vdd 0 3.3
 Vvss vss 0 0
 Vvddo vddo 0 3.3
 Vvsso vsso 0 0
 Ven en 0 pwl(0 0 1u 0 1.01u 3.3)
-Xb vdd vss vddo vsso vbp vbn vbpc vbnc vabp vabn en d2s_bias_oa_pd
+Xb vdd vss vbp vbn vbpc vbnc vabp vabn en bias_oa_pd
 Vcm vref 0 1.65
 Vp vinp vref 0
 Vn vinn vref 0

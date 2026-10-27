@@ -1,0 +1,47 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias_dist_pd: switchable distribution mirror (2026-10-27). Sourced reference currents into iin0..2 (e.g.
+* bias_gen_pd's iref, the harness ibias, a second generator); every input with en_in<k> = 1 is passed by its
+* transmission gate TIN / TIP into the NMOS diode NI, so enabled inputs add. NM copies the sum into the PMOS diode
+* PD; the four PMOS outputs PO0..3 source it (1 : 1) through their transmission gates TON / TOP into iout0..3,
+* each enabled by en_out<j>. iout<j> goes into a bias_tree_pd (NMOS input diode behind its own TG).
+* en_3v3 = 0: every TG open, TDN pulls ni to vss, SVPD pulls vpd to vdd. Gates: hv_logic (nand2_hv, inv_hv).
+.subckt bias_dist_pd vdd vss en_3v3 en_3v3_b iin0 iin1 iin2 en_in0 en_in1 en_in2 iout0 iout1 iout2 iout3 en_out0 en_out1 en_out2 en_out3
+XIA0 vdd vss en_3v3 en_in0 ei0_b nand2_hv
+XIB0 vdd vss ei0_b ei0 inv_hv
+XTIN0 iin0 ei0 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTIP0 iin0 ei0_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIA1 vdd vss en_3v3 en_in1 ei1_b nand2_hv
+XIB1 vdd vss ei1_b ei1 inv_hv
+XTIN1 iin1 ei1 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTIP1 iin1 ei1_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIA2 vdd vss en_3v3 en_in2 ei2_b nand2_hv
+XIB2 vdd vss ei2_b ei2 inv_hv
+XTIN2 iin2 ei2 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTIP2 iin2 ei2_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+XNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNM vpd ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+XPD vpd vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XSVPD vpd en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XOA0 vdd vss en_3v3 en_out0 eo0_b nand2_hv
+XOB0 vdd vss eo0_b eo0 inv_hv
+XPO0 po0 vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XTON0 po0 eo0 iout0 vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTOP0 po0 eo0_b iout0 vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XOA1 vdd vss en_3v3 en_out1 eo1_b nand2_hv
+XOB1 vdd vss eo1_b eo1 inv_hv
+XPO1 po1 vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XTON1 po1 eo1 iout1 vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTOP1 po1 eo1_b iout1 vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XOA2 vdd vss en_3v3 en_out2 eo2_b nand2_hv
+XOB2 vdd vss eo2_b eo2 inv_hv
+XPO2 po2 vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XTON2 po2 eo2 iout2 vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTOP2 po2 eo2_b iout2 vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XOA3 vdd vss en_3v3 en_out3 eo3_b nand2_hv
+XOB3 vdd vss eo3_b eo3 inv_hv
+XPO3 po3 vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XTON3 po3 eo3 iout3 vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTOP3 po3 eo3_b iout3 vdd sg13_hv_pmos w=1u l=0.45u ng=1
+.ends bias_dist_pd

@@ -2,9 +2,9 @@
 * SPDX-License-Identifier: Apache-2.0
 * en_ctrl_3v3: fail-safe enable and select bits for the 3.3 V pad circuits.
 *   en_3v3   = en_1v2 AND (vdd1v2_sense present) AND (vdd3v3_sense present)
-*   sel*_3v3 = level-shifted sel*_1v2 (gated by en_3v3 in d2s_bias_sel_pd)
+*   sel*_3v3 = level-shifted sel*_1v2 (gated by en_3v3 in bias_sel_pd)
 *   en_3v3_b = NOT en_3v3 (XIB), for the NMOS enable switches of d2s_mpdda_pd and the bias tree
-*              of d2s_bias_sel_pd (both had their own inverter before)
+*              of bias_sel_pd (both had their own inverter before)
 * Ports: vddh (3.3 V: iovdd in the pad, vdd_3v3 in the slot fallback), vddl (1.2 V for the input
 * inverters of ls_up: the core ring vdd in the pad, vdd_1v2 in the fallback), vss.
 * pg_det needs no vddl: an hv NMOS with its gate on the sensed supply against a weak hv PMOS pull-up.

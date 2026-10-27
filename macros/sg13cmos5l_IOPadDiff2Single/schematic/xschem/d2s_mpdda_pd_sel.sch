@@ -8,7 +8,6 @@ E {}
 T {d2s_mpdda_pd_sel: CACE fixture for the loop gain of sg13cmos5l_IOPadDiff2Single (driver + selectable bias, 3.3 V controls, vfb as a pin).} 0 -660 0 0 0.35 0.35 {}
 T {Not a layout cell. In the pad, vfb = vout = pad and the controls come from en_ctrl_3v3.} 0 -620 0 0 0.25 0.25 {}
 N 200 -140 200 -120 {lab=vss}
-N 240 -140 240 -100 {lab=vsso}
 N 100 -120 200 -120 {lab=vss}
 N 100 -100 240 -100 {lab=vsso}
 N 100 -180 160 -180 {lab=sel1_3v3}
@@ -41,7 +40,6 @@ N 100 -420 420 -420 {lab=vinn}
 N 100 -380 420 -380 {lab=vref}
 N 220 -540 220 -320 {lab=vdd}
 N 100 -540 220 -540 {lab=vdd}
-N 260 -560 260 -320 {lab=vddo}
 N 100 -560 260 -560 {lab=vddo}
 N 140 -480 140 -240 {lab=en_3v3}
 N 100 -480 140 -480 {lab=en_3v3}
@@ -65,11 +63,9 @@ C {devices/ipin.sym} 100 -480 0 0 {name=p11 lab=en_3v3}
 C {devices/ipin.sym} 100 -200 0 0 {name=p12 lab=sel0_3v3}
 C {devices/ipin.sym} 100 -180 0 0 {name=p13 lab=sel1_3v3}
 C {devices/ipin.sym} 100 -460 0 0 {name=p14 lab=en_3v3_b}
-C {d2s_bias_sel_pd.sym} 250 -230 0 0 {name=xb}
+C {bias_sel_pd.sym} 250 -230 0 0 {name=xb}
 C {devices/lab_pin.sym} 220 -320 0 0 {name=l0 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 200 -140 0 0 {name=l1 sig_type=std_logic lab=vss}
-C {devices/lab_pin.sym} 260 -320 0 1 {name=l2 sig_type=std_logic lab=vddo}
-C {devices/lab_pin.sym} 240 -140 0 1 {name=l3 sig_type=std_logic lab=vsso}
 C {devices/lab_pin.sym} 540 -280 0 1 {name=l5 sig_type=std_logic lab=vbp}
 C {devices/lab_pin.sym} 660 -180 0 1 {name=l6 sig_type=std_logic lab=vbn}
 C {devices/lab_pin.sym} 560 -260 0 1 {name=l7 sig_type=std_logic lab=vbpc}

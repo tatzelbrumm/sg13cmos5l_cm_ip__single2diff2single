@@ -14,8 +14,8 @@ selectable bias, a fail-safe enable and a CACE suite whose output follows
 | instance | cell (macro) | function |
 |---|---|---|
 | `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` = NOT `en_3v3` for `xb` and `xd` |
-| `xb` | `d2s_bias_sel_pd` (`../d2s_bias_sel_pd`) | six bias lines from one mirror tree; reference selected by `sel1 sel0` |
-| `xd` | `d2s_mpdda_pd` (here) | Miller-compensated class-AB driver (MP-DDA front end), power-down switches |
+| `xb` | `bias_sel_pd` (`../bias_sel_pd`) | six bias lines from one mirror tree; reference selected by `sel1 sel0` |
+| `xd` | `d2s_mpdda_pd` (here) | Miller-compensated class-AB driver (MP-DDA front end), power-down switches; since 2026-10-27 also the class-AB diode stacks RP1 + RP2 / RN1 + RN2 and the P frame's dummy RPD (block [8]), formerly in the bias tree |
 | `DN`, `DP` | IHP `sg13cmos5l_DCNDiode` / `DCPDiode` | primary ESD diodes, as in `sg13cmos5l_IOPadAnalog` |
 
 `schematic/xschem/sg13cmos5l_IOPadDiff2Single.sch` (drawn from `netlist/source/sg13cmos5l_IOPadDiff2Single.spice`),
@@ -23,7 +23,7 @@ selectable bias, a fail-safe enable and a CACE suite whose output follows
 and `d2s_mpdda_pd_sel.sch`, a CACE-only fixture (driver + bias with `vfb` as a pin, for the loop gain).
 
 **Enable complement (2026-10-25).** `en_3v3_b` is made once, by `XIB` (`inv_hv`) in `en_ctrl_3v3`, and goes to
-`d2s_bias_sel_pd` and `d2s_mpdda_pd` as a port; their own inverters (`Xi` = `inv_3v3_pd`, `XIP` / `XIN`) are gone.
+`bias_sel_pd` and `d2s_mpdda_pd` as a port; their own inverters (`Xi` = `inv_3v3_pd`, `XIP` / `XIN`) are gone.
 In `d2s_mpdda_pd.sch` the PMOS switches SA, SABP hang from the top rails with their gates on an `en_3v3` line, the
 NMOS switches SB, SABN from the bottom rails on an `en_3v3_b` line, all wired from the pins. The fixture
 `d2s_mpdda_pd_sel` has `en_3v3_b` as a pin (its template ties it to 0); `tb_pd_*` (sheets and decks) carry the
@@ -45,10 +45,10 @@ identical; leak, startup_oa within 5 ppm).
 
 **Bias selection** `sel1 sel0`: 00 harness `ibias` (through a TG), 01 Oguey–Aebischer core, 10 bandgap
 core, 11 both cores (currents add: I_Q doubles). The harness sources current, so the `_in` topology
-(NMOS input diode) is used; `d2s_bias_out_pd` is kept as a reference macro only.
+(NMOS input diode) is used; `bias_out_pd` is kept as a reference macro only.
 
 **Power down.** `en_3v3` is low, and every current root is off (power-down switches of
-`d2s_mpdda_pd` and `d2s_bias_sel_pd`), whenever
+`d2s_mpdda_pd` and `bias_sel_pd`), whenever
 - `en_1v2` is low, or
 - the slot's `vdd_1v2` is gated off (the presence detector needs no 1.2 V supply, so it also works with
   the `ls_up` latches undefined), or

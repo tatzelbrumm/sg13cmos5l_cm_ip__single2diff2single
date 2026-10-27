@@ -6,8 +6,8 @@ S {}
 F {}
 E {}
 T {en_ctrl_3v3: fail-safe enable and select bits for the 3.3 V pad circuits} 20 -832 0 0 0.4 0.4 {}
-T {en_3v3 = en_1v2 AND vdd_1v2 present AND vdd_3v3 present; sel*_3v3 = sel*_1v2 level-shifted (gated by en_3v3 in d2s_bias_sel_pd).} 50 -792 0 0 0.25 0.25 {}
-T {en_3v3_b = NOT en_3v3 (XIB): the complement for the NMOS enable switches of d2s_mpdda_pd and for the bias tree of d2s_bias_sel_pd.} 50 -770 0 0 0.25 0.25 {}
+T {en_3v3 = en_1v2 AND vdd_1v2 present AND vdd_3v3 present; sel*_3v3 = sel*_1v2 level-shifted (gated by en_3v3 in bias_sel_pd).} 50 -792 0 0 0.25 0.25 {}
+T {en_3v3_b = NOT en_3v3 (XIB): the complement for the NMOS enable switches of d2s_mpdda_pd and for the bias tree of bias_sel_pd.} 50 -770 0 0 0.25 0.25 {}
 T {vddh: iovdd in the pad (vdd_3v3 in the slot fallback). vddl: input inverters of ls_up, the 1.2 V core ring vdd in the pad (vdd_1v2 in the fallback).} 50 -748 0 0 0.25 0.25 {}
 T {With vddl = 0 the ls_up latches are undefined: pg_det of vdd_1v2 forces en_3v3 low. ls_up_1v2_3v3 can be replaced by IHP sg13cmos5l_LevelUp (same topology).} 50 -726 0 0 0.25 0.25 {}
 T {Source: netlist/source/en_ctrl_3v3.spice} 50 -704 0 0 0.25 0.25 {}

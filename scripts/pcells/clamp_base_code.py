@@ -8,7 +8,9 @@
 # (compare sg13cmos5l_pycell_lib/ihp/rfmosfet_base_code.py).
 #
 # clamp_base     -> Clamp_N, Clamp_P        (IHP cells, parameters ng, tie)
-# clamp_m1_base  -> Clamp_N_M1, Clamp_P_M1  (M1 only, no tie block, parameters ng, l, frame)
+# clamp_m1_base  -> Clamp_N_M1, Clamp_P_M1  (M1 only, no tie block, parameters ng, l, frame, wiring)
+# clamp_m1_wiring_base -> Clamp_N_M1_wiring, Clamp_P_M1_wiring (Metal1 wiring on top of a
+#                  wiring = external clamp: gate bus segments, replica / dummy jumpers, names)
 # dcdiode_base   -> DCNDiode, DCPDiode       (IHP's DC diodes, parameter l = diode length)
 #
 ########################################################################
@@ -19,7 +21,7 @@ from cni.dlo import *
 from sg13cmos5l_pycell_lib.ihp.geometry import *
 from sg13cmos5l_pycell_lib.ihp.utility_functions import *
 
-from .clamp_engine import FAMILY, generate, generate_m1, generate_diode, cell_name, ClampError
+from .clamp_engine import FAMILY, generate, generate_m1, generate_m1_wiring, generate_diode, cell_name, ClampError
 from .clamp_refdata import REFDATA
 
 _ALIGN = {
@@ -108,18 +110,22 @@ class clamp_m1_base(clamp_base):
         specs('frame', 'fit', "Guard rings: fit = wrap the array, 80u = IHP's fixed 80 um frame, array centred",
               ChoiceConstraint(['fit', '80u']))
         specs('Lmin', techparams[cls.MIN_L[cls.FAMILY]], 'Lmin')
+        specs('wiring', 'internal', "internal = one gate bus, pins gate / pad; external = all fingers alike, "
+              "no bus, no gate / pad names: wire with Clamp_*_M1_wiring", ChoiceConstraint(['internal', 'external']))
 
     def setupParams(self, params):
         self.ng = int(params['ng'])
         self.l = int(round(Numeric(params['l']) * 1e9))        # nm
         self.lmin = int(round(Numeric(params['Lmin']) * 1e9))
         self.frame = params['frame']
+        self.wiring = params['wiring'] if 'wiring' in params else 'internal'
 
     def genLayout(self):
         try:
             if self.l < self.lmin:
                 raise ClampError('l = %d nm < Lmin = %d nm' % (self.l, self.lmin))
-            shapes, texts = generate_m1(self.FAMILY, self.ng, self.l, 80000 if self.frame == '80u' else None)
+            shapes, texts = generate_m1(self.FAMILY, self.ng, self.l, 80000 if self.frame == '80u' else None,
+                                        self.wiring)
         except ClampError as e:
             raise Exception('%s: %s' % (self.__class__.__name__, e))
 
@@ -128,7 +134,50 @@ class clamp_m1_base(clamp_base):
         dbReplaceProp(self, 'instNamePrefix', 'X')
         dbReplaceProp(self, 'function', 'esd')
         dbReplaceProp(self, 'pcellVersion', '$Revision: 1.0 $')
-        dbReplaceProp(self, 'pin#', 3 if self.FAMILY == 'N' else 4)   # gate pad iovss [iovdd]
+        if self.wiring == 'external':
+            dbReplaceProp(self, 'pin#', 1 if self.FAMILY == 'N' else 2)   # iovss [iovdd]
+        else:
+            dbReplaceProp(self, 'pin#', 3 if self.FAMILY == 'N' else 4)   # gate pad iovss [iovdd]
+        dbReplaceProp(self, 'cellName', self.__class__.__name__)
+        self.draw(shapes, texts)
+
+
+class clamp_m1_wiring_base(clamp_base):
+    """Metal1 wiring for a Clamp_N_M1 / Clamp_P_M1 with wiring = external, placed at the same
+    origin with the same ng, l and frame. roles: 'i:rep j:dummy ...' (gate index from the left,
+    0-based; every other gate is an output finger)."""
+
+    @classmethod
+    def defineParamSpecs(cls, specs):
+        techparams = specs.tech.getTechParams()
+        specs('cdf_version', techparams['CDFVersion'], 'CDF Version')
+        specs('Display', 'Selected', 'Display', ChoiceConstraint(['All', 'Selected']))
+        specs('ng', cls.DEF_NG, 'Number of gate fingers (as the clamp)')
+        specs('l', '0.6u', 'Gate length (as the clamp)')
+        specs('frame', 'fit', 'Guard rings (as the clamp)', ChoiceConstraint(['fit', '80u']))
+        specs('roles', '', "Gate roles, e.g. '21:rep 20:dummy' (others are outputs)")
+        specs('gate_net', 'gate', 'Name of the output gate bus segments')
+        specs('rep_net', 'rep', 'Name of the replica gate / drain')
+        specs('pad_net', 'pad', 'Name of the output drains')
+
+    def setupParams(self, params):
+        self.ng = int(params['ng'])
+        self.l = int(round(Numeric(params['l']) * 1e9))        # nm
+        self.frame = params['frame']
+        self.roles = params['roles']
+        self.gate_net = params['gate_net']
+        self.rep_net = params['rep_net']
+        self.pad_net = params['pad_net']
+
+    def genLayout(self):
+        try:
+            shapes, texts = generate_m1_wiring(self.FAMILY, self.ng, self.l, 80000 if self.frame == '80u' else None,
+                                               self.roles, self.gate_net, self.rep_net, self.pad_net)
+        except ClampError as e:
+            raise Exception('%s: %s' % (self.__class__.__name__, e))
+        dbReplaceProp(self, 'ivCellType', 'graphic')
+        dbReplaceProp(self, 'viewSubType', 'maskLayoutParamCell')
+        dbReplaceProp(self, 'pcellVersion', '$Revision: 1.0 $')
         dbReplaceProp(self, 'cellName', self.__class__.__name__)
         self.draw(shapes, texts)
 

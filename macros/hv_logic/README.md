@@ -16,12 +16,12 @@ All devices are 1u / 0.45u sg13_hv (NOR stacks: 2u resp. 3u PMOS), the size of t
 | `nor2_hv` | y = not (a or b) | `vdd vss a b y` | 4 |
 | `nor3_hv` | y = not (a or b or c) | `vdd vss a b c y` | 6 |
 
-Used by `macros/en_ctrl_3v3` (inv_hv, nor3_hv) and `macros/d2s_bias_sel_pd` (decoder: nand2_hv, nor2_hv, inv_hv).
+Used by `macros/en_ctrl_3v3` (inv_hv, nor3_hv) and `macros/bias_sel_pd` (decoder: nand2_hv, nor2_hv, inv_hv).
 
 - `netlist/source/hv_logic.spice`: the source netlist.
 - `schematic/xschem/*.sch / *.sym`: one sheet per gate, PMOS above, NMOS below, nets by label; box symbols with the
   pins in subcircuit port order (inputs left, y right, vdd top, vss bottom).
 - Checked 2026-10-20 (cloud, xschem 3.4.8RC `ddc7344`): each sheet netlists to its source subcircuit, device by
   device (model, terminals, w / l / ng / m, port order), with no missing symbols.
-- No CACE suite: the gates are characterized as part of `en_ctrl_3v3` and `d2s_bias_sel_pd`. `make sim-cace` does nothing here.
+- No CACE suite: the gates are characterized as part of `en_ctrl_3v3` and `bias_sel_pd`. `make sim-cace` does nothing here.
 - No layout yet.
