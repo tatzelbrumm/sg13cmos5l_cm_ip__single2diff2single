@@ -409,3 +409,73 @@ Chat log: `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`, expo
   the RP1 drain, n2 from the RN1 drain with a jog to x 37.735 and through a gap in the junction bar, both to y 88.
   Checked: devices OP 546.12 / 0.6, RP1 and dummy 13.32 / 0.6, ON 154.0 + 145.2 / 1, RN1 8.8 / 1; nets pad / n1 / n2
   / gates / rails distinct; own Metal1 / Metal2, NWell, contact and via checks clean. Not run: IHP DRC deck, LVS.
+
+## 22:01–22:26: how IHP wires pad, iovss and iovdd in Metal2 over clamps and diodes; the band above DCNDiode; room for
+## the Miller capacitors; chat log recovered (Christoph, 22:01: "You ignored that the output metal2 lines are
+## interdigitated with the vddio and vssio wires to the supplies and BOTH the diodes. check with the existing IHP
+## IOPads how this is supposed to work out."; 22:03: "Also, it would be good to fit Miller capacitors in the space
+## between the protective structures. Maybe the guard on top (i.e., closer to the core) of the DCNDiode can be made
+## narrower yet. Figure out what this structure is good for, anyhow."; 22:11: "Figure out why the sources of the
+## output/clamp transistors connect to the diodes. Also figure out how to reproduce the function of the wide metal2
+## connections to the diode structures in the IHP standard IOPads."; 22:12: "Don't lose track of the chatlogs before
+## compaction happens.")
+
+- IHP `IOPadAnalog` (PDK GDS e6f0d64b…, flat extraction): 10 pad lines, 0.61 µm, on the clamp drain columns
+  (x 26.105 + k·3.02), straight from the pad bar (y 0–3, the only place with Via2 on the pad net) up to the core
+  pin; Via1 on the N clamp drains, the DCNDiode cathode stripes, the DCPDiode anode stripes and the P clamp drains.
+  Between them, on the source columns, 0.2 µm supply straps, split between the diodes: iovss from y 6 to 51.76 (Via1
+  on the N clamp sources, the DCNDiode anode bars and, one per strap, the bottom side of the DCPDiode guard ring;
+  Via2 only at y 6–15, above the N clamp), iovdd from 53.08 to 84.26 (Via1 on the DCPDiode cathode bars and the P
+  clamp sources; Via2 at y 64–85). Both clamps have l = 0.6 µm, so N and P drains share their x positions.
+  `IOPadInOut30mA` and `IOPadOut4mA` use the same split.
+- Rails (Metal3, Metal4 and TopMetal1, the same at x = 40 in IHP's cell and in ours): pad y 0–3, iovss 7–32.5 and
+  34.5–60, iovdd 66–91.5.
+- The wide Metal2 on the diodes. `IOPadAnalog` widens the leftmost strap to x 23.47–25.0 where it passes each diode
+  (y 17.56–27.82 and 53.08–63.34), over the diode frame's left side bar (x 23.47–24.73), with 36 Via1 each; the
+  right side bar (x 55.27–56.53) has none. `IOPadInOut30mA`: 5.3 µm wide (x 23.47–28.775), 117 Via1 each, over the
+  part of the diodes left of its narrower comb. `IOPadOut4mA` (2-finger clamps): an iovss plate (x 23.47–38.59) over
+  the left half of DCNDiode with Via1 on all its anode bars there (333), an iovdd plate (same x) over the left half
+  of DCPDiode on its cathode bars (333), and a pad plate (x 43.61–53.89, y 4–61.09) over the right half of both, on
+  their pad stripes (300). The common rule: where the comb does not cover a diode, Metal2 of the diode's supply net
+  (in Out4mA also of the pad) covers it, with Via1 on every bar of that net, merged with the straps.
+- Why clamp sources and diodes share the straps (reasoning, not an IHP statement): DCNDiode's anode is iovss like the
+  N clamp's sources, DCPDiode's cathode iovdd like the P clamp's sources; the diodes have no Via2 of their own and
+  return their current through the clamps' Via2 fields, 3–30 µm away. The interleaving crosses every diode stripe
+  with a pad line and a supply strap every 1.51 µm, so each diode works as many short segments in parallel, each with
+  its own vias on both terminals: uniform current along the stripes, and a series resistance set by vias and
+  parallel Metal2 rather than by Metal1 along the stripes. The wide pieces do the same for the diode parts outside
+  the comb. The iovss straps also tie the DCPDiode guard ring (a P+ isolator) from below.
+- Our pad (bb99b7d7…): N clamps at l = 1 µm (drain pitch 3.82 µm) against P at 0.6 µm (3.02 µm), so one straight comb
+  cannot serve both. The 19:13 rewiring (junction bar y 44–50) has no supply straps: nothing ties the clamp sources,
+  the DCNDiode anode or the DCPDiode cathode to a rail in Metal2. Since the strip of 14:44 the iovss plate is gone,
+  so the P clamp's outer ring and the DCPDiode guard ring it merges with have no tie either. The diode frames
+  (x 5.47–74.53) reach beyond both combs (drains x 9.44–70.56 N, 10.555–70.955 P).
+- Equal pitch: the engine gives identical drain and source x positions for N and P at equal ng and l (ng 43, l 0.6
+  µm: 22 drains, x 9.045–72.465). One N frame ng 43 at l = 0.6 µm: ON 41 fingers = 180.4 / 0.6 µm (W/L 300.7; today
+  299.2), RN1 one finger with a dummy, like RP1 in the P frame; N ratio 41 (today 68 / 2 = 34), P ratio 82 / 2 = 41.
+  Arithmetic only, the class-AB loop is not simulated with these values. It gives IHP's floorplan (one N frame,
+  DCNDiode at IHP's height) and IHP's comb as it is.
+- The n+ band above DCNDiode: y 29.14–33.0 (NWell 28.52–33.62) in IHP's cell, 38.7–42.56 (NWell 38.08–43.18) in ours,
+  3.86 µm in both, including DCNDiode's own guard ring (0.34 µm n+, NWell 0.62 µm beyond it; netlist pin `guard`,
+  iovdd). It is the top side of the N-well isolator around the n-channel side (layout rules §7.2.1: double guard
+  rings, N-Well isolator and P+ isolator, between n- and p-channel output buffers; the P+ isolators here are the p+
+  guard ring of DCPDiode and the outer ring of the P clamp, iovss). With Cont and Metal1 over its full width from cell
+  edge to cell edge, it is also the main horizontal path of the 6–61 ring through the cell; no supply reaches it
+  inside the cell, only along the ring from the IOPadIOVdd cells. Narrowed to DCNDiode's own guard ring: the rules
+  allow it, but it departs from IHP's 3.86 µm in every pad cell and makes the Metal1 of that path about eleven times
+  as resistive (3.86 → 0.34 µm).
+- Room for the capacitors, wells on other nets (NW.b1 1.8 µm to the band's NWell, NW.f 0.24 µm to the DCPDiode guard
+  ring at y 51.42, NW.c1 0.62 µm well enclosure; `d2s_cma` / `d2s_cmb` today: 16 × 16 µm gate, 0.34 µm source/drain
+  strips, ntap, 17.92 × 19.0 µm): band as is, gap 43.18–51.24, well 6.2 µm high, about 4.96 µm of gate width, one
+  capacitor about 52 µm long; band narrowed (NWell top 39.66), well 9.72 µm, about 8.48 µm of gate width, about 30
+  µm long each, both in separate wells, roughly 70 of 74.9 µm with ntap and gate contact at the ends; one N frame at
+  l = 0.6 µm (DCNDiode and band at IHP's heights), gap 33.62–51.24 as in IHP, well about 15.8 µm high, both
+  capacitors with the band unchanged. Not counted: routing `a` (CMA gate) and `b` (CMB well) out of the gap.
+- Corrections to the first version of this entry (22:06): the band is 3.86 µm, not 3.52; "§7.2.1 item 4" had no
+  source for the item number; in IHP's cells the P clamp's outer ring is tied by the plate it abuts
+  (pad_cell_internals.md section 3), not only through the DCPDiode guard ring; the narrowed-band well is 9.72 µm
+  high, not 9.38.
+- Chat log: the context was compacted at 22:08 and the transcript file lost 17:57–22:06. Recovered from this chat's
+  record on claude.ai (user messages, replies, tool calls with arguments; no tool results) and exported again (22:16):
+  `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`, 44 turns, sha256 12bd9604…; its header says where
+  each part comes from.

@@ -2,10 +2,11 @@
 
 - Session `f5dc1779-0ee8-504e-923f-171069e08948`, configured model `claude-opus-5-5` (the serving model may differ), cloud container linked to the user's computer, attached to the claude.ai Project "Chipalooza sg13cmos5l". Session title: "Put together the sg13cmos5l_IOPadDiff2Single layout and macro".
 - Running log of the same work: `sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md`. The design itself goes into `macros/sg13cmos5l_IOPadDiff2Single` of the main repository.
-- Source: the raw transcript `~/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948.jsonl` in the cloud container, extracted by script (`sudelbuecher/design_considerations/pad_buffer_alternatives/export.py`, extended this session so that questions asked with AskUserQuestion, the user's answers and messages sent while a turn runs appear verbatim), records in file order along the live chain.
-- At 14:32 the session's context was compacted and the transcript file was started anew; it begins with the last tool call before the compaction (14:31). The records between the 13:23 export and 14:31 are no longer in it, nor anywhere else in the container: the closing reply of the 13:09 turn, the record of Christoph's message of 14:29 and the first tool calls on it. Turns 1–20 come from the copy of the transcript taken at 13:23; Turn 21 quotes the message of 14:29 from the session's compaction summary (the only place it survives); the rest comes from the new transcript file, without the compaction summary itself.
+- Source: the raw transcript `~/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948.jsonl` in the cloud container, extracted by script (`sudelbuecher/design_considerations/pad_buffer_alternatives/export.py`, extended this session so that questions asked with AskUserQuestion, the user's answers and messages sent while a turn runs appear verbatim), records in file order along the live chain; for 17:57–22:06 the conversation's record on claude.ai (see below).
+- At 14:32 the session's context was compacted and the transcript file was started anew; it begins with the last tool call before the compaction (14:31). The records between the 13:23 export and 14:31 are no longer in it, nor anywhere else in the container: the closing reply of the 13:09 turn, the record of Christoph's message of 14:29 and the first tool calls on it. Turns 1–20 come from the copy of the transcript taken at 13:23; Turn 21 quotes the message of 14:29 from the session's compaction summary (the only place it survives); Turns 22–38 come from the transcript file started at 14:32 (copy taken at 17:57), without the compaction summary itself.
+- At 22:08 the context was compacted again, and the transcript file was started anew; it begins with the last tool call before the compaction (22:06). The records between the 17:57 export and 22:06 are no longer in the container. The end of Turn 38 and Turns 39–42 up to that tool call come from the conversation's record on claude.ai, read back at 22:14 with the session's conversation reader and converted to this format by script (`export_claudeai.py`, cloud workspace). That record keeps user messages, visible replies and tool calls with their arguments, not tool results, so tool errors cannot be shown for this part, and the background agent's notification at 18:56 shows only as the start of a new reply; "sent mid-turn" is inferred there from the reply before it ending in a tool call. From the tool call of 22:06 on, the new transcript file, without the compaction summary.
 - User messages are verbatim, without system reminders and the app's file-delivery notices. Visible replies are verbatim. Tool calls are `*[ ]*` summaries: tool name and the first line of the main argument cut at 150 characters, plus tool errors. The internal reasoning is not included; the script checks that no 40-character window of it occurs here and prints counts only.
-- Export made 2026-10-27 10:10, 10:29, 11:54, 13:23, 14:48 and 17:57 by the session itself, each time up to and including the command that built it. The replies after it are not included.
+- Export made 2026-10-27 10:10, 10:29, 11:54, 13:23, 14:48, 17:57 and 22:16 by the session itself, each time up to and including the command that built it. The replies after it are not included.
 - Times are Europe/Berlin (CET).
 
 ## Turn 1 — 2026-10-27 09:46
@@ -1934,4 +1935,373 @@ All of this is in the running log.
 *[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sed -i 's/^## 17:54–18:02: Miller…`]*
 
 *[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; T=$(TZ=Europe/Berlin date +%H:%M); echo $T; cp /root/.claude/p…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md; sha256sum $F; python3 -c…`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md", "…]*
+
+*[mcp__remote-devices__device_bash: `sha256sum $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`]*
+
+**Assistant:** The Miller capacitors can be polygons and can be split, and CMB sitting far from ON costs nothing. For the class-AB replicas, the earlier floorplan proposal still works, with one correction for the P side and one netlist consequence you should decide.
+
+**Miller capacitors as polygons, split as needed**
+- They need no matching, only area. Build them from rectangular fingers of one gate length; the finger widths can follow whatever outline is left, and the fingers can sit in different places.
+- The netlist then has to take the drawn W/L instead of 16/16, because LVS compares W and L, not area. At 256 µm² per capacitor, C stays about 1.3 pF to first order. Shorter gates also lower the capacitor's series resistance.
+- **CMA** has to stay in one well on the pad net, inside the pad's guard rings. The gap holds all of it: about 4.96 µm × 52 µm of gate.
+- **CMB** can be split into leftover corners of the circuit zone, one well on net `b` per piece.
+
+**CMB far from ON**
+- Not a problem. `b` has to run down to ON's gate buses at y ≈ 13.4 and 23.0 anyway, and CMB can attach anywhere along that line.
+- A long M2 line adds at most tens of ohms and a few fF. That compares with about 1.3 pF of CMB and about 1.5 pF of ON gate, on a node driven by a high-impedance cascode, so the extra RC is a few picoseconds.
+- What matters is what `b` runs next to: keep it away from `vinp`, `vinn`, `vref` and the cascode nodes `x` / `y`. Coupling to the pad comb only adds a few fF in parallel with CMB.
+
+**Where the translinear replicas go**
+- **RP1 and RN1 go inside the clamp frames.** The quiescent current (82/2 × 5 µA ≈ 205 µA) depends on RP1 matching OP. A replica 100 µm away wouldn't see the output devices' temperature or stress.
+- **Netlist consequence.** The drawn counts already match that plan: 82 P fingers = OP 80 + RP1 2, and 68 N fingers = ON 66 + RN1 2. So with the replicas inside, ON goes back to 66 in the netlist, which reverses the 13:09 "Netlist follows layout" answer, and OP drops to 80 (I_Q ≈ 200 µA). The alternative is to grow the frames by the replica fingers; the 80 µm frame takes up to 49 P columns at l = 0.6 µm and 38 N fingers at l = 1 µm.
+- **N side.** RN1 is an S-G-D-G-S pair with its drain on `n2`. Put it in the middle of one N frame, not at an end, where fingers see the ring and a different end source. Its comb track then carries `n2` up past the diodes instead of the pad, without the vias onto DCN and DCP.
+- **P side, correcting my earlier proposal.** A P gate column runs through both device rows, so RP1 (2 × 6.66 µm) is exactly one column. A single column only has a drain of its own at the end of an odd-ng array (the 0.74 µm end drain; 41 is odd), and the end position costs some matching. The other way is to split two adjacent columns between the rows. Either way it needs a PCell variant that splits off fingers.
+- **RP2 / FPL / ABP:** a compact three-finger group just above the P frame, next to OP's gate bus (`a`, y ≈ 81.7) and RP1's `n1`. All three sit on iovdd at pad level, like OP, so they could also go inside an enlarged P frame. Just above it keeps them away from the drains swinging with the pad.
+- **RN2 / FNL / ABN:** there's no room beside the N frames at the pad end. ABN connects `a` and `b` just as ABP does, so put this group next to the P group, with its own substrate ring. Only RN1 needs the N frame, and `n2` is a DC node, so its long run is harmless.
+- **Guard rings changing:** fine. What has to stay is the band pieces at x = 0 and 80 at IHP's heights, and the double guard ring between the frames and the circuit.
+
+The running log has an entry for this, and I exported the chat log at 17:57.
+
+## Turn 39 — 2026-10-27 18:19
+
+**User:** so ... review the d2s_mpdda_pd.sch verification and characterization suites, suggest where the specifications should be tightened or even improved, to make sure that we can freeze device dimensions, as preparation for cramming in the layout primitives in the pad. spawn an agent to tentatively work the class AB replicas into the clamp structures.
+
+*[Bash: `ls /mnt/user-data/uploads/IHP-Open-PDK/ihp-sg13cmos5l/ /mnt/user-data/uploads/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech 2>/dev/null; ls /tmp/claude-0/-hom…`]*
+
+*[Bash: `find /mnt/user-data/uploads/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout -maxdepth 3 | head -30; find /mnt/user-data/uploads/IHP-Open-PDK/ihp-sg13cmo…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; ls scripts/pcells/test_m1; ls macros/sg13cmos5l_IOPadDiff2Single macros/sg13cmos5l_IOPadDiff2Single…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc; find . -type f | wc -l; find . -type f | head -40; du -sh .; cd ../../python; fin…`]*
+
+*[Bash: `(apt-cache policy klayout 2>/dev/null | head -5); cat /etc/os-release | head -3; ls /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/sc…`]*
+
+*[mcp__remote-devices__device_bash: `cd /home 2>/dev/null; P=/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells; for f in $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/…`]*
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["~/mnt/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/BasicsLib.py", "~/mnt/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/Clamp_…]*
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["~/mnt/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/density.drc", "~/mnt/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout…]*
+
+*[Agent: Prototype class-AB replicas in clamps]*
+
+**Assistant (message sent mid-work):** An agent is now prototyping RP1 / RN1 inside the clamp PCells, on copies in the cloud workspace only. It writes nothing on your computer and runs no git. Meanwhile I'm reviewing the d2s_mpdda_pd verification and characterization suites.
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single; find $M/verification $M/testbenches -maxdepth 3 | grep -v -E '/(r…`]*
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single; sed -n 120,400p $M/README.md`]*
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/verification/cace; wc -l $M/*.yaml; python3 -c "import yaml" 2>&1;…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/verification/cace; python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/verification/cace; ls $M/results/sg13cmos5l_IOPadDiff2Single | hea…`]*
+
+*[Bash: `TZ=Europe/Berlin date +%H:%M; mkdir -p /mnt/user-data/outputs/review_1830; cat > /mnt/user-data/outputs/review_1830/spec_review_before_freeze.md <<'EO…`]*
+
+*[Bash: `grep -n -E 'ad=|as=|pd=|ps=' /mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/clamp_netlist.py | head -5`]*
+
+*[Bash: `grep -n -i -E "'ad'|\bad\b|area|perim" /mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/clamp_netlist.py | head -10`]*
+
+*[Bash: `cd /mnt/user-data/outputs/review_1830; python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_…]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date +%H:%M; S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build; sha256sum …`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sed -i 's/^## 18:19–18:28: review…`]*
+
+**Assistant:** I wrote the review as `sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md`; I didn't run any simulations. The main finding: every limit in the suite is "worst case of the 20 October run plus margin", as the README says. To freeze dimensions, each quantity needs a requirement first, so the review lists which devices each one sizes.
+
+**Decisions that move device sizes**
+1. **Offset from mismatch.** Today's check is 30 Monte Carlo runs at tt only, limit ±20 mV, σ ≈ 5 mV, and its CSV export is empty. This sizes the matched arrays: input pairs, tails, sinks, loads.
+2. **Gain accuracy.** The limit is ±2 %, but with σ ≈ 0.77 % three sigma is 2.3 %, so it passes 30 runs by luck. Either widen the limit or widen rhigh to w = 1.0 µm, for about +320 / +480 µm².
+3. **Input common mode and supply range.** The suite runs at 1.65 V, while the S2D proposes 1.2 V. INL at iovdd = 3.0 V is report-only (11–87 mV), although 3.0 V is iovdd's own minimum. Together these decide the input-stage sizing, possibly the topology.
+4. **Maximum load and phase margin.** At 300 pF the worst margin is 41.96° against a 40° limit, but that's at tt, 27 °C, 3.3 V only. This freezes the Miller capacitor area, which matters now that you want to reshape and split them.
+5. **PSRR at 100 kHz.** 31 dB on the shared IO ring. Improving it means a different compensation scheme, so decide before freezing.
+6. **Noise.** The limits are not requirements. A real limit, even a looser one, could free area.
+7. **THD.** −35 dB is 1.8 %. If this is a measurement buffer, it needs a requirement per amplitude.
+
+**Cheap gaps to close**
+- Short-circuit current has a minimum (≥ 20 mA) but no maximum, against a worst case of about 50 mA. The drain combs and 0.2 µm source straps have to carry it, so their widths can't be frozen without one.
+- The load, loop, transient, noise and THD groups need corners, temperatures and 3.0 / 3.6 V supplies.
+- The resistor corner is fixed at `typ` everywhere.
+- Monte Carlo needs a few hundred runs, at the corners too.
+- The unpowered-pad testbench isn't in CACE.
+
+**Netlist changes the layout forces before a freeze run**
+- **DN / DP:** the pad sheet still uses IHP's 27.78 µm diodes; the layout has 63.78 µm. Swap in the new `DCNDiode` / `DCPDiode` sheets.
+- **OP / ON junctions:** the netlist gives no drain/source areas or perimeters, but the frames have 1.18 µm ballast drains. This affects pad capacitance and pad leakage at 125 °C.
+- **Replica finger counts:** OP 80 + RP1 2 = 82 and ON 66 + RN1 2 = 68, or frames grown by the replica fingers. Either way RP1 / RN1 move into `d2s_mpdda_pd`.
+- **Miller capacitors and antenna diodes:** the reshaped capacitors need their drawn W/L in the netlist, and their wells and the antenna diodes add junctions to the pad and to `a` / `b`.
+
+The current results are already stale: they date from 20 October, with ON = 66.
+
+The replica agent is still running and changes nothing on your computer; I'll report what it built when it finishes.
+
+*[a background task notification started this reply; the claude.ai record does not keep it]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas; ls -la; tail -5 regress_default.log; tail -8 verify_variants.l…`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[Read: /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas/render_P41_rep.png]*
+
+*[Read: /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas/render_N34_rep.png]*
+
+*[Read: /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas/render_pad_mock.png]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948; python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `grep -n -E '^ *M(n|2)\.[a-z0-9]+ ' /tmp/lr.txt | head -20; sed -n "$(grep -n -E '^ *Mn\.e ' /tmp/lr.txt | head -1 | cut -d: -f1),+3p" /tmp/lr.txt`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas; head -12 clamp_engine.diff; grep -c '^[+-]' clamp_engine.diff;…`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas; O=/mnt/user-data/outputs/replica_1905; mkdir -p $O; { printf '%…`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/replica_prototype/r…]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date +%H:%M; cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/replica_pr…`]*
+
+*[Bash: `sha256sum /mnt/user-data/outputs/replica_1905/*.png /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas/*.png | cut -c…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/replica_prototype; ls -la *.png; file *.…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/replica_prototype; python3 -c "`]*
+
+*[Bash: `cd /mnt/user-data/outputs/replica_1905; python3 -c "`]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date +%H:%M; F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sha…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sed -i -e 's/^## 18:56–19:02: rep…`]*
+
+**Assistant:** The agent built a working prototype. It is still tentative: only the cloud workspace was touched, and the PCell code on your computer is unchanged.
+
+**What it proposes**
+- **RN1:** an S-G-D-G-S pair at the centre of the upper N frame, drain and both gates on `n2`.
+- **RP1:** the centre gate column of the P frame, which spans both rows and so gives exactly RP1's two fingers. Its drain partner becomes a dummy with its gate on iovdd. That was the only way to give RP1 a drain of its own away from the array edge. Splitting the poly between the rows doesn't fit the row gap: 0.44 µm, where 0.54 µm is needed.
+- **Only contacts and Metal1 change.** Activ, poly, implants and wells are identical to today's cells, so the replicas are physically the same fingers as OP and ON. A new M1 pin `rep` carries gate and drain. The `gate` bus runs over the replica columns without contacting them.
+- **Pad level:**
+  - one P comb line (x = 40.755) becomes `n1`;
+  - the N comb line at x = 40.0 is cut between the two N frames, pad below and `n2` above;
+  - four via stacks that bridged those lines onto DCN / DCP go away.
+- **Finger counts and I_Q, carved from today's arrays:** OP 78, ON 66, I_Q ≈ 195 µA. With P ng = 42, OP stays at 80 and I_Q ≈ 200 µA. With ng 43 / 35, the netlist's OP and ON stay as they are, but every comb line moves.
+
+**What the agent ran**
+- With the replica option off, the patched engine's output is element-for-element identical to today's, over 54 cells.
+- It built 271 variant cells and checked each by device and net extraction plus XOR against the default.
+- It extracted a pad mock with the variant clamps in place, giving OP 519.48 / 0.6, RP1 and dummy 13.32 / 0.6, ON 149.6 + 140.8 / 1, RN1 8.8 / 1, with pad, `n1`, `n2`, gates and rails distinct.
+- It also ran its own Metal1 / Metal2 spacing checks.
+
+**Not run:** the IHP DRC deck (apt's KLayout 0.28.16 can't run it), PDK LVS, the real PCell path, and any simulation of the new ratios.
+
+**Decisions for you:**
+1. Centre column plus dummy (recommended), or the end column, which needs no dummy but sits at the array edge.
+2. Carve the replicas from today's arrays (I_Q 195 µA, smallest change), or grow the arrays.
+3. Whether to keep the pin name `rep`.
+4. Dummy gate tied to iovdd inside the cell, or brought out as its own pin.
+5. RN1 as a pair in the upper frame (as built), or as two single fingers, one in each frame.
+6. For LVS, move RP1 / RN1 / dummy from the bias sheets into `d2s_mpdda_pd`, or flatten.
+7. Where RP2 / RN2 sit, which sets how far `n1` / `n2` run.
+
+**Existing DRC errors.** The current pad layout already has Metal2 spacing errors where the N and P comb lines run side by side (y ≈ 29–61), all on the pad net:
+- x ≈ 32.0: 0.045 µm against the 0.21 µm minimum;
+- x ≈ 40.4: 0.135 µm against 0.21 µm (in the replica version these lines become `n1` / `n2` and are re-spaced);
+- x ≈ 47.2: 0.225 µm against 0.24 µm (Mn.e: line wider than 0.39 µm, parallel run over 1 µm).
+
+The comb pitches (3.02 µm P, 3.82 µm N) leave near-misses for any choice of ng. Since the lines are on the same net, merging each pair is the simple fix.
+
+**Design-note inconsistency.** `layout_primitives.md` says "ON = 66 + RN1 2" in one place and "ON 64 f + RN1 2 f" in its floorplan sketch; the netlist has 68.
+
+**Where things are.** Everything is in `sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/replica_prototype/`: the agent's report, the two code diffs, `replica_cells.gds`, `pad_mock.gds`, three renders and the logs. The three PNGs gained a provenance chunk in transfer, so their checksums differ from the cloud copies while the image data is identical. The log has an entry for this step.
+
+## Turn 40 — 2026-10-27 19:08
+
+**User:** clean up the pad layout metal2 spacing errors. my hand wiring is bad and awkward.
+fix the design-note inconsistency. if the agent migrated reference transistors into the arrays, grow them accordingly. put the pad mockup somewhere it makes sense, is out of the way of the toplevel macro structure (for now) and where I have a chance to find it.
+
+*[mcp__remote-devices__device_bash: `grep -n -E '^ *Slt\.[a-z0-9.A-Z]+ ' /tmp/lr.txt | head; sed -n "$(grep -n '7.3 Metal Slits' /tmp/lr.txt | tail -1 | cut -d: -f1),+30p" /tmp/lr.txt | g…`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `D=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout; sha256sum $D/sg13cmos5l_IOPadDiff2Single.klay.gds;…`]*
+
+*[Bash: `mkdir -p /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/m2fix /mnt/user-data/outputs/m2fix_1915; cd /tmp/claude-0/-home-cl…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/m2fix; cat > check.py <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/m2fix; cat > conn.py <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `D=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout; B=$D/backups/sg13cmos5l_IOPadDiff2Single_before_m2…`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.k…]*
+
+*[mcp__remote-devices__device_bash: `D=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout; sha256sum $D/sg13cmos5l_IOPadDiff2Single.klay.gds;…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/layout_primitives.md; sha256sum $F;…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/layout_primitives.md; sed -n 119,13…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/layout_primitives.md; [ "$(sha256su…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas; cat common.py | head -80; grep -n "^def \|^    def " clamp_eng…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/replicas; sed -n 486,520p clamp_engine.py; sed -n 636,700p clamp_engine.…`]*
+
+*[Bash: `mkdir -p /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/mock /mnt/user-data/outputs/mock_1930; cd /tmp/claude-0/-home-clau…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/mock; cat > verify_mock.py <<'EOF'`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/mock; sed -i 's/db.DCellInstArray(c.cell_index(), db.DTrans(x, y))/db.DC…`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/mock; python3 - <<'EOF'`]*
+
+*[Read: /mnt/user-data/outputs/mock_1930/replica_mockup.png]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/mock; python3 - <<'EOF'`]*
+
+*[Read: /mnt/user-data/outputs/mock_1930/replica_mockup.png]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/m2fix; python3 - <<'EOF'`]*
+
+*[Read: /mnt/user-data/outputs/m2fix_1915/m2_cleanup.png]*
+
+*[Bash: `cat > /mnt/user-data/outputs/mock_1930/README.md <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `ls -la $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/replica_mockup 2>&1 | head -3`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/replica_mockup/sg13cmos5l_IOP…]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date +%H:%M; cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout; ls -la replica_mock…`]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date +%H:%M; F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sha…`]*
+
+*[SendUserFile: {"caption": "Left: the pad cell's new Metal2 comb. Right: the replica mock-up with grown frames.", "display": "render", "files": ["/mnt/user-data/outp…]*
+
+**Assistant:** All three are done. The pad cell has no Metal2 spacing errors any more, the design note is corrected, and the replica mock-up with grown frames sits next to `size_mockup/`. The IHP DRC deck and LVS were not run on either file; the checks below are my own.
+
+**Metal2 rewired in the pad cell**
+- **New scheme:** the N comb now runs from the pad bar up to y 50, and the P comb from y 44 up to the P frame. A Metal2 junction bar at y 44–50 joins them, in the bare gap between DCNDiode and DCPDiode.
+- **Why the errors are gone:** N and P lines no longer run side by side anywhere, and that side-by-side stretch was where all the errors were.
+- **Hand-placed vias removed:** your 55 extra via stacks between the two combs and onto the diodes are gone. The N comb's own vias feed DCN and the P comb's feed DCP.
+- **Checks:** the 10 Metal2 spacing errors are gone, and no new width, space, notch or area errors appeared. Pad bar, every N and P drain, both diodes' pad stripes and the bar extract as one net, with gates and rails separate. The PCell settings are untouched.
+- **Files:** the previous version is in `backups/sg13cmos5l_IOPadDiff2Single_before_m2cleanup_2026-10-27.klay.gds`. `padrow` picks up the change on reload.
+
+**Design note (`layout_primitives.md`, P7 and the floorplan sketch)**
+- ON is 68, with a dated correction line.
+- RN1 is the centre S-G-D-G-S pair of the upper N frame.
+- RP1 is one P gate column with a dummy partner.
+- The frames grow by the replica fingers: Clamp_P ng 43 = OP 82 + RP1 2 + dummy 2, and both Clamp_N ng 35 = ON 68 + RN1 2. The two N frames share the comb, so they need the same ng.
+
+**Replica mock-up**
+- **Where:** `macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/replica_mockup/`, next to `size_mockup/`, the existing precedent for mock-ups of this macro. The Makefile only picks up layouts named after a cell directly in `layout/klayout/`, so a subfolder stays out of the build. The folder holds the GDS (top cell `sg13cmos5l_IOPadDiff2Single_replica_mockup`), a short README and the picture.
+- **Contents:** Clamp_P ng 43 with RP1 and dummy at the centre column; two Clamp_N ng 35, the upper one with RN1 at its centre drain; the same Metal2 scheme as the pad cell. `n1` goes straight up from RP1's drain; `n2` jogs once and passes through a gap in the junction bar. Both end at y 88, where RP2 / RN2 would sit.
+- **Longer diodes:** DCNDiode is now 67.6 µm and DCPDiode 65.8 µm, because the wider combs need longer stripes. I trimmed the top-level n+ band around the longer DCNDiode to make room.
+- **Static cells:** the clamps and diodes come from the prototype code, because the replica option isn't in `scripts/pcells` yet.
+- **Checks:** extraction gives OP 546.12/0.6, RP1 and dummy 13.32/0.6, ON 154.0 + 145.2/1 and RN1 8.8/1; pad, `n1`, `n2`, gates and rails are separate. My Metal1 / Metal2, NWell, contact and via checks pass.
+
+Both pictures are attached, and the steps are in the running log.
+
+## Turn 41 — 2026-10-27 22:01
+
+**User:** You ignored that the output metal2 lines are interdigitated with the vddio and vssio wires to the supplies and BOTH the diodes. check with the existing IHP IOPads how this is supposed to work out.
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; mkdir -p ihpcomb; cat > ihpcomb/comb.py <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; for c in sg13cmos5l_IOPadInOut30mA sg13cmos5l_IOPadOut4mA; do echo "===…`]*
+
+## Turn 42 — 2026-10-27 22:03 (sent mid-turn)
+
+**User:** Also, it would be good to fit Miller capacitors in the space between the protective structures. Maybe the guard on top (i.e., closer to the core) of the DCNDiode can be made narrower yet. Figure out what this structure is good for, anyhow.
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad 2>/dev/null && ls; ls ihpcomb m2fix mock 2>/dev/null | head -50; TZ=Euro…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; head -40 m2fix/check.py; echo ----; head -60 ihpcomb/comb.py; ls /mnt/u…`]*
+
+*[Bash: `cd /mnt/user-data/uploads; sha256sum sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Singl…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single && sha256sum macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds …`]*
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["~/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds", "~/mnt…]*
+
+*[Bash: `mkdir -p /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/capfit && cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-17…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/capfit && cat > cut.py <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/capfit && P=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/capfit && P=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/…`]*
+
+*[Bash: `cd /mnt/user-data/uploads/IHP-Open-PDK/ihp-sg13cmos5l; find . -iname "*layout_rules*" | head; ls /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-17…`]*
+
+*[Bash: `cd /mnt/user-data/uploads/IHP-Open-PDK; find . -iname "*rule*" -not -path "*/.git/*" | grep -iv "\.lydrc\|\.drc$" | head -20; ls`]*
+
+*[Bash: `cd /root/.claude/projects/-home-claude/; ls -la *.jsonl | head; grep -o '7\.2\.1[^"\\]\{0,400\}' f5dc1779-0ee8-504e-923f-171069e08948.jsonl | sort -u …`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; grep -o '7\.2\.[12][^"\\]\{0,300\}' $S/logbuild/transcript_copy.jsonl | …`]*
+
+*[Projects: claude/sg13cmos5l_pad_cell_internals.md]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/capfit && sed -e 's/ly=db.Layout(); ly.read(f); t=ly.top_cell(); dbu=ly.…`]*
+
+## Turn 43 — 2026-10-27 22:11 (sent mid-turn)
+
+**User:** Figure out why the sources of the output/clamp transistors connect to the diodes. Also figure out how to reproduce the function of the wide metal2 connections to the diode structures in the IHP standard IOPads.
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; sed -n 60,200p ihpcomb/comb.py`]*
+
+## Turn 44 — 2026-10-27 22:12 (sent mid-turn)
+
+**User:** Don't lose track of the chatlogs before compaction happens.
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; T=/root/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923f-1…`]*
+
+*[Bash: `ls -la /root/.claude/ /root/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/ 2>&1 | head -40; find /root/.claude -newer /tmp/claude…`]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "max_turns": 5}]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; cat $S/export.py | head -120; echo; cat $S/header_now.md; tail …`]*
+
+*[Bash: `ls -la --time-style=+%H:%M /root/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/tool-results/ | tail -5; ls -la --time-style=+%H:%…`]*
+
+*[mcp__claude_ai__conversation_search: {"query": "conceivably, the miller capacitors could even be split in two as the pad geometry requires", "within_conversation_id": "70ecff0a-e09e-42e6-…]*
+
+*[error: This tool cannot search inside this chat, and a search without within_conversation_id only covers other chats. To re-read this chat's earlier turns, call mcp__claude_ai__read_conversation with convers]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t72", "max_turns": 1}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t73", "max_turns": 11}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t74", "max_turns": 10}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t75", "max_turns": 10}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t76", "max_turns": 10}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t77", "max_turns": 10}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t78", "max_turns": 10}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t81", "max_turns": 5}]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; T=/root/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923f-1…`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; sed -n 120,200p $S/export.py; grep -n "Turn 3[6-9]" $S/2026-10-…`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; cat > $S/export_claudeai.py <<'EOF'`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; cd $S; python3 export_claudeai.py claudeai_current_pages_raw.tx…`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; cd $S; python3 - <<'EOF'`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; cd $S; T=$(TZ=Europe/Berlin date +%H:%M); TT=${T/:/}; echo $T; …`]*
 
