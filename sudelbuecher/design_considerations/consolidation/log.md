@@ -672,3 +672,46 @@ also provide for a distribution current mirror for several bias inputs feeding s
 - 23:03: a first append of this entry went through an unquoted heredoc, so the shell ran the backquoted names as
   commands (all failed with "command not found" / "No such file"; run from the session home, the Makefile loop found
   nothing); the mangled entry was cut off again (file back to sha256 a0478776…) and this entry written instead.
+
+## 2026-10-27 23:55 … 2026-10-28 00:15 CET — class-AB diode stacks into the pad; n1 / n2 -> dabp / dabn; s2d bias without the class-AB branches; flat bias macros updated
+
+Christoph (23:35): "1. dabp/dabn: rename the nets n1/n2 in sheets and netlists. consistency is key. 2. connect dummy gate
+so that it stays off. 3. yes group RP1, RP2, RN1, RN2 with the matching devices in the pads instead of bias_tree_pd.
+Separate version for s2d that does not contain the unnecessary branches." On the four flat sheets (00:05): "update them."
+
+- `d2s_mpdda_pd` (sheet block [8] right of OP / ON, and source netlist): XRP1 dabp dabp vddo vddo 13.32u/0.6u ng 2,
+  XRPD dabp vddo vddo vddo 13.32u/0.6u ng 2 (the P frame's dummy next to RP1: gate = source, off; drain on dabp as in the
+  PCell wiring), XRP2 vabp vabp dabp vdd 6.66u/0.6u, XRN1 dabn dabn vsso vsso 8.8u/1u ng 2, XRN2 vabn vabn dabn vss
+  4.4u/1u. Ports unchanged.
+- `bias_tree_pd`: RP1, RP2, RN1, RN2 and the pins vddo / vsso gone; vabp / vabn are current outputs (NABP sinks, PABN
+  sources 5 uA). `bias_ref_pd.spice`: `d2s_bias_diodes` -> `bias_diodes` (four diodes); `bias_tree_pd`, `bias_in_pd`,
+  `bias_out_pd`, `bias_oa_pd`, `bias_bg_pd` without vddo / vsso. `bias_ref.spice`, `bias_lp.spice` (no power-down) keep
+  their six diodes; only n1 / n2 -> dabp / dabn.
+- `bias_sel_pd`: no vddo / vsso (sheet, symbol, source, yaml pins); instances in both pads, `d2s_mpdda_pd_sel`, and the
+  two CACE templates follow. The templates carry RP1 + RP2 / RN1 + RN2 as fixtures on vddo / vsso (same devices, same
+  nets), the replica loads keep measuring them (their drains renamed mdabp / mdabn); I_vddo / I_vsso stay the stacks'
+  currents.
+- New `bias_tree_noab_pd` (tree without NABP / PABN and the columns [8] vabp / [8] vabn) and `bias_sel_noab_pd`
+  (`bias_sel_pd` with that tree, symbol without vabp / vabn, same pin positions). The s2d top sheet and
+  `s2d_mpdda_pd_sel` use `bias_sel_noab_pd`; s2d source netlist and `tb_pad_dc.spice` follow; s2d and slot xschemrc add
+  the two folders. The s2d pad loses NABP, PABN, RP1, RP2, RN1, RN2 (10 uA from iovdd); its CACE results are older.
+- The four flat sheets `bias_{in,out,oa,bg}_pd` (option (b)): RP1, RP2, RN1, RN2, their labels, the vddo / vsso pins and
+  26 wires each removed (dangling-wire pruning), the "[8] vabn" box ends with the others, texts updated; symbols without
+  vddo / vsso; yaml pins without vddo / vsso; templates: the stacks as fixtures on vddo / vsso, `@n.x1.xrp2` /
+  `@n.x1.xrn2` -> `@n.xrp2` / `@n.xrn2`, psrr replica drains -> mdabp / mdabn. The pad's xschem testbenches `tb_pd_*`
+  lose the vddo / vsso stubs to the bias block; the spice decks `tb_pd_*` lose vddo vsso in the Xb lines.
+- READMEs: macros index, bias_tree_pd, bias_sel_pd, the four flat macros, both pads; new READMEs for the two noab macros.
+- Checked in the cloud copy before writing: 71 sheets netlisted with xschem before / after and compared flattened,
+  independent of hierarchy and names (Weisfeiler-Lehman labels, S / D symmetric): 68 identical, the 2 new sheets,
+  and tb_pd_leak with one intended difference (RP2's bulk now the driver's vdd instead of the bias's vddb; 3.3 V both).
+  Expected differences taken out before comparing: RPD added; in s2d / slot the six AB devices of the tree; in the
+  standalone tree / selector / flat sheets the four stacks. All CACE templates of the flat macros and of bias_sel_pd:
+  same circuit as before, so their results stand. Source netlists: d2s and s2d pad subckts flattened before / after
+  identical (same exceptions); spice decks of both pads identical except tb_pd_leak (same RP2 bulk). Sheet vs source:
+  tree, noab tree, in, out, oa identical; sel, sel_noab, d2s_mpdda_pd, bg differ the same way before and after (the
+  comparison does not resolve them; not introduced here); sel_noab = sel minus NABP / PABN, sheets and sources.
+  14 key sheets also through their own xschemrc: same netlists, no missing symbols.
+- Before-state: `ab_regroup_2026-10-28/before/` (68 files) with `before_sha256.txt`; `after_sha256.txt` lists all 80
+  written files (68 changed, 12 new), all matching on the computer at 00:15. New Makefiles are `Makefile.new` again
+  (bias_sel_noab_pd, bias_tree_noab_pd). Not changed: CACE results, generated simulations, the notes worktree's sheets.
+  No git command; a plain read of `.git/info/exclude` at 00:14 (reported).

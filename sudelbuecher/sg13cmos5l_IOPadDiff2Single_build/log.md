@@ -497,3 +497,40 @@ Chat log: `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`, expo
 - Chat log: a background process in the cloud workspace (`archive.py`, started 22:27) copies every new transcript record
   into an append-only archive every 15 s, so a compaction can no longer lose records; the export to
   `sudelbuecher/chatlog/` follows at the end of each turn.
+
+## 23:15–00:16: replica prototype into the main tree: agnostic clamp PCells, class-AB stacks into the pad
+## (Christoph, 23:15: "Not sure to what extent sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/replica_prototype/ ever made
+## it into the main macros hierarchy. it should. I answered the questions in section 8 of the report. [...] pad metal2
+## rework should take replica prototype findings into account. did i address all your questions?"; 23:35: "PCell code:
+## try to design the pcell scripts such that the generators are agnostic whether the strips are outputs, reference
+## diodes, or dummies. let the cell above (or a wiring only cell) sort out the symmetry breaking routing. increase ng as
+## needed for R[NP]1 and dummies. Move R[NP]1 to where they are in the layout. 60s archiver interval ought to be enough
+## for anyone. [...] 1. dabp/dabn: rename the nets n1/n2 in sheets and netlists. consistency is key. 2. connect dummy
+## gate so that it stays off. 3. yes group RP1, RP2, RN1, RN2 with the matching devices in the pads instead of
+## bias_tree_pd. Separate version for s2d that does not contain the unnecessary branches. [...]"; 00:05, on the flat
+## bias macros: "update them."; 00:14, on the Makefiles: "did i forget [...] and broke something?")
+
+- Replica prototype status (23:17): in the main tree were only the static mock-up (`layout/klayout/replica_mockup/`) and
+  the corrected design note; `scripts/pcells` unchanged since 10-21, pad cell still Clamp_P ng 41 / 2 x Clamp_N ng 34,
+  RP1 / RN1 still in the bias tree. Section 8 answers as applied: interior P column + dummy, frames 43 / 35, pins and nets
+  `dabp` / `dabn`, dummy gate on the frame's own rail (off), RN1 as a pair in the upper N frame, RP1 / RN1 / dummy out of
+  the bias tree, grouping after the layout, hand wiring to be reviewed, design-note inconsistencies resolved for the layout.
+- Archiver: 60 s interval since 23:36 (cloud process, no tokens, no load on the computer).
+- PCells, written 23:49 to `scripts/pcells` (backup of the four replaced files: `pcells_before_2026-10-27/` here):
+  `Clamp_N_M1` / `Clamp_P_M1` take `wiring = internal | external`; internal is the old cell exactly, external draws
+  every finger alike without bus and gate / pad labels. New `Clamp_N_M1_wiring` / `Clamp_P_M1_wiring` (roles per gate
+  index, e.g. `20:dummy 21:rep`): bus segments over runs of output gates, M1 jumper replica gate -> its drain (`rep_net`),
+  dummy gate -> source / rail. Engine: `generate_m1(..., wiring)`, `generate_m1_wiring()`, `centre_roles()`. Checked in
+  the cloud: default output unchanged (50 parameter sets; `test_m1.py` 53 cells XOR-identical), clamp + wiring cell
+  without roles = internal cell (50 sets), new `test_m1/test_wiring.py`: P ng 43 / 0.6u / 80u -> OP 546.12, RP1 13.32,
+  dummy 13.32 um (gate = source, drain on dabp); N ng 35 / 1u / 80u pair -> ON 145.2, RN1 8.8 um; M1 width / space /
+  M1.e clean; IHP DRC deck not run (cloud KLayout too old). The pad cell is not switched to them yet.
+- Class-AB stacks into the pad, n1 / n2 -> dabp / dabn, s2d without the AB branches, flat macros updated (b): written
+  00:13–00:15, 80 files; details in `design_considerations/consolidation/log.md`, entry 2026-10-27 23:55.
+- 00:14 Makefiles: on disk every macro has its Makefile with the right TOP and no Makefile.new is left, so the mv loop
+  worked; what git lists as deleted is presumably the old `d2s_bias_*_pd` paths (untracked new folders show as folder
+  names only until `git add -A macros`). Two new Makefile.new since (bias_sel_noab_pd, bias_tree_noab_pd).
+- Slips: at 23:43 one read-only `git -C IHP-Open-PDK log -1` in your PDK clone (to name the state of the copied cni files); at
+  00:14 a plain read of `.git/info/exclude` while looking for an ignore rule; both against "no git", both reported.
+- Open: pad cell onto the PCells (P ng 43 roles 20:dummy 21:rep, upper N ng 35 16:rep 17:rep); pad Metal2 rework agent
+  (task 15); the bias-generator layout agents after Christoph's review.
