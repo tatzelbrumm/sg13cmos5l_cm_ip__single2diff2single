@@ -510,3 +510,125 @@ devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on
   11.2 µm), now 30.4 × 16.9 µm. All other cells unchanged. DRC clean, LVS against `pad_buffer_cells.cdl` match.
   sha256 `099b188f…`. Fit cells not repacked: in `fit_bias_tree_oa_bg` bg_res now overlaps bg_nab and
   bias_tree_p (bounding boxes); the top-cell placement has no overlap.
+
+## 23:45–23:59: sinks_6x6 (Christoph exported `sinks_6x6_row.gds` = row r2 with the transistor array turned m45, pitch
+## 8 µm; "push the nmos transistors as close together as design rules allow for separate drains"; "Can I get away
+## with connecting the gates with poly only?")
+
+- DRC probes of the turned 6/6 array alone (container): gap 0.21 fails Gat.b1 (0.25 between 3.3 V gates over
+  Activ); 0.25 and 0.30 pass; 0.40 fails Gat.b (endcaps 0.18 + 0.18 leave a 0.04 poly gap); 0.54 passes again
+  (separate gates). Window 0.36 < gap < 0.54 forbidden.
+- `klayout/sinks_6x6_row.gds`: array pitch 8 → 6.25 µm (gap 0.25, the minimum; endcaps overlap, so the 8 gates
+  form one poly strip); device labels moved with the devices. Everything else untouched: the old row's M1 / M2 /
+  poly bar / pins (DRC M1.d and Pin.e, the same as in the export) and the 57.6 µm ptap strip. sha256 `a467d63f…`.
+
+## 00:04–00:06: sinks_6x6_row tap, sources, vss pin, gate contacts, TGO (Christoph: "adjust the width of the
+## substrate tap to the width of the transistor array and connect the bottom diffusion contacts (sources) to it. put
+## the vss pin onto the metal1 net"; "add gate contacts left and right of the transistor array. minimum drc
+## distance?"; "do i still need the thick gate ox rectangle?")
+
+- `klayout/sinks_6x6_row.gds`: ptap1 49.75 × 0.78 µm (= array width), same y; one M1 rectangle from the tap M1 to
+  the top of the bottom S/D stripes (y 0.23) over the full array width ties all 8 sources to it; vss pin = the
+  tap M1 rectangle, label in its centre (old pin off). Gate contacts at both ends of the gate strip, 0.14 µm from
+  the array Activ (Cnt.e; a probe at 0.135 fails Cnt.e), poly tab with 0.07 enclosure, M1 pad 0.29 × 0.32 µm
+  (Via1-ready, M1.d) at the gate centre y = 3.34. The old row's TGO rectangle removed: it lay over nothing
+  (y 21.2 … 28.2); the PCells' own TGO merge into one region at 6.25 µm pitch.
+- DRC: only M1.d, all six from the old row's 0.29 × 0.29 via pads (y 12–13). sha256 `20c0f9cf…`.
+
+## 00:12–00:14: sinks_6x6_row wiring (Christoph: gate contacts over the entire transistor length; drain M1 out over
+## the full width, M2 lines to connect the drains; labels at the Activ centres; "connect the poly contacts with metal1
+## over the gate area or ... above the array with metal2?"; "Would it be advantageous to make the drain contacts
+## narrower than the full transistor width?" — both answered in the chat)
+
+- `klayout/sinks_6x6_row.gds`: gate contact columns at both ends, 17 contacts each over the gate length (0.54 …
+  6.30), 0.14 µm from the array Activ, poly tab over the full gate length, M1 column 0.26 × 5.86 µm (Via1-ready),
+  vbn pin = each column. Drain M1 plates over the full 6 µm width of every transistor, y 6.45 … 7.90; three M2
+  path tracks over the whole array: x (y 6.70), y (7.20), vss (7.70), one Via1 per plate at its centre onto its
+  own net; the vss track serves the dummy drains and drops at both ends outside the gate columns to the tap
+  (Via1). x / y M2 pins at the left end. Labels at the Activ centres. The old row's wiring above the array (no
+  longer connected) removed. Cell 51.6 × 9.6 µm.
+- DRC clean. LVS against a row reference (dummies S = D = vss, SX on x, SY on y, all gates vbn): match.
+  sha256 `23b666f7…`.
+
+## 00:23: sinks_6x6_row guard ring, BN variant (Christoph renamed the cell to sinks_6x6_row; "not so happy with
+## vertical metal2. extend the substrate tap to a full guard ring. That takes care of vss to the dummies. two
+## horizontal metal1 lines remain. prepare for a variant corresponding to _r1 where one of the dummies is the diode
+## connected transistor")
+
+- Read "two horizontal metal1 lines" as the x / y lines; they stay M2, because an M1 line over the drain plates
+  would short them.
+- `klayout/sinks_6x6_row.gds` (rebuilt around his transistor array, otherwise only the rename): ptap guard ring,
+  sides 0.27 µm outside the array's ThickGateOx (TGO.b; Activ x −1.57 … −0.79 and 50.54 … 51.32), top strip
+  0.22 µm above the drain plates (M1.e; Activ y 7.53 … 8.31), bottom strip where the tap was (−1.635 … −0.855),
+  M1 bridged and flush. Sources: one M1 plate to the bottom strip. Dummy drain plates run into the top strip;
+  the vss M2 track and its drops are gone. x / y M2 tracks at 6.70 / 7.20 µm over the whole array, plates up to
+  7.40. vss pin = bottom strip M1; vbn = gate columns; x / y M2 pins at the left end. 52.9 × 10.0 µm.
+- `klayout/sinks_6x6_row_bn.gds` (new, cell sinks_6x6_row_bn): the _r1 map dummy X Y Y X X Y BN; BN's drain plate
+  joined in M1 to the right gate column (diode), not to the ring.
+- DRC both clean; LVS both match their row references. sha256 `11edee22…`, `e83176e2…`.
+
+## 00:27–00:42: sinks_6x6 from two rows (Christoph: another row upside down with shared M2; drain contacts not full
+## width; M2 and the guard ring one level up in sinks_6x6, drain wiring maybe a layout-only cell; update
+## sinks_6x6_row; d2s_casc_n in parallel, the 6x6 first)
+
+- `klayout/sinks_6x6.gds`: cell sinks_6x6 = sinks_6x6_row (R0) + sinks_6x6_row_bn (R180, so it reads the old
+  r1 map dummy X Y Y X X Y BN left to right, under the r2 row: every column has one X and one Y as before) +
+  sinks_6x6_wiring (layout only). The rows' drains face each other, 0.21 µm apart (Act.b).
+- Drain contacts: device cell `nmosHV_ds` = the 6/6 transistor with the drain contact row cut at one end (15 of
+  17 contacts, stripe 5.285 µm of 6). With the upper row turned R180 the short end alternates, leaving 0.43 µm
+  for the other row's tab.
+- sinks_6x6_wiring: x track (M2 path) over the lower drain stripes (y 6.53), y track over the upper ones (7.04),
+  columns 1–6; direct Via1 on the own row's stripe (M1 pad), otherwise a 0.29 µm M1 tab at the column edge to the
+  other track (columns 1, 4, 5); dummy drains in M1 at stripe level out to the ring sides; poly links joining the
+  two rows' gates at both ends (outside the Activ, 0.18 µm Gat.d); ptap ring around both rows over the source
+  plates (sides 0.27 µm outside the TGO), flush M1. Top-level pins: x, y (M2), vss (ring), vbn (gate column).
+- `klayout/sinks_6x6_row.gds`, `sinks_6x6_row_bn.gds`: rows without ring and M2: transistors (nmosHV_ds), source
+  plate down to the ring strip position (vss label), gate columns (vbn); row_bn = r2 map with BN at position 0,
+  BN drain to the left gate column.
+- DRC: sinks_6x6 clean; the rows alone only LU.b (no tap). LVS sinks_6x6 against the library's sinks_6x6
+  subcircuit: match (SX 36/6, SY 36/6, dummies, BN diode). 52.9 × 16.9 µm (was 60.4 × 16.4 incl. wiring outside).
+  sha256 sinks_6x6 `2f5e6751…`, row `5beeb01a…`, row_bn `e1261184…`.
+- d2s_casc_n handed to a parallel worker (rotated m45 arrays, 4+1), results to follow.
+
+## 00:47–00:49: sinks_6x6 vbn track; one row cell (Christoph: "how do you propose to contact the shared vbn? Maybe a
+## horizontal metal2 wire across the horizontal center line"; "why are two versions _row and _row_bn necessary? Try
+## to use one version only and move the difference to the wiring or to the parent cell.")
+
+- Three M2 tracks between the rows at 0.5 µm pitch: x 6.53 (over the lower drain stripes), vbn 7.03 (centre line),
+  y 7.53 (over the upper stripes); the upper row moved up 0.49 µm. All three run over the full block width
+  (−1.6 … 51.35), pins x / vbn / y at the left block edge. vbn: at both ends the poly link is widened to 0.30 µm
+  for a contact, M1 pad 0.30 × 0.32 µm (M1.d), Via1 to the track. One TGO rectangle bridges the 0.16 µm gap the
+  move left between the two rows' ThickGateOx (TGO.e 0.86).
+- One row cell: both instances are `sinks_6x6_row` (R0 and R180). The BN diode link (BN drain stripe to the upper
+  right gate column) and the end-device labels (3 × dummy, BN) are in `sinks_6x6_wiring`; the row keeps the labels
+  of its six matched transistors. `sinks_6x6_row_bn.gds` is obsolete (not deleted).
+- sinks_6x6: DRC clean, LVS match (library subcircuit); 52.9 × 17.4 µm. Row alone: LU.b only.
+  sha256 sinks_6x6 `6e696017…`, sinks_6x6_row `db806381…`.
+
+## 00:57: sinks_6x6 gate connection (Christoph: "isn't the gate contact through narrow poly VERY flimsy?")
+
+- Agreed: 0.19 µm poly links and one contact per end. Now: the two rows' gate contact columns (17 contacts each)
+  are joined in M1 through the band between the rows (jogged to x −0.55 … −0.18 so it stays 0.18 µm clear of
+  the drain stripes), two Via1 per end onto the vbn track. Poly links and the single contacts removed.
+- To free the band at the row ends, the dummy drains no longer run out to the ring sides: each dummy's drain is
+  tied to its own source by a 0.29 µm M1 strap over the dummy's channel (lower row both ends, upper row its left
+  end; the upper right end is BN).
+- DRC clean, LVS match. sha256 `7a423929…`.
+
+## 01:03–01:14: sinks_6x6 back to the original transistor cell (Christoph: "Don't mess with the drain contacts of the
+## transistors. DON'T BREAK UP THE TRANSISTOR ARRAY!!! Rather, leave some room to the left and right between the
+## transistor arrays and the guard ring."; "PURGE nmosHV_ds.")
+
+- Undone: nmosHV_ds (shortened drain contacts) and the dummy straps over the channels. nmosHV is the unmodified
+  PCell copy (XOR 0 against the exported sinks_6x6_row), one m45 AREF, 8 × 6.25 µm, per row.
+- Room at both row ends, between array and ring, 1.0 µm: 0.18 gap, 0.29 µm M1 channel (dummy drain to the ring
+  strip), 0.18, gate contact column (0.26 µm M1, 17 contacts on a poly tab), 0.07 to the ring. Ring sides moved
+  out by 0.21 µm.
+- Drains: full-width stripes unchanged. One 0.29 µm M1 tab per transistor, lower row at the column's left edge going
+  up, upper row at its right edge going down, Via1 onto the x / vbn / y M2 tracks at y = 6.90 / 7.40 / 7.90 between
+  the rows. Upper row from y = 8.115 (was 7.38); block 53.4 × 18.1 µm.
+- vbn: gate columns of both rows joined in M1 at each end, one Via1 each onto the vbn track; BN drain (upper row,
+  right end) to its column in M1.
+- sinks_6x6_row_bn.gds deleted; no file contains nmosHV_ds any more. Old build scripts removed (container).
+- sinks_6x6: DRC clean, LVS match. sinks_6x6_row alone: LU.b only (the ring is in the parent). sha256 `8e2caf7f…`
+  (block), `e0e4d2c0…` (row).
