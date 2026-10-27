@@ -863,3 +863,86 @@ devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on
 - s2d cannot fit as is: its bounding boxes alone need 87.2 µm of height in 80 µm, and seven of its primitives are
   41 … 75 µm wide; with 90° rotation allowed it would be 107.5.
 - All 14 reimported cells in the library: DRC clean, LVS match. sha256 gds `da6ac38a…`, cdl `b470a10b…`.
+
+## 03:32–03:36: s2d_loads in two rows; narrow dummies (Christoph: "s2d_loads, rotate, 2 rows, narrower dummies";
+## "which cells have unnecessarily wide dummy transistors?"; "yes, go.")
+
+- Candidates for narrow (W = 2 µm, same L) end dummies are the rotated rows only: s2d_sinks_cmfb (4, ≈ 8 µm),
+  d2s_loads (2, ≈ 8 µm), sinks_6x6 / d2s_tails / s2d_tails (3 each, but the BN / BP diode at the upper row's end stays
+  full width and breaks the shared row cell; ≈ 3 … 4 µm). Unrotated cells keep full-width dummies.
+- Given to the sinks-style worker: s2d_loads as two rows "dummy LP LN D D LN LP dummy" (R0 / R180) with 2/4 dummies;
+  s2d_sinks_cmfb with 2/6 dummies; d2s_loads with 2/4 dummies.
+
+## 03:38: split diode as end dummies (Christoph: "what about the idea of splitting the diode into narrower transistors
+## that second as dummies? that could deteriorate the input to output ratio, but the output currents would still
+## match.") — question only
+
+- ngspice, IHP HV models (psp103), op, output Vds = diode Vgs, total diode W kept: 4 × 1.5/6 instead of 1 × 6/6 (NMOS)
+  raises Iout/Iref by +7.0 … 8.2 % over 1 … 30 µA; 4 × 1.25/6 instead of 5/6 (PMOS) lowers it by 4.8 … 5.2 %.
+  Nearly constant over current and corner, so it sizes out: 4 × 1.605/6 (n) within ±0.3 % over tt/ss/ff/sf/fs,
+  +0.6 / −0.3 % at 1 / 30 µA; 4 × 1.185/6 (p) within ±0.11 % over the corners, −0.37 / +0.04 % at 1 / 30 µA.
+- Not modelled: edge-position layout effects on the four fingers. The diode centroid moves from one corner to the
+  array centre (linear gradients between diode and outputs cancel). Same gate area, same random mismatch.
+- Would apply to sinks_6x6 (≈ 9 µm narrower), d2s_tails, s2d_tails (≈ 7.6 µm each); schematic and .cdl diode change.
+- Done 03:45 (s2d_loads two rows, narrow dummies), by the sinks-style worker; fresh SG13_dev 2/4 and 2/6 dummies,
+  unmodified, R270, 0.25 gap. s2d_loads: one row cell twice (R0 / R180), "dummy LP LN D D LN LP dummy", tracks
+  vcmfb, lp, dd, ln, vcmfb (lp and ln each between vcmfb and dd; point-symmetric about dd), 45.8 × 15.8 µm (was
+  74.6 × 9.0). s2d_sinks_cmfb 32.9 × 18.1 (was 40.9; now also R270, upright texts). d2s_loads 58.3 × 9.1 (was 66.3).
+  DRC clean, LVS match. sha256 s2d_loads `0d01697b…`, s2d_loads_row `96331eef…` (new), s2d_sinks_cmfb `068f9715…`,
+  s2d_sinks_cmfb_row `0588e54b…`, d2s_loads `2e3a023d…`. Not reimported.
+
+## 03:55–04:05: s2d_loads, s2d_sinks_cmfb, d2s_loads reimported; library re-placed (Christoph: "ok reimport
+## s2d_loads, s2d_sinks_cmfb, d2s_loads to pad_buffer_cells, rearrange cells to avoid overlaps.")
+
+- Versions on disk (`0d01697b…`, `068f9715…`, `2e3a023d…`). The new 2/4 dummy cell (pmosHV$15) is shared by both
+  loads; s2d_loads_row / _wiring new; only s2d_sinks_cmfb's own row / wiring changed otherwise.
+- .cdl: s2d_loads (two rows, 4 × 2/4 dummies), s2d_sinks_cmfb (2/6 dummies), d2s_loads (2/4 dummies); 39 subckts.
+- Re-placed as before, no overlaps. Fit heights (zone 94): d2s front 74.0, d2s front + caps 82.5, s2d front 145.4
+  (six s2d primitives wider than 39 µm cannot pair in 80 µm), bias / oa / bg 106.3.
+- The three cells in the library: DRC clean, LVS match. sha256 gds `434b8233…`, cdl `598edcc6…`.
+
+## 04:01: oa_pmir (Christoph: "why are oa_pmir_a and oa_pmir_b necessary? anyhow, looks like the transistors should be
+## rotated and there's an expert agent that can do it.")
+
+- Not necessary: they are rows 1–2 and 3–4 of one 4 × 8 point-symmetric 2/8 PMOS mirror (PO ×20, P8 ×8, P2 ×2,
+  P0 diode, one dummy as P0's partner); the generator's block() only builds two rows.
+- Given to the sinks-style worker as one cell oa_pmir: R270, rows 1 / 2 and 3 / 4 as R0 / R180 pairs with shared
+  drain bands, 2/8 end dummies at both ends of every row (+8 devices), new file oa_pmir.gds. Library / .cdl at reimport.
+
+## 04:03: oa_pcas (Christoph: "also queue oa_pcas. the transistors should be rotated.")
+
+- Given to the cascode worker (parallel to oa_pmir): one rotated row POC POC P8C POC P0C P2C POC P8C POC (L = 2 for
+  all, W 2 / 0.5 / 1), one merged vpc poly strip, source tracks (co, c8, vpg, c2) on one side, drain tracks (iout,
+  vnc, vpc, vbr) on the other, no dummies; new file oa_pcas.gds.
+
+## 04:07–04:12: oa_misc_p rotated (Christoph: "oa_misc_p needs rotating. which agent?")
+
+- No agent needed: oa_misc_p is identical to bg_misc_p (same netlist apart from the name, original layouts XOR 0).
+  oa_misc_p.gds = the rotated bg_misc_p (`52f37173…`) with the top cell renamed; replaced his export (= library
+  cell). DRC clean, LVS match against the oa_misc_p subckt. sha256 `ec81c155…`. Not reimported.
+- 04:06 (question only): the inner dummy in oa_pmir is P0's point partner (31 units on 32 positions, no centre cell
+  in 4 × 8); keeping it, the alternatives cost more (P0 doubled → ratio 20:2; odd × odd grids; split P0).
+- oa_pcas done 04:10 (cascode worker): one rotated row POC POC P8C POC P0C P2C POC P8C POC, R270 (upright texts),
+  gaps 0.25, one merged vpc poly strip incl. the 0.5 µm P0C, gate columns to the vpc track. Tracks bottom to top
+  vpg, c2, c8, co | row | iout, vnc, vbr, vpc (co / iout innermost). Tabs: 3 Via1 on 2 µm, 2 on P2C and P0C. No dummies.
+  ntap1 ring. 21.5 × 8.5 µm (was 30.2 × 5.0 without ring). DRC clean, LVS match. His export (= library cell, XOR 0)
+  replaced after the worker stopped at the existing file. sha256 `5a38cb70…`. Not reimported.
+- oa_pmir done 04:14 (sinks-style worker): one row cell oa_pmir_row (10 × pmosHV$9 2/8, 2.25 pitch, R270), all four
+  rows R0 (upright texts; the wiring chooses the drain stripe: rows 1, 3 drain at the bottom, 2, 4 at the top).
+  Bottom to top: ring, row 4, band B, row 3, shared vdd plate, row 2, band A, row 1, ring; point-symmetric. Tracks
+  band A co, c8, c2, vpg, band B the 180° image. Drain tabs 0.70 µm / 2 Via1 (two rows' tabs share a 2 µm column).
+  Bands joined per net by four vertical M1 jumpers just outside the left ring side. Inner dummy D–S strapped.
+  28.0 × 42.8 µm (was 2 × 76.8 × 8.0). DRC clean (incl. LU), LVS match. New file oa_pmir.gds, sha256 `6dd9d4f9…`.
+
+## 08:35–08:45: oa_misc_p split (Christoph: "what is oa_misc_p doing?"; "ok good job with oa_misc_p, but this block
+## needs to be broken up.")
+
+- oa_misc_p = PMOS half of oa_core_pd's start-up and power-down: MS1 (0.5/100 as 8 × 0.5/12.5, gate en_3v3_b) trickles
+  current into ks, which opens MS3 to pull vpc down and start the core; MS2 (gate vbr) pulls ks down once running.
+  SVPG (gate en_3v3) pulls vpg to vdd when disabled (PMOS mirror off, iout high-Z). bg_misc_p is the same block.
+- Given to the sinks-style worker: split into <pre>_ms1 (start-up chain, own ntap ring) and <pre>_svpg (switch, own
+  small ntap ring) for oa and bg; new files; library / .cdl swap at reimport.
+- 08:45 correction (Christoph: "NO. NO ntap rings."): the four split cells get no ring or tap, like the tap-less
+  switch cells; bulk on an internal net nw tied by the parent, as in the .cdl for d2s_pd_p; missing-tap DRC accepted.
+- 08:45 cancelled (Christoph: "Or for now, leave the blocks as they are. I'll deal with hand layout later, in
+  context."): oa_misc_p / bg_misc_p stay as delivered; the worker told to stop and deliver nothing.
