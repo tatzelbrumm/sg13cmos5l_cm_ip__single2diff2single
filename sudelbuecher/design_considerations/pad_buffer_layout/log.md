@@ -632,3 +632,234 @@ devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on
 - sinks_6x6_row_bn.gds deleted; no file contains nmosHV_ds any more. Old build scripts removed (container).
 - sinks_6x6: DRC clean, LVS match. sinks_6x6_row alone: LU.b only (the ring is in the parent). sha256 `8e2caf7f…`
   (block), `e0e4d2c0…` (row).
+
+## 01:20–01:30: sinks_6x6 reimported into pad_buffer_cells.gds (Christoph: "your solution is good and needs only
+## minimally more space. Keep it! Good to reimport to pad_buffer_cells.gds. Update the .cdl if necessary.")
+
+- sinks_6x6 now holds sinks_6x6_row (twice) and sinks_6x6_wiring; nmosHV reuses the library's identical cell, the
+  two ring ptap1 variants are new (ptap1$17, ptap1$18). sinks_6x6_r1, sinks_6x6_r2 and their tap ptap1$2 are
+  gone. No other cell changed; instance positions unchanged.
+- The block is now 53.4 × 18.1 µm (was 60.4 × 16.4) with its origin at the lower row's Activ, so in the parents it
+  sits about 8 µm higher. Top cell: no overlap. Fit cells (not repacked): overlaps casc_n / casc_p / tails.
+- pad_buffer_cells.cdl unchanged: its sinks_6x6 subcircuit is the one LVS matched.
+- sinks_6x6 in the library: DRC clean, LVS match. sha256 `434de2e1…`.
+
+## 01:22–01:29: d2s_casc_n rotated, by a background worker (Christoph, 00:38: "start in parallel with d2s_casc_n.gds:
+## transistors rotated by 90 deg (and mirrored? as in sinks_6x6_row)"; "use transistor arrays where you can.")
+
+- First worker (00:42) was cancelled by an interrupt after reading its inputs; restarted 01:22.
+- The four 15/3 cascodes are one 2 × 2 AREF of the exported nmosHV$1, m45 like the sinks; pitch 15.25 (x) × 4.42 (y).
+  Lower row CX CX (bottom stripes x, top l1), upper row CY CY (bottom b, top y). BNC (nmosHV$2, same rotation) stands
+  right of the array: drain to the gate column (diode), source to the ring. Both device cells XOR 0 vs the export.
+- Gate: M1 contact columns on poly tabs, left (21 contacts, vbnc pin) and right (23, also BNC's gate). No thin poly.
+- M2 path tracks (0.29) over the full width: x at y = −0.40, l1 / b at 3.80 / 4.30, y at 8.50; one M1 tab + Via1 per
+  stripe. Pins x / l1 / b / y on M2 at the left edge, vbnc and vss on M1. No dummies (no matching needed).
+- ptap1 ring, flush M1 frame; block 35.3 × 11.5 µm (was 26.3 × 17.6 without a ring).
+- DRC clean, LVS match. sha256 `5cb3fe59…`. Not reimported into pad_buffer_cells.gds.
+
+## 01:29–01:36: d2s_tails, s2d_tails like sinks_6x6, by a background worker (Christoph: "apply the transformations for
+## sinks_6x6, mutatis mutandis, to d2s_tails and s2d_tails.")
+
+- pmosHV$1 (5/6) unmodified (XOR 0 vs the exports), m45, one AREF per row at 5.25 µm pitch (Gat.b1; poly endcaps
+  merge). One row cell per block, R0 lower (.cdl _r2 map, dummies at both ends), R180 upper (_r1 map, dummy + BP).
+- Sources: M1 plate to the ring strip. Drains: one 0.29 µm M1 tab + Via1 each onto its own full-width M2 path track
+  in the band, 0.5 µm pitch from y = 6.90; each row's nets on its own side of the vbp centre track.
+  d2s: sb_B sa_C1 sa_C2 sb_A | vbp | sa_B sb_C1 sb_C2 sa_A. s2d: sb_A2 sa_F1 sa_F2 sb_A1 sb_M1 sa_M2 | vbp |
+  sb_M2 sa_M1 sa_A2 sb_F1 sb_F2 sa_A1.
+- Row ends as in sinks_6x6 (dummy-drain lane, gate columns joined, Via1 to vbp, BP drain to its column). ntap1 ring
+  (vdd), flush M1 frame, one NWell and one ThickGateOx over everything. Pins on M2 left edge, vdd on M1.
+- d2s_tails 35.3 × 21.8 µm (was 45.0 × 14.0), s2d_tails 45.8 × 23.8 µm (was 59.6 × 14.0).
+- DRC clean, LVS match (.cdl unchanged); row cells alone LU.a only. sha256 d2s_tails `a32204a2…`, d2s_tails_row
+  `1a40db34…`, s2d_tails `10256f95…`, s2d_tails_row `3630bea7…`. Not reimported.
+- Open: neighbouring output tracks couple slightly over the full width (shorter tracks would trade off symmetry).
+
+## 01:37: d2s_casc_n common centroid requested (Christoph: "please common centroid: CX CY / CY CX. This will require a
+## little more area and maybe vertical metal1 lines within the guard ring to the left of the 4 big transistors.")
+
+- Given to the background worker: l1 / b stay shared in the band; x / y tracks below and above, joined by two vertical
+  M1 lines inside the ring, left of the array.
+- Done 01:41: lower row CX CY, upper row CY CX, still one 2 × 2 AREF of the unmodified nmosHV$1; row pitch 4.42 → 4.74.
+  Tracks bottom to top: y, x | lower row | l1, b | upper row | y, x. Source tracks in the same order below and above
+  (not mirrored), so x and y each get one short and one long tab. Lower-row tabs 0.5 µm left of the device centre,
+  upper-row tabs 0.5 µm right. x / y joined by two vertical 0.29 µm M1 lines left of the gate column (left ring side
+  out by 0.81). Block 36.1 × 11.9 µm. x / y pins only on the lower tracks.
+- DRC clean, LVS match. sha256 `6c82a781…`. Not reimported.
+
+## 01:48–01:58: d2s_casc_n, d2s_tails, s2d_tails reimported; library re-placed (Christoph: "reintegrate to
+## pad_buffer_cells.gds, and rearrange the cells in pad_buffer_cells.gds so that they don't overlap after their
+## layout changes.")
+
+- Reimported the versions on disk (d2s_casc_n `6c82a781…`, d2s_tails `a32204a2…`, s2d_tails `10256f95…`). Device
+  cells reuse the library's identical nmosHV$1 / $2 and pmosHV$1; the rings' tap variants are new (ptap1$19/$20,
+  ntap1$16 … $19). Old row cells _r1 / _r2 of the tails and their taps are gone. No other primitive changed.
+- Top cell and fit cells re-placed with the generator's own rules (columns with 8 µm gaps, first-fit-decreasing shelf
+  packing in 80 µm, 2 µm gaps); the code reproduces the original generator output exactly. No overlaps left.
+- Fit heights in 80 µm (zone 94 µm), at generation → now: d2s front 94.2 → 79.4, d2s front + caps 98.8 → 94.9,
+  s2d front 136.5 → 123.7 (also with cload), bias / oa / bg 131.1 → 132.8.
+- The three cells in the library: DRC clean, LVS match; pad_buffer_cells.cdl unchanged. sha256 `82309bf8…`.
+
+## 01:53–02:00: d2s_casc_p like d2s_casc_n, by the background worker (Christoph: "apply the transformations, mutatis
+## mutandis, of d2s_casc_n to d2s_casc_p.")
+
+- One 2 × 2 AREF of the unmodified pmosHV$3, pitch 15.25 × 4.74, common centroid PCL PCR / PCR PCL. BPC (pmosHV$4)
+  right of the array as the diode, source to the right ring side.
+- Tracks bottom to top: pr, pl | lower row | l2, a | upper row | pr, pl; pl / pr joined by two vertical M1 lines left
+  of the gate column. Gate columns 22 contacts each. Pins a / l2 / pl / pr on M2 left edge, vbpc and vdd on M1.
+- ntap1 ring (vdd), flush M1 frame; one NWell (0.24 beyond the ring), one ThickGateOx, one pSD. 36.6 × 12.4 µm
+  (was 23.0 × 18.0).
+- DRC clean, LVS match. sha256 `5b05fffb…`. Not reimported.
+- Next for the worker (Christoph, 01:55): s2d_casc_p, then s2d_casc_n, same kind of transformations.
+
+## 02:00–02:05: s2d_casc_p like d2s_casc_p, by the background worker
+
+- One 2 × 3 AREF of the unmodified pmosHV$3, pitch 15.25 × 5.24, point-reflected common centroid LPC LNC DC /
+  DC LNC LPC. BPC right of the array as the diode. Gate columns 24 contacts each.
+- Tracks bottom to top: ln, dd, lp | lower row | voutp, vcmfb, voutn | upper row | ln, dd, lp; vcmfb between the two
+  outputs. Sources joined by three vertical M1 lines (equal length) left of the gate column.
+- ntap1 ring, one NWell / ThickGateOx / pSD. 52.4 × 13.9 µm (was 31.6 × 18.0). Row pitch set by the 0.205 M1 gap of
+  the far tabs to the other row's drain stripe.
+- DRC clean, LVS match. sha256 `3a1b1bdf…`. Not reimported.
+
+## 01:58: s2d_sinks_cmfb requested (Christoph: "s2d_sinks_cmfb needs the attention of an agent that handled
+## sinks_6x6 and similar cells.")
+
+- Given to the tails worker: as sinks_6x6, xc / vbn / yc tracks, dummies at all four row ends, no diode.
+- Done 02:07: unmodified nmosHV, m45, one AREF of 6 per row at 6.25; row cell s2d_sinks_cmfb_row twice (R0 lower =
+  _r2 map dummy SYC SXC SXC SYC dummy, R180 upper = _r1 map dummy SXC SYC SYC SXC dummy). Tracks xc / vbn / yc at
+  6.90 / 7.40 / 7.90, shared by both rows; dummy lanes at all four ends; gate columns joined, Via1 to vbn. Device
+  labels in the wiring cell (the two row maps are not 180° images of each other). 40.9 × 18.1 µm (was 45.9 × 16.4).
+- DRC clean, LVS match; row alone LU.b only. sha256 s2d_sinks_cmfb `c98cc576…`, s2d_sinks_cmfb_row `cf7805ed…`.
+  Not reimported.
+
+## 02:05–02:12: s2d_casc_n like d2s_casc_n, by the background worker
+
+- One 2 × 4 AREF of the unmodified nmosHV$1, pitch 15.25 × 5.74, point-reflected common centroid with the main pair
+  inside: CXC CX CY CYC / CYC CY CX CXC. BNC right of the array as the diode. Gate columns 25 contacts each.
+- Tracks bottom to top: y, yc, xc, x | lower row | vdd, vcmfb, voutp, voutn | upper row | y, yc, xc, x; neither
+  output next to vdd (vcmfb then neighbours only voutp). Sources joined by four equal vertical M1 lines.
+- ptap1 ring, one ThickGateOx. 67.7 × 14.9 µm (was 43.5 × 17.6).
+- DRC clean, LVS match. sha256 `9c0c841f…`. Not reimported.
+
+## 02:02–02:10: d2s_casc_p upright PCells, BPC in line, dummy (Christoph: "the pcell transistors are all upside down.
+## ... the small transistor to the right sits in the vertical center, so its gate is crossed by metal2. Maybe better
+## to move it in line with one row of the large transistors. For symmetry, one could add a dummy transistor to the
+## other row.")
+
+- Devices R270 shifted by W in y instead of m45: same polygons on every layer, PCell texts upright.
+- BPC on the lower row's centre line (diode, source to the right ring side); dummy pmosHV$4 on the upper row's
+  centre line, gate vbpc, D / S to vdd (ring). Row pitch 4.74 → 4.94 (BPC-dummy gap 0.26); 36.6 × 13.6 µm.
+- All M2 tracks end flush with the right gate column, so no metal over BPC or dummy.
+- DRC clean, LVS match against the .cdl plus "Md2s_casc_p_dummy_5 vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u"
+  (library .cdl to be updated at reimport). sha256 `d17e459d…`.
+- Aligning BPC / dummy with the rows' outer edges instead of the centre lines would save about 1 µm of height.
+
+## 02:05–02:14: d2s_loads as one sinks-style row, by the background worker (Christoph: "d2s_loads needs attention of
+## the agent that has handled or is handling similar layouts ... single row sinks.")
+
+- Unmodified pmosHV$2 (6/4), R270 (upright texts), one AREF of 10 at 6.25 (Gat.b1). Sources to an M1 plate on the
+  ntap1 ring's bottom strip. Drains: one centred 0.29 µm M1 tab each up to full-width M2 tracks pl / l2 / pr at
+  4.90 / 5.40 / 5.90; all tabs equally long; l2 between the outputs, gate columns (11 contacts) via1 to it at both ends.
+- Dummy-drain lanes at both ends; ntap1 ring, one NWell / ThickGateOx. 66.3 × 9.1 µm (was 53.4 × 9.0).
+- DRC clean, LVS match. The worker could not reach the computer (02:13); committed afterwards. sha256 `a5c70237…`.
+
+## 02:20: drain tabs to 3 Via1 (Christoph: "unnecessarily narrow drain connections with only one via from metal1 to
+## metal2 ... wide enough drain metal1 connections to allow for 3 vias in a row, where the drains are wide enough.")
+
+- Tabs about 1.11 µm wide (3 × 0.19 Via1 + 2 × 0.22 + 2 × 0.05 enclosure), 3 Via1 onto the track.
+- Sinks-style worker: sinks_6x6, d2s_tails, s2d_tails, s2d_sinks_cmfb, d2s_loads. Cascode worker (source tabs too):
+  d2s_casc_n, d2s_casc_p, s2d_casc_p, s2d_casc_n.
+- Cascodes done 02:26: every drain and source tab 1.11 µm with 3 Via1 at 0.41 pitch; band offsets ∓0.5 → ∓0.75 from
+  the device centre (crossing tabs 0.39 apart). Tab ends 0.105 past the track centre (was 0.145) so the wide tabs keep
+  0.245 to the other row's stripe (M1.e 0.22 for width > 0.3). Sizes unchanged; XOR only M1 / Via1 inside the tabs.
+  DRC clean, LVS match. sha256 d2s_casc_n `63111115…`, d2s_casc_p `50fdc580…`, s2d_casc_p `16fb4e74…`,
+  s2d_casc_n `56e4ff96…`.
+- Sinks-style blocks done 02:33: d2s_tails, s2d_tails all drains 1.11 µm / 3 Via1. sinks_6x6, s2d_sinks_cmfb half the
+  drains and d2s_loads all drains got only 2 Via1 on 0.70 µm tabs (M1.e 0.22 against 0.18 / 0.185 clearances).
+  Sizes unchanged, XOR only in the tabs. DRC clean, LVS match. sha256 sinks_6x6 `240efbbd…`, d2s_tails `94944177…`,
+  s2d_tails `f85133ba…`, s2d_sinks_cmfb `7fc02aa1…`, d2s_loads `37626712…`.
+- Follow-up given (02:34): the cascode worker's shorter tab ends (0.105 past the track centre, V1.c 0.01) gain the
+  missing 0.04, so 3 Via1 everywhere in sinks_6x6, s2d_sinks_cmfb, d2s_loads.
+- Done 02:43: all drains in sinks_6x6, s2d_sinks_cmfb, d2s_loads now 1.11 µm / 3 Via1. The tab ends already were
+  0.01 past the vias, so the margin came from M2: on the former 2-via tabs the via row moves 0.035 / 0.04 into the
+  track (M2.c 0.005 on the track's long side) and the tab end with it, leaving exactly M1.e 0.22. Tracks, rows, ring
+  unchanged; XOR only M1 / Via1 in the tab zone. DRC clean, LVS match. sha256 sinks_6x6 `96d36a44…`,
+  s2d_sinks_cmfb `a88a25fd…`, d2s_loads `e9506e3d…`.
+
+## 02:30–02:40: bg_misc_p transistors turned, first stab by the sinks-style worker (Christoph: "the transistors of
+## bg_misc_p need to be turned by ±90 degrees ... at least for a preliminary stab.")
+
+- Unmodified device cells, R270 (upright texts). MS1 chain: one AREF of 8 at 0.75 pitch (Gat.b1), 12.5 µm gates
+  vertical, one merged en_3v3_b poly strip with contact columns (36 contacts) at both ends. Series meander in M1:
+  vdd at device 0 top, ms1 … ms7 alternately linking bottom / top stripes of neighbours, ks at device 7 top.
+- SVPG at the bottom right, own en_3v3 gate contact. ntap1 ring, one NWell / ThickGateOx. All pins on M1.
+- 12.0 × 17.1 µm (was 58.2 × 5.5). DRC clean, LVS match. sha256 `52f37173…`. Not reimported.
+- Open: SVPG below the chain would give about 9.5 × 19; the right side has about 12 µm unused next to SVPG.
+
+## 02:34: bg_nab rotated? (question only)
+
+- Estimated: full 10 µm dummies → about 65 × 10 µm; dummies W ≈ 2 µm (same L, Activ height and gap, so the outer
+  devices see the same near environment at their W ends) → about 49 × 10 µm (now 31.6 × 12.6). Not started.
+
+## 02:35–02:45: bg_nab rotated, 2 µm dummies, by the sinks-style worker (Christoph: "Yes, queue it.")
+
+- One row dummy NA NB NB NA dummy, R270 (upright texts). NA / NB the unmodified nmosHV$10 (10/4) at 10.25 pitch;
+  dummies a fresh SG13_dev nmosHV w=2u l=4u (same Activ height and L), all gaps 0.25, one merged g poly strip.
+- Tracks: above g (4.90), vpc (5.40); below eb (−0.22), ea (−0.72): alternating order, so NA and NB each get one short
+  and one long tab. 1.11 µm tabs with 3 Via1, centred. Gate columns (11 contacts) via1 to the g track. Dummy stripes
+  straight in M1 to the ring strips. ptap1 ring, one ThickGateOx.
+- 48.9 × 8.2 µm (was 31.6 × 12.6). DRC clean, LVS match against the .cdl with w=2u dummies. New file bg_nab.gds,
+  sha256 `a41113ca…`. At reimport: dummy cell needs a unique name; library .cdl dummies → w=2u.
+
+## 02:36: bg_pcas, bg_pmir (question only)
+
+- Rotated rows of 9 × 10/1 would be ~96 µm wide (zone 80). Options given: (1) keep orientation, gate-head contacts,
+  M1 gate bus, M2 tracks over the rows, end dummies, ring; (2) rotate and fold into 4 rows (~49 × 18); (3) merge
+  bg_pmir + bg_pcas as in-line cascodes sharing the co / ca / vpg stripe (~33 × 30 for both). Waiting for a choice.
+
+## 02:41: bg_pmir_pcas (Christoph: "Go with option 3. create bg_pmir_pcas.")
+
+- Given to the cascode worker: R0 kept; each column = mirror and cascode pmosHV$14 (10/1) placed so they share the
+  ca / co / vpg stripe (unmodified PCells, overlapping placement); 2 × 10 columns, dummy stacks at both ends of both
+  rows (one more per row than today); gate contacts on the 1 µm gate heads, no poly stubs or bars. ca / co are only
+  wires between PA / PAC and PO / POC in bg_core_pd.sch, so they become internal; ports g iout vdd vpc vpg.
+  Reference subckt in the container (/opt/eda/bgpp/ref.cdl); the library .cdl gets it at reimport.
+
+## 02:44: bias_tree_n, bias_tree_p rotated (Christoph: "It is probably sufficient to use copies of the narrow transistor
+## as dummies, or the narrow transistor on one side and a narrow dummy on the other. Extract them from pad_buffer_cells
+## if they aren't already to work on them.")
+
+- Extracted from pad_buffer_cells.gds (`82309bf8…`); no exports existed. Chosen: narrow device at one end, narrow
+  dummy at the other: n = NBPC(2.4/6) NBP NI NABP dummy(2.4/6), p = PBNC(2/6) PBN PABN dummy(2/6), replacing the two
+  wide dummies each. Given to the sinks-style worker (R270, one row, abutted gates, 3-via tabs, rings); new files
+  bias_tree_n.gds, bias_tree_p.gds. Library .cdl to change at reimport.
+- Done 02:50: one row each, R270, unmodified cells (dummy = the narrow device's cell), gaps 0.25, one merged gate
+  strip, gate columns (17 contacts) via1 to the gate track (n: ni, so NI closes through its drain; p: extra vbp track).
+  Drains 1.11 µm / 3 Via1 (narrow devices too), all tabs to the top track (matched devices equal). Tracks bottom to top
+  n: ni vbp vabp vbpc; p: vbp vbn vabn vbnc. bias_tree_n 27.4 × 11.1 (was 43.6 × 8.6), bias_tree_p 18.8 × 11.6
+  (was 37.0 × 8.0). DRC clean, LVS match. sha256 `d8ca188a…`, `c64471ee…`. Not reimported.
+- Done 02:52: 2 × 10 stacks at 3.40 pitch, R0 (r2 R0 too, upright texts), cascode 1.38 right of the mirror so its
+  source stripe lands on the mirror's drain stripe (contacts coincide). Gate heads 1 µm wide, 2 contacts, 2 Via1:
+  vpg heads at the outer row ends, vpc heads in the band. M2 tracks bottom to top: ca co vpg | r2 | g vpc iout | r1 |
+  vpg co ca, outer pairs joined by three vertical M1 lines left of the array. No metal over channels.
+- co / ca kept as single nets (as in bg_core_pd.sch), each shared stripe up to its track: costs about 2 µm height vs.
+  per-stack internal nodes (a netlist change). Out stripes 1 Via1 each (0.16 stripes between head pads).
+- 38.6 × 27.6 µm (bg_pmir + bg_pcas today 1152 µm² without full rings). DRC clean, LVS match (40 devices). New file
+  bg_pmir_pcas.gds, sha256 `c462bf92…`. Library .cdl needs the combined subckt at reimport.
+
+## 03:03–03:25: all reworked cells reimported; library re-placed (Christoph: "reimport all the gds files you and your
+## agents have worked on back into pad_buffer_cells. as you put them back, rearrange them to avoid overlaps and try
+## to improve the fit into the pad area. Make me a table ...")
+
+- Compared every block gds in klayout/ with the library: 13 changed + bg_pmir_pcas new were reimported (sinks_6x6,
+  d2s_tails, s2d_tails, d2s_casc_n, d2s_casc_p, s2d_casc_p, s2d_casc_n, s2d_sinks_cmfb, d2s_loads, bg_misc_p, bg_nab,
+  bias_tree_n, bias_tree_p); the rest already matched. bg_pmir and bg_pcas removed from the library (replaced by
+  bg_pmir_pcas; their gds files in klayout/ are untouched). Identical leaf cells keep their names; only the reworked
+  blocks' own row / wiring / ring cells changed.
+- pad_buffer_cells.cdl by hand: d2s_casc_p (+ dummy), bg_nab (2/4 dummies), bias_tree_n / _p (narrow dummies),
+  bg_pmir + bg_pcas → bg_pmir_pcas (39 subckts).
+- Top cell: generator columns (no overlaps by construction). Fit cells: the lower of the generator's shelf packing
+  and a skyline bottom-left packing over 4000 orders, no rotation. Heights in 80 µm (zone 94): d2s front 75.6 (shelf
+  85.2), d2s front + caps 87.9 (96.6), s2d front 138.6 (also with cload), bias / oa / bg 106.3 (114.6). No overlaps.
+- s2d cannot fit as is: its bounding boxes alone need 87.2 µm of height in 80 µm, and seven of its primitives are
+  41 … 75 µm wide; with 90° rotation allowed it would be 107.5.
+- All 14 reimported cells in the library: DRC clean, LVS match. sha256 gds `da6ac38a…`, cdl `b470a10b…`.

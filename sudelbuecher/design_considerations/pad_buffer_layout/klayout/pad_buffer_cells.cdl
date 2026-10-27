@@ -3,6 +3,8 @@
 * 2026-10-26: d2s_pd_n, s2d_pd_n, d2s_pd_p, s2d_pd_p, bias_tree_sw edited by hand for the compact,
 * tap-less versions (Christoph); pad_buffer_cells.py does not produce them yet.
 * 2026-10-26: bg_res added by hand for the wired, ring-guarded bg_res.gds (not yet in pad_buffer_cells.gds).
+* 2026-10-27: by hand for the reworked cells: d2s_casc_p (+ BPC-row dummy), bg_nab (2/4 dummies), bias_tree_n / _p
+*   (narrow dummies replace the wide ones), bg_pmir + bg_pcas merged into bg_pmir_pcas (in-line stacks, +2 dummy stacks).
 
 .SUBCKT bg_misc_n en_3v3_b g ks vpc vss
 Mbg_misc_n_MS2_0 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
@@ -23,55 +25,58 @@ Mbg_misc_p_r2_SVPG_4 vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
 .ENDS bg_misc_p
 
 .SUBCKT bg_nab ea eb g vpc vss
-Mbg_nab_dummy_0 vss g vss vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mbg_nab_dummy_0 vss g vss vss sg13_hv_nmos w=2u l=4u ng=1 m=1
 Mbg_nab_NA_1 g g ea vss sg13_hv_nmos w=10u l=4u ng=1 m=1
 Mbg_nab_NB_2 vpc g eb vss sg13_hv_nmos w=10u l=4u ng=1 m=1
 Mbg_nab_NB_3 vpc g eb vss sg13_hv_nmos w=10u l=4u ng=1 m=1
 Mbg_nab_NA_4 g g ea vss sg13_hv_nmos w=10u l=4u ng=1 m=1
-Mbg_nab_dummy_5 vss g vss vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mbg_nab_dummy_5 vss g vss vss sg13_hv_nmos w=2u l=4u ng=1 m=1
 .ENDS bg_nab
 
-.SUBCKT bg_pcas ca co g iout vdd vpc vpg
-Mbg_pcas_r1_POC_0 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r1_PAC_1 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r1_POC_2 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r1_PAC_3 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r1_PBC_4 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r1_POC_5 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r1_PBC_6 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r1_POC_7 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r1_dummy_8 vdd vpc vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r2_dummy_0 vdd vpc vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r2_POC_1 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r2_PBC_2 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r2_POC_3 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r2_PBC_4 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r2_PAC_5 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r2_POC_6 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r2_PAC_7 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pcas_r2_POC_8 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-.ENDS bg_pcas
 
-.SUBCKT bg_pmir ca co vdd vpg
-Mbg_pmir_r1_PO_0 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r1_PA_1 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r1_PO_2 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r1_PA_3 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r1_PB_4 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r1_PO_5 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r1_PB_6 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r1_PO_7 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r1_dummy_8 vdd vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r2_dummy_0 vdd vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r2_PO_1 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r2_PB_2 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r2_PO_3 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r2_PB_4 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r2_PA_5 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r2_PO_6 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r2_PA_7 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-Mbg_pmir_r2_PO_8 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
-.ENDS bg_pmir
+.SUBCKT bg_pmir_pcas g iout vdd vpc vpg
+* bg_pmir + bg_pcas as in-line stacks (mirror and cascode share the ca / co / vpg diffusion); one more dummy stack per row
+Mbg_pmir_pcas_M_r1_PO_0 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r1_PA_1 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r1_PO_2 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r1_PA_3 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r1_PB_4 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r1_PO_5 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r1_PB_6 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r1_PO_7 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r1_dummy_8 vdd vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_dummy_0 vdd vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_PO_1 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_PB_2 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_PO_3 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_PB_4 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_PA_5 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_PO_6 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_PA_7 ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_PO_8 co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_POC_0 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_PAC_1 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_POC_2 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_PAC_3 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_PBC_4 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_POC_5 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_PBC_6 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_POC_7 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_dummy_8 vdd vpc vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_dummy_0 vdd vpc vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_POC_1 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_PBC_2 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_POC_3 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_PBC_4 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_PAC_5 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_POC_6 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_PAC_7 g vpc ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_POC_8 iout vpc co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r1_dummy_e vdd vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r1_dummy_e vdd vpc vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_M_r2_dummy_e vdd vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_C_r2_dummy_e vdd vpc vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+.ENDS bg_pmir_pcas
 
 .SUBCKT bg_res e2 ea eb vss
 * bandgap R0 (eb-e2, 18 x 9.94 um), R1A (ea-vss, 11), R1B (eb-vss, 10) as series rhigh segments,
@@ -120,20 +125,20 @@ Rbg_res_dummy_1 vss vss vss rhigh w=0.5u l=9.94u m=1 b=0
 .ENDS bg_res
 
 .SUBCKT bias_tree_n ni vabp vbp vbpc vss
-Mbias_tree_n_dummy_0 vss ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+* rotated row: narrow NBPC at one end, narrow dummy at the other (replaces the two 6/6 dummies)
+Mbias_tree_n_NBPC_0 vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
 Mbias_tree_n_NBP_1 vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
 Mbias_tree_n_NI_2 ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
 Mbias_tree_n_NABP_3 vabp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
-Mbias_tree_n_dummy_4 vss ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
-Mbias_tree_n_NBPC_5 vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+Mbias_tree_n_dummy_4 vss ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
 .ENDS bias_tree_n
 
 .SUBCKT bias_tree_p vabn vbn vbnc vbp vdd
-Mbias_tree_p_dummy_0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+* rotated row: narrow PBNC at one end, narrow dummy at the other (replaces the two 5/6 dummies)
+Mbias_tree_p_PBNC_0 vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
 Mbias_tree_p_PBN_1 vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
 Mbias_tree_p_PABN_2 vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
-Mbias_tree_p_dummy_3 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
-Mbias_tree_p_PBNC_4 vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+Mbias_tree_p_dummy_3 vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
 .ENDS bias_tree_p
 
 .SUBCKT bias_tree_sw en_3v3 en_3v3_b iref ni vss
@@ -176,6 +181,7 @@ Md2s_casc_p_PCR_1 a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
 Md2s_casc_p_PCR_2 a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
 Md2s_casc_p_PCL_3 l2 vbpc pl vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
 Md2s_casc_p_BPC_4 vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+Md2s_casc_p_dummy_5 vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
 .ENDS d2s_casc_p
 
 .SUBCKT d2s_cma a vout
