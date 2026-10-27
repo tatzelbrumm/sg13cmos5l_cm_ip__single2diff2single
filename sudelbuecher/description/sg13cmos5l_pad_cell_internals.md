@@ -2,6 +2,8 @@
 
 Compiled from IHP's actual PCell source (`bondpad_code.py`, both the SG13G2 and SG13CMOS5L copies) and the `sg13cmos5l_io.cdl` netlist, cross-checked against the local PDK checkout under `EDA/heichips26-analog-workshop/IHP-Open-PDK/ihp-sg13cmos5l/` and the project's own `ip/sg13cmos5l_ip__bondpad_70x70/` wrapper. Written for use in `sg13cmos5l_cm_ip__single2diff2single`.
 
+**Correction, 2026-10-27.** Checked against the PDK in use: iic-jku/IHP-Open-PDK dev `a49358c` (2026-10-15), the `COMMIT` of the IIC-OSIC-TOOLS container on DoctorEvil. Its `sg13cmos5l_io` `.spice`, `.cdl` and `.gds` are byte-identical to IHP-GmbH dev `0488153` (local checkout `~/EDA/IHP-Open-PDK`) and to iic-jku dev `c271a7e` (the cloud CACE runs). Corrected below: the pin order of `IOPadAnalog` and the CDL excerpts of `IOPadAnalog` and `SecondaryProtection` in section 2. Not rewritten, but out of date for this PDK: there is no `sg12g2_Gallery` subcircuit (45 subcircuits, all `sg13cmos5l_*`); there is no `*.GLOBAL sub!` line, commented or not (`sub!` is still never declared global); `LevelDown` is `core pad iovdd iovss vdd vss`, with two hv inverters on `iovdd` / `iovss` (MP3 / MN4, MP2 / MN3) after the secondary protection, an hv NMOS pair on the core side (MN2 from `vss`, MN0 to `vdd`) and then the `sg13_lv` inverter. Section 2's description of the first stage as hv devices on the 1.2 V rails no longer holds; hv devices on the core rails remain only in the pair MN2 / MN0. Section 1 (the `bondpad` PCell) was not re-checked.
+
 ## 1. The `bondpad` PCell (`SG13_dev` library, KLayout PyCell)
 
 File: `libs.tech/klayout/python/sg13cmos5l_pycell_lib/ihp/bondpad_code.py` (a **separate, hand-ported copy** of the SG13G2 file, not a symlink — the two can and do diverge; PR #1072 on IHP-Open-PDK had to fix the same bug in both files independently).
@@ -43,28 +45,31 @@ Full cell list, naming convention identical to SG13G2's `sg13g2_io` (just prefix
 
 **`IOPadAnalog`: `pad` and `padres` are not the same net — connect your circuit to `padres`.**
 ```
-.SUBCKT sg13cmos5l_IOPadAnalog iovdd iovss pad padres vdd vss
-  XI9 iovdd iovss pad / sg13cmos5l_Clamp_P20N0D
-  XI3 iovss pad iovdd / sg13cmos5l_DCNDiode
+.SUBCKT sg13cmos5l_IOPadAnalog pad padres vdd vss iovdd iovss
+  XI0 iovdd iovss pad / sg13cmos5l_Clamp_P20N0D
+  XI5 iovss pad iovdd / sg13cmos5l_DCNDiode
   XI2 pad iovdd iovss / sg13cmos5l_DCPDiode
-  XI6 padres iovss pad iovdd / sg13cmos5l_SecondaryProtection
-  XI8 iovss pad / sg13cmos5l_Clamp_N20N0D
+  XI3 padres iovss pad iovdd / sg13cmos5l_SecondaryProtection
+  XI4 iovss pad / sg13cmos5l_Clamp_N20N0D
+  XR0 vss sub! ptap1 ...
+  XR1 iovss sub! ptap1 ...
 ```
 `SecondaryProtection` itself is:
 ```
 .SUBCKT sg13cmos5l_SecondaryProtection core minus pad plus
   RR0 pad core 586.899 ... rppd ...      ' series resistor, pad -> core
-  DD0 sub! core dantenna ...
-  XR1 minus sub! / ptap1 ...
-  DD1 core plus dpantenna ...
+  DD1 sub! core dantenna ...
+  XR1 minus sub! ptap1 ...
+  DD0 core plus dpantenna ...
 ```
-called as `XI6 padres iovss pad iovdd / sg13cmos5l_SecondaryProtection` — i.e. `padres` = the block's `core` terminal, sitting behind a **~587 Ω series resistor** from the actual bond pad, with its own secondary diode clamps to `iovdd`/`iovss`. `pad` is the primary-ESD/bond-wire node; `padres` is the RC-filtered, secondarily-clamped node your internal circuit should actually connect to. Tying your input to `pad` directly bypasses the secondary protection stage entirely; tying to `padres` puts ~587 Ω of series resistance in your signal path, which is probably non-negligible for a differential front-end's input impedance/noise budget and worth including explicitly in your hand calculations or extracted-parasitic sims, not just assumed away as "the pad." This exact same split exists in SG13G2's `IOPadAnalog` too, so it's an IHP-wide convention, not CMOS5L-specific.
+called as `XI3 padres iovss pad iovdd / sg13cmos5l_SecondaryProtection` — i.e. `padres` = the block's `core` terminal, sitting behind a **~587 Ω series resistor** from the actual bond pad, with its own secondary diode clamps to `iovdd`/`iovss`. `pad` is the primary-ESD/bond-wire node; `padres` is the RC-filtered, secondarily-clamped node your internal circuit should actually connect to. Tying your input to `pad` directly bypasses the secondary protection stage entirely; tying to `padres` puts ~587 Ω of series resistance in your signal path, which is probably non-negligible for a differential front-end's input impedance/noise budget and worth including explicitly in your hand calculations or extracted-parasitic sims, not just assumed away as "the pad." This exact same split exists in SG13G2's `IOPadAnalog` too, so it's an IHP-wide convention, not CMOS5L-specific.
 
-**Pin order for `IOPadAnalog` differs between the two PDKs — a real trap for positional instantiation.**
+**Pin order for `IOPadAnalog`: in the PDK in use it equals SG13G2's, but it has changed between PDK revisions — a real trap for positional instantiation.**
 - SG13G2: `.SUBCKT sg13g2_IOPadAnalog pad padres vdd vss iovdd iovss`
-- SG13CMOS5L: `.SUBCKT sg13cmos5l_IOPadAnalog iovdd iovss pad padres vdd vss`
+- SG13CMOS5L, PDK in use (iic-jku dev `a49358c`): `.SUBCKT sg13cmos5l_IOPadAnalog pad padres vdd vss iovdd iovss`
+- SG13CMOS5L, other revisions seen in this project: `iovdd iovss pad padres vdd vss` (as quoted in the first version of this document, 2026-09-17), and `vss vdd iovss iovdd pad padres` (`sg13cmos5l_io.spi` generated 2024-05-27, copy in `sudelbuecher/sg13cmos5l_IOPadInOut30mA/`)
 
-Same cell, same function, **different terminal order**. If any tooling, template, or hand-written testbench instantiates this by position (common in raw SPICE, easy to carry over by copy-paste from an SG13G2 example) rather than by name, switching between the two PDKs will silently cross-wire `vdd`/`vss` with `iovdd`/`iovss`/`pad`. Worth grep'ing your own `.spice`/`.cir` files for any positional (non-keyword) instantiation of `IOPadAnalog` before trusting a simulation that mixes reference material from both process variants.
+Same cell, same function, **different terminal orders across revisions**. If any tooling, template, or hand-written testbench instantiates this by position (common in raw SPICE, easy to carry over by copy-paste from another revision or from an SG13G2 example) rather than by name, a PDK update will silently cross-wire `vdd`/`vss` with `iovdd`/`iovss`/`pad`. Check the `.SUBCKT` line of the PDK in use (`$PDK_ROOT/ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/cdl/sg13cmos5l_io.cdl`) before trusting a positional instantiation. The same holds for `Clamp_N20N0D`: `iovss pad` in the PDK in use, `iovss iovdd pad` in the 2024 file.
 
 **`LevelDown`'s two-stage structure — why you'll see HV devices biased off the core rails.**
 ```
@@ -85,3 +90,4 @@ First stage is built from **thick-oxide (`sg13_hv_*`) devices** but powered from
 - `ihp-sg13g2/libs.tech/klayout/python/sg13g2_pycell_lib/ihp/bondpad_code.py` and `ihp-sg13g2/libs.ref/sg13g2_io/cdl/sg13g2_io.cdl` (via github.com/IHP-GmbH/IHP-Open-PDK)
 - github.com/IHP-GmbH/IHP-Open-PDK issue #1109 ("KLayout PyCells use inconsistent and undocumented cell-origin conventions") and PR #1072 ("KLayout PyCell bondpad: Fixed evaluation of parameter fill")
 - Project files: `ip/sg13cmos5l_ip__bondpad_70x70/{README.md,script/bondpad.py}`, `macros/IOPad/schematic/xschem/*`
+- Correction of 2026-10-27: `ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/{spice,cdl,gds}` at iic-jku/IHP-Open-PDK `a49358c` (fetched by commit from GitHub), identical to IHP-GmbH/IHP-Open-PDK dev `0488153` and iic-jku `c271a7e`

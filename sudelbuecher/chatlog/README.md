@@ -89,3 +89,6 @@
 
 [2026-10-26_fable_pad_buffer_alternatives.md](2026-10-26_fable_pad_buffer_alternatives.md)
 : Fable session, 26 Oct: literature search for smaller, faster, wider-range alternatives to the source-degenerated pad buffers, preferably without poly resistors (four parallel searches, reports saved verbatim), synthesized in `design_considerations/pad_buffer_alternatives/alternatives.md`; then a simulated study of a series pad resistor R_s with the feedback before or after it (`series_resistor.md`, decks and results in `sim/`) and a brainstorm of unconventional pad buffers; running log `log.md`; the chat log was built by the export script of the same folder.
+
+[2026-10-27_opus_iopaddiff2single_build.md](2026-10-27_opus_iopaddiff2single_build.md)
+: Opus session, 27 Oct: `sg13cmos5l_IOPadDiff2Single` from the design considerations into the macro of the main repository (layout and netlist); decisions: reference cores into the slot (one current from the slot into the pad), a cell-library GDS shared by both pads bound through `.klay.klib`, the layout-driven netlist changes; running log in `sg13cmos5l_IOPadDiff2Single_build/log.md`.

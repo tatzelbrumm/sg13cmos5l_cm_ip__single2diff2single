@@ -946,3 +946,13 @@ devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on
   switch cells; bulk on an internal net nw tied by the parent, as in the .cdl for d2s_pd_p; missing-tap DRC accepted.
 - 08:45 cancelled (Christoph: "Or for now, leave the blocks as they are. I'll deal with hand layout later, in
   context."): oa_misc_p / bg_misc_p stay as delivered; the worker told to stop and deliver nothing.
+
+## 09:03–09:15: staged cells pulled back into pad_buffer_cells.gds (Christoph deleted the oa_pmir_a / _b exports;
+## "pull these back in in their preliminary state": bg_misc_p, d2s_loads, oa_misc_p, oa_pcas, oa_pmir, s2d_loads,
+## s2d_loads_row, s2d_sinks_cmfb, s2d_sinks_cmfb_row)
+
+- d2s_loads, s2d_loads, s2d_sinks_cmfb (with rows) were already in the library at these versions. Reimported:
+  oa_misc_p and bg_misc_p as on disk (`c4b6d572…`, `0f51faf6…`: his note "NEEDS TO BE BROKEN UP" on 63/0 added,
+  geometry unchanged), oa_pcas (`5a38cb70…`), oa_pmir (`6dd9d4f9…`). oa_pmir_a / oa_pmir_b removed from the library.
+- .cdl: oa_pmir replaces oa_pmir_a / oa_pmir_b (38 subckts). Re-placed, no overlaps; bias / oa / bg fit 102.3 µm.
+- The four cells in the library: DRC clean, LVS match. sha256 gds `fe2c540f…`, cdl `52fb7fad…`.

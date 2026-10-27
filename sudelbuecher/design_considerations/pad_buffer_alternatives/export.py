@@ -4,6 +4,8 @@
 Emits, in file order along the live parentUuid chain: user text blocks (system reminders and
 file-delivery notices stripped), visible assistant text blocks, and tool calls as *[ ]* summaries
 (tool name + first line of the main argument cut at 150 chars, plus tool errors).
+AskUserQuestion is shown to the user, so its questions and options and the user's answers are verbatim.
+Messages the user sends while a turn runs (queued_command attachments) are user turns, marked "sent mid-turn".
 Thinking blocks are never read into the output; a final check asserts no 40-char window of any
 thinking block occurs in the file, and that every user/assistant text occurs verbatim.
 Usage: export.py <transcript.jsonl> <out.md> <header.md> [--until N]
@@ -53,6 +55,13 @@ def summary(tu):
     if len(first) > 150: first = first[:150] + "…"
     if name == "SendUserMessage":
         return "**Assistant (message sent mid-work):** " + inp.get("message", "")
+    if name == "AskUserQuestion":
+        out = ["**Assistant (questions asked):**"]
+        for q in inp.get("questions", []):
+            out.append("- " + q.get("question", ""))
+            for o in q.get("options", []):
+                out.append("  - " + o.get("label", "") + (": " + o["description"] if o.get("description") else ""))
+        return "\n".join(out)
     return f"*[{name}: `{first}`]*" if key in ("command", "pattern", "query") else f"*[{name}: {first}]*"
 
 def main():
@@ -91,10 +100,21 @@ def main():
                             lines += [t, ""]; continue
                         if t:
                             turn += 1; lines += [f"## Turn {turn} — {ts(r)}", "", "**User:** " + t, ""]; user_texts.append(t)
+                    elif b.get("type") == "tool_result" and isinstance(r.get("toolUseResult"), dict) \
+                            and "answers" in r["toolUseResult"] and not b.get("is_error"):
+                        ans = r["toolUseResult"]["answers"]
+                        t = "\n".join(f"- {q} → {a}" for q, a in ans.items())
+                        turn += 1; lines += [f"## Turn {turn} — {ts(r)}", "", "**User (answers):**", t, ""]
+                        user_texts.extend(ans.values())
                     elif b.get("type") == "tool_result" and b.get("is_error"):
                         cc = b.get("content"); e = cc if isinstance(cc, str) else " ".join(x.get("text", "") for x in cc or [])
                         e = e.strip().split("\n")[0][:200]
                         lines += [f"*[error: {e}]*", ""]
+        elif r["type"] == "attachment" and (r.get("attachment") or {}).get("type") == "queued_command":
+            p = r["attachment"].get("prompt")
+            t = strip_user(p if isinstance(p, str) else "\n".join(x.get("text", "") for x in p or [] if isinstance(x, dict)))
+            if t:
+                turn += 1; lines += [f"## Turn {turn} — {ts(r)} (sent mid-turn)", "", "**User:** " + t, ""]; user_texts.append(t)
         elif r["type"] == "assistant":
             for b in c or []:
                 if b.get("type") == "text" and b["text"].strip():
