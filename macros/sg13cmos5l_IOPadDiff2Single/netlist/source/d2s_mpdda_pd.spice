@@ -30,7 +30,7 @@ XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1
 XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
 XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
 XOP vout a vddo vddo sg13_hv_pmos w=546.12u l=0.6u ng=82
-XON vout b vsso vsso sg13_hv_nmos w=290.4u l=1u ng=66
+XON vout b vsso vsso sg13_hv_nmos w=299.2u l=1u ng=68
 XCMA vout a vout vout sg13_hv_pmos w={wc} l={lc} ng=1
 XCMB b vout b b sg13_hv_pmos w={wc} l={lc} ng=1
 * --- disable switches: output gates to their own rails, class-AB lines off
