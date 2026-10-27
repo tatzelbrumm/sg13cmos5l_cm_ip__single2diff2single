@@ -1,0 +1,44 @@
+--- a/scripts/pcells/clamp_base_code.py
++++ b/scripts/pcells/clamp_base_code.py
+@@ -107,6 +107,13 @@
+         specs('l', '0.6u', 'Gate length')
+         specs('frame', 'fit', "Guard rings: fit = wrap the array, 80u = IHP's fixed 80 um frame, array centred",
+               ChoiceConstraint(['fit', '80u']))
++        # PROTOTYPE (untested here: no cni): class-AB replica carved out of the array, pin 'rep'
++        specs('rep', 'none', "Replica: none, pair = both gates of one drain (S-G-D-G-S), "
++              "single = one gate + a dummy (gate on the rail) at that drain",
++              ChoiceConstraint(['none', 'pair', 'single']))
++        specs('rep_at', 'centre', "Replica drain column: centre, end, or an index (0 = leftmost)")
++        specs('rep_side', 'auto', "single: which gate of the drain is the replica",
++              ChoiceConstraint(['auto', 'L', 'R']))
+         specs('Lmin', techparams[cls.MIN_L[cls.FAMILY]], 'Lmin')
+ 
+     def setupParams(self, params):
+@@ -114,12 +121,17 @@
+         self.l = int(round(Numeric(params['l']) * 1e9))        # nm
+         self.lmin = int(round(Numeric(params['Lmin']) * 1e9))
+         self.frame = params['frame']
++        self.rep = None if params['rep'] == 'none' else params['rep']
++        at = str(params['rep_at']).strip()
++        self.rep_at = int(at) if at.lstrip('-').isdigit() else at
++        self.rep_side = None if params['rep_side'] == 'auto' else params['rep_side']
+ 
+     def genLayout(self):
+         try:
+             if self.l < self.lmin:
+                 raise ClampError('l = %d nm < Lmin = %d nm' % (self.l, self.lmin))
+-            shapes, texts = generate_m1(self.FAMILY, self.ng, self.l, 80000 if self.frame == '80u' else None)
++            shapes, texts = generate_m1(self.FAMILY, self.ng, self.l, 80000 if self.frame == '80u' else None,
++                                        rep=self.rep, rep_at=self.rep_at, rep_side=self.rep_side)
+         except ClampError as e:
+             raise Exception('%s: %s' % (self.__class__.__name__, e))
+ 
+@@ -128,7 +140,7 @@
+         dbReplaceProp(self, 'instNamePrefix', 'X')
+         dbReplaceProp(self, 'function', 'esd')
+         dbReplaceProp(self, 'pcellVersion', '$Revision: 1.0 $')
+-        dbReplaceProp(self, 'pin#', 3 if self.FAMILY == 'N' else 4)   # gate pad iovss [iovdd]
++        dbReplaceProp(self, 'pin#', (3 if self.FAMILY == 'N' else 4) + (self.rep is not None))  # gate pad iovss [iovdd] [rep]
+         dbReplaceProp(self, 'cellName', self.__class__.__name__)
+         self.draw(shapes, texts)
+ 

@@ -1,0 +1,24 @@
+Clamp_N_M1 (N ng=34 l=1000 80u):
+   8/0    stored    72 engine    72  XOR area  115.709 um2
+   1/0    stored     3 engine     3  XOR area    0.000 um2
+   6/0    stored  1525 engine  1661  XOR area    3.482 um2
+   31/0   stored     1 engine     1  XOR area    0.000 um2
+   40/0   stored     1 engine     1  XOR area    0.000 um2
+   14/0   stored     1 engine     1  XOR area    0.000 um2
+   8/2    stored    19 engine    19  XOR area    0.109 um2
+   63/0   stored     1 engine     1  XOR area    0.000 um2
+   8/25   stored    19 engine    19  XOR area    0.000 um2
+   44/0   stored     1 engine     1  XOR area    0.000 um2
+   5/0    stored    34 engine    34  XOR area    0.000 um2
+Clamp_P_M1 (P ng=41 l=600 80u):
+   8/0    stored    86 engine    86  XOR area    0.000 um2
+   1/0    stored     4 engine     4  XOR area    0.000 um2
+   6/0    stored  2831 engine  2831  XOR area    0.000 um2
+   31/0   stored     2 engine     2  XOR area    0.000 um2
+   40/0   stored     1 engine     1  XOR area    0.000 um2
+   14/0   stored     2 engine     2  XOR area    0.000 um2
+   8/2    stored    24 engine    24  XOR area    0.000 um2
+   63/0   stored     1 engine     1  XOR area    0.000 um2
+   8/25   stored    24 engine    24  XOR area    0.000 um2
+   44/0   stored     1 engine     1  XOR area    0.000 um2
+   5/0    stored    41 engine    41  XOR area    0.000 um2

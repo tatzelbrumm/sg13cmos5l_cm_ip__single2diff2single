@@ -1,0 +1,60 @@
+N ng=1   l=450   fit    shapes   191  lists same  XOR empty  labels same  ok
+N ng=2   l=450   fit    shapes   225  lists same  XOR empty  labels same  ok
+N ng=3   l=450   fit    shapes   260  lists same  XOR empty  labels same  ok
+N ng=8   l=450   fit    shapes   432  lists same  XOR empty  labels same  ok
+N ng=1   l=455   fit    shapes   191  lists same  XOR empty  labels same  ok
+N ng=2   l=455   fit    shapes   225  lists same  XOR empty  labels same  ok
+N ng=3   l=455   fit    shapes   260  lists same  XOR empty  labels same  ok
+N ng=8   l=455   fit    shapes   432  lists same  XOR empty  labels same  ok
+N ng=1   l=600   fit    shapes   191  lists same  XOR empty  labels same  ok
+N ng=2   l=600   fit    shapes   227  lists same  XOR empty  labels same  ok
+N ng=3   l=600   fit    shapes   264  lists same  XOR empty  labels same  ok
+N ng=8   l=600   fit    shapes   446  lists same  XOR empty  labels same  ok
+N ng=1   l=640   fit    shapes   195  lists same  XOR empty  labels same  ok
+N ng=2   l=640   fit    shapes   233  lists same  XOR empty  labels same  ok
+N ng=3   l=640   fit    shapes   272  lists same  XOR empty  labels same  ok
+N ng=8   l=640   fit    shapes   464  lists same  XOR empty  labels same  ok
+N ng=1   l=1000  fit    shapes   201  lists same  XOR empty  labels same  ok
+N ng=2   l=1000  fit    shapes   245  lists same  XOR empty  labels same  ok
+N ng=3   l=1000  fit    shapes   290  lists same  XOR empty  labels same  ok
+N ng=8   l=1000  fit    shapes   516  lists same  XOR empty  labels same  ok
+N ng=1   l=455   80u    shapes  1047  lists same  XOR empty  labels same  ok
+N ng=3   l=455   80u    shapes  1084  lists same  XOR empty  labels same  ok
+N ng=49  l=455   80u    shapes  1935  lists same  XOR empty  labels same  ok
+N ng=1   l=600   80u    shapes  1047  lists same  XOR empty  labels same  ok
+N ng=3   l=600   80u    shapes  1084  lists same  XOR empty  labels same  ok
+N ng=49  l=600   80u    shapes  1935  lists same  XOR empty  labels same  ok
+P ng=1   l=400   fit    shapes   354  lists same  XOR empty  labels same  ok
+P ng=2   l=400   fit    shapes   414  lists same  XOR empty  labels same  ok
+P ng=3   l=400   fit    shapes   475  lists same  XOR empty  labels same  ok
+P ng=8   l=400   fit    shapes   773  lists same  XOR empty  labels same  ok
+P ng=1   l=405   fit    shapes   354  lists same  XOR empty  labels same  ok
+P ng=2   l=405   fit    shapes   414  lists same  XOR empty  labels same  ok
+P ng=3   l=405   fit    shapes   475  lists same  XOR empty  labels same  ok
+P ng=8   l=405   fit    shapes   775  lists same  XOR empty  labels same  ok
+P ng=1   l=600   fit    shapes   356  lists same  XOR empty  labels same  ok
+P ng=2   l=600   fit    shapes   418  lists same  XOR empty  labels same  ok
+P ng=3   l=600   fit    shapes   481  lists same  XOR empty  labels same  ok
+P ng=8   l=600   fit    shapes   793  lists same  XOR empty  labels same  ok
+P ng=1   l=640   fit    shapes   361  lists same  XOR empty  labels same  ok
+P ng=2   l=640   fit    shapes   426  lists same  XOR empty  labels same  ok
+P ng=3   l=640   fit    shapes   492  lists same  XOR empty  labels same  ok
+P ng=8   l=640   fit    shapes   819  lists same  XOR empty  labels same  ok
+P ng=1   l=1000  fit    shapes   368  lists same  XOR empty  labels same  ok
+P ng=2   l=1000  fit    shapes   440  lists same  XOR empty  labels same  ok
+P ng=3   l=1000  fit    shapes   513  lists same  XOR empty  labels same  ok
+P ng=8   l=1000  fit    shapes   879  lists same  XOR empty  labels same  ok
+P ng=1   l=405   80u    shapes  1212  lists same  XOR empty  labels same  ok
+P ng=3   l=405   80u    shapes  1301  lists same  XOR empty  labels same  ok
+P ng=49  l=405   80u    shapes  3348  lists same  XOR empty  labels same  ok
+P ng=1   l=600   80u    shapes  1212  lists same  XOR empty  labels same  ok
+P ng=3   l=600   80u    shapes  1301  lists same  XOR empty  labels same  ok
+P ng=49  l=600   80u    shapes  3348  lists same  XOR empty  labels same  ok
+N ng=34  l=1000  80u    shapes  1793  lists same  XOR empty  labels same  ok
+P ng=41  l=600   80u    shapes  2992  lists same  XOR empty  labels same  ok
+== 80 um frame limits
+  P l=600 nm: largest ng in 80u = 49
+  N l=1000 nm: largest ng in 80u = 38
+  P l=1000 nm: largest ng in 80u = 38
+  N l=600 nm: largest ng in 80u = 49
+regression: 54 cells, 0 failing

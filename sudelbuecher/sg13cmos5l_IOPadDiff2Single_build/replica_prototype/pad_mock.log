@@ -1,0 +1,55 @@
+   Clamp_P_M1 @r0 0,65000 -> Clamp_P_M1_rep
+   Clamp_N_M1 @r0 0,15560 -> Clamp_N_M1_rep
+   Clamp_N_M1 @r0 0,6000 -> Clamp_N_M1_engine
+   pdrainwire element 10 at x=40755 replaced
+   removed via_stack$2 @r90 40410,34500
+   removed via_stack$2 @r90 40410,30000
+   ndrainwire element 8 at x=40000 replaced
+   removed via_stack$2 @r90 40345,60460
+   removed via_stack$2 @r90 40345,55960
+wrote pad_mock.gds
+== original: nets at the probe points (same id = same net)
+   net 1: pad bar (M2); P drain col 0 (OP); P drain col 9 (OP); P drain col 11 (OP); P drain col 10 (RP1); N low drain col 8; N low drain col 7; N up drain col 8 (RN1); N up drain col 7 (ON); DCN stripe; DCP stripe
+   net 11: P gate bus; P gate strip 20 (RP1); P gate strip 21 (dummy)
+   net 10: P inner ring (iovdd)
+   net 8: P outer ring (iovss)
+   net None: N up gate strip 16 (RN1); n1 wire top (M2); n2 wire top (M2)
+   net 4: N low gate bus
+   net 6: N up gate bus
+   net 5: N up inner ring (iovss)
+   net 3: N low inner ring (iovss)
+== original: MOS devices (combined)
+   PMOS  W=  546.12 L=0.60  S=[P inner ring (iovdd)] G=[P gate bus|P gate strip 20 (RP1)|P gate strip 21 (dummy)] D=[pad bar (M2)|P drain col 0 (OP)|P drain col 9 (OP)|P drain col 11 (OP)|P drain col 10 (RP1)|N low drain col 8|N low drain col 7|N up drain col 8 (RN1)|N up drain col 7 (ON)|DCN stripe|DCP stripe]
+   NMOS  W=  149.60 L=1.00  S=[N low inner ring (iovss)] G=[N low gate bus] D=[pad bar (M2)|P drain col 0 (OP)|P drain col 9 (OP)|P drain col 11 (OP)|P drain col 10 (RP1)|N low drain col 8|N low drain col 7|N up drain col 8 (RN1)|N up drain col 7 (ON)|DCN stripe|DCP stripe]
+   NMOS  W=  149.60 L=1.00  S=[N up inner ring (iovss)] G=[N up gate bus] D=[pad bar (M2)|P drain col 0 (OP)|P drain col 9 (OP)|P drain col 11 (OP)|P drain col 10 (RP1)|N low drain col 8|N low drain col 7|N up drain col 8 (RN1)|N up drain col 7 (ON)|DCN stripe|DCP stripe]
+== original: M2 / Via1 checks
+   Mn.a 0.20                0  at x = []
+   Mn.b 0.21               10  at x = [32.03, 40.38]
+   Mn.e~ 0.24               7  at x = [32.03, 40.38, 47.22]
+   M2.c (V1 not in M2)      0  at x = []
+== mock: nets at the probe points (same id = same net)
+   net 1: pad bar (M2); P drain col 0 (OP); P drain col 9 (OP); P drain col 11 (OP); N low drain col 8; N low drain col 7; N up drain col 7 (ON); DCN stripe; DCP stripe
+   net 13: P drain col 10 (RP1); P gate strip 20 (RP1); n1 wire top (M2)
+   net 12: P gate bus
+   net 11: P gate strip 21 (dummy); P inner ring (iovdd)
+   net 9: P outer ring (iovss)
+   net 7: N up drain col 8 (RN1); N up gate strip 16 (RN1); n2 wire top (M2)
+   net 4: N low gate bus
+   net 6: N up gate bus
+   net 5: N up inner ring (iovss)
+   net 3: N low inner ring (iovss)
+== mock: MOS devices (combined)
+   PMOS  W=  519.48 L=0.60  S=[P gate strip 21 (dummy)|P inner ring (iovdd)] G=[P gate bus] D=[pad bar (M2)|P drain col 0 (OP)|P drain col 9 (OP)|P drain col 11 (OP)|N low drain col 8|N low drain col 7|N up drain col 7 (ON)|DCN stripe|DCP stripe]
+   PMOS  W=   13.32 L=0.60  S=[P gate strip 21 (dummy)|P inner ring (iovdd)] G=[P drain col 10 (RP1)|P gate strip 20 (RP1)|n1 wire top (M2)] D=[P drain col 10 (RP1)|P gate strip 20 (RP1)|n1 wire top (M2)]
+   PMOS  W=   13.32 L=0.60  S=[P drain col 10 (RP1)|P gate strip 20 (RP1)|n1 wire top (M2)] G=[P gate strip 21 (dummy)|P inner ring (iovdd)] D=[P gate strip 21 (dummy)|P inner ring (iovdd)]
+   NMOS  W=  149.60 L=1.00  S=[N low inner ring (iovss)] G=[N low gate bus] D=[pad bar (M2)|P drain col 0 (OP)|P drain col 9 (OP)|P drain col 11 (OP)|N low drain col 8|N low drain col 7|N up drain col 7 (ON)|DCN stripe|DCP stripe]
+   NMOS  W=  140.80 L=1.00  S=[N up inner ring (iovss)] G=[N up gate bus] D=[pad bar (M2)|P drain col 0 (OP)|P drain col 9 (OP)|P drain col 11 (OP)|N low drain col 8|N low drain col 7|N up drain col 7 (ON)|DCN stripe|DCP stripe]
+   NMOS  W=    8.80 L=1.00  S=[N up inner ring (iovss)] G=[N up drain col 8 (RN1)|N up gate strip 16 (RN1)|n2 wire top (M2)] D=[N up drain col 8 (RN1)|N up gate strip 16 (RN1)|n2 wire top (M2)]
+== mock: M2 / Via1 checks
+   Mn.a 0.20                0  at x = []
+   Mn.b 0.21                5  at x = [32.03]
+   Mn.e~ 0.24               4  at x = [32.03, 47.22]
+   M2.c (V1 not in M2)      0  at x = []
+== mock connectivity: pad group True, n1 True, n2 True, dummy gate on iovdd True, distinct nets True
+   probes on n1 / n2: ['P drain col 10 (RP1)', 'P gate strip 20 (RP1)', 'N up drain col 8 (RN1)', 'N up gate strip 16 (RN1)', 'n1 wire top (M2)', 'n2 wire top (M2)']
+mock checks: ok

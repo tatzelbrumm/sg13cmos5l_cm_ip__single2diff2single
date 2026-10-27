@@ -1,0 +1,40 @@
+pad N (chosen)               N34_l1000_80u_pair_centre          drain  8 rep [16, 17] dummy [] | out 32 rep 2 dum 0 | -6 cont | window layers 6/0,8/0,8/2 | ok
+                               iovss/gate/pad W=140.80 L=1.000
+                               iovss/rep/rep W=8.80 L=1.000
+pad P (chosen)               P41_l600_80u_single_centre         drain 10 rep [20] dummy [21] | out 39 rep 1 dum 1 | -2 cont | window layers 6/0,8/0,8/2 | ok
+                               iovdd/gate/pad W=519.48 L=0.600
+                               iovdd/rep/rep W=13.32 L=0.600
+                               rep/iovdd/iovdd W=13.32 L=0.600
+P option (a) end column      P41_l600_80u_single_end            drain 20 rep [40] dummy [] | out 40 rep 1 dum 0 | -1 cont | window layers 6/0,8/0,8/2 | ok
+                               iovdd/gate/pad W=532.80 L=0.600
+                               iovdd/rep/rep W=13.32 L=0.600
+P chosen, ng 42 -> OP 80     P42_l600_80u_single_centre         drain 10 rep [20] dummy [21] | out 40 rep 1 dum 1 | -2 cont | window layers 6/0,8/0,8/2 | ok
+                               iovdd/gate/pad W=532.80 L=0.600
+                               iovdd/rep/rep W=13.32 L=0.600
+                               rep/iovdd/iovdd W=13.32 L=0.600
+P chosen, ng 43 -> OP 82     P43_l600_80u_single_centre         drain 10 rep [21] dummy [20] | out 41 rep 1 dum 1 | -2 cont | window layers 6/0,8/0,8/2 | ok
+                               iovdd/gate/pad W=546.12 L=0.600
+                               iovdd/iovdd/rep W=13.32 L=0.600
+                               rep/rep/iovdd W=13.32 L=0.600
+P option (d) 4-finger pair   P41_l600_80u_pair_centre           drain 10 rep [20, 21] dummy [] | out 39 rep 2 dum 0 | -2 cont | window layers 6/0,8/0,8/2 | ok
+                               iovdd/gate/pad W=519.48 L=0.600
+                               iovdd/rep/rep W=26.64 L=0.600
+N ng 35 (ON 68 + RN1 2)      N35_l1000_80u_pair_centre          drain  8 rep [16, 17] dummy [] | out 33 rep 2 dum 0 | -6 cont | window layers 6/0,8/0,8/2 | ok
+                               iovss/gate/pad W=145.20 L=1.000
+                               iovss/rep/rep W=8.80 L=1.000
+N single + dummy             N34_l1000_80u_single_centre        drain  8 rep [16] dummy [17] | out 32 rep 1 dum 1 | -6 cont | window layers 6/0,8/0,8/2 | ok
+                               iovss/gate/pad W=140.80 L=1.000
+                               iovss/rep/rep W=4.40 L=1.000
+                               rep/iovss/iovss W=4.40 L=1.000
+N pair at end                N34_l1000_80u_pair_end             drain 16 rep [32, 33] dummy [] | out 32 rep 2 dum 0 | -6 cont | window layers 6/0,8/0,8/2 | ok
+                               iovss/gate/pad W=140.80 L=1.000
+                               iovss/rep/rep W=8.80 L=1.000
+P max ng 49                  P49_l600_80u_single_centre         drain 12 rep [24] dummy [25] | out 47 rep 1 dum 1 | -2 cont | window layers 6/0,8/0,8/2 | ok
+                               iovdd/gate/pad W=626.04 L=0.600
+                               iovdd/rep/rep W=13.32 L=0.600
+                               rep/iovdd/iovdd W=13.32 L=0.600
+N max ng 38                  N38_l1000_80u_pair_centre          drain  9 rep [18, 19] dummy [] | out 36 rep 2 dum 0 | -6 cont | window layers 6/0,8/0,8/2 | ok
+                               iovss/gate/pad W=158.40 L=1.000
+                               iovss/rep/rep W=8.80 L=1.000
+sweep + named: 271 variant cells checked, 0 failing, 90 parameter sets rejected by the engine (n/a)
+wrote replica_cells.gds

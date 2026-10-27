@@ -1,0 +1,17 @@
+== replica position vs. output-device centroid (x, um)
+  P ng=41 single centre rep gates [20] dummy [21]: replica 39.865, output centroid 39.958 (array centre 40.000) -> offset -0.093 um
+  P ng=41 single end    rep gates [40] dummy []: replica 70.065, output centroid 39.245 (array centre 40.000) -> offset 30.820 um
+  P ng=42 single centre rep gates [20] dummy [21]: replica 39.110, output centroid 40.000 (array centre 40.000) -> offset -0.890 um
+  P ng=43 single centre rep gates [21] dummy [20]: replica 40.135, output centroid 40.034 (array centre 40.000) -> offset 0.101 um
+  N ng=34 pair   centre rep gates [16, 17] dummy []: replica 40.000, output centroid 40.000 (array centre 40.000) -> offset 0.000 um
+  N ng=34 pair   end    rep gates [32, 33] dummy []: replica 70.560, output centroid 38.090 (array centre 40.000) -> offset 32.470 um
+  N ng=35 pair   centre rep gates [16, 17] dummy []: replica 39.045, output centroid 40.054 (array centre 40.000) -> offset -1.009 um
+== distance of the replica gate edge to the array-end Activ edge / NWell edge (option a)
+  P ng=41 gate 40: right edge 70.365, Activ end 71.105 (drain 0.74), NWell edge 71.725 -> 1.36 um to the well edge
+== comb lines: P drains (pad lines from y 29.37) vs N drains (pad lines up to y 61.09), 0.62 um wide
+  P ng=41 (21 lines) x N ng=34 (17 lines): 3 gaps below 0.24 um (Mn.e; Mn.b 0.21): ['31.695/32.360 gap 0.045', '40.755/40.000 gap 0.135', '46.795/47.640 gap 0.225']
+  P ng=41 (21 lines) x N ng=35 (18 lines): 2 gaps below 0.24 um (Mn.e; Mn.b 0.21): ['49.815/50.505 gap 0.070', '58.875/58.145 gap 0.110']
+  P ng=42 (21 lines) x N ng=34 (17 lines): 2 gaps below 0.24 um (Mn.e; Mn.b 0.21): ['36.980/36.180 gap 0.180', '43.020/43.820 gap 0.180']
+  P ng=42 (21 lines) x N ng=35 (18 lines): 3 gaps below 0.24 um (Mn.e; Mn.b 0.21): ['46.040/46.685 gap 0.025', '55.100/54.325 gap 0.155', '61.140/61.965 gap 0.205']
+  P ng=43 (22 lines) x N ng=34 (17 lines): 3 gaps below 0.24 um (Mn.e; Mn.b 0.21): ['33.205/32.360 gap 0.225', '39.245/40.000 gap 0.135', '48.305/47.640 gap 0.045']
+  P ng=43 (22 lines) x N ng=35 (18 lines): 3 gaps below 0.24 um (Mn.e; Mn.b 0.21): ['51.325/50.505 gap 0.200', '57.365/58.145 gap 0.160', '66.425/65.785 gap 0.020']

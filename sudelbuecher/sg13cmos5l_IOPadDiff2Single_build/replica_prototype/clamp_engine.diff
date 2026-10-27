@@ -1,0 +1,148 @@
+--- a/scripts/pcells/clamp_engine.py
++++ b/scripts/pcells/clamp_engine.py
+@@ -408,10 +408,87 @@
+     return [start + k * CONT_PITCH for k in range(n)]
+ 
+ 
+-def generate_m1(family, ng, l, width=None):
++# ----------------------------------------------------------------------------------
++# PROTOTYPE (scratch, 2026-10-27): class-AB replica carved out of the finger array.
++#
++# One drain column k of the array and one or both of its gates become a separate,
++# diode-connected device (gate = drain = M1 pin REP_PIN), e.g. RN1 / RP1 of d2s_mpdda
++# inside the ON / OP clamp frames. Front-end layers (Activ, GatPoly, pSD, NWell,
++# ThickGateOx, Substrate) are not touched at all, so the replica fingers are physically
++# the output device's fingers; only Cont and Metal1 change:
++#   - the replica gates (and a dummy, see below) lose their top-head contact, and their
++#     M1 strip stops M1_E below the gate bus. The bus stays ONE piece ('gate') and runs
++#     across their poly heads uncontacted; when the replica sits at an end of the array
++#     the bus is shortened to the outermost output gate instead.
++#   - the replica drain column becomes pin REP_PIN instead of 'pad' and is extended
++#     down to the gate heads; a bottom M1 link joins it to the replica gate strips
++#     (below the active, above the inner ring).
++#   - mode 'single': the drain's other gate is a dummy; its M1 strip runs down into
++#     the inner ring, i.e. gate = source = rail (off; drain on REP_PIN).
++# Sources stay shared with the neighbouring output fingers.
++# ----------------------------------------------------------------------------------
++REP_PIN = 'rep'
++M1_E = 220          # M1.e: 0.22 um space next to lines wider than 0.3 um (strip end -> bus)
++
++
++def replica_plan(ng, l, x0, mode, at='centre', side=None):
++    """Which drain column and gates form the replica (gate i sits next to drain i // 2).
++    mode 'pair'  : both gates of drain k, S-G-D-G-S, no dummy (needs two gates at k).
++    mode 'single': one gate of drain k; the other gate of that drain (if any: the
++                   0.74 um end drain of an odd ng has only one) becomes a dummy.
++    at   : 'centre' - pair: the drain nearest to the array centre; single: the gate
++                      nearest to it (ties: the left one)
++           'end'    - the last drain column (right end of the array)
++           int      - drain column index k, 0 = leftmost
++    side : single with at = 'end' / int: 'L' or 'R' gate of drain k; default the one
++           nearer to the array centre.
++    Returns dict(mode, k, rep=[gate indices], dummy=[gate indices])."""
++    if mode not in ('pair', 'single'):
++        raise ClampError("rep must be None, 'pair' or 'single'")
++    xa0, xa1 = array_extent(ng, l, x0)
++    g = gate_lefts(ng, l, x0)
++    _, drn = columns(ng, l, x0)
++    xm2 = xa0 + xa1                                   # 2 x array centre (exact)
++    gc2 = [2 * gl + l for gl in g]                    # 2 x gate centres
++    gates = lambda k: [i for i in (2 * k, 2 * k + 1) if i < ng]
++    if at == 'centre':
++        if mode == 'pair':
++            ks = [k for k in range(len(drn)) if len(gates(k)) == 2]
++            if not ks:
++                raise ClampError('ng = %d: no drain column with two gates' % ng)
++            k = min(ks, key=lambda k: (abs(2 * drn[k] - xm2), k))
++        else:
++            i = min(range(ng), key=lambda i: (abs(gc2[i] - xm2), i))
++            k, side = i // 2, 'L' if i % 2 == 0 else 'R'
++    elif at == 'end':
++        k = len(drn) - 1
++    else:
++        k = int(at)
++        if not 0 <= k < len(drn):
++            raise ClampError('replica drain column %d does not exist (0 .. %d)' % (k, len(drn) - 1))
++    gk = gates(k)
++    if mode == 'pair':
++        if len(gk) != 2:
++            raise ClampError('drain column %d has one gate only: no S-G-D-G-S pair' % k)
++        rep, dummy = gk, []
++    else:
++        if side is None:
++            side = 'L' if len(gk) == 1 or abs(gc2[gk[0]] - xm2) <= abs(gc2[gk[1]] - xm2) else 'R'
++        if side not in ('L', 'R') or (side == 'R' and len(gk) == 1):
++            raise ClampError('replica side must be L or R (R needs a second gate at drain %d)' % k)
++        rep = [gk[0] if side == 'L' else gk[1]]
++        dummy = [i for i in gk if i not in rep]
++    if len(rep) + len(dummy) >= ng:
++        raise ClampError('ng = %d: no output finger left besides the replica' % ng)
++    return dict(mode=mode, k=k, rep=rep, dummy=dummy)
++
++
++def generate_m1(family, ng, l, width=None, rep=None, rep_at='centre', rep_side=None):
+     """Complete M1-only clamp: (shapes, texts). l = gate length in nm.
+     width = None: rings wrap the array; else fixed cell width in nm (80000 as IHP),
+-    array centred (on the 5 nm grid)."""
++    array centred (on the 5 nm grid).
++    rep = None (default: the cell as before), 'pair' or 'single': carve a diode-connected
++    replica (pin REP_PIN) out of the array, see replica_plan() for rep_at / rep_side."""
+     f = FAMILY[family]
+     if ng < 1:
+         raise ClampError('ng must be >= 1')
+@@ -429,6 +506,8 @@
+     H = f['height']
+     src, drn = columns(ng, l, x0)
+     s, t = [], []
++    R = replica_plan(ng, l, x0, rep, rep_at, rep_side) if rep is not None else None
++    special = set(R['rep'] + R['dummy']) if R else set()
+ 
+     # finger array
+     for (y0, y1) in f['act_rows']:
+@@ -449,7 +528,12 @@
+                 _box(s, 'Cont', 'drawing', xc - CONT // 2, y, xc + CONT // 2, y + CONT)
+     for xc in src:                        # down into the inner ring
+         _box(s, 'Metal1', 'drawing', xc - 105, RING_IN, xc + 105, sd_y1)
+-    for xc in drn:
++    for k, xc in enumerate(drn):
++        if R and k == R['k']:             # replica drain: own pin, down to the gate heads
++            for purpose in ('drawing', 'pin'):
++                _box(s, 'Metal1', purpose, xc - 310, f['gate_m1'][0], xc + 310, sd_y1)
++            t.append(('Metal1', 'text', REP_PIN, xc, f['pad_label_y'], 0, 'center', 'center', 'R0'))
++            continue
+         for purpose in ('drawing', 'pin'):
+             _box(s, 'Metal1', purpose, xc - 310, sd_y0, xc + 310, sd_y1)
+         t.append(('Metal1', 'text', 'pad', xc, f['pad_label_y'], 0, 'center', 'center', 'R0'))
+@@ -460,15 +544,28 @@
+     # in for l = 0.6 um), 2 from 0.64 um, 3 from 0.98 um. The M1 strip over the gate covers
+     # them. Drain and source keep one column: their widths are fixed, and a second drain
+     # column would come closer to the gate than IHP's 0.51 um (the ESD ballast).
+-    for gl in g:
++    for i, gl in enumerate(g):
+         _box(s, 'GatPoly', 'drawing', gl, f['poly'][0], gl + l, f['poly'][1])
+         xs = _cont_row(gl + GATE_ENC, gl + l - GATE_ENC)
+-        for y in f['gate_cont']:
++        heads = f['gate_cont'][:-1] if i in special else f['gate_cont']   # replica / dummy: no top head
++        for y in heads:
+             for x in xs:
+                 _box(s, 'Cont', 'drawing', x, y, x + CONT, y + CONT)
+-        _box(s, 'Metal1', 'drawing', xs[0], f['gate_m1'][0], xs[-1] + CONT, f['gate_m1'][1])
++        if i not in special:
++            _box(s, 'Metal1', 'drawing', xs[0], f['gate_m1'][0], xs[-1] + CONT, f['gate_m1'][1])
++        else:                             # strip stops below the bus; a dummy's runs into the inner ring
++            _box(s, 'Metal1', 'drawing', xs[0], RING_IN if i in R['dummy'] else f['gate_m1'][0],
++                 xs[-1] + CONT, f['bus'][0] - M1_E)
++    if R:                                 # bottom link: replica gate strip(s) <-> replica drain column
++        xd = drn[R['k']]
++        xs_r = [_cont_row(g[i] + GATE_ENC, g[i] + l - GATE_ENC) for i in R['rep']]
++        lx0 = min([xd - 310] + [x[0] for x in xs_r])
++        lx1 = max([xd + 310] + [x[-1] + CONT for x in xs_r])
++        y0 = f['gate_m1'][0]
++        _box(s, 'Metal1', 'drawing', lx0, y0, lx1, f['gate_cont'][0] + CONT + (f['gate_cont'][0] - y0))
++    op = [i for i in range(ng) if i not in special]       # output gates on the bus
+     xs0 = _cont_row(g[0] + GATE_ENC, g[0] + l - GATE_ENC)
+-    bx0, bx1 = xs0[0], g[-1] + (xs0[-1] - g[0]) + CONT
++    bx0, bx1 = g[op[0]] + (xs0[0] - g[0]), g[op[-1]] + (xs0[-1] - g[0]) + CONT
+     by0, by1 = f['bus']
+     for purpose in ('drawing', 'pin'):
+         _box(s, 'Metal1', purpose, bx0, by0, bx1, by1)
