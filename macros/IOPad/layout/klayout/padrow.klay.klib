@@ -1,0 +1,16 @@
+{
+    "technology": null,
+    "statements": [
+        {
+            "comment": "padrow.klay.gds: custom pads next to IHP IO pads. Written by Claude, 2026-10-27; edit with File > Manage Cell Library Map"
+        },
+        {
+            "lib_name": "sg13cmos5l_io",
+            "lib_path": "$PDKPATH/libs.ref/sg13cmos5l_io/gds/sg13cmos5l_io.gds"
+        },
+        {
+            "lib_name": "sg13cmos5l_IOPadDiff2Single",
+            "lib_path": "../../../sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds"
+        }
+    ]
+}
