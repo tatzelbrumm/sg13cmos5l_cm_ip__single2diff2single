@@ -3,8 +3,9 @@
 - Session `f5dc1779-0ee8-504e-923f-171069e08948`, configured model `claude-opus-5-5` (the serving model may differ), cloud container linked to the user's computer, attached to the claude.ai Project "Chipalooza sg13cmos5l". Session title: "Put together the sg13cmos5l_IOPadDiff2Single layout and macro".
 - Running log of the same work: `sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md`. The design itself goes into `macros/sg13cmos5l_IOPadDiff2Single` of the main repository.
 - Source: the raw transcript `~/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948.jsonl` in the cloud container, extracted by script (`sudelbuecher/design_considerations/pad_buffer_alternatives/export.py`, extended this session so that questions asked with AskUserQuestion, the user's answers and messages sent while a turn runs appear verbatim), records in file order along the live chain.
+- At 14:32 the session's context was compacted and the transcript file was started anew; it begins with the last tool call before the compaction (14:31). The records between the 13:23 export and 14:31 are no longer in it, nor anywhere else in the container: the closing reply of the 13:09 turn, the record of Christoph's message of 14:29 and the first tool calls on it. Turns 1–20 come from the copy of the transcript taken at 13:23; Turn 21 quotes the message of 14:29 from the session's compaction summary (the only place it survives); the rest comes from the new transcript file, without the compaction summary itself.
 - User messages are verbatim, without system reminders and the app's file-delivery notices. Visible replies are verbatim. Tool calls are `*[ ]*` summaries: tool name and the first line of the main argument cut at 150 characters, plus tool errors. The internal reasoning is not included; the script checks that no 40-character window of it occurs here and prints counts only.
-- Export made 2026-10-27 10:10, 10:29, 11:54 and 13:23 by the session itself, each time up to and including the command that built it. The replies after it are not included.
+- Export made 2026-10-27 10:10, 10:29, 11:54, 13:23, 14:48 and 17:57 by the session itself, each time up to and including the command that built it. The replies after it are not included.
 - Times are Europe/Berlin (CET).
 
 ## Turn 1 — 2026-10-27 09:46
@@ -1304,4 +1305,633 @@ trees, testbenches and CACE templates included; pure Python, no networkx) in
 **Assistant:** Chat-log checkpoint:
 
 *[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; cd $S && T=$(TZ=Europe/Berlin date +%H:%M) && sed -i -E "s/^- E…`]*
+
+## Turn 21 — 2026-10-27 14:29 (record lost at the compaction; text quoted from the compaction summary)
+
+**User:** Now, strip all the internals except the clamp and protection diode structures from underneath the metal lines needed for pad ring continuity. Also figure out what the contact structures to silicon are good for. Maybe there need to be guard structures at the edge of the pads.
+
+*[the first tool calls on this message, 14:29–14:31, are lost]*
+
+*[mcp__remote-devices__device_bash: `P=$HOME/mnt/IHP-Open-PDK/ihp-sg13cmos5l; ls $P/libs.tech/klayout/tech/drc/docs | head; ls $P/libs.doc 2>/dev/null | head; find $P -iname '*rule*' \( -…`]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date; P=$HOME/mnt/IHP-Open-PDK/ihp-sg13cmos5l; which pdftotext python3; ls -la $P/libs.doc/doc/; grep -n -i -e 'LU\.' -e 'latch' $P/l…`]*
+
+*[mcp__remote-devices__device_bash: `P=$HOME/mnt/IHP-Open-PDK/ihp-sg13cmos5l; sed -n 2560,2600p $P/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_maximal.drc; cd /tmp && pdftotext -layo…`]*
+
+*[mcp__remote-devices__device_bash: `sed -n 2240,2400p /tmp/lr.txt`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; ls; ls edit; sha256sum edit/*.gds; python3 -c "import klayout.db as db;…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; head -50 ana3.py; echo ----; head -40 rm_reminders.py`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `echo $PDK_ROOT; ls $PDK_ROOT/ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/gds/; cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad…`]*
+
+*[error: Exit code 1]*
+
+*[Bash: `find / -name 'sg13cmos5l_io.gds' -not -path '/proc/*' 2>/dev/null | head; ls /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpa…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; sha256sum /mnt/user-data/uploads/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/s…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `mkdir -p /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/guard; cat > /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-17…`]*
+
+*[error: Exit code 1]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; cat >> guard/bands.py <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; G=/mnt/user-data/uploads/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 guard/bands.py edit/sg13cmos5l_IOPadDiff2Single.klay.gds sg13cm…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 guard/bands_rec.py edit/sg13cmos5l_IOPadDiff2Single.klay.gds sg…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; cat > guard/probe.py <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `S=/mnt/user-data/uploads/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/spice/sg13cmos5l_io.spice; awk '/^.subckt sg13cmos5l_IOPadAnalog/,/^.ends/…`]*
+
+*[error: Exit code 2]*
+
+*[Bash: `S=$(find /mnt/user-data/uploads /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/ext -name 'sg13cmos5l_io.spice' 2>/dev/null…`]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/spice/sg13cmos5l_io.spice; ls -la $S; sha256sum $S; awk '/^.subckt sg13cmos5l_IOPadAnal…`]*
+
+*[Bash: `which klayout magic netgen 2>&1; ls /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/ext/pdk_a49358c | head; ls /tmp/claude-…`]*
+
+*[mcp__remote-devices__device_bash: `which klayout; ls $HOME/mnt/; D=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout; ls -la $D $D/backups…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[error: Exit code 1]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; cat rm_oldvias.py | head -60; ls sanity iopad_new 2>/dev/null | head`]*
+
+*[Bash: `mkdir -p /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/strip; cat > /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-17…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; cat > strip/verify.py <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; N=/mnt/user-data/outputs/strip_1435/sg13cmos5l_IOPadDiff2Single.klay.gd…`]*
+
+*[mcp__remote-devices__device_list_dir: {"path": "~/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout"}]*
+
+*[Bash: `sha256sum /mnt/user-data/outputs/strip_1435/sg13cmos5l_IOPadDiff2Single.klay.gds; stat -c %s /mnt/user-data/outputs/strip_1435/sg13cmos5l_IOPadDiff2Si…`]*
+
+**Assistant:** Backup of the current file into the folder's `backups/` first, then the stripped version.
+
+*[mcp__remote-devices__device_bash: `D=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout; B=$D/backups/sg13cmos5l_IOPadDiff2Single_before_st…`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.k…]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date; D=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout; sha256sum $D/sg13cmos5l_IOP…`]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; ls -la $S/sg13cmos5l_IOPadDiff2Single_build/ $S/chatlog/ | head -30; wc -l…`]*
+
+*[Bash: `cd /root/.claude/projects/-home-claude/; python3 - <<'EOF'`]*
+
+*[Bash: `cd /root/.claude/projects/-home-claude/; grep -n -o '"timestamp":"[^"]*"' f5dc1779-0ee8-504e-923f-171069e08948.jsonl | head -0; python3 - <<'EOF'`]*
+
+*[Bash: `cd /root/.claude/projects/-home-claude/; wc -l f5dc1779-0ee8-504e-923f-171069e08948.jsonl; ls -la; ls -la f5dc1779-0ee8-504e-923f-171069e08948/ 2>/dev…`]*
+
+*[Bash: `grep -rl "Now, strip all the internals" /root/.claude /tmp/claude-0 2>/dev/null | head; find / -name '*.jsonl' -size +1M -not -path '/proc/*' 2>/dev/n…`]*
+
+*[Bash: `cd /root/.claude/projects/-home-claude/; python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `P=$HOME/mnt/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks; sed -n 128,138p $P/sg13cmos5l_maximal.drc; ls $P; grep -l -i latchUp $P…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; G=/mnt/user-data/uploads/IHP-Open-PDK/ihp-sg13cmos5l/libs.ref/sg13cmos5…`]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; F=$S/chatlog/2026-10-27_opus_iopaddiff2single_build.md; sha256sum $F; stat…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; sha256sum 2026-10-27_opus_iopaddiff2single_build.md; mkdir -p …`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sha256sum $F; cat >> $F <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; T=$(TZ=Europe/Berlin date +%H:%M); echo $T; cp /root/.claude/p…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; tail -c 700 partB_1449.md; echo; echo ====; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; diff <(cat ../chk/partA.md) <(head -c $(stat -c %s partA_1449.…`]*
+
+*[mcp__remote-devices__device_list_dir: {"path": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog"}]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md", "…]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; sha256sum $S/chatlog/2026-10-27_opus_iopaddiff2single_build.md; sha256sum …`]*
+
+**Assistant:** I've stripped the pad cell down to the clamps and diodes. The contacts to silicon turn out to be guard rings that run through every IHP pad, filler and corner cell, so your hunch about guard structures at the pad edges is right.
+
+## The strip
+
+**Removed** from the top cell:
+- the large p+ tap plate at y 84–140 and the three thin strips at y 148, 157 and 167 (silicon, implants, M1);
+- the `sub!` text on the plate;
+- the six M2 straps and stubs, with all their Via1 and Via2;
+- 32,906 contacts from the `contacts` cell.
+
+**Kept:**
+- the five PCells and their pad wiring (`pdrainwire`, `ndrainwire`, the 55 via stacks);
+- `Metal3ViasUp`, `TopLayersTo4`, and the pad bar with its 858 Via2;
+- the n+/NWell frame at y 15.56–61 with its 2,839 contacts, the boundary, and the TEXT box at (36.355,147.73;45.815,180.62), which you haven't told me about yet.
+
+I kept the frame because it is the DCNDiode guard ring and the ring that continues through the neighbouring cells. If you meant it to go too, I'll remove it.
+
+The previous version is in `layout/klayout/backups/sg13cmos5l_IOPadDiff2Single_before_strip_2026-10-27.klay.gds`. Nothing was added on any layer, and nothing changed below y 84.26 or in any cell other than the top cell and `contacts`. The pad net still runs from the DCN cathode, DCP anode and clamp drains up to TopMetal1. If you have the file open in KLayout, reload it before saving, or the open copy will overwrite the strip.
+
+## What the contacts to silicon are for
+
+Every IHP IO cell, filler and the corner has the same silicon bands at the same heights, running from edge to edge. Placed side by side, they close into rings around the die, just like the metal rails:
+
+| y (µm) | What it is | Net | Where it gets its potential |
+|---|---|---|---|
+| 6–61 | n+ in NWell, a frame around the NMOS clamp and DCNDiode | iovdd (IHP's netlist: DCNDiode guard = iovdd) | only the IOPadIOVdd cell, then neighbour to neighbour |
+| 84–140 | p+ substrate plate | iovss | M2 strap at x 0.2–5.9, y 126–134 |
+| 148 | n+ strip in NWell | iovdd | right-hand M2 strap, down to the iovdd rail |
+| 157 | p+ strip | vss | short M2 stubs at both cell ends |
+| 167 | n+ strip in NWell | vdd | short M2 stubs at both cell ends |
+
+The fillers and the corner have no Via1, M2 or Via2 at all: their bands only get a potential from the pad cells next to them. This follows IHP's latch-up guidelines in the layout rules, §7.2.1:
+- guard rings around every NMOS and PMOS tied to a pad;
+- double guard rings (NWell plus p+) between the output devices and the internal circuit.
+
+§7.2.2 adds two limits:
+- **LU.a/LU.b:** at most 20 µm from any p+ in NWell to an NWell tie, and from any n+ in substrate to a substrate tie.
+- **LU.c/c1/d/d1:** at most 6 µm of tie beyond a contact, which is why the plate is so densely contacted.
+
+The KLayout maximal deck checks these by default, though it has no LU.b.
+
+## What the strip means for the edges
+
+Our cell now breaks the four upper bands (plate and three strips). IHP neighbours tie their own pieces and are unaffected. A filler sitting between two of our pads, though, would have floating bands.
+
+So the circuit zone will need guard columns at both cell edges that pick up the neighbours' bands and tie them to their rails, as IHP's straps do. Those columns would also form the sides of the circuit's own guard ring. Along the bottom of the zone, between the output devices and the circuit, it needs the double guard (p+ to iovss, NWell n+ to iovdd).
+
+**One side effect:** the plate was the only path from any clamp or diode supply terminal to a rail. It carried the Clamp_P_M1 outer ring to iovss. Now none of them reach a rail, so the source and anode/cathode straps are the next real gap.
+
+## Chat log
+
+I logged this step and exported the chat log. When the context was compacted at 14:32, the transcript lost the records from 13:24 to 14:31: my closing reply to the 13:09 turn, the record of your 14:29 message, and my first tool calls on it. The export marks the gap and quotes your message from the compaction summary, the only place it survives.
+
+If you want, I can add the guard-band table to the pad-cell-internals doc in the sudelbuecher and the project.
+
+## Turn 22 — 2026-10-27 14:53
+
+**User:** Yes, add the guard-band table.
+
+**Assistant:** I'll add the table to both copies of the pad-cell-internals doc, reading each first.
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; F=$S/description/sg13cmos5l_pad_cell_internals.md; ls -la $F; sha256sum $F…`]*
+
+*[Projects: claude/sg13cmos5l_pad_cell_internals.md]*
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/description/sg13cmos5l_pad_cell_internals.md"]}]*
+
+*[Bash: `F=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/description/sg13cmos5l_pad_cell_internals.md; sleep 1; sha256s…`]*
+
+*[Bash: `F=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/description/sg13cmos5l_pad_cell_internals.md; for s in 'Sectio…`]*
+
+## Turn 23 — 2026-10-27 14:54 (sent mid-turn)
+
+**User:** where does the running log end up at the moment?
+
+**Assistant (message sent mid-work):** The running log is `sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md` on your computer (`~/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md`). Its last entry is "14:29–14:48: pad cell stripped to clamps and diodes; what the silicon contacts are for", sha256 `a0d169e6…`. The same folder holds `iopad_inventory.md`. The verbatim chat log is `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md` (export of 14:48, `e28006d2…`). The folder name is my reading of your 10:05 answer; log.md's decisions section says so. I'm adding the guard-band table to the pad-cell-internals doc now.
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/padint_1455 /home/claude/padint; cd /home/claude/padint; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/description/sg13cmos5l_pad_cell_internals.md", "stage…]*
+
+*[Projects: claude/sg13cmos5l_pad_cell_internals.md]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date +%H:%M; S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; sha256sum $S/description/sg13cmos5l_pad_cell…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sed -i 's/^## 14:53–14:57: guard-…`]*
+
+**Assistant:** The guard-band table is now section 3 of the pad-cell-internals doc, in both the sudelbuecher copy (`description/sg13cmos5l_pad_cell_internals.md`) and the Project copy. Nothing else in the doc changed; besides the section there is one new line under Sources.
+
+The section covers:
+- **The bands:** the six silicon bands with their heights, the net each one belongs to, the netlist lines that say so, and how the IHP pad cells tie each band to its rail.
+- **Fillers and corner:** they have no Via1, Metal2 or Via2. Their pieces of the bands only get a potential from the pad cells next to them. The NWell ring at y 6–61 gets iovdd only from `IOPadIOVdd`.
+- **IHP's rules:** the latch-up guidelines and the LU rules (§7.2.1 and §7.2.2). The rules document says these aren't checked by default, but the maximal KLayout deck switches them on and has no LU.b.
+- **What it means for our pad cell:** guard ties at both cell edges, plus the double guard ring between the output devices and the circuit. This paragraph is marked as my reasoning, not something IHP states.
+
+I re-checked the via counts on the strap and stubs and the two gaps in the plate in `IOPadAnalog` before writing them in. The step has its own entry at the end of `sg13cmos5l_IOPadDiff2Single_build/log.md`.
+
+## Turn 24 — 2026-10-27 14:57
+
+**User:** I don't see the sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md .
+
+*[mcp__remote-devices__device_list_dir: {"path": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build"}]*
+
+*[mcp__remote-devices__device_bash: `ls -la $HOME/mnt/; ls -la $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/ | head; ls -d $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_su…`]*
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; ls -la $M | head -30; ls -la $M/sudelbuecher | head -40; cat $HOME/mnt/sg13cmos5l_cm_ip__single2diff…`]*
+
+*[mcp__remote-devices__device_bash: `W=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher; cat -A $W/.gitignore; echo; cat -A $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/.giti…`]*
+
+**Assistant:** The file is there; it's in the sudelbuecher worktree, not in the main repository:
+
+`/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md`
+
+It's 23,450 bytes, last written 14:55, and sits next to `iopad_inventory.md`. Your computer's own file listing confirms it under that path, and the sudelbuecher `.gitignore` only excludes `_runs`, so git isn't hiding it.
+
+Two things could make it look missing:
+- **There are two `sudelbuecher` folders.** The one inside the main repo, `~/EDA/sg13cmos5l_cm_ip__single2diff2single/sudelbuecher/`, holds only `logs/` from 3 September. The build log is in the separate sudelbuecher worktree, `~/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/`, the same place as `chatlog/` and `description/`.
+- **The folder name is my reading of two different names.** At 09:54 you wrote `sg13cmos5l_IOPadSingle2Diff_build`, and at 10:05 `sg13cmos_IOPadDiff2Single_build`. I used `sg13cmos5l_IOPadDiff2Single_build`, so a folder under either of the other two names doesn't exist.
+
+If you want the log under another name or somewhere else, tell me where and I'll move it and fix the references to it in the chat log header and in the log itself.
+
+## Turn 25 — 2026-10-27 15:47
+
+**User:** ok found the log in the _sudelbuecher
+
+**Assistant:** Good. It stays where it is, and the following entries go to the same file.
+
+## Turn 26 — 2026-10-27 15:51
+
+**User:** ok for the clamp pcells, does it make sense to use less than 80um but not fit the transistor width? there also needs to be a tap that I let you remove from the pcell.
+
+**Assistant:** I'll look at the PCell code and at the 14 October session where the tap came out before answering.
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; ls -la $M/scripts $M/scripts/pcells 2>/dev/null; find $M/scripts -name '*.py' | xargs grep -l -i 'cl…`]*
+
+*[mcp__remote-devices__device_bash: `P=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells; cat $P/Clamp_N_M1_code.py $P/Clamp_P_M1_code.py; echo =====; cat $P/clamp_base_code.p…`]*
+
+*[mcp__remote-devices__device_bash: `C=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog; grep -n -i -E 'tap|remove|drop|omit|without' $C/2026-10-14_opus_cl…`]*
+
+*[mcp__remote-devices__device_bash: `C=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-14_opus_clamp_m1_pcells.md; grep -n '^\*\*User' $C | cut -c…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sed -n 183,200p $F; X=$HOME/mnt/s…`]*
+
+## Turn 27 — 2026-10-27 15:52 (sent mid-turn)
+
+**User:** what might speak against closing the vertical space between clamp transistors and protection diodes on the physical pad end of this structure?
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+## Turn 28 — 2026-10-27 15:54 (sent mid-turn)
+
+**User:** no it wasn't the substrate ring but a connection into the guard ring structure surrounding the clamp transistor array
+
+*[mcp__remote-devices__device_bash: `P=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells; grep -n -E "^[A-Z_]+ *=|^    '[A-Za-z0-9_]+': *\{|'tie|window|block" $P/clamp_refdata…`]*
+
+*[mcp__remote-devices__device_bash: `P=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells; sed -n 1,104p $P/clamp_engine.py`]*
+
+*[Bash: `ls /mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells 2>/dev/null | head; ls /mnt/user-data/uploads/sg13cmos5l_cm_ip__single2d…`]*
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells/clamp_engine.py", "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2sin…]*
+
+*[Bash: `sleep 1; P=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2single/scripts/pcells; sed -n 360,520p $P/clamp_engine.py`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; mkdir -p pc && cp /mnt/user-data/uploads/sg13cmos5l_cm_ip__single2diff2…`]*
+
+*[mcp__remote-devices__device_bash: `C=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog; sed -n 463,520p $C/2026-10-14_opus_clamp_m1_pcells.md | cut -c1-70…`]*
+
+*[mcp__remote-devices__device_bash: `grep -n -E '^ *NW\.[a-z0-9]+ ' /tmp/lr.txt | head -20; grep -n -E '^ *(pSD|nSD)\.[a-z0-9]+ ' /tmp/lr.txt | head -20`]*
+
+**Assistant:** Your three questions are linked: a clamp frame narrower than 80 µm only pays off if the clamps and diodes move off IHP's heights. I need one answer from you on the tap before changing the PCell.
+
+## A frame narrower than 80 µm
+
+I read this as a third `frame` choice: a fixed width between `fit` and `80u`, with the array centred.
+
+While the clamps stay at IHP's heights, it buys nothing in the pad cell. With `80u`, each clamp's outer ring reaches x = 0 and 80, and that ring is our piece of the neighbours' guard band: the n+/NWell band for the N clamps (y 6–61), the p+ iovss band for the P clamp (y 65–84). With a narrower frame, I'd have to draw those pieces at top level in the edge gap and contact them densely enough for LU.c/LU.d.
+
+A narrower frame does make sense in two cases:
+- **Room for a tie block inside the ring.** `fit` leaves only 0.61 µm between the array and the ring, which is too little for one.
+- **The stack moves off IHP's heights,** as in your second question. The cell edges then need columns that keep the neighbours' bands at their template heights and handle the transition to our devices.
+
+## Closing the gap between the diodes
+
+In our stack the only gap is 8.9 µm of bare substrate, y 42.56–51.42. It sits between the n+ band above DCNDiode and DCPDiode's p+ guard ring. Below the gap, the N clamps, DCN and the band already merge ring into ring; above it, DCP and the P clamp do too. IHP leaves about 18 µm there. These speak against moving DCP and the P clamp down:
+
+- **Cell edges.** The neighbours' n+/NWell band runs up to y 61, and their NWell reaches 0.62 µm into our cell. A P-clamp outer p+ ring at y 56–75 would butt into that band and partly sit inside the neighbour's NWell. The fix is narrower frames plus edge columns. NW.f (0.24 µm from NWell to a p+ substrate tie) keeps our p+ at least about 0.86 µm in from the cell edge.
+- **Rails stay put.** The iovss rail is at 34.5–60 and the iovdd rail at 66–91.5. The P clamp's overlap with the iovdd rail would shrink from about 18.3 to 9.4 µm. That roughly halves the Via2 from its source straps into iovdd, and adds resistance in the ESD path from pad through DCP and the PMOS to iovdd. DCP and the bottom of the P clamp would then sit under the iovss rail.
+- **Latch-up.** The gap separates the n-side injectors (DCN cathode and NMOS drains, both on the pad) from the iovdd NWells of DCP and the PMOS clamp. Less spacing means a stronger parasitic NPN into those wells. The layout rules give no minimum distance, only double guard rings, and the PCell rings already provide those. I can't put a number on the margin; IHP's qualified cells keep about 18 µm.
+- **In favour:** about 8.9 µm more height for the circuit zone, and a shorter drain comb to the P clamp. That helps if the circuit's own guard rings and edge columns eat into the 94 µm.
+
+## Which tap?
+
+I compared IHP's `Clamp_N15N15D` / `Clamp_P15N15D` against our M1 PCells at the same ng, l = 0.6 µm and `80u` frame. Ours lack three things:
+
+1. **The gate antenna diode.** A 0.78 µm diffusion: n+ (`dant`) in the N cell, p+ in the NWell (`dpant`) in the P cell. It sits at x ≈ 15 µm, left of the array and inside the inner ring, and an M1 extension joins it to the gate bus. Below Metal2, this is the only difference.
+2. **The source tie at the top of the inner ring.** IHP's source straps also drop Via1 onto the ring's top side (y 7.835 in N, 17.195 in P). Our PCell ties the sources to the ring only at the bottom side, in M1, because the gate bus runs above the array.
+3. **The rppd from the gate into the ring** in IHP's `0D` cells, which keeps the gate tied off.
+
+Which one do you mean? If it's 1, room for it at the left end of the array is also the case where an intermediate frame width earns its place.
+
+## Turn 29 — 2026-10-27 16:10
+
+**User:** I think the first shot of custom Clamp_N and Clamp_P cells allow two options. remind me what they were.
+
+*[Bash: `sed -n 66,100p /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/pc/clamp_refdata.py; sed -n 226,256p /tmp/claude-0/-home-cla…`]*
+
+**Assistant:** `Clamp_N` / `Clamp_P` have one switch besides `ng`: the gate tie, `tie = D` or `tie = 0D`.
+
+- **`D`:** the gate is a pin, `gate`, with an antenna diode. That's a 0.78 µm `dant` in N or `dpant` in P, left of the array, plus an M2 gate strap. Range: ng 1–42 for N, 1–41 for P. Cell names: `sg13cmos5l_Clamp_N<ng>N<ng>D`, e.g. `Clamp_N15N15D`.
+- **`0D`:** the gate is tied off through an rppd to the rail, so the clamp is always off and there is no gate pin. Range: ng 1–27. Cell names: `sg13cmos5l_Clamp_N<ng>N0D`, e.g. `Clamp_N20N0D`.
+  - N: 3.54 µm, 1.959 kΩ to iovss.
+  - P: 12.9 µm, 6.768 kΩ to iovdd.
+
+The `0D` rppd is probably the connection you mean. It is a vertical resistor at x ≈ 66.3–66.8 µm. Its top end joins the gate bus in M1. Its bottom end goes through M2 and four Via1 into the bottom side of the inner guard ring, which is iovss in N and iovdd in P.
+
+That is the tiedown you asked me to leave out of the M1 cells on 14 October. In an M1-only cell it would have to land on the inner ring in M1, the way the source columns already do.
+
+One thing to weigh if it comes back on a driven gate: the resistor becomes a static load on the predriver. With the IHP value in N, that is about 1.7 mA from 3.3 V while the NMOS is on. A larger value would still hold the gate off when nothing drives it.
+
+## Turn 30 — 2026-10-27 16:26
+
+**User:** Once more, for slow humans: what are the purposes and use cases of D and 0D? what is a rppd "vertical resistor"? It's a new concept to me that vertical resistors are designed and not parasitics.
+
+**Assistant:** I wrote "vertical resistor" carelessly, sorry. I only meant that the strip runs in the y direction in the drawing. Electrically, an rppd is an ordinary lateral resistor, not a vertical one.
+
+**What an rppd is.** It is IHP's p-doped polysilicon resistor:
+- A strip of gate poly over field oxide, 0.5 µm wide, with a contact head at each end. Current flows along the strip.
+- The salicide is blocked over the body, so the strip keeps the resistance of the doped poly. The cells' own values work out to about 260–280 Ω per square, against a few Ω for normal silicided gate poly. The marker layers PolyRes, SalBlock and HeatRes tell DRC and LVS that this is a resistor.
+- In the `0D` clamps the strip is 3.54 µm long in N (1.959 kΩ) and 12.9 µm in P (6.768 kΩ).
+
+**`D`: the clamp is also the output driver.**
+- The gate is a pin, and a predriver drives it, so the same transistor fingers drive the pad and protect it.
+- The antenna diode protects the gate oxide during fabrication. The gate is wired from outside the cell, so for a few metal levels it hangs on a long wire with no diffusion attached.
+- IHP uses it in the output pads: for example, `IOPadOut4mA` uses `Clamp_N2N2D` / `Clamp_P2N2D` driven by `GateLevelUpInv`, and `IOPadInOut30mA` uses `N15N15D` / `P15N15D`.
+
+**`0D`: the clamp is pure ESD protection.**
+- Nothing drives the gate. The rppd holds the NMOS gate at iovss and the PMOS gate at iovdd, so in normal operation the device is off.
+- In an ESD event it conducts through drain avalanche and the parasitic bipolar of the fingers, as a gate-grounded NMOS does.
+- IHP uses it where a pad has no driver: `IOPadAnalog` uses `Clamp_N20N0D` / `Clamp_P20N0D`. The names suggest the second number counts driven fingers, 0 here.
+
+**Why a resistor instead of a direct tie.** IHP doesn't say, so this is the usual reasoning for such clamps, not theirs. During a zap the drain-to-gate capacitance briefly pulls the gate up, and the resistor lets that happen. The short gate pulse helps all fingers turn on together and lowers the trigger voltage. A hard metal tie would clamp the gate at the rail.
+
+**For our pad.** ON and OP are driven, so IHP's pattern for them is `D`: gate pin plus antenna diode, no tie-off. Adding the `0D` rppd on top would be your own choice, not IHP's. It would hold the output off when the predriver isn't driving, for instance during power-up. The cost is the static load on the predriver I mentioned, about 1.7 mA from 3.3 V at the IHP value for N.
+
+## Turn 31 — 2026-10-27 16:37
+
+**User:** ok so we need to place a D somewhere at the clamp structures. Where does the pmos clamp connect to?
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single; ls $M/netlist/source $M/schematic/xschem; cat $M/netlist/source/d…`]*
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single; cat $M/netlist/source/sg13cmos5l_IOPadDiff2Single.spice | grep -v…`]*
+
+**Assistant:** The PMOS clamp is OP, the PMOS output device of `d2s_mpdda_pd` (`netlist/source/d2s_mpdda_pd.spice`). The pad cell instantiates it with `vddo` = iovdd and `vout` = pad:
+
+`XOP vout a vddo vddo sg13_hv_pmos w=546.12u l=0.6u ng=82`
+
+- **Drain:** the pad.
+- **Source and NWell:** iovdd. In the PCell this is the inner n+ ring; the outer p+ ring is iovss.
+- **Gate:** net `a`, the output node of the driver stage. Diffusions sit on it from:
+  - XPCR (drain), the PMOS cascode that drives it;
+  - XABP (source) and XABN (drain), the class-AB pair between `a` and `b`;
+  - XSA (drain), the disable switch that pulls `a` to iovdd when `en_3v3` = 0.
+
+  XCMA, the Miller capacitor, connects to `a` with its gate only.
+
+ON works the same way on net `b`, with XCY, XABN/XABP, XSB and XCMB attached.
+
+**Where the gate sits physically.** It is the PCell's M1 gate bus, along the top edge of the array. For the P clamp that is y ≈ 81.7–81.9 µm in the pad, facing the circuit zone, so the run to its driver is short. The two N clamps have their buses at y ≈ 13.4 and 23.0, at the pad end. Net `b` has to come down roughly 60 µm past the P clamp and both diodes to reach them.
+
+**Where a `D` diode fits.** In IHP's D cells it sits inside the inner ring, left of the array, and an M1 stub from the gate bus reaches it:
+- **P clamp:** a p+ diode in the clamp's own NWell (`dpant`). With the `80u` frame, our array (62.2 µm) leaves about 6.8 µm on each side between the inner ring and the array. That is enough for the 0.78 µm diode with IHP's 2 µm clearance to the array and its well.
+- **N clamps:** an n+ diode in the substrate (`dant`). The arrays (65.2 µm) leave about 5.2 µm per side, also enough. Since both N clamps share `b`, one diode covers the net.
+
+**How much the diode is needed.** Net `a` gets drain diffusions as soon as it is wired to XPCR, XABP and XSA. The OP gate area is large (about 330 µm²), which keeps the antenna ratio low, so the diode is cheap insurance that copies IHP. The antenna check in DRC will show whether it is actually needed.
+
+## Turn 32 — 2026-10-27 16:43
+
+**User:** ok VERY stupid basic question: how do I instantiate sg13cmos5l_IOPadDiff2Single.klay.gds into another empty klayout panel?
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/ext; ls klayout-library-manager; sed -n 1,200p klayout-library-manager/R…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/ext/klayout-library-manager; ls doc pymacros; grep -rhn -o -E '"[^"]*(Hi…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/ext/klayout-library-manager/pymacros; grep -n -E "title|Action|insert_it…`]*
+
+*[WebSearch: `KLayout "Other Files Into Current" import layout instantiate merge`]*
+
+*[WebFetch: https://www.klayout.de/doc/manual/import_layout.html]*
+
+**Assistant:** There are two ways. Use the first if the new layout should follow later edits to the pad cell, the second for a one-off snapshot.
+
+**1. Bind it as a library (stays linked)**
+
+This uses the Library Manager plugin you already have:
+
+1. **File → New Hierarchical Layout…** creates the new `.klay.gds` together with its `.klay.klib`.
+2. **File → Manage Cell Library Map…** → add a row and browse to `sg13cmos5l_IOPadDiff2Single.klay.gds`. The library name defaults to the file stem, `sg13cmos5l_IOPadDiff2Single`. Because it is a `.klay` file, the plugin also loads the libraries from that pad cell's own `.klay.klib`.
+3. In edit mode, pick the **Instance** tool on the toolbar. In the editor options panel (F3), set **Library** to `sg13cmos5l_IOPadDiff2Single` and **Cell** to `sg13cmos5l_IOPadDiff2Single`, then click in the layout to place it.
+
+After you change the pad cell, **File → Reload Cell Libraries** updates the instance. As when you edit the pad cell itself, start KLayout with the `SG13_cm_clamps` PCell library loaded. Otherwise the clamps and diodes show as `<defunct>`, though their geometry is intact.
+
+**2. Copy it in (snapshot)**
+
+In the new layout, use **File → Import → Other File Into Current…** and choose mode **Instantiate**. That places the pad's top cell as an instance in the current cell. The cells are copied into the new file, so later edits to the pad cell file don't carry over.
+
+Sources:
+- [KLayout manual: Import Other Layout Files](https://www.klayout.de/doc/manual/import_layout.html)
+
+## Turn 33 — 2026-10-27 16:47
+
+**User:** @"/mnt/user-data/attachments/f5dc1779-0ee8-504e-923f-171069e08948/cc44cbd7-crash.log" Application crashed ...?
+
+*[mcp__remote-devices__device_bash: `D=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout; TZ=Europe/Berlin ls -la --time-style=+%H:%M $D | h…`]*
+
+**Assistant:** KLayout segfaulted inside the import plugin the moment you chose the menu item. The current panel most likely had no layout in it, so there was nothing to import into.
+
+**What the log shows.** Line 9 is `libimport_ui.so`, the plugin behind **File → Import → Other File Into Current**. It is called straight from the menu action and crashes in `lay::LayoutHandle::layout()` at address 0x70. A crash at such a small address means the plugin asked a missing layout handle for its layout. KLayout should refuse with a message there instead of crashing; that's a bug in 0.30.12.
+
+**How to get around it:**
+1. Give the panel a layout first: **File → New Layout**, or the plugin's **New Hierarchical Layout…**. Check that a top cell appears in the cell list.
+2. Then **File → Import → Other File Into Current…** with mode **Instantiate**.
+
+The library route avoids the import plugin altogether: **Manage Cell Library Map…**, then the Instance tool.
+
+**Nothing on disk changed.** The pad cell on disk is still the version I wrote at 14:44 (sha256 `18149412…`), and nothing has saved it since. If you had unsaved edits open in KLayout, they are gone. The newest auto-backup in that layout folder's `backups/` is from 24 October, and the only newer file there is my 14:44 pre-strip copy.
+
+If you want KLayout to fix it, the crash log plus "Import → Other File Into Current on a panel without a layout" is enough for a report on their GitHub issue tracker.
+
+## Turn 34 — 2026-10-27 17:24
+
+**User:** ok got it to work. i put a padrow.gds somewhere in the sudelbuecher. I'm losing track ... do you find it?
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt; find sg13cmos5l_cm_ip__single2diff2single_sudelbuecher sg13cmos5l_cm_ip__single2diff2single sg13cmos5l_ocd_chipalooza -iname '*padrow*' …`]*
+
+*[mcp__remote-devices__device_bash: `D=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout; TZ=Europe/Berlin ls -la --…`]*
+
+*[error: Exit code 1]*
+
+**Assistant:** Found it: `sudelbuecher/design_considerations/pad_buffer_layout/klayout/padrow.klay.gds`, 8.0 MB, saved today at 17:23. That's the folder holding the layout primitives (`pad_buffer_cells.gds`, `d2s_*.gds` and the rest). On your computer it's `~/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/`.
+
+There's no `padrow.klay.klib` next to it, so it isn't bound to any libraries through the plugin. The repositories hold no other file with "padrow" in its name.
+
+## Turn 35 — 2026-10-27 17:28
+
+**User:** Intended to put custom pads side by side with standard IHP IO pads. Ideas for a better place to put this are welcome. but something like this is obviously needed.
+So far, the clamp transistors still align, as does the nwell strap. Is a pad to pad distance of 80um correct, or should this be slightly different?
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/padrow.kla…]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt; grep -n -E '^ *Pad\.[a-z0-9]+ ' /tmp/lr.txt | head -30; echo ---; ls sg13cmos5l_ocd_chipalooza | head -40; grep -rIl -i -E 'pad ?pitch|p…`]*
+
+*[mcp__remote-devices__device_bash: `sed -n 1895,1935p /tmp/lr.txt; cd $HOME/mnt/sg13cmos5l_ocd_chipalooza; wc -l scripts/gen_padframe.tcl config.txt; grep -n -i -E 'pitch|spacing|filler|…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_ocd_chipalooza; sed -n 1,130p scripts/gen_padframe.tcl`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_ocd_chipalooza; ls magic gds def | head -30; ls -la magic/*.mag 2>/dev/null | head; grep -l -r 'sg13cmos5l_IOPadAnalog' magic …`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_ocd_chipalooza/magic; head -5 sg13cmos5l_padframe.mag; grep -n -A3 -E '^use sg13cmos5l_(IOPad|Filler|Corner)' sg13cmos5l_padfr…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_ocd_chipalooza; sed -n 236,292p scripts/gen_padframe.tcl; grep -n -E 'bondpad_LX3CBX|magic::gencell' scripts/gen_padframe.tcl …`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_ocd_chipalooza/magic; awk '/^use /{c=$2; n=$3} /^transform/{print c, n, $2,$3,$4,$5,$6,$7}' sg13cmos5l_padframe.mag | awk '$3=…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_ocd_chipalooza/magic; awk '/^use /{c=$2; n=$3} /^transform/{print c, n, $2,$3,$4,$5,$6,$7}' sg13cmos5l_padframe.mag > /tmp/pf.…`]*
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; ls -R $M/layout | head -20; ls $M/macros/IOPad $M/macros/IOPad/layout $M/macros/IOPad/layout/klayout…`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date +%H:%M; F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sha…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sed -i 's/^## 17:28–17:38: pad pi…`]*
+
+**Assistant:** Abutting at 80 µm is correct for the cells themselves, but in the Chipalooza frame the pads sit on a 110 µm pitch, with fillers between them.
+
+**Pitch**
+- **The cells.** The boundary is 80 µm, and the NWell (0.62 µm) and pSD (0.18 µm) overhangs merge with the neighbour's by design. Your `PADROW` (TriOut16mA at −80, our pad at 0, IOPadAnalog at 80) is therefore a valid abutment test.
+- **The chip.** In `sg13cmos5l_ocd_chipalooza/magic/sg13cmos5l_padframe.mag`, built by `scripts/gen_padframe.tcl`, every pad is followed by a `Filler4000` (20 µm) and a `Filler2000` (10 µm). At voltage-domain boundaries a `sg13cmos5l_ocd_Split2000` takes the place of the Filler2000.
+- **Slot 7, right edge.** The pads `pad_s7_an_0` at 2260 µm and `pad_s7_an_1` at 2370 µm sit between Filler2000 and Filler4000 pieces. Our pad will never touch an IHP pad directly, only fillers.
+- **Bond pads.** They are separate 70 × 100 µm cells (`bondpad_LX3CBX`) placed outside the IO row, so at 110 µm they are 40 µm apart.
+
+**What the fillers mean for our cell.** Fillers have no Via1, M2 or Via2, so their guard bands only get a potential from the pad cells beside them. If both slot-7 pads become custom pads, the 30 µm of filler between them is tied by neither. That's the concrete case for the tied guard columns at our cell edges we talked about. For a realistic row, I'd lay `padrow` out as the frame does: IHP pad, Filler4000, Filler2000, our pad, Filler4000, Filler2000, and so on.
+
+**Where to put `padrow`.** It currently sits among the layout primitives, with no `.klay.klib`, so it doesn't follow edits to the pad cells. I haven't moved anything; these are two suggestions:
+- **`macros/IOPad/layout/klayout/`, with its own `.klay.klib`** binding `sg13cmos5l_io` and both custom pads. IOPad is the shared IO library, and a row of its cells beside IHP's is its abutment test. IHP has a precedent: its gallery cell places every IO cell side by side (`sg13cmos5l_Gallery.mag` in the Chipalooza magic library). The Makefile resolves layouts by `CELL` name only, so no existing target would pick the file up on its own.
+- **The real integration test** is eventually the Chipalooza padframe itself: `gen_padframe.tcl` with our pads in place of `pad_s7_an_*`.
+
+**The TEXT box you asked about earlier.** The rectangle (36.355,147.73;45.815,180.62) is exactly the footprint of IHP's `sg13cmos5l_GateDecode` as placed in `IOPadTriOut4mA` / `16mA` / `30mA`. That's IHP's predriver for the output clamps' gates. The `InOut*` cells place it at x = 16.355 instead.
+
+These findings are in the running log.
+
+## Turn 36 — 2026-10-27 17:39
+
+**User:** ok move the gds where you think it fits, to the macros, and add a .klay.klib binding.
+Question about the custom diff2single pad: can the gap between the clamps be filled by the compensation capacitors? do they fit in there?
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros; cat $M/sg13cmos5l_IOPadDiff2Single/netlist/source/ccomp.spice; echo ----; cat $M/sg13cmos5l_I…`]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout; sed -n 140,150p $S/layout_primitiv…`]*
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/macros/IOPad/layout/klayout/pad_buffer_cells.gds"]}]*
+
+*[Bash: `sleep 1; cd /tmp; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp; sha256sum /mnt/user-data/outputs/strip_1435/sg13cmos5l_IOPadDiff2Single.klay.gds; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[Bash: `mkdir -p /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/padrow /mnt/user-data/outputs/padrow_1745; cd /tmp/claude-0/-home-…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/padrow; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/padrow; cat > padrow.klay.klib <<'EOF'`]*
+
+*[error: Exit code 1]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/ext; find klayout-plugin-utils -maxdepth 3 -name '__init__.py' | head -3…`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; R=$S/padrow/mirror/macros; mkdir -p $R/IOPad/layout/klayout $R/sg13cmos5…`]*
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.k…]*
+
+*[Bash: `sleep 1; S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; R=$S/padrow/mirror/macros; cp /mnt/user-data/uploads/sg13cmos5l…`]*
+
+*[mcp__remote-devices__device_bash: `ls -la $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/IOPad/layout/klayout/; stat -c '%Y %s' $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sud…`]*
+
+*[Bash: `cp /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/padrow/padrow.klay.klib /mnt/user-data/outputs/padrow_1745/; sha256sum /…`]*
+
+**Assistant:** The source is unchanged since I read it. Writing the bound version and its library map into `macros/IOPad/layout/klayout/`.
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single/macros/IOPad/layout/klayout/padrow.klay.gds", "stagedPath": "/mnt/user-data/out…]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/IOPad/layout/klayout; sha256sum padrow.klay.gds padrow.klay.klib; ls -la`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/padrow.klay.gds; stat -c '%…`]*
+
+*[mcp__remote-devices__device_request_delete_permission: {"paths": ["/home/cmaier/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher"], "reason": "To finish moving padrow.klay.gds into macros/IOPad: remov…]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout/klayout/padrow.klay.gds; [ "$(stat …`]*
+
+*[mcp__remote-devices__device_bash: `grep -n -E '^ *TGO\.[a-z0-9]+ ' /tmp/lr.txt | head -20`]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date +%H:%M; F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sha…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sed -i 's/^## 17:39–17:58: padrow…`]*
+
+**Assistant:** I moved `padrow` into the shared IO library and bound it there. On your question: only one of the two Miller capacitors fits in the gap, and it's the one that belongs there.
+
+**`padrow`**
+- It's now `macros/IOPad/layout/klayout/padrow.klay.gds`, next to a new `padrow.klay.klib`. The map binds `sg13cmos5l_io` (from `$PDKPATH`) and `sg13cmos5l_IOPadDiff2Single` (your pad's `.klay.gds`). The plugin also loads the pad's own map, which brings in `pad_buffer_cells`.
+- The IHP pads in it were already library cells. The custom pad, however, was a plain copy, and its clamps and diodes had lost their PCell identity. I replaced that copy with a library reference at the same placement, so `padrow` now follows the pad cell and the clamps and diodes inside are PCells again.
+- **Checked:** the plugin's own map reader resolves the map with no issues, and with both libraries registered no IHP or pad cell shows as defunct. Placements and all 299 texts are unchanged, and the flattened XOR shows one difference only, described in the next point.
+- **The stored `Clamp_N_M1` geometry is out of date.** Your copy had three contacts per gate head, from the PCell code since the 15 October change. The pad cell file still stores one. KLayout recomputes this when it opens the pad with `SG13_cm_clamps` loaded, but batch DRC and LVS read the stored shapes. Save the pad cell once with the library loaded to bring the file up to date.
+- I deleted the old copy in `design_considerations/` after you granted deletion. If KLayout still has it open, close it without saving, or it will reappear. Then open the new one with **Open Hierarchical Layout…**.
+
+**The capacitors in the gap**
+- **Both don't fit.** Each is 16 × 16 µm of gate (256 µm²), and the cells `d2s_cma` / `d2s_cmb` are 17.9 × 19.0 µm with their wells.
+- **What the gap leaves.** The gap runs y 42.56–51.42. A capacitor well on another net must keep 1.8 µm to the n+ band's well (NW.b1) and 0.24 µm to the DCP guard ring (NW.f). That leaves a well of 6.2 × 74.9 µm, and inside it 4.96 × 73.6 µm of p+ active, about 365 µm². The pair needs 512 µm² before any overhead.
+- **One fits, reshaped:** 4.96 µm wide, about 52 µm of gate. Eight fingers would keep the series resistance down, and that leaves about 15 µm spare.
+- **CMA is the right one.** Its well sits on the pad, and the floorplan notes already said to put it inside the pad's guard rings, next to DCN and DCP. CMB's well is on the internal node `b`, so it can stay with the circuit.
+
+**Things to weigh if CMA goes there**
+- Its well becomes another injector on the pad when the pad dips below iovss, and it fills the 8.9 µm that currently separates the n-side from the iovdd wells. Below it is the n+ band; above it is only DCP's p+ guard ring, so DCP's well becomes its nearest electron collector. The rules give no distance limit, so this is a judgement call rather than a check.
+- **Wiring is easy on the pad side:** the drain comb's M2 lines pass right over it. The gate net `a` has to come down about 30 µm from the P clamp's gate bus, best along the edges outside the comb, at x below 9 or above 71.
+
+All of this is in the running log.
+
+## Turn 37 — 2026-10-27 17:54
+
+**User:** the geometry of the Miller capacitors can become adaptive polygons. also: would it be a problem if the distance from cmb to the corresponding nmos transistor becomes a bit long? where could the matching translinear mesh transistor stacks end up in the pad? their geometry is also not cast in stone as you cast in on silicon; the outline, especially the guard rings, may change.
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations; grep -rn -i -E 'translinear|RP1|RN1|clamp frame' $S/…`]*
+
+## Turn 38 — 2026-10-27 17:54 (sent mid-turn)
+
+**User:** conceivably, the miller capacitors could even be split in two as the pad geometry requires.
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/pad_buffer_layout; sed -n 116,140p $S/layout_primitiv…`]*
+
+*[mcp__remote-devices__device_bash: `TZ=Europe/Berlin date +%H:%M; F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sha…`]*
+
+*[mcp__remote-devices__device_bash: `F=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sed -i 's/^## 17:54–18:02: Miller…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild; T=$(TZ=Europe/Berlin date +%H:%M); echo $T; cp /root/.claude/p…`]*
 

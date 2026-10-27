@@ -84,6 +84,29 @@ First stage is built from **thick-oxide (`sg13_hv_*`) devices** but powered from
 
 **`sub!` is used everywhere but never declared global in either CDL file — check your own testbench/xschemrc.** Every clamp, diode, and tap subcircuit in both `sg13g2_io.cdl` and `sg13cmos5l_io.cdl` references a bare node named `sub!` for substrate/bulk connections (e.g. `XR0 iovss sub! / ptap1 ...`), and it is never listed as a `.SUBCKT` port. The CMOS5L file even has a **commented-out** leftover `*.GLOBAL sub!` at the top (line 30) — SG13G2's file doesn't have the line at all, commented or not. Neither file actually declares it global. In a Cadence/Virtuoso flow `sub!`/`gnd!` are implicitly global by convention, but plain ngspice is not guaranteed to treat it that way unless a `.global sub!` (or equivalent tie) is declared somewhere in your own top-level deck or `xschemrc`. If it isn't, every instance of these subcircuits gets its own **local, disconnected** `sub!` node in simulation — the substrate-referenced ESD clamps and guard-ring taps silently stop doing anything electrically meaningful, with no error from ngspice. Worth explicitly checking whether your `testbenches/xschem/...tb_tran.spice` deck (or the PDK's own `xschemrc`) declares this, rather than assuming it's handled.
 
+## 3. Guard bands: silicon that runs through every IO cell
+
+Checked 2026-10-27 on the `sg13cmos5l_io` GDS and spice of the PDK in use (`a49358c`; GDS sha256 `e6f0d64b…`, spice `1b07a9ee…`), cells extracted flat with KLayout (Activ split by pSD; Cont, Metal1 … TopMetal1 with the label layers).
+
+Every pad cell, every `Filler*` and the `Corner` carry the same silicon bands at the same heights (y measured from the pad edge of the 80 × 180 µm cell), drawn from cell edge to cell edge. Abutting cells close them into rings around the die, like the metal rails:
+
+| y (µm) | Silicon | Net | Tied inside the pad cell by |
+|---|---|---|---|
+| 6–61 (NWell 5.38–61.62) | n+ in NWell; in the pad cells a frame around the n-channel clamp and `DCNDiode` | iovdd in the netlist (`XI5 iovss pad iovdd / sg13cmos5l_DCNDiode`, pins `anode cathode guard`); in the layouts of `IOPadAnalog`, `In`, `Out4mA`, `InOut4mA`, `InOut30mA`, `TriOut30mA`, `IOVss`, `Vss`, `Vdd` no supply reaches it | only `IOPadIOVdd`, whose pad is iovdd |
+| 65–84.4 | p+ outer ring of the p-channel clamp | iovss | the plate it abuts |
+| 84.5–140 | p+ plate with pSD, Substrate (40/0) and a `sub!` text (63/0); two 1 µm gaps at y 89.56 and 114.62 | iovss (`XR1 iovss sub! ptap1 R=214.8m` in `IOPadAnalog`) | Metal2 strap x 0.21–5.89, y 126–134, 192 Via1 and 192 Via2 to the iovss rail at y 126–134 |
+| 148.35–148.65 (NWell 147.73–149.27) | n+ strip | iovdd | Metal2 at x 79.18–79.79 from the strip down to the iovdd rail (Via2 at y 118.86) |
+| 156.85–157.15 (pSD 156.67–157.33) | p+ strip with Substrate (40/0) | vss (`XR0 vss sub! ptap1 R=22.579` in `IOPadAnalog`) | 3 µm Metal2 stubs at both cell ends, 8 Via1 and 8 Via2 each, to the vss rail (Metal3 y 140–158) |
+| 166.85–167.15 (NWell 166.23–167.77) | n+ strip | vdd | as the vss strip, to the vdd rail (Metal3 y 160–178) |
+
+**The fillers and the corner have no Via1, Metal2 or Via2 at all.** They have Metal1 over each band and Metal1 labels (iovdd on the 6–61 band, iovss on the plate, vss on the 157 strip), so their bands get the potential only by abutment from the neighbouring pad cells. The 6–61 NWell ring gets iovdd only from the `IOPadIOVdd` cells, along the whole ring.
+
+**Why (IHP layout rules, `libs.doc/doc/SG13CMOS5L_os_layout_rules.pdf` Rev. 0.1, §7.2.1 "Latch-up Protection on Output Buffers", p. 54):** connect the sources of NMOS and PMOS devices to VSS and VDD and their drains directly to the pad; place guard rings (VSS, VDD ties) around any NMOS and PMOS directly tied to a pad; insert double guard rings (N-Well isolator and P+ isolator) between n- and p-channel output buffers, and between output buffers and the internal circuit area. In the IO cells: the 6–61 band is the N-Well isolator around the n-channel side, the p-channel clamp's outer ring and the plate are the P+ isolator, and the strips at 148 / 157 / 167 lie between the iovdd / iovss part and the circuitry on vdd / vss.
+
+**Latch-up rules (§7.2.2, p. 54):** LU.a / LU.b, max. 20 µm from any portion of P+Activ inside NWell to an nSD-NWell tie, and from any portion of N+Activ inside PWell to a pSD-PWell tie; LU.c / LU.c1 / LU.d / LU.d1, max. 6 µm extension of an NWell or substrate tie (abutted, or Activ) beyond Cont, hence the dense contacting (32 045 Cont on the plate of `IOPadAnalog`). The document says latch-up rules are not checked by default; the KLayout deck `libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_maximal.drc` sets `$latchUpRules` to true when it is not given (lines 133–137) and implements LU.a, LU.c, LU.c1, LU.d and LU.d1, not LU.b (lines 2564–2597).
+
+**Consequence for a pad cell of our own (reasoning, not an IHP statement):** a cell that does not carry a band through, e.g. because its own circuitry takes y 84–178 as planned for `sg13cmos5l_IOPadDiff2Single`, leaves a filler next to it with a floating piece of that band unless the filler's other neighbour ties it. Ties at both cell edges, strapped to the rails as in the IHP cells, keep the rings tied and can be the sides of the circuit's own guard ring; the double guard ring between the output devices and that circuitry is still needed.
+
 ## Sources
 - Local checkout: `EDA/heichips26-analog-workshop/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/ihp/bondpad_code.py`, `.../sealring_code.py`, `.../sg13cmos5l_tech.json`, `.../sg13cmos5l_tech_mod.json`, `libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json`
 - `ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/cdl/sg13cmos5l_io.cdl` (via github.com/IHP-GmbH/ihp-sg13cmos5l)
@@ -91,3 +114,4 @@ First stage is built from **thick-oxide (`sg13_hv_*`) devices** but powered from
 - github.com/IHP-GmbH/IHP-Open-PDK issue #1109 ("KLayout PyCells use inconsistent and undocumented cell-origin conventions") and PR #1072 ("KLayout PyCell bondpad: Fixed evaluation of parameter fill")
 - Project files: `ip/sg13cmos5l_ip__bondpad_70x70/{README.md,script/bondpad.py}`, `macros/IOPad/schematic/xschem/*`
 - Correction of 2026-10-27: `ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/{spice,cdl,gds}` at iic-jku/IHP-Open-PDK `a49358c` (fetched by commit from GitHub), identical to IHP-GmbH/IHP-Open-PDK dev `0488153` and iic-jku `c271a7e`
+- Section 3 (2026-10-27): `ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/{gds,spice}` of the PDK in use; `ihp-sg13cmos5l/libs.doc/doc/SG13CMOS5L_os_layout_rules.pdf` §7.2; `ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_maximal.drc`

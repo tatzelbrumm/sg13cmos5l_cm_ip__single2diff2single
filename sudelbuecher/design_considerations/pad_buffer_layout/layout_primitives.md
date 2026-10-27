@@ -119,16 +119,23 @@ Interleave ABBA, with D in the middle in s2d.
 centroid.
 
 **P7 `ab_loop` (d2s only): replicas inside the clamp frames.** The output devices and the translinear
-replicas are the same finger: OP = 82 × 6.66/0.6 and RP1 = 2 such fingers; ON = 66 × 4.4/1 and
+replicas are the same finger: OP = 82 × 6.66/0.6 and RP1 = 2 such fingers; ON = 68 × 4.4/1 and
 RN1 = 2 such fingers. RP2, FPL and ABP are single 6.66/0.6 fingers; RN2, FNL and ABN single 4.4/1
 fingers. I_Q ≈ (82/2) × 5 µA ≈ 205 µA (212 µA in simulation) relies on OP matching RP1.
-- So put RP1 into the Clamp_P frame and RN1 into a Clamp_N frame. RP1's two fingers share one drain
-  stripe, so they can be cut out of a row as one S-G-D-G-S group, with gate and drain on n1 and the
-  sources shared with OP's neighbours.
+*Corrected 2026-10-27:* ON is 68 fingers (2 × 34; the netlist follows the drawn clamps since
+2026-10-27, it was 66). The bullets and the floorplan below follow the prototype in
+`sg13cmos5l_IOPadDiff2Single_build/replica_prototype/`, with the frames grown by the replica fingers.
+- So put RP1 into the Clamp_P frame and RN1 into a Clamp_N frame. RN1's two fingers share one drain
+  stripe, so they are one S-G-D-G-S group cut out of the row, with gate and drain on n2 and the sources
+  shared with ON's neighbours: the centre drain of the upper Clamp_N frame. In Clamp_P a gate column runs
+  through both device rows, so RP1 (2 × 6.66 µm) is one column: the centre column, gate and drain on n1;
+  the other gate of its drain is a dummy with its gate on iovdd.
 - The output devices are the cell's heat source. A replica in the bias tree, 100 µm away, would not see
   their temperature or their stress; a replica inside the frame sees both.
-- Cost: OP drops to 80 fingers (ratio 40, I_Q ≈ 200 µA), or the frame gets one extra drain stripe.
-  Your `_manualPcell` variant could take a "split off k fingers" parameter.
+- Cost: none if the frames grow by the replica fingers (decided 2026-10-27): Clamp_P ng 41 → 43 = OP 82
+  + RP1 2 + dummy 2; both Clamp_N frames ng 34 → 35 = ON 68 + RN1 2 (the two N frames share the drain
+  comb, so they keep one ng). Carved out of the old frames instead: OP 78, ON 66, I_Q ≈ 195 µA. The PCell
+  option (`rep`, `rep_at`, `rep_side`) is prototyped, not yet in `scripts/pcells`.
 - Place RP2, FPL and ABP as a 3-finger group directly next to the frame, and likewise for the NMOS side.
 
 **P8 `bias_ctrl` hard macro.** `en_ctrl_3v3` + 3 × `ls_up_1v2_3v3` + `d2s_bias_sel_pd`, laid out once
@@ -164,10 +171,10 @@ the bands: 119–126 and 134–140 µm. Signals come in from the core side on M2
      │       AB P-group (RP2 FPL ABP)               │  iovdd 93.5–119
      │ PMOS: P1 tubs 2×4 above P2 tails 2×4 (+BP)   │  iovdd 66–91.5
   84 ├── guard rings (latch-up rules) ──────────────┤
-     │ Clamp_P frame: OP 80 f + RP1 2 f             │
+     │ Clamp_P frame: OP 82 f + RP1 2 f + dummy 2 f │
      │ DCPDiode   (+ CMA, pad-connected well)       │  iovss 34.5–60
      │ DCNDiode                                     │  iovss 7–32.5
-   5 │ 2 × Clamp_N frame: ON 64 f + RN1 2 f         │
+   5 │ 2 × Clamp_N frame: ON 68 f + RN1 2 f         │
    0 └──────────────────────────────────────────────┘  pad side
 ```
 
@@ -246,7 +253,8 @@ Notation: unit half `a` is the device on gp (drain to y), `b` the device on gn (
 3. Sinks at 4× area: offset ≈ 6.1 → 3.9 mV, but they no longer fit in the pad cell.
 4. Move BP, BN, BPC and BNC from `d2s_bias_sel_pd` into the buffer sheets, so the layout and schematic
    hierarchies match for LVS.
-5. RP1 / RN1 inside the clamp frames: a frame variant with a split-off drain stripe.
+5. RP1 / RN1 inside the clamp frames: prototyped 2026-10-27 (`sg13cmos5l_IOPadDiff2Single_build/replica_prototype/`;
+   mock-up with the grown frames in `macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/replica_mockup/`).
 6. CMA's pad-connected n-well: guard ring and latch-up rules.
 7. Custom padframe cell only: leave out M3 under part of the iovdd / iovss rails to gain a third
    routing layer. That needs the harness and IHP to agree, because it thins the ESD ring locally.
