@@ -479,3 +479,21 @@ Chat log: `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`, expo
   record on claude.ai (user messages, replies, tool calls with arguments; no tool results) and exported again (22:16):
   `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`, 44 turns, sha256 12bd9604…; its header says where
   each part comes from.
+
+## 22:26–23:03: bias macro hierarchy; pad decisions; chat log kept current
+## (Christoph, 22:26: bias macros, see the consolidation log; 22:26: "Find some way not to fall behind with the chatlog
+## before compaction happens."; 22:48: "Decisions: B: ON stays at l=1µm. band narrowed. try to fit both capacitors. Is
+## it an option to bridge with metal3?"; 22:50: "once the bias macro infrastructure is sorted out, expect that I want you
+## to start agents to draft detailed layouts for the bias generator blocks. but first let me review how you sorted out my
+## macro mess."; 22:51: "ok don't cut the iovss rail.")
+
+- Bias macros: `design_considerations/consolidation/log.md`, entry 2026-10-27 22:26; before-state in
+  `consolidation/bias_hierarchy_2026-10-27/before/`. In this pad: `bias_sel_pd` (was `d2s_bias_sel_pd`); the shared bias
+  netlists moved from `netlist/source` to `macros/bias_tree_pd/netlist/source`.
+- Pad Metal2, decided: option B (ON at l = 1 µm, two combs at their own pitch), the band above DCNDiode narrowed to
+  DCNDiode's own guard ring, both Miller capacitors in the gap. Answer to the Metal3 question (22:49): the pad junction
+  stays in Metal2; iovss crosses it in the iovss rail (Metal3 / Metal4 / TopMetal1, y 34.5–60), Via2 from the N-side
+  straps below and from Metal2 stubs on the DCPDiode guard ring above; the rail is not cut (22:51). Not drawn yet.
+- Chat log: a background process in the cloud workspace (`archive.py`, started 22:27) copies every new transcript record
+  into an append-only archive every 15 s, so a compaction can no longer lose records; the export to
+  `sudelbuecher/chatlog/` follows at the end of each turn.

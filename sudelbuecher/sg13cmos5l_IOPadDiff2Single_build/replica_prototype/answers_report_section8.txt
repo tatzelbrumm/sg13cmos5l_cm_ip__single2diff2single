@@ -1,0 +1,10 @@
+8. Decisions
+1. P replica interior column+dummy
+2. Finger accounting 43/35
+3. pin names dabp dabn
+4. dummy gate tied to the iovdd or iovss rings
+5. N layout RN1 pair in the upper frame
+6. schematic hierarchy: move RP1, RN1, dummy out of d2s_bias, make grouping follow layout
+7. I don't understand the question. generally, keep RP2, RN2 close to the output/clamp structures.
+8. Fix the pre-existing near-misses ... and maybe review the entire hand wiring
+9. Resolve the design note (and possible other) inconsistencies in favor of the actual layout.

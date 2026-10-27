@@ -632,3 +632,43 @@ Topology against the committed versions (`sheet_equiv.py`) and the xschem netlis
   right pins. All 13 sheets that contain the two cells (the cells, pad top, fixture, eight templates, slot) are now
   equivalent to the verified 00:13 versions; `s2d_mpdda_pd` and the pad match their source netlists device for
   device; the structural check is clean for both sheets. The 00:13 simulation results stand.
+
+## 2026-10-27 22:26 … 23:03 CET — bias macro hierarchy: names without d2s_, cores and tree as macros, generator and distribution mirror
+
+Christoph (22:26): "Do macros for the OgueyAebischer and Banba bandgap cores with powerdown already exist as
+non-Sudelbuecher schematics? Or as tentative sudelbuecher schematics? The d2s_bias_*_pd come with the bias voltage
+generation trees attached, and the macro names are misnomers, because s2d is going to use the same bias blocks. Clean up
+the macro hierarchy accordingly. In particular, create macros for the bias generators without the attached bias trees,
+because they might go into the pads while the bias generators themselves will probably have to be put into the slot7
+main area." Answers to the questions asked: keep the core names; flat sheets renamed and kept; source netlists moved and
+renamed; for the pads "provide macros for both options. some may turn out to be unnecessary for this particular design.
+also provide for a distribution current mirror for several bias inputs feeding several trees, switchable."
+
+- Found: both cores with power-down existed only as sub-sheets of the selector, `macros/d2s_bias_sel_pd/schematic/xschem/`
+  `oa_core_pd` and `bg_core_pd` (Banba type, edited 2026-10-24), with the tree `d2s_bias_in_tree_pd`. In the notes
+  worktree: the flat sheets `class_ab_pad_driver/power_down/xschem/d2s_bias_{oa,bg}_pd` (with tree) and
+  `improvements/xschem/d2s_bias_{oa,bg}` (without power-down). `macros/OgueyAebischerBias` is the old unsized sky130 port.
+- Renamed (folder, files, cell and subckt names, CACE yaml / templates / results folder, Makefile TOP, READMEs, every
+  reference): `d2s_bias_{in,out,oa,bg,sel}_pd` -> `bias_{in,out,oa,bg,sel}_pd`, `d2s_bias_in_tree_pd` -> `bias_tree_pd`.
+- New macros from existing sheets, unchanged: `oa_core_pd`, `bg_core_pd`, `bias_tree_pd` (moved out of the selector;
+  its `xschemrc` and the pads' / slot's dependency lists add them). `bias_tree_pd/netlist/source/` now holds
+  `bias_ref_pd.spice`, `bias_ref.spice`, `bias_lp.spice` (were `d2s_bias_*.spice` in
+  `sg13cmos5l_IOPadDiff2Single/netlist/source`); all includes follow. Helper subckts keep their names
+  (`d2s_bias_diodes`, `d2s_bias_lp`, `d2s_bias_in` / `_out` / `_oa` / `_bg`).
+- New circuits, not simulated: `bias_gen_pd` = `bias_sel_pd` without its tree (sheet cut from the selector sheet; ports
+  `vdd vss ibias iref en_3v3 sel0_3v3 sel1_3v3`); `bias_dist_pd` = switchable distribution mirror, 3 sourced inputs
+  (TG each) into NI 6u/6u, NM 6u/6u -> PD 5u/6u, 4 PMOS outputs 5u/6u (TG each), enables gated with en_3v3 by hv_logic.
+- Before-state of everything touched: `bias_hierarchy_2026-10-27/before/` (this folder, 22:42, 218 files).
+- Checked in the cloud copy before writing: all 67 sheets under the affected macros netlisted with xschem 3.4.4 before
+  and after: identical apart from the renamed names; 10 key sheets (pads, slot, selector, templates) also through their
+  own xschemrc files: identical, no missing symbols. `bias_gen_pd` / `bias_dist_pd`: sheet netlist = source subckt
+  device by device (gen: TEN / TEP with drain and source swapped, as in the selector), symbol pin order = source ports.
+- Written on the computer 22:59 … 23:02: 53 moves, 103 files; afterwards the 755 files under macros / schematic /
+  testbenches match the verified copy (one sha256 over the sorted list). The remote tools may not write files named
+  `Makefile`: the ten Makefiles (five renamed with the new TOP, five new) are `Makefile.new`; the five moved `Makefile`s
+  still say the old TOP. To do: `for f in macros/*/Makefile.new; do mv "$f" "${f%.new}"; done`.
+- Not changed: CACE results (old names inside), generated `testbenches/xschem/simulations/*.spice`, the text label
+  "bias (d2s_bias_sel_pd)" in `macros/IOPad/layout/klayout/pad_buffer_cells.gds`, notes in this worktree. No git command.
+- 23:03: a first append of this entry went through an unquoted heredoc, so the shell ran the backquoted names as
+  commands (all failed with "command not found" / "No such file"; run from the session home, the Makefile loop found
+  nothing); the mangled entry was cut off again (file back to sha256 a0478776…) and this entry written instead.
