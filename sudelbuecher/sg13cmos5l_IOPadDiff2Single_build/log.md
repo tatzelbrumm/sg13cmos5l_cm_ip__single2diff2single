@@ -607,3 +607,141 @@ Chat log: `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`, expo
   `macros/IOPad/layout/klayout/pad_buffer_cells.gds` unchanged, oa_misc_p as delivered); 01:47 envelope corrected to
   a compact block for the core side of slot 7 (537.15 × 273 µm), Metal1 / Metal2 wiring where possible. bg_core_pd
   queued as its part 2 (inputs staged, `BRIEF_bg.md`), to start when oa_core_pd is done.
+
+## 02:18–02:22 (Christoph, 02:18: "has the agent continued while I updated Claude desktop?")
+
+- Yes: the oa_core_pd agent kept working (first `oa_core_pd.gds` at 02:08, 76.0 × 50.7 µm, the six OA primitives
+  unchanged plus its own jumper cell `oa_pmir_image_jumpers`; build script, reference .cdl and Python DRC / LVS
+  scripts by 02:18). Not reviewed yet.
+- The 01:54 chat-log export had hung in a chain check of mine (a dict lookup on records without uuid looped); killed
+  at 02:18, nothing written then. `export.py` (`design_considerations/pad_buffer_alternatives/`, 5e44d9a9… →
+  64159306…, old copy `export.py.before_2026-10-28`): background task notifications that arrive while a turn runs
+  (queued commands) are now one summary line like the others, not a user turn (the Metal2 agent's report had gone
+  into the log whole), and the summary line is cut to its first line and 150 characters, without the old "saved under
+  `research/`" remark. Chat log re-exported at 02:21 from the transcript archive (the 01:23 compaction started the
+  transcript file anew): 68 turns, numbering continuous, the 00:50 body a prefix once notification lines are
+  normalized, user and assistant texts all found verbatim, no reasoning text.
+
+## 02:23–02:26 (agent report on oa_core_pd; Christoph, 02:24: "what's the difference between the agent running right now and something that would be covered by the cloud session credit?")
+
+- oa_core_pd layout (agent 01:34–02:23): 76.00 × 50.74 µm, the six OA primitives unchanged (XOR 0 against
+  pad_buffer_cells.gds, checked again by me), wiring Metal1 / Via1 / Metal2 only (nothing on Via2 or above, checked),
+  vdd rail on top, vss at the bottom, iout / en_3v3 on top, en_3v3_b on the right. Agent's own Python DRC (72 rules +
+  antenna) 0, its klayout.db LVS against the sheet netlist with MS1 split 8 × 0.5/12.5 and the 10 dummies: match. My
+  flat extraction (`verify.py`): every sheet device on its sheet nets (P0 2/8 diode on vpg, P8 16, P2 4, PO 40, the
+  cascodes on vpc, M11 90 / M10 180 on vnc, MC10, MCS / MCL 3.4/30, MS1 8 × 0.5/12.5 ks…vdd, MS2, MS3, SVPG, SKS) plus
+  the dummies, no net with two names. IHP's decks not run (cloud KLayout 0.28.16). Written 02:25:
+  `macros/oa_core_pd/layout/gds/oa_core_pd.gds` (2720b02d…, the Makefile's `layout/gds` place), README section
+  (before-state `README_before.md` next to the report), report / scripts / logs / renders in
+  `design_considerations/pad_buffer_layout/oa_core_pd_2026-10-28/`. Agent's open questions (report §Open questions):
+  MS1 / finger counts into the sheet, pmir taps, port sides, rail widths / M2 straps, vbr–vres channel, the image
+  jumpers into the library.
+- bg_core_pd: the same agent continued at 02:24 with `BRIEF_bg.md` (same conventions; try oa_core_pd's height).
+- Cloud credit (02:24): answered from Anthropic's help-center article on the cloud-sessions bonus credit; the agent is
+  a subagent of this session, so it is billed as this session is; whether this Project-bound, computer-linked session
+  counts as a "cloud session" for the credit is not visible from inside the session.
+
+## 02:36–02:42 (Christoph, 02:36: "tell your layout agent that oa_nmir, oa_mcs, oa_misc_n, oa_misc_p, need to be changed. in particular transistors in oa_nmir, oa_misc_n, oa_mcs rotated, transistors of same size in oa_nmir and oa_misc_n combined into one array, NEVER use substrate tap between rows of arrayed transistor, and completely revise the guard ring structures. They're too bulky as they are. There is WAY too much empty space in the oa_core_pd layout. Compactify. Use narrower dummy transistors in oa_pmir. Let the layout drive the design. backannotate if necessary. Hold off on the bandgap layout until there are lessons learned from compactifying oa_core_pd."; 02:37: "other agents may be more experienced rotating transistors within layout primitives."; 02:38: "what needs to be done to keep earlier working agents or at least their experience reachable."; 02:39: "keep good logs and chat logs so i can remember the procedures here. save the briefs somewhere i can review them." / "make it clear which brief belongs to which agents and which contexts.")
+
+- The oa_core_pd agent (A2) told at 02:37 to stop bg_core_pd and redo oa_core_pd with changed primitives; at 02:38
+  narrowed to the assembler: floorplan / routing script for the new cells, back-annotation framework, lessons
+  learned from v1; it waits for the primitives.
+- The 2026-10-27 workers ("sinks-style worker", "cascode worker") belonged to an earlier session and are not
+  reachable (only A2 is listed); their method lives in `design_considerations/pad_buffer_layout/log.md` and the cells
+  they drew. Two new specialists launched at 02:39, briefed with those log entries and cells as worked examples:
+  A3, the NMOS primitives (oa_nmir + oa_misc_n as one rotated 10/1 array, MS3 / SKS, oa_mcs rotated); A4, the PMOS
+  primitives (oa_misc_p compact, oa_pmir with narrower dummies). Taps only at the array periphery, slim rings, LU
+  numbers reported, back-annotation listed.
+- Briefs, verbatim launch prompts and messages, and the input lists of all four agents (A1–A4): `agents/` here, with
+  a README that says which brief belongs to which agent, what context each has, and its status.
+
+## 02:50–02:53 (Christoph, 02:50: "let the agents develop (and export) transferable layout design skills. are non-verbal formulations of these skills available? I think not only in words, but very much in graphical (and musical) patterns.")
+
+- Addendum `agents/SKILL_EXPORT.md` sent to A2, A3 and A4: each delivers `out/skill/` with the same pattern in three
+  forms:
+  - symbol / score notation: rows and matrices of device letters with their generating transforms, where
+    translation = repetition, mirror = retrograde, point symmetry = retrograde inversion, interdigitation = hocket;
+  - pictures rendered from its GDS: pattern tile, before / after at one scale, and the rule behind each saving;
+  - a reusable generator.
+  Plus `rules.md` with deck citations and a SKILL.md draft. A2's subject is assembly: floorplan grammar, rails / pins,
+  channel routing, the check flow.
+- `agents/*/messages.md` regenerated with the 02:50 messages; the README lists the addendum.
+
+## 02:58–02:59 (Christoph, 02:58: "notice to layout agents: separate nwells connected to the same voltage rail are EXTREMELY wasteful. Avoid.")
+
+- Relayed to A2, A3 and A4 with what it means for each:
+  - A2 (assembly): every PMOS bulk in oa_core_pd is vdd, so one continuous NWell for oa_pmir, oa_pcas and oa_misc_p,
+    with one shared periphery tap. oa_pcas gets a copy with its ring removed and the NWell drawn to the edge. A2 is
+    to count the area v1 lost to separate same-net wells.
+  - A4 (PMOS): NWell drawn to the cell edge where it abuts another vdd-well cell, no per-cell ring, never two vdd
+    wells inside one cell, LU checked against the taps the parent provides.
+  - A3 (NMOS): no NWell ring per array. If an n-well ring is needed at all, one shared structure that can merge
+    with the PMOS vdd well; otherwise p+ substrate ties at the periphery.
+  - All three: the rule goes into rules.md and the skill material, with the spacing numbers it saves.
+- `agents/*/messages.md` gets these messages at the next update.
+
+## 03:01 (Christoph: "contiguous tap ring is optional. tap ring doesn't have to be rectangular, in particular if that leaves empty space in a guard ring.")
+
+- Relayed to A2, A3 and A4:
+  - taps only where the LU rules need them;
+  - tap segments or rectilinear outlines that follow the cells, no closed rectangular ring around empty area;
+  - the merged vdd well's outline follows the PMOS cells;
+  - LU numbers reported per tap segment;
+  - the rule goes into rules.md and the skill material.
+- A2 additionally counts v1's area in rings and in the empty space they enclosed.
+
+## 03:04 (Christoph: "nwell doesn't have to be rectangular if polygonal shapes are allowed by the design rules. make sure that transferrable layout skills are process agnostic, in the sense that process specific design rules are very important, but the skills themselves must be adaptable to a different set of design, parasitic extraction, device model, and LvS rules.")
+
+- Added "Addendum 2" to `agents/SKILL_EXPORT.md` and relayed it to A2, A3 and A4.
+- Well and tap outlines are polygons that follow the devices, within the deck's angle / grid rules (cited).
+- The skill material is split in two:
+  - a process adapter, one file per process: layer map, DRC values, device cells and LVS recognition, LU and well
+    rules, the PEX and model facts that drive the layout, each with its source;
+  - a process-free part: patterns, procedure, and generators that take every value from the adapter.
+- Plus a "porting to another process" section, and check scripts that are adapter-driven or marked IHP-only.
+
+## 03:14 (Christoph: "record both skills specific for IHP, and process agnostic skills, and clearly distinguish between them.")
+
+- Added "Addendum 3" to `agents/SKILL_EXPORT.md` and relayed it to A2, A3 and A4. `out/skill/` splits into:
+  - `generic/`: the process-agnostic SKILL_draft, patterns, adapter-driven generators and the porting section,
+    with no IHP name or value;
+  - `ihp_sg13cmos5l/`: the IHP SKILL_draft with the adapter and the IHP know-how: device cells and PCells, deck
+    files and gaps, LU as the deck computes it, hv / NWell specifics, pin conventions, pitfalls and workarounds.
+- Every rule and lesson is tagged [generic] or [IHP]. The final merge here keeps the same split: one generic layout
+  skill and one IHP sg13cmos5l skill that points to it.
+
+## 03:24–03:27 (A3, the NMOS primitives, finished)
+
+- `oa_n10`, 36.72 × 19.97 µm, replaces oa_nmir + oa_misc_n (952 µm² → 733 µm²):
+  - M10, M11, MC10, MS2, MS3 and SKS in one block of rotated 10/1 rows, interdigitated by rows
+    `A B A A B A A B A`, so M10 / M11 share one centroid;
+  - narrow 2/1 end dummies;
+  - one p+ tie strip, no ring, no NWell, no tap between rows; the farthest N+ is 18.90 µm from the tie, against 20.
+- `oa_mcs_c`, 31.22 × 8.57 µm, replaces oa_mcs (376 µm² → 268 µm²). Its tie overlaps oa_n10's; both together take
+  1017 µm² against 1327 µm² before.
+- A3's checks: Python DRC 0, its LVS matches.
+- My check, a flat extraction of each cell: every device on its sheet nets. Dummies are 36/1 with gate vnc and 4/1
+  with gate vbr, all D = S = B = vss.
+- Back-annotation: M10 ng 8 → 18, M11 ng 4 → 9 (W and L unchanged), plus the dummies. More gate area on vnc
+  (36 against 10 µm²), not simulated.
+- Skill export split into `generic/` and `ihp_sg13cmos5l/`.
+- Report and before / after picture in `agents/A3_oa_nmos_primitives/`. The cells were passed to A2.
+
+## 03:26–03:32 (A4, the PMOS primitives, finished; assembly handed to A2)
+
+- `oa_pmir_c`, 20.09 × 39.49 µm (−34 %): the end dummies go from 2/8 to 0.3/8, and the ring and Metal1 jumpers are
+  gone. Device layers are exactly point-symmetric; only the metal routing differs.
+- `oa_misc_p` is split into `oa_ms1` (6.99 × 14.42) and `oa_svpg` (2.24 × 2.37): 106 against 206 µm².
+- All three cells are tap-less, with the NWell drawn to the cell edge so they merge with the parent's vdd well.
+  - Latch-up holds against the parent's assumed tap segments: two segments of at least 7.86 µm at the top and
+    bottom of oa_pmir_c leave the farthest P+ at 19.23 µm, against 20.
+  - Each cell's own DRC shows only LU.a, as intended.
+- A4's LVS matches 3 / 3. My flat extraction gives the same devices: P0, P2, P8 and PO, dummies 4.4/8, MS1 as
+  8 × 0.5/12.5 from vdd to ks, and SVPG.
+- Back-annotation: dummy width 18 → 4.4 µm. No change to the real devices.
+- Report and picture in `agents/A4_oa_pmos_primitives/`.
+- A2 now assembles the compact oa_core_pd from A3's and A4's cells:
+  - oa_pcas as a copy with its well merged;
+  - one polygonal vdd NWell with tap segments only where latch-up needs them;
+  - the NMOS group on its shared p+ tie;
+  - then checks, renders, the v1-against-compact comparison, the back-annotation package and the skill export.

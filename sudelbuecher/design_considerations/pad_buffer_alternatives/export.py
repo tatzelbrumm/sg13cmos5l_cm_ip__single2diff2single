@@ -5,7 +5,8 @@ Emits, in file order along the live parentUuid chain: user text blocks (system r
 file-delivery notices stripped), visible assistant text blocks, and tool calls as *[ ]* summaries
 (tool name + first line of the main argument cut at 150 chars, plus tool errors).
 AskUserQuestion is shown to the user, so its questions and options and the user's answers are verbatim.
-Messages the user sends while a turn runs (queued_command attachments) are user turns, marked "sent mid-turn".
+Messages the user sends while a turn runs (queued_command attachments) are user turns, marked "sent mid-turn";
+background task notifications arriving that way are one summary line, as elsewhere (2026-10-28).
 Thinking blocks are never read into the output; a final check asserts no 40-char window of any
 thinking block occurs in the file, and that every user/assistant text occurs verbatim.
 Usage: export.py <transcript.jsonl> <out.md> <header.md> [--until N]
@@ -36,7 +37,8 @@ def strip_user(text):
 def notification(text):
     """A background-agent notification is not a user turn: one summary line, the report itself stays out."""
     m = re.search(r"<summary>(.*?)</summary>", text, flags=re.S)
-    return "*[background task notification: " + (m.group(1).strip() if m else "agent finished") + "; its report is saved verbatim under `research/`]*"
+    s = (m.group(1).strip() if m else "agent finished").split("\n")[0]
+    return "*[background task notification: " + (s[:150] + " …" if len(s) > 150 else s) + "]*"
 
 def ts(rec):
     t = rec.get("timestamp")
@@ -113,6 +115,8 @@ def main():
         elif r["type"] == "attachment" and (r.get("attachment") or {}).get("type") == "queued_command":
             p = r["attachment"].get("prompt")
             t = strip_user(p if isinstance(p, str) else "\n".join(x.get("text", "") for x in p or [] if isinstance(x, dict)))
+            if "<task-notification>" in t[:400]:
+                lines += [notification(t), ""]; continue
             if t:
                 turn += 1; lines += [f"## Turn {turn} — {ts(r)} (sent mid-turn)", "", "**User:** " + t, ""]; user_texts.append(t)
         elif r["type"] == "assistant":
