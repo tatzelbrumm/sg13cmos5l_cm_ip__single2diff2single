@@ -534,3 +534,76 @@ Chat log: `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`, expo
   00:14 a plain read of `.git/info/exclude` while looking for an ignore rule; both against "no git", both reported.
 - Open: pad cell onto the PCells (P ng 43 roles 20:dummy 21:rep, upper N ng 35 16:rep 17:rep); pad Metal2 rework agent
   (task 15); the bias-generator layout agents after Christoph's review.
+
+## 00:32–00:52: pad cell on the clamp PCells; Metal2 agent started
+## (Christoph, 00:38: "are the `Makefile`s taken care of?"; 00:41: "ok go")
+
+- 00:32 the cloud workspace restarted; the chat-log archiver was restarted and picked up the 18 records since 00:19
+  (the transcript file had survived), so nothing was lost.
+- Makefiles (00:38): no `Makefile.new` left, every macro folder has its Makefile with the right TOP (IOPad never had one).
+- Pad cell `macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds` (bb99b7d7… →
+  8520e315…, written 00:45; before-state `layout/klayout/backups/sg13cmos5l_IOPadDiff2Single_before_pcells_2026-10-28.klay.gds`):
+  the static clamp and diode cells (first checked identical to the PCells at their old parameters) replaced by live
+  `SG13_cm_clamps` PCells: `Clamp_P_M1` ng 43 / 0.6u / 80u at (0, 65) with `Clamp_P_M1_wiring` roles `20:dummy 21:rep`,
+  nets a / dabp; 2 x `Clamp_N_M1` ng 35 / 1u / 80u at (0, 15.56) and (0, 6), wiring cells with roles `16:rep 17:rep`
+  (b / dabn) and none (b); `DCNDiode` l 67.6u at (3.56, 27.12), `DCPDiode` l 65.8u at (4.46, 53.08), centred as in the
+  replica mock-up; the top-level n+ band clipped around the longer DCNDiode and its contacts with it (2468 of 2839
+  kept), as in the mock-up. Removed: the junction-bar Metal2 comb of 19:13 (arrays pdrainwire 21, ndrainwire 17 and
+  the bar), which option B replaces; the drains are therefore unconnected until the Metal2 rework.
+- Checked (klayout.db, flat): ON 299.2 / 1 (G b), RN1 8.8 / 1 (G = D = dabn), OP 546.12 / 0.6 (G a), RP1 13.32 / 0.6
+  (G = D = dabp), dummy 13.32 / 0.6 (G iovdd, D dabp); Metal1 width / space / M1.e, Cont on Activ and under Metal1,
+  NWell space, NW.f, Activ and GatPoly space: 0; nets with two labels: only `guard,iovss` (DCPDiode guard ring with the
+  P clamp's outer ring, as before). Re-opened with the library registered: all six instances live PCells with their
+  parameters; without it, plain cells with the same geometry. IHP DRC deck not run.
+- `macros/sg13cmos5l_IOPadDiff2Single/README.md`, "Not done": the stale layout line replaced by the state above.
+- Metal2 rework (task 15) handed to a background agent at 00:50, working only in the cloud workspace on a copy, no
+  access to the computer, no git: option B comb with straps and Via2 into the rails, pad junction in Metal2 with iovss
+  in the uncut iovss rail, wide Metal2 over the diode side bars, dabp / dabn and the a / b feeds to pins above the P
+  frame, the band above DCNDiode narrowed, CMA and CMB in the gap, review of the hand wiring, a list of design-note
+  inconsistencies. Its candidate comes back for review before anything is written to the computer.
+
+## 01:10–01:53 (Christoph, 01:10: "This looks like an incomplete partial mess." / "the elimination of output transistors from the core schematic looks incomplete."; answers: CMA / CMB "Pad level (Recommended)", frame cells "Two frame sheets (Recommended)"; 01:16: "seems that the `xschemrc` in macros/ (and elsewhere) is out of date and fucked up."; 01:27: "I want to open any macro schematic from macro/xschemrc and can't access the bias generator cores."; 01:30: "Tell an agent to create a layout from oa_core_pd.sch using the layout primitives, I think they're in IOPad layout."; 01:45: "When the agent drawing a layout for oa_core_pd.sch using the layout primitives is done, have it continue with a layout  for bg_core_pd.sch"; 01:46: "how far is the layout agent with a compact layout for oa_core_pd (to go into slot7), anyhow?")
+
+- Acknowledged at 01:10: at 23:35 the frame-matched cells had been agreed, and I had put RP1 / RN1 / the dummy into the
+  core instead. Redone (written 01:52, 55 files, before-state and sha256 lists in
+  `design_considerations/consolidation/output_stage_2026-10-28/`):
+  - `d2s_mpdda_pd` without its output stage: OP, ON, CMA, CMB, RP1, RPD, RN1 out; RP2 / RN2 stay (block [8], the AB
+    groups of layout_primitives P7). Ports: `vout` gone, `a b dabp dabn` after `vfb`; parameters `wc`, `lc` gone.
+    Sheet re-wired (pins a / b / dabp / dabn on the right edge, RP2 / RN2 beside the AB control), texts [4] [6] [7] [8]
+    [E] and the title rewritten, symbol and source subckt in the same port order.
+  - New frame sheets / symbols `d2s_out_p` (vddo a vout dabp: OP 82 f, RP1, RPD) and `d2s_out_n` (vsso b vout dabn:
+    ON 68 f, RN1), source `netlist/source/d2s_out.spice`. Names differ from the layout cells (Clamp_*_M1), so LVS
+    flattens them.
+  - Pad top sheet and source: `xfp` / `xfn`, `CMA pad a pad pad`, `CMB b pad b b` at the drawn W 7.96u × L 32.16u
+    (256 µm², from the Metal2 agent's layout), DP / DN and the pad pin re-placed on one pad bus. The fixture
+    `d2s_mpdda_pd_sel` and the four `tb_pd_*` sheets and decks carry the same stage (device paths now `@n.xfp.xop.…`,
+    `@n.xfn.xon.…`, `v(a)`, `v(b)`; `tb_pad_dc` includes `d2s_out.spice`); the CACE dc template reads `@n.x1.xfp.xop` /
+    `@n.x1.xfn.xon`. Texts about where RP1 / RN1 live updated in bias_tree_pd, the four flat bias macros (sheet, yaml,
+    templates), bias_sel_pd (source, sheet, yaml, templates), Clamp_P_M1.sch, the pad README (structure table, a note,
+    "Not done" layout line) and yaml.
+  - Checked in the cloud before writing: all 71 existing sheets netlisted before / after and compared flattened (WL
+    labels): identical, with CMA / CMB size as the only intended change; `d2s_mpdda_pd.sch` = before minus exactly
+    xop xon xcma xcmb xrp1 xrpd xrn1. Sheet vs source: d2s_mpdda_pd, d2s_out_p, d2s_out_n and the whole pad identical.
+    The old "sel, sel_noab, d2s_mpdda_pd, bg differ" of 00:15 is resolved: the comparison did not normalize the lcas
+    expressions and cannot parse xschem's pnpMPA lines; with lcas normalized and the two pnp left out all four are
+    identical. Decks tb_pd_* / tb_pad_dc flattened before / after: identical apart from CMA / CMB. The IOPadDiff2Single
+    sheets, templates and slot.sch netlist through their own xschemrc without a missing symbol. Not simulated.
+- xschemrc (01:37, 44 files, `consolidation/xschemrc_fix_2026-10-28/`): the core symbols resolve and descend from
+  `macros/xschemrc` in the cloud (all 102 sheets load, no missing symbol), so the 01:27 symptom was not reproduced.
+  Fixed: a UTF-8 byte-order mark at the start of six rc files (IOPad, inverter ×2, OgueyAebischerBias ×2,
+  slot/testbenches) that made Tcl stop at line 1; `pin_netlist_dir` pointing to a nonexistent folder in the 10
+  macros without `testbenches/xschem` (now `schematic/xschem/simulations`, both created on demand, both gitignored);
+  `macros/xschemrc` re-globs the macro list on every load through `load_file_postprocess`, a hook xschem 3.4.4 does
+  not call (3.4.8RC not checked), so an xschem started before 2026-10-27 22:00 needs a restart.
+- Metal2 rework, option B (agent 00:49–01:33; written 01:39): pad cell 8520e315… → e270a219…, before-state
+  `layout/klayout/backups/sg13cmos5l_IOPadDiff2Single_before_m2_2026-10-28.klay.gds`; report, builder, checker, log
+  and renders in `m2_option_b_2026-10-28/` here. My own checks on the candidate: re-opened with the PCell library, all
+  instances live with unchanged parameters; flat extraction with `verify.py`: ON 299.2/1 (G b), RN1 8.8/1 (dabn), OP
+  546.12/0.6 (G a), RP1 and the dummy 13.32/0.6 (dabp), CMA 7.96/32.16 (G a, S/D pad), CMB 7.96/32.16 (G pad, S/D b);
+  Metal1, Cont, NWell, Activ, GatPoly subset 0. Its open points: the a / b joins above the P frame box in dabp / dabn,
+  `guard` not tied inside the cell, CMA's pad-connected well without its own ring, rules at exactly the limit by
+  construction, the 63/0 GateDecode box. KLayout had autosaved the pad cell at 01:06: if it is open there, reload.
+- oa_core_pd layout: background agent from 01:32 on (brief `scratchpad/oaagent/BRIEF.md`, cloud only, primitives from
+  `macros/IOPad/layout/klayout/pad_buffer_cells.gds` unchanged, oa_misc_p as delivered); 01:47 envelope corrected to
+  a compact block for the core side of slot 7 (537.15 × 273 µm), Metal1 / Metal2 wiring where possible. bg_core_pd
+  queued as its part 2 (inputs staged, `BRIEF_bg.md`), to start when oa_core_pd is done.

@@ -715,3 +715,19 @@ Separate version for s2d that does not contain the unnecessary branches." On the
   written files (68 changed, 12 new), all matching on the computer at 00:15. New Makefiles are `Makefile.new` again
   (bias_sel_noab_pd, bias_tree_noab_pd). Not changed: CACE results, generated simulations, the notes worktree's sheets.
   No git command; a plain read of `.git/info/exclude` at 00:14 (reported).
+
+## 2026-10-28 01:37: xschemrc fixes (`xschemrc_fix_2026-10-28/`)
+
+- 44 rc files under macros/ (Christoph, 01:16 / 01:27). Byte-order mark removed from six (IOPad, inverter ×2,
+  OgueyAebischerBias ×2, slot/testbenches); `pin_netlist_dir` falls back to `schematic/xschem/simulations` when a
+  macro has no `testbenches/xschem` and creates the folder; `macros/xschemrc` re-reads the macro list on each load.
+  `before/`, `before_sha256.txt`, `after_sha256.txt`, `files.txt`, and `xrc.py`, the script that made the change (run
+  from outside the repo). Cloud test, 102 sheets: through `macros/xschemrc` and through each folder's own rc, no
+  missing symbol and no netlist-folder error.
+
+## 2026-10-28 01:52: output stage of IOPadDiff2Single at pad level (`output_stage_2026-10-28/`)
+
+- `d2s_mpdda_pd` without OP / ON / CMA / CMB / RP1 / RPD / RN1; new `d2s_out_p` / `d2s_out_n` (sheets, symbols,
+  `d2s_out.spice`); CMA / CMB in the pad's top sheet at the drawn 7.96u × 32.16u; fixture, tb_pd_* and the dc template
+  follow; text ripple in the bias macros. 50 files changed, 5 new; `before/` (50) with `before_sha256.txt`,
+  `after_sha256.txt` (55), all matching on the computer at 01:52. Checks: build log, entry 01:10–01:53.
