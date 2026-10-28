@@ -1,0 +1,6 @@
+sheet ports: ['vdd', 'vss', 'en_3v3', 'en_3v3_b', 'iout']  hand ports: ['vdd', 'vss', 'iout', 'en_3v3', 'en_3v3_b']
+devices sheet 18, hand 18
+device differences: 0
+oa_pmir.gds    top cells ['oa_pmir']; XOR layers differing: 0; subcell names equal: False
+oa_pcas.gds    top cells ['oa_pcas']; XOR layers differing: 0; subcell names equal: False
+oa_misc_p.gds  top cells ['oa_misc_p']; XOR layers differing: 0; subcell names equal: False

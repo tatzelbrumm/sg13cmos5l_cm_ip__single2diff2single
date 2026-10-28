@@ -1,0 +1,51 @@
+labels: 5 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS oa_pmir vs pad_buffer_cells.cdl:oa_pmir -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 5
+  sg13_hv_pmos  D=c8        G=vpg       S=vdd       B=vdd   W=  16.000 L=  8.000
+  sg13_hv_pmos  D=co        G=vpg       S=vdd       B=vdd   W=  40.000 L=  8.000
+  sg13_hv_pmos  D=vdd       G=vpg       S=c2        B=vdd   W=   4.000 L=  8.000
+  sg13_hv_pmos  D=vdd       G=vpg       S=vdd       B=vdd   W=  18.000 L=  8.000
+  sg13_hv_pmos  D=vpg       G=vpg       S=vdd       B=vdd   W=   2.000 L=  8.000
+labels: 9 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS oa_pcas vs pad_buffer_cells.cdl:oa_pcas -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 4
+  sg13_hv_pmos  D=iout      G=vpc       S=co        B=vdd   W=  10.000 L=  2.000
+  sg13_hv_pmos  D=vbr       G=vpc       S=c2        B=vdd   W=   1.000 L=  2.000
+  sg13_hv_pmos  D=vnc       G=vpc       S=c8        B=vdd   W=   4.000 L=  2.000
+  sg13_hv_pmos  D=vpc       G=vpc       S=vpg       B=vdd   W=   0.500 L=  2.000
+labels: 12 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS oa_misc_p vs pad_buffer_cells.cdl:oa_misc_p -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 9
+  sg13_hv_pmos  D=ks        G=en_3v3_b  S=ms7       B=vdd   W=   0.500 L= 12.500
+  sg13_hv_pmos  D=ms2       G=en_3v3_b  S=ms1       B=vdd   W=   0.500 L= 12.500
+  sg13_hv_pmos  D=ms2       G=en_3v3_b  S=ms3       B=vdd   W=   0.500 L= 12.500
+  sg13_hv_pmos  D=ms4       G=en_3v3_b  S=ms3       B=vdd   W=   0.500 L= 12.500
+  sg13_hv_pmos  D=ms4       G=en_3v3_b  S=ms5       B=vdd   W=   0.500 L= 12.500
+  sg13_hv_pmos  D=ms6       G=en_3v3_b  S=ms5       B=vdd   W=   0.500 L= 12.500
+  sg13_hv_pmos  D=ms6       G=en_3v3_b  S=ms7       B=vdd   W=   0.500 L= 12.500
+  sg13_hv_pmos  D=vdd       G=en_3v3_b  S=ms1       B=vdd   W=   0.500 L= 12.500
+  sg13_hv_pmos  D=vpg       G=en_3v3    S=vdd       B=vdd   W=   1.000 L=  0.450
+labels: 4 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS oa_nmir vs pad_buffer_cells.cdl:oa_nmir -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 3
+  sg13_hv_nmos  D=vnc       G=vnc       S=vss       B=vss   W=  90.000 L=  1.000
+  sg13_hv_nmos  D=vres      G=vnc       S=d10       B=vss   W= 180.000 L=  1.000
+  sg13_hv_nmos  D=vss       G=vnc       S=vss       B=vss   W=  10.000 L=  1.000
+labels: 3 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS oa_mcs vs pad_buffer_cells.cdl:oa_mcs -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 2
+  sg13_hv_nmos  D=vbr       G=vbr       S=vss       B=vss   W=   3.400 L= 30.000
+  sg13_hv_nmos  D=vres      G=vbr       S=vss       B=vss   W=   3.400 L= 30.000
+labels: 6 names; nets with two label names (shorts): none; names on two nets (opens): ['ks', 'vpc']
+LVS oa_misc_n vs pad_buffer_cells.cdl:oa_misc_n -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 4
+  sg13_hv_nmos  D=ks        G=en_3v3_b  S=vss       B=vss   W=   1.000 L=  0.450
+  sg13_hv_nmos  D=ks        G=vbr       S=vss       B=vss   W=  10.000 L=  1.000
+  sg13_hv_nmos  D=vpc       G=ks        S=vss       B=vss   W=   0.500 L=  2.000
+  sg13_hv_nmos  D=vpc       G=vbr       S=d10       B=vss   W=  10.000 L=  1.000

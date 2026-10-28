@@ -1,0 +1,2 @@
+short exit 1 | labels: 22 names; nets with two label names (shorts): ['vbr,vpc']; names on two nets (opens): none | LVS oa_core_pd vs oa_core_pd.cdl:oa_core_pd -> MISMATCH |   LV gates (outside ThickGateOx): 0
+open  exit 1 | labels: 22 names; nets with two label names (shorts): none; names on two nets (opens): ['vnc'] | LVS oa_core_pd vs oa_core_pd.cdl:oa_core_pd -> MISMATCH |   LV gates (outside ThickGateOx): 0

@@ -1,0 +1,1 @@
+wrote oa_core_pd.gds: top oa_core_pd, 76.000 x 50.740 um = 3856 um2, pmir centre (cell) (11.125, 19.405)

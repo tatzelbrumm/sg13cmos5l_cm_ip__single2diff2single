@@ -1,0 +1,26 @@
+M1.a         expected >=1, got 1 ok
+M1.b         expected >=1, got 1 ok
+M2.a         expected >=1, got 1 ok
+M2.b         expected >=1, got 1 ok
+M1.e         expected >=1, got 1 ok
+M2.e         expected >=1, got 1 ok
+V1.a         expected >=1, got 1 ok
+M2.c/x       expected >=1, got 1 ok
+V1.c1        expected >=1, got 1 ok
+M2.d         expected >=1, got 1 ok
+M1.d         expected >=1, got 2 ok
+Pin.e        expected >=1, got 1 ok
+OffGrid      expected >=1, got 2 ok
+M3+          expected >=1, got 1 ok
+CMOS5L.FORB  expected >=1, got 1 ok
+NW.b1        expected >=1, got 1 ok
+TGO.e        expected >=1, got 1 ok
+Act.b        expected >=1, got 1 ok
+Cnt.g        expected >=1, got 1 ok
+Cnt.h        expected >=1, got 1 ok
+Gat.a4       expected >=1, got 1 ok
+LU.a         expected >=1, got 2 ok
+LU.b         expected >=1, got 4 ok
+other rules firing: {'M1.c1': 1, 'M2.c1': 1}
+antenna: [('$30', 1.5, 207.73333333333335, 0.024066666666666667)]
+ALL INJECTED VIOLATIONS FOUND
