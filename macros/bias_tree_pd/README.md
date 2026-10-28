@@ -10,7 +10,8 @@ mirror cascodes), vbn (5 uA, fold sinks), vbnc (2 uA, fold cascodes) with their 
 currents for the class-AB stacks: NABP sinks 5 uA from vabp (RP2 on RP1), PABN sources 5 uA into vabn (RN2 on RN1).
 The stacks themselves are in the pad, in `d2s_mpdda_pd`, since 2026-10-27: RP1 / RN1 are the replicas of OP / ON in
 its clamp frames (nets `dabp` / `dabn`, formerly `n1` / `n2`), so the tree has no vddo / vsso any more.
-`bias_tree_noab_pd` is this tree without NABP / PABN, for the s2d pad.
+`bias_tree_noab_pd` is this tree without NABP / PABN, for the s2d pad. `bias_tree_out_pd` is its twin for a reference
+current out of `iref` (PMOS input diode), with the same ports.
 
 This is the part that goes into a pad. Its reference comes from `bias_gen_pd`: next to it in the pad (`xg` + `xt`
 since 2026-10-28; before, the two were one cell, `bias_sel_pd`) or in the slot's main area, optionally through

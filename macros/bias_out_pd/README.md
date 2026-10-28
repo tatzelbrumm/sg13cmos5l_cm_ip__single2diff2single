@@ -4,7 +4,8 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # `bias_out_pd`: bias of the class-AB pad driver, with power-down
 
-`bias_out_pd` is the bias of `d2s_mpdda_pd` from an **external reference current out of `iref`** (into an external NMOS sink). Mirror image of `bias_in_pd`: input diode PI (a copy of BP). Not usable with the harness `ibias` pins, which source current.
+`bias_out_pd` is the bias of `d2s_mpdda_pd` from an **external reference current out of `iref`** (into an external NMOS sink). Mirror image of `bias_in_pd`: input diode PI (a copy of BP). Not usable with the harness `ibias` pins, which source current. Its tree without the inverter is
+`bias_tree_out_pd` (2026-10-28), pin-compatible with `bias_tree_pd`.
 
 It is one of the four bias variants of `d2s_mpdda_pd` (in, out, oa, bg). All four keep `d2s_bias_lp`'s six bias
 diodes and so the bias voltages the driver sees: vbp 5 uA (BP, unit tails), vbn 5 uA (BN, fold sinks), vbpc 2 uA (BPC,

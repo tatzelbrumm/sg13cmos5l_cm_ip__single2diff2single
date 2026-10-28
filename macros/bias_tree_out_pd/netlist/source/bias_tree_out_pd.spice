@@ -1,0 +1,19 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias_tree_out_pd: bias_out_pd without its inverter (en_3v3_b is a port), 2026-10-28: the mirror tree for a
+* reference current OUT of iref, i.e. into an NMOS sink (PMOS input diode PI, a copy of BP; TDP pulls pi to vdd while
+* disabled). Pin-compatible with bias_tree_pd (same ports, same order); bias_out_pd = inv_3v3_pd + this.
+* Uses bias_diodes of ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice.
+.subckt bias_tree_out_pd vdd vss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b
+XTGN iref en_3v3 pi vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTGP iref en_3v3_b pi vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XTDP pi en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XPI pi pi vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBN vbn pi vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBNC vbnc pi vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+XPABN vabn pi vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XNBP vbp vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBPC vbpc vbn vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+XNABP vabp vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+Xd vdd vss vbp vbn vbpc vbnc bias_diodes
+.ends bias_tree_out_pd
