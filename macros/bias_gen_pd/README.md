@@ -6,8 +6,9 @@ SPDX-License-Identifier: Apache-2.0
 
 `bias_sel_pd` without its tree `Xt`: the harness `ibias` through TEN / TEP, the Oguey–Aebischer core `oa_core_pd` and
 the Banba core `bg_core_pd`, selected by the same decode (nand2_hv / nor2_hv / inv_hv), into one output `iref`.
-For the floorplan in which the generator sits in the slot's main area and only the trees (`bias_tree_pd`) go into the
-pads; `bias_sel_pd` remains the version with the tree attached, for a generator inside the pad.
+Since 2026-10-28 both pads instantiate it next to their tree (`xg` + `xt` in place of `bias_sel_pd` /
+`bias_sel_noab_pd`, device for device); the same cell serves the floorplan in which the generator sits in the slot's
+main area and only the trees go into the pads. `bias_sel_pd` stays as the combined reference cell with its CACE suite.
 
 | sel1 sel0 | iref |
 |---|---|

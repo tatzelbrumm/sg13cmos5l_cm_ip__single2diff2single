@@ -13,8 +13,9 @@ selectable bias, a fail-safe enable and a CACE suite whose output follows
 
 | instance | cell (macro) | function |
 |---|---|---|
-| `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` = NOT `en_3v3` for `xb` and `xd` |
-| `xb` | `bias_sel_pd` (`../bias_sel_pd`) | six bias lines from one mirror tree; reference selected by `sel1 sel0` |
+| `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` = NOT `en_3v3` for `xt` and `xd` |
+| `xg` | `bias_gen_pd` (`../bias_gen_pd`) | the reference current `iref` (sourced), selected by `sel1 sel0` |
+| `xt` | `bias_tree_pd` (`../bias_tree_pd`) | six bias lines from one mirror tree fed by `iref`. `xg` + `xt` are the former `xb` = `bias_sel_pd`, device for device (split 2026-10-28) |
 | `xd` | `d2s_mpdda_pd` (here) | Miller-compensated class-AB driver without its output stage (MP-DDA front end, folded cascode, class-AB control): drives the output gates a / b; power-down switches; RP2 / RN2, the upper halves of the class-AB diode stacks (block [8], since 2026-10-27, formerly in the bias tree) |
 | `xfp`, `xfn` | `d2s_out_p`, `d2s_out_n` (here) | the output stage = the pad's clamp frames: OP with its replica RP1 and the dummy RPD (P frame), ON with its replica RN1 (both N frames); RP1 / RN1 are the lower halves of the class-AB stacks (nets dabp / dabn). Since 2026-10-28 |
 | `CMA`, `CMB` | hv PMOS in accumulation | Miller capacitors a–pad and pad–b, W 7.96 µm × L 32.16 µm as drawn between the diodes (256 µm², as the former 16 × 16 µm). Since 2026-10-28 |
@@ -35,7 +36,7 @@ follows the layout, 7.96 × 32.16 µm instead of 16 × 16 µm, same area); the s
 are from 16 × 16 µm capacitors.
 
 **Enable complement (2026-10-25).** `en_3v3_b` is made once, by `XIB` (`inv_hv`) in `en_ctrl_3v3`, and goes to
-`bias_sel_pd` and `d2s_mpdda_pd` as a port; their own inverters (`Xi` = `inv_3v3_pd`, `XIP` / `XIN`) are gone.
+`bias_sel_pd` (since 2026-10-28 `bias_tree_pd`) and `d2s_mpdda_pd` as a port; their own inverters (`Xi` = `inv_3v3_pd`, `XIP` / `XIN`) are gone.
 In `d2s_mpdda_pd.sch` the PMOS switches SA, SABP hang from the top rails with their gates on an `en_3v3` line, the
 NMOS switches SB, SABN from the bottom rails on an `en_3v3_b` line, all wired from the pins. The fixture
 `d2s_mpdda_pd_sel` has `en_3v3_b` as a pin (its template ties it to 0); `tb_pd_*` (sheets and decks) carry the
@@ -60,7 +61,7 @@ core, 11 both cores (currents add: I_Q doubles). The harness sources current, so
 (NMOS input diode) is used; `bias_out_pd` is kept as a reference macro only.
 
 **Power down.** `en_3v3` is low, and every current root is off (power-down switches of
-`d2s_mpdda_pd` and `bias_sel_pd`), whenever
+`d2s_mpdda_pd` and the bias, `bias_gen_pd` + `bias_tree_pd`), whenever
 - `en_1v2` is low, or
 - the slot's `vdd_1v2` is gated off (the presence detector needs no 1.2 V supply, so it also works with
   the `ls_up` latches undefined), or

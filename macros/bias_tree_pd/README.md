@@ -12,8 +12,9 @@ The stacks themselves are in the pad, in `d2s_mpdda_pd`, since 2026-10-27: RP1 /
 its clamp frames (nets `dabp` / `dabn`, formerly `n1` / `n2`), so the tree has no vddo / vsso any more.
 `bias_tree_noab_pd` is this tree without NABP / PABN, for the s2d pad.
 
-This is the part that goes into a pad. Its reference comes either from the selector next to it (`bias_sel_pd`, the
-generator in the pad) or from the slot's main area (`bias_gen_pd`, optionally through `bias_dist_pd`).
+This is the part that goes into a pad. Its reference comes from `bias_gen_pd`: next to it in the pad (`xg` + `xt`
+since 2026-10-28; before, the two were one cell, `bias_sel_pd`) or in the slot's main area, optionally through
+`bias_dist_pd`.
 
 Ports (order): `vdd vss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b`.
 

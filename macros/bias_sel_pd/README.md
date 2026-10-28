@@ -9,6 +9,11 @@ four bias diodes (`bias_tree_pd`, the tree of `bias_in_pd`) is fed by one of thr
 vabn are currents into the class-AB stacks RP1 + RP2 / RN1 + RN2, which are in `d2s_mpdda_pd` since 2026-10-27.
 The s2d pad uses `bias_sel_noab_pd`, this block without the class-AB branches.
 
+**Since 2026-10-28 the pads no longer instantiate this cell.** Each pad has `bias_gen_pd` (`xg`, this cell without
+`Xt`) and the tree (`xt`: `bias_tree_pd`, in the s2d pad `bias_tree_noab_pd`) side by side, joined by `iref`; the
+flattened netlists of both pads, both loop fixtures, all CACE templates and `slot` are unchanged by it. This cell and
+its CACE results stay as the characterization of that combination.
+
 | sel1 sel0 | reference into the tree | |
 |---|---|---|
 | 0 0 | harness `ibias` through a transmission gate (TEN / TEP) | the harness iDAC *sources* its current (PMOS, 250 nA per code step, `sg13cmos5l_ocd_ip__biasgen2`), hence the `_in` topology (NMOS input diode NI); 5 uA = code 20 |

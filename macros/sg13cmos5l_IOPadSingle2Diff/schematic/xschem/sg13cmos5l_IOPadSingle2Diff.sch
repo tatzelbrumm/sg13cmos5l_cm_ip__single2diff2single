@@ -10,51 +10,49 @@ T {Same ring / control / bias infrastructure as sg13cmos5l_IOPadDiff2Single. Inp
 T {secondary protection with its 587 Ohm rppd between pad and padres). xa = s2d_mpdda_pd, the matched-pair DDA input buffer (gain 2, vfbp / vfbn tied to outp / outn).} 0 -940 0 0 0.3 0.3 {}
 T {[C] enable / bias select} 220 -350 0 0 0.3 0.3 {}
 T {[B] bias} 620 -410 0 0 0.3 0.3 {}
-T {[A] input buffer s2d_mpdda_pd} 910 -640 0 0 0.3 0.3 {}
-T {[P] input protection (IHP IO cells)} 730 -780 0 0 0.3 0.3 {}
-N 880 -100 1040 -100 {lab=iovss}
-N 1100 -360 1100 -320 {lab=vbp}
-N 1120 -360 1120 -300 {lab=vbpc}
-N 1160 -360 1160 -240 {lab=vbnc}
-N 1180 -360 1180 -220 {lab=vbn}
-N 680 -100 720 -100 {lab=iovss}
+T {[A] input buffer s2d_mpdda_pd} 1270 -640 0 0 0.3 0.3 {}
+T {[P] input protection (IHP IO cells)} 1090 -780 0 0 0.3 0.3 {}
+N 1240 -100 1400 -100 {lab=iovss}
+N 1460 -360 1460 -320 {lab=vbp}
+N 1480 -360 1480 -300 {lab=vbpc}
+N 1520 -360 1520 -240 {lab=vbnc}
+N 1540 -360 1540 -220 {lab=vbn}
+N 1040 -100 1080 -100 {lab=iovss}
 N 140 -100 360 -100 {lab=iovss}
-N 360 -100 680 -100 {lab=iovss}
+N 360 -100 1040 -100 {lab=iovss}
 N 140 -200 320 -200 {lab=vdd1v2_sense}
 N 140 -180 320 -180 {lab=vdd3v3_sense}
 N 140 -220 320 -220 {lab=sel1_1v2}
 N 140 -240 320 -240 {lab=sel0_1v2}
 N 140 -260 320 -260 {lab=en_1v2}
 N 360 -140 360 -100 {lab=iovss}
-N 140 -320 640 -320 {lab=ibias}
-N 680 -180 680 -100 {lab=iovss}
-N 1040 -360 1040 -100 {lab=iovss}
+N 1400 -360 1400 -100 {lab=iovss}
 N 540 -280 540 -260 {lab=en_3v3}
-N 1260 -500 1280 -500 {lab=outp}
-N 1280 -500 1300 -500 {lab=outp}
-N 1280 -520 1280 -500 {lab=outp}
-N 1260 -520 1280 -520 {lab=outp}
-N 1260 -460 1280 -460 {lab=outn}
-N 1280 -460 1300 -460 {lab=outn}
-N 1260 -440 1280 -440 {lab=outn}
+N 1620 -500 1640 -500 {lab=outp}
+N 1640 -500 1660 -500 {lab=outp}
+N 1640 -520 1640 -500 {lab=outp}
+N 1620 -520 1640 -520 {lab=outp}
+N 1620 -460 1640 -460 {lab=outn}
+N 1640 -460 1660 -460 {lab=outn}
+N 1620 -440 1640 -440 {lab=outn}
 N 540 -420 540 -280 {lab=en_3v3}
 N 520 -200 620 -200 {lab=sel1_3v3}
-N 820 -320 1100 -320 {lab=vbp}
-N 820 -300 1120 -300 {lab=vbpc}
-N 720 -100 880 -100 {lab=iovss}
-N 940 -700 960 -700 {lab=padres}
-N 960 -500 980 -500 {lab=padres}
-N 880 -560 880 -100 {lab=iovss}
-N 960 -700 960 -500 {lab=padres}
-N 620 -560 880 -560 {lab=iovss}
-N 880 -660 880 -560 {lab=iovss}
+N 1180 -320 1460 -320 {lab=vbp}
+N 1180 -300 1480 -300 {lab=vbpc}
+N 1080 -100 1240 -100 {lab=iovss}
+N 1300 -700 1320 -700 {lab=padres}
+N 1320 -500 1340 -500 {lab=padres}
+N 1240 -560 1240 -100 {lab=iovss}
+N 1320 -700 1320 -500 {lab=padres}
+N 620 -560 1240 -560 {lab=iovss}
+N 1240 -660 1240 -560 {lab=iovss}
 N 620 -720 620 -560 {lab=iovss}
 N 220 -740 220 -560 {lab=iovss}
 N 300 -580 300 -560 {lab=iovss}
 N 220 -560 300 -560 {lab=iovss}
 N 240 -640 260 -640 {lab=pad}
 N 240 -700 240 -640 {lab=pad}
-N 540 -700 820 -700 {lab=pad}
+N 540 -700 1180 -700 {lab=pad}
 N 180 -780 180 -700 {lab=pad}
 N 180 -700 240 -700 {lab=pad}
 N 540 -760 560 -760 {lab=pad}
@@ -64,15 +62,14 @@ N 540 -660 560 -660 {lab=pad}
 N 240 -700 540 -700 {lab=pad}
 N 300 -560 620 -560 {lab=iovss}
 N 140 -700 180 -700 {lab=pad}
-N 1060 -900 1060 -600 {lab=iovdd}
-N 740 -900 1060 -900 {lab=iovdd}
+N 1420 -900 1420 -600 {lab=iovdd}
+N 1100 -900 1420 -900 {lab=iovdd}
 N 140 -880 380 -880 {lab=vdd}
 N 380 -880 380 -300 {lab=vdd}
 N 360 -900 360 -300 {lab=iovdd}
 N 300 -900 360 -900 {lab=iovdd}
-N 700 -900 700 -360 {lab=iovdd}
-N 620 -900 700 -900 {lab=iovdd}
-N 700 -900 740 -900 {lab=iovdd}
+N 620 -900 1060 -900 {lab=iovdd}
+N 1060 -900 1100 -900 {lab=iovdd}
 N 220 -900 220 -840 {lab=iovdd}
 N 140 -900 220 -900 {lab=iovdd}
 N 300 -900 300 -680 {lab=iovdd}
@@ -81,29 +78,23 @@ N 620 -900 620 -840 {lab=iovdd}
 N 360 -900 620 -900 {lab=iovdd}
 N 560 -260 560 -240 {lab=en_3v3_b}
 N 560 -400 560 -260 {lab=en_3v3_b}
-N 560 -400 980 -400 {lab=en_3v3_b}
-N 540 -420 980 -420 {lab=en_3v3}
-N 540 -280 640 -280 {lab=en_3v3}
+N 560 -400 1340 -400 {lab=en_3v3_b}
+N 540 -420 1340 -420 {lab=en_3v3}
 N 520 -260 540 -260 {lab=en_3v3}
-N 560 -260 640 -260 {lab=en_3v3_b}
 N 520 -240 560 -240 {lab=en_3v3_b}
-N 600 -240 640 -240 {lab=sel0_3v3}
-N 600 -240 600 -220 {lab=sel0_3v3}
 N 520 -220 600 -220 {lab=sel0_3v3}
-N 620 -220 640 -220 {lab=sel1_3v3}
-N 620 -220 620 -200 {lab=sel1_3v3}
-N 820 -240 1160 -240 {lab=vbnc}
-N 820 -220 1180 -220 {lab=vbn}
-N 1280 -460 1280 -440 {lab=outn}
-N 140 -540 980 -540 {lab=vcm}
-N 140 -460 980 -460 {lab=vref}
+N 1180 -240 1520 -240 {lab=vbnc}
+N 1180 -220 1540 -220 {lab=vbn}
+N 1640 -460 1640 -440 {lab=outn}
+N 140 -540 1340 -540 {lab=vcm}
+N 140 -460 1340 -460 {lab=vref}
 C {devices/iopin.sym} 140 -900 0 1 {name=p1 lab=iovdd}
 C {devices/iopin.sym} 140 -100 0 1 {name=p2 lab=iovss}
 C {devices/iopin.sym} 140 -880 0 1 {name=p3 lab=vdd}
 C {devices/iopin.sym} 140 -120 0 1 {name=p4 lab=vss}
 C {devices/iopin.sym} 140 -700 0 1 {name=p5 lab=pad}
-C {devices/opin.sym} 1300 -500 0 0 {name=p6 lab=outp}
-C {devices/opin.sym} 1300 -460 0 0 {name=p7 lab=outn}
+C {devices/opin.sym} 1660 -500 0 0 {name=p6 lab=outp}
+C {devices/opin.sym} 1660 -460 0 0 {name=p7 lab=outn}
 C {devices/ipin.sym} 140 -540 0 0 {name=p8 lab=vcm}
 C {devices/ipin.sym} 140 -460 0 0 {name=p9 lab=vref}
 C {devices/ipin.sym} 140 -320 0 0 {name=p10 lab=ibias}
@@ -115,7 +106,7 @@ C {devices/ipin.sym} 140 -180 0 0 {name=p15 lab=vdd3v3_sense}
 C {en_ctrl_3v3.sym} 420 -220 0 0 {name=xc}
 C {devices/lab_pin.sym} 360 -300 0 0 {name=l0 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 380 -300 0 1 {name=l1 sig_type=std_logic lab=vdd}
-C {devices/lab_pin.sym} 1040 -100 0 1 {name=l2 sig_type=std_logic lab=iovss}
+C {devices/lab_pin.sym} 1400 -100 0 1 {name=l2 sig_type=std_logic lab=iovss}
 C {devices/lab_pin.sym} 320 -260 0 0 {name=l3 sig_type=std_logic lab=en_1v2}
 C {devices/lab_pin.sym} 320 -240 0 0 {name=l4 sig_type=std_logic lab=sel0_1v2}
 C {devices/lab_pin.sym} 320 -220 0 0 {name=l5 sig_type=std_logic lab=sel1_1v2}
@@ -123,15 +114,12 @@ C {devices/lab_pin.sym} 320 -200 0 0 {name=l6 sig_type=std_logic lab=vdd1v2_sens
 C {devices/lab_pin.sym} 320 -180 0 0 {name=l7 sig_type=std_logic lab=vdd3v3_sense}
 C {devices/lab_wire.sym} 520 -220 0 1 {name=l9 sig_type=std_logic lab=sel0_3v3}
 C {devices/lab_wire.sym} 520 -200 0 1 {name=l10 sig_type=std_logic lab=sel1_3v3}
-C {bias_sel_noab_pd.sym} 730 -270 0 0 {name=xb}
-C {devices/lab_pin.sym} 700 -360 0 0 {name=l11 sig_type=std_logic lab=iovdd}
-C {devices/lab_pin.sym} 680 -180 0 0 {name=l12 sig_type=std_logic lab=iovss}
-C {s2d_mpdda_pd.sym} 1120 -480 0 0 {name=xa}
-C {devices/lab_pin.sym} 1060 -600 0 0 {name=l25 sig_type=std_logic lab=iovdd}
-C {devices/lab_pin.sym} 1040 -360 0 0 {name=l26 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 960 -500 0 0 {name=l27 sig_type=std_logic lab=padres}
-C {devices/lab_pin.sym} 1260 -520 0 1 {name=l30 sig_type=std_logic lab=outp}
-C {devices/lab_pin.sym} 1260 -440 0 1 {name=l31 sig_type=std_logic lab=outn}
+C {s2d_mpdda_pd.sym} 1480 -480 0 0 {name=xa}
+C {devices/lab_pin.sym} 1420 -600 0 0 {name=l25 sig_type=std_logic lab=iovdd}
+C {devices/lab_pin.sym} 1400 -360 0 0 {name=l26 sig_type=std_logic lab=iovss}
+C {devices/lab_pin.sym} 1320 -500 0 0 {name=l27 sig_type=std_logic lab=padres}
+C {devices/lab_pin.sym} 1620 -520 0 1 {name=l30 sig_type=std_logic lab=outp}
+C {devices/lab_pin.sym} 1620 -440 0 1 {name=l31 sig_type=std_logic lab=outn}
 C {devices/lab_pin.sym} 540 -420 0 0 {name=l38 sig_type=std_logic lab=en_3v3}
 C {sg13cmos5l_Clamp_P20N0D.sym} 620 -780 0 0 {name=CP}
 C {devices/lab_pin.sym} 620 -840 0 0 {name=l39 sig_type=std_logic lab=iovdd}
@@ -148,15 +136,33 @@ C {sg13cmos5l_DCPDiode.sym} 220 -780 0 0 {name=DP}
 C {devices/lab_pin.sym} 180 -780 0 0 {name=l47 sig_type=std_logic lab=pad}
 C {devices/lab_pin.sym} 220 -840 0 0 {name=l48 sig_type=std_logic lab=iovdd}
 C {devices/lab_pin.sym} 220 -740 0 0 {name=l49 sig_type=std_logic lab=iovss}
-C {sg13cmos5l_SecondaryProtection.sym} 880 -700 0 0 {name=SP}
-C {devices/lab_pin.sym} 940 -700 0 1 {name=l50 sig_type=std_logic lab=padres}
-C {devices/lab_pin.sym} 880 -660 0 0 {name=l51 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 820 -700 0 0 {name=l52 sig_type=std_logic lab=pad}
-C {devices/lab_pin.sym} 880 -740 0 0 {name=l53 sig_type=std_logic lab=iovdd}
+C {sg13cmos5l_SecondaryProtection.sym} 1240 -700 0 0 {name=SP}
+C {devices/lab_pin.sym} 1300 -700 0 1 {name=l50 sig_type=std_logic lab=padres}
+C {devices/lab_pin.sym} 1240 -660 0 0 {name=l51 sig_type=std_logic lab=iovss}
+C {devices/lab_pin.sym} 1180 -700 0 0 {name=l52 sig_type=std_logic lab=pad}
+C {devices/lab_pin.sym} 1240 -740 0 0 {name=l53 sig_type=std_logic lab=iovdd}
 C {devices/title.sym} 160 -40 0 0 {name=l_title author="Christoph Maier"}
 C {devices/lab_wire.sym} 520 -240 0 1 {name=l60 sig_type=std_logic lab=en_3v3_b}
-C {devices/lab_pin.sym} 1100 -320 0 1 {name=l54 sig_type=std_logic lab=vbp}
-C {devices/lab_pin.sym} 1180 -220 0 1 {name=l55 sig_type=std_logic lab=vbn}
-C {devices/lab_pin.sym} 1120 -300 0 1 {name=l56 sig_type=std_logic lab=vbpc}
-C {devices/lab_pin.sym} 1160 -240 0 1 {name=l57 sig_type=std_logic lab=vbnc}
+C {devices/lab_pin.sym} 1460 -320 0 1 {name=l54 sig_type=std_logic lab=vbp}
+C {devices/lab_pin.sym} 1540 -220 0 1 {name=l55 sig_type=std_logic lab=vbn}
+C {devices/lab_pin.sym} 1480 -300 0 1 {name=l56 sig_type=std_logic lab=vbpc}
+C {devices/lab_pin.sym} 1520 -240 0 1 {name=l57 sig_type=std_logic lab=vbnc}
 C {devices/lab_wire.sym} 520 -260 0 1 {name=l8 sig_type=std_logic lab=en_3v3}
+C {bias_gen_pd.sym} 740 -290 0 0 {name=xg}
+C {bias_tree_noab_pd.sym} 1080 -270 0 0 {name=xt}
+N 140 -320 650 -320 {lab=ibias}
+N 540 -300 650 -300 {lab=en_3v3}
+N 600 -280 600 -220 {lab=sel0_3v3}
+N 600 -280 650 -280 {lab=sel0_3v3}
+N 620 -260 620 -200 {lab=sel1_3v3}
+N 620 -260 650 -260 {lab=sel1_3v3}
+N 830 -290 850 -290 {lab=iref}
+N 850 -320 850 -290 {lab=iref}
+N 850 -320 980 -320 {lab=iref}
+C {devices/lab_wire.sym} 850 -320 0 1 {name=l_iref sig_type=std_logic lab=iref}
+C {devices/lab_pin.sym} 980 -300 0 0 {name=l_xt_en sig_type=std_logic lab=en_3v3}
+C {devices/lab_pin.sym} 980 -280 0 0 {name=l_xt_enb sig_type=std_logic lab=en_3v3_b}
+N 1040 -900 1040 -360 {lab=iovdd}
+N 1020 -180 1020 -100 {lab=iovss}
+C {devices/lab_pin.sym} 740 -370 0 1 {name=l_xg_vdd sig_type=std_logic lab=iovdd}
+C {devices/lab_pin.sym} 740 -210 0 1 {name=l_xg_vss sig_type=std_logic lab=iovss}

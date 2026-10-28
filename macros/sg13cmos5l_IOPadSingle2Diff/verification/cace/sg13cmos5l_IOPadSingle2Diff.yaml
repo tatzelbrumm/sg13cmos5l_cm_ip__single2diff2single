@@ -6,7 +6,8 @@
 #--------------------------------------------------------------
 # Single-ended pad in, differential out: outp - outn = 2 (pad - vref), (outp + outn)/2 = vcm.
 # Input buffer s2d_mpdda_pd (the matched-pair DDA of sudelbuecher/design_considerations/s2d_input_buffer,
-# s2d_input_buffer.md), selectable bias bias_sel_pd, fail-safe enable en_ctrl_3v3, IHP input
+# s2d_input_buffer.md), selectable bias bias_gen_pd + bias_tree_noab_pd (until 2026-10-28 one bias_sel_noab_pd,
+# before 2026-10-27 bias_sel_pd), fail-safe enable en_ctrl_3v3, IHP input
 # protection as in sg13cmos5l_IOPadAnalog (primary diodes, gate-tied clamps, 587 Ohm secondary protection).
 # Everything on the ring rails iovdd / iovss; the 1.2 V core ring vdd only feeds the level shifters.
 # vfbp / vfbn are tied to outp / outn inside the cell: the loop gain is characterized on the fixture

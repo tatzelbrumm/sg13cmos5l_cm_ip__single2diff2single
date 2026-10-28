@@ -15,8 +15,9 @@ unit `unit_r2`. Open points are in [`FILL_IN.md`](FILL_IN.md).
 
 | instance | cell (macro) | function |
 |---|---|---|
-| `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` for `xb` and `xa` |
-| `xb` | `bias_sel_noab_pd` (`../bias_sel_noab_pd`) | four bias lines vbp vbn vbpc vbnc from one mirror tree; reference selected by `sel1 sel0`; until 2026-10-27 `bias_sel_pd`, whose class-AB legs stayed unused here |
+| `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` for `xt` and `xa` |
+| `xg` | `bias_gen_pd` (`../bias_gen_pd`) | the reference current `iref` (sourced), selected by `sel1 sel0` |
+| `xt` | `bias_tree_noab_pd` (`../bias_tree_noab_pd`) | four bias lines vbp vbn vbpc vbnc from one mirror tree fed by `iref`. `xg` + `xt` replace `xb` = `bias_sel_noab_pd` (2026-10-27 to 2026-10-28; before that `bias_sel_pd`, whose class-AB legs stayed unused here), device for device |
 | `xa` | `s2d_mpdda_pd` (here) | `s2d_mpdda` + four output-to-vcm ties; `vfbp` / `vfbn` tied to `outp` / `outn` on the top sheet |
 | `CP`, `CN`, `DN`, `DP`, `SP` | IHP IO sub-cells | input protection exactly as `sg13cmos5l_IOPadAnalog`: gate-tied clamps, primary diodes, secondary protection (587 Ω rppd) from `pad` to `padres` |
 
@@ -33,7 +34,7 @@ Sheets in `schematic/xschem/`:
 | `sg13cmos5l_IOPadSingle2Diff.{sch,sym}` | top sheet; symbol and port order unchanged since 2026-10-20 |
 | `s2d_mpdda.{sch,sym}` | Christoph's sheet of 2026-10-23 from `s2d_input_buffer/xschem` (only the netlist-path text changed) |
 | `s2d_mpdda_pd.{sch,sym}` | wrapper: `s2d_mpdda` + TPN / TPP, TNN / TNP (1 / 0.45 µm hv TGs, outputs to vcm while disabled) |
-| `s2d_mpdda_pd_sel.{sch,sym}` | CACE-only fixture: `s2d_mpdda_pd` + `bias_sel_noab_pd`, `vfbp` / `vfbn` as pins (loop gain) |
+| `s2d_mpdda_pd_sel.{sch,sym}` | CACE-only fixture: `s2d_mpdda_pd` + `bias_gen_pd` + `bias_tree_noab_pd` (until 2026-10-28 `bias_sel_noab_pd`), `vfbp` / `vfbn` as pins (loop gain) |
 | `s2d_core_ideal.{sch,sym}` | the 2026-10-20 placeholder (two E sources), no longer used |
 | `xschemrc` | PDK + this folder + the sub-macros; `sg13cmos5l_IOPadDiff2Single` added for `unit_r2` |
 

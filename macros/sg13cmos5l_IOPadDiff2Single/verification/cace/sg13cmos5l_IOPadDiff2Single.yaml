@@ -5,7 +5,7 @@
 # CACE circuit characterization file: sg13cmos5l_IOPadDiff2Single
 #--------------------------------------------------------------
 # Differential-in, single-ended-out buffered pad: class-AB driver d2s_mpdda_pd with its output stage
-# d2s_out_p / d2s_out_n and CMA / CMB at pad level (gain 1/2, Miller compensated, OP / ON = the pad's ESD clamp frames), selectable bias bias_sel_pd, fail-safe enable
+# d2s_out_p / d2s_out_n and CMA / CMB at pad level (gain 1/2, Miller compensated, OP / ON = the pad's ESD clamp frames), selectable bias bias_gen_pd + bias_tree_pd (one bias_sel_pd until 2026-10-28), fail-safe enable
 # en_ctrl_3v3, IHP primary diodes DCNDiode / DCPDiode. Everything on the ring rails iovdd / iovss;
 # the 1.2 V core ring vdd only feeds the level shifters' input inverters.
 # vfb is tied to pad inside the cell, so the loop cannot be opened here: loop gain / phase margin are

@@ -13,9 +13,12 @@
 * capacitors, W x L as drawn in the layout (256 um2 each, as the former 16u x 16u).
 * Slot fallback (no padframe change): iovdd = vdd_3v3, iovss = vss_3v3, vdd = vdd_1v2, vss = vss_1v2,
 * pad = s7_an[1] (the harness IOPadAnalog pad).
+* Bias since 2026-10-28: Xg = bias_gen_pd selects the reference (iref, sourced), Xt = bias_tree_pd makes the six
+* bias lines from it; together the former Xb = bias_sel_pd, device for device (bias_sel_pd = bias_gen_pd + its tree).
 .subckt sg13cmos5l_IOPadDiff2Single iovdd iovss vdd vss pad vinp vinn vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
 Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
-Xb iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 en_3v3_b bias_sel_pd
+Xg iovdd iovss ibias iref en_3v3 sel0_3v3 sel1_3v3 bias_gen_pd
+Xt iovdd iovss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b bias_tree_pd
 Xd iovdd iovss iovdd iovss vinp vinn vref pad a b dabp dabn vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
 * output stage (d2s_out.spice): the clamp frames, and the Miller capacitors as drawn between the diodes
 Xfp iovdd a pad dabp d2s_out_p
