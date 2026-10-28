@@ -5,7 +5,7 @@ V {}
 S {}
 F {}
 E {}
-T {tb_pd_enable: vout of d2s_mpdda_pd + bias_in_pd while en_3v3 rises at 10 us and falls at 60 us, tt 27 C} 60 -500 0 0 0.5 0.5 {}
+T {tb_pd_enable: vout of d2s_mpdda_pd + output stage + bias_in_pd while en_3v3 rises at 10 us and falls at 60 us, tt 27 C} 60 -500 0 0 0.5 0.5 {}
 T {DUT and bias from the schematics in this directory; code block = the deck's .lib / .temp / .option / .param / .save lines and its .control section} 60 -455 0 0 0.3 0.3 {}
 T {vinp = vinn = vref, so vout should sit at vref = 1.65 V when enabled; disabled, RL holds it there.} 60 -420 0 0 0.25 0.25 {}
 T {Reference (results_power_down.txt), 1k||100p: after the enable edge vout spans 1.542 ... 1.761 V and is} 60 -398 0 0 0.25 0.25 {}
@@ -38,11 +38,10 @@ N 510 320 510 380 {lab=xg}
 N 440 380 440 500 {lab=xg}
 N 580 350 580 380 {lab=iref}
 N 580 380 700 380 {lab=iref}
-N 1320 0 1380 0 {lab=vout}
-N 1380 20 1380 60 {lab=vout}
-N 1380 0 1480 0 {lab=vout}
-N 1480 0 1480 60 {lab=vout}
-N 1060 700 1480 700 {lab=GND}
+N 1980 20 1980 60 {lab=vout}
+N 1980 0 2080 0 {lab=vout}
+N 2080 0 2080 60 {lab=vout}
+N 1060 700 2080 700 {lab=GND}
 N 480 320 510 320 {lab=xg}
 N 1100 120 1100 380 {lab=vbpc}
 N 1120 120 1120 400 {lab=vabp}
@@ -59,7 +58,7 @@ N 840 680 840 700 {lab=GND}
 N 660 680 660 700 {lab=GND}
 N 360 680 360 700 {lab=GND}
 N 280 680 280 700 {lab=GND}
-N 1480 120 1480 700 {lab=GND}
+N 2080 120 2080 700 {lab=GND}
 N 840 600 1240 600 {lab=vsso}
 N 120 700 200 700 {lab=GND}
 N 740 580 1020 580 {lab=vss}
@@ -68,8 +67,7 @@ N 440 560 440 580 {lab=vss}
 N 120 -320 120 620 {lab=vddo}
 N 860 -320 1260 -320 {lab=vddo}
 N 1260 -320 1260 -80 {lab=vddo}
-N 1320 20 1380 20 {lab=vout}
-N 1380 0 1380 20 {lab=vout}
+N 1980 0 1980 20 {lab=vout}
 N 1040 -300 1040 -70 {lab=vdd}
 N 120 -320 860 -320 {lab=vddo}
 N 360 260 360 620 {lab=vext}
@@ -77,8 +75,8 @@ N 360 260 420 260 {lab=vext}
 N 660 460 660 620 {lab=en}
 N 660 460 710 460 {lab=en}
 N 600 20 600 40 {lab=vinn}
-N 920 140 1380 140 {lab=vref}
-N 1380 120 1380 140 {lab=vref}
+N 920 140 1980 140 {lab=vref}
+N 1980 120 1980 140 {lab=vref}
 N 920 60 920 140 {lab=vref}
 N 200 -300 760 -300 {lab=vdd}
 N 500 0 500 40 {lab=vinp}
@@ -158,17 +156,17 @@ spiceprefix=X}
 C {devices/lab_wire.sym} 510 380 0 1 {name=l29 sig_type=std_logic lab=xg}
 C {devices/isource.sym} 440 530 0 0 {name=Iext value=5u}
 C {devices/lab_wire.sym} 580 380 0 0 {name=l30 sig_type=std_logic lab=iref}
-C {devices/res.sym} 1380 90 0 0 {name=RL value=1k m=1}
-C {devices/lab_pin.sym} 1380 140 0 1 {name=l31 sig_type=std_logic lab=vref}
-C {devices/capa.sym} 1480 90 0 0 {name=CL value=100p m=1}
-C {devices/lab_pin.sym} 1480 0 0 1 {name=l32 sig_type=std_logic lab=vout}
+C {devices/res.sym} 1980 90 0 0 {name=RL value=1k m=1}
+C {devices/lab_pin.sym} 1980 140 0 1 {name=l31 sig_type=std_logic lab=vref}
+C {devices/capa.sym} 2080 90 0 0 {name=CL value=100p m=1}
+C {devices/lab_pin.sym} 2080 0 0 1 {name=l32 sig_type=std_logic lab=vout}
 C {devices/code_shown.sym} 60 820 0 0 {name=s1 only_toplevel=false value=".lib cornerMOShv.lib mos_tt
 .lib cornerRES.lib res_typ
 .lib cornerCAP.lib cap_typ
 .temp 27
 .option method=gear
 .param vd=0
-.save v(vout) v(en) v(xd.a) v(xd.b) v(vbn) v(vbp)
+.save v(vout) v(en) v(a) v(b) v(vbn) v(vbp)
 .control
 tran 2n 110u
 meas tran vf find v(vout) at=59u
@@ -181,7 +179,7 @@ meas tran tset when dv=1m cross=last from=10u to=59u
 let t_1mV = tset - 10u
 print vf emin emax t_1mV dmin dmax
 if $?batchmode = 0
-  plot v(vout) v(xd.a) v(xd.b) v(en)
+  plot v(vout) v(a) v(b) v(en)
 end
 .endc"}
 C {devices/lab_pin.sym} 200 -300 0 0 {name=l23 sig_type=std_logic lab=vdd}
@@ -189,3 +187,58 @@ C {devices/lab_pin.sym} 1040 -300 0 1 {name=l7 sig_type=std_logic lab=vdd}
 C {inv_hv.sym} 740 200 0 0 {name=XIB}
 C {devices/lab_wire.sym} 800 200 0 1 {name=lxib sig_type=std_logic lab=en_b}
 C {devices/lab_pin.sym} 800 -20 0 0 {name=l11 sig_type=std_logic lab=en_b}
+C {d2s_out_p.sym} 1640 -160 0 0 {name=Xfp}
+C {d2s_out_n.sym} 1640 180 0 0 {name=Xfn}
+N 1320 -40 1400 -40 {lab=dabp}
+N 1400 -40 1400 -180 {lab=dabp}
+N 1400 -180 1560 -180 {lab=dabp}
+N 1320 -20 1420 -20 {lab=a}
+N 1420 -20 1420 -160 {lab=a}
+N 1420 -160 1460 -160 {lab=a}
+N 1460 -160 1560 -160 {lab=a}
+N 1460 -160 1460 -80 {lab=a}
+N 1460 -80 1800 -80 {lab=a}
+N 1320 60 1420 60 {lab=b}
+N 1420 60 1420 180 {lab=b}
+N 1420 180 1460 180 {lab=b}
+N 1460 180 1560 180 {lab=b}
+N 1460 180 1460 100 {lab=b}
+N 1460 100 1800 100 {lab=b}
+N 1320 80 1400 80 {lab=dabn}
+N 1400 80 1400 200 {lab=dabn}
+N 1400 200 1560 200 {lab=dabn}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1820 -80 0 0 {name=CMA
+l=32.16u
+w=7.96u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X}
+N 1840 -110 1840 -80 {lab=vout}
+N 1840 -80 1840 -50 {lab=vout}
+N 1840 -80 1900 -80 {lab=vout}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1820 100 0 1 {name=CMB
+l=32.16u
+w=7.96u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X}
+N 1800 70 1800 100 {lab=b}
+N 1800 100 1800 130 {lab=b}
+N 1840 100 1900 100 {lab=vout}
+N 1720 -160 1900 -160 {lab=vout}
+N 1720 180 1900 180 {lab=vout}
+N 1320 20 1900 20 {lab=vout}
+N 1640 -220 1640 -240 {lab=vddo}
+C {devices/lab_pin.sym} 1640 -240 0 0 {name=Xlrp sig_type=std_logic lab=vddo}
+N 1640 240 1640 260 {lab=vsso}
+C {devices/lab_pin.sym} 1640 260 0 0 {name=Xlrn sig_type=std_logic lab=vsso}
+N 1900 0 1980 0 {lab=vout}
+N 1900 -160 1900 -80 {lab=vout}
+N 1900 -80 1900 0 {lab=vout}
+N 1900 0 1900 20 {lab=vout}
+N 1900 20 1900 100 {lab=vout}
+N 1900 100 1900 180 {lab=vout}

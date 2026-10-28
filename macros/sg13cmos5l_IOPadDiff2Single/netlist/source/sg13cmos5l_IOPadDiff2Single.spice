@@ -1,19 +1,27 @@
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
 * sg13cmos5l_IOPadDiff2Single: differential-in, single-ended-out buffered pad (class-AB, gain 1/2).
-* Custom padframe cell (case (a)): OP / ON of d2s_mpdda_pd are the pad's ESD clamp frames, on the
+* Custom padframe cell (case (a)): OP / ON are the pad's ESD clamp frames (d2s_out_p / d2s_out_n), on the
 * ring rails iovdd / iovss; the front end and the bias also run on iovdd / iovss (pad-ring taps).
 * Ring ports as IHP's IO cells: iovdd iovss vdd vss (vdd / vss = 1.2 V core ring, only for the
 * level shifters' input inverters). Core-side ports: vinp vinn vref (from the slot), ibias (harness
 * current through the slot), en_1v2 sel0_1v2 sel1_1v2 (1.2 V logic), vdd1v2_sense vdd3v3_sense
 * (the slot's gated supplies). vfb is tied to pad inside the cell (Kelvin, at the pad).
 * DCN / DCP: IHP's primary diodes, as in sg13cmos5l_IOPadAnalog.
+* Output stage at this level since 2026-10-28: d2s_mpdda_pd drives the gates a / b; Xfp / Xfn are the clamp frames
+* with the class-AB replicas RP1 / RN1 (nets dabp / dabn, back to RP2 / RN2 in Xd); CMA / CMB are the Miller
+* capacitors, W x L as drawn in the layout (256 um2 each, as the former 16u x 16u).
 * Slot fallback (no padframe change): iovdd = vdd_3v3, iovss = vss_3v3, vdd = vdd_1v2, vss = vss_1v2,
 * pad = s7_an[1] (the harness IOPadAnalog pad).
 .subckt sg13cmos5l_IOPadDiff2Single iovdd iovss vdd vss pad vinp vinn vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
 Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
 Xb iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 en_3v3_b bias_sel_pd
-Xd iovdd iovss iovdd iovss vinp vinn vref pad pad vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
+Xd iovdd iovss iovdd iovss vinp vinn vref pad a b dabp dabn vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
+* output stage (d2s_out.spice): the clamp frames, and the Miller capacitors as drawn between the diodes
+Xfp iovdd a pad dabp d2s_out_p
+Xfn iovss b pad dabn d2s_out_n
+XCMA pad a pad pad sg13_hv_pmos w=7.96u l=32.16u ng=1
+XCMB b pad b b sg13_hv_pmos w=7.96u l=32.16u ng=1
 XDN iovss pad iovdd sg13cmos5l_DCNDiode
 XDP pad iovdd iovss sg13cmos5l_DCPDiode
 .ends sg13cmos5l_IOPadDiff2Single

@@ -10,7 +10,7 @@
 *   - The other bias lines only carry leakage then; they get no switch of their own.
 * Enabled: the switches are off; everything else is d2s_bias_ref unchanged.
 * bias_diodes: the four bias diodes BP, BN, BNC, BPC of bias_ref.spice's d2s_bias_diodes. Its class-AB stacks
-* RP1 + RP2 / RN1 + RN2 are in the pad, in d2s_mpdda_pd, since 2026-10-27 (with the replica nets n1 / n2 renamed
+* RP1 + RP2 / RN1 + RN2 are in the pad since 2026-10-27 (RP2 / RN2 in d2s_mpdda_pd, RP1 / RN1 in d2s_out_p / d2s_out_n since 2026-10-28) (with the replica nets n1 / n2 renamed
 * dabp / dabn); so the tree and the cells below have no vddo / vsso, and vabp / vabn are current outputs
 * (NABP sinks, PABN sources 5 uA).
 

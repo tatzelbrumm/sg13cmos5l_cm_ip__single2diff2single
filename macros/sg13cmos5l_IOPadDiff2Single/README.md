@@ -15,12 +15,24 @@ selectable bias, a fail-safe enable and a CACE suite whose output follows
 |---|---|---|
 | `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` = NOT `en_3v3` for `xb` and `xd` |
 | `xb` | `bias_sel_pd` (`../bias_sel_pd`) | six bias lines from one mirror tree; reference selected by `sel1 sel0` |
-| `xd` | `d2s_mpdda_pd` (here) | Miller-compensated class-AB driver (MP-DDA front end), power-down switches; since 2026-10-27 also the class-AB diode stacks RP1 + RP2 / RN1 + RN2 and the P frame's dummy RPD (block [8]), formerly in the bias tree |
+| `xd` | `d2s_mpdda_pd` (here) | Miller-compensated class-AB driver without its output stage (MP-DDA front end, folded cascode, class-AB control): drives the output gates a / b; power-down switches; RP2 / RN2, the upper halves of the class-AB diode stacks (block [8], since 2026-10-27, formerly in the bias tree) |
+| `xfp`, `xfn` | `d2s_out_p`, `d2s_out_n` (here) | the output stage = the pad's clamp frames: OP with its replica RP1 and the dummy RPD (P frame), ON with its replica RN1 (both N frames); RP1 / RN1 are the lower halves of the class-AB stacks (nets dabp / dabn). Since 2026-10-28 |
+| `CMA`, `CMB` | hv PMOS in accumulation | Miller capacitors a–pad and pad–b, W 7.96 µm × L 32.16 µm as drawn between the diodes (256 µm², as the former 16 × 16 µm). Since 2026-10-28 |
 | `DN`, `DP` | IHP `sg13cmos5l_DCNDiode` / `DCPDiode` | primary ESD diodes, as in `sg13cmos5l_IOPadAnalog` |
 
 `schematic/xschem/sg13cmos5l_IOPadDiff2Single.sch` (drawn from `netlist/source/sg13cmos5l_IOPadDiff2Single.spice`),
 `d2s_mpdda_pd.sch` and `unit_r2.sch` (Christoph's sheets from `power_down/xschem` and `improvements/xschem`),
+`d2s_out_p.sch` / `d2s_out_n.sch` (the clamp frames, from `netlist/source/d2s_out.spice`),
 and `d2s_mpdda_pd_sel.sch`, a CACE-only fixture (driver + bias with `vfb` as a pin, for the loop gain).
+
+**Output stage at pad level (2026-10-28).** OP / ON with RP1 / RPD / RN1 left `d2s_mpdda_pd` for the frame sheets
+`d2s_out_p` / `d2s_out_n`, which group the devices as the layout does (one P clamp frame, two N clamp frames); CMA /
+CMB are devices of the top sheet. `d2s_mpdda_pd` lost the port `vout` and the parameters `wc`, `lc` and got `a b dabp
+dabn` after `vfb`. The fixture `d2s_mpdda_pd_sel` and the `tb_pd_*` sheets and decks carry the same output stage.
+Checked by flattening: every sheet gives the same devices on the same nets as before, CMA / CMB apart (their size
+follows the layout, 7.96 × 32.16 µm instead of 16 × 16 µm, same area); the sources (`d2s_mpdda_pd.spice`,
+`d2s_out.spice`, `sg13cmos5l_IOPadDiff2Single.spice`) match their sheets. Not re-simulated: the results further down
+are from 16 × 16 µm capacitors.
 
 **Enable complement (2026-10-25).** `en_3v3_b` is made once, by `XIB` (`inv_hv`) in `en_ctrl_3v3`, and goes to
 `bias_sel_pd` and `d2s_mpdda_pd` as a port; their own inverters (`Xi` = `inv_3v3_pd`, `XIP` / `XIN`) are gone.
@@ -257,7 +269,17 @@ schematic netlist. The plots are not shipped; `make sim-cace` regenerates them.
 
 ## Not done
 
-- Layout: only `layout/klayout/size_mockup/` (device areas; the pad cell itself has none yet).
+- Layout: `layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds` stands on the `SG13_cm_clamps` PCells since 2026-10-28
+  (open it with `klayout -e -rm scripts/pcells/load_clamp_pcells.py ...` to keep them live): `Clamp_P_M1` ng 43 / 0.6u and
+  2 x `Clamp_N_M1` ng 35 / 1u, all `wiring = external`, with their wiring cells (P roles `20:dummy 21:rep`, nets `a` /
+  `dabp`; upper N `16:rep 17:rep`, `b` / `dabn`; lower N no roles, `b`), `DCNDiode` 67.6u and `DCPDiode` 65.8u centred.
+  Devices: OP 546.12 / 0.6, RP1 and the dummy 13.32 / 0.6, ON 299.2 / 1, RN1 8.8 / 1. Since 2026-10-28 01:39 also the
+  Metal2 comb (option B: pad lines on the drains, straps with Via2 into their own rails, pad junction in the gap), the
+  gate-bus feeds (a / b joined above the P frame), dabp / dabn to pins at y 85–86, CMA / CMB (W 7.96 × L 32.16 µm,
+  between the diodes) and the narrowed band above DCNDiode. Checked with a flat extraction and a Python subset of the
+  deck (report: `_sudelbuecher/.../sg13cmos5l_IOPadDiff2Single_build/m2_option_b_2026-10-28/`); not with IHP's own
+  DRC / LVS. Open: RP2 / RN2 placement, the `guard` net tie, the joins boxing in dabp / dabn. Before-states:
+  `layout/klayout/backups/*_before_pcells_2026-10-28*`, `*_before_m2_2026-10-28*`.
 - LVS, PEX, post-layout CACE; ESD and latch-up simulation; the unpowered-pad case of
   `testbenches/spice/tb_pd_unpowered.spice` is not in CACE.
 - The S2D counterpart `../sg13cmos5l_IOPadSingle2Diff` has its input buffer since 2026-10-25; it proposes vcm = 1.2 V for both

@@ -9,7 +9,7 @@ T {bias_sel_pd: pad-driver bias with a selectable reference current into one mir
 T {sel1 sel0 = 0 0: harness ibias (sourced, ~5 uA = iDAC code 20 at 250 nA/step) through TEN / TEP;  0 1: Oguey-Aebischer core;} 60 -150 0 0 0.25 0.25 {}
 T {1 0: bandgap core;  1 1: both cores (currents add). en_3v3 = 0: everything off (tree TG and TDN, both cores, TEN / TEP open); en_3v3_b = NOT en_3v3, from en_ctrl_3v3.} 60 -126 0 0 0.25 0.25 {}
 T {A disabled core output (POC drain) is off, so the cores share the tree input ir without a switch. Source: netlist/source/bias_sel_pd.spice} 60 -102 0 0 0.25 0.25 {}
-T {vabp / vabn are current outputs (NABP sinks, PABN sources 5 uA); the class-AB diode stacks are in d2s_mpdda_pd since 2026-10-27, so no vddo / vsso here.} 60 -78 0 0 0.25 0.25 {}
+T {vabp / vabn are current outputs (NABP sinks, PABN sources 5 uA); the class-AB diode stacks are in the pad since 2026-10-27 (d2s_mpdda_pd, d2s_out_p / d2s_out_n), so no vddo / vsso here.} 60 -78 0 0 0.25 0.25 {}
 N 1220 -540 1220 -180 {lab=vss}
 N 1380 -680 1400 -680 {lab=vbp}
 N 1380 -580 1400 -580 {lab=vbn}

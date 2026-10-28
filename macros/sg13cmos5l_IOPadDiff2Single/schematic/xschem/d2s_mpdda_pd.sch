@@ -11,10 +11,6 @@ P 10 5 2080 -565 2255 -565 2255 -285 2080 -285 2080 -565 {dash=6}
 P 10 5 1510 -1140 1970 -1140 1970 -895 1510 -895 1510 -1140 {dash=6}
 P 10 5 1855 -855 2255 -855 2255 -730 1855 -730 1855 -855 {dash=6}
 P 10 5 1220 -855 1635 -855 1635 -730 1220 -730 1220 -855 {dash=6}
-P 10 5 2330 -1150 2510 -1150 2510 -1045 2330 -1045 2330 -1150 {dash=6}
-P 10 5 2330 -395 2510 -395 2510 -285 2330 -285 2330 -395 {dash=6}
-P 10 5 2275 -915 2430 -915 2430 -810 2275 -810 2275 -915 {dash=6}
-P 10 5 2270 -690 2430 -690 2430 -590 2270 -590 2270 -690 {dash=6}
 P 10 5 1140 -1260 1290 -1260 1290 -1170 1140 -1170 1140 -1260 {dash=6}
 P 10 5 2200 -1260 2350 -1260 2350 -1170 2200 -1170 2200 -1260 {dash=6}
 P 10 5 115 -250 270 -250 270 -160 115 -160 115 -250 {dash=6}
@@ -25,34 +21,28 @@ T {[2]} 2040 -540 0 0 0.35 0.35 {layer=10}
 T {[3]} 1510 -1165 0 0 0.35 0.35 {layer=10}
 T {[4]} 1860 -878 0 0 0.35 0.35 {layer=10}
 T {[5]} 1225 -878 0 0 0.35 0.35 {layer=10}
-T {[6]} 2440 -1182 0 0 0.35 0.35 {layer=10}
-T {[6]} 2335 -418 0 0 0.35 0.35 {layer=10}
-T {[7]} 2270 -935 0 0 0.35 0.35 {layer=10}
-T {[7]} 2270 -715 0 0 0.35 0.35 {layer=10}
-T {d2s_mpdda_pd: matched-pair DDA (4 x unit_r2), folded cascode, class-AB output, MOS Miller compensation (vfb = vout), digital enable en_3v3 / en_3v3_b} 0 -1440 0 0 0.6 0.6 {}
-T {frozen .subckt defaults: lcas = 3 (CX, CY, PCL, PCR 30u / 3u ng=2), wc = lc = 16u (CMA, CMB), rl = 50.6u (in unit_r2.sch)} 0 -1390 0 0 0.3 0.3 {}
+T {d2s_mpdda_pd: matched-pair DDA (4 x unit_r2), folded cascode, class-AB drive of the output gates a / b, digital enable en_3v3 / en_3v3_b} 0 -1440 0 0 0.6 0.6 {}
+T {frozen .subckt defaults: lcas = 3 (CX, CY, PCL, PCR 30u / 3u ng=2), rl = 50.6u (in unit_r2.sch)} 0 -1390 0 0 0.3 0.3 {}
 T {d2s_mpdda (../../improvements/xschem) plus the [E] switches; unit_r2.sym from ../../improvements/xschem; block descriptions: README.md there and here} 0 -1365 0 0 0.3 0.3 {}
 T {[1] DDA units A, B, C1, C2: split-tail PMOS pair, rhigh between the sources. Each adds f(gp - gn) to the fold nodes: the gp device drains to y, the gn device to x.} 1250 -110 0 0 0.3 0.3 {layer=10}
 T {      A: vinp - vref,  B: vref - vinn,  C1 = C2: vref - vfb.  The loop forces f(vinp - vref) + f(vref - vinn) = 2 f(vfb - vref), so vfb - vref = (vinp - vinn)/2.} 1250 -86 0 0 0.3 0.3 {layer=10}
 T {[2] fold: sinks SX, SY (gate vbn) and NMOS cascodes CX, CY (gate vbnc). x and y are the fold nodes.} 1250 -62 0 0 0.3 0.3 {layer=10}
 T {[3] PMOS cascoded mirror: PL, PCL is the input side (gates tied to l2), PR, PCR the output side into node a. Cascode gates vbpc.} 1250 -38 0 0 0.3 0.3 {layer=10}
-T {[4] class-AB control: ABP (gate vabp) and ABN (gate vabn) between a and b. With the diode stacks RP1 + RP2 and RN1 + RN2 [8] it sets the quiescent current of OP and ON.} 1250 -14 0 0 0.3 0.3 {layer=10}
+T {[4] class-AB control: ABP (gate vabp) and ABN (gate vabn) between a and b. With RP2 / RN2 [8] and the replicas RP1 / RN1 at pad level it sets the quiescent current of OP and ON.} 1250 -14 0 0 0.3 0.3 {layer=10}
 T {[5] FPL, FNL: copy of [4] in the mirror input branch (between l2 and l1), so both fold branches carry the same element.} 1250 10 0 0 0.3 0.3 {layer=10}
-T {[6] output devices OP (gate a), ON (gate b), drains on vout.} 1250 34 0 0 0.3 0.3 {layer=10}
-T {[7] Miller capacitors CMA (between a and vout) and CMB (between vout and b): hv PMOS in accumulation, gate over n-well, 16u x 16u.} 1250 58 0 0 0.3 0.3 {layer=10}
+T {[6] the output devices OP / ON, their replicas RP1 / RN1 (dabp / dabn) and the dummy RPD are at pad level since 2026-10-28: d2s_out_p, d2s_out_n (the clamp frames).} 1250 34 0 0 0.3 0.3 {layer=10}
+T {[7] the Miller capacitors CMA (a to the pad) and CMB (pad to b) are at pad level since 2026-10-28, in the gap between the diodes. vfb is the feedback input (the pad).} 1250 58 0 0 0.3 0.3 {layer=10}
 T {[E]} 1145 -1258 0 0 0.25 0.25 {layer=10}
 T {[E]} 2205 -1258 0 0 0.25 0.25 {layer=10}
 T {[E]} 120 -177 0 0 0.25 0.25 {layer=10}
 T {[E]} 2205 -177 0 0 0.25 0.25 {layer=10}
-T {[E] enable, en_3v3 (0 ... 3.3 V on vdd / vss, active high); en_3v3_b from en_ctrl_3v3. Disabled: SA pulls a to vddo and SB pulls b to vsso, so OP and ON are off} 1250 82 0 0 0.3 0.3 {layer=10}
+T {[E] enable, en_3v3 (0 ... 3.3 V on vdd / vss, active high); en_3v3_b from en_ctrl_3v3. Disabled: SA pulls a to vddo and SB pulls b to vsso, so OP and ON (pad level) are off} 1250 82 0 0 0.3 0.3 {layer=10}
 T {      with their gates on their sources, as in a clamp; SABP pulls vabp to vdd and SABN pulls vabn to vss, so ABP / ABN cannot conduct from one pull} 1250 106 0 0 0.3 0.3 {layer=10}
 T {      into the other. Enabled: the four switches are off and the cell is d2s_mpdda.} 1250 130 0 0 0.3 0.3 {layer=10}
-P 10 5 2570 -1260 3000 -1260 3000 -970 2570 -970 2570 -1260 {dash=6}
-P 10 5 2570 -560 2800 -560 2800 -280 2570 -280 2570 -560 {dash=6}
-T {[8]} 2575 -1283 0 0 0.35 0.35 {layer=10}
-T {[8]} 2575 -583 0 0 0.35 0.35 {layer=10}
-T {[8] class-AB diode stacks, in bias_tree_pd until 2026-10-27: RP1 + RP2 from vddo into vabp and RN2 + RN1 from vabn to vsso carry the tree's 5 uA each.} 1250 154 0 0 0.3 0.3 {layer=10}
-T {      RP1 / RN1 are replicas of OP / ON inside the clamp frames (dabp / dabn), RP2 / RN2 of ABP / ABN. RPD: the P frame's dummy next to RP1, gate on vddo (off), drain on dabp.} 1250 178 0 0 0.3 0.3 {layer=10}
+P 10 5 2320 -1060 2520 -1060 2520 -900 2320 -900 2320 -1060 {dash=6}
+P 10 5 2320 -680 2520 -680 2520 -520 2320 -520 2320 -680 {dash=6}
+T {[8]} 2325 -1083 0 0 0.35 0.35 {layer=10}
+T {[8]} 2325 -703 0 0 0.35 0.35 {layer=10}
 N 300 -1280 300 -860 {lab=vdd}
 N 380 -1040 380 -860 {lab=vbp}
 N 300 -700 300 -460 {lab=x}
@@ -128,7 +118,6 @@ N 2160 -310 2160 -140 {lab=vss}
 N 1920 -910 1920 -860 {lab=a}
 N 1920 -860 2160 -860 {lab=a}
 N 2160 -860 2160 -810 {lab=a}
-N 2260 -1100 2360 -1100 {lab=a}
 N 1920 -750 1920 -720 {lab=b}
 N 1920 -720 2160 -720 {lab=b}
 N 2160 -750 2160 -720 {lab=b}
@@ -154,18 +143,6 @@ N 2100 -380 2100 -340 {lab=vbn}
 N 2100 -340 2120 -340 {lab=vbn}
 N 1240 -380 1240 -340 {lab=vbn}
 N 1240 -340 1260 -340 {lab=vbn}
-N 2400 -1100 2420 -1100 {lab=vddo}
-N 2400 -310 2400 -120 {lab=vsso}
-N 2400 -340 2420 -340 {lab=vsso}
-N 2420 -340 2420 -120 {lab=vsso}
-N 2400 -1070 2400 -860 {lab=vout}
-N 2400 -720 2480 -720 {lab=vout}
-N 2340 -890 2340 -860 {lab=vout}
-N 2340 -860 2400 -860 {lab=vout}
-N 2260 -860 2300 -860 {lab=a}
-N 2340 -670 2340 -640 {lab=b}
-N 2260 -640 2340 -640 {lab=b}
-N 2380 -640 2400 -640 {lab=vout}
 N 680 -640 920 -640 {lab=vref}
 N 220 -640 440 -640 {lab=vref}
 N 700 -620 940 -620 {lab=vfb}
@@ -187,11 +164,6 @@ N 2260 -640 2260 -340 {lab=b}
 N 1620 -900 1860 -900 {lab=vbpc}
 N 1240 -560 2100 -560 {lab=vbnc}
 N 1240 -380 2100 -380 {lab=vbn}
-N 2400 -640 2400 -370 {lab=vout}
-N 2400 -720 2400 -640 {lab=vout}
-N 2400 -860 2400 -720 {lab=vout}
-N 2340 -860 2340 -830 {lab=vout}
-N 2340 -640 2340 -610 {lab=b}
 N 440 -640 680 -640 {lab=vref}
 N 620 -1040 860 -1040 {lab=vbp}
 N 1020 -460 1300 -460 {lab=x}
@@ -201,8 +173,6 @@ N 1540 -940 1540 -780 {lab=vdd}
 N 1560 -840 1740 -840 {lab=l2}
 N 1940 -940 1940 -780 {lab=vdd}
 N 2160 -860 2260 -860 {lab=a}
-N 2400 -1300 2400 -1130 {lab=vddo}
-N 2420 -1300 2420 -1100 {lab=vddo}
 N 100 -1280 300 -1280 {lab=vdd}
 N 300 -1280 540 -1280 {lab=vdd}
 N 540 -1280 780 -1280 {lab=vdd}
@@ -215,8 +185,6 @@ N 1560 -1280 1920 -1280 {lab=vdd}
 N 1920 -1280 1940 -1280 {lab=vdd}
 N 100 -1300 2260 -1300 {lab=vddo}
 N 2260 -1300 2280 -1300 {lab=vddo}
-N 2280 -1300 2400 -1300 {lab=vddo}
-N 2400 -1300 2420 -1300 {lab=vddo}
 N 100 -140 180 -140 {lab=vss}
 N 180 -140 200 -140 {lab=vss}
 N 200 -140 380 -140 {lab=vss}
@@ -229,10 +197,7 @@ N 1320 -140 2160 -140 {lab=vss}
 N 2160 -140 2180 -140 {lab=vss}
 N 100 -120 2260 -120 {lab=vsso}
 N 2260 -120 2280 -120 {lab=vsso}
-N 2280 -120 2400 -120 {lab=vsso}
-N 2400 -120 2420 -120 {lab=vsso}
 N 2260 -1100 2260 -860 {lab=a}
-N 2260 -340 2360 -340 {lab=b}
 N 1320 -340 1320 -140 {lab=vss}
 N 1240 -580 2100 -580 {lab=vabn}
 N 1740 -780 1880 -780 {lab=vabp}
@@ -278,7 +243,6 @@ C {devices/iopin.sym} 100 -120 0 1 {name=p15 lab=vsso}
 C {devices/ipin.sym} 100 -680 0 0 {name=p3 lab=vinp}
 C {devices/ipin.sym} 100 -660 0 0 {name=p4 lab=vinn}
 C {devices/ipin.sym} 100 -640 0 0 {name=p5 lab=vref}
-C {devices/iopin.sym} 2480 -720 0 0 {name=p6 lab=vout}
 C {devices/ipin.sym} 100 -620 0 0 {name=p7 lab=vfb}
 C {devices/ipin.sym} 100 -1040 0 0 {name=p8 lab=vbp}
 C {devices/ipin.sym} 100 -380 0 0 {name=p9 lab=vbn}
@@ -394,38 +358,6 @@ C {devices/lab_wire.sym} 1560 -1020 0 0 {name=l5 sig_type=std_logic lab=pl}
 C {devices/lab_wire.sym} 1920 -1020 0 1 {name=l6 sig_type=std_logic lab=pr}
 C {devices/lab_wire.sym} 2040 -860 0 0 {name=l7 sig_type=std_logic lab=a}
 C {devices/lab_wire.sym} 2040 -720 0 0 {name=l8 sig_type=std_logic lab=b}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2380 -1100 0 0 {name=OP
-l=0.6u
-w=546.12u
-ng=82
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2380 -340 0 0 {name=ON
-l=1u
-w=299.2u
-ng=68
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2320 -860 0 0 {name=CMA
-l=16u
-w=16u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2360 -640 0 1 {name=CMB
-l=16u
-w=16u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X}
 C {devices/title.sym} 160 -40 0 0 {name=l0 author="Christoph Maier"}
 C {devices/ipin.sym} 100 -1160 0 0 {name=p16 lab=en_3v3}
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1180 -1210 0 0 {name=SABP
@@ -461,62 +393,11 @@ mm_ok=1
 model=sg13_hv_nmos
 spiceprefix=X}
 C {devices/ipin.sym} 100 -260 0 0 {name=p17 lab=en_3v3_b}
-N 2420 -1300 2660 -1300 {lab=vddo}
-N 2660 -1300 2680 -1300 {lab=vddo}
-N 2680 -1300 2860 -1300 {lab=vddo}
-N 2860 -1300 2920 -1300 {lab=vddo}
-N 2920 -1300 2940 -1300 {lab=vddo}
-N 2420 -120 2660 -120 {lab=vsso}
-N 2660 -120 2680 -120 {lab=vsso}
-N 2660 -1300 2660 -1210 {lab=vddo}
-N 2680 -1300 2680 -1180 {lab=vddo}
-N 2660 -1180 2680 -1180 {lab=vddo}
-N 2620 -1180 2620 -1150 {lab=dabp}
-N 2620 -1150 2660 -1150 {lab=dabp}
-N 2660 -1150 2660 -1120 {lab=dabp}
-N 2660 -1120 2660 -1090 {lab=dabp}
-N 2660 -1120 2740 -1120 {lab=dabp}
-N 2920 -1300 2920 -1210 {lab=vddo}
-N 2940 -1300 2940 -1180 {lab=vddo}
-N 2920 -1180 2940 -1180 {lab=vddo}
-N 2860 -1180 2880 -1180 {lab=vddo}
-N 2860 -1300 2860 -1180 {lab=vddo}
-N 2920 -1150 2920 -1120 {lab=dabp}
-N 2740 -1120 2920 -1120 {lab=dabp}
-N 2620 -1060 2620 -1030 {lab=vabp}
-N 2620 -1030 2660 -1030 {lab=vabp}
-N 2660 -1030 2660 -1000 {lab=vabp}
-N 2660 -1000 2720 -1000 {lab=vabp}
-N 2660 -1060 2700 -1060 {lab=vdd}
-N 2620 -460 2620 -490 {lab=vabn}
-N 2620 -490 2660 -490 {lab=vabn}
-N 2660 -490 2660 -520 {lab=vabn}
-N 2660 -520 2720 -520 {lab=vabn}
-N 2660 -460 2700 -460 {lab=vss}
-N 2660 -430 2660 -400 {lab=dabn}
-N 2660 -400 2660 -370 {lab=dabn}
-N 2620 -340 2620 -370 {lab=dabn}
-N 2620 -370 2660 -370 {lab=dabn}
-N 2660 -310 2660 -120 {lab=vsso}
-N 2660 -340 2680 -340 {lab=vsso}
-N 2680 -340 2680 -120 {lab=vsso}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2640 -1180 0 0 {name=RP1
-l=0.6u
-w=13.32u
-ng=2
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2900 -1180 0 0 {name=RPD
-l=0.6u
-w=13.32u
-ng=2
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2640 -1060 0 0 {name=RP2
+N 2260 -860 2600 -860 {lab=a}
+N 2260 -720 2600 -720 {lab=b}
+C {devices/opin.sym} 2600 -860 0 0 {name=p6 lab=a}
+C {devices/opin.sym} 2600 -720 0 0 {name=p18 lab=b}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2400 -980 0 0 {name=RP2
 l=0.6u
 w=6.66u
 ng=1
@@ -524,7 +405,15 @@ m=1
 mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2640 -460 0 0 {name=RN2
+N 2380 -980 2380 -950 {lab=vabp}
+N 2380 -950 2420 -950 {lab=vabp}
+N 2420 -950 2420 -920 {lab=vabp}
+C {devices/lab_pin.sym} 2420 -920 1 1 {name=l80 sig_type=std_logic lab=vabp}
+N 2420 -980 2460 -980 {lab=vdd}
+C {devices/lab_pin.sym} 2460 -980 2 0 {name=l81 sig_type=std_logic lab=vdd}
+N 2420 -1010 2600 -1010 {lab=dabp}
+C {devices/iopin.sym} 2600 -1010 0 0 {name=p19 lab=dabp}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2400 -600 0 0 {name=RN2
 l=1u
 w=4.4u
 ng=1
@@ -532,17 +421,12 @@ m=1
 mm_ok=1
 model=sg13_hv_nmos
 spiceprefix=X}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2640 -340 0 0 {name=RN1
-l=1u
-w=8.8u
-ng=2
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X}
-C {devices/lab_pin.sym} 2720 -1000 2 0 {name=l80 sig_type=std_logic lab=vabp}
-C {devices/lab_pin.sym} 2700 -1060 2 0 {name=l81 sig_type=std_logic lab=vdd}
-C {devices/lab_pin.sym} 2720 -520 2 0 {name=l82 sig_type=std_logic lab=vabn}
-C {devices/lab_pin.sym} 2700 -460 2 0 {name=l83 sig_type=std_logic lab=vss}
-C {devices/lab_wire.sym} 2740 -1120 0 0 {name=l84 sig_type=std_logic lab=dabp}
-C {devices/lab_wire.sym} 2660 -400 0 1 {name=l85 sig_type=std_logic lab=dabn}
+N 2380 -600 2380 -630 {lab=vabn}
+N 2380 -630 2420 -630 {lab=vabn}
+N 2420 -630 2420 -660 {lab=vabn}
+C {devices/lab_pin.sym} 2420 -660 3 1 {name=l82 sig_type=std_logic lab=vabn}
+N 2420 -600 2460 -600 {lab=vss}
+C {devices/lab_pin.sym} 2460 -600 2 0 {name=l83 sig_type=std_logic lab=vss}
+N 2420 -570 2600 -570 {lab=dabn}
+C {devices/iopin.sym} 2600 -570 0 0 {name=p20 lab=dabn}
+T {[8] RP2 / RN2: the upper halves of the class-AB diode stacks (with FPL / ABP and FNL / ABN the AB groups of layout_primitives P7); their sources dabp / dabn go to RP1 / RN1 in the clamp frames.} 1250 154 0 0 0.3 0.3 {layer=10}

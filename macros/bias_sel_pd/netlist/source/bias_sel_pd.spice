@@ -2,7 +2,7 @@
 * SPDX-License-Identifier: Apache-2.0
 * bias_sel_pd: the bias of the pad driver, with a selectable reference current into ONE
 * mirror tree (bias_tree_pd of bias_ref_pd.spice). vabp / vabn are current outputs into the class-AB diode
-* stacks of d2s_mpdda_pd (there since 2026-10-27), so no vddo / vsso.
+* stacks in the pad (since 2026-10-27; RP2 / RN2 in d2s_mpdda_pd, RP1 / RN1 in d2s_out_p / d2s_out_n), so no vddo / vsso.
 *   sel1 sel0 = 0 0: harness ibias (a sourced current, ~5 uA = iDAC code 20 at 250 nA/step),
 *                    through a transmission gate (TEN / TEP)
 *               0 1: Oguey-Aebischer core (oa_core_pd)

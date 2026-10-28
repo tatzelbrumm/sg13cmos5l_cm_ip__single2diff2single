@@ -1,4 +1,4 @@
-* tb_pd_unpowered: d2s_mpdda_pd + bias_in_pd unpowered, pad driven 0 -> 5 V in 10 ns through 1.5 kOhm, tt 27 C
+* tb_pd_unpowered: d2s_mpdda_pd + output stage + bias_in_pd unpowered, pad driven 0 -> 5 V in 10 ns through 1.5 kOhm, tt 27 C
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
 * Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
@@ -15,6 +15,7 @@
 .include ../../netlist/source/units.spice
 .include ../../netlist/source/ccomp.spice
 .include ../../netlist/source/d2s_mpdda_pd.spice
+.include ../../netlist/source/d2s_out.spice
 .include ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice
 Rvdd vdd 0 1g
 Cvdd vdd 0 1n
@@ -33,28 +34,33 @@ Vn vinn vref 0
 * en_3v3_b for Xd: the inverter that was inside d2s_mpdda_pd (XIB in en_ctrl_3v3 in the pad)
 XIBP en_b en vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
 XIBN en_b en vss vss sg13_hv_nmos w=1u l=0.45u ng=1
-Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en en_b d2s_mpdda_pd
+Xd vdd vss vddo vsso vinp vinn vref vout a b dabp dabn vbp vbn vbpc vbnc vabp vabn en en_b d2s_mpdda_pd
+* output stage at pad level since 2026-10-28 (d2s_out.spice) and the Miller capacitors as drawn
+Xfp vddo a vout dabp d2s_out_p
+Xfn vsso b vout dabn d2s_out_n
+XCMA vout a vout vout sg13_hv_pmos w=7.96u l=32.16u ng=1
+XCMB b vout b b sg13_hv_pmos w=7.96u l=32.16u ng=1
 * pad source (edit)
 Vpad padsrc 0 pwl(0 0 10n 5 3u 5)
 Rpad padsrc vout 1.5k
 CL vout 0 2p
-.save v(vout) v(xd.a) v(xd.b) v(vddo) v(en_b) @n.xd.xop.nsg13_hv_pmos[ids] @n.xd.xon.nsg13_hv_nmos[ids]
+.save v(vout) v(a) v(b) v(vddo) v(en_b) @n.xfp.xop.nsg13_hv_pmos[ids] @n.xfn.xon.nsg13_hv_nmos[ids]
 .control
 tran 1n 3u uic
-let vsg_op = v(vddo) - v(xd.a)
-let vgs_on = v(xd.b)
+let vsg_op = v(vddo) - v(a)
+let vgs_on = v(b)
 meas tran pmin min vsg_op
 meas tran pmax max vsg_op
 meas tran nmin min vgs_on
 meas tran nmax max vgs_on
-let ip = abs(@n.xd.xop.nsg13_hv_pmos[ids])
-let inn = abs(@n.xd.xon.nsg13_hv_nmos[ids])
+let ip = abs(@n.xfp.xop.nsg13_hv_pmos[ids])
+let inn = abs(@n.xfn.xon.nsg13_hv_nmos[ids])
 meas tran ipm max ip
 meas tran inm max inn
 meas tran vddm max v(vddo)
 print pmin pmax nmin nmax ipm inm vddm
 if $?batchmode = 0
-  plot v(vout) v(vddo) v(xd.a) v(xd.b) v(en_b)
+  plot v(vout) v(vddo) v(a) v(b) v(en_b)
 end
 .endc
 .end

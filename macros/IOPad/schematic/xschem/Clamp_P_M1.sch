@@ -6,7 +6,7 @@ S {}
 F {}
 E {}
 T {Clamp_P_M1: the SG13_cm_clamps PCell as placed in sg13cmos5l_IOPadDiff2Single (ng = 41, l = 0.6u, frame 80u)} 60 -540 0 0 0.4 0.4 {}
-T {Two rows of 41 fingers 6.66 / 0.6 um: 82 fingers, W = 41 x 13.32 = 546.12 um, as OP in d2s_mpdda_pd.
+T {Two rows of 41 fingers 6.66 / 0.6 um: 82 fingers, W = 41 x 13.32 = 546.12 um, as OP (d2s_out_p; in d2s_mpdda_pd until 2026-10-28).
 Drains = pad, sources and NWell = iovdd (inner n+ ring), gate bus = gate; the outer p+ substrate-tap ring = iovss.
 Taps are not netlist devices: KLayout LVS runs with --disable_tap_extraction.} 60 -500 0 0 0.25 0.25 {}
 T {iovss: no device} 90 -115 0 0 0.25 0.25 {}

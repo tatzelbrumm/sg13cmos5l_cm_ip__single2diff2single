@@ -5,7 +5,7 @@
 # CACE circuit characterization file: bias_sel_pd
 #
 # Bias of the class-AB pad driver d2s_mpdda_pd: one mirror tree (bias_tree_pd + four bias diodes; the class-AB stacks
-# RP1 + RP2 / RN1 + RN2 are test fixtures in the templates since 2026-10-27, as they are in d2s_mpdda_pd)
+# RP1 + RP2 / RN1 + RN2 are test fixtures in the templates since 2026-10-27, as they are in the pad: d2s_mpdda_pd, d2s_out_p / d2s_out_n)
 # fed by a selectable reference current: sel = 0 harness ibias (sourced), 1 Oguey-Aebischer core,
 # 2 bandgap core, 3 both cores.  en_3v3 = 0 switches everything off.
 # Source netlist: netlist/source/bias_sel_pd.spice (+ bias_ref_pd.spice, hv_logic.spice).

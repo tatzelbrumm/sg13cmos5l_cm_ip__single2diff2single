@@ -14,7 +14,7 @@
 # Run on the schematic netlist (-s schematic): mismatch is vacuous on an extracted netlist.
 # Sign convention: currents positive = delivered by the source.
 # 2026-10-27: the class-AB stacks RP1 + RP2 / RN1 + RN2 are test fixtures in the templates (in the pad they are in
-# d2s_mpdda_pd), the AB currents read at @n.xrp2 / @n.xrn2; same devices on the same nets as before, so the
+# d2s_mpdda_pd / d2s_out_p / d2s_out_n), the AB currents read at @n.xrp2 / @n.xrn2; same devices on the same nets as before, so the
 # results stand.
 #--------------------------------------------------------------
 

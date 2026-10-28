@@ -5,7 +5,7 @@
 #
 # Use:  cd macros && xschem                      (xschem reads ./xschemrc)
 #   or: xschem --rcfile <repo>/macros/xschemrc <file.sch>
-# New macros are picked up automatically (glob below); nothing to edit when one is added.
+# New macros are picked up automatically (glob below, repeated on every file load); nothing to edit when one is added.
 # Symbol names must be unique across macros: on a clash the alphabetically first macro wins.
 
 # Set default PDK_ROOT
@@ -58,11 +58,16 @@ if {![llength [info commands append_xschem_library_path_unique]]} {
 #                       or   xschem --rcfile <repo>/macros/xschemrc
 # Per-macro xschemrc files stay self-contained and are not sourced here.
 set macros_root [file dirname [file normalize [info script]]]
-foreach sub {schematic/xschem testbenches/xschem} {
-  foreach d [lsort [glob -nocomplain -type d [file join $macros_root * $sub]]] {
-    append_xschem_library_path_unique $d
+# The macro list is read again on every file load (load_file_postprocess below), so a macro created while xschem runs
+# is found without a restart (2026-10-28).
+proc add_macro_paths {} {
+  foreach sub {schematic/xschem testbenches/xschem} {
+    foreach d [lsort [glob -nocomplain -type d [file join $::macros_root * $sub]]] {
+      append_xschem_library_path_unique $d
+    }
   }
 }
+add_macro_paths
 append_xschem_library_path_unique [file join $macros_root .. schematic xschem]
 append_xschem_library_path_unique [file join $macros_root .. testbenches xschem]
 
@@ -71,12 +76,16 @@ if {![llength [info commands pin_netlist_dir]]} {
   proc pin_netlist_dir {dir} {
     set dir [file normalize $dir]
     if {[string match */schematic/xschem $dir]} {
-      set dir [file join $dir ../../testbenches/xschem]
+      # testbenches/xschem/simulations if the macro has testbenches, else schematic/xschem/simulations (both gitignored)
+      set tb [file normalize [file join $dir ../../testbenches/xschem]]
+      if {[file isdir $tb]} {set dir $tb}
     } elseif {![string match */testbenches/xschem $dir] && ![string match */cace/templates $dir]} {
       return
     }
     set ::netlist_dir [file normalize [file join $dir simulations]]
+    # xschem does not create a netlist_dir set this way; without the folder netlisting fails
+    catch {file mkdir $::netlist_dir}
   }
 }
 pin_netlist_dir [file dirname [info script]]
-set load_file_postprocess {pin_netlist_dir [xschem get current_dirname]}
+set load_file_postprocess {add_macro_paths; pin_netlist_dir [xschem get current_dirname]}

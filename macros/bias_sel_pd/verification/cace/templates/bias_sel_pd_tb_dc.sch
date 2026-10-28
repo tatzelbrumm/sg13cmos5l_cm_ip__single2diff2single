@@ -48,7 +48,7 @@ C {devices/code_shown.sym} 0 420 0 0 {name=NGSPICE only_toplevel=false value="
 Vdd vdd 0 \{vd\}
 Vddo vddo 0 \{vd\}
 Vsso vsso 0 0
-* class-AB diode stacks of the pad as fixtures: in the DUT's tree until 2026-10-27, in d2s_mpdda_pd since then;
+* class-AB diode stacks of the pad as fixtures: in the DUT's tree until 2026-10-27, in the pad since then (RP2 / RN2 in d2s_mpdda_pd, RP1 / RN1 in d2s_out_p / d2s_out_n since 2026-10-28);
 * same devices on the same nets, so the circuit is the one characterized before (the replica loads below measure them)
 XRP1 dabp dabp vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
 XRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1

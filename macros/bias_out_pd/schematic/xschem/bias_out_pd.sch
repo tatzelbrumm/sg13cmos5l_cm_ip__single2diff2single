@@ -18,7 +18,7 @@ T {Mirror tree and diodes. The four diodes are those of d2s_bias_lp without the 
 T {   vbp: BP 5u/6u, 5 uA (unit tails).  vbpc: BPC 1u/4u, 2 uA (mirror cascodes).  vabp: 5 uA out to RP2 on RP1 (ABP, FPL).} 60 4 0 0 0.3 0.3 {layer=10}
 T {   vbn: BN 6u/6u, 5 uA (fold sinks).  vbnc: BNC 1u/8u, 2 uA (fold cascodes).  vabn: 5 uA out to RN2 on RN1 (ABN, FNL).} 60 28 0 0 0.3 0.3 {layer=10}
 T {PMOS gate lines come from PMOS diodes on vdd, NMOS gate lines from NMOS diodes on vss: bias crosses blocks as currents.} 60 52 0 0 0.3 0.3 {layer=10}
-T {The class-AB stacks RP1 + RP2 / RN1 + RN2 (RP1 / RN1 replicas of OP / ON, nets dabp / dabn) moved to the pad, d2s_mpdda_pd,} 60 76 0 0 0.3 0.3 {layer=10}
+T {The class-AB stacks RP1 + RP2 / RN1 + RN2 (RP1 / RN1 replicas of OP / ON, nets dabp / dabn) moved to the pad (RP2 / RN2 in d2s_mpdda_pd, RP1 / RN1 in d2s_out_p / d2s_out_n since 2026-10-28)} 60 76 0 0 0.3 0.3 {layer=10}
 T {   on 2026-10-27: vabp / vabn are current outputs here; the CACE templates attach the stacks as fixtures.} 60 100 0 0 0.3 0.3 {layer=10}
 T {[8] PMOS diodes, NMOS sinks} 965 -1090 0 0 0.3 0.3 {layer=10}
 T {[8] vabp} 805 -1090 0 0 0.3 0.3 {layer=10}

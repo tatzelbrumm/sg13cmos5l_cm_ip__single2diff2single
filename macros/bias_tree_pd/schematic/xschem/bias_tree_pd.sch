@@ -21,7 +21,7 @@ T {[8] PMOS sources, NMOS diodes} 1165 -1150 0 0 0.3 0.3 {layer=10}
 T {[8] vabn} 1005 -1150 0 0 0.3 0.3 {layer=10}
 T {[E] enable} 145 -1150 0 0 0.3 0.3 {layer=10}
 T {[E] enable (en_3v3: 0 ... 3.3 V on vdd / vss, active high): IP / IN make en_3v3_b. Enabled, the transmission gate TGN / TGP} 80 -1196 0 0 0.3 0.3 {layer=10}
-T {NABP sinks 5 uA from vabp, PABN sources 5 uA into vabn. Their diode stacks RP2 + RP1 / RN2 + RN1 sit in the pad, in d2s_mpdda_pd next to ABP / OP / ABN / ON (2026-10-27).} 60 -1202 0 0 0.3 0.3 {}
+T {NABP sinks 5 uA from vabp, PABN sources 5 uA into vabn. Their diode stacks RP2 + RP1 / RN2 + RN1 sit in the pad: RP2 / RN2 in d2s_mpdda_pd next to ABP / ABN (2026-10-27), RP1 / RN1 in the clamp frames d2s_out_p / d2s_out_n next to OP / ON (2026-10-28).} 60 -1202 0 0 0.3 0.3 {}
 N 400 -260 400 -160 {lab=vss}
 N 400 -260 420 -260 {lab=vss}
 N 400 -160 420 -160 {lab=vss}

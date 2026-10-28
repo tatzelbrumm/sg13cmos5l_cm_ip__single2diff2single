@@ -5,7 +5,7 @@ V {}
 S {}
 F {}
 E {}
-T {tb_pd_leak: d2s_mpdda_pd + bias_in_pd disabled (en_3v3 = 0), supply currents, tt 27 C} 60 -500 0 0 0.5 0.5 {}
+T {tb_pd_leak: d2s_mpdda_pd + output stage + bias_in_pd disabled (en_3v3 = 0), supply currents, tt 27 C} 60 -500 0 0 0.5 0.5 {}
 T {DUT and bias from the schematics in this directory; code block = the deck's .lib / .temp / .option / .param / .save lines and its .control section} 60 -455 0 0 0.3 0.3 {}
 T {Reference (results_power_down.txt), vout held at 1.65 V: tt 27 C: bias 0.030 nA, driver front end} 60 -420 0 0 0.25 0.25 {}
 T {0.054 nA, vddo 0.020 nA, total 0.104 nA; ff 125 C: 0.633 / 1.283 / 27.21 nA, total 29.1 nA.} 60 -398 0 0 0.25 0.25 {}
@@ -36,9 +36,8 @@ N 510 320 510 380 {lab=xg}
 N 440 380 440 500 {lab=xg}
 N 580 350 580 380 {lab=iref}
 N 580 380 700 380 {lab=iref}
-N 1320 0 1380 0 {lab=vout}
-N 1380 20 1380 60 {lab=vout}
-N 1380 0 1480 0 {lab=vout}
+N 1980 20 1980 60 {lab=vout}
+N 1980 0 2080 0 {lab=vout}
 N 480 320 510 320 {lab=xg}
 N 1100 120 1100 380 {lab=vbpc}
 N 1120 120 1120 400 {lab=vabp}
@@ -63,8 +62,7 @@ N 440 560 440 580 {lab=vss}
 N 120 -320 120 620 {lab=vddo}
 N 860 -320 1260 -320 {lab=vddo}
 N 1260 -320 1260 -80 {lab=vddo}
-N 1320 20 1380 20 {lab=vout}
-N 1380 0 1380 20 {lab=vout}
+N 1980 0 1980 20 {lab=vout}
 N 1040 -300 1040 -70 {lab=vdd}
 N 120 -320 860 -320 {lab=vddo}
 N 360 260 360 620 {lab=vext}
@@ -89,8 +87,8 @@ N 200 700 280 700 {lab=GND}
 N 660 -40 960 -40 {lab=en}
 N 1060 700 1060 720 {lab=GND}
 N 840 700 1060 700 {lab=GND}
-N 1380 120 1380 700 {lab=GND}
-N 1060 700 1380 700 {lab=GND}
+N 1980 120 1980 700 {lab=GND}
+N 1060 700 1980 700 {lab=GND}
 N 1020 120 1020 580 {lab=vss}
 N 800 -20 960 -20 {lab=en_b}
 N 780 80 800 80 {lab=en_b}
@@ -155,7 +153,7 @@ spiceprefix=X}
 C {devices/lab_wire.sym} 510 380 0 1 {name=l29 sig_type=std_logic lab=xg}
 C {devices/isource.sym} 440 530 0 0 {name=Iext value=5u}
 C {devices/lab_wire.sym} 580 380 0 0 {name=l30 sig_type=std_logic lab=iref}
-C {devices/lab_pin.sym} 1480 0 0 1 {name=l32 sig_type=std_logic lab=vout}
+C {devices/lab_pin.sym} 2080 0 0 1 {name=l32 sig_type=std_logic lab=vout}
 C {devices/code_shown.sym} 60 820 0 0 {name=s1 only_toplevel=false value=".lib cornerMOShv.lib mos_tt
 .lib cornerRES.lib res_typ
 .lib cornerCAP.lib cap_typ
@@ -166,16 +164,71 @@ let ibias = i(vsb)
 let idrv = -i(vvdd) - i(vsb)
 let iddo = -i(vvddo)
 let itot = -i(vvdd) - i(vvddo)
-let vsg_op = v(vddo) - v(xd.a)
-let vgs_on = v(xd.b) - v(vsso)
+let vsg_op = v(vddo) - v(a)
+let vgs_on = v(b) - v(vsso)
 print ibias idrv iddo itot vsg_op vgs_on
 print v(vbp) v(vbpc) v(vabp) v(vabn) v(vbn) v(vbnc)
 .endc"}
 C {devices/lab_pin.sym} 200 -300 0 0 {name=l23 sig_type=std_logic lab=vdd}
 C {devices/lab_pin.sym} 1040 -300 0 1 {name=l7 sig_type=std_logic lab=vdd}
 C {devices/vsource.sym} 760 230 0 0 {name=Vsb value=0 savecurrent=false}
-C {devices/vsource.sym} 1380 90 0 0 {name=Vo value=1.65 savecurrent=false}
+C {devices/vsource.sym} 1980 90 0 0 {name=Vo value=1.65 savecurrent=false}
 C {devices/lab_wire.sym} 760 290 0 0 {name=l40 sig_type=std_logic lab=vddb}
 C {inv_hv.sym} 740 80 0 0 {name=XIB}
 C {devices/lab_wire.sym} 800 80 0 1 {name=lxib1 sig_type=std_logic lab=en_b}
 C {devices/lab_pin.sym} 800 -20 0 0 {name=l11 sig_type=std_logic lab=en_b}
+C {d2s_out_p.sym} 1640 -160 0 0 {name=Xfp}
+C {d2s_out_n.sym} 1640 180 0 0 {name=Xfn}
+N 1320 -40 1400 -40 {lab=dabp}
+N 1400 -40 1400 -180 {lab=dabp}
+N 1400 -180 1560 -180 {lab=dabp}
+N 1320 -20 1420 -20 {lab=a}
+N 1420 -20 1420 -160 {lab=a}
+N 1420 -160 1460 -160 {lab=a}
+N 1460 -160 1560 -160 {lab=a}
+N 1460 -160 1460 -80 {lab=a}
+N 1460 -80 1800 -80 {lab=a}
+N 1320 60 1420 60 {lab=b}
+N 1420 60 1420 180 {lab=b}
+N 1420 180 1460 180 {lab=b}
+N 1460 180 1560 180 {lab=b}
+N 1460 180 1460 100 {lab=b}
+N 1460 100 1800 100 {lab=b}
+N 1320 80 1400 80 {lab=dabn}
+N 1400 80 1400 200 {lab=dabn}
+N 1400 200 1560 200 {lab=dabn}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1820 -80 0 0 {name=CMA
+l=32.16u
+w=7.96u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X}
+N 1840 -110 1840 -80 {lab=vout}
+N 1840 -80 1840 -50 {lab=vout}
+N 1840 -80 1900 -80 {lab=vout}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1820 100 0 1 {name=CMB
+l=32.16u
+w=7.96u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X}
+N 1800 70 1800 100 {lab=b}
+N 1800 100 1800 130 {lab=b}
+N 1840 100 1900 100 {lab=vout}
+N 1720 -160 1900 -160 {lab=vout}
+N 1720 180 1900 180 {lab=vout}
+N 1320 20 1900 20 {lab=vout}
+N 1640 -220 1640 -240 {lab=vddo}
+C {devices/lab_pin.sym} 1640 -240 0 0 {name=Xlrp sig_type=std_logic lab=vddo}
+N 1640 240 1640 260 {lab=vsso}
+C {devices/lab_pin.sym} 1640 260 0 0 {name=Xlrn sig_type=std_logic lab=vsso}
+N 1900 0 1980 0 {lab=vout}
+N 1900 -160 1900 -80 {lab=vout}
+N 1900 -80 1900 0 {lab=vout}
+N 1900 0 1900 20 {lab=vout}
+N 1900 20 1900 100 {lab=vout}
+N 1900 100 1900 180 {lab=vout}

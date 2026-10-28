@@ -69,7 +69,7 @@ value="
 .options savecurrents klu method=gear reltol=1e-4 abstol=1e-15 gmin=1e-15 SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 .option warn=1
 .control
-save v(pad) v(vref) v(dp) i(vio) i(vcore) @n.x1.xd.xop.nsg13_hv_pmos[ids] @n.x1.xd.xon.nsg13_hv_nmos[ids]
+save v(pad) v(vref) v(dp) i(vio) i(vcore) @n.x1.xfp.xop.nsg13_hv_pmos[ids] @n.x1.xfn.xon.nsg13_hv_nmos[ids]
 dc Vd -CACE\{vdmax=1\} CACE\{vdmax=1\} CACE\{vdstep=0.01\}
 let vo = v(pad) - v(vref)
 meas dc vo0 find vo at=0
@@ -83,8 +83,8 @@ let iio = -i(vio)
 meas dc Iio find iio at=0
 let icore = -i(vcore)
 meas dc Icore find icore at=0
-let ip = abs(@n.x1.xd.xop.nsg13_hv_pmos[ids])
-let inn = abs(@n.x1.xd.xon.nsg13_hv_nmos[ids])
+let ip = abs(@n.x1.xfp.xop.nsg13_hv_pmos[ids])
+let inn = abs(@n.x1.xfn.xon.nsg13_hv_nmos[ids])
 meas dc IqP find ip at=0
 meas dc IqN find inn at=0
 let imn = 0.5*(ip + inn - abs(ip - inn))

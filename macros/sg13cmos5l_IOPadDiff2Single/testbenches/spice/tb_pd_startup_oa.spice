@@ -1,4 +1,4 @@
-* tb_pd_startup_oa: d2s_mpdda_pd + bias_oa_pd (self-contained), supplies steady, en_3v3 0 -> 3.3 V at 1 us, tt 27 C
+* tb_pd_startup_oa: d2s_mpdda_pd + output stage + bias_oa_pd (self-contained), supplies steady, en_3v3 0 -> 3.3 V at 1 us, tt 27 C
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
 * Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
@@ -14,6 +14,7 @@
 .include ../../netlist/source/units.spice
 .include ../../netlist/source/ccomp.spice
 .include ../../netlist/source/d2s_mpdda_pd.spice
+.include ../../netlist/source/d2s_out.spice
 .include ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice
 Vvdd vdd 0 3.3
 Vvss vss 0 0
@@ -27,13 +28,18 @@ Vn vinn vref 0
 * en_3v3_b for Xd: the inverter that was inside d2s_mpdda_pd (XIB in en_ctrl_3v3 in the pad)
 XIBP en_b en vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
 XIBN en_b en vss vss sg13_hv_nmos w=1u l=0.45u ng=1
-Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en en_b d2s_mpdda_pd
+Xd vdd vss vddo vsso vinp vinn vref vout a b dabp dabn vbp vbn vbpc vbnc vabp vabn en en_b d2s_mpdda_pd
+* output stage at pad level since 2026-10-28 (d2s_out.spice) and the Miller capacitors as drawn
+Xfp vddo a vout dabp d2s_out_p
+Xfn vsso b vout dabn d2s_out_n
+XCMA vout a vout vout sg13_hv_pmos w=7.96u l=32.16u ng=1
+XCMB b vout b b sg13_hv_pmos w=7.96u l=32.16u ng=1
 RL vout vref 1k
 CL vout 0 100p
-.save v(vout) v(en) @n.xd.xop.nsg13_hv_pmos[ids] v(xb.xc.vbr) v(xb.xc.ks)
+.save v(vout) v(en) @n.xfp.xop.nsg13_hv_pmos[ids] v(xb.xc.vbr) v(xb.xc.ks)
 .control
 tran 20n 2m
-let iq = abs(@n.xd.xop.nsg13_hv_pmos[ids])
+let iq = abs(@n.xfp.xop.nsg13_hv_pmos[ids])
 meas tran iqf find iq at=2m
 let hi = 1.1*iqf
 let lo = 0.9*iqf
