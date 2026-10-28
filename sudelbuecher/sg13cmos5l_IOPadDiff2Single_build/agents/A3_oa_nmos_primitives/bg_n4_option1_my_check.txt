@@ -1,0 +1,12 @@
+NW.f NWell to p+ substrate Activ < 0.24: 0
+NWell space < 1.8: 0
+Activ space < 0.21: 0  GatPoly space < 0.18: 0
+  NMOS L=0.45 G=en_3v3_b S/D=ks/vss                 W=    1.00  (1)
+  NMOS L=1.00 G=g      S/D=g/g                    W=    2.00  (1)
+  NMOS L=1.00 G=g      S/D=ks/vss                 W=   10.00  (1)
+  NMOS L=2.00 G=ks     S/D=vpc/vss                W=    0.50  (1)
+  NMOS L=4.00 G=g      S/D=ea/g                   W=   20.00  (1)
+  NMOS L=4.00 G=g      S/D=eb/vpc                 W=   20.00  (1)
+  NMOS L=4.00 G=g      S/D=g/g                    W=   16.00  (1)
+named nets: {'ea': 1, 'g': 1, 'eb': 1, 'vpc': 1, 'ks': 1, 'vss': 1, 'en_3v3_b': 1}
+nets with more than one label name: []

@@ -1,0 +1,20 @@
+placed 6 instances, 2 rails, 0 tap stripes: 76.000 x 50.740 um
+block oa_core_pd: 76.000 x 50.740 um = 3856.2 um2; gate 1226.9 um2 (31.8 %), MOS diffusion 1504.9 um2 (39.0 %)
+layers drawn in the top cell: 10/0 10/2 10/25 19/0 8/0 8/2 8/25; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  vdd        M1   2.43 um  M2   0.00 um  vias 0
+  vss        M1   1.83 um  M2   6.71 um  vias 2
+  iout       M1   0.00 um  M2  15.39 um  vias 0
+  en_3v3     M1   0.00 um  M2   2.59 um  vias 1
+  en_3v3_b   M1   0.00 um  M2   6.19 um  vias 2
+  vpg        M1  12.96 um  M2  11.87 um  vias 3
+  vpc        M1  18.07 um  M2   6.48 um  vias 5
+  vnc        M1   0.00 um  M2   4.00 um  vias 1
+  vbr        M1  37.26 um  M2  28.29 um  vias 2
+  ks         M1   7.71 um  M2   4.00 um  vias 2
+  d10        M1   1.83 um  M2   0.00 um  vias 0
+  vres       M1   2.15 um  M2   1.89 um  vias 2
+  co         M1   0.00 um  M2   2.16 um  vias 0
+  c8         M1   0.00 um  M2   2.16 um  vias 0
+  c2         M1   0.00 um  M2   2.16 um  vias 0

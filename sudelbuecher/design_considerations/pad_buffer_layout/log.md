@@ -956,3 +956,67 @@ devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on
   geometry unchanged), oa_pcas (`5a38cb70…`), oa_pmir (`6dd9d4f9…`). oa_pmir_a / oa_pmir_b removed from the library.
 - .cdl: oa_pmir replaces oa_pmir_a / oa_pmir_b (38 subckts). Re-placed, no overlaps; bias / oa / bg fit 102.3 µm.
 - The four cells in the library: DRC clean, LVS match. sha256 gds `fe2c540f…`, cdl `52fb7fad…`.
+
+## 2026-10-28 04:09–05:08 oa_core_pd v2 (compact) into the macro (Christoph, 04:22: "There's a spectacularly compact Oguey-Aebischer layout from Agent 2. Is that already on my file system?"; 04:25: "okay, as long as you don't wait with it until Agent 2 has finished bg_core_pd, which is next in line.")
+
+- Layout: A2 assembled it from A3's / A4's primitives at 04:09.
+  - 40.51 × 58.135 µm = 2355 µm², against 3856 µm² for v1 (−39 %).
+  - One vdd NWell, no rings, no tie between rows; Metal1 / Metal2 only; ports on the right edge.
+  - A2's checks: DRC 0 (Python subset, LU included); LVS match against the composed reference and against the
+    backannotated sheet; byte-reproducible build.
+  - My check, an independent flat extraction (padswitch/verify.py): every sheet device on its nets; MS1 is
+    8 × 0.5/12.5 from vdd to ks; the dummies are PMOS 4.4/8 (gate vpg) and NMOS 36/1 (vnc) + 4/1 (vbr), with
+    D = S = bulk; one label per net.
+- In the notes (04:27): A2's whole output is in `design_considerations/pad_buffer_layout/oa_core_pd_v2_2026-10-28/`
+  (`v2/`, `skill/`, `report.md`).
+- In the macro (05:05):
+  - `macros/oa_core_pd/layout/gds/oa_core_pd.gds` is v2 (sha 22ad9f95…).
+  - `oa_core_pd.sch` is backannotated in the sheet's own style: M10 ng 8 → 18, M11 ng 4 → 9 (W, L unchanged); MS1 as
+    the drawn 8-device chain in a new box [S1]; the three dummies in box [D]. A2's own backannotated sheet copy,
+    with its label-style box, was not used.
+  - Subckt `oa_core_pd` in `bias_ref_pd.spice`: the same devices, in place.
+  - README updated.
+- Checks of the backannotation:
+  - the sheet against the new subckt: equal, 28 devices;
+  - all 94 sheets of the repo (outside OgueyAebischerBias), with their own xschemrc, flattened: after swapping in
+    the new oa_core_pd subckt, the 93 others are identical to before; only oa_core_pd itself changed;
+  - source against sheet: bias_sel_pd, bias_sel_noab_pd and both pads equal.
+  - Open: `bias_oa_pd`'s flat sheet still has the pre-layout core, while its source (which instantiates oa_core_pd)
+    has the new one: 34 against 44 devices.
+- Backup of the four replaced files and the check outputs: `oa_core_pd_v2_2026-10-28/macro_before/` and
+  `macro_install/`.
+
+## 2026-10-28 05:20–06:32 bg_core_pd compact: A2's assembly checked, into the notes and the macro (Christoph, 04:25: "There should be lessons learned from Oguey Aebischer for first modifying layout primitives for the bandgap reference, then compacting the overall bandgap core."; 04:28: "It might make sense for Agent 2 to recruit help from Agents 3 and 4.")
+
+- Layout: A2 assembled it by 06:19 from A3's bg_n4 (option 1), A4's bg_pmir_pcas_c / bg_ms1 / bg_svpg and its own
+  bg_res_c / bg_pnp_c.
+  - 47.55 × 50.05 µm = 2380 µm². The library primitives take 2673 µm² in their bounding boxes (−11 %), and 3424 µm²
+    placed as a block (−31 %).
+  - One vdd NWell, no rings, no tie between rows; Metal1 / Metal2 only; vdd on top, vss at the bottom, ports on the
+    right edge, as in oa_core_pd v2.
+  - bg_res_c: the library's segments, now wired, ring removed, 515.0 → 401.1 µm². bg_pnp_c: the 3 × 3 array, now
+    with emitter / base wiring, same size.
+  - A2's checks: DRC 0 of 74 rules (latch-up and antenna included); LVS match against the composed reference and
+    against its backannotated netlist (30 devices); byte-reproducible build.
+- My check, an independent flat extraction (MOS; rhigh in squares on PolyRes; pnp emitters with their nets):
+  - every MOS on its sheet nets, the dummies as listed;
+  - R0 357.84 squares eb–e2, R1A 218.68 ea–vss, R1B 198.80 eb–vss, the dummy segments vss–vss;
+  - Q1's emitter on ea, 8 × Q2 on e2, base vss;
+  - one label per net.
+- In the notes (06:23): A2's whole `out_bg/` (105 files, my check files in `logs/session_check_*`) in
+  `design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28/`.
+- In the macro (06:26):
+  - `macros/bg_core_pd/layout/gds/bg_core_pd.gds` (sha c799ffb5…), new;
+  - README: the layout section, and what the sheet does not have yet.
+- Not done yet: the sheet and the subckt `bg_core_pd` in `bias_ref_pd.spice`. A2's backannotated sheet copy puts the
+  41 resistor segments in a grid of labels and is not used. What the backannotation has to bring in:
+  - R0 / R1A / R1B as chains of 18 / 11 / 10 segments 0.5/9.94: R +0.70 / +1.03 / +1.02 %, R1 / R0 +0.32 %, not
+    simulated (the library bg_res already had these segments);
+  - NA / NB ng 2;
+  - MS1 as an 8-device chain;
+  - the dummies: PMOS 2.4/1 on vpg and on vpc, NMOS 16/4 + 2/1 with D = S = G = g, 2 rhigh segments on vss.
+- A2's open point: ea and eb are not mirror images (18 µm against 4.6 µm of Metal1 / Metal2, at µA currents into
+  kΩ–MΩ; the PDK copy has no metal sheet resistance to confirm that it doesn't matter).
+- Backup: the README and the sheet as they were, in `bg_core_pd_2026-10-28/macro_before/`.
+- Agents folder: A2's report as `agents/A2_oa_core_pd_layout/report_bg.md`, with three pictures. The messages to
+  A2, A3 and A4 from 05:20 on are added to their `messages.md`, taken from the agents' own transcripts.

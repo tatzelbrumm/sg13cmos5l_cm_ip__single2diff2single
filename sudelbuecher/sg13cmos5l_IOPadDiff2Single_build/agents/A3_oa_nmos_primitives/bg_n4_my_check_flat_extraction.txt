@@ -1,0 +1,15 @@
+M1: width<0.16 0 space<0.18 0 M1.e<0.22 (run>1um, next to >0.30) 0
+M2 shapes: 13 (-1.33,-0.78;16.515,22.02)
+Cont not on Activ/GatPoly: 0  Cont not under M1: 0
+NW.f NWell to p+ substrate Activ < 0.24: 0
+NWell space < 1.8: 0
+Activ space < 0.21: 0  GatPoly space < 0.18: 0
+  NMOS L=0.45 G=en_3v3_b S/D=ks/vss                 W=    1.00  (1)
+  NMOS L=1.00 G=g      S/D=ks/vss                 W=   10.00  (1)
+  NMOS L=1.00 G=g      S/D=vss/vss                W=    2.00  (1)
+  NMOS L=2.00 G=ks     S/D=vpc/vss                W=    0.50  (1)
+  NMOS L=4.00 G=g      S/D=ea/g                   W=   20.00  (1)
+  NMOS L=4.00 G=g      S/D=eb/vpc                 W=   20.00  (1)
+  NMOS L=4.00 G=g      S/D=vss/vss                W=   16.00  (1)
+named nets: {'vss': 1, 'ea': 1, 'g': 1, 'eb': 1, 'vpc': 1, 'ks': 1, 'en_3v3_b': 1}
+nets with more than one label name: []

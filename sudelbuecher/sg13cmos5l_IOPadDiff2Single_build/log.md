@@ -745,3 +745,201 @@ Chat log: `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`, expo
   - one polygonal vdd NWell with tap segments only where latch-up needs them;
   - the NMOS group on its shared p+ tie;
   - then checks, renders, the v1-against-compact comparison, the back-annotation package and the skill export.
+
+## 03:40 (Christoph: "Agent 2 is free to modify the —very well done— layout primitives delivered by Agents 3 and 4 if it helps making the combined layout more compact.")
+
+- Relayed to A2:
+  - it may modify oa_n10, oa_mcs_c, oa_pmir_c, oa_ms1, oa_svpg and the oa_pcas copy for a smaller block;
+  - examples: shared tie / well edges, pins moved to the neighbour, flipped orientations, tracks continued across
+    cell boundaries;
+  - it works on renamed copies, so A3's and A4's files stay untouched;
+  - matching and symmetry properties are kept;
+  - every change is listed with its area gain, and DRC / LVS are re-run per changed cell;
+  - the edits go into its skill export as lessons, tagged generic or IHP.
+
+## 04:20 chat-log export (Christoph, 04:15: "now might be a good time to update the chatlog.")
+
+- `chatlog/2026-10-27_opus_iopaddiff2single_build.md` now covers 86 turns, up to 04:15.
+- The 04:02 compaction started the transcript file anew. The archive had last been swept at 02:51 (its background
+  process stopped at its 2-hour limit before 02:32), so 02:51–04:00 was missing from the cloud copy.
+- That stretch comes from the conversation's record on claude.ai, read back with the conversation reader and converted
+  by `export_claudeai.py`, as for 17:57–22:06: user messages, replies and tool calls, no tool results.
+- The two answers to the 03:58 question were a tool result, so the claude.ai record doesn't have them. They are quoted
+  from the compaction summary.
+- New build script `build_0418.sh` (cloud workspace logbuild/):
+  - it sweeps the transcript into the archive first;
+  - it links all three compaction boundaries and the 02:51 → 04:00 gap;
+  - it inserts the claude.ai part at the gap and renumbers the turns 1..N.
+  - Its checks: the 00:50 and 02:41 exports are prefixes of the new one, and no reasoning text is included.
+- Lesson: sweep the archive before every compaction-prone stretch, i.e. at every export and after long tool runs.
+
+## 2026-10-28 03:57–04:40 bias split: the tree comes out of bias_sel_pd in every instance (Christoph, 03:57: "Pull the bias tree_pd out of bias_sel_pd.sch in all occurrences of the macro hierarchy. List the schematics that change before you do it."; answers 03:58: "Instances → gen + tree (Recommended)", "Yes, both pads (Recommended)")
+
+- `bias_gen_pd` is `bias_sel_pd` without `Xt`. Flattened and compared:
+  - `bias_gen_pd` + `bias_tree_pd` = `bias_sel_pd` (74 devices);
+  - `bias_gen_pd` + `bias_tree_noab_pd` = `bias_sel_noab_pd` (72 devices).
+- Every `xb` became `xg` (`bias_gen_pd`) + `xt` (the tree), joined by the net `iref`. The four sheets:
+  - `sg13cmos5l_IOPadDiff2Single.sch` and `d2s_mpdda_pd_sel.sch` (`bias_tree_pd`);
+  - `sg13cmos5l_IOPadSingle2Diff.sch` and `s2d_mpdda_pd_sel.sch` (`bias_tree_noab_pd`).
+- How the sheets were edited:
+  - each sheet is stretched right of a cut by 360 / 400 units;
+  - `xt` takes `xb`'s place with its outputs on `xb`'s output wires, `xg` sits in the gap;
+  - the ibias / sel wires are re-routed into `xg`, `iref` is a named wire;
+  - the tree's en_3v3 / en_3v3_b come by label;
+  - the rails of `xt` are wired, `xg` gets labels.
+- Sources:
+  - both pad netlists have `Xg` + `Xt`;
+  - both `tb_pad_dc.spice` decks include `bias_gen_pd.spice` in place of `bias_sel(_noab)_pd.spice`;
+  - `bias_gen_pd` is added to five xschemrc dependency lists (both pads' schematic and testbenches, slot).
+- Docs updated: READMEs of both pads, `macros/README.md`, `bias_gen_pd`, `bias_sel_pd`, `bias_sel_noab_pd`,
+  `bias_tree_pd` and `bias_tree_noab_pd`, plus both pad yaml comments. `bias_sel_pd` / `bias_sel_noab_pd` stay as
+  reference cells with their CACE results.
+- Checks:
+  - all 33 sheets of both pads and slot (incl. every CACE template and testbench) netlist with their own xschemrc;
+  - flattened, all 33 are the same before / after;
+  - no new netlisting messages, no dangling wires or lonely pins;
+  - pad sources against their sheets: D2S equal (159 devices). S2D shows only the known `{wcl}` = 12u parameter
+    default of XCLP / XCLN, the same as before the change.
+- Not done: the text mentions of `bias_sel_pd` in `en_ctrl_3v3` (sheet text, README, spice comment), `s2d_core_ideal.sch`,
+  `s2d_mpdda_pd.sch` and FILL_IN.md are left as they are (they name the old combined cell).
+- Backup, sha lists, scripts and before / after renders: `consolidation/bias_split_2026-10-28/`.
+
+## 2026-10-28 04:09–05:08 oa_core_pd v2 (compact) into the macro (Christoph, 04:22: "There's a spectacularly compact Oguey-Aebischer layout from Agent 2. Is that already on my file system?"; 04:25: "okay, as long as you don't wait with it until Agent 2 has finished bg_core_pd, which is next in line.")
+
+- Layout: A2 assembled it from A3's / A4's primitives at 04:09.
+  - 40.51 × 58.135 µm = 2355 µm², against 3856 µm² for v1 (−39 %).
+  - One vdd NWell, no rings, no tie between rows; Metal1 / Metal2 only; ports on the right edge.
+  - A2's checks: DRC 0 (Python subset, LU included); LVS match against the composed reference and against the
+    backannotated sheet; byte-reproducible build.
+  - My check, an independent flat extraction (padswitch/verify.py): every sheet device on its nets; MS1 is
+    8 × 0.5/12.5 from vdd to ks; the dummies are PMOS 4.4/8 (gate vpg) and NMOS 36/1 (vnc) + 4/1 (vbr), with
+    D = S = bulk; one label per net.
+- In the notes (04:27): A2's whole output is in `design_considerations/pad_buffer_layout/oa_core_pd_v2_2026-10-28/`
+  (`v2/`, `skill/`, `report.md`).
+- In the macro (05:05):
+  - `macros/oa_core_pd/layout/gds/oa_core_pd.gds` is v2 (sha 22ad9f95…).
+  - `oa_core_pd.sch` is backannotated in the sheet's own style: M10 ng 8 → 18, M11 ng 4 → 9 (W, L unchanged); MS1 as
+    the drawn 8-device chain in a new box [S1]; the three dummies in box [D]. A2's own backannotated sheet copy,
+    with its label-style box, was not used.
+  - Subckt `oa_core_pd` in `bias_ref_pd.spice`: the same devices, in place.
+  - README updated.
+- Checks of the backannotation:
+  - the sheet against the new subckt: equal, 28 devices;
+  - all 94 sheets of the repo (outside OgueyAebischerBias), with their own xschemrc, flattened: after swapping in
+    the new oa_core_pd subckt, the 93 others are identical to before; only oa_core_pd itself changed;
+  - source against sheet: bias_sel_pd, bias_sel_noab_pd and both pads equal.
+  - Open: `bias_oa_pd`'s flat sheet still has the pre-layout core, while its source (which instantiates oa_core_pd)
+    has the new one: 34 against 44 devices.
+- Backup of the four replaced files and the check outputs: `oa_core_pd_v2_2026-10-28/macro_before/` and
+  `macro_install/`.
+
+## 2026-10-28 05:15–05:28 new macro bias_tree_out_pd (Christoph, 04:03: "Generate a bias tree_pd variant that with opposite iref polarity, in case of a current distribution mirror structure between reference block[s] and bias tree[s]. There should be some precedent for this type of bias tree.")
+
+- Precedent: `bias_out_pd` ("mirror image of bias_in_pd"):
+  - the reference flows out of iref into an NMOS sink;
+  - PMOS input diode PI (a copy of BP) behind TGN / TGP, with TDP pulling pi to vdd;
+  - pi drives PBN / PBNC / PABN, vbn drives NBP / NBPC / NABP.
+- `macros/bias_tree_out_pd` = `bias_out_pd` without its inverter IP / IN; en_3v3_b is a port. Ports and symbol are
+  bias_tree_pd's (same order), so the two trees swap in a sheet without rewiring.
+- Files: the sheet (bias_out_pd's minus IP / IN), the symbol, the xschemrc, the source netlist,
+  `Makefile.new` (rename to Makefile) and the README.
+- Checks: sheet = source (14 devices); symbol pins = source ports; `bias_out_pd` = `inv_3v3_pd` + `bias_tree_out_pd`
+  (16 devices, flattened).
+- The READMEs of macros, bias_out_pd and bias_tree_pd point to it. Not used by any sheet yet. A `bias_dist_pd` variant
+  with NMOS-sink outputs is the counterpart that would save one mirror stage; not built.
+- Backup of the three READMEs it touched: `consolidation/bias_split_2026-10-28/tree_out_before/`.
+
+## 05:25–05:36 A3: bandgap NMOS block bg_n4 done (A2, A3 and A4 had stopped at the 5-hour usage limit until 05:20; resumed at 05:20)
+
+- `bg_n4`, 18.12 × 22.80 µm = 413 µm², replaces bg_nab + bg_misc_n (492 µm², −16 %).
+  - NA / NB are 2 × 10/4 each, in rows A B B A; the upper half carries the current the other way, so the two share a
+    centroid.
+  - MS2 sits in a fifth row on top, MS3 / SKS in that row's free end.
+  - Two one-row p+ tie strips, bottom and top: the stack is 21.45 µm tall, more than LU 20 µm. No ring, no NWell, no
+    tie between rows.
+  - ea / eb leave on opposite sides and come back to two adjacent pins on the bottom edge, symmetric about the device
+    centre.
+- A3's checks: DRC 0 (Python subset), LVS match, byte-reproducible.
+- My flat extraction: NA 20/4 g / ea, NB 20/4 vpc / eb, MS2, MS3 and SKS all on their sheet nets. The dummies are
+  16/4 + 2/1 with D = S = vss and gate on g.
+- Open point: the dummies' 66 µm² of gate sits on g, against 160 µm² for NA + NB. g is low-impedance (NA is a diode),
+  so this is probably harmless, but vss would be the usual tie-off. A2 is to say whether vss costs area.
+- Passed to A2 with the pin list. Report and pictures: `agents/A3_oa_nmos_primitives/report_bg.md`, `bg_n4*.png`.
+
+## 05:30–05:40 A4: bandgap PMOS cells done; A2 on the dummy gates of bg_n4
+
+- `bg_pmir_pcas_c`, 45.17 × 16.15 µm = 729.5 µm², replaces bg_pmir_pcas (1065 µm², −31.5 %).
+  - 8 rows of 4 × 10/1. Each cascode row faces its mirror row with the same letters, so mirror drain and cascode
+    source are one Metal1 joint per column.
+  - Point-symmetric, a Latin square of b a o o. Device layers and both metals are XOR 0; the contact layer is off
+    only by the 10/1 PCell's own asymmetry.
+  - 16 end dummies 0.3/1. No bands between rows (0.21 µm gaps); Metal2 lanes run over each row's own channel.
+- `bg_ms1` (8 × 0.5/12.5) and `bg_svpg`: 106 µm², replacing bg_misc_p (206 µm², −49 %).
+- All three cells are tap-less, with the NWell to every edge. A2's full-width tie in the top vdd rail leaves the
+  farthest P+ at 15.53 µm (limit 20).
+- A4's checks: DRC with only the intended LU.a, LVS 3 / 3 match.
+- My flat extraction: PB, PBC, PA + PO into two internal nets, PAC to g, POC to iout. Dummies 2.4/1 on vpg and on
+  vpc, D = S = vdd; MS1 and SVPG as on the sheet.
+- No real-device change. Dummies are 8 × 0.3/1 per gate net instead of 4 × 10/1.
+- Passed to A2. Report and pictures: `agents/A4_oa_pmos_primitives/report_bg.md`, `*_bg.png`.
+- A2 on bg_n4's dummy gates (on g):
+  - vss would cost about 0.6–1 µm of row width, because the poly has to be cut;
+  - the poly end would then sit 0.18 µm from the matched device instead of 2.25 µm inside a continuous stripe;
+  - option 1: re-strap the dummies' D / S from vss to g, so Vgs = 0, no inversion layer, and only overlap and
+    junction capacitance stay on g (A2's preference; A3 has to check it is free);
+  - option 2: keep them as they are and list them on the sheet.
+  - Kept as they are for now; the choice is Christoph's.
+
+## 05:43 (Christoph: "Try Option 1.")
+
+- A3 is to re-strap all bg_n4 dummies to D = S = G = g, bulk vss, keeping the outline, the pins and the continuous
+  poly. If that doesn't fit without growing the cell, A3 stops and reports the cost. The first version is kept as
+  `bg_n_cells_v1.gds`.
+- A2 knows. Its backannotated sheet will list the dummies as D = S = G = g, B = vss.
+
+## 05:50–05:56 bg_n4 option 1 done (A3)
+
+- All 9 dummies are now D = S = G = g, B = vss; the poly stays continuous. That takes 66 µm² of gate off g.
+- No area cost: the outline (18.12 × 22.80 µm) and every pin box are identical to v1 (compared in the GDS).
+- The left dummy strap had been the only metal vss path between the bottom tie and the top group. The new vss path is
+  a Metal1 column at the right (x 15.54–15.83) through former free space. The lowest ea / eb tracks reach their pins
+  through Metal2 risers. Lengths stay mirror-symmetric; the Metal1 / Metal2 split of ea and eb differs slightly.
+- A3's checks: DRC 0, LVS match, LU unchanged (10.33 µm).
+- My flat extraction: dummies 16/4 + 2/1 with D = S = G = g; all other devices on their sheet nets; one label per net.
+- v1 kept as `primN/out_bg/bg_n_cells_v1.gds`. Passed to A2. Report:
+  `agents/A3_oa_nmos_primitives/report_bg_option1.md`.
+
+## 2026-10-28 05:20–06:32 bg_core_pd compact: A2's assembly checked, into the notes and the macro (Christoph, 04:25: "There should be lessons learned from Oguey Aebischer for first modifying layout primitives for the bandgap reference, then compacting the overall bandgap core."; 04:28: "It might make sense for Agent 2 to recruit help from Agents 3 and 4.")
+
+- Layout: A2 assembled it by 06:19 from A3's bg_n4 (option 1), A4's bg_pmir_pcas_c / bg_ms1 / bg_svpg and its own
+  bg_res_c / bg_pnp_c.
+  - 47.55 × 50.05 µm = 2380 µm². The library primitives take 2673 µm² in their bounding boxes (−11 %), and 3424 µm²
+    placed as a block (−31 %).
+  - One vdd NWell, no rings, no tie between rows; Metal1 / Metal2 only; vdd on top, vss at the bottom, ports on the
+    right edge, as in oa_core_pd v2.
+  - bg_res_c: the library's segments, now wired, ring removed, 515.0 → 401.1 µm². bg_pnp_c: the 3 × 3 array, now
+    with emitter / base wiring, same size.
+  - A2's checks: DRC 0 of 74 rules (latch-up and antenna included); LVS match against the composed reference and
+    against its backannotated netlist (30 devices); byte-reproducible build.
+- My check, an independent flat extraction (MOS; rhigh in squares on PolyRes; pnp emitters with their nets):
+  - every MOS on its sheet nets, the dummies as listed;
+  - R0 357.84 squares eb–e2, R1A 218.68 ea–vss, R1B 198.80 eb–vss, the dummy segments vss–vss;
+  - Q1's emitter on ea, 8 × Q2 on e2, base vss;
+  - one label per net.
+- In the notes (06:23): A2's whole `out_bg/` (105 files, my check files in `logs/session_check_*`) in
+  `design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28/`.
+- In the macro (06:26):
+  - `macros/bg_core_pd/layout/gds/bg_core_pd.gds` (sha c799ffb5…), new;
+  - README: the layout section, and what the sheet does not have yet.
+- Not done yet: the sheet and the subckt `bg_core_pd` in `bias_ref_pd.spice`. A2's backannotated sheet copy puts the
+  41 resistor segments in a grid of labels and is not used. What the backannotation has to bring in:
+  - R0 / R1A / R1B as chains of 18 / 11 / 10 segments 0.5/9.94: R +0.70 / +1.03 / +1.02 %, R1 / R0 +0.32 %, not
+    simulated (the library bg_res already had these segments);
+  - NA / NB ng 2;
+  - MS1 as an 8-device chain;
+  - the dummies: PMOS 2.4/1 on vpg and on vpc, NMOS 16/4 + 2/1 with D = S = G = g, 2 rhigh segments on vss.
+- A2's open point: ea and eb are not mirror images (18 µm against 4.6 µm of Metal1 / Metal2, at µA currents into
+  kΩ–MΩ; the PDK copy has no metal sheet resistance to confirm that it doesn't matter).
+- Backup: the README and the sheet as they were, in `bg_core_pd_2026-10-28/macro_before/`.
+- Agents folder: A2's report as `agents/A2_oa_core_pd_layout/report_bg.md`, with three pictures. The messages to
+  A2, A3 and A4 from 05:20 on are added to their `messages.md`, taken from the agents' own transcripts.

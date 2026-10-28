@@ -731,3 +731,50 @@ Separate version for s2d that does not contain the unnecessary branches." On the
   `d2s_out.spice`); CMA / CMB in the pad's top sheet at the drawn 7.96u × 32.16u; fixture, tb_pd_* and the dc template
   follow; text ripple in the bias macros. 50 files changed, 5 new; `before/` (50) with `before_sha256.txt`,
   `after_sha256.txt` (55), all matching on the computer at 01:52. Checks: build log, entry 01:10–01:53.
+
+## 2026-10-28 03:57–04:40 bias split: the tree comes out of bias_sel_pd in every instance (Christoph, 03:57: "Pull the bias tree_pd out of bias_sel_pd.sch in all occurrences of the macro hierarchy. List the schematics that change before you do it."; answers 03:58: "Instances → gen + tree (Recommended)", "Yes, both pads (Recommended)")
+
+- `bias_gen_pd` is `bias_sel_pd` without `Xt`. Flattened and compared:
+  - `bias_gen_pd` + `bias_tree_pd` = `bias_sel_pd` (74 devices);
+  - `bias_gen_pd` + `bias_tree_noab_pd` = `bias_sel_noab_pd` (72 devices).
+- Every `xb` became `xg` (`bias_gen_pd`) + `xt` (the tree), joined by the net `iref`. The four sheets:
+  - `sg13cmos5l_IOPadDiff2Single.sch` and `d2s_mpdda_pd_sel.sch` (`bias_tree_pd`);
+  - `sg13cmos5l_IOPadSingle2Diff.sch` and `s2d_mpdda_pd_sel.sch` (`bias_tree_noab_pd`).
+- How the sheets were edited:
+  - each sheet is stretched right of a cut by 360 / 400 units;
+  - `xt` takes `xb`'s place with its outputs on `xb`'s output wires, `xg` sits in the gap;
+  - the ibias / sel wires are re-routed into `xg`, `iref` is a named wire;
+  - the tree's en_3v3 / en_3v3_b come by label;
+  - the rails of `xt` are wired, `xg` gets labels.
+- Sources:
+  - both pad netlists have `Xg` + `Xt`;
+  - both `tb_pad_dc.spice` decks include `bias_gen_pd.spice` in place of `bias_sel(_noab)_pd.spice`;
+  - `bias_gen_pd` is added to five xschemrc dependency lists (both pads' schematic and testbenches, slot).
+- Docs updated: READMEs of both pads, `macros/README.md`, `bias_gen_pd`, `bias_sel_pd`, `bias_sel_noab_pd`,
+  `bias_tree_pd` and `bias_tree_noab_pd`, plus both pad yaml comments. `bias_sel_pd` / `bias_sel_noab_pd` stay as
+  reference cells with their CACE results.
+- Checks:
+  - all 33 sheets of both pads and slot (incl. every CACE template and testbench) netlist with their own xschemrc;
+  - flattened, all 33 are the same before / after;
+  - no new netlisting messages, no dangling wires or lonely pins;
+  - pad sources against their sheets: D2S equal (159 devices). S2D shows only the known `{wcl}` = 12u parameter
+    default of XCLP / XCLN, the same as before the change.
+- Not done: the text mentions of `bias_sel_pd` in `en_ctrl_3v3` (sheet text, README, spice comment), `s2d_core_ideal.sch`,
+  `s2d_mpdda_pd.sch` and FILL_IN.md are left as they are (they name the old combined cell).
+- Backup, sha lists, scripts and before / after renders: `consolidation/bias_split_2026-10-28/`.
+
+## 2026-10-28 05:15–05:28 new macro bias_tree_out_pd (Christoph, 04:03: "Generate a bias tree_pd variant that with opposite iref polarity, in case of a current distribution mirror structure between reference block[s] and bias tree[s]. There should be some precedent for this type of bias tree.")
+
+- Precedent: `bias_out_pd` ("mirror image of bias_in_pd"):
+  - the reference flows out of iref into an NMOS sink;
+  - PMOS input diode PI (a copy of BP) behind TGN / TGP, with TDP pulling pi to vdd;
+  - pi drives PBN / PBNC / PABN, vbn drives NBP / NBPC / NABP.
+- `macros/bias_tree_out_pd` = `bias_out_pd` without its inverter IP / IN; en_3v3_b is a port. Ports and symbol are
+  bias_tree_pd's (same order), so the two trees swap in a sheet without rewiring.
+- Files: the sheet (bias_out_pd's minus IP / IN), the symbol, the xschemrc, the source netlist,
+  `Makefile.new` (rename to Makefile) and the README.
+- Checks: sheet = source (14 devices); symbol pins = source ports; `bias_out_pd` = `inv_3v3_pd` + `bias_tree_out_pd`
+  (16 devices, flattened).
+- The READMEs of macros, bias_out_pd and bias_tree_pd point to it. Not used by any sheet yet. A `bias_dist_pd` variant
+  with NMOS-sink outputs is the counterpart that would save one mirror stage; not built.
+- Backup of the three READMEs it touched: `consolidation/bias_split_2026-10-28/tree_out_before/`.

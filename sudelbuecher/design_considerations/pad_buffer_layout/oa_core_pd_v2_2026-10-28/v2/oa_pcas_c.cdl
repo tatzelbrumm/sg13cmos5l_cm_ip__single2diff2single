@@ -1,0 +1,16 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* oa_pcas_c: oa_pcas (pad_buffer_cells.cdl) without its ntap ring, 2026-10-28, Claude (Opus 5.5).
+* Devices identical to oa_pcas. The bulk is the cell's NWell (internal net nw, no vdd port): the parent merges the
+* NWell with the other PMOS cells and ties it to vdd through its tap segments. In the assembled oa_core_pd, nw = vdd.
+.SUBCKT oa_pcas_c c2 c8 co iout vbr vnc vpc vpg
+Moa_pcas_POC_0 iout vpc co nw sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_POC_1 iout vpc co nw sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_P8C_2 vnc vpc c8 nw sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_POC_3 iout vpc co nw sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_P0C_4 vpc vpc vpg nw sg13_hv_pmos w=0.5u l=2u ng=1 m=1
+Moa_pcas_P2C_5 vbr vpc c2 nw sg13_hv_pmos w=1u l=2u ng=1 m=1
+Moa_pcas_POC_6 iout vpc co nw sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_P8C_7 vnc vpc c8 nw sg13_hv_pmos w=2u l=2u ng=1 m=1
+Moa_pcas_POC_8 iout vpc co nw sg13_hv_pmos w=2u l=2u ng=1 m=1
+.ENDS oa_pcas_c

@@ -2,6 +2,8 @@
 
 A subagent starts with no part of the conversation: it sees only the launch prompt, the brief file(s) it is
 pointed to, the files in its own `inputs/` folder, and the later messages below. Times Europe/Berlin.
+Messages of 02:51–04:00 come from the claude.ai record of the chat (the transcript lost them at the 04:02
+compaction), timed by the user message they answered.
 
 ## 2026-10-28 00:50 — launch prompt
 

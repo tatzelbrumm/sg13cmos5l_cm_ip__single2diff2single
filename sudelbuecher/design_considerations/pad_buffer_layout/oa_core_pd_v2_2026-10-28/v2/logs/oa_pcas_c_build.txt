@@ -1,0 +1,2 @@
+oa_pcas_c: removed 4 ring instances, 6 M1 shapes, 1 pin boxes, 1 vdd texts; NWell = cell bbox (-1.77,-1.765;19.27,4.445) (21.04 x 6.21 um = 130.7 um2; oa_pcas 21.46 x 8.54 = 183.3 um2)
+XOR oa_pcas (minus ring) vs oa_pcas_c, all layers but NWell: none differing

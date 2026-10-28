@@ -1,0 +1,34 @@
+device changes, layout -> sheet (W, L in um; ng = fingers; series = devices in series)
+dev    type           sheet (old)                        layout (new)                       effect
+MS1    sg13_hv_pmos   w=0.5u l=100u ng=1 m=1             8 x w=0.5u l=12.5u in series       W/L 0.005 as one 0.5u/100u device (series of equal gates ~ one long device; internal nodes added)
+MS2    sg13_hv_nmos   w=10u l=1u ng=1 m=1                w=10u l=1u ng=1 (10u/finger)       none (W, L as sheet)
+MS3    sg13_hv_nmos   w=0.5u l=2u ng=1 m=1               w=0.5u l=2u ng=1 (0.5u/finger)     none (W, L as sheet)
+P0     sg13_hv_pmos   w=2u l=8u ng=1 m=1                 w=2u l=8u ng=1 (2u/finger)         none (W, L as sheet)
+P0C    sg13_hv_pmos   w=0.5u l=2u ng=1 m=1               w=0.5u l=2u ng=1 (0.5u/finger)     none (W, L as sheet)
+MC10   sg13_hv_nmos   w=10u l=1u ng=1 m=1                w=10u l=1u ng=1 (10u/finger)       none (W, L as sheet)
+M10    sg13_hv_nmos   w=180u l=1u ng=8 m=1               w=180u l=1u ng=18 (10u/finger)     none (W, L as sheet); finger split only
+MCL    sg13_hv_nmos   w=3.4u l=30u ng=1 m=1              w=3.4u l=30u ng=1 (3.4u/finger)    none (W, L as sheet)
+P8     sg13_hv_pmos   w=16u l=8u ng=8 m=1                w=16u l=8u ng=8 (2u/finger)        none (W, L as sheet)
+P8C    sg13_hv_pmos   w=4u l=2u ng=2 m=1                 w=4u l=2u ng=2 (2u/finger)         none (W, L as sheet)
+M11    sg13_hv_nmos   w=90u l=1u ng=4 m=1                w=90u l=1u ng=9 (10u/finger)       none (W, L as sheet); finger split only
+P2     sg13_hv_pmos   w=4u l=8u ng=2 m=1                 w=4u l=8u ng=2 (2u/finger)         none (W, L as sheet)
+P2C    sg13_hv_pmos   w=1u l=2u ng=1 m=1                 w=1u l=2u ng=1 (1u/finger)         none (W, L as sheet)
+MCS    sg13_hv_nmos   w=3.4u l=30u ng=1 m=1              w=3.4u l=30u ng=1 (3.4u/finger)    none (W, L as sheet)
+PO     sg13_hv_pmos   w=40u l=8u ng=20 m=1               w=40u l=8u ng=20 (2u/finger)       none (W, L as sheet)
+POC    sg13_hv_pmos   w=10u l=2u ng=5 m=1                w=10u l=2u ng=5 (2u/finger)        none (W, L as sheet)
+SKS    sg13_hv_nmos   w=1u l=0.45u ng=1 m=1              w=1u l=0.45u ng=1 (1u/finger)      none (W, L as sheet)
+SVPG   sg13_hv_pmos   w=1u l=0.45u ng=1 m=1              w=1u l=0.45u ng=1 (1u/finger)      none (W, L as sheet)
+MDUM0  sg13_hv_pmos   (not in the sheet)                 w=4.4u l=8u ng=9 (0.3u+2u/finger)  dummy D=S=vdd G=vpg B=vdd: gate load 35.2 um2 on vpg
+MDUM1  sg13_hv_nmos   (not in the sheet)                 w=36u l=1u ng=18 (2u/finger)       dummy D=S=vss G=vnc B=vss: gate load 36 um2 on vnc
+MDUM2  sg13_hv_nmos   (not in the sheet)                 w=4u l=1u ng=2 (2u/finger)         dummy D=S=vss G=vbr B=vss: gate load 4 um2 on vbr
+
+ratios that set the circuit (sheet -> layout):
+  M10 : M11 (W; sets the OA current)                 2 : 1                    2 : 1                    kept
+  PO : P8 : P2 : P0 (W, mirror)                      20 : 8 : 2 : 1           20 : 8 : 2 : 1           kept
+  POC : P8C : P2C : P0C (W, cascodes)                20 : 8 : 2 : 1           20 : 8 : 2 : 1           kept
+  MCS : MCL (W/L, matched)                           1 : 1                    1 : 1                    kept
+
+layout notes (no device change):
+  - oa_pcas -> oa_pcas_c: own ntap ring removed, NWell to the cell edge; bulk through the merged vdd well (no device change)
+  - PMOS cells oa_pmir_c / oa_ms1 / oa_svpg / oa_pcas_c tap-less in ONE merged vdd NWell; n ties: thick tie under the vdd rail, two 8.2 um segments in oa_pmir_c's margins
+  - NMOS: oa_n10 (M10 / M11 / MC10 / MS2 / MS3 / SKS) and oa_mcs_c share one p+ tie; no ring

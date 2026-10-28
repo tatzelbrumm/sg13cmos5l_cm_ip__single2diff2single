@@ -1,0 +1,32 @@
+M1: width<0.16 0 space<0.18 0 M1.e<0.22 (run>1um, next to >0.30) 0
+M2 shapes: 42 (0.51,1.6;40.51,56.635)
+Cont not on Activ/GatPoly: 0  Cont not under M1: 0
+NW.f NWell to p+ substrate Activ < 0.24: 0
+NWell space < 1.8: 0
+Activ space < 0.21: 0  GatPoly space < 0.18: 0
+  NMOS L=0.45 G=en_3v3_b S/D=ks/vss                 W=    1.00  (1)
+  NMOS L=1.00 G=vbr    S/D=#/vpc                  W=   10.00  (1)
+  NMOS L=1.00 G=vbr    S/D=ks/vss                 W=   10.00  (1)
+  NMOS L=1.00 G=vbr    S/D=vss/vss                W=    4.00  (1)
+  NMOS L=1.00 G=vnc    S/D=#/vres                 W=  180.00  (1)
+  NMOS L=1.00 G=vnc    S/D=vnc/vss                W=   90.00  (1)
+  NMOS L=1.00 G=vnc    S/D=vss/vss                W=   36.00  (1)
+  NMOS L=2.00 G=ks     S/D=vpc/vss                W=    0.50  (1)
+  NMOS L=30.00 G=vbr    S/D=vbr/vss                W=    3.40  (1)
+  NMOS L=30.00 G=vbr    S/D=vres/vss               W=    3.40  (1)
+  PMOS L=0.45 G=en_3v3 S/D=vdd/vpg                W=    1.00  (1)
+  PMOS L=2.00 G=vpc    S/D=c2/vbr                 W=    1.00  (1)
+  PMOS L=2.00 G=vpc    S/D=c8/vnc                 W=    4.00  (1)
+  PMOS L=2.00 G=vpc    S/D=co/iout                W=   10.00  (1)
+  PMOS L=2.00 G=vpc    S/D=vpc/vpg                W=    0.50  (1)
+  PMOS L=8.00 G=vpg    S/D=c2/vdd                 W=    4.00  (1)
+  PMOS L=8.00 G=vpg    S/D=c8/vdd                 W=   16.00  (1)
+  PMOS L=8.00 G=vpg    S/D=co/vdd                 W=   40.00  (1)
+  PMOS L=8.00 G=vpg    S/D=vdd/vdd                W=    4.40  (1)
+  PMOS L=8.00 G=vpg    S/D=vdd/vpg                W=    2.00  (1)
+  PMOS L=12.50 G=en_3v3_b S/D=#/#                    W=    3.00  (6)
+  PMOS L=12.50 G=en_3v3_b S/D=#/ks                   W=    0.50  (1)
+  PMOS L=12.50 G=en_3v3_b S/D=#/vdd                  W=    0.50  (1)
+named nets: {'vbr': 1, 'vss': 1, 'vnc': 1, 'vres': 1, 'vpc': 1, 'ks': 1, 'en_3v3_b': 1, 'iout': 1, 'co': 1, 'c8': 1, 'c2': 1, 'en_3v3': 1, 'vpg': 1, 'vdd': 1}
+nets with more than one label name: []
+done 0

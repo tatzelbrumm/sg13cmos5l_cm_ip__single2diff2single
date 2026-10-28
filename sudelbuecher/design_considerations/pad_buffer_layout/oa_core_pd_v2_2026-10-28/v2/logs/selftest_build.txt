@@ -1,0 +1,7 @@
+placed 5 instances, 2 rails, 2 tap stripes: 12.500 x 9.880 um
+block selftest: 12.500 x 9.880 um = 123.5 um2; gate 0.0 um2 (0.0 %), MOS diffusion 0.0 um2 (0.0 %)
+layers drawn in the top cell: 1/0 10/0 10/2 10/25 14/0 19/0 31/0 6/0 8/0 8/2 8/25; well fill 0.00 um2, tap stripes 2
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  a          M1   0.00 um  M2   7.95 um  vias 2
+  b          M1   0.00 um  M2  12.19 um  vias 3

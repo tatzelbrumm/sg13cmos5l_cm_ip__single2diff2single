@@ -1,0 +1,3 @@
+unlabelled layout nets mapped to sheet nets: {'$4': 'd10'}
+111 layout fingers -> 18 sheet devices, 3 dummy groups; wrote backannotation
+xschem netlist of the new sheet: 28 devices; subckt text: 28 devices; differing: none

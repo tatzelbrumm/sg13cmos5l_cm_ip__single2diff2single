@@ -1,0 +1,119 @@
+[
+ {
+  "panel": 0,
+  "box": [
+   0.0,
+   7.81,
+   3.75,
+   50.58
+  ],
+  "text": "per-cell ntap ring + NWell band\n3.75 / 2.0 um wide (NW.c1 0.62, NW.e1 0.62,\nring 0.30): PMOS rings 572 um2",
+  "tx": 4.2,
+  "ty": 49.0,
+  "color": "#c00000"
+ },
+ {
+  "panel": 0,
+  "box": [
+   51.09,
+   33.03,
+   63.96,
+   49.24
+  ],
+  "text": "empty bay 209 um2\n(floorplan)",
+  "tx": 51.6,
+  "ty": 48.5,
+  "color": "#c00000"
+ },
+ {
+  "panel": 0,
+  "box": [
+   28.03,
+   41.01,
+   51.09,
+   49.24
+  ],
+  "text": "empty bay 190 um2",
+  "tx": 34.0,
+  "ty": 48.5,
+  "color": "#c00000"
+ },
+ {
+  "panel": 0,
+  "box": [
+   32.5,
+   18.89,
+   63.82,
+   19.67
+  ],
+  "text": "p+ tap row BETWEEN array rows\n(never): 31.3 x 0.78 um",
+  "tx": 40.0,
+  "ty": 18.6,
+  "color": "#c00000"
+ },
+ {
+  "panel": 0,
+  "box": [
+   29.62,
+   32.47,
+   51.09,
+   41.01
+  ],
+  "text": "oa_pcas: 136 of 183 um2\nring + bands",
+  "tx": 30.0,
+  "ty": 32.2,
+  "color": "#c00000"
+ },
+ {
+  "panel": 1,
+  "box": [
+   0.51,
+   29.345,
+   40.0,
+   56.635
+  ],
+  "text": "ONE vdd NWell for all PMOS\n(gaps < NW.b 0.62 closed)",
+  "tx": 1.0,
+  "ty": 44.0,
+  "color": "#006000"
+ },
+ {
+  "panel": 1,
+  "box": [
+   1.13,
+   57.215,
+   39.38,
+   57.515
+  ],
+  "text": "n tie in the vdd rail, inside ThickGateOx\n(NW.e1 0.62, TGO.a 0.27); LU.a 20 um",
+  "tx": 1.0,
+  "ty": 56.3,
+  "color": "#006000"
+ },
+ {
+  "panel": 1,
+  "box": [
+   0.51,
+   9.6,
+   37.23,
+   9.95
+  ],
+  "text": "ONE p+ tie shared by oa_n10 / oa_mcs_c\n(LU_b 20: farthest N+ 18.9 um)",
+  "tx": 3.0,
+  "ty": 8.8,
+  "color": "#006000"
+ },
+ {
+  "panel": 1,
+  "box": [
+   39.59,
+   42.49,
+   39.89,
+   50.69
+  ],
+  "text": "tie segments 8.2 um in oa_pmir_c's\n0.62 margins (well 0.51 past the edge)",
+  "tx": 18.0,
+  "ty": 53.5,
+  "color": "#006000"
+ }
+]
