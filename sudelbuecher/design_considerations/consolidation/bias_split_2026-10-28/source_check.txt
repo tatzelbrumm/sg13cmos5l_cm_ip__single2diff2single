@@ -1,0 +1,6 @@
+SAME sg13cmos5l_IOPadDiff2Single source 159 sheet 159 devices; symbol pins == source ports: True
+DIFF sg13cmos5l_IOPadSingle2Diff source 165 sheet 165 devices; symbol pins == source ports: True
+   - source top.xtop.xa.xs.xclp sg13_hv_nmos iovss outp iovss iovss l={wcl} ng=1 w={wcl}
+   - source top.xtop.xa.xs.xcln sg13_hv_nmos iovss outn iovss iovss l={wcl} ng=1 w={wcl}
+   + sheet  xa.xs.xclp sg13_hv_nmos iovss outp iovss iovss l=12u ng=1 w=12u
+   + sheet  xa.xs.xcln sg13_hv_nmos iovss outn iovss iovss l=12u ng=1 w=12u
