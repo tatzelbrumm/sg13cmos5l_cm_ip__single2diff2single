@@ -92,3 +92,6 @@
 
 [2026-10-27_opus_iopaddiff2single_build.md](2026-10-27_opus_iopaddiff2single_build.md)
 : Opus session, 27 Oct: `sg13cmos5l_IOPadDiff2Single` from the design considerations into the macro of the main repository (layout and netlist); decisions: reference cores into the slot (one current from the slot into the pad), a cell-library GDS shared by both pads bound through `.klay.klib`, the layout-driven netlist changes; running log in `sg13cmos5l_IOPadDiff2Single_build/log.md`.
+
+[2026-10-30_opus_c0_oa_core_pd_pex_and_cloud_toolchain.md](2026-10-30_opus_c0_oa_core_pd_pex_and_cloud_toolchain.md)
+: Opus cloud session, 30 Oct: C0 brief carried out (oa_core_pd magic DRC, LVS and PEX 1/2/3 plus KLayout-PEX in a cloud session whose setup script had been cut off at about 5 min), then the whole toolchain prebuilt once and published with a non-compiling setup script as `tatzelbrumm/claude-cloud-config`.
