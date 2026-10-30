@@ -1,0 +1,998 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0
+#
+#--------------------------------------------------------------
+# CACE circuit characterization file: bias_sel_pd
+#
+# Bias of the class-AB pad driver d2s_mpdda_pd: one mirror tree (bias_tree_pd + the six bias diodes)
+# fed by a selectable reference current: sel = 0 harness ibias (sourced), 1 Oguey-Aebischer core,
+# 2 bandgap core, 3 both cores.  en_3v3 = 0 switches everything off.
+# Source netlist: netlist/source/bias_sel_pd.spice (+ bias_ref_pd.spice, hv_logic.spice).
+# The six bias currents are measured as the drain currents of replica loads: one copy of each bias diode,
+# gate on its bias line, drain forced to the gate voltage by an ideal buffer, so it carries the diode current.
+# The harness iDAC is modelled as a PMOS mirror on its own 3.3 V supply (sourcing, 250 nA per code step).
+# The LIMITS are PROPOSALS: worst case of the pre-layout runs (schematic netlist, no parasitics) with
+# ~30 % margin. Replace them by requirements when there are any.  "any" = characterized, not specified.
+# Sign convention: supply currents positive when delivered by the source.  Testbenches echo SI values.
+#--------------------------------------------------------------
+
+name:           bias_sel_pd
+description:    Pad-driver bias with selectable reference (harness ibias, Oguey-Aebischer, bandgap) and power-down
+PDK:            ihp-sg13cmos5l
+
+cace_format:    5.2
+
+authorship:
+  designer:         Christoph Maier
+  creation_date:    October 20, 2026
+  license:          Apache-2.0
+
+paths:
+  root:             ..
+  schematic:        ../schematic/xschem
+  netlist:          cace/netlist
+  documentation:    cace/_docs
+  runs:             cace/_runs
+
+pins:
+  vdd:
+    description: 3.3 V supply of bias and front end (iovdd in the pad)
+    type: power
+    direction: inout
+    Vmin: 3.0
+    Vmax: 3.6
+  vss:
+    description: Ground of bias and front end
+    type: ground
+    direction: inout
+  vddo:
+    description: Output-stage rail (RP1, the replica of OP)
+    type: power
+    direction: inout
+  vsso:
+    description: Output-stage ground (RN1, the replica of ON)
+    type: ground
+    direction: inout
+  ibias:
+    description: Harness reference current input (sourced into this pin), used with sel = 0
+    type: signal
+    direction: input
+  vbp:
+    description: Bias line, PMOS unit tails
+    type: signal
+    direction: output
+  vbn:
+    description: Bias line, NMOS fold sinks
+    type: signal
+    direction: output
+  vbpc:
+    description: Bias line, PMOS mirror cascodes
+    type: signal
+    direction: output
+  vbnc:
+    description: Bias line, NMOS fold cascodes
+    type: signal
+    direction: output
+  vabp:
+    description: Bias line, class-AB P side
+    type: signal
+    direction: output
+  vabn:
+    description: Bias line, class-AB N side
+    type: signal
+    direction: output
+  en_3v3:
+    description: Enable, 0 .. vdd, active high
+    type: digital
+    direction: input
+  sel0_3v3:
+    description: Select bit 0, 0 .. vdd
+    type: digital
+    direction: input
+  sel1_3v3:
+    description: Select bit 1, 0 .. vdd
+    type: digital
+    direction: input
+  en_3v3_b:
+    description: NOT en_3v3 (from en_ctrl_3v3), 0 .. vdd
+    type: digital
+    direction: input
+
+default_conditions:
+  vdd:
+    description: Supply voltage (vdd = vddo)
+    display: VDD
+    unit: V
+    typical: 3.3
+  sel:
+    description: Select code (sel1 sel0)
+    display: sel
+    typical: 0
+  en:
+    description: Enable (1 = en_3v3 at vdd)
+    display: en
+    typical: 1
+  step:
+    description: Transient scenario (see the template)
+    display: Step
+    typical: 0
+  iref:
+    description: Harness ibias current
+    display: ibias
+    unit: uA
+    typical: 5
+  corner_mos:
+    description: Process corner MOSFET
+    display: Corner MOSFET
+    typical: tt
+  corner_r:
+    description: Process corner resistor
+    display: Corner R
+    typical: typ
+  corner_pnp:
+    description: Process corner pnpMPA
+    display: Corner PNP
+    typical: typ
+  temp:
+    description: Ambient temperature
+    display: Temperature
+    unit: °C
+    typical: 27
+
+parameters:
+  # Each select code at tt, 27 C, 3.3 V, harness ibias 5 uA = 4 runs
+  sel_params:
+    spec:
+      Ibp:
+        display: I vbp
+        description: Current of bias diode BP (vbp line, unit tails), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibn:
+        display: I vbn
+        description: Current of bias diode BN (vbn line, fold sinks), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibnc:
+        display: I vbnc
+        description: Current of bias diode BNC (vbnc line, fold cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibpc:
+        display: I vbpc
+        description: Current of bias diode BPC (vbpc line, mirror cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabp:
+        display: I vabp
+        description: Current of the RP2 / RP1 stack (vabp line, class-AB P side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabn:
+        display: I vabn
+        description: Current of the RN2 / RN1 stack (vabn line, class-AB N side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vdd:
+        display: I vdd
+        description: Current delivered by vdd into the bias cell (replica loads excluded)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vddo:
+        display: I vddo
+        description: Current delivered by vddo into the bias cell (RP1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vsso:
+        display: I vsso
+        description: Current returned through vsso (RN1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_ibias:
+        display: I ibias
+        description: Current the harness mirror delivers into ibias
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Ibp, Ibn, Ibnc, Ibpc, Iabp, Iabn, I_vdd, I_vddo, I_vsso, I_ibias]
+    plot:
+      Ibp_vs_sel:
+        type: xyplot
+        xaxis: sel
+        yaxis: Ibp
+        limits: auto
+      I_vdd_vs_sel:
+        type: xyplot
+        xaxis: sel
+        yaxis: I_vdd
+        limits: auto
+    conditions:
+      sel:
+        enumerate: [0, 1, 2, 3]
+      en:
+        typical: 1
+      vdd:
+        typical: 3.3
+      iref:
+        typical: 5
+      corner_mos:
+        typical: tt
+      corner_r:
+        typical: typ
+      corner_pnp:
+        typical: typ
+      temp:
+        typical: 27
+
+  # Codes 0 / 1 / 2 over 5 MOS corners x -40 / 125 C at 3.3 V = 30 runs
+  pvt_params:
+    spec:
+      Ibp:
+        display: I vbp
+        description: Current of bias diode BP (vbp line, unit tails), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 2.2
+        typical:
+          value: any
+        maximum:
+          value: 9.3
+      Ibn:
+        display: I vbn
+        description: Current of bias diode BN (vbn line, fold sinks), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 2.2
+        typical:
+          value: any
+        maximum:
+          value: 9.3
+      Ibnc:
+        display: I vbnc
+        description: Current of bias diode BNC (vbnc line, fold cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: 0.85
+        typical:
+          value: any
+        maximum:
+          value: 3.8
+      Ibpc:
+        display: I vbpc
+        description: Current of bias diode BPC (vbpc line, mirror cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: 0.85
+        typical:
+          value: any
+        maximum:
+          value: 3.8
+      Iabp:
+        display: I vabp
+        description: Current of the RP2 / RP1 stack (vabp line, class-AB P side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 2.2
+        typical:
+          value: any
+        maximum:
+          value: 9.3
+      Iabn:
+        display: I vabn
+        description: Current of the RN2 / RN1 stack (vabn line, class-AB N side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 2.2
+        typical:
+          value: any
+        maximum:
+          value: 9.3
+      I_vdd:
+        display: I vdd
+        description: Current delivered by vdd into the bias cell (replica loads excluded)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+      I_vddo:
+        display: I vddo
+        description: Current delivered by vddo into the bias cell (RP1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 9.3
+      I_vsso:
+        display: I vsso
+        description: Current returned through vsso (RN1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 9.3
+      I_ibias:
+        display: I ibias
+        description: Current the harness mirror delivers into ibias
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Ibp, Ibn, Ibnc, Ibpc, Iabp, Iabn, I_vdd, I_vddo, I_vsso, I_ibias]
+    plot:
+      Ibp_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: Ibp
+        limits: auto
+      Ibn_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: Ibn
+        limits: auto
+      Ibp_vs_corner:
+        type: xyplot
+        xaxis: corner_mos
+        yaxis: Ibp
+        limits: auto
+    conditions:
+      sel:
+        enumerate: [0, 1, 2]
+      en:
+        typical: 1
+      vdd:
+        typical: 3.3
+      iref:
+        typical: 5
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      corner_r:
+        typical: typ
+      corner_pnp:
+        typical: typ
+      temp:
+        enumerate: [-40, 125]
+
+  # Line sensitivity: codes 0 / 1 / 2 at vdd = vddo = 3.0 / 3.3 / 3.6 V, tt, 27 C = 9 runs
+  supply_params:
+    spec:
+      Ibp:
+        display: I vbp
+        description: Current of bias diode BP (vbp line, unit tails), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 4.8
+        typical:
+          value: any
+        maximum:
+          value: 5.3
+      Ibn:
+        display: I vbn
+        description: Current of bias diode BN (vbn line, fold sinks), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 4.8
+        typical:
+          value: any
+        maximum:
+          value: 5.3
+      Ibnc:
+        display: I vbnc
+        description: Current of bias diode BNC (vbnc line, fold cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: 1.9
+        typical:
+          value: any
+        maximum:
+          value: 2.2
+      Ibpc:
+        display: I vbpc
+        description: Current of bias diode BPC (vbpc line, mirror cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: 1.8
+        typical:
+          value: any
+        maximum:
+          value: 2.1
+      Iabp:
+        display: I vabp
+        description: Current of the RP2 / RP1 stack (vabp line, class-AB P side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 4.8
+        typical:
+          value: any
+        maximum:
+          value: 5.3
+      Iabn:
+        display: I vabn
+        description: Current of the RN2 / RN1 stack (vabn line, class-AB N side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 4.8
+        typical:
+          value: any
+        maximum:
+          value: 5.3
+      I_vdd:
+        display: I vdd
+        description: Current delivered by vdd into the bias cell (replica loads excluded)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 40
+      I_vddo:
+        display: I vddo
+        description: Current delivered by vddo into the bias cell (RP1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vsso:
+        display: I vsso
+        description: Current returned through vsso (RN1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_ibias:
+        display: I ibias
+        description: Current the harness mirror delivers into ibias
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Ibp, Ibn, Ibnc, Ibpc, Iabp, Iabn, I_vdd, I_vddo, I_vsso, I_ibias]
+    plot:
+      Ibp_vs_vdd:
+        type: xyplot
+        xaxis: vdd
+        yaxis: Ibp
+        limits: auto
+    conditions:
+      sel:
+        enumerate: [0, 1, 2]
+      en:
+        typical: 1
+      vdd:
+        enumerate: [3.0, 3.3, 3.6]
+      iref:
+        typical: 5
+      corner_mos:
+        typical: tt
+      corner_r:
+        typical: typ
+      corner_pnp:
+        typical: typ
+      temp:
+        typical: 27
+
+  # Bandgap code 2 at rhigh wcs / bcs x pnpMPA wcs / bcs, tt, 27 C = 4 runs
+  rpnp_params:
+    spec:
+      Ibp:
+        display: I vbp
+        description: Current of bias diode BP (vbp line, unit tails), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 2.8
+        typical:
+          value: any
+        maximum:
+          value: 8.5
+      Ibn:
+        display: I vbn
+        description: Current of bias diode BN (vbn line, fold sinks), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 2.8
+        typical:
+          value: any
+        maximum:
+          value: 8.5
+      Ibnc:
+        display: I vbnc
+        description: Current of bias diode BNC (vbnc line, fold cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: 1.1
+        typical:
+          value: any
+        maximum:
+          value: 3.5
+      Ibpc:
+        display: I vbpc
+        description: Current of bias diode BPC (vbpc line, mirror cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: 1.1
+        typical:
+          value: any
+        maximum:
+          value: 3.5
+      Iabp:
+        display: I vabp
+        description: Current of the RP2 / RP1 stack (vabp line, class-AB P side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 2.8
+        typical:
+          value: any
+        maximum:
+          value: 8.5
+      Iabn:
+        display: I vabn
+        description: Current of the RN2 / RN1 stack (vabn line, class-AB N side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: 2.8
+        typical:
+          value: any
+        maximum:
+          value: 8.5
+      I_vdd:
+        display: I vdd
+        description: Current delivered by vdd into the bias cell (replica loads excluded)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+      I_vddo:
+        display: I vddo
+        description: Current delivered by vddo into the bias cell (RP1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vsso:
+        display: I vsso
+        description: Current returned through vsso (RN1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_ibias:
+        display: I ibias
+        description: Current the harness mirror delivers into ibias
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Ibp, Ibn, Ibnc, Ibpc, Iabp, Iabn, I_vdd, I_vddo, I_vsso, I_ibias]
+    conditions:
+      sel:
+        typical: 2
+      en:
+        typical: 1
+      vdd:
+        typical: 3.3
+      iref:
+        typical: 5
+      corner_mos:
+        typical: tt
+      corner_r:
+        enumerate: [wcs, bcs]
+      corner_pnp:
+        enumerate: [wcs, bcs]
+      temp:
+        typical: 27
+
+  # Harness code 0 at ibias = 2.5 / 5 / 7.5 uA (iDAC codes 10 / 20 / 30 at 250 nA) = 3 runs
+  iref_params:
+    spec:
+      Ibp:
+        display: I vbp
+        description: Current of bias diode BP (vbp line, unit tails), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibn:
+        display: I vbn
+        description: Current of bias diode BN (vbn line, fold sinks), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibnc:
+        display: I vbnc
+        description: Current of bias diode BNC (vbnc line, fold cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibpc:
+        display: I vbpc
+        description: Current of bias diode BPC (vbpc line, mirror cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabp:
+        display: I vabp
+        description: Current of the RP2 / RP1 stack (vabp line, class-AB P side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabn:
+        display: I vabn
+        description: Current of the RN2 / RN1 stack (vabn line, class-AB N side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vdd:
+        display: I vdd
+        description: Current delivered by vdd into the bias cell (replica loads excluded)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vddo:
+        display: I vddo
+        description: Current delivered by vddo into the bias cell (RP1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vsso:
+        display: I vsso
+        description: Current returned through vsso (RN1)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_ibias:
+        display: I ibias
+        description: Current the harness mirror delivers into ibias
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Ibp, Ibn, Ibnc, Ibpc, Iabp, Iabn, I_vdd, I_vddo, I_vsso, I_ibias]
+    plot:
+      Ibp_vs_iref:
+        type: xyplot
+        xaxis: iref
+        yaxis: Ibp
+        limits: auto
+    conditions:
+      sel:
+        typical: 0
+      en:
+        typical: 1
+      vdd:
+        typical: 3.3
+      iref:
+        enumerate: [2.5, 5, 7.5]
+      corner_mos:
+        typical: tt
+      corner_r:
+        typical: typ
+      corner_pnp:
+        typical: typ
+      temp:
+        typical: 27
+
+  # Disabled (en_3v3 = 0), codes 0 / 3 at tt / ff x 27 / 125 C = 8 runs
+  pd_params:
+    spec:
+      Ibp:
+        display: I vbp
+        description: Current of bias diode BP (vbp line, unit tails), disabled
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.2
+      Ibn:
+        display: I vbn
+        description: Current of bias diode BN (vbn line, fold sinks), disabled
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.2
+      Ibnc:
+        display: I vbnc
+        description: Current of bias diode BNC (vbnc line, fold cascodes), disabled
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      Ibpc:
+        display: I vbpc
+        description: Current of bias diode BPC (vbpc line, mirror cascodes), disabled
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      Iabp:
+        display: I vabp
+        description: Current of the RP2 / RP1 stack (vabp line, class-AB P side), disabled
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.2
+      Iabn:
+        display: I vabn
+        description: Current of the RN2 / RN1 stack (vabn line, class-AB N side), disabled
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.2
+      I_vdd:
+        display: I vdd
+        description: Current delivered by vdd into the bias cell (replica loads excluded)
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 6.5
+      I_vddo:
+        display: I vddo
+        description: Current delivered by vddo into the bias cell (RP1)
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      I_vsso:
+        display: I vsso
+        description: Current returned through vsso (RN1)
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.2
+      I_ibias:
+        display: I ibias
+        description: Current the harness mirror delivers into ibias
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.05
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Ibp, Ibn, Ibnc, Ibpc, Iabp, Iabn, I_vdd, I_vddo, I_vsso, I_ibias]
+    conditions:
+      sel:
+        enumerate: [0, 3]
+      en:
+        typical: 0
+      vdd:
+        typical: 3.3
+      iref:
+        typical: 5
+      corner_mos:
+        enumerate: [tt, ff]
+      corner_r:
+        typical: typ
+      corner_pnp:
+        typical: typ
+      temp:
+        enumerate: [27, 125]
+
+  # Settling: steps 0-2 enable with sel 0 / 1 / 2, steps 3-5 sel 0->1 / 1->2 / 2->0, at ss / tt / ff, 27 C = 18 runs
+  tran_params:
+    spec:
+      t_settle:
+        display: Settling time
+        description: Event (enable at 1 us, or sel change at 100 us) to Ibp within 1 % of its final value
+        unit: us
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibp_end:
+        display: I vbp, final
+        description: Ibp at 199 us
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_tran.sch
+        format: ascii
+        suffix: .data
+        variables: [t_settle, Ibp_end]
+    plot:
+      t_settle_vs_step:
+        type: xyplot
+        xaxis: step
+        yaxis: t_settle
+        limits: auto
+    conditions:
+      sel:
+        typical: 0
+      en:
+        typical: 1
+      vdd:
+        typical: 3.3
+      iref:
+        typical: 5
+      corner_mos:
+        enumerate: [ss, tt, ff]
+      corner_r:
+        typical: typ
+      corner_pnp:
+        typical: typ
+      temp:
+        typical: 27
+      step:
+        enumerate: [0, 1, 2, 3, 4, 5]
+

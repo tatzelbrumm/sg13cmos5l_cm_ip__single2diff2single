@@ -1,0 +1,65 @@
+* tb_pad_dc: sg13cmos5l_IOPadSingle2Diff operating point per bias selection, harness ibias = 5 uA source
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Run from this directory with the PDK .spiceinit copied here: ngspice -b <deck>
+* pad = vref + 0.1 V, vref = vcm = 1.2 V, 0.5 pF per output: outp - outn = 0.2 V, (outp + outn)/2 = vcm
+* (s2d_mpdda alone, ideal bias: Vcm_err +11 mV at vcm = 1.65 V). Cases: sel 0 / 1 / 2 / 3, then en_1v2 = 0.
+.lib cornerMOShv.lib mos_tt
+.lib cornerMOSlv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.lib cornerPNP.lib typ
+.lib cornerDIO.lib dio_tt
+.include ../../../hv_logic/netlist/source/hv_logic.spice
+.include ../../../ls_up_1v2_3v3/netlist/source/ls_up_1v2_3v3.spice
+.include ../../../en_ctrl_3v3/netlist/source/en_ctrl_3v3.spice
+.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice
+.include ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice
+.include ../../../bias_sel_pd/netlist/source/bias_sel_pd.spice
+.include ../../netlist/source/s2d_mpdda.spice
+.include ../../netlist/source/s2d_pd.spice
+.include ../../netlist/source/sg13cmos5l_IOPadSingle2Diff.spice
+* sg13cmos5l_io.spice is on the sourcepath of the PDK .spiceinit
+.include sg13cmos5l_io.spice
+Vio iovdd 0 3.3
+Vcore vdd 0 1.2
+Ven en 0 1.2
+Vs0 s0 0 0
+Vs1 s1 0 0
+Vsl s12 0 1.2
+Vsh s33 0 3.3
+Vref vref 0 1.2
+Vcm vcm 0 1.2
+Vin pad vref 0.1
+* harness iDAC: PMOS source from its own 3.3 V, mirrored
+Vext vext 0 3.3
+Iext xg 0 5u
+XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
+Cp outp 0 0.5p
+Cn outn 0 0.5p
+X1 iovdd 0 vdd 0 pad outp outn vcm vref ibias en s0 s1 s12 s33 sg13cmos5l_IOPadSingle2Diff
+.control
+foreach c 0 1 2 3 4
+  if $c = 1
+    alter vs0 dc=1.2
+  end
+  if $c = 2
+    alter vs0 dc=0
+    alter vs1 dc=1.2
+  end
+  if $c = 3
+    alter vs0 dc=1.2
+  end
+  if $c = 4
+    alter ven dc=0
+  end
+  op
+  let iq = -i(vio)
+  let vd = v(outp) - v(outn)
+  let vc = (v(outp) + v(outn))/2 - v(vcm)
+  print $c iq vd vc v(x1.vbp) v(x1.vbn) v(x1.vbpc) v(x1.vbnc) v(x1.en_3v3) i(vext) -i(vcore) i(vin)
+  destroy all
+end
+.endc
+.end

@@ -1,0 +1,55 @@
+* tb_pd_enable: vout of d2s_mpdda_pd + bias_in_pd while en_3v3 rises at 10 us and falls at 60 us, tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* vinp = vinn = vref, so vout should sit at vref = 1.65 V when enabled; disabled, RL holds it there.
+* Reference (results_power_down.txt), 1k||100p: after the enable edge vout spans 1.542 ... 1.761 V and is
+* within 1 mV of its final value 0.87 us after the edge; after the disable edge 1.646 ... 1.650 V.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.temp 27
+.option method=gear
+.include ../../netlist/source/units.spice
+.include ../../netlist/source/ccomp.spice
+.include ../../netlist/source/d2s_mpdda_pd.spice
+.include ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice
+Vvdd vdd 0 3.3
+Vvss vss 0 0
+Vvddo vddo 0 3.3
+Vvsso vsso 0 0
+Ven en 0 pwl(0 0 10u 0 10.01u 3.3 60u 3.3 60.01u 0)
+Vext vext 0 3.3
+Iext xg 0 5u
+XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XEm iref xg vext vext sg13_hv_pmos w=5u l=6u
+Xb vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en bias_in_pd
+Vcm vref 0 1.65
+.param vd=0
+Vp vinp vref {vd/2}
+Vn vinn vref {-vd/2}
+* en_3v3_b for Xd: the inverter that was inside d2s_mpdda_pd (XIB in en_ctrl_3v3 in the pad)
+XIBP en_b en vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIBN en_b en vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en en_b d2s_mpdda_pd
+* load (edit)
+RL vout vref 1k
+CL vout 0 100p
+.save v(vout) v(en) v(xd.a) v(xd.b) v(vbn) v(vbp)
+.control
+tran 2n 110u
+meas tran vf find v(vout) at=59u
+meas tran emin min v(vout) from=10u to=59u
+meas tran emax max v(vout) from=10u to=59u
+meas tran dmin min v(vout) from=60u to=62u
+meas tran dmax max v(vout) from=60u to=62u
+let dv = abs(v(vout) - vf)
+meas tran tset when dv=1m cross=last from=10u to=59u
+let t_1mV = tset - 10u
+print vf emin emax t_1mV dmin dmax
+if $?batchmode = 0
+  plot v(vout) v(xd.a) v(xd.b) v(en)
+end
+.endc
+.end
