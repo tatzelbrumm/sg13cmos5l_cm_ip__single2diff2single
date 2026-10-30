@@ -1,0 +1,70 @@
+mkdir -p netlist/pex
+make symbol-pex CELL=oa_core_pd
+make[1]: Entering directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd'
+Wrote schematic/xschem/oa_core_pd_pex.sym (copy of oa_core_pd.sym with type=primitive).
+make[1]: Leaving directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd'
+sak-pex.sh -d -m 1 -n oa_core_pd_pex -t 10000 -r 1000 -y 1 -w netlist/pex layout/gds/oa_core_pd.gds
+[INFO] DEBUG is enabled!
+[INFO] flag -m is set to <1>.
+[INFO] flag -n is set to <oa_core_pd_pex>.
+[INFO] flag -t is set to <10000>.
+[INFO] flag -r is set to <1000>.
+[INFO] flag -y is set to <1>.
+[INFO] flag -w is set to <netlist/pex>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using layout file <layout/gds/oa_core_pd.gds>.
+[INFO] GDS mode is selected.
+[INFO] Running PEX of <layout/gds/oa_core_pd.gds>.
+[INFO] Results are put into </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/netlist/pex>.
+
+Magic 8.3 revision 685 - Compiled on Fri Oct 30 17:15:33 UTC 2026.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+WARNING: RLIMIT_NOFILE is above 1024 and Tcl_Version<9 this may cause runtime issues [rlim_cur=20000]
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology ihp-sg13cmos5l ...
+2 Magic internal units = 1 Lambda
+Input style sg13cmos5l(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    pblock pbase sealcont difffill sealvia1 sealvia2 sealvia3 sealvia4 seal glass thruvia inductor 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading ihp-sg13cmos5l Device Generator Menu ...
+Loading "/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/netlist/pex/pex_oa_core_pd.tcl" from command line.
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "$$$CONTEXT_INFO$$$".
+Reading "pmosHV$10".
+Reading "pmosHV$11".
+Reading "pmosHV$12".
+Reading "nmosHV$7".
+Reading "nmosHV_w2_l1".
+Reading "nmosHV$9".
+Reading "nmosHV$5".
+Reading "nmosHV$8".
+Reading "pmosHV$9".
+Reading "pmosHV_w0p3_l8".
+Reading "pmosHV$13".
+Reading "pmosHV$7".
+Reading "oa_pcas_c".
+Reading "oa_n10".
+Reading "oa_mcs_c".
+Reading "oa_pmir_c".
+Reading "oa_ms1".
+Reading "oa_svpg".
+Reading "oa_core_pd".
+Extracting oa_core_pd_pex into /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/netlist/pex/oa_core_pd_pex.ext:
+Processing oa_core_pd_pex
+oa_core_pd_pex: 29 warnings
+Total of 29 warnings.
+exttospice finished.
+[INFO] PEX (C-decoupled) done, the extracted SPICE netlist is </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/netlist/pex/oa_core_pd.pex.spice>.
+[DONE] Bye!
+mv netlist/pex/oa_core_pd.pex.spice netlist/pex/oa_core_pd_magic_pex_1.spice
+rm -f netlist/pex/pex_oa_core_pd.tcl
+Reordering pins in oa_core_pd_magic_pex_1.spice to match oa_core_pd_pex.sym...

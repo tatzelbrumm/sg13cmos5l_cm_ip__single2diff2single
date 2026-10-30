@@ -1,0 +1,45 @@
+mkdir -p verification/lvs
+mkdir -p netlist/layout
+make magic-lvs-netlist CELL=oa_core_pd
+make[1]: Entering directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd'
+mkdir -p netlist/schematic
+xschem -s -r -x -q --rcfile schematic/xschem/xschemrc --command ' \
+	set spiceprefix 1; \
+	set lvs_netlist 0; \
+	set top_is_subckt 1; \
+	set lvs_ignore 1; \
+	set ev_precision 5; \
+	set netlist_dir netlist/schematic; \
+	xschem set netlist_name [file tail [file rootname [xschem get current_name]]]_magic.spice; \
+	xschem netlist \
+' schematic/xschem/oa_core_pd.sch
+
+make[1]: Leaving directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd'
+sak-lvs.sh -d -w verification/lvs -s netlist/schematic/oa_core_pd_magic.spice -l layout/gds/oa_core_pd.gds -c oa_core_pd
+[INFO] DEBUG is enabled!
+[INFO] flag -w is set to <verification/lvs>.
+[INFO] flag -s is set to <netlist/schematic/oa_core_pd_magic.spice>.
+[INFO] flag -l is set to <layout/gds/oa_core_pd.gds>.
+[INFO] flag -c is set to <oa_core_pd>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using SPICE/CDL netlist file </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/netlist/schematic/oa_core_pd_magic.spice>.
+[INFO] Using layout file </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/layout/gds/oa_core_pd.gds>.
+[INFO] Running LVS of </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/layout/gds/oa_core_pd.gds> vs </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/netlist/schematic/oa_core_pd_magic.spice>.
+[INFO] Using SPICE/CDL netlist </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/netlist/schematic/oa_core_pd_magic.spice>...
+[INFO] Extracting netlist from layout </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/layout/gds/oa_core_pd.gds>...
+[INFO] Run netgen...
+---
+[INFO] Magic+Netgen LVS is OK, schematic/netlist and layout match!
+---
+CONGRATULATIONS! LVS is OK, schematic/netlist and layout match!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |    \_____/    |
+   \             /
+    '.         .'
+      '-.....-'
+---
+[DONE] Bye!
+mv verification/lvs/oa_core_pd.magic.lvs/oa_core_pd.ext.spc netlist/layout/oa_core_pd_magic.ext.spc
