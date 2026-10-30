@@ -1,0 +1,321 @@
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/sg13cmos5l_IOPadSingle2Diff.sch
+**.subckt sg13cmos5l_IOPadSingle2Diff iovdd iovss vdd vss pad outp outn vcm vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense
+*+ vdd3v3_sense
+*.iopin iovdd
+*.iopin iovss
+*.iopin vdd
+*.iopin vss
+*.iopin pad
+*.opin outp
+*.opin outn
+*.ipin vcm
+*.ipin vref
+*.ipin ibias
+*.ipin en_1v2
+*.ipin sel0_1v2
+*.ipin sel1_1v2
+*.ipin vdd1v2_sense
+*.ipin vdd3v3_sense
+xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_ctrl_3v3
+xb iovdd iovss iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 d2s_bias_sel_pd
+xa iovdd iovss padres vref vcm outp outn vbp vbn vbpc vbnc vabp vabn en_3v3 s2d_core_ideal
+XCP iovdd iovss pad sg13cmos5l_Clamp_P20N0D
+XCN iovss pad sg13cmos5l_Clamp_N20N0D
+XDN iovss pad iovdd sg13cmos5l_DCNDiode
+XDP pad iovdd iovss sg13cmos5l_DCPDiode
+XSP padres iovss pad iovdd sg13cmos5l_SecondaryProtection
+**.ends
+
+* expanding   symbol:  en_ctrl_3v3.sym # of pins=11
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/en_ctrl_3v3.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/en_ctrl_3v3.sch
+.subckt en_ctrl_3v3 vddh vddl vss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3
+*.iopin vddh
+*.iopin vddl
+*.iopin vss
+*.ipin en_1v2
+*.ipin sel0_1v2
+*.ipin sel1_1v2
+*.ipin vdd1v2_sense
+*.ipin vdd3v3_sense
+*.opin en_3v3
+*.opin sel0_3v3
+*.opin sel1_3v3
+XLE vss vddl vddh en_ls en_1v2 ls_up_1v2_3v3
+XL0 vss vddl vddh sel0_3v3 sel0_1v2 ls_up_1v2_3v3
+XL1 vss vddl vddh sel1_3v3 sel1_1v2 ls_up_1v2_3v3
+XIE vddh vss en_ls en_ls_b inv_hv
+XG1 vddh vss vdd1v2_sense pg1_b en_ls en_ls_b pg_det
+XG3 vddh vss vdd3v3_sense pg3_b en_ls en_ls_b pg_det
+XNO vddh vss en_ls_b pg1_b pg3_b en_3v3 nor3_hv
+.ends
+
+
+* expanding   symbol:  d2s_bias_sel_pd.sym # of pins=14
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/d2s_bias_sel_pd.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/d2s_bias_sel_pd.sch
+.subckt d2s_bias_sel_pd vdd vss vddo vsso ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3
+*.iopin vdd
+*.iopin vss
+*.iopin vddo
+*.iopin vsso
+*.iopin ibias
+*.opin vbp
+*.opin vbn
+*.opin vbpc
+*.opin vbnc
+*.opin vabp
+*.opin vabn
+*.ipin en_3v3
+*.ipin sel0_3v3
+*.ipin sel1_3v3
+Xi vdd vss en_3v3 en_3v3_b inv_3v3_pd
+Xt vdd vss vddo vsso ir vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_bias_in_tree_pd
+XDA vdd vss en_3v3 sel0_3v3 en_oa_b nand2_hv
+XDB vdd vss en_oa_b en_oa inv_hv
+XDC vdd vss en_3v3 sel1_3v3 en_bg_b nand2_hv
+XDD vdd vss en_bg_b en_bg inv_hv
+XDE vdd vss sel0_3v3 sel1_3v3 s00 nor2_hv
+XDF vdd vss en_3v3 s00 en_ext_b nand2_hv
+XDG vdd vss en_ext_b en_ext inv_hv
+Xoa vdd vss ir en_oa en_oa_b oa_core_pd
+Xbg vdd vss ir en_bg en_bg_b bg_core_pd
+XTEN ir en_ext ibias vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XTEP ir en_ext_b ibias vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  s2d_core_ideal.sym # of pins=14
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_core_ideal.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_core_ideal.sch
+.subckt s2d_core_ideal vdd vss padres vref vcm outp outn vbp vbn vbpc vbnc vabp vabn en_3v3
+*.iopin vdd
+*.iopin vss
+*.ipin padres
+*.ipin vref
+*.ipin vcm
+*.opin outp
+*.opin outn
+*.ipin vbp
+*.ipin vbn
+*.ipin vbpc
+*.ipin vbnc
+*.ipin vabp
+*.ipin vabn
+*.ipin en_3v3
+Ep outp vcm padres vref 1
+En vcm outn padres vref 1
+.ends
+
+
+* expanding   symbol:  ls_up_1v2_3v3.sym # of pins=5
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/ls_up_1v2_3v3/schematic/xschem/ls_up_1v2_3v3.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/ls_up_1v2_3v3/schematic/xschem/ls_up_1v2_3v3.sch
+.subckt ls_up_1v2_3v3 vss vddl vddh out in
+*.iopin vss
+*.iopin vddl
+*.iopin vddh
+*.opin out
+*.ipin in
+XM2 inb in vddl vddl sg13_lv_pmos w=1.2u l=0.13u ng=1 m=1 mm_ok=1
+XM1 inb in vss vss sg13_lv_nmos w=0.6u l=0.13u ng=1 m=1 mm_ok=1
+XM3 a in vss vss sg13_hv_nmos w=2u l=0.45u ng=1 m=4 mm_ok=1
+XM6 a b vddh vddh sg13_hv_pmos w=2u l=0.4u ng=1 m=1 mm_ok=1
+XM5 b a vddh vddh sg13_hv_pmos w=2u l=0.4u ng=1 m=1 mm_ok=1
+XM4 b inb vss vss sg13_hv_nmos w=2u l=0.45u ng=1 m=4 mm_ok=1
+XM16 out a vddh vddh sg13_hv_pmos w=2u l=0.4u ng=1 m=2 mm_ok=1
+XM12 out a vss vss sg13_hv_nmos w=2u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  inv_hv.sym # of pins=4
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/inv_hv.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/inv_hv.sch
+.subckt inv_hv vdd vss a y
+*.iopin vdd
+*.iopin vss
+*.ipin a
+*.opin y
+XP y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XN y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  pg_det.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/pg_det.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/pg_det.sch
+.subckt pg_det vddh vss sense pg_b ena ena_b
+*.iopin vddh
+*.iopin vss
+*.ipin sense
+*.opin pg_b
+*.ipin ena
+*.ipin ena_b
+XPU pg_b ena_b vddh vddh sg13_hv_pmos w=0.3u l=50u ng=1 m=1 mm_ok=1
+XND pg_b sense vss vss sg13_hv_nmos w=2u l=0.45u ng=1 m=1 mm_ok=1
+XRD sense ena vss vss sg13_hv_nmos w=0.3u l=100u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  nor3_hv.sym # of pins=6
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/nor3_hv.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/nor3_hv.sch
+.subckt nor3_hv vdd vss a b c y
+*.iopin vdd
+*.iopin vss
+*.ipin a
+*.ipin b
+*.ipin c
+*.opin y
+XPA p1 a vdd vdd sg13_hv_pmos w=3u l=0.45u ng=1 m=1 mm_ok=1
+XPB p2 b p1 vdd sg13_hv_pmos w=3u l=0.45u ng=1 m=1 mm_ok=1
+XPC y c p2 vdd sg13_hv_pmos w=3u l=0.45u ng=1 m=1 mm_ok=1
+XNA y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XNB y b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XNC y c vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  inv_3v3_pd.sym # of pins=4
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/inv_3v3_pd.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/inv_3v3_pd.sch
+.subckt inv_3v3_pd vdd vss en_3v3 en_3v3_b
+*.iopin vdd
+*.iopin vss
+*.ipin a
+*.opin y
+XP y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XN y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  d2s_bias_in_tree_pd.sym # of pins=13
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/d2s_bias_in_tree_pd.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/d2s_bias_in_tree_pd.sch
+.subckt d2s_bias_in_tree_pd vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b
+*.iopin vdd
+*.iopin vss
+*.iopin vddo
+*.iopin vsso
+*.iopin iref
+*.opin vbp
+*.opin vbn
+*.opin vbpc
+*.opin vbnc
+*.opin vabp
+*.opin vabn
+*.ipin en_3v3
+*.ipin en_3v3_b
+XNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1 mm_ok=1
+XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1 mm_ok=1
+XNBPC vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1 mm_ok=1
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XNBP vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1 mm_ok=1
+XRP1 n1 n1 vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2 m=1 mm_ok=1
+XRP2 vabp vabp n1 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1 mm_ok=1
+XNABP vabp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1 mm_ok=1
+XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1 mm_ok=1
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1 mm_ok=1
+XPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XBN vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1 mm_ok=1
+XPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1 mm_ok=1
+XRN2 vabn vabn n2 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1 mm_ok=1
+XRN1 n2 n2 vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2 m=1 mm_ok=1
+XTGP ni en_3v3_b vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XTGN vdd en_3v3 ni net1 sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  nand2_hv.sym # of pins=5
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/nand2_hv.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/nand2_hv.sch
+.subckt nand2_hv vdd vss a b y
+*.iopin vdd
+*.iopin vss
+*.ipin a
+*.ipin b
+*.opin y
+XPA y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XPB y b vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XNA y a n1 vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XNB n1 b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  nor2_hv.sym # of pins=5
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/nor2_hv.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/nor2_hv.sch
+.subckt nor2_hv vdd vss a b y
+*.iopin vdd
+*.iopin vss
+*.ipin a
+*.ipin b
+*.opin y
+XPA p1 a vdd vdd sg13_hv_pmos w=2u l=0.45u ng=1 m=1 mm_ok=1
+XPB y b p1 vdd sg13_hv_pmos w=2u l=0.45u ng=1 m=1 mm_ok=1
+XNA y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XNB y b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  oa_core_pd.sym # of pins=5
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/oa_core_pd.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/oa_core_pd.sch
+.subckt oa_core_pd vdd vss iout en_3v3 en_3v3_b
+*.iopin vdd
+*.iopin vss
+*.ipin en_3v3
+*.ipin en_3v3_b
+*.opin iout
+XMS1 ks en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=100u ng=1 m=1 mm_ok=1
+XMS2 ks vbr vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XP0 vpg vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1 mm_ok=1
+XP0C vpc vpc vpg vdd sg13_hv_pmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XMC10 vpc vbr d10 vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XM10 d10 vnc vres vss sg13_hv_nmos w=180u l=1u ng=8 m=1 mm_ok=1
+XMCL vres vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1 mm_ok=1
+XP8 c8 vpg vdd vdd sg13_hv_pmos w=16u l=8u ng=8 m=1 mm_ok=1
+XP8C vnc vpc c8 vdd sg13_hv_pmos w=4u l=2u ng=2 m=1 mm_ok=1
+XM11 vnc vnc vss vss sg13_hv_nmos w=90u l=1u ng=4 m=1 mm_ok=1
+XP2 c2 vpg vdd vdd sg13_hv_pmos w=4u l=8u ng=2 m=1 mm_ok=1
+XP2C vbr vpc c2 vdd sg13_hv_pmos w=1u l=2u ng=1 m=1 mm_ok=1
+XMCS vbr vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1 mm_ok=1
+XPO co vpg vdd vdd sg13_hv_pmos w=40u l=8u ng=20 m=1 mm_ok=1
+XPOC iout vpc co vdd sg13_hv_pmos w=10u l=2u ng=5 m=1 mm_ok=1
+XSKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XSVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+
+* expanding   symbol:  bg_core_pd.sym # of pins=5
+** sym_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/bg_core_pd.sym
+** sch_path: /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/d2s_bias_sel_pd/schematic/xschem/bg_core_pd.sch
+.subckt bg_core_pd vdd vss iout en_3v3 en_3v3_b
+*.iopin vdd
+*.iopin vss
+*.ipin en_3v3
+*.ipin en_3v3_b
+*.opin iout
+XMS1 ks en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=100u ng=1 m=1 mm_ok=1
+XMS2 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XPB vpg vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XPBC vpc vpc vpg vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XNB vpc g eb vss sg13_hv_nmos w=20u l=4u ng=1 m=1 mm_ok=1
+XR1B eb vss vss rhigh w=0.5u l=99.36u m=1 b=0 mm_ok=1
+XR0 eb e2 vss rhigh w=0.5u l=179.5u m=1 b=0 mm_ok=1
+XQ2 vss vss e2 pnpMPA a=4e-12 p=8e-06 m=8
+XPA ca vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XPAC g vpc ca vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XNA g g ea vss sg13_hv_nmos w=20u l=4u ng=1 m=1 mm_ok=1
+XR1A ea vss vss rhigh w=0.5u l=109.3u m=1 b=0 mm_ok=1
+XQ1 vss vss ea pnpMPA a=4e-12 p=8e-06
+XPO co vpg vdd vdd sg13_hv_pmos w=80u l=1u ng=8 m=1 mm_ok=1
+XPOC iout vpc co vdd sg13_hv_pmos w=80u l=1u ng=8 m=1 mm_ok=1
+XSKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XSVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+.ends
+
+.end

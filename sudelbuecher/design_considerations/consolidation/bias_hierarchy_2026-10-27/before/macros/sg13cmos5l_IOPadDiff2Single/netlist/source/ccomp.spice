@@ -1,0 +1,14 @@
+* compensation variants, pins: vout a b vss
+* MOM, as in d2s_miller: 2 x 31 x 31 um cap_cmomi (M1..M4)
+.subckt ccomp_mom vout a b vss
+XCMA vout a cap_cmomi w=31e-6 l=31e-6
+XCMB vout b cap_cmomi w=31e-6 l=31e-6
+.ends ccomp_mom
+* thick-oxide PMOS used as an accumulation-mode capacitor (gate above n-well):
+*   A side: gate = a (~2.3 V), S/D/well = vout   -> V_GW = 0.15 ... 1.15 V in the linear range
+*   B side: gate = vout, S/D/well = b (~0.9 V)    -> V_GW = 0.25 ... 1.25 V
+* area = W*L; C_ox(hv pmos, tox 6.9 nm) ~ 5 fF/um2
+.subckt ccomp_mos vout a b vss wc=14u lc=14u
+XCMA vout a vout vout sg13_hv_pmos w={wc} l={lc} ng=1
+XCMB b vout b b sg13_hv_pmos w={wc} l={lc} ng=1
+.ends ccomp_mos

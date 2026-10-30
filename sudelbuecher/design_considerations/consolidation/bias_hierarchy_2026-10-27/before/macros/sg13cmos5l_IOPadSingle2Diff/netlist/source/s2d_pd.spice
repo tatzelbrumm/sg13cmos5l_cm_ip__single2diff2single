@@ -1,0 +1,53 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Digital enable for s2d_mpdda and its bias trees, after ../../class_ab_pad_driver/power_down/
+* (en_3v3: 0 ... 3.3 V on vdd / vss, active high, last in every port list). Wrappers around the
+* unchanged cells of s2d_mpdda.spice and s2d_bias.spice: nothing inside them is edited.
+* Disabled (en_3v3 = 0):
+*   - the tree's iref is cut by a transmission gate, and the tree side of the gate is pulled to
+*     its rail, so no tree current flows (as d2s_bias_*_pd); vbp, vbpc drift to vdd and vbn, vbnc
+*     to vss, which switches off every tail, sink and cascode of s2d_mpdda, and with them the CMFB
+*     diode and the loads (vcmfb needs no switch).
+*   - voutp and voutn are tied to vcm by transmission gates, so the next stage sees a zero
+*     differential input at the internal common mode ("inbuf_en ... input of next internal stage
+*     to VCM if off", s2d_d2s_pinbuffers.md). With the bias off, these are the only paths.
+*   - The pad side (vin, vref) is gates only, enabled or not.
+* Switches and inverters are 1u / 0.45u hv devices, as in power_down/.
+* Macro copy (macros/sg13cmos5l_IOPadSingle2Diff, 2026-10-25): s2d_mpdda_pd takes en_3v3_b as a port,
+* last in its list, instead of making it with its own inverter Xi, as d2s_mpdda_pd and d2s_bias_sel_pd
+* do since 2026-10-25 (en_3v3_b is made once, by XIB in en_ctrl_3v3). The pad uses s2d_mpdda_pd only;
+* s2d_bias_out_pd, s2d_bias_in_pd and inv_3v3_s2d stay as in the design for the decks in
+* ../../testbenches/spice (the pad's bias is d2s_bias_sel_pd). Original:
+* sudelbuecher/design_considerations/s2d_input_buffer/sim/s2d_pd.spice.
+
+.subckt inv_3v3_s2d vdd vss en_3v3 en_3v3_b
+XIP en_3v3_b en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIN en_3v3_b en_3v3 vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends inv_3v3_s2d
+
+.subckt s2d_mpdda_pd vdd vss vin vref vcm voutp voutn vfbp vfbn vbp vbn vbpc vbnc en_3v3 en_3v3_b lcas=3 rl=50.6u
+Xs vdd vss vin vref vcm voutp voutn vfbp vfbn vbp vbn vbpc vbnc s2d_mpdda lcas={lcas} rl={rl}
+* output ties to vcm, on while disabled
+XTPN voutp en_3v3_b vcm vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTPP voutp en_3v3 vcm vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XTNN voutn en_3v3_b vcm vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTNP voutn en_3v3 vcm vdd sg13_hv_pmos w=1u l=0.45u ng=1
+.ends s2d_mpdda_pd
+
+* --- tree fed by an external NMOS sink (from bias_fanout_n): iref cut, PI side pulled to vdd
+.subckt s2d_bias_out_pd vdd vss iref vbp vbn vbpc vbnc en_3v3
+Xi vdd vss en_3v3 en_3v3_b inv_3v3_s2d
+XTGN iref en_3v3 pi vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTGP iref en_3v3_b pi vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XTDP pi en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+Xt vdd vss pi vbp vbn vbpc vbnc s2d_bias_out
+.ends s2d_bias_out_pd
+
+* --- tree fed by an external PMOS source (from bias_fanout_p): iref cut, NI side pulled to vss
+.subckt s2d_bias_in_pd vdd vss iref vbp vbn vbpc vbnc en_3v3
+Xi vdd vss en_3v3 en_3v3_b inv_3v3_s2d
+XTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+Xt vdd vss ni vbp vbn vbpc vbnc s2d_bias_in
+.ends s2d_bias_in_pd

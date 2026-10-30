@@ -1,0 +1,48 @@
+* tb_s2d_dc: DC transfer of s2d_mpdda, tt 27 C, 0.5 pF external load per output, ideal bias fixture
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Macro copy of sudelbuecher/design_considerations/s2d_input_buffer/sim/tb (2026-10-25): includes rewritten.
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* u = vin - vref is swept; ideal: voutp - voutn = 2 u, (voutp + voutn)/2 = vcm.
+* Gain and offset are two-point estimates (u = -0.1 / 0 / +0.1 V), offset referred to the input;
+* nonlin is the largest deviation of vd/2 from that line over |u| <= 0.5 V, referred to the input.
+* Reference (results_s2d.txt, section 2; the fit there is over |u| <= 0.1 V): gain 1.9991, offset
+* < 0.01 mV, nonlin 1.41 mV, output CM error 10.9 mV, idd 112.7 uA (incl. 14 uA of fixture diodes).
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice
+.include ../../netlist/source/s2d_mpdda.spice
+.include ../../netlist/source/s2d_bias.spice
+Vdd vdd 0 3.3
+Vref vref 0 1.65
+Vcm vcm 0 1.65
+Xb vdd 0 vbp vbn vbpc vbnc s2d_bias_lp
+Vu u 0 0
+Ein vin vref u 0 1
+Xs vdd 0 vin vref vcm voutp voutn voutp voutn vbp vbn vbpc vbnc s2d_mpdda
+* load (edit): gates of the next stage plus routing, per output
+CLp voutp 0 0.5p
+CLn voutn 0 0.5p
+.control
+dc Vu -0.6 0.6 0.005
+let vd = v(voutp) - v(voutn)
+let vc = (v(voutp) + v(voutn))/2 - v(vcm)
+let idd = -i(vdd)
+meas dc vdp find vd at=0.1
+meas dc vdm find vd at=-0.1
+meas dc vd0 find vd at=0
+meas dc cm0 find vc at=0
+meas dc iddq find idd at=0
+let gain = (vdp - vdm)/0.2
+let offin = vd0/gain
+let err = (vd - vd0 - gain*v(u))/gain
+let erri = err[20,220]
+let nonlin = vecmax(abs(erri))
+print gain offin nonlin cm0 iddq
+if $?batchmode = 0
+  plot vd vc
+  plot err xlimit -0.5 0.5
+end
+.endc
+.end

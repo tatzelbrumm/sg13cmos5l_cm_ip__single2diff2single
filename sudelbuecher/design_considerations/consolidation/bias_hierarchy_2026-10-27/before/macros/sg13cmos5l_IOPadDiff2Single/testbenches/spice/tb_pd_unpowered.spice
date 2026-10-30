@@ -1,0 +1,60 @@
+* tb_pd_unpowered: d2s_mpdda_pd + d2s_bias_in_pd unpowered, pad driven 0 -> 5 V in 10 ns through 1.5 kOhm, tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* vdd and vddo are one floating rail (both from vdd_3v3, switched off): 1 GOhm and 1 nF to ground.
+* vss = vsso = 0. en_3v3 held at 0 V. Not an ESD simulation: no pad diodes, no rail clamps, no snapback.
+* Reference (results_power_down.txt): V_SG(OP) = vddo - a -0.558 ... +0.002 V, V_GS(ON) = b - vsso
+* 0 ... +0.714 V, peak |I_OP| 2.36 mA, |I_ON| 0.23 mA, vddo up to 3.83 V.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.temp 27
+.option method=gear
+.include ../../netlist/source/units.spice
+.include ../../netlist/source/ccomp.spice
+.include ../../netlist/source/d2s_mpdda_pd.spice
+.include ../../netlist/source/d2s_bias_ref_pd.spice
+Rvdd vdd 0 1g
+Cvdd vdd 0 1n
+Vtie vdd vddo 0
+Vvss vss 0 0
+Vvsso vsso 0 0
+Ven en 0 0
+Rext vext 0 1g
+Iext xg 0 5u
+XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XEm iref xg vext vext sg13_hv_pmos w=5u l=6u
+Xb vdd vss vddo vsso iref vbp vbn vbpc vbnc vabp vabn en d2s_bias_in_pd
+Vcm vref 0 0
+Vp vinp vref 0
+Vn vinn vref 0
+* en_3v3_b for Xd: the inverter that was inside d2s_mpdda_pd (XIB in en_ctrl_3v3 in the pad)
+XIBP en_b en vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIBN en_b en vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en en_b d2s_mpdda_pd
+* pad source (edit)
+Vpad padsrc 0 pwl(0 0 10n 5 3u 5)
+Rpad padsrc vout 1.5k
+CL vout 0 2p
+.save v(vout) v(xd.a) v(xd.b) v(vddo) v(en_b) @n.xd.xop.nsg13_hv_pmos[ids] @n.xd.xon.nsg13_hv_nmos[ids]
+.control
+tran 1n 3u uic
+let vsg_op = v(vddo) - v(xd.a)
+let vgs_on = v(xd.b)
+meas tran pmin min vsg_op
+meas tran pmax max vsg_op
+meas tran nmin min vgs_on
+meas tran nmax max vgs_on
+let ip = abs(@n.xd.xop.nsg13_hv_pmos[ids])
+let inn = abs(@n.xd.xon.nsg13_hv_nmos[ids])
+meas tran ipm max ip
+meas tran inm max inn
+meas tran vddm max v(vddo)
+print pmin pmax nmin nmax ipm inm vddm
+if $?batchmode = 0
+  plot v(vout) v(vddo) v(xd.a) v(xd.b) v(en_b)
+end
+.endc
+.end

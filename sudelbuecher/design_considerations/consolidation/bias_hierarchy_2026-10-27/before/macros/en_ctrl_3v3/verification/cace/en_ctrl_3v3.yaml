@@ -1,0 +1,598 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0
+#
+#--------------------------------------------------------------
+# CACE circuit characterization file: en_ctrl_3v3
+#
+# Fail-safe enable for the 3.3 V pad circuits: en_3v3 = en_1v2 AND vdd_1v2 present AND vdd_3v3 present,
+# sel*_3v3 = sel*_1v2 level-shifted.  Source netlist: netlist/source/en_ctrl_3v3.spice.
+# The LIMITS are PROPOSALS: the functional ones (output errors) are set by hand; the current and timing
+# limits are the worst case of the pre-layout runs (schematic netlist, no parasitics) plus ~30 %% margin.
+# Replace them by requirements when there are any.  "any" = characterized, not specified.
+# Sign convention: currents are positive when delivered by the source.  Testbenches echo SI values.
+#--------------------------------------------------------------
+
+name:           en_ctrl_3v3
+description:    Fail-safe 1.2 V -> 3.3 V enable and select bits (vdd_1v2 / vdd_3v3 presence detectors)
+PDK:            ihp-sg13cmos5l
+
+cace_format:    5.2
+
+authorship:
+  designer:         Christoph Maier
+  creation_date:    October 20, 2026
+  license:          Apache-2.0
+
+paths:
+  root:             ..
+  schematic:        ../schematic/xschem
+  netlist:          cace/netlist
+  documentation:    cace/_docs
+  runs:             cace/_runs
+
+pins:
+  vddh:
+    description: 3.3 V supply (iovdd in the pad, vdd_3v3 in the slot fallback)
+    type: power
+    direction: inout
+    Vmin: 3.0
+    Vmax: 3.6
+  vddl:
+    description: 1.2 V supply of the ls_up input inverters (core ring vdd in the pad, vdd_1v2 in the fallback)
+    type: power
+    direction: inout
+    Vmin: 0
+    Vmax: 1.32
+  vss:
+    description: Ground
+    type: ground
+    direction: inout
+  en_1v2:
+    description: Enable request, 0 .. 1.2 V, active high
+    type: digital
+    direction: input
+  sel0_1v2:
+    description: Select bit 0, 0 .. 1.2 V
+    type: digital
+    direction: input
+  sel1_1v2:
+    description: Select bit 1, 0 .. 1.2 V
+    type: digital
+    direction: input
+  vdd1v2_sense:
+    description: The slot's gated vdd_1v2 (presence sense)
+    type: signal
+    direction: input
+  vdd3v3_sense:
+    description: The slot's gated vdd_3v3 (presence sense)
+    type: signal
+    direction: input
+  en_3v3:
+    description: Enable, 0 .. vddh, active high
+    type: digital
+    direction: output
+  sel0_3v3:
+    description: Select bit 0, 0 .. vddh
+    type: digital
+    direction: output
+  sel1_3v3:
+    description: Select bit 1, 0 .. vddh
+    type: digital
+    direction: output
+  en_3v3_b:
+    description: NOT en_3v3, 0 .. vddh
+    type: digital
+    direction: output
+
+default_conditions:
+  corner_mos:
+    description: Process corner MOSFET
+    display: Corner MOSFET
+    typical: tt
+  temp:
+    description: Ambient temperature
+    display: Temperature
+    unit: °C
+    typical: 27
+  sup:
+    description: Supply set, 0 = (vddl, vddh) = (1.08, 3.0) V, 1 = (1.32, 3.6) V, 0.5 = (1.2, 3.3) V
+    display: Supply set
+    typical: 0.5
+  case:
+    description: DC input state (see the testbench template)
+    display: Case
+    typical: 0
+  scenario:
+    description: Supply-loss scenario, 1 vdd_1v2 sense, 2 vdd_3v3 sense, 3 vdd_1v2 = vddl and sense
+    display: Scenario
+    typical: 1
+  cload:
+    description: Load at en_3v3
+    display: Cload
+    unit: fF
+    typical: 50
+
+parameters:
+  # Truth table: 8 input states at tt, 27 C, nominal supplies = 8 runs
+  truth_params:
+    spec:
+      Verr_en:
+        display: en_3v3 error
+        description: abs(v(en_3v3) - expected), expected = vddh for cases 0 and 7, else 0
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      Verr_sel:
+        display: sel_3v3 error
+        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (not checked with vddl = 0)
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      I_vddh:
+        display: I vddh
+        description: Current delivered by vddh
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2500
+      I_vddl:
+        display: I vddl
+        description: Current delivered by vddl
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+      I_s12:
+        display: I vdd1v2_sense
+        description: Current delivered by the vdd_1v2 sense source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 1900
+      I_s33:
+        display: I vdd3v3_sense
+        description: Current delivered by the vdd_3v3 sense source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2300
+      I_en:
+        display: I en_1v2
+        description: Current delivered by the en_1v2 source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.3
+    tool:
+      ngspice:
+        template: en_ctrl_3v3_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Verr_en, Verr_sel, I_vddh, I_vddl, I_s12, I_s33, I_en]
+    plot:
+      Verr_en_vs_case:
+        type: xyplot
+        xaxis: case
+        yaxis: Verr_en
+        limits: auto
+      I_vddh_vs_case:
+        type: xyplot
+        xaxis: case
+        yaxis: I_vddh
+        limits: auto
+    conditions:
+      case:
+        enumerate: [0, 1, 2, 3, 4, 5, 6, 7]
+      corner_mos:
+        typical: tt
+      temp:
+        typical: 27
+      sup:
+        typical: 0.5
+      cload:
+        typical: 50
+  # Enabled (case 0) over 5 corners x -40 / 125 C x low / high supply = 20 runs
+  pvt_params:
+    spec:
+      Verr_en:
+        display: en_3v3 error
+        description: abs(v(en_3v3) - expected), expected = vddh for cases 0 and 7, else 0
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      Verr_sel:
+        display: sel_3v3 error
+        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (not checked with vddl = 0)
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      I_vddh:
+        display: I vddh
+        description: Current delivered by vddh
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2500
+      I_vddl:
+        display: I vddl
+        description: Current delivered by vddl
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+      I_s12:
+        display: I vdd1v2_sense
+        description: Current delivered by the vdd_1v2 sense source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 1900
+      I_s33:
+        display: I vdd3v3_sense
+        description: Current delivered by the vdd_3v3 sense source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2300
+      I_en:
+        display: I en_1v2
+        description: Current delivered by the en_1v2 source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.3
+    tool:
+      ngspice:
+        template: en_ctrl_3v3_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Verr_en, Verr_sel, I_vddh, I_vddl, I_s12, I_s33, I_en]
+    plot:
+      I_vddh_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: I_vddh
+        limits: auto
+      Verr_en_vs_corner:
+        type: xyplot
+        xaxis: corner_mos
+        yaxis: Verr_en
+        limits: auto
+    conditions:
+      case:
+        typical: 0
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 125]
+      sup:
+        enumerate: [0, 1]
+      cload:
+        typical: 50
+  # vdd_1v2 gated off (case 4: vddl = sense = 0, en_1v2 still high) over 5 corners x -40 / 125 C x low / high supply = 20 runs
+  vddl_off_params:
+    spec:
+      Verr_en:
+        display: en_3v3 error
+        description: abs(v(en_3v3) - expected), expected = vddh for cases 0 and 7, else 0
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      Verr_sel:
+        display: sel_3v3 error
+        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (not checked with vddl = 0)
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      I_vddh:
+        display: I vddh
+        description: Current delivered by vddh
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vddl:
+        display: I vddl
+        description: Current delivered by vddl
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_s12:
+        display: I vdd1v2_sense
+        description: Current delivered by the vdd_1v2 sense source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_s33:
+        display: I vdd3v3_sense
+        description: Current delivered by the vdd_3v3 sense source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_en:
+        display: I en_1v2
+        description: Current delivered by the en_1v2 source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: en_ctrl_3v3_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Verr_en, Verr_sel, I_vddh, I_vddl, I_s12, I_s33, I_en]
+    plot:
+      I_vddh_vs_corner:
+        type: xyplot
+        xaxis: corner_mos
+        yaxis: I_vddh
+        limits: auto
+    conditions:
+      case:
+        typical: 4
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 125]
+      sup:
+        enumerate: [0, 1]
+      cload:
+        typical: 50
+  # Floating sense inputs (cases 5, 6) at ss / ff x -40 / 125 C, low supply = 8 runs
+  float_params:
+    spec:
+      Verr_en:
+        display: en_3v3 error
+        description: abs(v(en_3v3) - expected), expected = vddh for cases 0 and 7, else 0
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      Verr_sel:
+        display: sel_3v3 error
+        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (not checked with vddl = 0)
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+      I_vddh:
+        display: I vddh
+        description: Current delivered by vddh
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2500
+      I_vddl:
+        display: I vddl
+        description: Current delivered by vddl
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 50
+      I_s12:
+        display: I vdd1v2_sense
+        description: Current delivered by the vdd_1v2 sense source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 1900
+      I_s33:
+        display: I vdd3v3_sense
+        description: Current delivered by the vdd_3v3 sense source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 2300
+      I_en:
+        display: I en_1v2
+        description: Current delivered by the en_1v2 source
+        unit: nA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.3
+    tool:
+      ngspice:
+        template: en_ctrl_3v3_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Verr_en, Verr_sel, I_vddh, I_vddl, I_s12, I_s33, I_en]
+    conditions:
+      case:
+        enumerate: [5, 6]
+      corner_mos:
+        enumerate: [ss, ff]
+      temp:
+        enumerate: [-40, 125]
+      sup:
+        typical: 0
+      cload:
+        typical: 50
+  # Enable / disable delay: 5 corners x -40 / 125 C x low / high supply = 20 runs
+  tran_en_params:
+    spec:
+      td_on:
+        display: Enable delay
+        description: 50 % en_1v2 rise to 50 % en_3v3 rise
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 4.8
+      td_off:
+        display: Disable delay
+        description: 50 % en_1v2 fall to 50 % en_3v3 fall
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 7
+    tool:
+      ngspice:
+        template: en_ctrl_3v3_tb_tran_en.sch
+        format: ascii
+        suffix: .data
+        variables: [td_on, td_off]
+    plot:
+      td_on_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: td_on
+        limits: auto
+      td_off_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: td_off
+        limits: auto
+    conditions:
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 125]
+      sup:
+        enumerate: [0, 1]
+      cload:
+        typical: 50
+  # Supply loss with en_1v2 high: 3 scenarios x 5 corners x -40 / 125 C, low supply = 30 runs
+  tran_pg_params:
+    spec:
+      t_pg:
+        display: Supply-loss response
+        description: Ramp start (supply 1 -> 0 V in 1 us) to 50 % en_3v3 fall, en_1v2 held high
+        unit: us
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 1.2
+      Ven_end:
+        display: en_3v3 after the loss
+        description: en_3v3 at 9.9 us (supply gone since 2 us)
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+    tool:
+      ngspice:
+        template: en_ctrl_3v3_tb_tran_pg.sch
+        format: ascii
+        suffix: .data
+        variables: [t_pg, Ven_end]
+    plot:
+      t_pg_vs_scenario:
+        type: xyplot
+        xaxis: scenario
+        yaxis: t_pg
+        limits: auto
+    conditions:
+      scenario:
+        enumerate: [1, 2, 3]
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 125]
+      sup:
+        typical: 0
+      cload:
+        typical: 50

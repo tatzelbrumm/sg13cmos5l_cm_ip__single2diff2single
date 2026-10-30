@@ -1,0 +1,24 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* sg13cmos5l_IOPadSingle2Diff: single-ended pad in, differential out:
+*   outp - outn = 2 (pad - vref),  (outp + outn)/2 = vcm,  i.e. outp - vcm = vcm - outn = pad - vref
+* Input buffer xa = s2d_mpdda_pd (s2d_pd.spice): the matched-pair DDA of
+* sudelbuecher/design_considerations/s2d_input_buffer (s2d_input_buffer.md), the mirror image of
+* d2s_mpdda, built from the same unit_r2 (../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice).
+* vfbp / vfbn are tied to outp / outn here (at the buffer). vref and vcm drive gates only.
+* Same ring / control / bias infrastructure as sg13cmos5l_IOPadDiff2Single (en_ctrl_3v3, d2s_bias_sel_pd).
+* The buffer uses four of the six bias lines (vbp vbn vbpc vbnc, same diodes at the same currents as
+* the driver); vabp / vabn of d2s_bias_sel_pd are unused here.
+* Input protection as IHP's sg13cmos5l_IOPadAnalog: primary diodes, gate-tied clamp frames, and the
+* secondary protection (rppd series resistor + diodes) between pad and the buffer input padres.
+.subckt sg13cmos5l_IOPadSingle2Diff iovdd iovss vdd vss pad outp outn vcm vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
+Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
+Xb iovdd iovss iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 en_3v3_b d2s_bias_sel_pd
+Xa iovdd iovss padres vref vcm outp outn outp outn vbp vbn vbpc vbnc en_3v3 en_3v3_b s2d_mpdda_pd
+* input protection, as in sg13cmos5l_IOPadAnalog (iovdd iovss pad padres vdd vss)
+XCP iovdd iovss pad sg13cmos5l_Clamp_P20N0D
+XCN iovss pad sg13cmos5l_Clamp_N20N0D
+XDN iovss pad iovdd sg13cmos5l_DCNDiode
+XDP pad iovdd iovss sg13cmos5l_DCPDiode
+XSP padres iovss pad iovdd sg13cmos5l_SecondaryProtection
+.ends sg13cmos5l_IOPadSingle2Diff

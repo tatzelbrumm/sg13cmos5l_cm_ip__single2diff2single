@@ -1,0 +1,49 @@
+* tb_s2d_pd_enable: s2d_mpdda_pd + s2d_bias_out_pd, en_3v3 0 -> 3.3 V at 1 us and back at 30 us, tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Macro copy of sudelbuecher/design_considerations/s2d_input_buffer/sim/tb (2026-10-25): includes rewritten. s2d_mpdda_pd takes en_3v3_b (enb) as a port.
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* vin is held at vref + 0.25 V, so the enabled differential output is +0.5 V.
+* Prints the time after the enable edge until vd is within 1 mV of its final value, the largest
+* output common-mode excursion from vcm while enabling, and vd 1 us after disable.
+* Reference (results_s2d.txt, section 12, tt 27C 10 ns edge): vd 0.5000 V, settled after ~1.5 us,
+* vc -1.62 ... +1.09 V while enabling, vd ~0 after disable.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.include ../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice
+.include ../../netlist/source/s2d_mpdda.spice
+.include ../../netlist/source/s2d_bias.spice
+.include ../../netlist/source/s2d_pd.spice
+Vdd vdd 0 3.3
+Vref vref 0 1.65
+Vcm vcm 0 1.65
+Vin vin 0 1.9
+Ven en 0 pulse(0 3.3 1u 10n 10n 29u 60u)
+* the reference leg: one leg of bias_fanout_n, the root idealized as a 5 uA source into it
+Iroot vdd iin 5u
+Xf vdd 0 iin ir io2 bias_fanout_n
+Vio2 io2 vdd 0
+Xb vdd 0 ir vbp vbn vbpc vbnc en s2d_bias_out_pd
+* en_3v3_b: made once per pad (XIB in en_ctrl_3v3); here by the design's inverter, which used to sit inside s2d_mpdda_pd
+Xi vdd 0 en enb inv_3v3_s2d
+Xs vdd 0 vin vref vcm voutp voutn voutp voutn vbp vbn vbpc vbnc en enb s2d_mpdda_pd
+CLp voutp 0 0.5p
+CLn voutn 0 0.5p
+.control
+tran 5n 35u
+let vd = v(voutp) - v(voutn)
+let vc = (v(voutp) + v(voutn))/2 - v(vcm)
+meas tran vfin find vd at=29u
+let dev = abs(vd - vfin)
+meas tran tlast when dev=1m cross=last from=1u to=29u
+let ton = tlast - 1u
+meas tran vcmax max vc from=1u to=29u
+meas tran vcmin min vc from=1u to=29u
+meas tran vdoff find vd at=32u
+print vfin ton vcmax vcmin vdoff
+if $?batchmode = 0
+  plot vd vc v(en)/10
+end
+.endc
+.end

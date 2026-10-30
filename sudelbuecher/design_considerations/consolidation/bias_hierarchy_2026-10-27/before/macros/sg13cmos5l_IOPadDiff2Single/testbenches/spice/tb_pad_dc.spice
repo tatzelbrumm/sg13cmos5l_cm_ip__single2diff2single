@@ -1,0 +1,61 @@
+* tb_pad_dc: sg13cmos5l_IOPadDiff2Single operating point per bias selection, harness ibias = 5 uA source
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Run from this directory with the PDK .spiceinit copied here: ngspice -b <deck>
+.lib cornerMOShv.lib mos_tt
+.lib cornerMOSlv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.lib cornerPNP.lib typ
+.lib cornerDIO.lib dio_tt
+.include ../../../hv_logic/netlist/source/hv_logic.spice
+.include ../../../ls_up_1v2_3v3/netlist/source/ls_up_1v2_3v3.spice
+.include ../../../en_ctrl_3v3/netlist/source/en_ctrl_3v3.spice
+.include ../../netlist/source/units.spice
+.include ../../netlist/source/ccomp.spice
+.include ../../netlist/source/d2s_mpdda_pd.spice
+.include ../../netlist/source/d2s_bias_ref_pd.spice
+.include ../../../d2s_bias_sel_pd/netlist/source/d2s_bias_sel_pd.spice
+.include ../../netlist/source/sg13cmos5l_IOPadDiff2Single.spice
+* sg13cmos5l_io.spice is on the sourcepath of the PDK .spiceinit
+.include sg13cmos5l_io.spice
+Vio iovdd 0 3.3
+Vcore vdd 0 1.2
+Ven en 0 1.2
+Vs0 s0 0 0
+Vs1 s1 0 0
+Vsl s12 0 1.2
+Vsh s33 0 3.3
+Vref vref 0 1.65
+Vp vinp vref 0
+Vn vinn vref 0
+* harness iDAC: PMOS source from its own 3.3 V, mirrored
+Vext vext 0 3.3
+Iext xg 0 5u
+XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
+Rl pad vref 1k
+X1 iovdd 0 vdd 0 pad vinp vinn vref ibias en s0 s1 s12 s33 sg13cmos5l_IOPadDiff2Single
+.control
+foreach c 0 1 2 3 4
+  if $c = 1
+    alter vs0 dc=1.2
+  end
+  if $c = 2
+    alter vs0 dc=0
+    alter vs1 dc=1.2
+  end
+  if $c = 3
+    alter vs0 dc=1.2
+  end
+  if $c = 4
+    alter ven dc=0
+  end
+  op
+  let iq = -i(vio)
+  let ivbp = 0
+  print $c iq v(pad) v(x1.vbp) v(x1.vbn) v(x1.vabp) v(x1.vabn) v(x1.en_3v3) i(vext) -i(vcore)
+  destroy all
+end
+.endc
+.end
