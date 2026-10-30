@@ -1,0 +1,317 @@
+# check_m2: start pad_pcells_2026-10-28.klay.gds
+#           candidate cand2.gds
+
+## 1. rails and PCells unchanged
+Metal3ViasUp   shapes per layer {'30/0': 8, '30/2': 8, '30/25': 8, '49/0': 2087} ... identical: True
+TopLayersTo4   shapes per layer {'50/0': 8, '126/0': 6, '50/2': 8, '50/25': 8, '126/2': 6, '126/25': 6, '125/0': 1783} ... identical: True
+PCell variant Clamp_N_M1             stored geometry identical: True
+PCell variant Clamp_N_M1_wiring      stored geometry identical: True
+PCell variant Clamp_N_M1_wiring$1    stored geometry identical: True
+PCell variant Clamp_P_M1             stored geometry identical: True
+PCell variant Clamp_P_M1_wiring      stored geometry identical: True
+PCell variant DCNDiode               stored geometry identical: True
+PCell variant DCPDiode               stored geometry identical: True
+flat 30/0 XOR start vs candidate: empty
+flat 49/0 XOR start vs candidate: empty
+flat 50/0 XOR start vs candidate: empty
+flat 125/0 XOR start vs candidate: empty
+flat 126/0 XOR start vs candidate: empty
+flat 30/2 XOR start vs candidate: empty
+flat 50/2 XOR start vs candidate: empty
+flat 126/2 XOR start vs candidate: empty
+top-level pad bar Metal2: start 1 shapes, candidate 1, XOR empty
+top-level pad bar Via2: start 858 shapes, candidate 858, XOR empty
+top-level instances: start ['Clamp_N_M1', 'Clamp_N_M1', 'Clamp_N_M1_wiring', 'Clamp_N_M1_wiring$1', 'Clamp_P_M1', 'Clamp_P_M1_wiring', 'DCNDiode', 'DCPDiode', 'Metal3ViasUp', 'TopLayersTo4', 'contacts']
+                     cand  ['Clamp_N_M1', 'Clamp_N_M1', 'Clamp_N_M1_wiring', 'Clamp_N_M1_wiring$1', 'Clamp_P_M1', 'Clamp_P_M1_wiring', 'DCNDiode', 'DCPDiode', 'Metal3ViasUp', 'TopLayersTo4', 'cap_cma', 'cap_cmb', 'contacts', 'gate_feeds', 'm2_comb_n', 'm2_comb_p', 'm2_junction', 'replica_lines']
+flat XOR start vs candidate per layer (what changed where):
+     1/0   removed (0.4,39.04;79.6,42.56)  added (3.19,42.56;74.55,50.04)
+     5/0   removed -  added (4.19,41.9;73.55,50.82)
+     6/0   removed (0.32,26.04;79.68,42.31)  added (3.29,42.24;74.45,50.72)
+     8/0   removed (0.4,39.04;79.6,42.56)  added (3,12.73;76.5,81.89)
+    10/0   removed -  added (0.5,3;79.5,88)
+    10/2   removed -  added (35.5,85;42.5,88)
+    14/0   removed -  added (3.67,41.68;74.07,50.44)
+    19/0   removed -  added (3.155,7.875;76.435,82.385)
+    29/0   removed -  added (3.535,7.1;75.985,83.92)
+    31/0   removed (0.77,39.66;79.23,43.18)  added (2.57,43.18;75.17,50.66)
+    44/0   removed -  added (2.57,41.46;75.17,50.66)
+    51/0   removed -  added (4.19,41.9;73.55,50.22)
+
+## 2. reopen with SG13_cm_clamps registered (reopen.py logic, subprocess)
+  Clamp_P_M1           live PCell lib=SG13_cm_clamps at r0 *1 0,65 {'Display': 'Selected', 'Lmin': '0.40u', 'cdf_version': '8', 'frame': '80u', 'l': '0.6u', 'model': 'sg13_hv_pmos', 'ng': '43', 'wiring': 'external'}
+  Clamp_P_M1_wiring    live PCell lib=SG13_cm_clamps at r0 *1 0,65 {'Display': 'Selected', 'cdf_version': '8', 'frame': '80u', 'gate_net': 'a', 'l': '0.6u', 'ng': '43', 'pad_net': 'pad', 'rep_net': 'dabp', 'roles': '20:dummy 21:rep'}
+  Clamp_N_M1           live PCell lib=SG13_cm_clamps at r0 *1 0,15.56 {'Display': 'Selected', 'Lmin': '0.45u', 'cdf_version': '8', 'frame': '80u', 'l': '1u', 'model': 'sg13_hv_nmos', 'ng': '35', 'wiring': 'external'}
+  Clamp_N_M1           live PCell lib=SG13_cm_clamps at r0 *1 0,6 {'Display': 'Selected', 'Lmin': '0.45u', 'cdf_version': '8', 'frame': '80u', 'l': '1u', 'model': 'sg13_hv_nmos', 'ng': '35', 'wiring': 'external'}
+  Clamp_N_M1_wiring    live PCell lib=SG13_cm_clamps at r0 *1 0,15.56 {'Display': 'Selected', 'cdf_version': '8', 'frame': '80u', 'gate_net': 'b', 'l': '1u', 'ng': '35', 'pad_net': 'pad', 'rep_net': 'dabn', 'roles': '16:rep 17:rep'}
+  Clamp_N_M1_wiring$1  live PCell lib=SG13_cm_clamps at r0 *1 0,6 {'Display': 'Selected', 'cdf_version': '8', 'frame': '80u', 'gate_net': 'b', 'l': '1u', 'ng': '35', 'pad_net': 'pad', 'rep_net': 'dabn', 'roles': ''}
+  DCNDiode             live PCell lib=SG13_cm_clamps at r0 *1 3.56,27.12 {'Display': 'Selected', 'cdf_version': '8', 'l': '67.6u', 'model': 'dantenna'}
+  DCPDiode             live PCell lib=SG13_cm_clamps at r0 *1 4.46,53.08 {'Display': 'Selected', 'cdf_version': '8', 'l': '65.8u', 'model': 'dpantenna'}
+PCell instances (cell, placement, parameters, library) identical to the start: True (8 live)
+regenerated (library) vs stored geometry, all layers: identical
+
+## 3. flat extraction
+
+### start: 82 nets, 90 labels (0 not on their layer's metal: [])
+  pad    labels on 61 net(s)
+  iovss  labels on 6 net(s)
+  iovdd  labels on 3 net(s)
+  guard  labels on 1 net(s)
+  a      labels on 2 net(s)
+  b      labels on 3 net(s)
+  dabp   labels on 1 net(s)
+  dabn   labels on 1 net(s)
+  nets carrying labels of more than one name: none
+  devices (combined):
+    NMOS L=1      G=b      S/D=iovss/pad      W=  299.20  (35)
+    NMOS L=1      G=dabn   S/D=dabn/iovss     W=    8.80  (1)
+    PMOS L=0.6    G=a      S/D=iovdd/pad      W=  546.12  (21)
+    PMOS L=0.6    G=dabp   S/D=dabp/iovdd     W=   13.32  (1)
+    PMOS L=0.6    G=iovdd  S/D=dabp/iovdd     W=   13.32  (1)
+
+### candidate: 12 nets, 98 labels (0 not on their layer's metal: [])
+  pad    labels on 1 net(s)
+  iovss  labels on 1 net(s)
+  iovdd  labels on 1 net(s)
+  guard  labels on 1 net(s)
+  a      labels on 1 net(s)
+  b      labels on 1 net(s)
+  dabp   labels on 1 net(s)
+  dabn   labels on 1 net(s)
+  nets carrying labels of more than one name: none
+  devices (combined):
+    NMOS L=1      G=b      S/D=iovss/pad      W=  299.20  (1)
+    NMOS L=1      G=dabn   S/D=dabn/iovss     W=    8.80  (1)
+    PMOS L=0.6    G=a      S/D=iovdd/pad      W=  546.12  (1)
+    PMOS L=0.6    G=dabp   S/D=dabp/iovdd     W=   13.32  (1)
+    PMOS L=0.6    G=iovdd  S/D=dabp/iovdd     W=   13.32  (1)
+    PMOS L=32.16  G=a      S/D=pad            W=    7.96  (1)
+    PMOS L=32.16  G=pad    S/D=b              W=    7.96  (1)
+
+### candidate: expected devices
+  ('NMOS', 1.0, 'b', 'iovss/pad')                  expected W  299.20  got  299.20  ok
+  ('NMOS', 1.0, 'dabn', 'dabn/iovss')              expected W    8.80  got    8.80  ok
+  ('PMOS', 0.6, 'a', 'iovdd/pad')                  expected W  546.12  got  546.12  ok
+  ('PMOS', 0.6, 'dabp', 'dabp/iovdd')              expected W   13.32  got   13.32  ok
+  ('PMOS', 0.6, 'iovdd', 'dabp/iovdd')             expected W   13.32  got   13.32  ok
+  ('PMOS', 32.16, 'a', 'pad')                      expected W    7.96  got    7.96  ok
+  ('PMOS', 32.16, 'pad', 'b')                      expected W    7.96  got    7.96  ok
+  devices not expected: none
+
+### candidate: probe points (layer, x, y -> net)
+  pad bar                              M2 (40.000,  1.500) -> pad          ok
+  pad rail                             M3 (40.000,  1.500) -> pad          ok
+  lower N frame drain k=0              M1 ( 8.485, 10.900) -> pad          ok
+  lower N frame drain x 39.045 (ON)    M1 (39.045, 10.900) -> pad          ok
+  upper N frame drain k=0              M1 ( 8.485, 20.500) -> pad          ok
+  upper N frame drain x 39.045 (RN1)   M1 (39.045, 20.500) -> dabn         ok
+  RN1 gate strip (gate 16)             M1 (37.955, 20.500) -> dabn         ok
+  P drain k=0                          M1 ( 9.045, 70.000) -> pad          ok
+  P drain k=21 (end)                   M1 (72.465, 70.000) -> pad          ok
+  P drain x 39.245 (RP1 + dummy)       M1 (39.245, 70.000) -> dabp         ok
+  RP1 gate strip (gate 21)             M1 (40.135, 70.000) -> dabp         ok
+  dummy gate strip (gate 20)           M1 (38.355, 70.000) -> iovdd        ok
+  DCN cathode stripe 1                 M1 (20.000, 30.000) -> pad          ok
+  DCN cathode stripe 2 at x 39         M1 (39.000, 34.500) -> pad          ok
+  DCN anode bar                        M1 (20.000, 27.750) -> iovss        ok
+  DCN left side bar                    M1 ( 4.190, 32.250) -> iovss        ok
+  DCN right side bar                   M1 (75.810, 32.250) -> iovss        ok
+  DCN guard ring top                   M1 (20.000, 38.870) -> guard        ok
+  band column x 0.2                    M1 ( 0.200, 50.000) -> guard        ok
+  N frame outer ring                   M1 (20.000,  6.170) -> guard        ok
+  DCP anode stripe                     M1 (20.000, 55.960) -> pad          ok
+  DCP cathode bar                      M1 (20.000, 53.710) -> iovdd        ok
+  DCP left side bar                    M1 ( 5.090, 58.200) -> iovdd        ok
+  DCP right side bar                   M1 (74.910, 58.200) -> iovdd        ok
+  DCP guard ring bottom                M1 (20.000, 51.590) -> iovss        ok
+  P frame outer ring                   M1 (20.000, 65.170) -> iovss        ok
+  N source k=0                         M1 ( 6.575, 10.900) -> iovss        ok
+  N inner ring                         M1 (20.000,  7.970) -> iovss        ok
+  P source k=0                         M1 ( 7.535, 70.000) -> iovdd        ok
+  P source x 37.735                    M1 (37.735, 70.000) -> iovdd        ok
+  P inner ring                         M1 (20.000, 66.970) -> iovdd        ok
+  P bus left                           M1 (20.000, 81.810) -> a            ok
+  P bus right                          M1 (60.000, 81.810) -> a            ok
+  CMA gate head                        M1 (20.000, 50.640) -> a            ok
+  a pin                                M2 (36.500, 86.700) -> a            ok
+  lower N bus                          M1 (20.000, 13.450) -> b            ok
+  upper N bus left                     M1 (20.000, 23.010) -> b            ok
+  upper N bus right                    M1 (60.000, 23.010) -> b            ok
+  CMB S/D + ntap frame                 M1 (57.000, 41.675) -> b            ok
+  CMB well                             NW (57.000, 41.600) -> b            ok
+  b pin                                M2 (41.500, 87.700) -> b            ok
+  CMA S/D + ntap frame                 M1 (20.000, 40.500) -> pad          ok
+  CMA well                             NW (20.000, 41.600) -> pad          ok
+  CMB gate head                        M1 (57.000, 50.640) -> pad          ok
+  junction left                        M2 (20.000, 40.300) -> pad          ok
+  junction right                       M2 (60.000, 40.300) -> pad          ok
+  P pad stub x 39.245                  M2 (39.245, 58.000) -> pad          ok
+  dabn pin                             M2 (38.300, 85.500) -> dabn         ok
+  dabn in the junction cut             M2 (38.300, 40.300) -> dabn         ok
+  dabp pin                             M2 (39.245, 85.500) -> dabp         ok
+  iovss rail 7-32.5                    M3 (40.000, 19.750) -> iovss        ok
+  iovss rail 34.5-60                   M3 (40.000, 47.250) -> iovss        ok
+  iovdd rail 66-91.5                   M3 (40.000, 78.750) -> iovdd        ok
+  DCN guard NWell                      NW (20.000, 39.500) -> guard        ok
+  DCP NWell                            NW (20.000, 52.600) -> iovdd        ok
+  P frame NWell                        NW (20.000, 75.000) -> iovdd        ok
+probe points: 56 of 56 on the expected net
+unlabelled nets with metal or NWell: 0 []
+
+## 4. rules (values from sg13cmos5l_tech_default.json; names and implementation as in the .drc files)
+rule      start   cand    new
+NW.a          0      0      0 
+NW.b          0      0      0 
+NW.b1         0      0      0 
+NW.c          0      0      0 
+NW.c1         0      0      0 
+NW.d          0      0      0 
+NW.d1         0      0      0 
+NW.e          0      0      0 
+NW.e1         0      0      0 
+NW.f          0      0      0 
+NW.f1         0      0      0 
+Act.a         0      0      0 
+Act.b         0      0      0 
+Act.c         0      0      0 
+Act.d         0      0      0 
+Act.e         0      0      0 
+Gat.a         0      0      0 
+Gat.b         0      0      0 
+Gat.a4        0      0      0 
+Gat.b1        0      0      0 
+Gat.c         0      0      0 
+Gat.d         0      0      0 
+Gat.e         0      0      0 
+Gat.f         0      0      0 
+TGO.a         0      0      0 
+TGO.b         0      0      0 
+TGO.c         0      0      0 
+TGO.d         0      0      0 
+TGO.e         0      0      0 
+pSD.a         0      0      0 
+pSD.b         0      0      0 
+pSD.c         0      0      0 
+pSD.d         0      0      0 
+pSD.d1        0      0      0 
+pSD.i         0      0      0 
+pSD.i1        0      0      0 
+pSD.j         0      0      0 
+pSD.j1        0      0      0 
+pSD.k         0      0      0 
+pSD.l         0      0      0 
+Cnt.a         0      0      0 
+Cnt.b         0      0      0 
+Cnt.b1       68      0      0 
+Cnt.c         0      0      0 
+Cnt.d         0      0      0 
+Cnt.e         0      0      0 
+Cnt.f         0      0      0 
+Cnt.g         0      0      0 
+Cnt.g1        0      0      0 
+Cnt.g2        0      0      0 
+Cnt.h         0      0      0 
+Cnt.j         0      0      0 
+M1.a          0      0      0 
+M1.b          0      0      0 
+M1.e          0      0      0 
+M1.d          0      0      0 
+M1.c1         0      0      0 
+M2.a          0      0      0 
+M2.b          0      0      0 
+M2.e          0      0      0 
+M2.f          0      0      0 
+M2.d          0      0      0 
+M2.c          0      0      0 
+M2.c1         0      0      0 
+M3.a          0      0      0 
+M3.b          0      0      0 
+M3.e          0      0      0 
+M3.f          0      0      0 
+M3.d          0      0      0 
+M3.c          0      0      0 
+M3.c1         0      0      0 
+M4.a          0      0      0 
+M4.b          0      0      0 
+M4.e          0      0      0 
+M4.f          0      0      0 
+M4.d          0      0      0 
+M4.c          0      0      0 
+M4.c1         0      0      0 
+V1.a          0      0      0 
+V1.b          0      0      0 
+V1.b1         0      0      0 
+V1.c          0      0      0 
+V1.c1         0      0      0 
+V2.a          0      0      0 
+V2.b          0      0      0 
+V2.b1         0      0      0 
+V2.c          0      0      0 
+V2.c1         0      0      0 
+V3.a          0      0      0 
+V3.b          0      0      0 
+V3.b1         0      0      0 
+V3.c          0      0      0 
+V3.c1         0      0      0 
+TV1.a         0      0      0 
+TV1.b         0      0      0 
+TV1.c         0      0      0 
+TV1.d         0      0      0 
+TM1.a         0      0      0 
+TM1.b         0      0      0 
+rules run: 99; violations in the candidate: 0 (start: 68); new: 0
+
+## 5. hand wiring (everything that is not a PCell)
+(contact / via arrays are drawn at the rule pitch by convention -- IHP 0.34 / 0.41 -- and are not listed as near-misses)
+near-miss M1.b   [0.180, 0.198):   0 
+near-miss M1.e   [0.220, 0.242):   5 0.230@(3.425,23.09;36.81,23.32) 0.230@(41.28,23.09;76.575,23.32) 0.230@(4.925,81.89;37.27,82.12) 0.230@(3.425,13.53;76.575,13.76) 0.230@(41.22,81.89;75.075,82.12)
+near-miss M2.b   [0.210, 0.231):   0 
+near-miss M2.e   [0.240, 0.264):   0 
+near-miss M3.b   [0.210, 0.231):   0 
+near-miss Act.b  [0.210, 0.231):   0 
+near-miss Gat.b  [0.180, 0.198):   0 
+near-miss pSD.b  [0.310, 0.341):   0 
+near-miss NW.b1  [1.800, 1.980):   6 1.800@(1.745,39.66;38.795,41.46) 1.800@(38.945,39.66;75.995,41.46) 1.800@(0.77,40.635;2.57,51.485) 1.800@(3.015,50.66;38.795,52.46) 1.800@(37.97,41.46;39.77,50.66) ...
+near-miss NW.f   [0.240, 0.264):   0 
+near-miss NW.d   [0.310, 0.341):   0 
+near-miss Cnt.f  [0.110, 0.121):  92 0.110@(41.28,45.59;41.39,45.85) 0.110@(41.28,43.55;41.39,43.81) 0.110@(36.35,49.67;36.46,49.93) 0.110@(41.28,44.23;41.39,44.49) 0.110@(36.35,48.99;36.46,49.25) ...
+near-miss Cnt.e  [0.140, 0.154):   0 
+near-miss Gat.d  [0.070, 0.077):   0 
+near-miss pSD.d1 [0.030, 0.033):   0 
+near-miss TGO.b  [0.270, 0.297):   0 
+duplicate shapes in static cells: 0 []
+hand-wiring shapes beyond the 80 x 180 boundary: {'nw': (-0.62,14.94;80.62,61.62)}
+TEXT 63/0 shapes in the top cell: [(36.355,147.73;45.815,180.62)]
+label iovss  30/25   at ( 40.0,  19.75) on (0,7;80,32.5)
+label iovss  30/25   at ( 40.0, 130.00) on (0,126;80,134)
+label iovss  30/25   at ( 40.0,  47.25) on (0,34.5;80,60)
+label iovdd  30/25   at ( 40.0, 106.25) on (0,93.5;80,119)
+label iovdd  30/25   at ( 40.0,  78.75) on (0,66;80,91.5)
+label vss    30/25   at ( 40.0, 149.00) on (0,140;80,158)
+label vdd    30/25   at ( 40.0, 169.00) on (0,160;80,178)
+label pad    30/25   at ( 40.0,   1.50) on (5,0;75,3)
+label iovss  50/25   at ( 40.0,  19.75) on (0,7;80,32.5)
+label iovss  50/25   at ( 40.0, 130.00) on (0,126;80,134)
+label iovss  50/25   at ( 40.0,  47.25) on (0,34.5;80,60)
+label iovdd  50/25   at ( 40.0, 106.25) on (0,93.5;80,119)
+label iovdd  50/25   at ( 40.0,  78.75) on (0,66;80,91.5)
+label vss    50/25   at ( 40.0, 170.10) on (0,157.8;80,178)
+label vdd    50/25   at ( 40.0, 147.90) on (0,140;80,160.2)
+label pad    50/25   at ( 40.0,   1.50) on (5,0;75,3)
+label iovss  126/25  at ( 40.0,  19.75) on (0,7;80,32.5)
+label iovss  126/25  at ( 40.0, 130.00) on (0,126;80,134)
+label iovss  126/25  at ( 40.0,  47.25) on (0,34.5;80,60)
+label iovdd  126/25  at ( 40.0, 106.25) on (0,93.5;80,119)
+label iovdd  126/25  at ( 40.0,  78.75) on (0,66;80,91.5)
+label pad    126/25  at ( 40.0,   1.50) on (5,0;75,3)
+label pad    10/25   at ( 40.0,   1.50) top cell, on Metal2 net pad
+Via2     2159: pad 0-3: 858, iovss 7-32.5: 798, iovss 34.5-60: 227, iovdd 66-91.5: 276, iovdd 93.5-119: 0, iovss 126-134: 0, vss/vdd 140-178: 0; not inside a rail band: 0; not covered by m2: 0, by m3: 0
+Via3     2087: pad 0-3: 70, iovss 7-32.5: 429, iovss 34.5-60: 429, iovdd 66-91.5: 429, iovdd 93.5-119: 429, iovss 126-134: 117, vss/vdd 140-178: 184; not inside a rail band: 0; not covered by m3: 0, by m4: 0
+TopVia1  1783: pad 0-3: 35, iovss 7-32.5: 418, iovss 34.5-60: 418, iovdd 66-91.5: 418, iovdd 93.5-119: 418, iovss 126-134: 76, vss/vdd 140-178: 0; not inside a rail band: 0; not covered by m4: 0, by tm1: 0
+band Activ : one polygon from x 0 to x 80 through the DCN guard ring: True; its top between x 2.5 and 77.5: 39.04
+band Metal1: one polygon from x 0 to x 80 through the DCN guard ring: True; its top between x 2.5 and 77.5: 39.04
+band NWell : one polygon from x 0 to x 80 through the DCN guard ring: True; its top between x 2.5 and 77.5: 39.66
+Via2 by (Metal2 net, Metal3 net): {('iovdd', 'iovdd'): 276, ('iovss', 'iovss'): 1025, ('pad', 'pad'): 858}
+
+## 6. renders
+wrote ./m2_full.png
+wrote ./m2_gap.png
