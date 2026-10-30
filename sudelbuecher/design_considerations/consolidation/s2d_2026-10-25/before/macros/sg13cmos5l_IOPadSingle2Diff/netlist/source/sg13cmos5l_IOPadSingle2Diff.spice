@@ -1,0 +1,24 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* sg13cmos5l_IOPadSingle2Diff: SCAFFOLD (2026-10-20). Single-ended pad in, differential out:
+*   outp - vcm = vcm - outn = pad - vref   (unity and negative-unity gain)
+* Same ring / control / bias infrastructure as sg13cmos5l_IOPadDiff2Single (en_ctrl_3v3, d2s_bias_sel_pd).
+* Input protection as IHP's sg13cmos5l_IOPadAnalog: primary diodes, gate-tied clamp frames, and the
+* secondary protection (rppd series resistor + diodes) between pad and the amplifier input padres.
+* *** s2d_core_ideal is a BEHAVIOURAL PLACEHOLDER (E sources, no devices). Replace it by the real
+* *** transistor-level input buffer (ports: vdd vss padres vref vcm outp outn vbp vbn vbpc vbnc vabp vabn en_3v3).
+.subckt s2d_core_ideal vdd vss padres vref vcm outp outn vbp vbn vbpc vbnc vabp vabn en_3v3
+Ep outp vcm padres vref 1
+En outn vcm vref padres 1
+.ends s2d_core_ideal
+.subckt sg13cmos5l_IOPadSingle2Diff iovdd iovss vdd vss pad outp outn vcm vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
+Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
+Xb iovdd iovss iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 en_3v3_b d2s_bias_sel_pd
+Xa iovdd iovss padres vref vcm outp outn vbp vbn vbpc vbnc vabp vabn en_3v3 s2d_core_ideal
+* input protection, as in sg13cmos5l_IOPadAnalog (iovdd iovss pad padres vdd vss)
+XCP iovdd iovss pad sg13cmos5l_Clamp_P20N0D
+XCN iovss pad sg13cmos5l_Clamp_N20N0D
+XDN iovss pad iovdd sg13cmos5l_DCNDiode
+XDP pad iovdd iovss sg13cmos5l_DCPDiode
+XSP padres iovss pad iovdd sg13cmos5l_SecondaryProtection
+.ends sg13cmos5l_IOPadSingle2Diff
