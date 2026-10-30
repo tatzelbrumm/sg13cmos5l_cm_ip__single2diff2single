@@ -943,3 +943,78 @@ Chat log: `sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md`, expo
 - Backup: the README and the sheet as they were, in `bg_core_pd_2026-10-28/macro_before/`.
 - Agents folder: A2's report as `agents/A2_oa_core_pd_layout/report_bg.md`, with three pictures. The messages to
   A2, A3 and A4 from 05:20 on are added to their `messages.md`, taken from the agents' own transcripts.
+
+## 2026-10-28 10:39–11:00 bg_core_pd sheet backannotated (resistor chains as vector instances)
+
+- See `design_considerations/pad_buffer_layout/log.md`, same date and title.
+
+## 2026-10-28 11:17–11:20 Which untracked sudelbuecher paths go under version control (Christoph, 11:17: "I'm losing track which of your working directories in the sudelbuecher I need to put under version control, see git status output"; 12:48: "log this recommendation, as running log and as chatlog update.")
+
+- Input: Christoph's `git status` of the sudelbuecher worktree (branch `sudel_buecher`), attached as
+  `sudelbuecher_git_status_snapshot.log`: the two modified logs and 25 untracked paths.
+- How I checked, read-only:
+  - size, file count and newest file of each path, and which logs mention it;
+  - for every file, whether its exact content is already a blob in the repository: `git hash-object --no-filters`
+    run outside the worktree, then `git -C <main repo> cat-file -e` (the worktree shares the main repository's
+    object store), with `GIT_OPTIONAL_LOCKS=0`; no lock files left.
+  - No git command runs inside the notes worktree from the Linux environment on the computer: its `.git` names a
+    host path that environment cannot resolve. A first check that missed this returned nothing usable and was
+    redone as above.
+- Files whose content is already in git, of all files:
+  - consolidation: `ab_regroup_2026-10-28` 9/70, `bias_hierarchy_2026-10-27` 217/218, `bias_split_2026-10-28` 26/46,
+    `enable_rework_2026-10-25` 34/36, `output_stage_2026-10-28` 49/54, `reference_sheets_2026-10-20` 133/134,
+    `s2d_2026-10-25` 17/17, `xschemrc_fix_2026-10-28` 44/48;
+  - `pad_buffer_layout/klayout/backups` 7/10;
+  - `pcells_before_2026-10-27` 4/4, `export.py.before_2026-10-28` 1/1, `chatlog/README.md.bak` 1/1, the cheatsheet
+    `.md.bak` 1/1;
+  - `class_ab_pad_driver/hand_edit_transfer` 0/1.
+
+### The recommendation as given at 11:20, verbatim
+
+Track the eight consolidation folders, `bg_core_pd_2026-10-28/` and two small documents. The other untracked entries are backups already in git history, generated output, or material from outside these sessions. I checked by size, contents and whether the content is already in git, without running any git command on your notes folder.
+
+**Put under version control** (about 13 MB):
+- `design_considerations/consolidation/`, eight folders, one per consolidation step: `reference_sheets_2026-10-20`, `enable_rework_2026-10-25`, `s2d_2026-10-25`, `bias_hierarchy_2026-10-27`, `ab_regroup_2026-10-28`, `output_stage_2026-10-28`, `xschemrc_fix_2026-10-28`, `bias_split_2026-10-28`.
+  - Each holds that step's scripts, check outputs and before-copies, and the consolidation log points to all of them.
+  - Most of the before-copies are already in git history. Git stores identical content only once, so they add almost nothing to the repo.
+- `design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28/` (4.1 MB): today's bandgap layout, generators, skill drafts and the sheet checks.
+- Two documents:
+  - `sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md`;
+  - `class_ab_pad_driver/hand_edit_transfer/kickoff_hand_edit_transfer.md`, from 22 Oct; no log mentions it.
+- The two modified logs.
+
+```
+git add sudelbuecher/design_considerations/consolidation/*_2026-10-2* \
+  sudelbuecher/design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28 \
+  sudelbuecher/design_considerations/pad_buffer_layout/log.md \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md \
+  sudelbuecher/design_considerations/class_ab_pad_driver/hand_edit_transfer
+```
+
+**Safe to delete, because the exact content is already in git:** `pcells_before_2026-10-27/`, `export.py.before_2026-10-28`, `chatlog/README.md.bak` and the cheatsheet `.md.bak`.
+
+**Ignore, because it's generated:**
+- `pad_buffer_layout/klayout/drc_run_*/`: DRC run outputs from 26 Oct.
+- `pad_buffer_layout/klayout/backups/`: timed GDS backups from 26 Oct, 7 of 10 already in git. The main repo already ignores `backups/`.
+- `klayout_hierarchy/__pycache__/`.
+- `JanteStroemSpejl/runs/`: 178 MB, 41,168 files of CACE runs.
+
+Lines for `.gitignore` that would cover these:
+```
+__pycache__/
+*.bak
+backups/
+drc_run_*/
+runs/
+```
+
+**Yours to decide.** The logs don't show these as made in our sessions:
+- `skunkworx/`: 22 text files of chat copy-and-paste;
+- `JanteStroemSpejl/zipslop/`;
+- `JanteStroemSpejl_chat_export.zip`: 9 MB, and the unpacked folder next to it is already tracked;
+- the untracked root `.gitignore` itself.
+
+From now on I'll end each task with the list of new paths to add, so you don't have to reconstruct this.
+
+### (end of the recommendation)

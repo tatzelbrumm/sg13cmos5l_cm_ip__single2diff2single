@@ -1020,3 +1020,26 @@ devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on
 - Backup: the README and the sheet as they were, in `bg_core_pd_2026-10-28/macro_before/`.
 - Agents folder: A2's report as `agents/A2_oa_core_pd_layout/report_bg.md`, with three pictures. The messages to
   A2, A3 and A4 from 05:20 on are added to their `messages.md`, taken from the agents' own transcripts.
+
+## 2026-10-28 10:39–11:00 bg_core_pd sheet backannotated, resistor chains as vector instances (Christoph, 10:39: "try the vector instances.")
+
+- Sheet `macros/bg_core_pd/schematic/xschem/bg_core_pd.sch` (sha bd3e1864…), in its own style, as for oa_core_pd:
+  - R0 / R1A / R1B as xschem vector instances `R0[17:0]`, `R1A[10:0]`, `R1B[9:0]` (0.5u / 9.94u each), connected
+    by bus labels: `eb,n0[16:0]` / `n0[16:0],e2`, `ea,n1a[9:0]` / `n1a[9:0],vss`, `eb,n1b[8:0]` / `n1b[8:0],vss`.
+    xschem netlists them as the chains eb – n0[16] … n0[0] – e2 etc.;
+  - box [C] widened (+210 / +230 from x 520 / 670, +470 from x 820), so the labels clear the bulk wires and the
+    neighbouring resistor texts;
+  - NA / NB ng 2; MS1 as the drawn chain in [S1]; dummies MDUM0–3 and `RDUM[1:0]` in [D].
+- Subckt `bg_core_pd` in `bias_ref_pd.spice` (sha 709f30ac…) edited in place, block-scoped, with the sheet's names;
+  README (sha 1323e721…) says the sheet follows the layout.
+- Checks (`bg_core_pd_2026-10-28/macro_install/`):
+  - LVS of the GDS against the sheet's netlist: MATCH, 30 devices after combining, no shorts or opens;
+  - sheet against subckt: equal, 67 devices;
+  - all 94 sheets with their own xschemrc, before / after, with the new subckt swapped in before: 93 identical,
+    only bg_core_pd.sch differs (6 devices out, 55 in);
+  - pads, source against sheet: as before (IOPadDiff2Single equal; IOPadSingle2Diff's only difference is the
+    expression {wcl} against its value 12u, unchanged).
+- Open, as for oa: `bias_bg_pd`'s flat sheet still has the pre-layout core; its source instantiates bg_core_pd.
+- Backups in `bg_core_pd_2026-10-28/macro_before/` (bias_ref_pd.spice, the README with the layout section).
+- The batch svg renders misplace right-aligned labels by an amount that depends on xschem's window zoom; the label
+  clearances were checked by geometry (worst case: xschem's text width estimate).
