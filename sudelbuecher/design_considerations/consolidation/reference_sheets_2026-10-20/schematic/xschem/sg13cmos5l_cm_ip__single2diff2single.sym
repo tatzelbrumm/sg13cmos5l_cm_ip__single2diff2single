@@ -1,0 +1,56 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+spectre_format="@name ( @pinlist ) @symname"
+template="name=x1"}
+V {}
+S {}
+F {}
+E {}
+P 4 5 -160 -420 160 -420 160 420 -160 420 -160 -420 {}
+T {Chipalooza 2026\nsingle2diff2single\nboundary reconciled 2026-09-04 vs\nuser_project_wrapper_3a.v -- no scan\nchain (reopened) -- no reset pin\n(harness has none per-project)} -150 -540 0 0 0.25 0.25 {}
+B 5 -200 375 -160 385 {name=ena dir=in}
+T {ena} -240 380 0 0 0.2 0.2 {}
+B 5 -200 315 -160 325 {name=clk dir=in}
+T {clk} -240 320 0 0 0.2 0.2 {}
+B 5 -200 255 -160 265 {name=outbuf_en dir=in}
+T {outbuf_en} -240 260 0 0 0.2 0.2 {}
+B 5 -200 195 -160 205 {name=inbuf_en dir=in}
+T {inbuf_en} -240 200 0 0 0.2 0.2 {}
+B 5 -200 135 -160 145 {name=filter_en dir=in}
+T {filter_en} -240 140 0 0 0.2 0.2 {}
+B 5 -200 75 -160 85 {name=vdiff_en[1] dir=in}
+T {vdiff_en[1]} -240 80 0 0 0.2 0.2 {}
+B 5 -200 15 -160 25 {name=vdiff_en[0] dir=in}
+T {vdiff_en[0]} -240 20 0 0 0.2 0.2 {}
+B 5 -200 -45 -160 -35 {name=vcmsel[1] dir=in}
+T {vcmsel[1]} -240 -40 0 0 0.2 0.2 {}
+B 5 -200 -105 -160 -95 {name=vcmsel[0] dir=in}
+T {vcmsel[0]} -240 -100 0 0 0.2 0.2 {}
+B 5 -200 -165 -160 -155 {name=ibias dir=in}
+T {ibias} -240 -160 0 0 0.2 0.2 {}
+B 5 -200 -225 -160 -215 {name=igmc dir=in}
+T {igmc} -240 -220 0 0 0.2 0.2 {}
+B 5 -200 -285 -160 -275 {name=vbias dir=in}
+T {vbias} -240 -280 0 0 0.2 0.2 {}
+B 5 -200 -345 -160 -335 {name=vin dir=in}
+T {vin} -240 -340 0 0 0.2 0.2 {}
+B 5 160 375 200 385 {name=vout dir=out}
+T {vout} 165 380 0 0 0.2 0.2 {}
+B 5 160 315 200 325 {name=vcm dir=inout}
+T {vcm} 165 320 0 0 0.2 0.2 {}
+B 5 160 255 200 265 {name=vdiffp dir=inout}
+T {vdiffp} 165 260 0 0 0.2 0.2 {}
+B 5 160 195 200 205 {name=vdiffn dir=inout}
+T {vdiffn} 165 200 0 0 0.2 0.2 {}
+B 5 160 135 200 145 {name=vdd_3v3 dir=inout}
+T {vdd_3v3} 165 140 0 0 0.2 0.2 {}
+B 5 160 75 200 85 {name=vdd_1v2 dir=inout}
+T {vdd_1v2} 165 80 0 0 0.2 0.2 {}
+B 5 160 15 200 25 {name=vss_3v3 dir=inout}
+T {vss_3v3} 165 20 0 0 0.2 0.2 {}
+B 5 160 -45 200 -35 {name=vss_1v2 dir=inout}
+T {vss_1v2} 165 -40 0 0 0.2 0.2 {}
+B 5 160 -105 200 -95 {name=vssio dir=inout}
+T {vssio} 165 -100 0 0 0.2 0.2 {}

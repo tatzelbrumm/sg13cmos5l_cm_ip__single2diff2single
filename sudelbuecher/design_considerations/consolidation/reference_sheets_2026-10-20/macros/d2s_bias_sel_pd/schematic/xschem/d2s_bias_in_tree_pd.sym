@@ -1,0 +1,52 @@
+v {xschem version=3.4.8RC file_version=1.2}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+description="d2s_bias_in_tree_pd: mirror tree and bias diodes"
+}
+V {}
+S {}
+E {}
+B 4 -80 -70 80 70 {}
+B 5 -62.5 -92.5 -57.5 -87.5 {name=vdd dir=inout}
+L 4 -60 -90 -60 -70 {}
+T {vdd} -66 -66 3 1 0.2 0.2 {}
+B 5 -62.5 87.5 -57.5 92.5 {name=vss dir=inout}
+L 4 -60 70 -60 90 {}
+T {vss} -66 66 3 0 0.2 0.2 {}
+B 5 -42.5 -92.5 -37.5 -87.5 {name=vddo dir=inout}
+L 4 -40 -90 -40 -70 {}
+T {vddo} -46 -66 3 1 0.2 0.2 {}
+B 5 -42.5 87.5 -37.5 92.5 {name=vsso dir=inout}
+L 4 -40 70 -40 90 {}
+T {vsso} -46 66 3 0 0.2 0.2 {}
+B 5 -102.5 -52.5 -97.5 -47.5 {name=iref dir=inout}
+L 4 -100 -50 -80 -50 {}
+T {iref} -76 -57 0 0 0.2 0.2 {}
+B 5 97.5 -52.5 102.5 -47.5 {name=vbp dir=out}
+L 4 80 -50 100 -50 {}
+T {vbp} 76 -57 0 1 0.2 0.2 {}
+B 5 97.5 -32.5 102.5 -27.5 {name=vbn dir=out}
+L 4 80 -30 100 -30 {}
+T {vbn} 76 -37 0 1 0.2 0.2 {}
+B 5 97.5 -12.5 102.5 -7.5 {name=vbpc dir=out}
+L 4 80 -10 100 -10 {}
+T {vbpc} 76 -17 0 1 0.2 0.2 {}
+B 5 97.5 7.5 102.5 12.5 {name=vbnc dir=out}
+L 4 80 10 100 10 {}
+T {vbnc} 76 3 0 1 0.2 0.2 {}
+B 5 97.5 27.5 102.5 32.5 {name=vabp dir=out}
+L 4 80 30 100 30 {}
+T {vabp} 76 23 0 1 0.2 0.2 {}
+B 5 97.5 47.5 102.5 52.5 {name=vabn dir=out}
+L 4 80 50 100 50 {}
+T {vabn} 76 43 0 1 0.2 0.2 {}
+B 5 -102.5 -32.5 -97.5 -27.5 {name=en_3v3 dir=in}
+L 4 -100 -30 -80 -30 {}
+T {en_3v3} -76 -37 0 0 0.2 0.2 {}
+B 5 -102.5 -12.5 -97.5 -7.5 {name=en_3v3_b dir=in}
+L 4 -100 -10 -80 -10 {}
+T {en_3v3_b} -76 -17 0 0 0.2 0.2 {}
+T {@symname} -80 94 0 0 0.25 0.25 {}
+T {@name} -80 -110 0 0 0.25 0.25 {}

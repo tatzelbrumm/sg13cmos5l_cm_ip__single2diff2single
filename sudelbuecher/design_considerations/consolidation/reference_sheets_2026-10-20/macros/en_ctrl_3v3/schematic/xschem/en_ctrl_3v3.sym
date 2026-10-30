@@ -1,0 +1,46 @@
+v {xschem version=3.4.8RC file_version=1.2}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+description="en_ctrl_3v3: fail-safe 1.2 V -> 3.3 V enable and select"
+}
+V {}
+S {}
+E {}
+B 4 -80 -60 80 60 {}
+B 5 -62.5 -82.5 -57.5 -77.5 {name=vddh dir=inout}
+L 4 -60 -80 -60 -60 {}
+T {vddh} -66 -56 3 1 0.2 0.2 {}
+B 5 -42.5 -82.5 -37.5 -77.5 {name=vddl dir=inout}
+L 4 -40 -80 -40 -60 {}
+T {vddl} -46 -56 3 1 0.2 0.2 {}
+B 5 -62.5 77.5 -57.5 82.5 {name=vss dir=inout}
+L 4 -60 60 -60 80 {}
+T {vss} -66 56 3 0 0.2 0.2 {}
+B 5 -102.5 -42.5 -97.5 -37.5 {name=en_1v2 dir=in}
+L 4 -100 -40 -80 -40 {}
+T {en_1v2} -76 -47 0 0 0.2 0.2 {}
+B 5 -102.5 -22.5 -97.5 -17.5 {name=sel0_1v2 dir=in}
+L 4 -100 -20 -80 -20 {}
+T {sel0_1v2} -76 -27 0 0 0.2 0.2 {}
+B 5 -102.5 -2.5 -97.5 2.5 {name=sel1_1v2 dir=in}
+L 4 -100 0 -80 0 {}
+T {sel1_1v2} -76 -7 0 0 0.2 0.2 {}
+B 5 -102.5 17.5 -97.5 22.5 {name=vdd1v2_sense dir=in}
+L 4 -100 20 -80 20 {}
+T {vdd1v2_sense} -76 13 0 0 0.2 0.2 {}
+B 5 -102.5 37.5 -97.5 42.5 {name=vdd3v3_sense dir=in}
+L 4 -100 40 -80 40 {}
+T {vdd3v3_sense} -76 33 0 0 0.2 0.2 {}
+B 5 97.5 -42.5 102.5 -37.5 {name=en_3v3 dir=out}
+L 4 80 -40 100 -40 {}
+T {en_3v3} 76 -47 0 1 0.2 0.2 {}
+B 5 97.5 -22.5 102.5 -17.5 {name=sel0_3v3 dir=out}
+L 4 80 -20 100 -20 {}
+T {sel0_3v3} 76 -27 0 1 0.2 0.2 {}
+B 5 97.5 -2.5 102.5 2.5 {name=sel1_3v3 dir=out}
+L 4 80 0 100 0 {}
+T {sel1_3v3} 76 -7 0 1 0.2 0.2 {}
+T {@symname} -80 84 0 0 0.25 0.25 {}
+T {@name} -80 -100 0 0 0.25 0.25 {}

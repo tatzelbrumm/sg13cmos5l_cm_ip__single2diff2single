@@ -1,0 +1,55 @@
+v {xschem version=3.4.8RC file_version=1.2}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+description="d2s_bias_sel_pd: pad-driver bias, selectable reference"
+}
+V {}
+S {}
+E {}
+B 4 -90 -70 90 70 {}
+B 5 -72.5 -92.5 -67.5 -87.5 {name=vdd dir=inout}
+L 4 -70 -90 -70 -70 {}
+T {vdd} -76 -66 3 1 0.2 0.2 {}
+B 5 -72.5 87.5 -67.5 92.5 {name=vss dir=inout}
+L 4 -70 70 -70 90 {}
+T {vss} -76 66 3 0 0.2 0.2 {}
+B 5 -52.5 -92.5 -47.5 -87.5 {name=vddo dir=inout}
+L 4 -50 -90 -50 -70 {}
+T {vddo} -56 -66 3 1 0.2 0.2 {}
+B 5 -52.5 87.5 -47.5 92.5 {name=vsso dir=inout}
+L 4 -50 70 -50 90 {}
+T {vsso} -56 66 3 0 0.2 0.2 {}
+B 5 -112.5 -52.5 -107.5 -47.5 {name=ibias dir=inout}
+L 4 -110 -50 -90 -50 {}
+T {ibias} -86 -57 0 0 0.2 0.2 {}
+B 5 107.5 -52.5 112.5 -47.5 {name=vbp dir=out}
+L 4 90 -50 110 -50 {}
+T {vbp} 86 -57 0 1 0.2 0.2 {}
+B 5 107.5 -32.5 112.5 -27.5 {name=vbn dir=out}
+L 4 90 -30 110 -30 {}
+T {vbn} 86 -37 0 1 0.2 0.2 {}
+B 5 107.5 -12.5 112.5 -7.5 {name=vbpc dir=out}
+L 4 90 -10 110 -10 {}
+T {vbpc} 86 -17 0 1 0.2 0.2 {}
+B 5 107.5 7.5 112.5 12.5 {name=vbnc dir=out}
+L 4 90 10 110 10 {}
+T {vbnc} 86 3 0 1 0.2 0.2 {}
+B 5 107.5 27.5 112.5 32.5 {name=vabp dir=out}
+L 4 90 30 110 30 {}
+T {vabp} 86 23 0 1 0.2 0.2 {}
+B 5 107.5 47.5 112.5 52.5 {name=vabn dir=out}
+L 4 90 50 110 50 {}
+T {vabn} 86 43 0 1 0.2 0.2 {}
+B 5 -112.5 -32.5 -107.5 -27.5 {name=en_3v3 dir=in}
+L 4 -110 -30 -90 -30 {}
+T {en_3v3} -86 -37 0 0 0.2 0.2 {}
+B 5 -112.5 -12.5 -107.5 -7.5 {name=sel0_3v3 dir=in}
+L 4 -110 -10 -90 -10 {}
+T {sel0_3v3} -86 -17 0 0 0.2 0.2 {}
+B 5 -112.5 7.5 -107.5 12.5 {name=sel1_3v3 dir=in}
+L 4 -110 10 -90 10 {}
+T {sel1_3v3} -86 3 0 0 0.2 0.2 {}
+T {@symname} -90 94 0 0 0.25 0.25 {}
+T {@name} -90 -110 0 0 0.25 0.25 {}
