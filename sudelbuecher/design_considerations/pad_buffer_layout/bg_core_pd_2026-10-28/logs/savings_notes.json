@@ -1,0 +1,145 @@
+[
+ {
+  "panel": 0,
+  "box": [
+   0.0,
+   -27.6,
+   38.585,
+   0.0
+  ],
+  "text": "ntap ring + NWell band\n335 of 1065 um2",
+  "tx": 1.0,
+  "ty": -11.0,
+  "color": "#c00000"
+ },
+ {
+  "panel": 0,
+  "box": [
+   39.585,
+   -27.6,
+   51.625,
+   -10.46
+  ],
+  "text": "bg_misc_p: own ntap ring\n100 of 206 um2",
+  "tx": 39.8,
+  "ty": -1.0,
+  "color": "#c00000"
+ },
+ {
+  "panel": 0,
+  "box": [
+   0.0,
+   -41.21,
+   48.87,
+   -33.0
+  ],
+  "text": "bg_nab: p-tap ring around one 49 um row: 190 of 401 um2",
+  "tx": 1.0,
+  "ty": -28.8,
+  "color": "#c00000"
+ },
+ {
+  "panel": 0,
+  "box": [
+   49.87,
+   -41.21,
+   57.1,
+   -28.6
+  ],
+  "text": "bg_misc_n:\nring 24 of 91 um2",
+  "tx": 50.1,
+  "ty": -35.0,
+  "color": "#c00000"
+ },
+ {
+  "panel": 0,
+  "box": [
+   0.0,
+   -59.97,
+   30.4,
+   -43.03
+  ],
+  "text": "bg_res: p-tap ring + R0 stretch reserve\n216 of 515 um2",
+  "tx": 1.0,
+  "ty": -42.0,
+  "color": "#c00000"
+ },
+ {
+  "panel": 0,
+  "box": [
+   31.4,
+   -59.97,
+   53.6,
+   -42.21
+  ],
+  "text": "bg_pnp: placed only\n(no emitter / base wiring)",
+  "tx": 32.0,
+  "ty": -50.0,
+  "color": "#c00000"
+ },
+ {
+  "panel": 1,
+  "box": [
+   29.14,
+   32.79,
+   42.24,
+   33.09
+  ],
+  "text": "ONE vdd NWell (pmir_c, svpg, ms1), no ring:\nn tie in the vdd rail + one 13.1 um segment in\npmir_c's bottom margin (LU for ms1 below it)",
+  "tx": 3.0,
+  "ty": 31.5,
+  "color": "#006000"
+ },
+ {
+  "panel": 1,
+  "box": [
+   0.0,
+   18.6,
+   28.49,
+   32.68
+  ],
+  "text": "bg_res_c: same 41 segments, ring and\nreserve removed: 401 um2 (-22 %)",
+  "tx": 3.0,
+  "ty": 26.0,
+  "color": "#006000"
+ },
+ {
+  "panel": 1,
+  "box": [
+   22.2,
+   0.82,
+   28.49,
+   18.58
+  ],
+  "text": "e-channel 112 um2:\nres is 6.3 um wider\nthan the pnp array;\nea / e2 run here",
+  "tx": 22.4,
+  "ty": 9.0,
+  "color": "#a05000"
+ },
+ {
+  "panel": 1,
+  "box": [
+   28.49,
+   1.54,
+   46.61,
+   24.34
+  ],
+  "text": "bg_n4 (A3): NA NB MS2 MS3 SKS,\nties top + bottom only:\n413 vs 492 um2 (bg_nab + bg_misc_n)",
+  "tx": 29.0,
+  "ty": 14.0,
+  "color": "#006000"
+ },
+ {
+  "panel": 1,
+  "box": [
+   2.38,
+   32.68,
+   47.55,
+   48.83
+  ],
+  "text": "bg_pmir_pcas_c (A4): 8 rows x 4 x 10/1,\ncascode rows facing their mirror rows: 729 vs 1065 um2",
+  "tx": 3.0,
+  "ty": 44.0,
+  "color": "#006000"
+ }
+]

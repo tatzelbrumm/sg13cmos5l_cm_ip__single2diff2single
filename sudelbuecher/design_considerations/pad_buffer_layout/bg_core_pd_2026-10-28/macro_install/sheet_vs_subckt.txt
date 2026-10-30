@@ -1,0 +1,2 @@
+# subckt bg_core_pd (bias_ref_pd.spice) against the xschem netlist of bg_core_pd.sch, topology + parameters
+subckt 67 sheet 67 -> EQUAL

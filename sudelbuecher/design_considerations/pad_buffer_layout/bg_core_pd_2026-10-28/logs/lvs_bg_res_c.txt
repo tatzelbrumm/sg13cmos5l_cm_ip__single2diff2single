@@ -1,0 +1,8 @@
+labels: 5 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS bg_res_c vs bg_res_c.cdl:bg_res_c -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 4
+  RES           A=e2        B=eb        R=   357.840 sq (L=178.920 W=0.500)
+  RES           A=vss       B=ea        R=   218.680 sq (L=109.340 W=0.500)
+  RES           A=vss       B=eb        R=   198.800 sq (L=99.400 W=0.500)
+  RES           A=vss       B=vss       R=     9.940 sq (L=9.940 W=1.000)

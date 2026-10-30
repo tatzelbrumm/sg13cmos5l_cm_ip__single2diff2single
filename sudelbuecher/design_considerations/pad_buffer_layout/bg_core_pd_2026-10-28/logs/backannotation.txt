@@ -1,0 +1,3 @@
+unlabelled layout nets mapped to sheet nets: {'$54': 'ca', '$53': 'co'}
+73 layout fingers -> 13 sheet devices, 4 dummy groups; 50 resistor segments / bipolars -> 5 sheet passives, 1 resistor dummy groups; wrote backannotation
+xschem netlist of the new sheet: 66 devices; subckt text: 66 devices; differing: none

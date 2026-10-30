@@ -1,0 +1,76 @@
+.SUBCKT bg_core_pd vdd vss iout en_3v3 en_3v3_b
+MMS2 ks g vss vss sg13_hv_nmos  W=10u L=1u
+MMS3 vpc ks vss vss sg13_hv_nmos  W=0.5u L=2u
+MPB vpg vpg vdd vdd sg13_hv_pmos  W=40u L=1u
+MPBC vpc vpc vpg vdd sg13_hv_pmos  W=40u L=1u
+MNB vpc g eb vss sg13_hv_nmos  W=20u L=4u
+QQ2_0 vss vss e2 pnpMPA AE=4e-12 PE=8e-06
+QQ2_1 vss vss e2 pnpMPA AE=4e-12 PE=8e-06
+QQ2_2 vss vss e2 pnpMPA AE=4e-12 PE=8e-06
+QQ2_3 vss vss e2 pnpMPA AE=4e-12 PE=8e-06
+QQ2_4 vss vss e2 pnpMPA AE=4e-12 PE=8e-06
+QQ2_5 vss vss e2 pnpMPA AE=4e-12 PE=8e-06
+QQ2_6 vss vss e2 pnpMPA AE=4e-12 PE=8e-06
+QQ2_7 vss vss e2 pnpMPA AE=4e-12 PE=8e-06
+MPA ca vpg vdd vdd sg13_hv_pmos  W=40u L=1u
+MPAC g vpc ca vdd sg13_hv_pmos  W=40u L=1u
+MNA g g ea vss sg13_hv_nmos  W=20u L=4u
+QQ1_0 vss vss ea pnpMPA AE=4e-12 PE=8e-06
+MPO co vpg vdd vdd sg13_hv_pmos  W=80u L=1u
+MPOC iout vpc co vdd sg13_hv_pmos  W=80u L=1u
+MSKS ks en_3v3_b vss vss sg13_hv_nmos  W=1u L=0.45u
+MSVPG vpg en_3v3 vdd vdd sg13_hv_pmos  W=1u L=0.45u
+RR1B_9 eb n1b_8 19.88
+RR1B_8 n1b_8 n1b_7 19.88
+RR1B_7 n1b_7 n1b_6 19.88
+RR1B_6 n1b_6 n1b_5 19.88
+RR1B_5 n1b_5 n1b_4 19.88
+RR1B_4 n1b_4 n1b_3 19.88
+RR1B_3 n1b_3 n1b_2 19.88
+RR1B_2 n1b_2 n1b_1 19.88
+RR1B_1 n1b_1 n1b_0 19.88
+RR1B_0 n1b_0 vss 19.88
+RR0_17 eb n0_16 19.88
+RR0_16 n0_16 n0_15 19.88
+RR0_15 n0_15 n0_14 19.88
+RR0_14 n0_14 n0_13 19.88
+RR0_13 n0_13 n0_12 19.88
+RR0_12 n0_12 n0_11 19.88
+RR0_11 n0_11 n0_10 19.88
+RR0_10 n0_10 n0_9 19.88
+RR0_9 n0_9 n0_8 19.88
+RR0_8 n0_8 n0_7 19.88
+RR0_7 n0_7 n0_6 19.88
+RR0_6 n0_6 n0_5 19.88
+RR0_5 n0_5 n0_4 19.88
+RR0_4 n0_4 n0_3 19.88
+RR0_3 n0_3 n0_2 19.88
+RR0_2 n0_2 n0_1 19.88
+RR0_1 n0_1 n0_0 19.88
+RR0_0 n0_0 e2 19.88
+RR1A_10 ea n1a_9 19.88
+RR1A_9 n1a_9 n1a_8 19.88
+RR1A_8 n1a_8 n1a_7 19.88
+RR1A_7 n1a_7 n1a_6 19.88
+RR1A_6 n1a_6 n1a_5 19.88
+RR1A_5 n1a_5 n1a_4 19.88
+RR1A_4 n1a_4 n1a_3 19.88
+RR1A_3 n1a_3 n1a_2 19.88
+RR1A_2 n1a_2 n1a_1 19.88
+RR1A_1 n1a_1 n1a_0 19.88
+RR1A_0 n1a_0 vss 19.88
+MMS1_0 net1 en_3v3_b vdd vdd sg13_hv_pmos  W=0.5u L=12.5u
+MMS1_1 net2 en_3v3_b net1 vdd sg13_hv_pmos  W=0.5u L=12.5u
+MMS1_2 net3 en_3v3_b net2 vdd sg13_hv_pmos  W=0.5u L=12.5u
+MMS1_3 net4 en_3v3_b net3 vdd sg13_hv_pmos  W=0.5u L=12.5u
+MMS1_4 net5 en_3v3_b net4 vdd sg13_hv_pmos  W=0.5u L=12.5u
+MMS1_5 net6 en_3v3_b net5 vdd sg13_hv_pmos  W=0.5u L=12.5u
+MMS1_6 net7 en_3v3_b net6 vdd sg13_hv_pmos  W=0.5u L=12.5u
+MMS1_7 ks en_3v3_b net7 vdd sg13_hv_pmos  W=0.5u L=12.5u
+MMDUM0 vdd vpg vdd vdd sg13_hv_pmos  W=2.4u L=1u
+MMDUM1 vdd vpc vdd vdd sg13_hv_pmos  W=2.4u L=1u
+MMDUM2 g g g vss sg13_hv_nmos  W=2u L=1u
+MMDUM3 g g g vss sg13_hv_nmos  W=16u L=4u
+RRDUM_1 vss vss 19.88
+RRDUM_0 vss vss 19.88
+.ENDS bg_core_pd

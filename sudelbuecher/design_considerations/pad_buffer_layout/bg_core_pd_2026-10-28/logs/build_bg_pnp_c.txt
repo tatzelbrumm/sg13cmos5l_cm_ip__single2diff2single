@@ -1,0 +1,1 @@
+bg_pnp_c: 22.200 x 17.760 um = 394.3 um2 (library bg_pnp 22.20 x 17.76 = 394.3); e2 pin y -8.795, ea pin y -3.125, right edge x 22.200

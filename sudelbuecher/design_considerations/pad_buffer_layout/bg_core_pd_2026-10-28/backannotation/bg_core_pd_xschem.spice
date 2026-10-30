@@ -1,0 +1,75 @@
+** sch_path: /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/oaagent/out_bg/backannotation/bg_core_pd.sch
+**.subckt bg_core_pd vdd vss en_3v3 en_3v3_b iout
+*.iopin vdd
+*.iopin vss
+*.ipin en_3v3
+*.ipin en_3v3_b
+*.opin iout
+XMS2 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XPB vpg vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XPBC vpc vpc vpg vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XNB vpc g eb vss sg13_hv_nmos w=20u l=4u ng=2 m=1 mm_ok=1
+XQ2 vss vss e2 pnpMPA a=4e-12 p=8e-06 m=8
+XPA ca vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XPAC g vpc ca vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XNA g g ea vss sg13_hv_nmos w=20u l=4u ng=2 m=1 mm_ok=1
+XQ1 vss vss ea pnpMPA a=4e-12 p=8e-06 m=1
+XPO co vpg vdd vdd sg13_hv_pmos w=80u l=1u ng=8 m=1 mm_ok=1
+XPOC iout vpc co vdd sg13_hv_pmos w=80u l=1u ng=8 m=1 mm_ok=1
+XSKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XSVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XMS1_0 ms1_1 en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_1 ms1_2 en_3v3_b ms1_1 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_2 ms1_3 en_3v3_b ms1_2 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_3 ms1_4 en_3v3_b ms1_3 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_4 ms1_5 en_3v3_b ms1_4 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_5 ms1_6 en_3v3_b ms1_5 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_6 ms1_7 en_3v3_b ms1_6 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_7 ks en_3v3_b ms1_7 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XR1B_0 eb r1b_1 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B_1 r1b_1 r1b_2 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B_2 r1b_2 r1b_3 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B_3 r1b_3 r1b_4 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B_4 r1b_4 r1b_5 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B_5 r1b_5 r1b_6 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B_6 r1b_6 r1b_7 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B_7 r1b_7 r1b_8 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B_8 r1b_8 r1b_9 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B_9 r1b_9 vss vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_0 eb r0_1 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_1 r0_1 r0_2 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_2 r0_2 r0_3 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_3 r0_3 r0_4 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_4 r0_4 r0_5 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_5 r0_5 r0_6 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_6 r0_6 r0_7 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_7 r0_7 r0_8 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_8 r0_8 r0_9 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_9 r0_9 r0_10 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_10 r0_10 r0_11 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_11 r0_11 r0_12 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_12 r0_12 r0_13 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_13 r0_13 r0_14 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_14 r0_14 r0_15 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_15 r0_15 r0_16 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_16 r0_16 r0_17 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0_17 r0_17 e2 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_0 ea r1a_1 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_1 r1a_1 r1a_2 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_2 r1a_2 r1a_3 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_3 r1a_3 r1a_4 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_4 r1a_4 r1a_5 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_5 r1a_5 r1a_6 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_6 r1a_6 r1a_7 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_7 r1a_7 r1a_8 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_8 r1a_8 r1a_9 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_9 r1a_9 r1a_10 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A_10 r1a_10 vss vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XMDUM0 vdd vpg vdd vdd sg13_hv_pmos w=2.4u l=1u ng=8 m=1 mm_ok=1
+XMDUM1 vdd vpc vdd vdd sg13_hv_pmos w=2.4u l=1u ng=8 m=1 mm_ok=1
+XMDUM2 g g g vss sg13_hv_nmos w=2u l=1u ng=1 m=1 mm_ok=1
+XMDUM3 g g g vss sg13_hv_nmos w=16u l=4u ng=8 m=1 mm_ok=1
+XRDUM0 vss vss vss rhigh w=0.5u l=9.94u m=2 b=0 mm_ok=1
+**.ends
+.end

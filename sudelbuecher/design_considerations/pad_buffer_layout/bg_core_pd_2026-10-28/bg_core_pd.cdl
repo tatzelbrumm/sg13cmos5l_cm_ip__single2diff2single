@@ -1,0 +1,135 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bg_core_pd reference for LVS, composed from the primitives' netlists by make_bg_core_pd_ref.py (Claude, 2026-10-28)
+* sources: bg_p_cells.cdl, bg_n_cells.cdl, bg_res_c.cdl, bg_pnp_c.cdl
+.SUBCKT bg_core_pd vdd vss iout en_3v3 en_3v3_b
+* pmir: bg_pmir_pcas_c
+Mpmir_bg_pmir_pcas_c_r1_dummyn_0 vdd vpg vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r1_PO_1 pmir.co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r1_PB_2 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r1_PA_3 pmir.ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r1_PO_4 pmir.co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r1_dummyn_5 vdd vpg vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r2_dummyn_0 vdd vpc vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r2_POC_1 iout vpc pmir.co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r2_PBC_2 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r2_PAC_3 g vpc pmir.ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r2_POC_4 iout vpc pmir.co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r2_dummyn_5 vdd vpc vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r3_dummyn_0 vdd vpc vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r3_PAC_1 g vpc pmir.ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r3_POC_2 iout vpc pmir.co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r3_POC_3 iout vpc pmir.co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r3_PBC_4 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r3_dummyn_5 vdd vpc vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r4_dummyn_0 vdd vpg vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r4_PA_1 pmir.ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r4_PO_2 pmir.co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r4_PO_3 pmir.co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r4_PB_4 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r4_dummyn_5 vdd vpg vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r5_dummyn_0 vdd vpg vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r5_PB_1 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r5_PO_2 pmir.co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r5_PO_3 pmir.co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r5_PA_4 pmir.ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r5_dummyn_5 vdd vpg vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r6_dummyn_0 vdd vpc vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r6_PBC_1 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r6_POC_2 iout vpc pmir.co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r6_POC_3 iout vpc pmir.co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r6_PAC_4 g vpc pmir.ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r6_dummyn_5 vdd vpc vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r7_dummyn_0 vdd vpc vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r7_POC_1 iout vpc pmir.co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r7_PAC_2 g vpc pmir.ca vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r7_PBC_3 vpc vpc vpg vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r7_POC_4 iout vpc pmir.co vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r7_dummyn_5 vdd vpc vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r8_dummyn_0 vdd vpg vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r8_PO_1 pmir.co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r8_PA_2 pmir.ca vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r8_PB_3 vpg vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r8_PO_4 pmir.co vpg vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mpmir_bg_pmir_pcas_c_r8_dummyn_5 vdd vpg vdd vdd sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+* svpg: bg_svpg
+Msvpg_bg_svpg_SVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+* ms1: bg_ms1
+Mms1_bg_ms1_MS1_0 ms1.ms1 en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mms1_bg_ms1_MS1_1 ms1.ms2 en_3v3_b ms1.ms1 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mms1_bg_ms1_MS1_2 ms1.ms3 en_3v3_b ms1.ms2 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mms1_bg_ms1_MS1_3 ms1.ms4 en_3v3_b ms1.ms3 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mms1_bg_ms1_MS1_4 ms1.ms5 en_3v3_b ms1.ms4 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mms1_bg_ms1_MS1_5 ms1.ms6 en_3v3_b ms1.ms5 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mms1_bg_ms1_MS1_6 ms1.ms7 en_3v3_b ms1.ms6 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mms1_bg_ms1_MS1_7 ks en_3v3_b ms1.ms7 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+* n4: bg_n4
+Mn4_dummy_R0_0 g g g vss sg13_hv_nmos w=2u l=4u ng=1 m=1
+Mn4_NA_R0_1 g g ea vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mn4_dummy_R0_2 g g g vss sg13_hv_nmos w=2u l=4u ng=1 m=1
+Mn4_dummy_R1_0 g g g vss sg13_hv_nmos w=2u l=4u ng=1 m=1
+Mn4_NB_R1_1 vpc g eb vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mn4_dummy_R1_2 g g g vss sg13_hv_nmos w=2u l=4u ng=1 m=1
+Mn4_dummy_R2_0 g g g vss sg13_hv_nmos w=2u l=4u ng=1 m=1
+Mn4_NB_R2_1 vpc g eb vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mn4_dummy_R2_2 g g g vss sg13_hv_nmos w=2u l=4u ng=1 m=1
+Mn4_dummy_R3_0 g g g vss sg13_hv_nmos w=2u l=4u ng=1 m=1
+Mn4_NA_R3_1 g g ea vss sg13_hv_nmos w=10u l=4u ng=1 m=1
+Mn4_dummy_R3_2 g g g vss sg13_hv_nmos w=2u l=4u ng=1 m=1
+Mn4_dummy_Y_0 g g g vss sg13_hv_nmos w=2u l=1u ng=1 m=1
+Mn4_MS2_Y_1 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Mn4_MS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1
+Mn4_SKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+* res: bg_res_c
+Rres_R0_0 e2 res.R0_1 19.88
+Rres_R0_1 res.R0_1 res.R0_2 19.88
+Rres_R0_2 res.R0_2 res.R0_3 19.88
+Rres_R0_3 res.R0_3 res.R0_4 19.88
+Rres_R0_4 res.R0_4 res.R0_5 19.88
+Rres_R0_5 res.R0_5 res.R0_6 19.88
+Rres_R0_6 res.R0_6 res.R0_7 19.88
+Rres_R0_7 res.R0_7 res.R0_8 19.88
+Rres_R0_8 res.R0_8 res.R0_9 19.88
+Rres_R0_9 res.R0_9 res.R0_10 19.88
+Rres_R0_10 res.R0_10 res.R0_11 19.88
+Rres_R0_11 res.R0_11 res.R0_12 19.88
+Rres_R0_12 res.R0_12 res.R0_13 19.88
+Rres_R0_13 res.R0_13 res.R0_14 19.88
+Rres_R0_14 res.R0_14 res.R0_15 19.88
+Rres_R0_15 res.R0_15 res.R0_16 19.88
+Rres_R0_16 res.R0_16 res.R0_17 19.88
+Rres_R0_17 res.R0_17 eb 19.88
+Rres_R1A_0 vss res.R1A_1 19.88
+Rres_R1A_1 res.R1A_1 res.R1A_2 19.88
+Rres_R1A_2 res.R1A_2 res.R1A_3 19.88
+Rres_R1A_3 res.R1A_3 res.R1A_4 19.88
+Rres_R1A_4 res.R1A_4 res.R1A_5 19.88
+Rres_R1A_5 res.R1A_5 res.R1A_6 19.88
+Rres_R1A_6 res.R1A_6 res.R1A_7 19.88
+Rres_R1A_7 res.R1A_7 res.R1A_8 19.88
+Rres_R1A_8 res.R1A_8 res.R1A_9 19.88
+Rres_R1A_9 res.R1A_9 res.R1A_10 19.88
+Rres_R1A_10 res.R1A_10 ea 19.88
+Rres_R1B_0 vss res.R1B_1 19.88
+Rres_R1B_1 res.R1B_1 res.R1B_2 19.88
+Rres_R1B_2 res.R1B_2 res.R1B_3 19.88
+Rres_R1B_3 res.R1B_3 res.R1B_4 19.88
+Rres_R1B_4 res.R1B_4 res.R1B_5 19.88
+Rres_R1B_5 res.R1B_5 res.R1B_6 19.88
+Rres_R1B_6 res.R1B_6 res.R1B_7 19.88
+Rres_R1B_7 res.R1B_7 res.R1B_8 19.88
+Rres_R1B_8 res.R1B_8 res.R1B_9 19.88
+Rres_R1B_9 res.R1B_9 eb 19.88
+Rres_dummy_L vss vss 19.88
+Rres_dummy_R vss vss 19.88
+* pnp: bg_pnp_c
+Qpnp_Q1 vss vss ea pnpMPA AE=4p PE=8u
+Qpnp_Q2_0 vss vss e2 pnpMPA AE=4p PE=8u
+Qpnp_Q2_1 vss vss e2 pnpMPA AE=4p PE=8u
+Qpnp_Q2_2 vss vss e2 pnpMPA AE=4p PE=8u
+Qpnp_Q2_3 vss vss e2 pnpMPA AE=4p PE=8u
+Qpnp_Q2_4 vss vss e2 pnpMPA AE=4p PE=8u
+Qpnp_Q2_5 vss vss e2 pnpMPA AE=4p PE=8u
+Qpnp_Q2_6 vss vss e2 pnpMPA AE=4p PE=8u
+Qpnp_Q2_7 vss vss e2 pnpMPA AE=4p PE=8u
+.ENDS bg_core_pd

@@ -1,0 +1,1 @@
+bg_library_set: 6 primitives, sum of their boxes 2673.0 um2

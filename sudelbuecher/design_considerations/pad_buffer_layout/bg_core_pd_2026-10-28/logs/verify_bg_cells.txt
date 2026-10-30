@@ -1,0 +1,23 @@
+1. bg_pnp_c (bg_pnp_c.gds) vs library bg_pnp
+   device cell pnpMPA: XOR differences on no layer
+   array: library (3.95, -11.63, 0.0, 5.67, 7.15, 0.0, 3, 3), revised (3.95, -11.63, 0.0, 5.67, 7.15, 0.0, 3, 3) -> same
+   Activ    XOR 0.0000 um2 (library 162.78 um2)
+   Cont     XOR 0.0000 um2 (library 23.37 um2)
+   pSD      XOR 0.0000 um2 (library 162.28 um2)
+   NWell    XOR 0.0000 um2 (library 190.51 um2)
+   device labels (63/0): 9 in the library, kept
+2. bg_res_c (bg_res_c.gds) vs library bg_res
+   device cell rhigh$1: XOR differences on no layer
+   segments: library 41 at pitch [0.68] (y [0.0]), revised 41 at pitch [0.68]
+   order of R0 / R1A / R1B / dummy: same
+   GatPoly  XOR 0.0000 um2 (library 17.63 um2, translated by 0.000, 0.000)
+   Cont     XOR 0.0000 um2 (library 4.72 um2, translated by 0.000, 0.000)
+   nSD      XOR 0.0000 um2 (library 313.15 um2, translated by 0.000, 0.000)
+   pSD      XOR 0.0000 um2 (library 313.15 um2, translated by 0.000, 0.000)
+   SalBlock XOR 0.0000 um2 (library 279.31 um2, translated by 0.000, 0.000)
+   PolyRes  XOR 0.0000 um2 (library 203.77 um2, translated by 0.000, 0.000)
+   EXTBlock XOR 0.0000 um2 (library 313.55 um2, translated by 0.000, 0.000)
+3. sizes
+   bg_pnp   22.20 x 17.76 =  394.3 um2  ->  bg_pnp_c  22.20 x 17.76 =  394.3 um2  (+0.0 %)
+   bg_res   30.40 x 16.94 =  515.0 um2  ->  bg_res_c  28.49 x 14.08 =  401.1 um2  (-22.1 %)
+RESULT: devices as in the library

@@ -1,0 +1,1 @@
+bg_res_c: 28.490 x 14.080 um = 401.1 um2 (library bg_res 30.40 x 16.94 = 515.0); levels top 3 bottom 3; pins [('e2', 0.93), ('ea', 26.09), ('eb', 26.77), ('vss', -0.25), ('vss', 27.95)]

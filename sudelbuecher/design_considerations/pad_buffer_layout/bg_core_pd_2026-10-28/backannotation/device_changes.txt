@@ -1,0 +1,35 @@
+device changes, layout -> sheet (W, L in um; ng = fingers; series = devices in series)
+dev    type           sheet (old)                        layout (new)                       effect
+MS1    sg13_hv_pmos   w=0.5u l=100u ng=1 m=1             8 x w=0.5u l=12.5u in series       W/L 0.005 as one 0.5u/100u device (series of equal gates ~ one long device; internal nodes added)
+MS2    sg13_hv_nmos   w=10u l=1u ng=1 m=1                w=10u l=1u ng=1 (10u/finger)       none (W, L as sheet)
+MS3    sg13_hv_nmos   w=0.5u l=2u ng=1 m=1               w=0.5u l=2u ng=1 (0.5u/finger)     none (W, L as sheet)
+PB     sg13_hv_pmos   w=40u l=1u ng=4 m=1                w=40u l=1u ng=4 (10u/finger)       none (W, L as sheet)
+PBC    sg13_hv_pmos   w=40u l=1u ng=4 m=1                w=40u l=1u ng=4 (10u/finger)       none (W, L as sheet)
+NB     sg13_hv_nmos   w=20u l=4u ng=1 m=1                w=20u l=4u ng=2 (10u/finger)       none (W, L as sheet); finger split only
+PA     sg13_hv_pmos   w=40u l=1u ng=4 m=1                w=40u l=1u ng=4 (10u/finger)       none (W, L as sheet)
+PAC    sg13_hv_pmos   w=40u l=1u ng=4 m=1                w=40u l=1u ng=4 (10u/finger)       none (W, L as sheet)
+NA     sg13_hv_nmos   w=20u l=4u ng=1 m=1                w=20u l=4u ng=2 (10u/finger)       none (W, L as sheet); finger split only
+PO     sg13_hv_pmos   w=80u l=1u ng=8 m=1                w=80u l=1u ng=8 (10u/finger)       none (W, L as sheet)
+POC    sg13_hv_pmos   w=80u l=1u ng=8 m=1                w=80u l=1u ng=8 (10u/finger)       none (W, L as sheet)
+SKS    sg13_hv_nmos   w=1u l=0.45u ng=1 m=1              w=1u l=0.45u ng=1 (1u/finger)      none (W, L as sheet)
+SVPG   sg13_hv_pmos   w=1u l=0.45u ng=1 m=1              w=1u l=0.45u ng=1 (1u/finger)      none (W, L as sheet)
+R1B    rhigh          w=0.5u l=99.36u m=1 b=0            10 x w=0.5u l=9.94u in series (l total 99.4u) l +0.04 % (99.36u -> 99.4u); 10 segments, each with its own heads
+R0     rhigh          w=0.5u l=179.5u m=1 b=0            18 x w=0.5u l=9.94u in series (l total 178.92u) l -0.32 % (179.5u -> 178.92u); 18 segments, each with its own heads
+Q2     pnpMPA         a=4p p=8u m=8                      m=8 (AE 4 um2 each)                none
+R1A    rhigh          w=0.5u l=109.3u m=1 b=0            11 x w=0.5u l=9.94u in series (l total 109.34u) l +0.04 % (109.3u -> 109.34u); 11 segments, each with its own heads
+Q1     pnpMPA         a=4p p=8u m=1                      m=1 (AE 4 um2 each)                none
+RDUM0  rhigh          (not in the sheet)                 2 x w=0.5u l=9.94u                 dummy segments, both ends on vss
+MDUM0  sg13_hv_pmos   (not in the sheet)                 w=2.4u l=1u ng=8 (0.3u/finger)     dummy D=S=vdd G=vpg B=vdd: gate area 2.4 um2 on vpg
+MDUM1  sg13_hv_pmos   (not in the sheet)                 w=2.4u l=1u ng=8 (0.3u/finger)     dummy D=S=vdd G=vpc B=vdd: gate area 2.4 um2 on vpc
+MDUM2  sg13_hv_nmos   (not in the sheet)                 w=2u l=1u ng=1 (2u/finger)         dummy D=S=g G=g B=vss: gate area 2 um2 on g (D=S=G: Vgs = 0, no channel)
+MDUM3  sg13_hv_nmos   (not in the sheet)                 w=16u l=4u ng=8 (2u/finger)        dummy D=S=g G=g B=vss: gate area 64 um2 on g (D=S=G: Vgs = 0, no channel)
+
+ratios that set the circuit (sheet -> layout):
+  PO : PA : PB (W, mirror; iout = 2 x branch)        2 : 1 : 1                2 : 1 : 1                kept
+  POC : PAC : PBC (W, cascodes)                      2 : 1 : 1                2 : 1 : 1                kept
+  NA : NB (W/L, matched pair)                        1 : 1                    1 : 1                    kept
+
+layout notes (no device change):
+  - PMOS cells bg_pmir_pcas_c / bg_ms1 / bg_svpg tap-less in ONE merged vdd NWell; n ties: thick tie under the vdd rail, one 13.1 um segment in bg_pmir_pcas_c's bottom margin over bg_ms1
+  - bg_n4 (NA, NB, MS2, MS3, SKS): own p+ ties at bottom and top; its dummies D = S = G = g (user's choice 2026-10-28 05:43)
+  - bg_res_c: the library's rhigh segments (0.5 x 9.94 um, 0.68 um pitch, the library's interleave) without the p-tap ring; bg_pnp_c: the library's 3 x 3 pnpMPA array (Q1 centre) with its emitter / base wiring

@@ -1,0 +1,156 @@
+# all 94 sheets (own xschemrc), before / after the bg_core_pd backannotation; before with the new bg_core_pd subckt swapped in
+SAME macros/IOPad/schematic/xschem/Clamp_N_M1.sch
+SAME macros/IOPad/schematic/xschem/Clamp_P_M1.sch
+SAME macros/IOPad/schematic/xschem/DCNDiode.sch
+SAME macros/IOPad/schematic/xschem/DCNdiode.sch
+SAME macros/IOPad/schematic/xschem/DCPDiode.sch
+SAME macros/IOPad/schematic/xschem/DCPdiode.sch
+SAME macros/IOPad/schematic/xschem/sg13cmos5l_ClampN15N15.sch
+SAME macros/IOPad/schematic/xschem/sg13cmos5l_ClampP15N15.sch
+DIFF macros/bg_core_pd/schematic/xschem/bg_core_pd.sch
+   - xms1 sg13_hv_pmos ks en_3v3_b vdd vdd l=100u ng=1 w=0.5u
+   - xnb sg13_hv_nmos vpc g eb vss l=4u ng=1 w=20u
+   - xr1b rhigh eb vss vss l=99.36u w=0.5u
+   - xr0 rhigh eb e2 vss l=179.5u w=0.5u
+   - xna sg13_hv_nmos g g ea vss l=4u ng=1 w=20u
+   - xr1a rhigh ea vss vss l=109.3u w=0.5u
+   + xnb sg13_hv_nmos vpc g eb vss l=4u ng=2 w=20u
+   + xna sg13_hv_nmos g g ea vss l=4u ng=2 w=20u
+   + xr1b[9] rhigh eb n1b[8] vss l=9.94u w=0.5u
+   + xr1b[8] rhigh n1b[8] n1b[7] vss l=9.94u w=0.5u
+   + xr1b[7] rhigh n1b[7] n1b[6] vss l=9.94u w=0.5u
+   + xr1b[6] rhigh n1b[6] n1b[5] vss l=9.94u w=0.5u
+   + xr1b[5] rhigh n1b[5] n1b[4] vss l=9.94u w=0.5u
+   + xr1b[4] rhigh n1b[4] n1b[3] vss l=9.94u w=0.5u
+   + xr1b[3] rhigh n1b[3] n1b[2] vss l=9.94u w=0.5u
+   + xr1b[2] rhigh n1b[2] n1b[1] vss l=9.94u w=0.5u
+   + xr1b[1] rhigh n1b[1] n1b[0] vss l=9.94u w=0.5u
+   + xr1b[0] rhigh n1b[0] vss vss l=9.94u w=0.5u
+   + xr0[17] rhigh eb n0[16] vss l=9.94u w=0.5u
+   + xr0[16] rhigh n0[16] n0[15] vss l=9.94u w=0.5u
+   + xr0[15] rhigh n0[15] n0[14] vss l=9.94u w=0.5u
+   + xr0[14] rhigh n0[14] n0[13] vss l=9.94u w=0.5u
+   + xr0[13] rhigh n0[13] n0[12] vss l=9.94u w=0.5u
+   + xr0[12] rhigh n0[12] n0[11] vss l=9.94u w=0.5u
+   + xr0[11] rhigh n0[11] n0[10] vss l=9.94u w=0.5u
+   + xr0[10] rhigh n0[10] n0[9] vss l=9.94u w=0.5u
+   + xr0[9] rhigh n0[9] n0[8] vss l=9.94u w=0.5u
+   + xr0[8] rhigh n0[8] n0[7] vss l=9.94u w=0.5u
+   + xr0[7] rhigh n0[7] n0[6] vss l=9.94u w=0.5u
+   + xr0[6] rhigh n0[6] n0[5] vss l=9.94u w=0.5u
+   + xr0[5] rhigh n0[5] n0[4] vss l=9.94u w=0.5u
+   + xr0[4] rhigh n0[4] n0[3] vss l=9.94u w=0.5u
+   + xr0[3] rhigh n0[3] n0[2] vss l=9.94u w=0.5u
+   + xr0[2] rhigh n0[2] n0[1] vss l=9.94u w=0.5u
+   + xr0[1] rhigh n0[1] n0[0] vss l=9.94u w=0.5u
+   + xr0[0] rhigh n0[0] e2 vss l=9.94u w=0.5u
+   + xr1a[10] rhigh ea n1a[9] vss l=9.94u w=0.5u
+   + xr1a[9] rhigh n1a[9] n1a[8] vss l=9.94u w=0.5u
+   + xr1a[8] rhigh n1a[8] n1a[7] vss l=9.94u w=0.5u
+   + xr1a[7] rhigh n1a[7] n1a[6] vss l=9.94u w=0.5u
+   + xr1a[6] rhigh n1a[6] n1a[5] vss l=9.94u w=0.5u
+   + xr1a[5] rhigh n1a[5] n1a[4] vss l=9.94u w=0.5u
+   + xr1a[4] rhigh n1a[4] n1a[3] vss l=9.94u w=0.5u
+   + xr1a[3] rhigh n1a[3] n1a[2] vss l=9.94u w=0.5u
+   + xr1a[2] rhigh n1a[2] n1a[1] vss l=9.94u w=0.5u
+   + xr1a[1] rhigh n1a[1] n1a[0] vss l=9.94u w=0.5u
+   + xr1a[0] rhigh n1a[0] vss vss l=9.94u w=0.5u
+   + xms1_0 sg13_hv_pmos net1 en_3v3_b vdd vdd l=12.5u ng=1 w=0.5u
+   + xms1_1 sg13_hv_pmos net2 en_3v3_b net1 vdd l=12.5u ng=1 w=0.5u
+   + xms1_2 sg13_hv_pmos net3 en_3v3_b net2 vdd l=12.5u ng=1 w=0.5u
+   + xms1_3 sg13_hv_pmos net4 en_3v3_b net3 vdd l=12.5u ng=1 w=0.5u
+   + xms1_4 sg13_hv_pmos net5 en_3v3_b net4 vdd l=12.5u ng=1 w=0.5u
+   + xms1_5 sg13_hv_pmos net6 en_3v3_b net5 vdd l=12.5u ng=1 w=0.5u
+   + xms1_6 sg13_hv_pmos net7 en_3v3_b net6 vdd l=12.5u ng=1 w=0.5u
+   + xms1_7 sg13_hv_pmos ks en_3v3_b net7 vdd l=12.5u ng=1 w=0.5u
+   + xmdum0 sg13_hv_pmos vdd vpg vdd vdd l=1u ng=8 w=2.4u
+   + xmdum1 sg13_hv_pmos vdd vpc vdd vdd l=1u ng=8 w=2.4u
+   + xmdum2 sg13_hv_nmos g g g vss l=1u ng=1 w=2u
+   + xmdum3 sg13_hv_nmos g g g vss l=4u ng=8 w=16u
+   + xrdum[1] rhigh vss vss vss l=9.94u w=0.5u
+   + xrdum[0] rhigh vss vss vss l=9.94u w=0.5u
+SAME macros/bias_bg_pd/schematic/xschem/bias_bg_pd.sch
+SAME macros/bias_bg_pd/verification/cace/templates/bias_bg_pd_tb_dc.sch
+SAME macros/bias_bg_pd/verification/cace/templates/bias_bg_pd_tb_pd.sch
+SAME macros/bias_bg_pd/verification/cace/templates/bias_bg_pd_tb_psrr.sch
+SAME macros/bias_bg_pd/verification/cace/templates/bias_bg_pd_tb_startup.sch
+SAME macros/bias_dist_pd/schematic/xschem/bias_dist_pd.sch
+SAME macros/bias_gen_pd/schematic/xschem/bias_gen_pd.sch  (instantiates bg_core_pd)
+SAME macros/bias_in_pd/schematic/xschem/bias_in_pd.sch
+SAME macros/bias_in_pd/verification/cace/templates/bias_in_pd_tb_dc.sch
+SAME macros/bias_in_pd/verification/cace/templates/bias_in_pd_tb_pd.sch
+SAME macros/bias_in_pd/verification/cace/templates/bias_in_pd_tb_psrr.sch
+SAME macros/bias_in_pd/verification/cace/templates/bias_in_pd_tb_startup.sch
+SAME macros/bias_oa_pd/schematic/xschem/bias_oa_pd.sch
+SAME macros/bias_oa_pd/verification/cace/templates/bias_oa_pd_tb_dc.sch
+SAME macros/bias_oa_pd/verification/cace/templates/bias_oa_pd_tb_pd.sch
+SAME macros/bias_oa_pd/verification/cace/templates/bias_oa_pd_tb_psrr.sch
+SAME macros/bias_oa_pd/verification/cace/templates/bias_oa_pd_tb_startup.sch
+SAME macros/bias_out_pd/schematic/xschem/bias_out_pd.sch
+SAME macros/bias_out_pd/verification/cace/templates/bias_out_pd_tb_dc.sch
+SAME macros/bias_out_pd/verification/cace/templates/bias_out_pd_tb_pd.sch
+SAME macros/bias_out_pd/verification/cace/templates/bias_out_pd_tb_psrr.sch
+SAME macros/bias_out_pd/verification/cace/templates/bias_out_pd_tb_startup.sch
+SAME macros/bias_sel_noab_pd/schematic/xschem/bias_sel_noab_pd.sch  (instantiates bg_core_pd)
+SAME macros/bias_sel_pd/schematic/xschem/bias_sel_pd.sch  (instantiates bg_core_pd)
+SAME macros/bias_sel_pd/schematic/xschem/inv_3v3_pd.sch
+SAME macros/bias_sel_pd/verification/cace/templates/bias_sel_pd_tb_dc.sch  (instantiates bg_core_pd)
+SAME macros/bias_sel_pd/verification/cace/templates/bias_sel_pd_tb_tran.sch  (instantiates bg_core_pd)
+SAME macros/bias_tree_noab_pd/schematic/xschem/bias_tree_noab_pd.sch
+SAME macros/bias_tree_pd/schematic/xschem/bias_tree_pd.sch
+SAME macros/counter/testbenches/xschem/counter_top_tb_tran.sch
+SAME macros/en_ctrl_3v3/schematic/xschem/en_ctrl_3v3.sch
+SAME macros/en_ctrl_3v3/schematic/xschem/pg_det.sch
+SAME macros/en_ctrl_3v3/verification/cace/templates/en_ctrl_3v3_tb_dc.sch
+SAME macros/en_ctrl_3v3/verification/cace/templates/en_ctrl_3v3_tb_tran_en.sch
+SAME macros/en_ctrl_3v3/verification/cace/templates/en_ctrl_3v3_tb_tran_pg.sch
+SAME macros/hv_logic/schematic/xschem/inv_hv.sch
+SAME macros/hv_logic/schematic/xschem/nand2_hv.sch
+SAME macros/hv_logic/schematic/xschem/nor2_hv.sch
+SAME macros/hv_logic/schematic/xschem/nor3_hv.sch
+SAME macros/inverter/schematic/xschem/inverter.sch
+SAME macros/inverter/testbenches/xschem/inverter_tb_ac_ol.sch
+SAME macros/inverter/testbenches/xschem/inverter_tb_dc_vout.sch
+SAME macros/inverter/testbenches/xschem/inverter_tb_tran.sch
+SAME macros/inverter/verification/cace/templates/inverter_tb_ac.sch
+SAME macros/ls_dn_3v3_1v2/schematic/xschem/ls_dn_3v3_1v2.sch
+SAME macros/ls_dn_3v3_1v2/testbenches/xschem/tb_ls_dn.sch
+SAME macros/ls_dn_3v3_1v2/verification/cace/templates/ls_dn_3v3_1v2_tb_tran.sch
+SAME macros/ls_up_1v2_3v3/schematic/xschem/ls_up_1v2_3v3.sch
+SAME macros/ls_up_1v2_3v3/testbenches/xschem/tb_ls_loop.sch
+SAME macros/ls_up_1v2_3v3/testbenches/xschem/tb_ls_up.sch
+SAME macros/ls_up_1v2_3v3/verification/cace/templates/ls_up_1v2_3v3_tb_tran.sch
+SAME macros/oa_core_pd/schematic/xschem/oa_core_pd.sch
+SAME macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd.sch
+SAME macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd_sel.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_out_n.sch
+SAME macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_out_p.sch
+SAME macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/sg13cmos5l_IOPadDiff2Single.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/unit_r2.sch
+SAME macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_enable.sch
+SAME macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_leak.sch
+SAME macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_startup_oa.sch
+SAME macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_unpowered.sch
+SAME macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/d2s_mpdda_pd_sel_tb_loop.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_ac.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_dc.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_drive.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_enable.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_noise.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_pd.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_thd.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_tran.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_core_ideal.sch
+SAME macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda.sch
+SAME macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd.sch
+SAME macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd_sel.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/sg13cmos5l_IOPadSingle2Diff.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/s2d_mpdda_pd_sel_tb_loop.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_ac.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_dc.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_enable.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_noise.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_pd.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_range.sch  (instantiates bg_core_pd)
+SAME macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_tran.sch  (instantiates bg_core_pd)
+SAME macros/slot/schematic/xschem/slot.sch  (instantiates bg_core_pd)

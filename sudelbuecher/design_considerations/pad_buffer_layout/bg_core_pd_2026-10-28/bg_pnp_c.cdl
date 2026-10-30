@@ -1,0 +1,15 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bg_pnp_c (build_bg_pnp_c.py, 2026-10-28, Claude): Q1 (centre, ea) and 8 x Q2 (e2), pnpMPA a=4p p=8u,
+* C = substrate = B = vss
+.SUBCKT bg_pnp_c e2 ea vss
+QQ1 vss vss ea pnpMPA AE=4p PE=8u
+QQ2_0 vss vss e2 pnpMPA AE=4p PE=8u
+QQ2_1 vss vss e2 pnpMPA AE=4p PE=8u
+QQ2_2 vss vss e2 pnpMPA AE=4p PE=8u
+QQ2_3 vss vss e2 pnpMPA AE=4p PE=8u
+QQ2_4 vss vss e2 pnpMPA AE=4p PE=8u
+QQ2_5 vss vss e2 pnpMPA AE=4p PE=8u
+QQ2_6 vss vss e2 pnpMPA AE=4p PE=8u
+QQ2_7 vss vss e2 pnpMPA AE=4p PE=8u
+.ENDS bg_pnp_c

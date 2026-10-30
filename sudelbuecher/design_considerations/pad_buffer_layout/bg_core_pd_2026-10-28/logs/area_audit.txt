@@ -1,0 +1,23 @@
+== bg_library_set in bg_library_set.gds: 57.10 x 59.97 = 3424.3 um2
+   instance                     bbox     core     band      tie  wells
+   bg_pmir_pcas               1064.9    730.4    334.5     99.3  1 well(s) 1064.9 um2
+   bg_misc_p                   206.4    106.0    100.4     41.6  1 well(s) 206.4 um2
+   bg_nab                      401.2    211.8    189.5     86.4  0 well(s) 0.0 um2
+   bg_misc_n                    91.2     66.9     24.3      5.2  0 well(s) 0.0 um2
+   bg_res                      515.0    299.2    215.8     71.2  0 well(s) 0.0 um2
+   bg_pnp                      394.3    378.4     15.8      0.0  9 well(s) 190.5 um2
+   sum                        2673.0   1792.7    880.3    303.8
+   block: wells 11 (1461.8 um2); top-level ties 0.0 um2; rails 0.0 um2; union of primitives 2673.0 um2; free (no primitive, no rail) 751.3 um2 = 21.9 %
+   gate area 637.9 um2 = 18.6 % of the block; device diffusion 891.0 um2 = 26.0 %
+== bg_core_pd in bg_core_pd.gds: 47.55 x 50.05 = 2379.9 um2
+   instance                     bbox     core     band      tie  wells
+   bg_svpg                       5.3      1.1      4.2      0.0  1 well(s) 5.3 um2
+   bg_pmir_pcas_c              729.5    624.0    105.5      0.0  1 well(s) 729.5 um2
+   bg_res_c                    401.1    299.2    102.0      0.0  0 well(s) 0.0 um2
+   bg_pnp_c                    394.3    378.4     15.8      0.0  9 well(s) 190.5 um2
+   bg_ms1                      100.8     75.8     25.0      0.0  1 well(s) 100.8 um2
+   bg_n4                       413.1    350.9     62.3      8.0  0 well(s) 0.0 um2
+   sum                        2044.1   1729.4    314.8      8.0
+   block: wells 10 (1084.5 um2); top-level ties 17.8 um2; rails 86.5 um2; union of primitives 2044.1 um2; free (no primitive, no rail) 249.9 um2 = 10.5 %
+   gate area 612.7 um2 = 25.7 % of the block; device diffusion 884.2 um2 = 37.2 %
+== change: block 3424.3 -> 2379.9 um2 (-31 %); bands 880.3 -> 314.8; free 751.3 -> 249.9; wells 11 -> 10

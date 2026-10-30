@@ -1,0 +1,6 @@
+labels: 3 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS bg_pnp_c vs bg_pnp_c.cdl:bg_pnp_c -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 2
+  PNPMPA        C=vss       B=vss       E=e2        AE= 32.000 NE=8
+  PNPMPA        C=vss       B=vss       E=ea        AE=  4.000 NE=1
