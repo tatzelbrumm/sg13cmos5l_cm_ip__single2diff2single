@@ -12,7 +12,8 @@
 - Messages that a background agent sent to the session (one, at 04:32) arrive as user-role records; they are one summary line like the notifications, not user turns. The agents' internal ids are replaced by their names (A2, A3, A4).
 - At 04:02 the context was compacted a fifth time and the transcript file was started anew; it begins with the reply in progress at 04:00. The archive had been swept last at 02:51 (the background archive process had stopped at its 2-hour limit before 02:32 and was not restarted; one-off sweeps since), so the records from 02:51 to 04:00 come from the conversation's record on claude.ai, read back at 04:18 with the session's conversation reader and converted by `export_claudeai.py`, as for 17:57–22:06: user messages, visible replies and tool calls with their arguments, no tool results and no background notifications. The answers to the question asked at 03:58 were a tool result and so are not in that record; they are quoted from the session's compaction summary, the only place they survive. From 04:00 on, the new transcript file (swept into the archive at 04:17 and again at each export), without the compaction summary.
 - At 06:24 the context was compacted a sixth time and the transcript file was started anew; it begins with the last reasoning step before the compaction (06:20). The archive had been swept last at 05:23, so the records from 05:23 to 06:20 come from the conversation's record on claude.ai, read back at 12:50–12:51 with the session's conversation reader and converted by `export_claudeai.py`, as for 02:51–04:00: user messages, visible replies and tool calls with their arguments, no tool results and no background notifications (a reply that begins without a user message was started by one, and is marked so). From 06:20 on, the new transcript file (swept into the archive at 06:28 and at each export), without the compaction summary.
-- Export made 2026-10-27 10:10, 10:29, 11:54, 13:23, 14:48, 17:57, 22:16, 23:04, and on 2026-10-28 00:18, 00:50, 02:21, 02:41, 04:20 and 12:53, and on 2026-10-30 13:19 by the session itself, each time up to and including the command that built it. The replies after it are not included.
+- At 14:56 on 2026-10-30 the context was compacted a seventh time and the transcript file was started anew; it begins with the last tool call before the compaction (14:55). The archive had been swept last at 13:19, so the records from 13:19 to 14:55 come from the conversation's record on claude.ai, read back at 14:58–14:59 with the session's conversation reader (the message of 14:50 and the reply up to 14:55 at 15:27: the record keeps a turn only once its reply is finished) and converted by `export_claudeai.py`, as for 05:23–06:20: user messages, visible replies and tool calls with their arguments, no tool results, no background notifications and no attachments (the messages of 13:50 and 14:18 came with an updated `git status` output). The export of 15:04 still had the message of 14:50 from the session's compaction summary and the reply up to 14:55 as one line from it. From 14:55 on, the new transcript file, without the compaction summary.
+- Export made 2026-10-27 10:10, 10:29, 11:54, 13:23, 14:48, 17:57, 22:16, 23:04, and on 2026-10-28 00:18, 00:50, 02:21, 02:41, 04:20 and 12:53, and on 2026-10-30 13:19, 15:04 and 15:28 by the session itself, each time up to and including the command that built it. The replies after it are not included.
 - Times are Europe/Berlin (CET).
 
 ## Turn 1 — 2026-10-27 09:46
@@ -5968,4 +5969,674 @@ The folder holds 46 files. Two steps share it: the bias split, and the README ba
 **Assistant:** The transcript is continuous: no compaction since the 06:24 one, and 79 new records to sweep. I'm building with the same script and one more date in the header.
 
 *[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && HM=$(TZ=Europe/Berlin date +%H:%M) && TT=30_$(TZ=Europe/Berl…`]*
+
+*[13:19–14:55: from the conversation's record on claude.ai (no tool results, no background notifications, no attachments); from 14:55 on again from the transcript]*
+
+**Assistant:** Built: 106 turns, today's eight included, and the 12:53 export is an exact prefix. Checking the copy on your computer before overwriting:
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog; sha256sum $S/2026-10-27_opus_iopaddiff2single_build.md | cut -c1-1…`]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/chatlog_30_1319 && cp /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild/2026-10-27_o…`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md", "expectedMti…]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/chatlog; sha256sum $S/2026-10-27_opus_iopaddiff2single_build.md | cut -c1-1…`]*
+
+**Assistant:** The chat log is up to date through this message: 106 turns, sha `02502f69…`, at `chatlog/2026-10-27_opus_iopaddiff2single_build.md`.
+
+- **What's new:** today's eight turns, from your 12:53 question about the staged files to this one.
+- **Integrity:** the 12:53 export is an exact prefix of this one. The transcript has run without a compaction since 06:24 on the 28th, so nothing came from the claude.ai record this time, and no internal agent IDs appear.
+
+From now on I'll re-export at the end of each turn where something changes, the same way, without being asked. I'll skip pure question-and-answer turns unless you say otherwise.
+
+Same as before, the file shows up as modified in `git status`. It's already tracked, so `git add` it with whatever else you commit.
+
+## Turn 107 — 2026-10-30 13:21
+
+**User:** commit message for output_stage_2026-10-28 ?
+
+*[mcp__remote-devices__device_bash: `N=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/consolidation; D=$N/output_stage_2026-10-28; find $D …`]*
+
+*[mcp__remote-devices__device_bash: `B=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; n=$(grep -n "^## .*01:10" $B | he…`]*
+
+**Assistant:** ```
+git commit -m "sudelbuecher/design_considerations/consolidation/output_stage_2026-10-28 : the 50 macro files as they were before the IOPadDiff2Single output stage moved to pad level (d2s_out_p / d2s_out_n, CMA / CMB in the top sheet), kept for undo, with before/after checksums" \
+  -m "The folder has no README of its own; the one README.md under before/macros/
+is the pad's own README (sg13cmos5l_IOPadDiff2Single) as it was.
+Contents: before/macros/ (50 files), files.txt and before_sha256.txt (those
+50), files_after.txt and after_sha256.txt (the 55 written: the 50 plus the new
+d2s_out.spice and d2s_out_p / d2s_out_n sheets and symbols; all matched on the
+computer at 2026-10-28 01:52).
+The change (Christoph, 01:10: \"the elimination of output transistors from the
+core schematic looks incomplete\"): d2s_mpdda_pd without OP, ON, CMA, CMB, RP1,
+RPD, RN1 (ports a b dabp dabn instead of vout); new frame cells d2s_out_p (OP,
+RP1, RPD) and d2s_out_n (ON, RN1); CMA / CMB in the pad's top sheet at the drawn
+7.96u x 32.16u; fixture d2s_mpdda_pd_sel, tb_pd_* sheets and decks and the CACE
+dc template follow; text updates in the bias macros and Clamp_P_M1.sch.
+Record: consolidation/log.md, entry 2026-10-28 01:52; checks in
+sg13cmos5l_IOPadDiff2Single_build/log.md, entry 01:10-01:53."
+```
+
+The folder holds 54 files: the 50 before-copies and the four lists. Its only `README.md` is the pad's own, copied under `before/`.
+
+Your quote of 01:10 is inside the body with escaped double quotes (`\"…\"`), so the command works as pasted in bash. In git gui, type plain quotes.
+
+## Turn 108 — 2026-10-30 13:30
+
+**User:** commit msg for xschemrc_fix_2026-10-28
+
+*[mcp__remote-devices__device_bash: `N=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/consolidation; D=$N/xschemrc_fix_2026-10-28; find $D …`]*
+
+**Assistant:** ```
+git commit -m "sudelbuecher/design_considerations/consolidation/xschemrc_fix_2026-10-28 : the 44 xschemrc files as they were before the fixes of 2026-10-28 01:37 (BOM, pin_netlist_dir, macro list re-read), kept for undo, with the script that made the change" \
+  -m "Contents: before/macros/ (44 rc files: macros/xschemrc and every macro's
+schematic, testbenches and CACE-template xschemrc), files.txt and
+before_sha256.txt (those 44), after_sha256.txt (as written), and xrc.py, the
+script that made the change (run from outside the repo). No README.
+The fixes (Christoph, 01:16 / 01:27):
+- UTF-8 byte-order mark removed from six rc files (IOPad, inverter x2,
+  OgueyAebischerBias x2, slot/testbenches) that made Tcl stop at line 1;
+- pin_netlist_dir falls back to schematic/xschem/simulations in the macros
+  without testbenches/xschem and creates the folder (it pointed to a
+  nonexistent one);
+- macros/xschemrc re-reads the macro list on every load, through the
+  load_file_postprocess hook; xschem 3.4.4 does not call that hook (3.4.8RC not
+  checked), so an xschem started before 2026-10-27 22:00 needs a restart.
+Cloud test, 102 sheets: through macros/xschemrc and through each folder's own
+rc, no missing symbol and no netlist-folder error.
+Record: consolidation/log.md, entry 2026-10-28 01:37;
+sg13cmos5l_IOPadDiff2Single_build/log.md, entry 01:10-01:53."
+```
+
+The folder holds 48 files: the 44 rc copies, the three lists and `xrc.py`. There's no README in it. The hook caveat comes from the build log entry and is worth keeping in the commit, since it explains why a running xschem may not see new macros.
+
+## Turn 109 — 2026-10-30 13:32
+
+**User:** Hook caveat? I seem to be missing this?
+
+*[mcp__remote-devices__device_bash: `M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/xschemrc; grep -n -i -B3 -A12 "load_file_postprocess\|postprocess" $M | head -60; echo ====; B…`]*
+
+*[mcp__remote-devices__device_bash: `sed -n 73,91p $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros/xschemrc; grep -n "netlist_dir" $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/mac…`]*
+
+**Assistant:** You didn't miss anything. The caveat is only in the build log (`sg13cmos5l_IOPadDiff2Single_build/log.md`, entry 01:10–01:53, the xschemrc bullet). The consolidation log entry for 01:37 doesn't mention it, and I should have pointed it out at the time.
+
+**What the 01:37 fix does.** In `macros/xschemrc`, lines 61–91:
+- At startup, `add_macro_paths` adds every `macros/*/schematic/xschem` and `testbenches/xschem` folder to the symbol search path.
+- Line 91 then sets xschem's `load_file_postprocess` variable to `add_macro_paths; pin_netlist_dir [xschem get current_dirname]`. That is meant to run after every file load, for two reasons:
+  - a macro folder created while xschem is running (such as `bias_tree_out_pd` on the 28th) is then found without a restart;
+  - the netlist folder follows the sheet you just opened, as `<macro>/testbenches/xschem/simulations` or `schematic/xschem/simulations`.
+
+**The caveat.** xschem 3.4.4, the version in my cloud workspace, never evaluates `load_file_postprocess`. There the after-load step simply doesn't happen. I didn't check whether your 3.4.8RC evaluates it. If it doesn't:
+- **New macros:** an xschem started before a macro folder existed shows that macro's symbols as missing until you restart it. That's why the build log says "an xschem started before 2026-10-27 22:00 needs a restart".
+- **Netlist folder:** it isn't re-pinned when you open another sheet. Started with `--rcfile macros/xschemrc`, it stays at xschem's default folder, because the startup call with the `macros/` folder pins nothing.
+
+**A one-minute test in your xschem.** Start it with `macros/xschemrc` and open any macro's schematic. Then type `puts $netlist_dir` in the Tcl console:
+- if it shows that macro's `…/simulations` folder, the hook runs and the caveat doesn't apply to you;
+- if it shows the default, it doesn't run, and you need a restart after new macros appear.
+
+If you run the test and tell me the result, I'll add it to both logs.
+
+## Turn 110 — 2026-10-30 13:50
+
+**User:** ah ok I'll put this aside while I commit all the files not under version control.
+
+which ones should I git commit, grouped how, and which ones can I ignore/delete. You reported this way up in this cowork session (maybe before a compaction and only left in the chatlogs) but I need a reminder, anyhow.
+
+**Assistant:** The consolidation folders are committed. I'm rechecking what's left, including the entries that are new since my last list (`cloud_sessions/`, `cloud_environment.md` and its `.bak`, the modified 2026-10-26 chat log), read-only as before.
+
+*[mcp__remote-devices__device_bash: `export GIT_OPTIONAL_LOCKS=0; M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; W=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher; S=$W/sud…`]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; head -12 $S/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md…`]*
+
+**Assistant:** Five commits cover everything worth keeping. The rest is already in git history (safe to delete) or generated (to ignore). I rechecked all of it just now against your new status.
+
+**1. The bandgap layout folder**
+```
+git add sudelbuecher/design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28
+git commit -m "sudelbuecher/design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28 : compact Banba bandgap core layout from 3 Claude agents (revised primitives, assembly, checks, skill drafts), sheet backannotation with resistor chains as vector instances"
+```
+
+**2. Logs and this session's chat log**
+```
+git add sudelbuecher/design_considerations/pad_buffer_layout/log.md \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md \
+  sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md
+git commit -m "sudelbuecher : update logs (bg_core_pd layout and sheet backannotation, version-control recommendation, chat log to 2026-10-30)"
+```
+
+**3. The cloud work of 29 Oct.** This came from another session, not this one: `cloud_environment.md` now references IIC-OSIC-TOOLS 2026.10, `cloud_sessions/` holds the two C0 briefs (pilot, oa_core_pd PEX), and that session re-exported the 10-26 chat log with a note about its gap.
+```
+git add sudelbuecher/cloud_environment.md sudelbuecher/cloud_sessions \
+  sudelbuecher/chatlog/2026-10-26_opus_pad_buffer_layout_primitives.md
+git commit -m "sudelbuecher : cloud pilot C0 briefs (toolchain, oa_core_pd PEX), cloud_environment.md for IIC-OSIC-TOOLS 2026.10, 2026-10-26 chat log re-export with gap note"
+```
+
+**4. Spec review**
+```
+git add sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md
+git commit -m "sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md : review of the d2s verification and characterization suites before freezing device dimensions"
+```
+
+**5. Hand-edit kickoff**
+```
+git add sudelbuecher/design_considerations/class_ab_pad_driver/hand_edit_transfer
+git commit -m "sudelbuecher/design_considerations/class_ab_pad_driver/hand_edit_transfer : kickoff for carrying the hand-drawn bias sheet style over to the Oguey-Aebischer sheet"
+```
+
+**Delete, because the exact content is in git** (rechecked just now):
+```
+rm sudelbuecher/cloud_environment.md.bak sudelbuecher/chatlog/README.md.bak \
+  sudelbuecher/klayout_hierarchy/klayout-hierarchical-layout_cheatsheet.md.bak \
+  sudelbuecher/design_considerations/pad_buffer_alternatives/export.py.before_2026-10-28
+rm -r sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/pcells_before_2026-10-27
+```
+`cloud_environment.md.bak` is identical to the committed version of `cloud_environment.md`.
+
+**Ignore, because it's generated:** `pad_buffer_layout/klayout/backups/`, `pad_buffer_layout/klayout/drc_run_*/`, `klayout_hierarchy/__pycache__/` and `JanteStroemSpejl/runs/`. Adding these lines to the root `.gitignore` covers them:
+```
+__pycache__/
+*.bak
+backups/
+drc_run_*/
+runs/
+```
+
+**Yours to decide**, not from this session:
+- `skunkworx/`: 22 text files of chat copy-and-paste;
+- `JanteStroemSpejl/zipslop/`: 7 small CACE zips from 15 Oct, which look like superseded attempts;
+- `JanteStroemSpejl_chat_export.zip`: the unpacked folder next to it is already tracked;
+- the root `.gitignore` itself, which is still untracked.
+
+The chat log will show as modified again after my next export; it goes into the next "update logs" commit.
+
+## Turn 111 — 2026-10-30 13:57
+
+**User:** put the 5 recommended commits in chronological order, so I can git add and commit the oldest first, then in sequence.
+
+**Assistant:** Ordered by the newest file in each group, oldest first. The logs go last because the chat log in that group runs to today.
+
+**1. Hand-edit kickoff (22 Oct)**
+```
+git add sudelbuecher/design_considerations/class_ab_pad_driver/hand_edit_transfer
+git commit -m "sudelbuecher/design_considerations/class_ab_pad_driver/hand_edit_transfer : kickoff for carrying the hand-drawn bias sheet style over to the Oguey-Aebischer sheet"
+```
+
+**2. Spec review (27 Oct)**
+```
+git add sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md
+git commit -m "sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md : review of the d2s verification and characterization suites before freezing device dimensions"
+```
+
+**3. Bandgap layout folder (28 Oct)**
+```
+git add sudelbuecher/design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28
+git commit -m "sudelbuecher/design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28 : compact Banba bandgap core layout from 3 Claude agents (revised primitives, assembly, checks, skill drafts), sheet backannotation with resistor chains as vector instances"
+```
+
+**4. Cloud work (29 Oct)**
+```
+git add sudelbuecher/cloud_environment.md sudelbuecher/cloud_sessions \
+  sudelbuecher/chatlog/2026-10-26_opus_pad_buffer_layout_primitives.md
+git commit -m "sudelbuecher : cloud pilot C0 briefs (toolchain, oa_core_pd PEX), cloud_environment.md for IIC-OSIC-TOOLS 2026.10, 2026-10-26 chat log re-export with gap note"
+```
+
+**5. Logs and this session's chat log (28–30 Oct)**
+```
+git add sudelbuecher/design_considerations/pad_buffer_layout/log.md \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md \
+  sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md
+git commit -m "sudelbuecher : update logs (bg_core_pd layout and sheet backannotation, version-control recommendation, chat log to 2026-10-30)"
+```
+
+The two log files were last changed on the 28th, before the cloud work. If you'd rather have strict file-date order, commit them as their own step between 3 and 4, and commit the chat log alone at the end.
+
+## Turn 112 — 2026-10-30 14:08
+
+**User:** re: The two log files were last changed on the 28th, before the cloud work. If you’d rather have strict file-date order, commit them as their own step between 3 and 4, and commit the chat log alone at the end.
+tell me how. This is the preparation for setting up cloud work (in a different process) by git committing everything before, so the logs of the cloud work in preparation better remain uncommitted for now.
+
+**Assistant:** First, a check that nobody else has touched the log files and the chat log since I wrote them, so commits 4 and 5 hold no cloud-work content:
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; sha256sum $S/sg13cmos5l_IOPadDiff2Single_build/log.md $S/design_considerat…`]*
+
+**Assistant:** All three are unchanged since my last writes: the layout log and build log on the 28th, the chat log today at 13:19. None of them contain cloud work.
+
+So the sequence is five commits, and the cloud-work files are simply never added. `git commit` takes only what's staged, so they stay as they are.
+
+**1. Hand-edit kickoff (22 Oct)**
+```
+git add sudelbuecher/design_considerations/class_ab_pad_driver/hand_edit_transfer
+git commit -m "sudelbuecher/design_considerations/class_ab_pad_driver/hand_edit_transfer : kickoff for carrying the hand-drawn bias sheet style over to the Oguey-Aebischer sheet"
+```
+
+**2. Spec review (27 Oct)**
+```
+git add sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md
+git commit -m "sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/spec_review_before_freeze.md : review of the d2s verification and characterization suites before freezing device dimensions"
+```
+
+**3. Bandgap layout folder (28 Oct)**
+```
+git add sudelbuecher/design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28
+git commit -m "sudelbuecher/design_considerations/pad_buffer_layout/bg_core_pd_2026-10-28 : compact Banba bandgap core layout from 3 Claude agents (revised primitives, assembly, checks, skill drafts), sheet backannotation with resistor chains as vector instances"
+```
+
+**4. The two logs (28 Oct)**
+```
+git add sudelbuecher/design_considerations/pad_buffer_layout/log.md \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md
+git commit -m "sudelbuecher : update logs (bg_core_pd layout and sheet backannotation, version-control recommendation)"
+```
+
+**5. This session's chat log (to 30 Oct)**
+```
+git add sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md
+git commit -m "sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md : chat log to 2026-10-30 13:18"
+```
+
+**Left uncommitted, as the cloud work's own state:**
+- `sudelbuecher/cloud_environment.md`
+- `sudelbuecher/cloud_sessions/`
+- `sudelbuecher/chatlog/2026-10-26_opus_pad_buffer_layout_primitives.md`, which the cloud-prep session re-exported on the 29th.
+
+Two quick checks:
+- **Before each commit:** `git diff --cached --name-only` lists exactly what that commit will take.
+- **After the five:** `git status` should show only those three as modified or untracked, plus the files to delete or ignore and the ones that are yours to decide.
+
+If I export the chat log again later, it shows as modified again, and that goes into a later commit.
+
+## Turn 113 — 2026-10-30 14:10
+
+**User:** buffer layout primitives is completed work, should be reported in sequence. resequence and take a sneak preview at the current git log
+
+*[mcp__remote-devices__device_bash: `export GIT_OPTIONAL_LOCKS=0; M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; cd $HOME; git -C $M log --format='%h %ad %s' --date=format:'%Y-%m-%d %H…`]*
+
+*[mcp__remote-devices__device_bash: `export GIT_OPTIONAL_LOCKS=0; M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; cd $HOME; git -C $M log --graph --format='%h %ad %<(70,trunc)%s' --date…`]*
+
+**Assistant:** Your log already has the first three of my list: the kickoff, the spec review and the bandgap folder. You branched the 22 Oct kickoff off the 10-20 snapshot and merged it back, so the graph shows it in content order:
+
+```
+* ea0b15c 10-30 14:06 .../pad_buffer_layout/bg_core_pd_2026-10-28 : compact Banba bandgap core layout ...
+* 14dff14 10-30 14:04 .../spec_review_before_freeze.md : review of the d2s verification ...
+*   44d109d 10-30 14:02 Merge change from 22 Oct into otherwise chronological sudel_buecher ...
+|\
+| * e9dc65a 10-30 14:00 .../class_ab_pad_driver/hand_edit_transfer : kickoff ...   (parent 8e072c0)
+* | 5309571 .. 7c3b7f5   the seven consolidation folders, 25 Oct -> 28 Oct
+|/
+* 8e072c0 10-30 12:56 .../consolidation/reference_sheets_2026-10-20 : baseline snapshot ...
+* 33700ad 10-28 11:04 sudelbuecher : reports from 3 Claude agents ...   <- origin/sudel_buecher
+```
+
+Twelve commits are ahead of origin and none are pushed yet. Plain `git log` lists the kickoff by commit time; `git log --graph` shows the merge.
+
+The remaining commits, by date of last change:
+
+**4. The two logs (last changed 28 Oct)**
+```
+git add sudelbuecher/design_considerations/pad_buffer_layout/log.md \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md
+git commit -m "sudelbuecher : update logs (bg_core_pd layout and sheet backannotation, version-control recommendation)"
+```
+
+**5. The pad buffer layout primitives chat log (completed work; final export 29 Oct 14:20)**
+```
+git add sudelbuecher/chatlog/2026-10-26_opus_pad_buffer_layout_primitives.md
+git commit -m "sudelbuecher/chatlog/2026-10-26_opus_pad_buffer_layout_primitives.md : final export of the pad buffer layout primitives session (2026-10-29 14:20), with the note on the 2026-10-27 03:12 to 2026-10-29 14:12 gap (user messages only)"
+```
+
+**6. This session's chat log (to 30 Oct 13:18)**
+```
+git add sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md
+git commit -m "sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md : chat log to 2026-10-30 13:18"
+```
+
+**Left uncommitted, as the cloud work's state:** `sudelbuecher/cloud_environment.md` and `sudelbuecher/cloud_sessions/`.
+
+Commit 5 goes by the file's last export. By the work it covers (26–27 Oct), it would belong before the spec review; the same branch-and-merge you used for the kickoff would put it there if you prefer.
+
+## Turn 114 — 2026-10-30 14:18
+
+**User:** ok git status looks like this now. what to delete/gitignore/ignore/hold for later commit?
+
+**Assistant:** Nothing in this list needs a commit before the cloud work, apart from `.gitignore` if you want it. Every entry has been checked today, the delete group content-for-content against git.
+
+**Hold for a later commit** (the cloud work's own state):
+- `sudelbuecher/cloud_environment.md` (modified)
+- `sudelbuecher/cloud_sessions/`
+
+**Delete:** each file's exact content is already in git (`cloud_environment.md.bak` is the committed `cloud_environment.md`).
+```
+rm sudelbuecher/cloud_environment.md.bak \
+  sudelbuecher/chatlog/README.md.bak \
+  sudelbuecher/klayout_hierarchy/klayout-hierarchical-layout_cheatsheet.md.bak \
+  sudelbuecher/design_considerations/pad_buffer_alternatives/export.py.before_2026-10-28
+rm -r sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/pcells_before_2026-10-27
+```
+
+**Gitignore** (generated, keep on disk). Add these lines to the root `.gitignore`, which so far holds only `_runs`:
+```
+__pycache__/
+*.bak
+backups/
+drc_run_*/
+runs/
+```
+That covers:
+- `klayout_hierarchy/__pycache__/`;
+- `pad_buffer_layout/klayout/drc_run_bg_pnp/`, `drc_run_bg_res/` and `drc_run_bias_tree_sw/`: DRC run outputs from 26 Oct;
+- `pad_buffer_layout/klayout/backups/`: timed GDS backups from 26 Oct. Three of the ten aren't in git, so keep the folder rather than delete it, unless you know you won't need those intermediate states. The main repo already ignores `backups/`.
+- `JanteStroemSpejl/runs/`: 178 MB, 41,168 files of CACE runs.
+
+Then commit `.gitignore` itself:
+```
+git add .gitignore
+git commit -m ".gitignore : ignore __pycache__, *.bak, backups, DRC run folders and CACE runs"
+```
+
+**Your call** (from outside these sessions as far as the logs show):
+- `skunkworx/`: 22 text files of chat copy-and-paste from 25 Oct. Commit it if it's notes you want to keep, otherwise ignore it.
+- `JanteStroemSpejl/zipslop/`: 7 small CACE zips from 15 Oct, which look like superseded attempts. Delete or ignore.
+- `JanteStroemSpejl_chat_export.zip`: 9 MB; the unpacked folder next to it is tracked. Delete or ignore.
+
+After the deletes, the `.gitignore` commit and your two decisions, `git status` should list only `cloud_environment.md` and `cloud_sessions/`.
+
+## Turn 115 — 2026-10-30 14:50
+
+**User:** ok .gitignore stays out of git, skunkworx and the JanteStroemSpejl/ stay non-committal.
+wrap up your logs and chatlogs, then I'll commit those, you can take a well-deserved rest and I'll go to the Claude cloud with your alter ego cowork that I start preparing this with.
+
+**Assistant:** I'll write a closing entry in the build log (today's commit work, your decisions, what's open for the next session), then do a final chat-log export. First, the commit list for the record:
+
+*[mcp__remote-devices__device_bash: `export GIT_OPTIONAL_LOCKS=0; M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; cd $HOME; git -C $M log --reverse --format='%h %ad %s' --date=format:'%…`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; for d in primN/out/skill primN/out_bg/skill primP/out/skill primP/out_bg…`]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; find $S -type d -name skill | sed "s|$S/||"; ls $S/sg13cmos5l_IOPadDiff2Si…`]*
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; for d in primN/out primN/out_bg primP/out primP/out_bg; do echo "$d: $(f…`]*
+
+**Assistant:** 117 files, 4.1 MB, no large files and no internal IDs inside. Staging them in their agents' folders:
+
+*[Bash: `S=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; O=/mnt/user-data/outputs/agentout_1455; rm -rf $O; mkdir -p $O/A3 $O/A4;…`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A3_oa_nmos_primitives/o…]*
+
+*[Bash: `cat /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/ao_1.json`]*
+
+*[14:55: the transcript file restarted at the 14:56 compaction continues here]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A4_oa_pmos_primitives/o…]*
+
+*[Bash: `cat /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/ao_2.json`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A4_oa_pmos_primitives/o…]*
+
+*[Bash: `cd /mnt/user-data/outputs/agentout_1455 && find . -type f | wc -l && find . -type f -exec sha256sum {} + | sort -k2 > /tmp/claude-0/-home-claude/f5dc1…`]*
+
+**Assistant:** Verify all 117 on the device against the staged shas.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents && { (cd A3_oa_nmos_primitives &&…`]*
+
+**Assistant:** All 117 files on the device match (combined sha da4577dc). Next, the closing entry in the build log.
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher && sha256sum sg13cmos5l_IOPadDiff2Single_build/log.md chatlog/2026-10-27_o…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher && grep -n '^## \|^### ' sg13cmos5l_IOPadDiff2Single_build/log.md | tail -…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher && for t in 1793188346 1793362776; do TZ=Europe/Berlin date -d @$t '+%F %H…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && ls -la | head -50; cat build_1300.sh | head -80`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && grep -n '^## Turn' 2026-10-27_opus_iopaddiff2single_build_30…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && T=/root/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && grep -n -A2 '^## Turn 9[9] \|^## Turn 10[0-6] ' 2026-10-27_o…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && head -c 1500 claudeai_0523_0620_raw.txt; echo; echo ----; gr…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && sed -n 5675,5712p 2026-10-27_opus_iopaddiff2single_build_30_…`]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t216", "max_turns": 2}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t218", "max_turns": 18}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t222", "max_turns": 14}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t226", "max_turns": 10}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t230", "max_turns": 6}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t235", "max_turns": 2}]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_bash: `export GIT_OPTIONAL_LOCKS=0; M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single; cd $HOME; git -C $M log --graph --format='%h %ad %<(90,trunc)%s' --date…`]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents; grep -n '^| A[1-4]' $S/README.md;…`]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; B=$S/sg13cmos5l_IOPadDiff2Single_build/log.md; grep -n -i 'open point\|sti…`]*
+
+*[mcp__remote-devices__device_bash: `B=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md; sed -n 533,537p $B | cut -c1-400;…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && sed -n 5765,5766p 2026-10-27_opus_iopaddiff2single_build_30_…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents; for d in A3_oa_nmos_primitives/o…`]*
+
+**Assistant:** Now staging the build log and the agents README for the closing edits.
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md", "~/mnt/sg13cmos5l_cm_ip__s…]*
+
+*[Bash: `mkdir -p /mnt/user-data/outputs/wrap_1500/build/agents && cd /mnt/user-data/outputs/wrap_1500 && U=/mnt/user-data/uploads/sg13cmos5l_cm_ip__single2dif…`]*
+
+*[Write: /mnt/user-data/outputs/wrap_1500/build/entry.md]*
+
+*[Bash: `cd /mnt/user-data/outputs/wrap_1500/build/agents && python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && python3 export_claudeai.py claudeai_1319_1450_raw.txt partG_…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && sed -n 105,110p partG_raw.md; sed -n 219,224p partG_raw.md; …`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && python3 - <<'EOF'`]*
+
+**Assistant:** Now adding the third gap link and the insertion of the new claude.ai part to the build script.
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && python3 - <<'EOF'`]*
+
+*[Bash: `TT=30_$(TZ=Europe/Berlin date +%H%M); HM=$(TZ=Europe/Berlin date +%H:%M); cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpa…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && F=2026-10-27_opus_iopaddiff2single_build_30_1504.md; cat par…`]*
+
+*[Bash: `python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && python3 - <<'EOF'`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md", "stagedPath": "/mnt/u…]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; sha256sum $S/sg13cmos5l_IOPadDiff2Single_build/log.md $S/sg13cmos5l_IOPadD…`]*
+
+**Assistant:** I've wrapped up the logs and the chat log. One thing I found on the way: A3's and A4's own outputs were still only in the cloud workspace, so they would have been lost when it shuts down. Those 117 files are now on your computer, and their checksums match the cloud copies.
+
+**Changed in your notes folder:**
+- **A3 / A4 outputs:** new folders `out/` and `out_bg/` in `agents/A3_oa_nmos_primitives/` and `agents/A4_oa_pmos_primitives/`. They hold the generators, the cells as GDS / CDL, the DRC / LVS logs and the skill drafts.
+- **`agents/README.md`:** the A3 and A4 rows now point to those folders. A2's row now says the sheet backannotation was done at 11:00 on the 28th.
+- **Build log:** a closing entry for today. It covers your 15 commits and the hook caveat with its test, plus what stays out of git. It ends with the handover list for the cloud sessions:
+  - the flat sheets of `bias_oa_pd` and `bias_bg_pd` still have the pre-layout cores;
+  - the bandgap resistors are +0.7 to +1 % as drawn, not simulated;
+  - IHP's own DRC / LVS decks haven't been run on the two cores;
+  - the hook test is still to do;
+  - the agents' skill drafts aren't merged into one skill;
+  - the NMOS-sink `bias_dist_pd` isn't built.
+- **Chat log:** 115 turns, up to 15:04. The 13:19 export is an exact prefix of it, and no internal agent IDs appear.
+  - My context was compacted at 14:56, which dropped the transcript records from 13:19 to 14:55. I took them from the conversation's record on claude.ai.
+  - That record doesn't have your 14:50 message or the start of my reply yet. Your message is quoted from the compaction summary, and the 14:50–14:55 part of my reply is reduced to one line from it.
+
+**Commits, oldest first:**
+```
+git add sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A3_oa_nmos_primitives/out \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A3_oa_nmos_primitives/out_bg \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A4_oa_pmos_primitives/out \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A4_oa_pmos_primitives/out_bg \
+  sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/README.md
+git commit -m "sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A3_oa_nmos_primitives A4_oa_pmos_primitives : the agents' own outputs from the cloud workspace (generators, cells GDS / CDL, DRC / LVS logs, skill drafts), 117 files"
+```
+```
+git add sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md
+git commit -m "sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/log.md : closing entry 2026-10-30 (commits, hook caveat, A3 / A4 outputs, handover open items)"
+```
+```
+git add sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md
+git commit -m "sudelbuecher/chatlog/2026-10-27_opus_iopaddiff2single_build.md : chat log to 2026-10-30 15:04"
+```
+
+After these three, `git status` should list only `cloud_environment.md` and `cloud_sessions/`, plus `.gitignore`, `skunkworx/`, `JanteStroemSpejl/` and whichever delete candidates you've kept. Nothing else changed, and the cloud-work files are untouched. Good luck in the cloud.
+
+## Turn 116 — 2026-10-30 15:07
+
+**User:** nothing from agent 2?
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && ls; ls oaagent 2>/dev/null; for d in oaagent/out oaagent/out_bg oaage…`]*
+
+*[mcp__remote-devices__device_bash: `S=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher; M=$HOME/mnt/sg13cmos5l_cm_ip__single2diff2single/macros; find $S/design_co…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && ls m2agent; find oaagent m2agent -type f -not -path '*/inputs*' -not …`]*
+
+*[Bash: `cat /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/a2_prefixes.txt`]*
+
+*[mcp__remote-devices__device_bash: `P="003812bcdbed 007ac5ba8711 00e78a2f2826 01ba4719c80b 027367458ae3 02c18b6e7c8e 0429f81fb8dd 0438c0138d12 05e30183e707 063edfabed99 065104b95691 09ae…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && M="003812bcdbed 007ac5ba8711 01ba4719c80b 063edfabed99 09ae1de3372f 0…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME; for n in oa_core_pd.png oa_core_pd_m1.png v1_vs_v2.png bg_core_pd.png primitives_before_after.png rule_savings.png score_compact.png score_b…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/oaagent && ls -la --time-style=+%m-%d_%H:%M out_bg/bg_core_pd.png out_bg…`]*
+
+*[Bash: `cd /mnt/user-data/outputs && for d in bg_core_0630 oa_core_pd_0228 m2_2026-10-28; do echo "== $d $(find $d -type f | wc -l)"; done; ls -d oa*  core_20…`]*
+
+*[Bash: `cd /mnt/user-data/outputs && python3 -c "`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && grep -v '\.png$' a2_missing.txt | awk '{print $2}' | grep -v '/out' >…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && for p in oaagent/work m2agent/work; do awk '{print $2}' a2_missing.tx…`]*
+
+**Assistant:** A2's results are all on your computer already. Only its scratch folders aren't.
+
+**Already on the computer**, file for file. The pictures differ in encoding but are pixel-identical; I checked.
+- oa_core_pd v1: `pad_buffer_layout/oa_core_pd_2026-10-28/`
+- oa_core_pd v2: `pad_buffer_layout/oa_core_pd_v2_2026-10-28/`
+- bg_core_pd: `pad_buffer_layout/bg_core_pd_2026-10-28/` (its 105 files)
+- reports and pictures: `agents/A2_oa_core_pd_layout/`
+
+That's why I copied A3's and A4's outputs and not A2's: theirs had only gone into the macros as finished cells.
+
+**Only in the cloud workspace**, lost when it's reclaimed:
+- **A2's scratch** (`work/`, `work_bg/`, `work_v2/`): 118 files, 5.6 MB.
+  - Trial layouts (`work_try1..5.gds`, `v2_fp1/2*.gds`) and their DRC / LVS runs.
+  - Renders of the tries.
+  - Helper scripts: `router_v2.py`, `netroutes.py`, `analyze_v1.py`, `dbg_route.py`, `test_gap.py`, `render.py`, `drc_selftest.py`, plus the negative LVS tests (`lvs_neg_open/short.gds`).
+- **A1's scratch** (`work/`): 19 files, 5.2 MB, mostly candidate GDS, plus `plant.py`, `measure*.py` and `common.py`.
+
+None of it is needed to rebuild the cores: each folder's `generator.py` / `build_*.py` and the checks are on the computer. But the scratch is the only record of how A2 found its routing.
+
+Should I copy it to `agents/A2_oa_core_pd_layout/work*/` and `agents/A1_pad_metal2_option_b/work/`? I'd recommend it. You can still choose to commit or ignore those folders afterwards.
+
+## Turn 117 — 2026-10-30 15:15
+
+**User:** Yes, copy them as guidance for the cloud sessions I'm about to set up.
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && for d in oaagent/work oaagent/work_bg oaagent/work_v2 m2agent/work; d…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && grep -rhoI '/tmp/claude-0/[^ "'"'"')]*' oaagent/work* m2agent/work --…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/oaagent && grep -l 'class GridRouter' -r out out_bg | head; for f in wor…`]*
+
+*[Bash: `set -e; SP=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; O=/mnt/user-data/outputs/agentwork_1515; rm -rf $O; mkdir -p $O…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents; ls A1_pad_metal2_option_b A2_oa_…`]*
+
+*[Bash: `cat /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/aw_0.json`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A1_pad_metal2_option_b/…]*
+
+*[Bash: `cat /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/aw_1.json`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A2_oa_core_pd_layout/wo…]*
+
+*[Bash: `cat /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/aw_2.json`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A2_oa_core_pd_layout/wo…]*
+
+*[Bash: `cat /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/aw_3.json`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A2_oa_core_pd_layout/wo…]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents && { (cd A2_oa_core_pd_layout && …`]*
+
+**Assistant:** The combined checksum differs; checking whether that's sort order or content.
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && LC_ALL=C sort -k2 aw_sha.txt | awk '{print $1}' | sha256sum | cut -c1…`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents && { (cd A2_oa_core_pd_layout && …`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents && { (cd A2_oa_core_pd_layout && …`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && D="003812bcdb 007ac5ba87 00e5d602a3 01ba4719c8 01ba4719c8 05e30183e7 …`]*
+
+**Assistant:** The 31 mismatches are all PNGs; the bridge re-encodes some images on the way. Staging them back to confirm the pixels are identical.
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && grep '\.png$' aw_sha.txt | awk '{print $2}' | sed 's#^\./#~/mnt/sg13c…`]*
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A1_pad_metal2_option_b/work/…]*
+
+*[Bash: `sleep 2; python3 - <<'EOF'`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad && for d in primN primP; do echo "== $d"; ls $d; for s in $d/*/; do echo…`]*
+
+**Assistant:** A3 and A4 also have scratch folders (92 files, 2.8 MB) that I hadn't mentioned. They serve the same purpose, so I'm copying them as well.
+
+*[Bash: `set -e; SP=/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad; O=/mnt/user-data/outputs/agentwork34_1525; rm -rf $O; mkdir -p …`]*
+
+*[Bash: `cat /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/aw34_0.json; echo; echo =====; cat /tmp/claude-0/-home-claude/f5dc1779-…`]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A3_oa_nmos_primitives/w…]*
+
+*[mcp__remote-devices__device_commit_files: [{"devicePath": "~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A4_oa_pmos_primitives/w…]*
+
+*[Bash: `cd /mnt/user-data/outputs/agentwork34_1525 && find . -type f -not -name '*.png' -exec sha256sum {} + | awk '{print $1}' | LC_ALL=C sort | sha256sum | …`]*
+
+*[mcp__remote-devices__device_bash: `cd $HOME/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents && find A3_oa_nmos_primitives/wor…`]*
+
+*[mcp__remote-devices__device_stage_files: {"paths": ["~/mnt/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/A3_oa_nmos_primitives/work/p…]*
+
+*[Bash: `sleep 2; python3 - <<'EOF'`]*
+
+**Assistant:** All copies check out. Reading a few docstrings so the README describes the scratch folders accurately:
+
+*[Bash: `cd /mnt/user-data/outputs/agentwork34_1525 && for f in A3/work/verify.py A3/work/verify_bg.py A3/work/rcell.py A3/work/rzoom.py A3/work/dump.py A4/wor…`]*
+
+*[Bash: `cd /mnt/user-data/outputs && mkdir -p wrap_1530/build/agents && cp wrap_1500/build/agents/README.md wrap_1530/build/agents/README.md.base && cp wrap_1…`]*
+
+*[Write: /mnt/user-data/outputs/wrap_1530/build/agents/readme_add.md]*
+
+*[Write: /mnt/user-data/outputs/wrap_1530/build/entry.md]*
+
+**Assistant:** Before the chat-log export: the claude.ai record should now contain your 14:50 message and the start of my reply, which the last export had to reduce to a line from the summary. Checking:
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t235", "max_turns": 1}]*
+
+*[mcp__claude_ai__read_conversation: {"conversation_id": "current", "page_token": "t236", "max_turns": 1}]*
+
+*[Bash: `F=/root/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/tool-results/mcp-claude_ai-read_conversation-1793370465814.txt; head -c 300…`]*
+
+**Assistant:** The record now has your 14:50 message verbatim (it has a line break the summary lost) and my reply up to the compaction. Rebuilding the claude.ai part with them in place of the summary line:
+
+*[Bash: `F=/root/.claude/projects/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/tool-results/mcp-claude_ai-read_conversation-1793370465814.txt; cd /tmp/cla…`]*
+
+*[Bash: `cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/logbuild && RT=$(python3 - <<'EOF'`]*
+
+*[Bash: `python3 - <<'EOF'`]*
+
+*[Bash: `TT=30_$(TZ=Europe/Berlin date +%H%M); HM=$(TZ=Europe/Berlin date +%H:%M); cd /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpa…`]*
 
