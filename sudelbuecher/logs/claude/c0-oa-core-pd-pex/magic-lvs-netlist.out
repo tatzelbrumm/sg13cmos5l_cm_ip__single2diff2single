@@ -1,0 +1,12 @@
+mkdir -p netlist/schematic
+xschem -s -r -x -q --rcfile schematic/xschem/xschemrc --command ' \
+	set spiceprefix 1; \
+	set lvs_netlist 0; \
+	set top_is_subckt 1; \
+	set lvs_ignore 1; \
+	set ev_precision 5; \
+	set netlist_dir netlist/schematic; \
+	xschem set netlist_name [file tail [file rootname [xschem get current_name]]]_magic.spice; \
+	xschem netlist \
+' schematic/xschem/oa_core_pd.sch
+
