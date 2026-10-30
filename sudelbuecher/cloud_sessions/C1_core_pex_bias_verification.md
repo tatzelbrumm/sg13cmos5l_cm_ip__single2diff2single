@@ -40,6 +40,15 @@ on the two `claude/c1-core-pex-verif*` branches and pushing them. Nothing else: 
    netlist, subckt `<cell>_pex`). Constraint: with no option given, everything behaves as now (schematic
    cores, same netlists, same results folder). Long runs go in the background (`CACE_JOBS` ≤ 3 on 4
    vCPU); check on them sparingly.
+   **Mismatch at worst case:** today mismatch runs only in `bias_oa_pd` / `bias_bg_pd` (flat pre-layout
+   copies of the cores, 30 Monte Carlo runs, typical corner, 27 °C, 3.3 V); `bias_sel_pd` has none. Add a
+   mismatch group to `bias_sel_pd` with the current cores (sel = 1, 2, 3): about 100 runs at typical and at
+   the worst MOS / R / pnp / temperature combinations of its `pvt` and `supply` results, at 3.0 and 3.6 V;
+   report mean, σ, and min / max against the limits. pnpMPA has no mismatch model: say so in the report.
+   The PDK enables mismatch per instance with `mm_ok` (schematic-only; it's what C0's LVS lists as the
+   only property difference), so extracted netlists have no mismatch: also run the PEX 2 cores with
+   `mm_ok` restored on their devices, at the typical corner and at the worst combination, to see whether
+   the parasitics shift the spread. Say how you restored it.
 4. **Adequacy of the verification:** where the CACE files, testbenches, `scripts/cace/*.py` or the
    Makefiles can't show the core-PEX effect, extend them. Where checks are redundant (for example the flat
    copies of the pre-layout cores in `bias_bg_pd` and `bias_oa_pd`, if `bias_sel_pd` with sel = 1 / 2
