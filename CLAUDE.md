@@ -15,6 +15,9 @@ export PDK_ROOT=/foss/pdks; source .designinit
 
 Git works here: commit to the session branch and push it. No pull request, no chat log, unless asked.
 
+**Local (non-cloud) sessions:** before anything else read `docs/local-container.md` and the "Local-only" section of
+`docs/traps.md`. Local sessions run no git commands without asking first; the line above does not apply to them.
+
 ## Hard invariant: the top-cell name
 
 `sg13cmos5l_cm_ip__single2diff2single` must agree in: `Makefile` `TOP =`, `submission.yaml` `top-cell:`, the file
