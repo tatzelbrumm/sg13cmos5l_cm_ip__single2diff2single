@@ -1,0 +1,19 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias_sel_pd CACE core view "magic_pex_2": both cores from their magic extraction, mode 2 (C-coupled),
+* as committed in ../<core>/netlist/pex/ (make magic-pex EXT_MODE=2 in the core's macro).
+* Included before the DUT netlist: ngspice keeps these definitions of oa_core_pd / bg_core_pd and ignores the
+* DUT netlist's own ("redefinition of .subckt ..., ignored" in the ngspice log). Relative paths resolve from this file.
+* bg_core_pd's extraction has 41 nodes that only capacitors touch (one next to each rhigh segment, a_<x>_4084#; oa_core_pd
+* has none). With them floating the op matrix is singular, ngspice falls back to a transient op and lands on a wrong
+* operating point (sel = 1, tt, 27 C: vbp +18 %, I ibias -0.2 uA). The bg netlist here is a copy that ties each of them to
+* vss through 1e12 Ohm (scripts/cace/pex_for_sim.py --tie; make cores-pex-sim), which reproduces the schematic's dc
+* currents to all printed digits (sel = 2, ss, -40 C: vbp 4.91515 uA in both).
+.include ../../../../../oa_core_pd/netlist/pex/oa_core_pd_magic_pex_2.spice
+.include bg_core_pd_magic_pex_2_tied.spice
+.subckt oa_core_pd vdd vss iout en_3v3 en_3v3_b
+Xpex vdd vss iout en_3v3 en_3v3_b oa_core_pd_pex
+.ends
+.subckt bg_core_pd vdd vss iout en_3v3 en_3v3_b
+Xpex vdd vss iout en_3v3 en_3v3_b bg_core_pd_pex
+.ends

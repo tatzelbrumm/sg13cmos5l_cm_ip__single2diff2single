@@ -131,6 +131,10 @@ default_conditions:
     display: Temperature
     unit: °C
     typical: 27
+  cores:
+    description: View of the cores oa_core_pd / bg_core_pd, a file templates/cores/<view>.spice (schematic = the DUT netlist's own; make sim-cace CORES=<view>)
+    display: Cores
+    typical: schematic
 
 parameters:
   # Each select code at tt, 27 C, 3.3 V, harness ibias 5 uA = 4 runs
@@ -989,3 +993,628 @@ parameters:
       step:
         enumerate: [0, 1, 2, 3, 4, 5]
 
+  # Supply rejection (added 2026-10-30, cloud session C1; the measurement of bias_oa_pd / bias_bg_pd psrr_params), report
+  # only: codes 0 / 1 / 2 x ss / tt / ff x -40 / 27 / 125 C at 3.3 V = 27 runs. Shows the cores' parasitic C (CORES=...).
+  psrr_params:
+    spec:
+      P_vdd_1k:
+        display: Supply sensitivity vdd, 1kHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vdd at 1kHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vdd_100k:
+        display: Supply sensitivity vdd, 100kHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vdd at 100kHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vdd_1M:
+        display: Supply sensitivity vdd, 1MHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vdd at 1MHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vss_1k:
+        display: Supply sensitivity vss, 1kHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vss at 1kHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vss_100k:
+        display: Supply sensitivity vss, 100kHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vss at 100kHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vss_1M:
+        display: Supply sensitivity vss, 1MHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vss at 1MHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vddo_1k:
+        display: Supply sensitivity vddo, 1kHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vddo at 1kHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vddo_100k:
+        display: Supply sensitivity vddo, 100kHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vddo at 100kHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vddo_1M:
+        display: Supply sensitivity vddo, 1MHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vddo at 1MHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vsso_1k:
+        display: Supply sensitivity vsso, 1kHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vsso at 1kHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vsso_100k:
+        display: Supply sensitivity vsso, 100kHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vsso at 100kHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      P_vsso_1M:
+        display: Supply sensitivity vsso, 1MHz
+        description: Largest |dI / I| of the six bias currents per volt of ripple on vsso at 1MHz
+        unit: '%/V'
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_psrr.sch
+        format: ascii
+        suffix: .data
+        variables: [P_vdd_1k, P_vdd_100k, P_vdd_1M, P_vss_1k, P_vss_100k, P_vss_1M, P_vddo_1k, P_vddo_100k, P_vddo_1M, P_vsso_1k, P_vsso_100k, P_vsso_1M]
+    plot:
+      P_vdd_1M_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: P_vdd_1M
+        limits: auto
+    conditions:
+      sel:
+        enumerate: [0, 1, 2]
+      vdd:
+        typical: 3.3
+      iref:
+        typical: 5
+      corner_mos:
+        enumerate: [ss, tt, ff]
+      corner_r:
+        typical: typ
+      corner_pnp:
+        typical: typ
+      temp:
+        enumerate: [-40, 27, 125]
+
+  # Start-up from 0 V (added 2026-10-30, cloud session C1; the measurement of bias_oa_pd / bias_bg_pd startup_params):
+  # supplies, en_3v3 and the select bits ramp in tramp, codes 1 / 2 x ss / tt / ff x -40 / 125 C x 3.0 / 3.6 V x
+  # tramp 1 / 100 us = 48 runs. Limits: those of bias_oa_pd (t_su90 130 us; bias_bg_pd had 120 us) and 0.95 .. 1.05.
+  startup_params:
+    spec:
+      t_su90:
+        display: Start-up time to 90 % vbp current
+        description: Last crossing of 90 % of the final vbp current, from the start of the ramp
+        unit: us
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 130
+      Rbp_end:
+        display: vbp current after start-up / dc
+        description: vbp current 1 ms after the ramp, relative to the dc operating point
+        minimum:
+          value: 0.95
+        typical:
+          value: any
+        maximum:
+          value: 1.05
+      Rabn_end:
+        display: vabn current after start-up / dc
+        description: vabn current 1 ms after the ramp, relative to the dc operating point
+        minimum:
+          value: 0.95
+        typical:
+          value: any
+        maximum:
+          value: 1.05
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_startup.sch
+        format: ascii
+        suffix: .data
+        variables: [t_su90, Rbp_end, Rabn_end]
+    plot:
+      t_su90_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: t_su90
+        limits: auto
+    conditions:
+      sel:
+        enumerate: [1, 2]
+      vdd:
+        enumerate: [3.0, 3.6]
+      tramp:
+        description: Supply ramp time
+        display: Ramp
+        unit: us
+        enumerate: [1, 100]
+      iref:
+        typical: 5
+      corner_mos:
+        enumerate: [ss, tt, ff]
+      corner_r:
+        typical: typ
+      corner_pnp:
+        typical: typ
+      temp:
+        enumerate: [-40, 125]
+
+  # Mismatch Monte Carlo (added 2026-10-30, cloud session C1), report only: limits are not set here because sel = 3
+  # doubles every current; scripts/cace/mc_stats.py (make mc-table) compares sel 1 / 2 with the limits of
+  # supply_params (mm_params) and pvt_params (mm_lo_params, mm_hi_params). MOS and rhigh mismatch through the
+  # *_mismatch model sections and the instances' mm_ok = 1 (schematic only: an extracted netlist has no mm_ok, see
+  # templates/cores/magic_pex_2_mm_ok.spice); pnpMPA has no mismatch model. The seed is 12345 + iteration, so run k
+  # of every (sel, vdd) draws the same numbers.  Not in the default CACE_GROUPS: make sim-cace-mm.
+  # Typical corner (tt, typ, typ, 27 C), sel 1 / 2 / 3 x vdd 3.0 / 3.6 V x 100 iterations = 600 runs
+  mm_params:
+    spec:
+      Ibp:
+        display: I vbp - mismatch
+        description: Current of bias diode BP (vbp line, unit tails), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibn:
+        display: I vbn - mismatch
+        description: Current of bias diode BN (vbn line, fold sinks), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibnc:
+        display: I vbnc - mismatch
+        description: Current of bias diode BNC (vbnc line, fold cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibpc:
+        display: I vbpc - mismatch
+        description: Current of bias diode BPC (vbpc line, mirror cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabp:
+        display: I vabp - mismatch
+        description: Current of the RP2 / RP1 stack (vabp line, class-AB P side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabn:
+        display: I vabn - mismatch
+        description: Current of the RN2 / RN1 stack (vabn line, class-AB N side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vdd:
+        display: I vdd - mismatch
+        description: Current delivered by vdd into the bias cell (replica loads excluded)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vddo:
+        display: I vddo - mismatch
+        description: Current delivered by vddo into the class-AB stack RP1 + RP2 (a fixture since 2026-10-27)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vsso:
+        display: I vsso - mismatch
+        description: Current returned through vsso from the class-AB stack RN2 + RN1 (a fixture since 2026-10-27)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_ibias:
+        display: I ibias - mismatch
+        description: Current the harness mirror delivers into ibias
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Ibp, Ibn, Ibnc, Ibpc, Iabp, Iabn, I_vdd, I_vddo, I_vsso, I_ibias]
+    conditions:
+      sel:
+        enumerate: [1, 2, 3]
+      en:
+        typical: 1
+      vdd:
+        enumerate: [3.0, 3.6]
+      iref:
+        typical: 5
+      corner_mos:
+        typical: tt_mismatch
+      corner_r:
+        typical: typ_mismatch
+      corner_pnp:
+        typical: typ
+      temp:
+        typical: 27
+      iterations:
+        description: Monte Carlo iteration (seed offset)
+        display: Iteration
+        minimum: 1
+        maximum: 100
+        step: linear
+        stepsize: 1
+
+  # Low worst case of pvt_params / supply_params / rpnp_params (ss, rhigh wcs, pnpMPA bcs, -40 C), as mm_params = 600 runs
+  mm_lo_params:
+    spec:
+      Ibp:
+        display: I vbp - mismatch
+        description: Current of bias diode BP (vbp line, unit tails), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibn:
+        display: I vbn - mismatch
+        description: Current of bias diode BN (vbn line, fold sinks), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibnc:
+        display: I vbnc - mismatch
+        description: Current of bias diode BNC (vbnc line, fold cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibpc:
+        display: I vbpc - mismatch
+        description: Current of bias diode BPC (vbpc line, mirror cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabp:
+        display: I vabp - mismatch
+        description: Current of the RP2 / RP1 stack (vabp line, class-AB P side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabn:
+        display: I vabn - mismatch
+        description: Current of the RN2 / RN1 stack (vabn line, class-AB N side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vdd:
+        display: I vdd - mismatch
+        description: Current delivered by vdd into the bias cell (replica loads excluded)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vddo:
+        display: I vddo - mismatch
+        description: Current delivered by vddo into the class-AB stack RP1 + RP2 (a fixture since 2026-10-27)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vsso:
+        display: I vsso - mismatch
+        description: Current returned through vsso from the class-AB stack RN2 + RN1 (a fixture since 2026-10-27)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_ibias:
+        display: I ibias - mismatch
+        description: Current the harness mirror delivers into ibias
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Ibp, Ibn, Ibnc, Ibpc, Iabp, Iabn, I_vdd, I_vddo, I_vsso, I_ibias]
+    conditions:
+      sel:
+        enumerate: [1, 2, 3]
+      en:
+        typical: 1
+      vdd:
+        enumerate: [3.0, 3.6]
+      iref:
+        typical: 5
+      corner_mos:
+        typical: ss_mismatch
+      corner_r:
+        typical: wcs_mismatch
+      corner_pnp:
+        typical: bcs
+      temp:
+        typical: -40
+      iterations:
+        description: Monte Carlo iteration (seed offset)
+        display: Iteration
+        minimum: 1
+        maximum: 100
+        step: linear
+        stepsize: 1
+
+  # High worst case (ff, rhigh bcs, pnpMPA wcs, 125 C), as mm_params = 600 runs
+  mm_hi_params:
+    spec:
+      Ibp:
+        display: I vbp - mismatch
+        description: Current of bias diode BP (vbp line, unit tails), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibn:
+        display: I vbn - mismatch
+        description: Current of bias diode BN (vbn line, fold sinks), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibnc:
+        display: I vbnc - mismatch
+        description: Current of bias diode BNC (vbnc line, fold cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Ibpc:
+        display: I vbpc - mismatch
+        description: Current of bias diode BPC (vbpc line, mirror cascodes), nominal 2 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabp:
+        display: I vabp - mismatch
+        description: Current of the RP2 / RP1 stack (vabp line, class-AB P side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Iabn:
+        display: I vabn - mismatch
+        description: Current of the RN2 / RN1 stack (vabn line, class-AB N side), nominal 5 uA
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vdd:
+        display: I vdd - mismatch
+        description: Current delivered by vdd into the bias cell (replica loads excluded)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vddo:
+        display: I vddo - mismatch
+        description: Current delivered by vddo into the class-AB stack RP1 + RP2 (a fixture since 2026-10-27)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_vsso:
+        display: I vsso - mismatch
+        description: Current returned through vsso from the class-AB stack RN2 + RN1 (a fixture since 2026-10-27)
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_ibias:
+        display: I ibias - mismatch
+        description: Current the harness mirror delivers into ibias
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: bias_sel_pd_tb_dc.sch
+        format: ascii
+        suffix: .data
+        variables: [Ibp, Ibn, Ibnc, Ibpc, Iabp, Iabn, I_vdd, I_vddo, I_vsso, I_ibias]
+    conditions:
+      sel:
+        enumerate: [1, 2, 3]
+      en:
+        typical: 1
+      vdd:
+        enumerate: [3.0, 3.6]
+      iref:
+        typical: 5
+      corner_mos:
+        typical: ff_mismatch
+      corner_r:
+        typical: bcs_mismatch
+      corner_pnp:
+        typical: wcs
+      temp:
+        typical: 125
+      iterations:
+        description: Monte Carlo iteration (seed offset)
+        display: Iteration
+        minimum: 1
+        maximum: 100
+        step: linear
+        stepsize: 1

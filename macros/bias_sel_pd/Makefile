@@ -120,30 +120,61 @@ sim-view-xschem: ## Plot Xschem simulation results (usage: make sim-view-xschem 
 .PHONY: sim-view-xschem
 
 # Parameter groups of verification/cace/$(TOP).yaml run by sim-cace. Override with: make sim-cace CACE_GROUPS=<group>
-CACE_GROUPS ?= sel_params pvt_params supply_params rpnp_params iref_params pd_params tran_params
+CACE_GROUPS ?= sel_params pvt_params supply_params rpnp_params iref_params pd_params tran_params psrr_params startup_params
+# Mismatch Monte Carlo groups (600 runs each), run by sim-cace-mm, not by sim-cace
+CACE_GROUPS_MM ?= mm_params mm_lo_params mm_hi_params
 # Parallel CACE jobs (keep small: parallel ngspice runs have stalled on 2-core machines)
 CACE_JOBS   ?= 1
 CACE_SCRIPTS := $(MAKEFILE_DIR)/../../scripts/cace
+# View of the cores oa_core_pd / bg_core_pd: the file verification/cace/templates/cores/<CORES>.spice. schematic (default)
+# is the DUT netlist's own cores, as before; magic_pex_2, magic_pex_3 and magic_pex_2_mm_ok are the cores' extraction.
+# Another view than schematic runs a copy of the yaml whose condition cores defaults to it, and keeps its results in
+# results/<TOP>_cores_<CORES>/. Override with: make sim-cace CORES=<view>
+CORES       ?= schematic
+CACE_RES    := results/$(TOP)$(if $(filter-out schematic,$(CORES)),_cores_$(CORES))
+CACE_YAML   := $(if $(filter-out schematic,$(CORES)),_$(TOP)_cores.yaml,$(TOP).yaml)
 
 # Per group: run CACE on the schematic netlist, keep plots, the CACE summary and a CSV of all runs under
-# results/$(TOP)/, then drop the run folder. A group that misses a spec makes make fail at the END.
-# (Scheme of chipalooza2/levelshifters/ls_pair/cace.mk.)
-sim-cace: ## Run CACE (-s schematic) and collect plots, summaries and CSV in verification/cace/results/<TOP>/
-	cd $(CACE_DIR) && mkdir -p results/$(TOP) && status=0 ; \
+# results/$(TOP)/ (results/$(TOP)_cores_<CORES>/), warn about runs whose op fell back to a transient op, then drop the
+# run folder. A group that misses a spec makes make fail at the END. (Scheme of chipalooza2/levelshifters/ls_pair/cace.mk.)
+sim-cace: ## Run CACE (-s schematic) and collect plots, summaries and CSV in verification/cace/results/<TOP>/ (usage: make sim-cace [CORES=<view>])
+	cd $(CACE_DIR) && test -f templates/cores/$(CORES).spice && mkdir -p $(CACE_RES) && status=0 && \
+	if [ $(CACE_YAML) != $(TOP).yaml ]; then \
+	  sed '/^  cores:/,/typical:/s/typical: schematic/typical: $(CORES)/' $(TOP).yaml > $(CACE_YAML) ; \
+	fi && \
 	for g in $(CACE_GROUPS); do \
 	  rm -rf _runs/RUN_* ; \
-	  cace $(TOP).yaml -s schematic -p $$g -j $(CACE_JOBS) --no-progress-bar || status=1 ; \
-	  cp _runs/RUN_*/parameters/$$g/*.png results/$(TOP)/ 2>/dev/null ; \
-	  cp _runs/RUN_*/summary.md results/$(TOP)/summary_$$g.md ; \
-	  python3 $(CACE_SCRIPTS)/cace_to_csv.py $(TOP).yaml $$g _runs/RUN_* results/$(TOP)/$$g.csv || status=1 ; \
+	  cace $(CACE_YAML) -s schematic -p $$g -j $(CACE_JOBS) --no-progress-bar || status=1 ; \
+	  cp _runs/RUN_*/parameters/$$g/*.png $(CACE_RES)/ 2>/dev/null ; \
+	  cp _runs/RUN_*/summary.md $(CACE_RES)/summary_$$g.md ; \
+	  python3 $(CACE_SCRIPTS)/cace_to_csv.py $(TOP).yaml $$g _runs/RUN_* $(CACE_RES)/$$g.csv || status=1 ; \
+	  n=$$(grep -lE 'Transient op started|Timestep too small' _runs/RUN_*/parameters/$$g/run_*/ngspice_std*.out 2>/dev/null | wc -l) ; \
+	  [ $$n -eq 0 ] || echo "WARNING: $$g: $$n runs where ngspice fell back to a transient op or stopped at timestep too small" ; \
 	  rm -rf _runs/RUN_* ; \
 	done ; \
-	rm -rf _runs _docs netlist ; exit $$status
+	rm -rf _runs _docs netlist $(filter-out $(TOP).yaml,$(CACE_YAML)) ; exit $${status:-1}
 .PHONY: sim-cace
 
-spec-table: ## Print limit and worst case per quantity, from the yaml and results/<TOP>/*.csv
-	cd $(CACE_DIR) && python3 $(CACE_SCRIPTS)/spec_table.py $(TOP).yaml results/$(TOP)
+sim-cace-mm: ## Run the mismatch Monte Carlo groups (usage: make sim-cace-mm [CORES=<view>])
+	$(MAKE) sim-cace CACE_GROUPS="$(CACE_GROUPS_MM)"
+.PHONY: sim-cace-mm
+
+spec-table: ## Print limit and worst case per quantity, from the yaml and results/<TOP>/*.csv (usage: make spec-table [CORES=<view>])
+	cd $(CACE_DIR) && python3 $(CACE_SCRIPTS)/spec_table.py $(TOP).yaml $(CACE_RES)
 .PHONY: spec-table
+
+mc-table: ## Print mean, sigma, min / max of the mismatch groups against the limits (usage: make mc-table [CORES=<view>])
+	cd $(CACE_DIR) && python3 $(CACE_SCRIPTS)/mc_stats.py $(TOP).yaml $(CACE_RES) \
+	  mm_params=supply_params mm_lo_params=pvt_params mm_hi_params=pvt_params --nolimit sel=3
+.PHONY: mc-table
+
+cores-pex-sim: ## Regenerate the simulation copies of the cores' magic PEX netlists in verification/cace/templates/cores/
+	python3 $(CACE_SCRIPTS)/pex_for_sim.py ../bg_core_pd/netlist/pex/bg_core_pd_magic_pex_2.spice $(CACE_DIR)/templates/cores/bg_core_pd_magic_pex_2_tied.spice --tie vss 1e12
+	python3 $(CACE_SCRIPTS)/pex_for_sim.py ../bg_core_pd/netlist/pex/bg_core_pd_magic_pex_3.spice $(CACE_DIR)/templates/cores/bg_core_pd_magic_pex_3_tied.spice --tie vss 1e12
+	for c in oa_core_pd bg_core_pd; do \
+	  python3 $(CACE_SCRIPTS)/pex_for_sim.py ../$$c/netlist/pex/$${c}_magic_pex_2.spice $(CACE_DIR)/templates/cores/$${c}_magic_pex_2_mm_ok.spice --mm-ok --tie vss 1e12 ; \
+	done
+.PHONY: cores-pex-sim
 
 sim-all: ## Simulate the macro
 	$(MAKE) sim-cace

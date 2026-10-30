@@ -1,0 +1,4 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias_sel_pd CACE core view "schematic" (the default): nothing is defined here, so the cores oa_core_pd and
+* bg_core_pd come from the DUT netlist that CACE writes from the xschem schematics.

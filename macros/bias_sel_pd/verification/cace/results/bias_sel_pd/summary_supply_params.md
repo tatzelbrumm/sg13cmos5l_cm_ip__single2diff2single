@@ -1,5 +1,5 @@
 
-# CACE Summary for d2s_bias_sel_pd
+# CACE Summary for bias_sel_pd
 
 **netlist source**: schematic
 
@@ -25,15 +25,15 @@
 | I vddo               | ngspice              | I_vddo               |             any |          ​ |          any |          ​ |       9.3 uA |          ​ |   Skip 🟧    |
 | I vsso               | ngspice              | I_vsso               |             any |          ​ |          any |          ​ |       9.3 uA |          ​ |   Skip 🟧    |
 | I ibias              | ngspice              | I_ibias              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| I vbp                | ngspice              | Ibp                  |          4.8 uA |   5.044 uA |          any |   5.061 uA |       5.3 uA |   5.080 uA |   Pass ✅    |
-| I vbn                | ngspice              | Ibn                  |          4.8 uA |   5.052 uA |          any |   5.071 uA |       5.3 uA |   5.091 uA |   Pass ✅    |
-| I vbnc               | ngspice              | Ibnc                 |          1.9 uA |   2.072 uA |          any |   2.080 uA |       2.2 uA |   2.088 uA |   Pass ✅    |
-| I vbpc               | ngspice              | Ibpc                 |          1.8 uA |   1.937 uA |          any |   1.944 uA |       2.1 uA |   1.952 uA |   Pass ✅    |
-| I vabp               | ngspice              | Iabp                 |          4.8 uA |   5.023 uA |          any |   5.043 uA |       5.3 uA |   5.062 uA |   Pass ✅    |
-| I vabn               | ngspice              | Iabn                 |          4.8 uA |   5.045 uA |          any |   5.065 uA |       5.3 uA |   5.086 uA |   Pass ✅    |
-| I vdd                | ngspice              | I_vdd                |             any |  19.171 uA |          any |  27.393 uA |        40 uA |  29.883 uA |   Pass ✅    |
-| I vddo               | ngspice              | I_vddo               |             any |   5.023 uA |          any |   5.043 uA |          any |   5.062 uA |   Pass ✅    |
-| I vsso               | ngspice              | I_vsso               |             any |   5.045 uA |          any |   5.065 uA |          any |   5.086 uA |   Pass ✅    |
+| I vbp                | ngspice              | Ibp                  |          4.8 uA |   4.996 uA |          any |   5.044 uA |       5.3 uA |   5.073 uA |   Pass ✅    |
+| I vbn                | ngspice              | Ibn                  |          4.8 uA |   5.004 uA |          any |   5.054 uA |       5.3 uA |   5.085 uA |   Pass ✅    |
+| I vbnc               | ngspice              | Ibnc                 |          1.9 uA |   2.052 uA |          any |   2.073 uA |       2.2 uA |   2.085 uA |   Pass ✅    |
+| I vbpc               | ngspice              | Ibpc                 |          1.8 uA |   1.919 uA |          any |   1.938 uA |       2.1 uA |   1.949 uA |   Pass ✅    |
+| I vabp               | ngspice              | Iabp                 |          4.8 uA |   4.975 uA |          any |   5.026 uA |       5.3 uA |   5.056 uA |   Pass ✅    |
+| I vabn               | ngspice              | Iabn                 |          4.8 uA |   4.997 uA |          any |   5.048 uA |       5.3 uA |   5.080 uA |   Pass ✅    |
+| I vdd                | ngspice              | I_vdd                |             any |  19.171 uA |          any |  27.362 uA |        40 uA |  29.597 uA |   Pass ✅    |
+| I vddo               | ngspice              | I_vddo               |             any |   4.975 uA |          any |   5.026 uA |          any |   5.056 uA |   Pass ✅    |
+| I vsso               | ngspice              | I_vsso               |             any |   4.997 uA |          any |   5.048 uA |          any |   5.080 uA |   Pass ✅    |
 | I ibias              | ngspice              | I_ibias              |             any |   0.000 uA |          any |   0.007 uA |          any |   5.009 uA |   Pass ✅    |
 | I vbp                | ngspice              | Ibp                  |          2.8 uA |          ​ |          any |          ​ |       8.5 uA |          ​ |   Skip 🟧    |
 | I vbn                | ngspice              | Ibn                  |          2.8 uA |          ​ |          any |          ​ |       8.5 uA |          ​ |   Skip 🟧    |
@@ -67,4 +67,49 @@
 | I ibias              | ngspice              | I_ibias              |             any |          ​ |          any |          ​ |      0.05 nA |          ​ |   Skip 🟧    |
 | Settling time        | ngspice              | t_settle             |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | I vbp, final         | ngspice              | Ibp_end              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vdd, 1kHz | ngspice              | P_vdd_1k             |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vdd, 100kHz | ngspice              | P_vdd_100k           |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vdd, 1MHz | ngspice              | P_vdd_1M             |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vss, 1kHz | ngspice              | P_vss_1k             |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vss, 100kHz | ngspice              | P_vss_100k           |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vss, 1MHz | ngspice              | P_vss_1M             |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vddo, 1kHz | ngspice              | P_vddo_1k            |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vddo, 100kHz | ngspice              | P_vddo_100k          |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vddo, 1MHz | ngspice              | P_vddo_1M            |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vsso, 1kHz | ngspice              | P_vsso_1k            |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vsso, 100kHz | ngspice              | P_vsso_100k          |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Supply sensitivity vsso, 1MHz | ngspice              | P_vsso_1M            |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Start-up time to 90 % vbp current | ngspice              | t_su90               |             any |          ​ |          any |          ​ |       130 us |          ​ |   Skip 🟧    |
+| vbp current after start-up / dc | ngspice              | Rbp_end              |            0.95 |          ​ |          any |          ​ |         1.05 |          ​ |   Skip 🟧    |
+| vabn current after start-up / dc | ngspice              | Rabn_end             |            0.95 |          ​ |          any |          ​ |         1.05 |          ​ |   Skip 🟧    |
+| I vbp - mismatch     | ngspice              | Ibp                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbn - mismatch     | ngspice              | Ibn                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbnc - mismatch    | ngspice              | Ibnc                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbpc - mismatch    | ngspice              | Ibpc                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vabp - mismatch    | ngspice              | Iabp                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vabn - mismatch    | ngspice              | Iabn                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vdd - mismatch     | ngspice              | I_vdd                |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vddo - mismatch    | ngspice              | I_vddo               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vsso - mismatch    | ngspice              | I_vsso               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I ibias - mismatch   | ngspice              | I_ibias              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbp - mismatch     | ngspice              | Ibp                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbn - mismatch     | ngspice              | Ibn                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbnc - mismatch    | ngspice              | Ibnc                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbpc - mismatch    | ngspice              | Ibpc                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vabp - mismatch    | ngspice              | Iabp                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vabn - mismatch    | ngspice              | Iabn                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vdd - mismatch     | ngspice              | I_vdd                |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vddo - mismatch    | ngspice              | I_vddo               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vsso - mismatch    | ngspice              | I_vsso               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I ibias - mismatch   | ngspice              | I_ibias              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbp - mismatch     | ngspice              | Ibp                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbn - mismatch     | ngspice              | Ibn                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbnc - mismatch    | ngspice              | Ibnc                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vbpc - mismatch    | ngspice              | Ibpc                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vabp - mismatch    | ngspice              | Iabp                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vabn - mismatch    | ngspice              | Iabn                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vdd - mismatch     | ngspice              | I_vdd                |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vddo - mismatch    | ngspice              | I_vddo               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I vsso - mismatch    | ngspice              | I_vsso               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| I ibias - mismatch   | ngspice              | I_ibias              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 

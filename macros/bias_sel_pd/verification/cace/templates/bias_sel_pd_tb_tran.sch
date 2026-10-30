@@ -5,7 +5,7 @@ V {}
 S {}
 F {}
 E {}
-T {CACE template, settling after enable / sel change: bias_sel_pd. Conditions: step, corner_mos, temp, vdd, iref} 0 -40 0 0 0.4 0.4 {}
+T {CACE template, settling after enable / sel change: bias_sel_pd. Conditions: step, corner_mos, temp, vdd, iref, cores} 0 -40 0 0 0.4 0.4 {}
 N 200 0 200 40 {lab=vdd}
 N 180 220 180 260 {lab=GND}
 N 100 80 140 80 {lab=ibias}
@@ -26,6 +26,9 @@ C {devices/code_shown.sym} 0 300 0 0 {name=MODEL only_toplevel=true format="tcle
 .lib cornerPNP.lib CACE\{corner_pnp\}
 "}
 C {devices/code_shown.sym} 0 420 0 0 {name=NGSPICE only_toplevel=false value="
+* core view, condition cores (default schematic): templates/cores/<cores>.spice may define oa_core_pd and bg_core_pd
+* from their layout extraction. ngspice keeps the first definition of a subckt and ignores the DUT netlist's own.
+.include CACE\{templates\}/cores/CACE\{cores=schematic\}.spice
 .include CACE\{DUT_path\}
 .temp CACE\{temp\}
 .options gmin=1e-12 abstol=1e-12 reltol=1e-4
@@ -47,6 +50,7 @@ XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
 XEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
 * replica loads: each copies one bias diode (same device, gate on the bias line, drain forced to the gate
 * voltage by an ideal buffer), so the current through Vm.. is that diode's current
+* (XRabp1 / XRabn1 etc. were XRp1 / XRn1 etc. until 2026-10-30: same names as the fixtures XRP1 / XRN1 in SPICE, so ngspice-47 stopped)
 XRbp dbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
 Ebp ebp 0 vbp 0 1
 Vmbp ebp dbp 0
@@ -59,12 +63,12 @@ Vmbnc dbnc ebnc 0
 XRbpc dbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
 Ebpc ebpc 0 vbpc 0 1
 Vmbpc ebpc dbpc 0
-XRp1 n1r n1r vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
-XRp2 mdabp vabp n1r vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XRabp1 n1r n1r vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
+XRabp2 mdabp vabp n1r vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
 Eabp eabp 0 vabp 0 1
 Vmabp eabp mdabp 0
-XRn1 n2r n2r vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2
-XRn2 mdabn vabn n2r 0 sg13_hv_nmos w=4.4u l=1u ng=1
+XRabn1 n2r n2r vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2
+XRabn2 mdabn vabn n2r 0 sg13_hv_nmos w=4.4u l=1u ng=1
 Eabn eabn 0 vabn 0 1
 Vmabn mdabn eabn 0
 * step 0 / 1 / 2: en_3v3 rises at 1 us with sel = 0 / 1 / 2;  step 3 / 4 / 5: en high, sel changes 0 -> 1 / 1 -> 2 / 2 -> 0 at 100 us

@@ -1,0 +1,17 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias_sel_pd CACE core view "magic_pex_2_mm_ok": as magic_pex_2, but every MOS and rhigh of the extracted cores has
+* mm_ok=1 again, so the mismatch groups draw for them (extraction drops the schematic-only mm_ok; C0's LVS lists it as the
+* only property difference). The two netlists included here are copies of ../<core>/netlist/pex/<core>_magic_pex_2.spice
+* with mm_ok=1 appended to those X lines and bg's capacitor-only nodes tied as in magic_pex_2.spice
+* (scripts/cace/pex_for_sim.py --mm-ok --tie; make cores-pex-sim). pnpMPA has no mismatch model.
+* Included before the DUT netlist: ngspice keeps these definitions of oa_core_pd / bg_core_pd and ignores the
+* DUT netlist's own ("redefinition of .subckt ..., ignored" in the ngspice log). Relative paths resolve from this file.
+.include oa_core_pd_magic_pex_2_mm_ok.spice
+.include bg_core_pd_magic_pex_2_mm_ok.spice
+.subckt oa_core_pd vdd vss iout en_3v3 en_3v3_b
+Xpex vdd vss iout en_3v3 en_3v3_b oa_core_pd_pex
+.ends
+.subckt bg_core_pd vdd vss iout en_3v3 en_3v3_b
+Xpex vdd vss iout en_3v3 en_3v3_b bg_core_pd_pex
+.ends
