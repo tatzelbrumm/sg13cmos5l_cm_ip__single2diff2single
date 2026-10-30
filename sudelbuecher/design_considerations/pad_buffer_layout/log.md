@@ -1097,3 +1097,17 @@ devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on
   hooks, workflows. Confirmed with the authenticator code; claude.ai Connectors shows "GitHub Integration" ✓.
 - Branch protection on GitHub for `main`, `toplevel`, `sudel_buecher`: not set; the brief's rule is the only guard.
 - Next: start the cloud session (repository, branch `toplevel`, environment `sg13cmos5l`, the brief's first message).
+
+## 2026-10-30 17:59–18:25: cloud session C0 launched (oa_core_pd PEX)
+
+- Dedicated branch first, because choosing a branch in claude.ai/code lets the session push straight to it
+  ("Claude will push directly to toplevel"): `git push origin origin/toplevel:refs/heads/claude/c0-oa-core-pd-pex`
+  (1903407). Session started on that branch, environment `sg13cmos5l`, Opus 5.5 Extra, Auto; first message told
+  it to skip the brief's `git switch -c`. Session URL `claude.ai/code/session_01XU3KH9HScngzHDYHFcqui5`.
+- The setup script (first run by a duplicate tab at 18:15) was cut off mid-compile at about 295 s, before the
+  symlinks, the kpex wrapper and `SETUP_DONE`; the session ran those lines by hand as an environment adaptation.
+  So the environment isn't cached; the setup script needs shortening (ngspice and OpenVAF aren't needed for PEX).
+- 18:25: LVS "Circuits match uniquely", 28 = 28 devices, 22 = 22 nets; all PEX targets run; $3 of the $250
+  cloud credit used (plan usage unchanged).
+- 21:56: the session has pushed `claude/c0-oa-core-pd-pex` (82a57ec) and `claude/c0-oa-core-pd-pex-sudel` (f9c28e1).
+- Screenshots `chatlog/pix/2026-10-30_opus_cloud_setup_22…30_*.png`.
