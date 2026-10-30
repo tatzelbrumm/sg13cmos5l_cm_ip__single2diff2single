@@ -1,0 +1,48 @@
+* tb_pd_startup_oa: d2s_mpdda_pd + bias_oa_pd (self-contained), supplies steady, en_3v3 0 -> 3.3 V at 1 us, tt 27 C
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Needs the PDK .spiceinit (sourcepath to libs.tech/ngspice/models, OSDI for psp103/r3_cmc/cap_cmomi).
+* Run from this directory: ngspice <deck> (interactive: plots) or ngspice -b <deck> (batch: prints)
+* The operating point is taken with en_3v3 = 0, so the transient starts from the disabled state.
+* Reference (results_power_down.txt): final I_Q 212.0 uA (enabled dc op 212.0 uA); I_Q stays within
+* 10 % of it from 10.9 us after the enable edge.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.temp 27
+.option method=gear
+.include ../../netlist/source/units.spice
+.include ../../netlist/source/ccomp.spice
+.include ../../netlist/source/d2s_mpdda_pd.spice
+.include ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice
+Vvdd vdd 0 3.3
+Vvss vss 0 0
+Vvddo vddo 0 3.3
+Vvsso vsso 0 0
+Ven en 0 pwl(0 0 1u 0 1.01u 3.3)
+Xb vdd vss vbp vbn vbpc vbnc vabp vabn en bias_oa_pd
+Vcm vref 0 1.65
+Vp vinp vref 0
+Vn vinn vref 0
+* en_3v3_b for Xd: the inverter that was inside d2s_mpdda_pd (XIB in en_ctrl_3v3 in the pad)
+XIBP en_b en vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIBN en_b en vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+Xd vdd vss vddo vsso vinp vinn vref vout vout vbp vbn vbpc vbnc vabp vabn en en_b d2s_mpdda_pd
+RL vout vref 1k
+CL vout 0 100p
+.save v(vout) v(en) @n.xd.xop.nsg13_hv_pmos[ids] v(xb.xc.vbr) v(xb.xc.ks)
+.control
+tran 20n 2m
+let iq = abs(@n.xd.xop.nsg13_hv_pmos[ids])
+meas tran iqf find iq at=2m
+let hi = 1.1*iqf
+let lo = 0.9*iqf
+meas tran t1 when iq=hi cross=last
+meas tran t2 when iq=lo cross=last
+print iqf t1 t2
+if $?batchmode = 0
+  plot iq
+  plot v(vout) v(xb.xc.vbr) v(xb.xc.ks) xlimit 0 50u
+end
+.endc
+.end

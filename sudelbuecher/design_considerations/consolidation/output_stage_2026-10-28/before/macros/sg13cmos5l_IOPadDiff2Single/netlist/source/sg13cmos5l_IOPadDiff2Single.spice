@@ -1,0 +1,19 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* sg13cmos5l_IOPadDiff2Single: differential-in, single-ended-out buffered pad (class-AB, gain 1/2).
+* Custom padframe cell (case (a)): OP / ON of d2s_mpdda_pd are the pad's ESD clamp frames, on the
+* ring rails iovdd / iovss; the front end and the bias also run on iovdd / iovss (pad-ring taps).
+* Ring ports as IHP's IO cells: iovdd iovss vdd vss (vdd / vss = 1.2 V core ring, only for the
+* level shifters' input inverters). Core-side ports: vinp vinn vref (from the slot), ibias (harness
+* current through the slot), en_1v2 sel0_1v2 sel1_1v2 (1.2 V logic), vdd1v2_sense vdd3v3_sense
+* (the slot's gated supplies). vfb is tied to pad inside the cell (Kelvin, at the pad).
+* DCN / DCP: IHP's primary diodes, as in sg13cmos5l_IOPadAnalog.
+* Slot fallback (no padframe change): iovdd = vdd_3v3, iovss = vss_3v3, vdd = vdd_1v2, vss = vss_1v2,
+* pad = s7_an[1] (the harness IOPadAnalog pad).
+.subckt sg13cmos5l_IOPadDiff2Single iovdd iovss vdd vss pad vinp vinn vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
+Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
+Xb iovdd iovss ibias vbp vbn vbpc vbnc vabp vabn en_3v3 sel0_3v3 sel1_3v3 en_3v3_b bias_sel_pd
+Xd iovdd iovss iovdd iovss vinp vinn vref pad pad vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
+XDN iovss pad iovdd sg13cmos5l_DCNDiode
+XDP pad iovdd iovss sg13cmos5l_DCPDiode
+.ends sg13cmos5l_IOPadDiff2Single
