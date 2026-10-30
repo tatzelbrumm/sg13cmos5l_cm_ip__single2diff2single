@@ -1,0 +1,5 @@
+top+bottom segments in the margins, full width          farthest P diffusion 19.23 um
+top+bottom segments, minimum centred length 7.86 each   farthest P diffusion 20.00 um
+left edge, full height                                  farthest P diffusion 19.47 um
+left edge, minimum centred length 29.10                 farthest P diffusion 20.00 um
+segments drawn: top/bottom 8.2 um each at y 38.610 / -0.360; left 29.4 um

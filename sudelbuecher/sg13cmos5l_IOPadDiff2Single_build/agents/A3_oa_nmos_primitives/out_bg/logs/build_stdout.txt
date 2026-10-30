@@ -1,0 +1,25 @@
+bg_n4: {'bbox': (-1.33,-0.78;16.79,22.02), 'ties': ((0.28, -0.49, 14.48, -0.23), (0.28, 21.47, 12.1, 21.73)), 'tie_y': (-0.51, 21.45), 'x3': 12.5, 'x4': 15.39, 'yE': 19.6, 'xc': 7.25}
+rules used:
+  active_space         0.21    J Act_b: Activ space (row-to-row gap)
+  cont                 0.16    J Cnt_a: contact size
+  cont_in_active       0.07    J Cnt_c: Activ enclosure of contact
+  cont_in_poly         0.07    J Cnt_d: GatPoly enclosure of contact
+  cont_space           0.18    J Cnt_b: contact space
+  finger_gap           0.25    J Gat_b1 / MAX Gat.b1: space between unrelated 3.3 V gates over Activ; fingers of a row at this gap merge their poly endcaps into one strip
+  grid                 0.005   J grid: all coordinates on this grid
+  m1_area              0.09    J M1_d / MAX M1.d: minimum Metal1 area (um2)
+  m1_cont_endcap       0.05    J M1_c1 / MAX M1.c1: M1 endcap enclosure of contact
+  m1_space             0.18    J M1_b
+  m2_space             0.21    J Mn_b
+  m2_via1_endcap       0.05    MAX M2.c1 output text '= 0.05' (no json key)
+  poly_endcap          0.18    J Gat_c / MAX Gat.c: GatPoly extension over Activ
+  poly_to_active       0.07    J Gat_d: field GatPoly to Activ
+  polycont_to_active   0.14    J Cnt_e: contact on GatPoly to Activ
+  thickox_over_active  0.27    J TGO_a / MAX TGO.a
+  thickox_space        0.86    J TGO_e / MAX TGO.e: merge if closer
+  tie_cont_ext_max     6       J LU_d / MAX LU.d1: max tie Activ extension beyond a contact
+  tie_impl_enc         0.03    J pSD_c1: pSD enclosure of the P+ substrate tie (the ptap1 PCell uses it)
+  via1                 0.19    J V1_a: Via1 size
+  via1_m1_enc          0.01    J V1_c: M1 enclosure of Via1
+  via1_m1_endcap       0.05    J V1_c1 / MAX V1.c1: M1 endcap enclosure of Via1
+  via1_space           0.22    J V1_b: Via1 space

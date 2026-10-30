@@ -1,0 +1,9 @@
+labels: 5 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS oa_pmir vs pad_buffer_cells.cdl:oa_pmir -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 5
+  sg13_hv_pmos  D=c8        G=vpg       S=vdd       B=vdd   W=  16.000 L=  8.000
+  sg13_hv_pmos  D=co        G=vpg       S=vdd       B=vdd   W=  40.000 L=  8.000
+  sg13_hv_pmos  D=vdd       G=vpg       S=c2        B=vdd   W=   4.000 L=  8.000
+  sg13_hv_pmos  D=vdd       G=vpg       S=vdd       B=vdd   W=  18.000 L=  8.000
+  sg13_hv_pmos  D=vpg       G=vpg       S=vdd       B=vdd   W=   2.000 L=  8.000

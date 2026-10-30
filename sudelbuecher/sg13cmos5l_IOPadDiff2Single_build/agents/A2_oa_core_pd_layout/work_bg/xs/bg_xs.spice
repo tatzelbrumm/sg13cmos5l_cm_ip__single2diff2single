@@ -1,0 +1,27 @@
+** sch_path: /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/oaagent/work_bg/xs/bg_core_pd.sch
+**.subckt bg_core_pd vdd vss en_3v3 en_3v3_b iout
+*.iopin vdd
+*.iopin vss
+*.ipin en_3v3
+*.ipin en_3v3_b
+*.opin iout
+XMS1 ks en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=100u ng=1 m=1 mm_ok=1
+XMS2 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XPB vpg vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XPBC vpc vpc vpg vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XNB vpc g eb vss sg13_hv_nmos w=20u l=4u ng=1 m=1 mm_ok=1
+XR1B eb vss vss rhigh w=0.5u l=99.36u m=1 b=0 mm_ok=1
+XR0 eb e2 vss rhigh w=0.5u l=179.5u m=1 b=0 mm_ok=1
+XQ2 vss vss e2 pnpMPA a=4e-12 p=8e-06 m=8
+XPA ca vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XPAC g vpc ca vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XNA g g ea vss sg13_hv_nmos w=20u l=4u ng=1 m=1 mm_ok=1
+XR1A ea vss vss rhigh w=0.5u l=109.3u m=1 b=0 mm_ok=1
+XQ1 vss vss ea pnpMPA a=4e-12 p=8e-06 m=1
+XPO co vpg vdd vdd sg13_hv_pmos w=80u l=1u ng=8 m=1 mm_ok=1
+XPOC iout vpc co vdd sg13_hv_pmos w=80u l=1u ng=8 m=1 mm_ok=1
+XSKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XSVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+**.ends
+.end

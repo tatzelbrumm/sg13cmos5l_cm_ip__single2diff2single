@@ -1,0 +1,7 @@
+.SUBCKT t a b c e
+R1 a b 19.88
+R2 b c 19.88
+Q1 c c e pnpMPA AE=4 PE=8
+Q2 c c e pnpMPA AE=4 PE=8
+XR3 a c rhigh w=0.5u l=9.94u
+.ENDS t

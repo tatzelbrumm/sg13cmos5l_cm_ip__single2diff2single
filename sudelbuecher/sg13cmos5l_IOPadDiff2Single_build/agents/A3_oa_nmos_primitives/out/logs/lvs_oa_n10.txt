@@ -1,0 +1,12 @@
+labels: 7 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS oa_n10 vs oa_n_cells.cdl:oa_n10 -> MATCH
+  LV gates (outside ThickGateOx): 0
+  layout devices after parallel combination: 8
+  sg13_hv_nmos  D=d10       G=vnc       S=vres      B=vss   W= 180.000 L=  1.000
+  sg13_hv_nmos  D=ks        G=en_3v3_b  S=vss       B=vss   W=   1.000 L=  0.450
+  sg13_hv_nmos  D=ks        G=vbr       S=vss       B=vss   W=  10.000 L=  1.000
+  sg13_hv_nmos  D=vnc       G=vnc       S=vss       B=vss   W=  90.000 L=  1.000
+  sg13_hv_nmos  D=vpc       G=ks        S=vss       B=vss   W=   0.500 L=  2.000
+  sg13_hv_nmos  D=vpc       G=vbr       S=d10       B=vss   W=  10.000 L=  1.000
+  sg13_hv_nmos  D=vss       G=vbr       S=vss       B=vss   W=   4.000 L=  1.000
+  sg13_hv_nmos  D=vss       G=vnc       S=vss       B=vss   W=  36.000 L=  1.000

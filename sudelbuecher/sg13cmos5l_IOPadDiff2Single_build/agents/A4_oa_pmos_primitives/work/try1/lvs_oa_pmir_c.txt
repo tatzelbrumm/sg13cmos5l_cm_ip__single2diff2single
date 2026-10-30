@@ -1,0 +1,25 @@
+labels: 5 names; nets with two label names (shorts): none; names on two nets (opens): none
+LVS oa_pmir_c vs oa_p_cells.cdl:oa_pmir_c -> MISMATCH
+  LV gates (outside ThickGateOx): 0
+  device Mismatch: layout $25 / ref OA_PMIR_C_R2_P0_4
+  device Mismatch: layout $15 / ref OA_PMIR_C_R2_P2_5
+  device Mismatch: layout $1 / ref OA_PMIR_C_R1_DUMMYN_0
+  device Mismatch: layout $3 / ref OA_PMIR_C_R1_P8_4
+  device Mismatch: layout $2 / ref OA_PMIR_C_R1_PO_1
+  net Mismatch: layout - / ref C2
+  net Mismatch: layout - / ref C8
+  net Mismatch: layout - / ref CO
+  net Mismatch: layout - / ref VDD
+  net Mismatch: layout - / ref VPG
+  net Mismatch: layout $1 / ref -
+  net Mismatch: layout c2 / ref -
+  net Mismatch: layout c8 / ref -
+  net Mismatch: layout co / ref -
+  net Mismatch: layout vdd / ref -
+  net Mismatch: layout vpg / ref -
+  layout devices after parallel combination: 5
+  sg13_hv_pmos  D=c8        G=vpg       S=vdd       B=$1    W=  16.000 L=  8.000
+  sg13_hv_pmos  D=co        G=vpg       S=vdd       B=$1    W=  40.000 L=  8.000
+  sg13_hv_pmos  D=vdd       G=vpg       S=c2        B=$1    W=   4.000 L=  8.000
+  sg13_hv_pmos  D=vdd       G=vpg       S=vdd       B=$1    W=   4.400 L=  8.000
+  sg13_hv_pmos  D=vpg       G=vpg       S=vdd       B=$1    W=   2.000 L=  8.000

@@ -1,0 +1,43 @@
+.SUBCKT oa_pmir c2 c8 co vdd vpg
+* oa_pmir_a (rows 1, 2) + oa_pmir_b (rows 3, 4) as one 4 x 8 point-symmetric array; 2/8 end dummies at both ends of every row
+Moa_pmir_r1_dummy_0 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r1_PO_1 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r1_PO_2 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r1_PO_3 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r1_P8_4 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r1_PO_5 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r1_PO_6 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r1_P8_7 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r1_PO_8 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r1_dummy_9 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_dummy_0 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_PO_1 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_P8_2 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_PO_3 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_P0_4 vpg vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_P2_5 c2 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_P8_6 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_PO_7 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_PO_8 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r2_dummy_9 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_dummy_0 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_PO_1 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_PO_2 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_P8_3 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_P2_4 c2 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_dummy_5 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_PO_6 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_P8_7 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_PO_8 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r3_dummy_9 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_dummy_0 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_PO_1 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_P8_2 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_PO_3 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_PO_4 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_P8_5 c8 vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_PO_6 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_PO_7 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_PO_8 co vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_r4_dummy_9 vdd vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1
+.ENDS oa_pmir

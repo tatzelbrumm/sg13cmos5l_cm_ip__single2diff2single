@@ -1,0 +1,29 @@
+.SUBCKT oa_core_pd vdd vss iout en_3v3 en_3v3_b
+MP0  vpg  vpg  vdd vdd sg13_hv_pmos W=2u   L=8u
+MP0C vpc  vpc  vpg vdd sg13_hv_pmos W=0.5u L=2u
+MP8  c8   vpg  vdd vdd sg13_hv_pmos W=16u  L=8u
+MP8C vnc  vpc  c8  vdd sg13_hv_pmos W=4u   L=2u
+MP2  c2   vpg  vdd vdd sg13_hv_pmos W=4u   L=8u
+MP2C vbr  vpc  c2  vdd sg13_hv_pmos W=1u   L=2u
+MPO  co   vpg  vdd vdd sg13_hv_pmos W=40u  L=8u
+MPOC iout vpc  co  vdd sg13_hv_pmos W=10u  L=2u
+MM11 vnc  vnc  vss vss sg13_hv_nmos W=90u  L=1u
+MM10 d10  vnc  vres vss sg13_hv_nmos W=180u L=1u
+MMC10 vpc vbr  d10 vss sg13_hv_nmos W=10u  L=1u
+MMCS vbr  vbr  vss vss sg13_hv_nmos W=3.4u L=30u
+MMCL vres vbr  vss vss sg13_hv_nmos W=3.4u L=30u
+MMS1_0 ms1 en_3v3_b vdd vdd sg13_hv_pmos W=0.5u L=12.5u
+MMS1_1 ms2 en_3v3_b ms1 vdd sg13_hv_pmos W=0.5u L=12.5u
+MMS1_2 ms3 en_3v3_b ms2 vdd sg13_hv_pmos W=0.5u L=12.5u
+MMS1_3 ms4 en_3v3_b ms3 vdd sg13_hv_pmos W=0.5u L=12.5u
+MMS1_4 ms5 en_3v3_b ms4 vdd sg13_hv_pmos W=0.5u L=12.5u
+MMS1_5 ms6 en_3v3_b ms5 vdd sg13_hv_pmos W=0.5u L=12.5u
+MMS1_6 ms7 en_3v3_b ms6 vdd sg13_hv_pmos W=0.5u L=12.5u
+MMS1_7 ks  en_3v3_b ms7 vdd sg13_hv_pmos W=0.5u L=12.5u
+MMS2 ks   vbr  vss vss sg13_hv_nmos W=10u  L=1u
+MMS3 vpc  ks   vss vss sg13_hv_nmos W=0.5u L=2u
+MSVPG vpg en_3v3 vdd vdd sg13_hv_pmos W=1u L=0.45u
+MSKS ks   en_3v3_b vss vss sg13_hv_nmos W=1u L=0.45u
+MDUMP vdd vpg  vdd vdd sg13_hv_pmos W=18u  L=8u
+MDUMN vss vnc  vss vss sg13_hv_nmos W=10u  L=1u
+.ENDS oa_core_pd

@@ -1,0 +1,11 @@
+.SUBCKT oa_misc_p en_3v3 en_3v3_b ks ms1 ms2 ms3 ms4 ms5 ms6 ms7 vdd vpg
+Moa_misc_p_r1_MS1_0_0 ms1 en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r1_MS1_1_1 ms2 en_3v3_b ms1 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r1_MS1_2_2 ms3 en_3v3_b ms2 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r1_MS1_3_3 ms4 en_3v3_b ms3 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_MS1_4_0 ms5 en_3v3_b ms4 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_MS1_5_1 ms6 en_3v3_b ms5 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_MS1_6_2 ms7 en_3v3_b ms6 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_MS1_7_3 ks en_3v3_b ms7 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_misc_p_r2_SVPG_4 vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS oa_misc_p

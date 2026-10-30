@@ -1,0 +1,24 @@
+auto gap line 5 seam 0 (cell(pcas) | cell(ms1)): 0.000 um
+auto gap line 5 seam 1 (cell(ms1) | cell(svpg)): 0.000 um
+auto gap line 2 seam 0 (rail(vdd) | cell(pmir)): 0.000 um
+auto gap line 2 seam 1 (cell(pmir) | H()): 0.210 um
+auto gap line 2 seam 2 (H() | FREE()): 0.140 um
+auto gap line 2 seam 3 (FREE() | rail(vss)): 0.090 um
+placed 6 instances, 2 rails, 1 tap stripes: 39.490 x 58.135 um
+block oa_core_pd: 40.510 x 58.135 um = 2355.0 um2; gate 1148.1 um2 (48.8 %), MOS diffusion 1437.2 um2 (61.0 %)
+layers drawn in the top cell: 1/0 10/0 10/2 10/25 19/0 31/0 44/0 6/0 8/0 8/2 8/25; well fill 7.92 um2, tap stripes 3
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  vdd        M1   5.38 um  M2   9.42 um  vias 2
+  vss        M1   0.81 um  M2   0.00 um  vias 0
+  iout       M1  11.61 um  M2   7.02 um  vias 2
+  en_3v3     M1   0.00 um  M2   5.08 um  vias 1
+  en_3v3_b   M1   6.59 um  M2   0.00 um  vias 1
+  vpg        M1   0.53 um  M2   2.02 um  vias 3
+  vpc        M1   0.00 um  M2   1.06 um  vias 0
+  vnc        M1  11.61 um  M2   5.66 um  vias 3
+  vbr        M1  13.22 um  M2  31.22 um  vias 4
+  ks         M1   7.08 um  M2   0.00 um  vias 0
+  co         M1   6.08 um  M2   4.19 um  vias 1
+  c8         M1   9.76 um  M2   3.78 um  vias 2
+  c2         M1   6.62 um  M2   9.67 um  vias 1

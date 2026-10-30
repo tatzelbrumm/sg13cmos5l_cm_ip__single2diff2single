@@ -1,0 +1,27 @@
+** sch_path: /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/biash/regroup/work/macros/oa_core_pd/schematic/xschem/oa_core_pd.sch
+**.subckt oa_core_pd vdd vss en_3v3 en_3v3_b iout
+*.iopin vdd
+*.iopin vss
+*.ipin en_3v3
+*.ipin en_3v3_b
+*.opin iout
+XMS1 ks en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=100u ng=1 m=1 mm_ok=1
+XMS2 ks vbr vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XP0 vpg vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1 mm_ok=1
+XP0C vpc vpc vpg vdd sg13_hv_pmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XMC10 vpc vbr d10 vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XM10 d10 vnc vres vss sg13_hv_nmos w=180u l=1u ng=8 m=1 mm_ok=1
+XMCL vres vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1 mm_ok=1
+XP8 c8 vpg vdd vdd sg13_hv_pmos w=16u l=8u ng=8 m=1 mm_ok=1
+XP8C vnc vpc c8 vdd sg13_hv_pmos w=4u l=2u ng=2 m=1 mm_ok=1
+XM11 vnc vnc vss vss sg13_hv_nmos w=90u l=1u ng=4 m=1 mm_ok=1
+XP2 c2 vpg vdd vdd sg13_hv_pmos w=4u l=8u ng=2 m=1 mm_ok=1
+XP2C vbr vpc c2 vdd sg13_hv_pmos w=1u l=2u ng=1 m=1 mm_ok=1
+XMCS vbr vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1 mm_ok=1
+XPO co vpg vdd vdd sg13_hv_pmos w=40u l=8u ng=20 m=1 mm_ok=1
+XPOC iout vpc co vdd sg13_hv_pmos w=10u l=2u ng=5 m=1 mm_ok=1
+XSKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XSVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+**.ends
+.end

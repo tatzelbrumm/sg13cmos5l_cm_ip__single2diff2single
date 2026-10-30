@@ -1,0 +1,48 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bg_res_c (build_bg_res_c.py, 2026-10-28, Claude): rhigh segments as two-terminal resistors, R in
+* squares (l / w = 9.94 / 0.5); bulk = substrate (vss), not a port of the comparison.
+* R0 e2-eb 18 x 9.94 = 178.92 um, R1A vss-ea 11 x = 109.34 um, R1B vss-eb 10 x = 99.40 um, 2 dummies on vss
+.SUBCKT bg_res_c e2 ea eb vss
+RR0_0 e2 R0_1 19.88
+RR0_1 R0_1 R0_2 19.88
+RR0_2 R0_2 R0_3 19.88
+RR0_3 R0_3 R0_4 19.88
+RR0_4 R0_4 R0_5 19.88
+RR0_5 R0_5 R0_6 19.88
+RR0_6 R0_6 R0_7 19.88
+RR0_7 R0_7 R0_8 19.88
+RR0_8 R0_8 R0_9 19.88
+RR0_9 R0_9 R0_10 19.88
+RR0_10 R0_10 R0_11 19.88
+RR0_11 R0_11 R0_12 19.88
+RR0_12 R0_12 R0_13 19.88
+RR0_13 R0_13 R0_14 19.88
+RR0_14 R0_14 R0_15 19.88
+RR0_15 R0_15 R0_16 19.88
+RR0_16 R0_16 R0_17 19.88
+RR0_17 R0_17 eb 19.88
+RR1A_0 vss R1A_1 19.88
+RR1A_1 R1A_1 R1A_2 19.88
+RR1A_2 R1A_2 R1A_3 19.88
+RR1A_3 R1A_3 R1A_4 19.88
+RR1A_4 R1A_4 R1A_5 19.88
+RR1A_5 R1A_5 R1A_6 19.88
+RR1A_6 R1A_6 R1A_7 19.88
+RR1A_7 R1A_7 R1A_8 19.88
+RR1A_8 R1A_8 R1A_9 19.88
+RR1A_9 R1A_9 R1A_10 19.88
+RR1A_10 R1A_10 ea 19.88
+RR1B_0 vss R1B_1 19.88
+RR1B_1 R1B_1 R1B_2 19.88
+RR1B_2 R1B_2 R1B_3 19.88
+RR1B_3 R1B_3 R1B_4 19.88
+RR1B_4 R1B_4 R1B_5 19.88
+RR1B_5 R1B_5 R1B_6 19.88
+RR1B_6 R1B_6 R1B_7 19.88
+RR1B_7 R1B_7 R1B_8 19.88
+RR1B_8 R1B_8 R1B_9 19.88
+RR1B_9 R1B_9 eb 19.88
+Rdummy_L vss vss 19.88
+Rdummy_R vss vss 19.88
+.ENDS bg_res_c

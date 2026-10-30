@@ -1,0 +1,67 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* oa_p_cells.cdl: reference netlists of oa_p_cells.gds, written by build_oa_p.py (2026-10-28, Claude).
+* Devices as drawn, dummies included (S = D). All cells are tap-less: bulk on the internal net nw (the cell's
+* one NWell), tied to vdd by the parent's periphery tap of the merged vdd well.
+
+.SUBCKT oa_pmir_c c2 c8 co vdd vpg
+* 4 x 8 point-symmetric 2/8 map of oa_pmir (PO 20, P8 8, P2 2, P0 1, inner dummy 1 = P0's point
+* image); end dummies 0.3/8 (were 2/8), D = S = vdd, G = vpg
+Moa_pmir_c_r1_dummyn_0 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=8u ng=1 m=1
+Moa_pmir_c_r1_PO_1 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r1_PO_2 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r1_PO_3 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r1_P8_4 c8 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r1_PO_5 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r1_PO_6 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r1_P8_7 c8 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r1_PO_8 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r1_dummyn_9 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=8u ng=1 m=1
+Moa_pmir_c_r2_dummyn_0 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=8u ng=1 m=1
+Moa_pmir_c_r2_PO_1 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r2_P8_2 c8 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r2_PO_3 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r2_P0_4 vpg vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r2_P2_5 c2 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r2_P8_6 c8 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r2_PO_7 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r2_PO_8 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r2_dummyn_9 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=8u ng=1 m=1
+Moa_pmir_c_r3_dummyn_0 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=8u ng=1 m=1
+Moa_pmir_c_r3_PO_1 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r3_PO_2 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r3_P8_3 c8 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r3_P2_4 c2 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r3_dummy_5 vdd vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r3_PO_6 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r3_P8_7 c8 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r3_PO_8 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r3_dummyn_9 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=8u ng=1 m=1
+Moa_pmir_c_r4_dummyn_0 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=8u ng=1 m=1
+Moa_pmir_c_r4_PO_1 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r4_P8_2 c8 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r4_PO_3 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r4_PO_4 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r4_P8_5 c8 vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r4_PO_6 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r4_PO_7 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r4_PO_8 co vpg vdd nw sg13_hv_pmos w=2u l=8u ng=1 m=1
+Moa_pmir_c_r4_dummyn_9 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=8u ng=1 m=1
+.ENDS oa_pmir_c
+
+.SUBCKT oa_ms1 en_3v3_b ks vdd
+* MS1 0.5/100 as 8 x 0.5/12.5 in series (ms1 ... ms7)
+Moa_ms1_MS1_0 ms1 en_3v3_b vdd nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_ms1_MS1_1 ms2 en_3v3_b ms1 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_ms1_MS1_2 ms3 en_3v3_b ms2 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_ms1_MS1_3 ms4 en_3v3_b ms3 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_ms1_MS1_4 ms5 en_3v3_b ms4 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_ms1_MS1_5 ms6 en_3v3_b ms5 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_ms1_MS1_6 ms7 en_3v3_b ms6 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Moa_ms1_MS1_7 ks en_3v3_b ms7 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+.ENDS oa_ms1
+
+.SUBCKT oa_svpg en_3v3 vdd vpg
+* SVPG 1/0.45
+Moa_svpg_SVPG vpg en_3v3 vdd nw sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS oa_svpg

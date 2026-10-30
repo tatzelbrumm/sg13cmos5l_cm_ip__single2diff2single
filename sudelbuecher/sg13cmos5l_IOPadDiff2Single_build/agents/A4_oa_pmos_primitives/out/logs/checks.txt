@@ -1,0 +1,44 @@
+oa_pmir_c: R180 about (9.425, 19.125) um
+  diff     area   576.352 um2   XOR with image    0.000 um2
+  poly     area   631.040 um2   XOR with image    0.000 um2
+  contact  area    14.950 um2   XOR with image    0.000 um2
+  pimp     area   707.596 um2   XOR with image    0.000 um2
+  well     area   793.354 um2   XOR with image    0.000 um2
+  hvox     area   793.354 um2   XOR with image    0.000 um2
+  m1       area   125.017 um2   XOR with image   13.776 um2
+  via1     area     2.383 um2   XOR with image    0.144 um2
+  m2       area    39.948 um2   XOR with image   27.464 um2
+oa_pmir_c pins:
+  vdd        m1  (9.025,-0.62;9.825,-0.3)  edge B
+  co         m2  (19.07,10.025;19.47,10.225)  edge R
+  c8         m2  (19.07,9.615;19.47,9.815)  edge R
+  c2         m2  (19.07,9.205;19.47,9.405)  edge R
+  vpg        m2  (19.07,8.795;19.47,8.995)  edge R
+oa_ms1 pins:
+  vdd        m1  (0,13.48;0.5,13.8)  edge T
+  ks         m1  (5.25,13.48;5.75,13.8)  edge T
+  en_3v3_b   m1  (-0.62,6.43;-0.3,6.75)  edge L
+oa_svpg pins:
+  en_3v3     m1  (1.3,0.435;1.62,0.695)  edge R
+  vdd        m1  (0,1.43;1,1.75)  edge T
+  vpg        m1  (0,-0.62;1,-0.3)  edge B
+oa_pmir_c taps L;R: farthest P diffusion 9.92 um at (9.3, 0.0); limit 20 (LU_a) -> pass
+oa_pmir_c taps L: farthest P diffusion 19.47 um at (18.85, 0.0); limit 20 (LU_a) -> pass
+oa_pmir_c taps T;B: farthest P diffusion 19.64 um at (0.0, 19.02); limit 20 (LU_a) -> pass
+oa_pmir_c taps T: farthest P diffusion 38.87 um at (0.0, 0.0); limit 20 (LU_a) -> FAIL
+oa_ms1 taps L: farthest P diffusion 6.37 um at (5.75, 0.0); limit 20 (LU_a) -> pass
+oa_svpg taps L: farthest P diffusion 1.62 um at (1.0, 0.0); limit 20 (LU_a) -> pass
+oa_ms1 taps R: farthest P diffusion 6.37 um at (0.0, 0.0); limit 20 (LU_a) -> pass
+oa_svpg taps R: farthest P diffusion 1.62 um at (0.0, 0.0); limit 20 (LU_a) -> pass
+oa_ms1 taps T: farthest P diffusion 13.80 um at (0.0, 0.0); limit 20 (LU_a) -> pass
+oa_svpg taps T: farthest P diffusion 1.75 um at (0.0, 0.0); limit 20 (LU_a) -> pass
+oa_ms1 taps B: farthest P diffusion 13.80 um at (0.0, 13.18); limit 20 (LU_a) -> pass
+oa_svpg taps B: farthest P diffusion 1.75 um at (0.0, 1.13); limit 20 (LU_a) -> pass
+top+bottom segments in the margins, full width          farthest P diffusion 19.23 um
+top+bottom segments, minimum centred length 7.86 each   farthest P diffusion 20.00 um
+left edge, full height                                  farthest P diffusion 19.47 um
+left edge, minimum centred length 29.10                 farthest P diffusion 20.00 um
+segments drawn: top/bottom 8.2 um each at y 38.610 / -0.360; left 29.4 um
+example_build (adapter-drawn devices) vs oa_p_cells.gds (library PCells), flat XOR oa_pmir_c : 0 on all layers
+example_build (adapter-drawn devices) vs oa_p_cells.gds (library PCells), flat XOR oa_ms1 : 0 on all layers
+example_build (adapter-drawn devices) vs oa_p_cells.gds (library PCells), flat XOR oa_svpg : 0 on all layers

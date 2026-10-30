@@ -1,0 +1,3 @@
+score 1: 10 rows, voices ABCSde, claims ['mirror_y ok', 'mirror_x ok', 'point ok', 'A,B ok']
+score 2: 2 rows, voices LS, claims -
+score 3: 5 rows, voices ABSde, claims ['mirror_y_orient ok', 'mirror_x ok', 'A,B ok']

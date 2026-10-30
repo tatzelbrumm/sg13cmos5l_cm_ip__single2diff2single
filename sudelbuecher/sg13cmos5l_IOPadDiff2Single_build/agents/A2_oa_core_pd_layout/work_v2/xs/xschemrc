@@ -1,0 +1,4 @@
+set ::env(PDK_ROOT) /tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/ext/pdk_a49358c
+set ::env(PDK) ihp-sg13cmos5l
+source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc
+append XSCHEM_LIBRARY_PATH :/tmp/claude-0/-home-claude/f5dc1779-0ee8-504e-923f-171069e08948/scratchpad/oaagent/work_v2/xs

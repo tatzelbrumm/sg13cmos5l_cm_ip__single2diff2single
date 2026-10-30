@@ -1,0 +1,4 @@
+.SUBCKT oa_mcs vbr vres vss
+Moa_mcs_MCS_0 vbr vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1
+Moa_mcs_MCL_1 vres vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1
+.ENDS oa_mcs

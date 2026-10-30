@@ -1,0 +1,30 @@
+.SUBCKT oa_nmir d10 vnc vres vss
+Moa_nmir_r1_M11_0 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_1 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_2 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M11_3 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_4 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_5 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M11_6 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_7 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M11_8 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_9 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_10 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M11_11 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_12 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r1_M10_13 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_0 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_1 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M11_2 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_3 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_4 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M11_5 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_6 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_dummy_7 vss vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_8 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_9 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M11_10 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_11 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M10_12 d10 vnc vres vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+Moa_nmir_r2_M11_13 vnc vnc vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1
+.ENDS oa_nmir

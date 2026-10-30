@@ -1,0 +1,75 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bg_p_cells.cdl: reference netlists of bg_p_cells.gds, written by build_bg_p.py (2026-10-28, Claude).
+* Devices as drawn, rests included (S = D). Tap-less cells: bulk on the internal net nw, tied to vdd by
+* the parent's tap of the merged vdd well.
+
+.SUBCKT bg_pmir_pcas_c g iout vdd vpc vpg
+* PB / PA / PO = 4 / 4 / 8 fingers 10/1 (sheet: W 40 / 40 / 80, ng 4 / 4 / 8), cascodes
+* PBC / PAC / POC the same; ca, co internal; 16 rests 0.3/1 (D = S = vdd, G = row gate)
+Mbg_pmir_pcas_c_r1_dummyn_0 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r1_PO_1 co vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r1_PB_2 vpg vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r1_PA_3 ca vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r1_PO_4 co vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r1_dummyn_5 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r2_dummyn_0 vdd vpc vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r2_POC_1 iout vpc co nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r2_PBC_2 vpc vpc vpg nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r2_PAC_3 g vpc ca nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r2_POC_4 iout vpc co nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r2_dummyn_5 vdd vpc vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r3_dummyn_0 vdd vpc vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r3_PAC_1 g vpc ca nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r3_POC_2 iout vpc co nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r3_POC_3 iout vpc co nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r3_PBC_4 vpc vpc vpg nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r3_dummyn_5 vdd vpc vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r4_dummyn_0 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r4_PA_1 ca vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r4_PO_2 co vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r4_PO_3 co vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r4_PB_4 vpg vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r4_dummyn_5 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r5_dummyn_0 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r5_PB_1 vpg vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r5_PO_2 co vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r5_PO_3 co vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r5_PA_4 ca vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r5_dummyn_5 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r6_dummyn_0 vdd vpc vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r6_PBC_1 vpc vpc vpg nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r6_POC_2 iout vpc co nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r6_POC_3 iout vpc co nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r6_PAC_4 g vpc ca nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r6_dummyn_5 vdd vpc vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r7_dummyn_0 vdd vpc vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r7_POC_1 iout vpc co nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r7_PAC_2 g vpc ca nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r7_PBC_3 vpc vpc vpg nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r7_POC_4 iout vpc co nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r7_dummyn_5 vdd vpc vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r8_dummyn_0 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r8_PO_1 co vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r8_PA_2 ca vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r8_PB_3 vpg vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r8_PO_4 co vpg vdd nw sg13_hv_pmos w=10u l=1u ng=1 m=1
+Mbg_pmir_pcas_c_r8_dummyn_5 vdd vpg vdd nw sg13_hv_pmos w=0.3u l=1u ng=1 m=1
+.ENDS bg_pmir_pcas_c
+
+.SUBCKT bg_ms1 en_3v3_b ks vdd
+* MS1 0.5/100 as 8 x 0.5/12.5 in series (ms1 ... ms7)
+Mbg_ms1_MS1_0 ms1 en_3v3_b vdd nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_ms1_MS1_1 ms2 en_3v3_b ms1 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_ms1_MS1_2 ms3 en_3v3_b ms2 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_ms1_MS1_3 ms4 en_3v3_b ms3 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_ms1_MS1_4 ms5 en_3v3_b ms4 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_ms1_MS1_5 ms6 en_3v3_b ms5 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_ms1_MS1_6 ms7 en_3v3_b ms6 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+Mbg_ms1_MS1_7 ks en_3v3_b ms7 nw sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1
+.ENDS bg_ms1
+
+.SUBCKT bg_svpg en_3v3 vdd vpg
+* SVPG 1/0.45
+Mbg_svpg_SVPG vpg en_3v3 vdd nw sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS bg_svpg
