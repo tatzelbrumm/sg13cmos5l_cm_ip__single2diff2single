@@ -134,9 +134,10 @@ sessions start with the tools on disk (rebuilt after about 7 days or when the sc
 
 ### The environment `sg13cmos5l` (claude.ai/code, environment dialog)
 
-- **Network access:** Custom, with "Also include default list of common package managers"
-  checked, plus one line `www.klayout.org`. GitHub, PyPI, crates.io and the Ubuntu archive are in
-  the default list.
+- **Network access:** "Limited" ("Sessions reach only what you allow below"); **Allowed domains**,
+  one per line: `www.klayout.org`, `github.com`; **Allow package managers** checked (apt, pip,
+  cargo). Set up so on 2026-10-30; the dialog's options were None / Limited / Full, not the docs'
+  Trusted / Custom (screenshots `chatlog/pix/2026-10-30_opus_cloud_setup_08…13`). Network secrets: none.
 - **Environment variables:**
   ```
   PDK_ROOT=/foss/pdks

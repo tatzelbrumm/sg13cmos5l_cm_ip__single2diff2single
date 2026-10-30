@@ -1043,3 +1043,57 @@ devices with W/L and counts, sizes, P-numbers. sha256 `6f7db7fa…`, the same on
 - Backups in `bg_core_pd_2026-10-28/macro_before/` (bias_ref_pd.spice, the README with the layout section).
 - The batch svg renders misplace right-aligned labels by an amount that depends on xschem's window zoom; the label
   clearances were checked by geometry (worst case: xschem's text width estimate).
+
+## 2026-10-29 (night) and 14:04–14:25, 2026-10-30 15:01–16:10: Claude Code cloud sessions, IIC-OSIC-TOOLS 2026.10, bg_core_pd PEX here, oa_core_pd brief for the cloud (Christoph: "Task at hand: set up Chipalooza sg13cmos5l tasks so that they ARE covered."; 14:04: "okay as proof of concept, set up a cloud PEX task for bg_core_pd."; 14:12: "... then the sponsored cloud PEX should be the Oguey Aebischer variant. Test only ONE of these on my current setup, the other one as Anthropic sponsored cloud process.")
+
+- `sudelbuecher/cloud_environment.md` (sha f95e6bfd…, pushed in cd46d8a): reference IIC-OSIC-TOOLS 2026.10 (tag
+  2026-10-14), the 2026.09 pins beside it. The image repo doesn't pin the IHP PDK; provisional df4c5054 (dev head on
+  the tag day), the true value is `$PDK_ROOT/ihp-sg13cmos5l/COMMIT` in the 2026.10 image. New section "Claude Code
+  cloud sessions": environment `sg13cmos5l` (Custom network + defaults + `www.klayout.org`; `PDK_ROOT`, `PDK`,
+  `BASH_DEFAULT_TIMEOUT_MS`), the setup script (lines 152–199), sessions start from `toplevel`.
+- The $250 cloud credit covers only Claude Code cloud sessions (claude.ai/code), until 5 Nov 08:59 CET; this
+  Cowork chat is not covered.
+- bg_core_pd, here (Cowork, Christoph's quota), `toplevel` 1903407, the 2026.10 tools built in the container, PDK
+  df4c5054, the macro's own Makefile targets:
+  - `magic-drc`: no errors; `magic-lvs`: match;
+  - `magic-pex` EXT_MODE 1/2/3 and `klayout-pex` 2: all ports connected, about 1 s each; 123 devices; C elements
+    50 / 313 / 347 (magic) and 317 (kpex), R 359 in mode 3;
+  - port C in fF, magic 1 / 2 / 3 / kpex: iout 44.2 / 41.9 / 39.4 / 40.5, vdd 48.5 / 76.1 / 63.7 / 73.4,
+    en_3v3_b 0 / 12.0 / 11.7 / 13.6 (mode 1 lumps everything to substrate; in mode 3 the sum covers only the port
+    node itself);
+  - warnings, not errors: xschem's res_drc on the bus instance names (`invalid command name "9:0"` etc.), and
+    `MS1_x` sg13_hv_pmos l = 12.5 µm above the model's 10 µm limit.
+- Template findings, worked around without touching design files:
+  - the PEX targets call `$(SCRIPTS_DIR)/check_pex_ports.py` with `SCRIPTS_DIR := scripts`, relative to the
+    macro, but the script is in the repository root: `make ... SCRIPTS_DIR=../../scripts`;
+  - kpex 0.6.8 takes `--pdk ihp-sg13cmos5l`, the template passes `ihp_sg13cmos5l`: the setup script wraps `kpex`;
+  - the `sak-*` scripts come without exec bits: `chmod +x` in the setup script.
+- Brief `sudelbuecher/cloud_sessions/C0_oa_core_pd_pex.md` (sha aa2c6f07…, pushed in cd46d8a): oa_core_pd from
+  `toplevel`, results on `claude/c0-oa-core-pd-pex` and `claude/c0-oa-core-pd-pex-sudel`, bg_core_pd numbers for
+  comparison. `C0_pilot.md` deleted (3acf926).
+- Chatlog: the transcript records from 2026-10-27 03:12 to 2026-10-29 14:15 are lost (session restore and
+  compaction); turns 97–121 of the chatlog have only Christoph's messages.
+- Next: Christoph starts the cloud session (steps 2–7: environment `sg13cmos5l`, repository branch `toplevel`).
+
+## 2026-10-30 16:30–17:55: GitLab backup, Claude cloud environment `sg13cmos5l`, Claude GitHub App (Christoph, 17:43: "Step by step ... and we'll log everything of this, with screenshots, as per standard procedure.")
+
+- Screenshots: `chatlog/pix/2026-10-30_opus_cloud_setup_01…21_*.png`, shown in the chatlog at the turns where
+  they were sent; the credit screenshot of 29 Oct as `chatlog/pix/2026-10-29_opus_usage_cloud_session_credit.png`
+  (cropped to the Settings dialog).
+- GitLab backup: remote `gitlab` = `git@gitlab.com:tatzelbrumm/sg13cmos5l_cm_ip_single2diff2single.git` (GitLab
+  path with one underscore), kept separate from `origin`; `git push gitlab --all` and `--tags`; GitLab's starter
+  commit on `main` replaced with `git push --force gitlab origin/main:refs/heads/main` (force push allowed on
+  the protected `main` for that). GitLab's GitHub importer was not used: its OAuth asks for read and write on all
+  repositories and fablab-neckar-alb.
+- claude.ai: "Connect GitHub" (identity only), monthly API credits not claimed (they don't cover cloud
+  sessions).
+- Environment `sg13cmos5l` (claude.ai/code → environment menu → New environment; edit via the gear wheel on its
+  row): Network access "Limited", allowed `www.klayout.org` and `github.com`, "Allow package managers" on;
+  network secrets none; setup script 48 lines (`cloud_environment.md` lines 152–199); 3 variables (`PDK_ROOT`,
+  `PDK`, `BASH_DEFAULT_TIMEOUT_MS`). `cloud_environment.md` corrected to these option names.
+- Claude GitHub App (github.com/apps/claude → Install → tatzelbrumm → Only select repositories): installed on
+  `tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single` only; read on administration, commit statuses, merge
+  queues, metadata; read and write on actions, checks, code, discussions, issues, pull requests, repository
+  hooks, workflows. Confirmed with the authenticator code; claude.ai Connectors shows "GitHub Integration" ✓.
+- Branch protection on GitHub for `main`, `toplevel`, `sudel_buecher`: not set; the brief's rule is the only guard.
+- Next: start the cloud session (repository, branch `toplevel`, environment `sg13cmos5l`, the brief's first message).
