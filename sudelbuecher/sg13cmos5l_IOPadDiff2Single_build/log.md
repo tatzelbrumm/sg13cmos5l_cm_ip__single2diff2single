@@ -1018,3 +1018,84 @@ runs/
 From now on I'll end each task with the list of new paths to add, so you don't have to reconstruct this.
 
 ### (end of the recommendation)
+
+## 2026-10-30 12:53–15:06 Commits of the notes, the hook caveat, A3 / A4 outputs onto the computer, handover (Christoph, 12:53: "Staged right now ... what is an appropriate git commit message?"; 13:32: "Hook caveat? I seem to be missing this?"; 13:50: "which ones should I git commit, grouped how, and which ones can I ignore/delete."; 14:10: "buffer layout primitives is completed work, should be reported in sequence. resequence and take a sneak preview at the current git log"; 14:50: "ok .gitignore stays out of git, skunkworx and the JanteStroemSpejl/ stay non-committal. wrap up your logs and chatlogs, then I'll commit those, you can take a well-deserved rest and I'll go to the Claude cloud with your alter ego cowork that I start preparing this with.")
+
+- Commit messages, 12:53–13:30: one per folder, in Christoph's style `<path> : <what>` as the title and a body as a
+  second `-m`. Each was written after reading the folder's files, its README.md files and the log entries it belongs
+  to. At 12:55: how title and body are separated on the command line and in git gui.
+- Christoph's commits on `sudel_buecher`, 12:56–14:13, oldest first:
+  - `8e072c0` consolidation/reference_sheets_2026-10-20 (baseline snapshot);
+  - `7c3b7f5` enable_rework_2026-10-25, `8724a5c` s2d_2026-10-25, `5411517` bias_hierarchy_2026-10-27, `3fee1a6`
+    ab_regroup_2026-10-28, `077f2d4` bias_split_2026-10-28, `227028e` output_stage_2026-10-28, `5309571`
+    xschemrc_fix_2026-10-28;
+  - `e9dc65a` class_ab_pad_driver/hand_edit_transfer (the kickoff of 22 Oct), on a branch from `8e072c0`, merged at
+    `44d109d`, so the sequence keeps the order of the work;
+  - `14dff14` spec_review_before_freeze.md, `ea0b15c` pad_buffer_layout/bg_core_pd_2026-10-28, `63af85a` the two
+    logs, `012ffe7` the 2026-10-26 chat log (the pad buffer layout primitives session, completed work), `3b9b02a`
+    this session's chat log to 13:18.
+  - `origin/sudel_buecher` is at `3b9b02a`. Checked read-only from outside the worktree, as on the 28th
+    (`GIT_OPTIONAL_LOCKS=0`, no lock files left): before this entry, this log and the chat log on the computer were
+    the committed blobs.
+- Hook caveat (13:32). It was only in this log (entry 01:10–01:53) and, since 13:36, in the body of `5309571`; the
+  consolidation log's 01:37 entry doesn't mention it.
+  - `macros/xschemrc` line 91 sets `load_file_postprocess` to `add_macro_paths; pin_netlist_dir [xschem get
+    current_dirname]`, meant to run after every file load.
+  - xschem 3.4.4 (cloud) never evaluates it; 3.4.8RC not checked. If that doesn't either, a macro folder created while
+    xschem runs needs a restart, and the netlist folder doesn't follow the sheet just opened.
+  - Test: start xschem with `--rcfile macros/xschemrc`, open any macro's sheet, type `puts $netlist_dir` in the Tcl
+    console. The macro's `…/simulations` folder means the hook runs. Put aside by Christoph at 13:50; open.
+- Untracked paths, rechecked read-only against the new `git status` at 13:50 and 14:18. Christoph's decisions at 14:50:
+  - out of git: the root `.gitignore`, `skunkworx/`, `JanteStroemSpejl/` (`zipslop/`, `runs/`, the chat-export zip);
+  - held for the cloud work: `cloud_environment.md` (modified) and `cloud_sessions/`, both from the cloud-preparation
+    session of the 29th;
+  - suggested for deletion at 14:18, their exact content being in git, and left to Christoph:
+    `cloud_environment.md.bak` (the committed `cloud_environment.md`), `chatlog/README.md.bak`, the cheatsheet
+    `.md.bak`, `export.py.before_2026-10-28`, `pcells_before_2026-10-27/`;
+  - the generated folders (`klayout/backups/`, `klayout/drc_run_*/`, `klayout_hierarchy/__pycache__/`,
+    `JanteStroemSpejl/runs/`) stay untracked on disk.
+- A3's and A4's own outputs onto the computer, 14:50–14:58. Until now they were only in the cloud workspace; the agents
+  folders had their briefs, messages and reports, and the cells were in the two cores. Now in:
+  - `agents/A3_oa_nmos_primitives/out/` (35 files: `build_oa_n.py`, `oa_n_cells.gds` / `.cdl`, `REPORT_oa_n.md`,
+    `logs/`, the skill drafts `skill/generic/` and `skill/ihp_sg13cmos5l/`) and `out_bg/` (15: `build_bg_n.py`,
+    `bg_n_cells.gds` / `.cdl` and the v1 before option 1, `REPORT_bg_n.md`, `logs/`);
+  - `agents/A4_oa_pmos_primitives/out/` (45: `build_oa_p.py`, `oa_p_cells.gds` / `.cdl`, `oa_p_report.md`, DRC / LVS
+    logs, `skill/generic/` and `skill/ihp_sg13cmos5l/` with examples and tools) and `out_bg/` (22: `build_bg_p.py`,
+    `bg_p_cells.gds` / `.cdl`, `bg_p_report.md`, DRC / LVS / latch-up-context logs).
+  - 117 files, 4.1 MB. The sha256 of all 117 on the computer equal the cloud copies; no internal agent ids in them.
+    `agents/README.md` points to them in the results column (and A2's status now says the sheet backannotation was
+    done at 11:00 on the 28th).
+- Handover, open for the cloud sessions:
+  - `bias_oa_pd` and `bias_bg_pd`: their flat sheets still have the pre-layout cores; their sources instantiate the
+    new ones.
+  - bg_core_pd: R0 / R1A / R1B as drawn are +0.70 / +1.03 / +1.02 % (R1 / R0 +0.32 %), not simulated; ea and eb are
+    not mirror images (18 against 4.6 µm of Metal1 / Metal2).
+  - IHP's own decks (`make klayout-drc` / `make klayout-lvs`) not yet run on oa_core_pd and bg_core_pd.
+  - The hook test above.
+  - The skill drafts of A2, A3 and A4 (generic and IHP-specific) are not merged into one skill.
+  - A `bias_dist_pd` variant with NMOS-sink outputs, not built (entry 05:15–05:28 on the 28th).
+  - The open points of the 01:10–01:53 entry, not rechecked since: A1's on the pad cell's Metal2 (a / b joins above
+    the P frame box, `guard` not tied inside the cell, CMA's well without its own ring), and A2's questions on
+    oa_core_pd v1 (port sides, rail widths / M2 straps, vbr–vres channel).
+- Chat log: exported at 15:04, through the command that built it. The records of 13:19–14:55 are no longer in the
+  transcript (the context was compacted at 14:56 and the file started anew); they come from the conversation's record
+  on claude.ai.
+
+## 2026-10-30 15:07–15:30 The agents' scratch folders onto the computer (Christoph, 15:07: "nothing from agent 2?"; 15:15: "Yes, copy them as guidance for the cloud sessions I'm about to set up.")
+
+- A2's results were already on the computer: oa_core_pd v1 / v2 and bg_core_pd in `pad_buffer_layout/*_2026-10-28/`,
+  its reports and pictures in `agents/A2_oa_core_pd_layout/`. Checked against A2's cloud workspace file by file: every
+  file is there; the pictures are pixel-identical but differently encoded, because the copy onto the computer
+  re-encodes some PNGs.
+- Not on the computer until now: the agents' scratch folders. Copied without `__pycache__`, at 15:17–15:26:
+  - `agents/A2_oa_core_pd_layout/work/` (56 files), `work_bg/` (52), `work_v2/` (39);
+  - `agents/A1_pad_metal2_option_b/work/` (20);
+  - `agents/A3_oa_nmos_primitives/work/` (29) and `agents/A4_oa_pmos_primitives/work/` (63), not asked for, copied for
+    the same reason.
+  - 259 files, about 17 MB. Checked on the computer: the 207 non-picture files byte-identical, the 52 pictures
+    pixel-identical. No internal agent ids in them.
+- `agents/README.md` describes them in a new paragraph "Scratch folders". The scripts carry the cloud workspace's paths
+  and have to be pointed at a new session's own copies.
+- Chat log: exported at 15:28, through the command that built it. The claude.ai record now has the message of 14:50
+  and the reply up to 14:55, so they are taken from there verbatim, in place of the compaction-summary quote and the
+  one-line note of the 15:04 export.
