@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # C1: verification changes and omissions, for review
 
-Cloud session C1, 2026-10-30, branch `claude/c1-core-pex-verif` (commit __DESIGN_COMMIT__). Report:
+Cloud session C1, 2026-10-30, branch `claude/c1-core-pex-verif` (commits 0ee4cc0 … 8a72dd8). Report:
 `C1_core_pex_bias_verification_report.md`. Paths below are relative to `macros/bias_sel_pd/` unless they start with
 `macros/` or `scripts/`. "Undo" assumes the rest stays.
 
@@ -39,7 +39,7 @@ Cloud session C1, 2026-10-30, branch `claude/c1-core-pex-verif` (commit __DESIGN
    −40 °C), `mm_hi_params` (ff, bcs, wcs, 125 °C)**, each sel 1 / 2 / 3 × vdd 3.0 / 3.6 V × 100 iterations, limits `any`
    (sel 3 doubles every current; `make mc-table` compares sel 1 / 2 with the limits of `supply_params` and
    `pvt_params`). The worst-case corners are the extremes of the `pvt`, `supply` and `rpnp` results, the same for both
-   cores. Not in the default `CACE_GROUPS` (__MM_MIN__ min per view): `make sim-cace-mm`. Undo: delete the three groups,
+   cores. Not in the default `CACE_GROUPS` (3 × 600 runs: 15 min on the schematic, 1.7 h in the `mm_ok` view): `make sim-cace-mm`. Undo: delete the three groups,
    `CACE_GROUPS_MM`, `sim-cace-mm`, `mc-table`, `scripts/cace/mc_stats.py`.
 7. **`bias_sel_pd.yaml` + new `templates/bias_sel_pd_tb_psrr.sch`, `_tb_startup.sch`: groups `psrr_params` (sel 0 / 1 / 2 ×
    ss / tt / ff × −40 / 27 / 125 °C, report only) and `startup_params` (sel 1 / 2 from a supply ramp, limits of
@@ -61,7 +61,8 @@ Cloud session C1, 2026-10-30, branch `claude/c1-core-pex-verif` (commit __DESIGN
 10. **`verification/cace/results/bias_sel_pd/` rewritten by `make sim-cace`.** sel 0 is bit-identical to the committed
     CSV; sel 1 / 2 / 3 differ (vbp −0.15 / −1.0 / −0.6 % at tt, 27 °C) because the cores' schematics were redrawn for
     their layouts on 2026-10-28, after these results (0d12e00). Plus `psrr_params`, `startup_params` and the mismatch
-    CSVs. Plots are left out, as in the other bias_* results. Undo: `git checkout <base> -- verification/cace/results/bias_sel_pd`.
+    CSVs, and the CACE plots (one PNG per yaml `plot:` entry, over all runs of the group; the other bias_* results
+    have none). Undo: `git checkout <base> -- verification/cace/results/bias_sel_pd`.
 11. **New results folders** `results/bias_sel_pd_cores_magic_pex_2/` (all groups + the plain-PEX mismatch groups),
     `_magic_pex_3/` (all default groups), `_magic_pex_2_mm_ok/` (mismatch groups). Undo: delete.
 12. **`macros/bg_core_pd/`: generated outputs** (as C0's list for oa_core_pd): schematic and layout LVS netlists, magic
@@ -86,7 +87,7 @@ Cloud session C1, 2026-10-30, branch `claude/c1-core-pex-verif` (commit __DESIGN
 7. **`scripts/cace/cace_to_csv.py` column labels not fixed:** its SI map lacks `us`, so `t_settle[us]` (already in the
    committed CSV) and the new `t_su90[us]` hold seconds; `%/V` columns hold fractions per volt. `spec_table.py` and the
    new scripts scale by the yaml unit, so only the label is wrong. Fix: add `'us': 's'` to the map.
-8. **Residual PEX 3 failures not chased further:** `psrr_params` sel 2, ff, −40 °C falls back to a transient op (its
-   values are ~10 % off a converged reference), and in `startup_params` __SU3__ The brief asked PEX 3 for the dc groups,
-   which are clean. __TRAN3__
+8. **One PEX 3 run not chased further:** in `psrr_params` the op of sel 2, ff, −40 °C still falls back to a transient
+   op (its values are ~10 % off a converged reference with gmin 1e-12; it sets none of the maxima). All other PEX 3
+   groups run complete without fallback.
 9. **Pad-level CACE** (`sg13cmos5l_IOPadDiff2Single`, `…Single2Diff`): out of scope; the report says what it would need.
