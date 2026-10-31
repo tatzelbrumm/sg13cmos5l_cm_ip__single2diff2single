@@ -95,3 +95,6 @@
 
 [2026-10-30_opus_c0_oa_core_pd_pex_and_cloud_toolchain.md](2026-10-30_opus_c0_oa_core_pd_pex_and_cloud_toolchain.md)
 : Opus cloud session, 30 Oct: C0 brief carried out (oa_core_pd magic DRC, LVS and PEX 1/2/3 plus KLayout-PEX in a cloud session whose setup script had been cut off at about 5 min), then the whole toolchain prebuilt once and published with a non-compiling setup script as `tatzelbrumm/claude-cloud-config`.
+
+[2026-10-30_opus_c1_core_pex_bias_verification.md](2026-10-30_opus_c1_core_pex_bias_verification.md)
+: Opus cloud session, 30–31 Oct: C1 brief carried out (bg_core_pd DRC, LVS and PEX; both cores' extractions as switchable views in the bias_sel_pd CACE suite, new psrr, start-up and worst-case mismatch groups), with the convergence fixes the extracted netlists needed.

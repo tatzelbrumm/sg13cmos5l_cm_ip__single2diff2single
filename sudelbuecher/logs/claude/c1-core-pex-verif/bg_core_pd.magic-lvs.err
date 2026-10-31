@@ -1,0 +1,22 @@
+Using run time directory XSCHEM_SHAREDIR = /foss/tools/xschem/share/xschem
+Sourcing /foss/tools/xschem/share/xschem/xschemrc init file
+Sourcing schematic/xschem/xschemrc init file
+MODELS_NGSPICE: /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models
+MODELS_XYCE: /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/models
+tcleval(): evaluation of script: res_drc R1B[9:0] rhigh rhigh 0.5u 9.94u failed
+         : invalid command name "9:0"
+tcleval(): evaluation of script: res_drc R0[17:0] rhigh rhigh 0.5u 9.94u failed
+         : invalid command name "17:0"
+tcleval(): evaluation of script: res_drc R1A[10:0] rhigh rhigh 0.5u 9.94u failed
+         : invalid command name "10:0"
+tcleval(): evaluation of script: res_drc RDUM[1:0] rhigh rhigh 0.5u 9.94u failed
+         : invalid command name "1:0"
+MS1_0 (sg13_hv_pmos): length is too big, l = 12.5, max l < 10.0u
+MS1_1 (sg13_hv_pmos): length is too big, l = 12.5, max l < 10.0u
+MS1_2 (sg13_hv_pmos): length is too big, l = 12.5, max l < 10.0u
+MS1_3 (sg13_hv_pmos): length is too big, l = 12.5, max l < 10.0u
+MS1_4 (sg13_hv_pmos): length is too big, l = 12.5, max l < 10.0u
+MS1_5 (sg13_hv_pmos): length is too big, l = 12.5, max l < 10.0u
+MS1_6 (sg13_hv_pmos): length is too big, l = 12.5, max l < 10.0u
+MS1_7 (sg13_hv_pmos): length is too big, l = 12.5, max l < 10.0u
+
