@@ -1215,3 +1215,65 @@ From now on I'll end each task with the list of new paths to add, so you don't h
     layout never waits. Without a result, CMA / CMB are laid out as in the sheet, each in its own region.
   - **A type change** only with at least the present phase margin and capacitance over the swing, recorded for
     Christoph's review, together with CMB's gate on the pad.
+
+## 2026-10-31 15:48–16:10 C2 ready for takeoff: commits checked, branches, setup script, launch prompt (Christoph, 15:48: "I had C1 report back and edit C2_pad_cram_draft.md . With this input, check if I did the commits you recommeded in your last turn, then walk me through creating the branches for C2 and setting up the C2 Claude cloud process for takeoff into the Claude cloud, human with attention deficit and information overload baby steps."; 15:52: "ah yes and update the log and chatlog, this is compacting.")
+
+- **Commits checked** (read-only git from outside the worktree, no lock files left):
+  - the three of 04:30: 21abc28 (A5 and `agents/README.md`), 1d4acf7 (this log), 1de4cd6 (chat log to 04:28);
+  - also on `sudel_buecher`: f87fee0 and b47f9d4 (C2 drafts), 16f0fd8 (C1's report), 00189be (merge of C1's notes
+    branch), 21d022e (C1's lessons in the C2 brief).
+
+  `sudel_buecher` = `origin/sudel_buecher` = 21d022e.
+- **C1's edits of the C2 brief** (21d022e, 22 301 bytes):
+  - Phase 0 also needs `OSDI_OK` and `CACE_OK`, with `cace --version` checked. "Without `CACE_OK` the environment
+    still runs the old setup script: say so and stop."
+  - Checks for K from C1's runs:
+    - grep the logs for `Transient op started` / `Timestep too small`;
+    - SPICE names are case-insensitive;
+    - run each pad template once unchanged;
+    - all 17 pad templates default to `sel` = 0.
+  - F counts rhigh nodes that only have capacitors (41 in bg_core_pd), with C1's `scripts/cace/pex_for_sim.py` from
+    `origin/claude/c1-core-pex-verif`.
+  - Phase 4 must not use stale CACE results.
+  - New section "Session mechanics (lessons of C1)":
+    - background commands are killed after 2 h;
+    - kill by PID, not with `pkill -f`;
+    - check status every 15 min;
+    - commit and push results as they land;
+    - the logs of reruns go into `superseded_<reason>/`.
+- **Branches:**
+  - Local `toplevel` (8a72dd8) is 11 commits ahead of `origin/toplevel` (36ca38d): C1's results, 0ee4cc0 … 8a72dd8.
+  - It equals `origin/claude/c1-core-pex-verif`, so pushing `toplevel` only moves the label on GitHub.
+- **Setup script:**
+  - claude-cloud-config `main`, a183391 (merge of PR #1, `claude/cace-py312`): `setup-cloud.sh` has 56 lines and
+    installs CACE 2.11.0 under `python3.12` (`cace==2.11.0`, `cace --version`, `ok CACE` → `CACE_OK`).
+  - The notes' copy `cloud_sessions/setup_script_claude_cloud_config` (52 lines, sha 31632de68f4f…, of 2026-10-30)
+    has no CACE. So the environment most likely still runs the old script, and C2 would stop at phase 0. The
+    environment's setup script has to be replaced first.
+  - A first grep of the notes' copy ran in the cloud workspace's shell with the path on the computer and found
+    nothing; it was rerun on the computer.
+- **15:55, walkthrough sent** (verbatim in the chat log), one action per step:
+  1. `git push origin toplevel`;
+  2. `git branch claude/c2-pad-layout toplevel` and `git push -u origin claude/c2-pad-layout`;
+  3. `git branch claude/c2-pad-layout-sudel sudel_buecher` and `git push -u origin claude/c2-pad-layout-sudel`;
+  4. replace the environment's setup script:
+     - copy `raw.githubusercontent.com/tatzelbrumm/claude-cloud-config/main/setup-cloud.sh`;
+     - paste it in the dialog the claude-cloud-config README describes (claude.ai/code, the caret after the session
+       title, **Edit cloud environment**, **Setup script**, **Save changes**);
+     - check that the field then contains `cace==2.11.0`;
+  5. start a plain cloud session (`cloud_environment.md`, "Starting a session"): repository
+     `tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single`, branch `claude/c2-pad-layout`, environment `sg13cmos5l`.
+     A model choice, if the screen offers one: Opus. There is no documented screen for model or effort, so none is
+     described;
+  6. the launch prompt, verbatim:
+
+     > You are on claude/c2-pad-layout, created from toplevel (8a72dd8) for this task; don't create it again.
+     > claude/c2-pad-layout-sudel also exists on origin, created from sudel_buecher (21d022e): use the brief's worktree
+     > command unchanged (it starts at the same commit) and push to that existing branch. The "(draft)" in the brief's
+     > title is only part of its name; the brief is final. Run git fetch origin sudel_buecher, read
+     > sudelbuecher/cloud_sessions/C2_pad_cram_draft.md from origin/sudel_buecher, and carry it out exactly.
+  7. after 10–15 min, C2 should report the phase 0 versions with `OSDI_OK` and `CACE_OK`. Without `CACE_OK`, step 4
+     didn't save.
+
+  The cloud credit runs until 2026-11-05 08:59 CET.
+- **Compaction at 15:53:** the transcript file was continued, so nothing was lost.
