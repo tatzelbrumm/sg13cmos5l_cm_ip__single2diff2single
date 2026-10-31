@@ -67,3 +67,7 @@ Christoph: "yes, have F reserve a spot for the CMB stage". Reserve a spot for IH
 (2 kΩ case: rppd 1 × 7.435 µm, dantenna 0.64 × 3.1 to the substrate, dpantenna 0.64 × 4.98 to iovdd), with a short wide
 pad-side connection and a short line to CMB's gate; in the ESD zone if it fits, else above y 88; keep CMB's gate feed as it is
 but cuttable at one place; mark the reserve in the previews and the report; don't draw the stage yet.
+
+## about 18:17, from the lead (verbatim)
+
+> From the lead, about 18:17 CET. Christoph, on the CMB-stage reserve: "as long as the bias tree fits comfortably." So the bias tree (bias_tree_pd and its routing to iref / en_3v3 / en_3v3_b and to the bias lines) has priority: place and route it comfortably first, and reserve the CMB-stage spot only from what is left. If the reserve would crowd the tree, say so in your report instead of squeezing the tree. No reply needed.
