@@ -1,0 +1,15 @@
+DRC, IHP run_drc.py --no_density --mp=4, Sat Oct 31 20:13:26 CET 2026
+== sinks_6x6_c2: exceptions: 0
+  total violations: 0
+== sinks_6x6_s2d_c2: exceptions: 0
+  total violations: 0
+== d2s_casc_n_c2: exceptions: 0
+  total violations: 0
+== d2s_ab_n_c2: exceptions: 0
+  total violations: 0
+== d2s_pd_n_c2: exceptions: 0
+  total violations: 0
+== bias_tree_n_c2: exceptions: 0
+  total violations: 0
+== d2s_rhigh_c2: exceptions: 0
+  total violations: 0

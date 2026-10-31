@@ -41,3 +41,18 @@ names an agent's own render.
 | `F_stage3_detail_bottom.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
 | `F_stage3_detail_right_channel.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
 | `F_stage3_detail_left_edge.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
+| `N2_bias_tree_n_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_bias_tree_n_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_ab_n_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_ab_n_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_casc_n_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_casc_n_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_casc_n_c2_gate.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_pd_n_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_pd_n_c2_gate.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_rhigh_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_rhigh_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_sinks_6x6_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_sinks_6x6_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_sinks_6x6_c2_gate.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_sinks_6x6_s2d_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |

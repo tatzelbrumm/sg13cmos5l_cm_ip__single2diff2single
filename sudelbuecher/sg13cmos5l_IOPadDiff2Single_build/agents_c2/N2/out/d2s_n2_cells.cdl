@@ -1,0 +1,102 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_n2_cells.cdl: reference netlists of d2s_n2_cells.gds (build_d2s_n2.py, agent N2, C2 2026-10-31).
+* One line per finger / segment as drawn, every dummy a device; bulk = vss (substrate).
+
+.SUBCKT sinks_6x6_c2 vbn vss x y
+Mdummy_0 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MSX_1 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_2 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_3 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MBN_4 vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_5 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_6 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_7 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_8 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+Mdummy_9 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MSY_10 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_11 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_12 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MBNtwin_13 vbn vbn vbn vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_14 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_15 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_16 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_17 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+.ENDS sinks_6x6_c2
+
+.SUBCKT sinks_6x6_s2d_c2 vbn vss x y
+Mdummy_0 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MSX_1 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_2 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_3 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MBN_4 vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_5 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_6 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_7 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_8 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+Mdummy_9 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MSY_10 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_11 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_12 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MBNtwin_13 vbn vbn vbn vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_14 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_15 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_16 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_17 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+.ENDS sinks_6x6_s2d_c2
+
+.SUBCKT d2s_casc_n_c2 b l1 vbnc vss x y
+Mdummy_0 vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MCX_1 l1 vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCY_2 b vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Mdummy_3 vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+Mdummy_4 vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MCY_5 b vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCX_6 l1 vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Mdummy_7 vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MBNC_8 vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1
+.ENDS d2s_casc_n_c2
+
+.SUBCKT d2s_ab_n_c2 a b dabn l1 l2 vabn vss
+Mdummy_0 vabn vabn vabn vss sg13_hv_nmos w=2u l=1u ng=1 m=1
+MFNL_1 l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+MRN2_2 vabn vabn dabn vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+MABN_3 a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+Mdummy_4 vabn vabn vabn vss sg13_hv_nmos w=2u l=1u ng=1 m=1
+.ENDS d2s_ab_n_c2
+
+.SUBCKT d2s_pd_n_c2 b en_3v3_b vabn vss vsso
+MSB_0 b en_3v3_b vsso vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MSABN_1 vabn en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_pd_n_c2
+
+.SUBCKT bias_tree_n_c2 en_3v3 en_3v3_b iref ni vabp vbp vbpc vss
+MNBPC_0 vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+MNBP_1 vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MNI_2 ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MNABP_3 vabp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_4 ni ni ni vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+MTGN_5 iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTDN_6 ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS bias_tree_n_c2
+
+.SUBCKT d2s_rhigh_c2 sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vss
+RA_0 sa_A A_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RA_1 A_1 A_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RA_2 A_2 A_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RA_3 A_3 sb_A vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_0 sa_B B_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_1 B_1 B_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_2 B_2 B_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_3 B_3 sb_B vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_0 sa_C1 C1_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_1 C1_1 C1_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_2 C1_2 C1_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_3 C1_3 sb_C1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_0 sa_C2 C2_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_1 C2_1 C2_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_2 C2_2 C2_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_3 C2_3 sb_C2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rdummy_0 vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+Rdummy_1 vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+.ENDS d2s_rhigh_c2

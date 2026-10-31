@@ -1,0 +1,34 @@
+sym_check.py (inputs/), Sat Oct 31 20:18:36 CET 2026
+sinks_6x6_c2: Activ bbox (-0.97,-0.51;50.17,15.46); axes x = 24.6, y = 7.475 um
+  X Cont         XOR    0.0768 um2  in (22.025,0.07;27.175,14.88)
+  summary: max mirror XOR 0.0768 um2, 0 narrow-poly hits
+sinks_6x6_s2d_c2: Activ bbox (-15.46,-0.97;0.51,50.17); axes x = -7.475, y = 24.6 um
+  Y Cont         XOR    0.0768 um2  in (-14.88,22.025;-0.07,27.175)
+  summary: max mirror XOR 0.0768 um2, 0 narrow-poly hits
+d2s_casc_n_c2: Activ bbox (-1.48,-1.46;38.68,10.41); axes x = 18.6, y = 4.475 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+(--no-y: one row)
+d2s_ab_n_c2: Activ bbox (-0.97,-0.945;19.17,1.68); axes x = 9.1, y = 0.367 um
+  X Cont         XOR    0.0256 um2  in (7.31,0.07;10.89,1.61)
+  summary: max mirror XOR 0.0256 um2, 0 narrow-poly hits
+(--no-y: one row)
+d2s_pd_n_c2: Activ bbox (-0.97,-0.945;3.22,1.13); axes x = 1.125, y = 0.092 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+(--no-y: one row)
+bias_tree_n_c2: Activ bbox (-2.96,-0.51;26.76,6.68); axes x = 11.9, y = 3.085 um
+  X Cont         XOR    0.0384 um2  in (9.325,0.07;14.475,6.61)
+  summary: max mirror XOR 0.0384 um2, 0 narrow-poly hits
+(--no-y: one row)
+d2s_rhigh_c2: Activ bbox (-0.84,-2.29;12.9,14.94); axes x = 6.03, y = 6.325 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+
+d2s_rhigh_c2 with the y check as well:
+d2s_rhigh_c2: Activ bbox (-0.84,-2.29;12.9,14.94); axes x = 6.03, y = 6.325 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+
+latch-up (work/tools/lu.py):
+sinks_6x6_c2       farthest N+ Activ from a tie: 6.89 um (LU_b 20)
+d2s_casc_n_c2      farthest N+ Activ from a tie: 5.64 um (LU_b 20)
+d2s_ab_n_c2        farthest N+ Activ from a tie: 2.33 um (LU_b 20)
+d2s_pd_n_c2        farthest N+ Activ from a tie: 1.78 um (LU_b 20)
+bias_tree_n_c2     farthest N+ Activ from a tie: 6.89 um (LU_b 20)
