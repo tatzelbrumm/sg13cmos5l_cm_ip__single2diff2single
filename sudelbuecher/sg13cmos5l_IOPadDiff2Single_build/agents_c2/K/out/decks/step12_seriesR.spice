@@ -1,0 +1,81 @@
+* K deck 12 (= deck 8, .lib cornerDIO.lib added for the secondary-stage diodes): closed-loop step response (fixture with vfb = vout) of a CMA / CMB variant (variant.inc), 1 kOhm to 1.65 V || 100 pF.
+* step 1 = CACE tb_tran step vd -0.5 <-> +0.5 V (pad 1.4 <-> 1.9 V) at 1 / 5 us; step 2 vd 0.8 <-> 1.3 V (pad 2.05 <-> 2.3 V) at 13 / 17 us.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.lib cornerPNP.lib typ
+.lib cornerDIO.lib dio_tt
+.include /home/user/c2/K/out/decks/dut_variants.spice
+.include /home/user/c2/K/work/variant.inc
+.include /home/user/c2/K/work/nodeset.inc
+Vdd vdd 0 3.3
+Vs0 s0 0 0
+Vs1 s1 0 0
+Vext vext 0 3.3
+Iext xg 0 5e-06
+XKEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XKEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
+Vref vref 0 1.65
+Vic vic 0 1.65
+Ep vinp vic dp 0 0.5
+En vinn vic dp 0 -0.5
+RL vout vterm 1000
+Vterm vterm 0 1.65
+CL vout 0 1e-10
+
+Vd dp 0 pwl(0 -0.5 1u -0.5 1.001u 0.5 5u 0.5 5.001u -0.5 9u -0.5 9.001u 0.8 13u 0.8 13.001u 1.3 17u 1.3 17.001u 0.8 21u 0.8)
+x1 vdd 0 vdd 0 vinp vinn vref vout vout ibias vdd s0 s1 0 fix_sel
+.temp 27
+* no klu: KLU + the mosvar OSDI (S-Varicap) aborts with 'doAnalyses: out of memory'; rshunt 10 GOhm on every node
+* and source stepping are needed for a valid op with S-Varicaps (else Transient op into a latched state, pad 3.28 V)
+.options method=gear reltol=1e-4 abstol=1e-12 gmin=1e-12
+.option warn=1 rshunt=1e10 itl1=500 gminsteps=50
+
+.control
+save v(vout)
+tran 2n 21u
+wrdata /home/user/c2/K/out/logs/step12_$variant.dat v(vout)
+meas tran v0 find v(vout) at=0.99u
+meas tran v1 find v(vout) at=4.9u
+let dv = v1 - v0
+let vn = (v(vout) - v0) / dv
+meas tran t10r when vn=0.1 rise=1 from=1u to=5u
+meas tran t90r when vn=0.9 rise=1 from=1u to=5u
+meas tran t90f when vn=0.9 fall=1 from=5u to=9u
+meas tran t10f when vn=0.1 fall=1 from=5u to=9u
+meas tran vnmax max vn from=1u to=5u
+meas tran vnmin min vn from=5u to=9u
+let er = abs(vn - 1)
+let ef = abs(vn)
+meas tran tsr when er=0.01 cross=last from=1u to=5u
+meas tran tsf when ef=0.01 cross=last from=5u to=9u
+let sr = 0.8*dv/(t90r - t10r)
+let sf = 0.8*dv/(t10f - t90f)
+let osr = vnmax - 1
+let osf = -vnmin
+let tr = tsr - 1.001u
+let tf = tsf - 5.001u
+echo $variant step1 $&v0 $&v1 $&sr $&sf $&osr $&osf $&tr $&tf >> /home/user/c2/K/out/logs/step12.dat
+meas tran v0 find v(vout) at=12.99u
+meas tran v1 find v(vout) at=16.9u
+let dv = v1 - v0
+let vn = (v(vout) - v0) / dv
+meas tran t10r when vn=0.1 rise=1 from=13u to=17u
+meas tran t90r when vn=0.9 rise=1 from=13u to=17u
+meas tran t90f when vn=0.9 fall=1 from=17u to=21u
+meas tran t10f when vn=0.1 fall=1 from=17u to=21u
+meas tran vnmax max vn from=13u to=17u
+meas tran vnmin min vn from=17u to=21u
+let er = abs(vn - 1)
+let ef = abs(vn)
+meas tran tsr when er=0.01 cross=last from=13u to=17u
+meas tran tsf when ef=0.01 cross=last from=17u to=21u
+let sr = 0.8*dv/(t90r - t10r)
+let sf = 0.8*dv/(t10f - t90f)
+let osr = vnmax - 1
+let osf = -vnmin
+let tr = tsr - 13.001u
+let tf = tsf - 17.001u
+echo $variant step2 $&v0 $&v1 $&sr $&sf $&osr $&osf $&tr $&tf >> /home/user/c2/K/out/logs/step12.dat
+.endc
+.end

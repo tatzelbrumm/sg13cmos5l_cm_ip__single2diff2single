@@ -2,6 +2,7 @@
 * v0 present (hv PMOS 256 um2 each); v1 S-Varicap same orientation, 2 x (Nx 6 + Nx 5) 9.74/0.8 (171 um2 gate each);
 * v2 S-Varicap Nx 8 + hv PMOS 7.96 x 9.65 (70/30 of the mid-rail C) each; v3 CMA present, CMB hv PMOS turned around;
 * v4 CMA present, CMB = S-Varicap Nx 9 (gate pad, well b) || S-Varicap Nx 5 turned (gate b, well pad), 80/20 of the mid-rail C
+* v5 / v6 CMA present, CMB present with IHP's secondary stage between pad and CMB's gate: rppd 1u x 2u (587 Ohm) / 1u x 7.435u (2 kOhm), dantenna and dpantenna at the gate
 .include /home/user/c2/K/out/decks/dut_fixture.spice
 .subckt fix_v0 vdd vss vddo vsso vinp vinn vref vout vfb ibias en_3v3 sel0_3v3 sel1_3v3 en_3v3_b
 *.PININFO vdd:B vss:B vddo:B vsso:B vinp:I vinn:I vref:I ibias:I en_3v3:I sel0_3v3:I sel1_3v3:I en_3v3_b:I vout:B vfb:I
@@ -50,6 +51,34 @@ xt vdd vss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b bias_tree_pd
 XKCA5 vout net2 vout vout sg13_hv_pmos w=7.96u l=32.16u ng=1
 XKSB5 vout net3 vout vss sg13_hv_svaricap w=9.74u l=0.8u Nx=9
 XKSB6 net3 vout net3 vss sg13_hv_svaricap w=9.74u l=0.8u Nx=5
+.ends
+
+.subckt fix_v5 vdd vss vddo vsso vinp vinn vref vout vfb ibias en_3v3 sel0_3v3 sel1_3v3 en_3v3_b
+*.PININFO vdd:B vss:B vddo:B vsso:B vinp:I vinn:I vref:I ibias:I en_3v3:I sel0_3v3:I sel1_3v3:I en_3v3_b:I vout:B vfb:I
+xd vdd vss vddo vsso vinp vinn vref vfb net2 net3 net1 net4 vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
+xfp vddo net2 vout net1 d2s_out_p
+xfn vsso net3 vout net4 d2s_out_n
+xg vdd vss ibias iref en_3v3 sel0_3v3 sel1_3v3 bias_gen_pd
+xt vdd vss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b bias_tree_pd
+XKCA6 vout net2 vout vout sg13_hv_pmos w=7.96u l=32.16u ng=1
+XKCB6 net3 kcg net3 net3 sg13_hv_pmos w=7.96u l=32.16u ng=1
+XKRP6 vout kcg vss rppd w=1u l=2u b=0
+XKDN6 vss kcg dantenna w=0.64u l=3.1u
+XKDP6 kcg vddo dpantenna w=0.64u l=4.98u
+.ends
+
+.subckt fix_v6 vdd vss vddo vsso vinp vinn vref vout vfb ibias en_3v3 sel0_3v3 sel1_3v3 en_3v3_b
+*.PININFO vdd:B vss:B vddo:B vsso:B vinp:I vinn:I vref:I ibias:I en_3v3:I sel0_3v3:I sel1_3v3:I en_3v3_b:I vout:B vfb:I
+xd vdd vss vddo vsso vinp vinn vref vfb net2 net3 net1 net4 vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
+xfp vddo net2 vout net1 d2s_out_p
+xfn vsso net3 vout net4 d2s_out_n
+xg vdd vss ibias iref en_3v3 sel0_3v3 sel1_3v3 bias_gen_pd
+xt vdd vss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b bias_tree_pd
+XKCA7 vout net2 vout vout sg13_hv_pmos w=7.96u l=32.16u ng=1
+XKCB7 net3 kcg net3 net3 sg13_hv_pmos w=7.96u l=32.16u ng=1
+XKRP7 vout kcg vss rppd w=1u l=7.435u b=0
+XKDN7 vss kcg dantenna w=0.64u l=3.1u
+XKDP7 kcg vddo dpantenna w=0.64u l=4.98u
 .ends
 
 .subckt fix_v3 vdd vss vddo vsso vinp vinn vref vout vfb ibias en_3v3 sel0_3v3 sel1_3v3 en_3v3_b

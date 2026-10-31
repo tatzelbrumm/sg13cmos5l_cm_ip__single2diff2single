@@ -336,8 +336,9 @@ predictability across corners) — not evaluated here.
 
 ### Open points
 
-1. **CDM / ESD of CMB's gate on the pad**: no simulation here; decide with task F. If CMB stays, IHP's secondary stage
-   (series R) cannot be inserted without breaking the Miller path [est].
+1. **CDM / ESD of CMB's gate on the pad**: no ESD simulation here; decide with task F. *Corrected in stage 5:* the earlier
+   estimate here, that IHP's secondary stage (series R) "cannot be inserted without breaking the Miller path", was wrong —
+   a 587 Ω or 2 kΩ secondary stage in front of CMB's gate leaves the loop unchanged within 0.5° [sim, stage 5].
 2. **Latch-up of pad-driven wells** (CMA now; CMB turned): guard-ring layout per §7.2.1 items 3–5; not checked (latch-up rules
    are off by default, §7.2).
 3. **300 pF unloaded at pad 2.29 V: PM 39.7°** (present), below the 40° proposal; CACE only checks vd = 0. A driver issue.
@@ -375,3 +376,70 @@ the three unchanged template groups of "Preliminaries". Scripts: `work/mkcv.py`,
    ≈ 400 µm²** — but it is not needed for stability and costs CACE convergence. **Recommended: CMA as is; CMB as is for now,
    with "turn CMB around" (removes the gate from the pad, PM 74.6° at 100 pF mid-rail, ≥ 40.4° at 300 pF, 326 µm², fits) as
    the first option for the discussion after task F.**
+
+## Stage 5 — series R in front of CMB (IHP's secondary stage), requested 18:20
+
+### 5.1 Setup [sim]
+
+CMB as now (gate side on the pad, S/D/NW on b), CMA unchanged, and between the pad and CMB's gate (new node `kcg`) the
+full secondary stage of `sg13cmos5l_SecondaryProtection` (`libs.ref/sg13cmos5l_io/cdl/sg13cmos5l_io.cdl` l.473–479):
+- **v5**: `XKRP6 vout kcg vss rppd w=1u l=2u b=0` (IHP's RR0), `XKDN6 vss kcg dantenna w=0.64u l=3.1u` (kcg → substrate),
+  `XKDP6 kcg vddo dpantenna w=0.64u l=4.98u` (kcg → iovdd);
+- **v6**: the same with the rppd scaled to 2 kΩ in length, `l=7.435u` (from 587 Ω = 260 Ω/□ × 2 + 67 Ω of heads).
+The PDK's `rppd` model was used (not an ideal R); a check in deck 11 (1 V across separate copies, `rcheck` lines in
+`out/logs/loop11.dat`) gives **587.0 Ω and 1991.6 Ω**. Diodes from `cornerDIO.lib dio_tt` (`diodes.lib`). All new devices
+are named `XK…`, different from every template name by more than case. Decks: **11** `loop11_seriesR.spice` (= deck 7 with
+the load as a parameter, run at 1 kΩ ∥ 100 pF and at unloaded ∥ 300 pF as deck 9) and **12** `step12_seriesR.spice`
+(= deck 8), run through `work/run78.sh` with the same options and nodesets as v0 in decks 7 / 9. Logs
+`out/logs/loop11_seriesR_*` (12) and `step12_seriesR_*` (2): no `Transient op started`, no `Timestep too small`, no
+"failed" line; the ops converged directly. v0 values below are from decks 7 / 8 / 9 (identical settings).
+
+### 5.2 Loop gain, 1 kΩ ∥ 100 pF — T0 (dB) / fc (MHz) / **PM (°)** / GM (dB) [sim]
+
+| variant | pad 0.99 V | pad 1.65 V | pad 2.29 V |
+|---|---|---|---|
+| v0 present | 81.7 / 1.552 / **78.4** / 22.6 | 78.5 / 1.371 / **72.6** / 23.1 | 90.0 / 1.790 / **75.4** / 16.8 |
+| v5 587 Ω + diodes | 81.7 / 1.552 / **78.4** / 22.7 | 78.5 / 1.371 / **72.6** / 23.2 | 90.0 / 1.791 / **75.6** / 16.8 |
+| v6 2 kΩ + diodes | 81.7 / 1.552 / **78.5** / 23.1 | 78.5 / 1.371 / **72.9** / 23.5 | 90.0 / 1.796 / **76.1** / 16.6 |
+
+### 5.3 Loop gain, unloaded ∥ 300 pF [sim]
+
+| variant | pad 0.99 V | pad 1.65 V | pad 2.29 V |
+|---|---|---|---|
+| v0 present | 103.1 / 1.312 / **43.7** / 20.3 | 104.1 / 1.392 / **42.2** / 19.3 | 104.6 / 1.467 / **39.7** / 17.5 |
+| v5 587 Ω + diodes | 103.1 / 1.312 / **43.7** / 20.3 | 104.1 / 1.392 / **42.3** / 19.4 | 104.6 / 1.468 / **39.8** / 17.6 |
+| v6 2 kΩ + diodes | 103.1 / 1.313 / **43.8** / 20.4 | 104.1 / 1.393 / **42.4** / 19.6 | 104.6 / 1.470 / **40.1** / 17.9 |
+
+### 5.4 Step response, 1 kΩ ∥ 100 pF — SR rise / fall (V/µs), overshoot, ts 1 % rise / fall (µs) [sim]
+
+| variant | step 1: pad 1.40 ↔ 1.90 V | step 2: pad 2.05 ↔ 2.29 V |
+|---|---|---|
+| v0 present | 2.44 / 2.46, 0.00 %, 0.329 / 0.335 | 1.37 / 1.28, 0.00 %, 0.316 / 0.329 |
+| v5 587 Ω | 2.44 / 2.45, 0.00 %, 0.330 / 0.336 | 1.36 / 1.27, 0.00 %, 0.318 / 0.332 |
+| v6 2 kΩ | 2.43 / 2.43, 0.00 %, 0.335 / 0.339 | 1.34 / 1.26, 0.00 %, 0.323 / 0.338 |
+
+### 5.5 RC time constant over the swing
+
+R × C_CMB, with C_CMB from §3.2 (present hv PMOS at the deck-6 bias) [sim inputs, product est]; the two diodes add
+≈ 5 fF at kcg (≈ 2 µm² dantenna + 3.2 µm² dpantenna at 0.8–0.95 fF/µm², spec l.255 / 295) [est], under 1 %.
+
+| pad (V) | 0.90 | 1.00 | 1.65 | 2.30 | 3.28 (saturated) |
+|---|---|---|---|---|---|
+| C_CMB (fF) | 466 | 487 | 840 | 1098 | 1185 |
+| τ at 587 Ω (ns) / pole (MHz) | 0.27 / 580 | 0.29 / 560 | 0.49 / 320 | 0.64 / 250 | 0.70 / 230 |
+| τ at 1992 Ω (ns) / pole (MHz) | 0.93 / 170 | 0.97 / 160 | 1.67 / 95 | 2.19 / 73 | 2.36 / 67 |
+
+### 5.6 Reading
+
+- **The secondary stage does not change the loop** [sim]: PM within +0.0 … +0.7° of v0 at every operating point and both
+  loads, fc within 0.3 %, GM within ±0.4 dB, step settling +0.3 % (587 Ω) and +2 % (2 kΩ), no overshoot.
+- Why [est]: the RC pole of R with CMB lies at ≥ 67 MHz (2 kΩ, worst case) and ≥ 230 MHz (587 Ω), 40–300× above the
+  1.2–1.8 MHz crossover; and a resistor in series with a Miller capacitor is the classic nulling resistor, which moves the
+  feed-forward zero — hence the slight PM *increase*, not a decrease. A value up to several kΩ would still keep the pole
+  well above fc; ≈ 20 kΩ would bring it to ≈ 7 MHz at the top of the swing [est].
+- DC: no current flows into CMB's gate, so kcg follows the pad and both diodes stay reverse-biased over 0 … 3.3 V (the pad
+  in saturation reaches 3.28–3.30 V, the dpantenna then sits at ≈ 0 V) [est from the op].
+- **Consequence for the CMB discussion:** keeping CMB's gate on the pad *with* IHP's secondary stage in front of it costs
+  nothing in loop terms and ≈ 6 µm² of devices plus a 1 × 2 µm (or 1 × 7.4 µm) rppd. Whether that makes the gate CDM-safe is
+  an ESD question (task F), not answered here. Next to "turn CMB around" (§Recommendation) this is now a second way to get the
+  gate oxide off the bare pad, without a second pad-connected n-well.

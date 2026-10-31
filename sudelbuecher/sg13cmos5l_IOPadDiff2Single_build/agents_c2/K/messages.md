@@ -33,9 +33,20 @@ stable state at the top rail.
 Logs grepped: `Transient op started` only in deck 9 v4 (S-Varicap pair at 300 pF), which K reports as invalid and leaves
 out; no `Timestep too small`; the "gmin stepping failed" runs continue with completed source stepping (valid ops).
 
-## about 18:20, from the lead (resume; summary — verbatim text in the session)
+## about 18:05, from the lead (resume; summary — verbatim text in the session)
 
 Christoph: "yes, resume K with 587 Ω and 2 kΩ". Stage 5: series R in front of CMB's gate (IHP's secondary stage: rppd
 587 Ω + dantenna to sub + dpantenna to iovdd at the gate node), v5 = 587 Ω, v6 = 2 kΩ, CMB orientation unchanged; deck
 limit raised by two (11 = loop as deck 7 / 9, 12 = step as deck 8); same log checks; append stage 5 to the report and
 correct the "cannot be inserted without breaking the Miller path" statement.
+
+## 18:07, K's stage 5 reply (summary)
+
+IHP's secondary stage in front of CMB's gate (PDK rppd 1 × 2 µm = 587.0 Ω and 1 × 7.435 µm = 1991.6 Ω, plus dantenna and
+dpantenna): PM at 100 pF 78.4 / 72.6 / 75.6° (587 Ω) and 78.5 / 72.9 / 76.1° (2 kΩ) against 78.4 / 72.6 / 75.4° now; 300 pF
+worst case 39.8 / 40.1° against 39.7°; steps 0.3 % / 2 % slower, no overshoot; R·C 0.27–2.4 ns, pole ≥ 67 MHz. The earlier
+"breaks the Miller path" statement corrected in the report.
+
+## about 18:10, the lead's check
+
+Logs of decks 11 and 12 grepped: no `Transient op started`, `Timestep too small` or failure; added devices named XK….
