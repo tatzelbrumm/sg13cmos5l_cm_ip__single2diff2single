@@ -1,0 +1,985 @@
+          IHP
+SG13CMOS5L
+      Open Source
+
+
+Process Specification
+      Revision: 0.2
+    Date: (2025-12-15)
+                              SG13CMOS5L Process Specification Rev. 0.2
+
+
+
+
+Contents
+
+
+1 General                                                                                                        3
+  1.1 Scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    3
+  1.2 List of Abbreviations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    3
+  1.3 Reference Documents . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        3
+  1.4 Main Processing Sequence and Cross-Section Schematic . . . . . . . . . . . . . . . . . . . .               4
+  1.5 Process Control . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      5
+      1.5.1 Pass/Fail Parameters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         5
+      1.5.2 Information Parameters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         5
+  1.6 Wafer Reject Criteria . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    6
+
+2 Process Control Parameters                                                                                     7
+  2.1 MOS Parameters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       7
+      2.1.1 NMOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       7
+      2.1.2 PMOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       8
+      2.1.3 iNMOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        9
+      2.1.4 HV-NMOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       10
+      2.1.5 HV-PMOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       11
+      2.1.6 HV-iNMOS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        12
+  2.2 Passive Device Parameters . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       13
+      2.2.1 Rsil . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    13
+      2.2.2 Rppd . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      13
+      2.2.3 Rhigh . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     13
+      2.2.4 S-Varicap . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     14
+
+3 Al BEOL                                                                                                       15
+  3.1 Resistances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   15
+  3.2 Line Width Deltas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   16
+  3.3 Temperature Coefficients . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      16
+  3.4 Contact and Via Resistances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       17
+  3.5 Maximum Current Densities . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       18
+  3.6 Layer Thickness Values . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      19
+  3.7 Parasitic Capacitances . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    20
+
+4 Change History                                                                                                24
+
+5 Known Issues                                                                                                  25
+
+
+
+
+                                                                                                          1 of 25
+                              SG13CMOS5L Process Specification Rev. 0.2
+
+
+
+
+License
+
+
+Copyright 2024 IHP PDK Authors
+
+Licensed under the Apache License, Version 2.0 (the ”License”); you may not use this file except in compli-
+ance with the License. You may obtain a copy of the License at
+
+https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+on an ”AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and limitations under the License.
+
+
+
+
+                                                                                                        2 of 25
+                            SG13CMOS5L Process Specification Rev. 0.2
+
+
+
+
+1 General
+
+
+1.1 Scope
+This document describes the process specification for IHPs SG13CMOS5L technology. The backend option
+offers 4 thin Al metal layers and one thick Al metal layers.
+1.2 List of Abbreviations
+Table 1.1: List of abbreviations used within this document
+
+ Abbreviation                 Explanation
+ IC                           Integrated Circuit
+ IHP                          Innovations for High Performance Microelectronics
+ NMOS                         Negative Channel Metal Oxide Semiconductor
+ PMOS                         Positive Channel Metal Oxide Semiconductor
+ RD                           Reference Document
+
+1.3 Reference Documents
+
+
+
+
+                                                                                             3 of 25
+                             SG13CMOS5L Process Specification Rev. 0.2
+
+
+1.4 Main Processing Sequence and Cross-Section Schematic
+
+ • Shallow trench isolation (STI)                     • Contact definition
+ • NWell formation                                    • Metal1
+ • PWell formation                                    • Via1
+ • Triple Well formation                              • Metal2
+ • Poly Gate formation                                • Via2
+ • Bipolar Window opening                             • Metal3
+ • Collector Window opening                           • Via3
+ • Emitter opening                                    • Metal4
+ • Emitter Poly definition                            • TopVia1
+ • Base Poly definition                               • TopMetal1
+ • nSD implant / drive                                • Passivation
+ • pSD implant / drive                                • Parametric test
+ • Salicide formation
+
+
+
+
+Figure 1.1: SG13CMOS5L Al process cross-section (not to scale)
+
+
+Remark:
+ILDO consists of oxide (590nm) and nitride (50nm).
+For a homogenous ILDO with εR =4.1 the effective thickness corresponds to deff =620nm.
+
+
+
+
+                                                                                         4 of 25
+                             SG13CMOS5L Process Specification Rev. 0.2
+
+
+          Poly resistor
+          ~160nm
+                                     εR = 4.1         CO              640nm
+Nitride 50nm
+εR = 6.5
+                                     εR = 3.95
+Field oxid 400nm
+
+
+Epi layer
+                             εR = 11.9, σ = 20 Ωcm
+3750nm
+
+
+
+Si bulk                      εR = 11.9, σ = 50 Ωcm
+750µm
+
+
+Figure 1.2: BEOL detail cross-section below Metal1 for passive modeling (not to scale)
+
+
+1.5 Process Control
+Several geometrical and electrical parameters are measured for process control purposes. Electrical mea-
+surements are typically performed at T0 = 27 ◦ C (300 K). Coefficients describing the temperature behavior
+of parameters are extracted for the temperature range −40 ◦ C < T < 125 ◦ C.
+
+Process control parameters are assigned to one of the following categories:
+1.5.1 Pass/Fail Parameters
+Pass/fail parameters are used for wafer selection during the wafer fabrication process. Pass/Fail parameters
+are measured on each wafer and are characterized by SPEC limits in bold red.
+1.5.2 Information Parameters
+Information parameters are provided in order to increase the knowledge about the process. These param-
+eters do not lead to wafer scrap. There are two groups of information parameters:
+
+The first group of information parameters is measured, identically to the pass/fail parameters, on each wafer.
+These parameters are characterized by SPEC limits in bold blue.
+
+The second group of information parameters is not measured on each wafer. This group includes, for
+example, the layer thickness values measured during the wafer fabrication process or taken from REM
+cross-sections, and the coefficients describing the temperature, voltage and matching behavior of active
+and passive devices. This group of information parameters is given in italic blue.
+
+Notes:
+
+   • The process control transistor parameters must not be used for circuit simulation purposes. They are
+     often extracted from simplified model equations in order to increase the speed of the measurements.
+     Special circuit simulation transistor parameters are provided in the models. Those are extracted from
+     the complete set of model equations in order to give the best fit of the entire characteristic for all
+     operating points. Therefore, process control transistor parameters may differ from their corresponding
+     circuit simulation parameters.
+
+   • It is strongly recommended that a design shall rely only on pass/fail parameters.
+
+
+
+
+                                                                                                      5 of 25
+                              SG13CMOS5L Process Specification Rev. 0.2
+
+
+1.6 Wafer Reject Criteria
+Pass/fail parameters are measured on nine (or more) sites, distributed uniformly across the wafer, see Fig.
+1.3. At least 2/3 of the measured sites (min. 6 sites) must pass all pass/fail criteria in order to consider the
+tested wafer as pass.
+
+
+
+
+Figure 1.3: IHP PCM structures placements
+
+
+
+
+                                                                                                        6 of 25
+                                  SG13CMOS5L Process Specification Rev. 0.2
+
+
+
+
+2 Process Control Parameters
+
+
+2.1 MOS Parameters
+2.1.1 NMOS
+VGS ≤ 1.65 V @ 125°C1
+                                                                              Tar-          Meas.
+ Parameter                        Name                    Unit        Min            Max             Comment
+                                                                              get           Cond.
+ Threshold Voltage                VTN10x013                 V       0.43      0.50   0.55   [A.a1]   WxL = 10 x
+ Short Channel Device                                                                                0.13 µm2
+ Threshold Voltage                VTN10x10                  V       0.16      0.20   0.24   [A.a1]   WxL = 10 x
+ Long Channel Device                                                                                 10 µm2
+ Threshold Voltage                VTN015x013                V       0.4       0.54   0.68   [A.a1]   WxL = 0.15 x
+ Small Channel Device                                                                                0.13 µm2
+ Saturation Current               IDSN013               µA/µm       380       480    600    [A.b1]   WxL = 10 x
+ Short Channel Device                                                                                0.13 µm2
+ Off-Current Short                IOFFN013              LOG10                 -10    -9     [A.c1]   WxL = 10 x
+ Channel Device                                         (A/µm)                                       0.13 µm2
+ Drain Induced Barrier            DIBLN013               mV/V       20        50     80     [A.d1]   WxL = 10 x
+ Lowering 0.1/1.2V                                                                                   0.13 µm2
+ Sub Threshold Slope              SSN013                mV/dec 76             82     88     [A.e]    WxL = 10 x
+                                                                                                     0.13 µm2
+ Breakdown Voltage                BVDSSN013                 V       2.0       2.7           [A.f1]   WxL = 10 x
+                                                                                                     0.13 µm2
+ Effective Channel                LEFFN013                 µm       0.10      0.14   0.19   [A.g1]   WxL = 10 x
+ Length                                                                                              0.13 µm2
+ Effective Channel                WEFFN015                 µm       0.09      0.15   0.22   [A.h1]   WxL = 0.15 x
+ Width                                                                                               0.13 µm2
+ Miller Capacitance               CMILLERN               fF/µm      0.32      0.36   0.40   [A.k1]
+ NMOS
+ Junction Capacitance             CJUNCTIONN            fF/µm2      0.9       0.95   1.0    [A.k]
+ NMOS
+ Junction Breakdown               BVNPW                     V                 12            [A.f3]
+
+  1 1 FIT in 10 years for TDDB: for details see SG13G2 Qualification Report
+
+
+
+
+                                                                                                            7 of 25
+                                  SG13CMOS5L Process Specification Rev. 0.2
+
+
+2.1.2 PMOS
+VGS ≤ 1.65 V @ 125°C2
+                                                                              Tar-            Meas.
+ Parameter                        Name                    Unit        Min             Max              Comment
+                                                                              get             Cond.
+ Threshold Voltage                VTP10x013                 V       -0.53     -0.47   -0.41   [A.a1]   WxL = 10 x
+ Short Channel Device                                                                                  0.13 µm2
+ Threshold Voltage                VTP10x10                  V       -0.41     -0.36   -0.31   [A.a1]   WxL = 10 x
+ Long Channel Device                                                                                   10 µm2
+ Threshold Voltage                VTP015x013                V       -0.58     -0.48   -0.38   [A.a1]   WxL = 0.15 x
+ Small Channel Device                                                                                  0.13 µm2
+ Saturation Current               IDSP013               µA/µm       -270      -215    -170    [A.b1]   WxL = 10 x
+ Short Channel Device                                                                                  0.13 µm2
+ Off-Current Short                IOFFP013              LOG10                 -10.3   -9.3    [A.c1]   WxL = 10 x
+ Channel Device                                         (A/µm)                                         0.13 µm2
+ Drain Induced Barrier            DIBLP013               mV/V       25        50      75      [A.d1]   WxL = 10 x
+ Lowering 0.1/1.2V                                                                                     0.13 µm2
+ Sub Threshold Slope              SSP013                mV/dec -87            -81     -75     [A.e]    WxL = 10 x
+                                                                                                       0.13 µm2
+ Breakdown Voltage                BVDSSP013                 V                 -2.9    -2.2    [A.f1]   WxL = 10 x
+                                                                                                       0.13 µm2
+ Effective Channel                LEFFP013                 µm       0.07      0.10    0.13    [A.g1]   WxL = 10 x
+ Length                                                                                                0.13 µm2
+ Effective Channel                WEFFP015                 µm       0.17      0.24    0.31    [A.h1]   WxL = 0.15 x
+ Width                                                                                                 0.13 µm2
+ Miller Capacitance               CMILLERP               fF/µm      0.31      0.35    0.39    [A.k1]
+ NMOS
+ Junction Capacitance             CJUNCTIONP            fF/µm2      0.8       0.85    0.9     [A.k]
+ NMOS
+ Junction Breakdown               BVNPW                     V                 -12             [A.f3]
+
+  2 1 FIT in 10 years for TDDB: for details see SG13G2 Qualification Report
+
+
+
+
+                                                                                                              8 of 25
+                                  SG13CMOS5L Process Specification Rev. 0.2
+
+
+2.1.3 iNMOS
+VGS ≤ 1.65 V @ 125°C3
+                                                                              Tar-          Meas.
+ Parameter                        Name                    Unit        Min            Max             Comment
+                                                                              get           Cond.
+ Threshold Voltage                VTNI10x013                V       0.43      0.50   0.55   [A.a1]   WxL = 10 x
+ Short Channel Device                                                                                0.13 µm2
+ Saturation Current               IDSNI013              µA/µm       380       480    600    [A.b1]   WxL = 10 x
+ Short Channel Device                                                                                0.13 µm2
+ Off-Current Short                IOFFNI013             LOG10                 -10    -9     [A.c1]   WxL = 10 x
+ Channel Device                                         (A/µm)                                       0.13 µm2
+ Drain Induced Barrier            DIBLNI013              mV/V       20        50     80     [A.d1]   WxL = 10 x
+ Lowering 0.1/1.2V                                                                                   0.13 µm2
+ Sub Threshold Slope              SSNI013               mV/dec 76             82     88     [A.e]    WxL = 10 x
+                                                                                                     0.13 µm2
+ Breakdown Voltage                BVDSSNI013                V       2.0       2.7           [A.f1]   WxL = 10 x
+                                                                                                     0.13 µm2
+
+  3 1 FIT in 10 years for TDDB: for details see SG13G2 Qualification Report
+
+
+
+
+                                                                                                            9 of 25
+                                   SG13CMOS5L Process Specification Rev. 0.2
+
+
+2.1.4 HV-NMOS
+VGS ≤ 3.3 V (Maximum) @ 27°C for LG ≥ 0.6 µm4
+                                                                             Tar-           Meas.
+ Parameter                        Name                     Unit        Min           Max             Comment
+                                                                             get            Cond.
+ Threshold Voltage                VTNHV10x045                V        0.63   0.70    0.77   [A.a2]   WxL = 10 x
+ Short Channel Device                                                                                0.45 µm2
+ Threshold Voltage                VTNHV10x10                 V        0.65   0.69    0.73   [A.a2]   WxL = 10 x
+ Long Channel Device                                                                                 10 µm2
+ Threshold Voltage                VTNHV030x045               V        0.59   0.67    0.75   [A.a2]   WxL = 0.30 x
+ Small Channel Device                                                                                0.45 µm2
+ Saturation Current               IDSNHV045              µA/µm        480    560     640    [A.b2]   WxL = 10 x
+ Short Channel Device                                                                                0.45 µm2
+ Off-Current Short                IOFFNHV045             LOG10               -12.5   -11    [A.c2]   WxL = 10 x
+ Channel Device                                          (A/µm)                                      0.45 µm2
+ Drain Induced Barrier            DIBLNHV045              mV/V        0      15      30     [A.d2]   WxL = 10 x
+ Lowering 0.1/1.2V                                                                                   0.45 µm2
+ Sub Threshold Slope              SSNHV013               mV/dec 72           84      96     [A.e]    WxL = 10 x
+                                                                                                     0.45 µm2
+ Breakdown Voltage                BVDSSNHV013                V        5.3    6.1            [A.f2]   WxL = 10 x
+                                                                                                     0.45 µm2
+ Effective Channel                LEFFNHV045                µm        0.26   0.31    0.36   [A.g2]   WxL = 10 x
+ Length                                                                                              0.45 µm2
+ Effective Channel                WEFFNHV030                µm        0.23   0.28    0.33   [A.h2]   WxL = 0.30 x
+ Width                                                                                               0.45 µm2
+ Miller Capacitance               CMILLERNHV              fF/µm       0.42   0.45    0.48   [A.k1]
+ NMOS
+ Junction Capacitance             CJUNCTIONNHV           fF/µm2       0.74   0.80    0.86   [A.k]
+ NMOS
+ Junction Breakdown               BVNPWHV                    V               12             [A.f3]
+
+  4 1 FIT in 10 years for HCI: for details see SG13G2 Qualification Report
+
+
+
+
+                                                                                                           10 of 25
+                                   SG13CMOS5L Process Specification Rev. 0.2
+
+
+2.1.5 HV-PMOS
+VGS ≤ 3.3 V (Maximum) @ 27°C for LG ≥ 0.5 µm5
+                                                                              Tar-            Meas.
+ Parameter                        Name                     Unit        Min            Max              Comment
+                                                                              get             Cond.
+ Threshold Voltage                VTPHV10x04                 V        -0.71   -0.65   -0.59   [A.a2]   WxL = 10 x
+ Short Channel Device                                                                                  0.4 µm2
+ Threshold Voltage                VTPHV10x10                 V        -0.78   -0.70   -0.64   [A.a2]   WxL = 10 x
+ Long Channel Device                                                                                   10 µm2
+ Threshold Voltage                VTPHV03x04                 V        -0.71   -0.64   -0.57   [A.a2]   WxL = 0.3 x
+ Small Channel Device                                                                                  0.4 µm2
+ Saturation Current               IDSPHV04               µA/µm        -290    -240    -190    [A.b2]   WxL = 10 x
+ Short Channel Device                                                                                  0.4 µm2
+ Off-Current Short                IOFFPHV04              LOG10                -12.5   -11.5   [A.c2]   WxL = 10 x
+ Channel Device                                          (A/µm)                                        0.4 µm2
+ Drain Induced Barrier            DIBLPHV04               mV/V        0       5       15      [A.d2]   WxL = 10 x
+ Lowering 0.1/1.2V                                                                                     0.4 µm2
+ Sub Threshold Slope              SSPHV04                mV/dec -102          -92     -82     [A.e]    WxL = 10 x
+                                                                                                       0.4 µm2
+ Breakdown Voltage                BVDSSPHV04                 V                -6.3    -5.3    [A.f2]   WxL = 10 x
+                                                                                                       0.4 µm2
+ Effective Channel                LEFFPHV04                 µm        0.24    0.30    0.36    [A.g2]   WxL = 10 x
+ Length                                                                                                0.4 µm2
+ Effective Channel                WEFFPHV03                 µm        0.26    0.33    0.40    [A.h2]   WxL = 0.3 x
+ Width                                                                                                 0.4 µm2
+ Miller Capacitance               CMILLERPHV              fF/µm       0.32    0.35    0.38    [A.k1]
+ NMOS
+ Junction Capacitance             CJUNCTIONPHV           fF/µm2       0.74    0.80    0.86    [A.k]
+ NMOS
+ Junction Breakdown               BVNPWhv                    V                -12             [A.f3]
+
+  5 1 FIT in 10 years for HCI: for details see SG13G2 Qualification Report
+
+
+
+
+                                                                                                              11 of 25
+                                   SG13CMOS5L Process Specification Rev. 0.2
+
+
+2.1.6 HV-iNMOS
+VGS ≤ 3.3 V (Maximum) @ 27°C for LG ≥ 0.6 µm6
+                                                                             Tar-           Meas.
+ Parameter                        Name                     Unit        Min           Max             Comment
+                                                                             get            Cond.
+ Threshold Voltage                VTNIHV10x045               V        0.63   0.70    0.77   [A.a2]   WxL = 10 x
+ Short Channel Device                                                                                0.45 µm2
+ Saturation Current               IDSNIHV045             µA/µm        480    560     640    [A.b2]   WxL = 10 x
+ Short Channel Device                                                                                0.45 µm2
+ Off-Current Short                IOFFNIHV045            LOG10               -12.5   -11    [A.c2]   WxL = 10 x
+ Channel Device                                          (A/µm)                                      0.45 µm2
+ Drain Induced Barrier            DIBLNIHV045             mV/V        0      15      30     [A.d2]   WxL = 10 x
+ Lowering 0.1/1.2V                                                                                   0.45 µm2
+ Sub Threshold Slope              SSNIHV045              mV/dec 72           84      96     [A.e]    WxL = 10 x
+                                                                                                     0.45 µm2
+ Breakdown Voltage                BVDSSNIHV045               V        5.2    6.1            [A.f2]   WxL = 10 x
+                                                                                                     0.45 µm2
+
+  6 1 FIT in 10 years for HCI: for details see SG13G2 Qualification Report
+
+
+
+
+                                                                                                           12 of 25
+                             SG13CMOS5L Process Specification Rev. 0.2
+
+
+2.2 Passive Device Parameters
+2.2.1 Rsil
+Rsil utilizes salicided, n-doped gate polysilicon as resistor material.
+                                                                  Tar-                Meas.
+ Parameter                  Name                Unit      Min                   Max            Comment
+                                                                  get                 Cond.
+ Sheet Resistance           RSNRSIL              Ω       6.2     7.0          7.8     [A.i]
+ Line Width Delta           DWRSIL               nm      -20     10           40      [A.i]
+ Temperature                TC1NRSIL           ppm/K             3100 0.3             [A.af]
+ Coefficients               TC2NRSIL           ppm/K2
+ Matching Coefficients      MATRSIL1             nm              6      1.4           [A.ac]
+                            MATRSIL2
+
+ Metal-to-Body-           RCRSIL               Ω* µm             4.5               [A.ae]
+ Resistance
+Maximum Current Density for Rsil is limited by contacts, please refer section 3.5.
+2.2.2 Rppd
+Rppd utilizes unsalicided, p-doped gate polysilicon as resistor material. For realizing precision resistors,
+a line width of 2μm or higher is recommended.
+
+                                                                  Tar-                Meas.
+ Parameter                  Name                Unit      Min                   Max            Comment
+                                                                  get                 Cond.
+ Sheet Resistance           RSRSRPPD             Ω       235     260          285     [A.i]
+ Line Width Delta           DWRPPD               nm      -24     6            36      [A.i]
+ Temperature                TC1NRPPD           ppm/K             170      0.4         [A.af]
+ Coefficients               TC2NRPPD           ppm/K2
+ Matching Coefficients      MATRPPD              nm              15                   [A.ac]
+ Metal-to-Body-             RCRPPD             Ω* µm             35                   [A.ae]
+ Resistance
+ Temperature                TC3NRPPD           ppm/K             -950
+ Coefficient Metal-to-
+ Body-Resistance
+ Max. Current Density       IMRPPD             mA/µm                          1.2              11 years @
+                                                                                               105°C
+
+2.2.3 Rhigh
+Rhigh utilizes unsalicided, partially compensated gate polysilicon as resistor material.
+                                                                  Tar-                Meas.
+ Parameter                  Name                Unit      Min                   Max            Comment
+                                                                  get                 Cond.
+ Sheet Resistance           RSRHIGH              Ω       1160    1360         1560    [A.i]
+ Line Width Delta           DWRHIGH              nm      -80     -40          0       [A.i]
+ Temperature                TC1NRHIGH          ppm/K             -2300        2.1     [A.af]
+ Coefficients               TC2NRHIGH          ppm/K2
+ Matching Coefficients      MATRHIGH             nm              48                   [A.ac]
+ Metal-to-Body-             RCRHIGH            Ω* µm             80                   [A.ae]
+ Resistance
+ Max. Current Density       IMRHIGH            mA/µm                          0.6              11 years @
+                                                                                               105°C
+
+
+                                                                                                     13 of 25
+                    SG13CMOS5L Process Specification Rev. 0.2
+
+
+
+
+2.2.4 S-Varicap
+Thick Gate Oxide.
+                                                   Tar-          Meas.
+ Parameter          Name           Unit    Min            Max            Comment
+                                                   get           Cond.
+ Capacitance -3     SVAR_m3       fF/µm2   20.5   23      25.5           10x
+                                                                         (3.74x0.3)µm2
+                                                                         @15.8GHz
+ Capacitance 0      SVAR_0        fF/µm2   32     35.3    37.5           10x
+                                                                         (3.74x0.3)µm2
+                                                                         @15.8GHz
+ Capacitance +3     SVAR_3        fF/µm2   37.5   39.5    41.5           10x
+                                                                         (3.74x0.3)µm2
+                                                                         @15.8GHz
+ Q Factor -3        QFACTOR_m3             50     62      75             10x
+                                                                         (3.74x0.3)µm2
+                                                                         @15.8GHz
+ Q Factor 0         QFACTOR_0              35     43      50             10x
+                                                                         (3.74x0.3)µm2
+                                                                         @15.8GHz
+ Q Factor 3         QFACTOR_3              35     43      50             10x
+                                                                         (3.74x0.3)µm2
+                                                                         @15.8GHz
+
+
+
+
+                                                                               14 of 25
+                           SG13CMOS5L Process Specification Rev. 0.2
+
+
+
+
+3 Al BEOL
+
+
+3.1 Resistances
+
+                                                          Tar-          Meas.
+ Parameter                 Name           Unit     Min           Max            Comment
+                                                          get           Cond.
+ Substrate Resistivity     RSBLK          Ωcm     37.5   50      62.5           WAFPR3763
+                       +
+ Salicided GatPoly (n )                                                         refer section
+                                                                                2.2.1
+ Unsalicided GatPoly                                                            refer section
+ (p+ )                                                                          2.2.2
+ Unsalicized GatPoly                                                            refer section
+ (n+ )                                                                          2.2.3
+ Unsalicided nSD-Activ     RSNSD0           Ω     55     67      79
+ Sheet Resistance
+ Unsalicided pSD-Activ     RSPSD0           Ω     69     79      89
+ Sheet Resistance
+ Metal1 Snake Sheet        SNAKEM1         mΩ     90     115     145            width = 0.16
+ Resistance                                                                     µm
+ Metal2 Snake Sheet        SNAKEM2         mΩ     70     88      110            width = 0.20
+ Resistance                                                                     µm
+ Metal3 Snake Sheet        SNAKEM3         mΩ     70     88      110            width = 0.20
+ Resistance                                                                     µm
+ Metal4 Snake Sheet        SNAKEM4         mΩ     70     88      110            width = 0.20
+ Resistance                                                                     µm
+ TopMetal1 Snake           SNAKETM1        mΩ     14     18      22             width = 1.5
+ Sheet Resistance                                                               µm
+ Metal1 Sheet              RSMET1          mΩ     85     110     135    [A.i]
+ Resistance
+ Metal2 Sheet              RSMET2          mΩ     73     88      103    [A.i]
+ Resistance
+ Metal3 Sheet              RSMET3          mΩ     73     88      103    [A.i]
+ Resistance
+ Metal4 Sheet              RSMET4          mΩ     73     88      103    [A.i]
+ Resistance
+ TopMetal1 Sheet           RSTM1           mΩ     15     18      21     [A.i]
+ Resistance
+
+
+
+
+                                                                                       15 of 25
+                        SG13CMOS5L Process Specification Rev. 0.2
+
+
+3.2 Line Width Deltas
+
+                                                       Tar-         Meas.
+ Parameter              Name           Unit    Min            Max            Comment
+                                                       get          Cond.
+ Metal1 Line Width      DWMET1          nm     -64    -24     16    [A.i]
+ Delta
+ Metal2 Line Width      DWMET2          nm     -56    -16     24    [A.i]
+ Delta
+ Metal3 Line Width      DWMET3          nm     -56    -16     24    [A.i]
+ Delta
+ Metal4 Line Width      DWMET4          nm     -56    -16     24    [A.i]
+ Delta
+ TopMetal1 Line Width   DWTM1           nm     -300   -100    100   [A.i]
+ Delta
+
+3.3 Temperature Coefficients
+
+                                                       Tar-         Meas.
+ Parameter              Name           Unit    Min            Max            Comment
+                                                       get          Cond.
+ Metal1 Sheet           TC1RSMET1      ppm/K          3400          [A.af]
+ Resistance
+ Temperature
+ Coefficient
+ Metal2 Sheet           TC1RSMET2      ppm/K          3500          [A.af]
+ Resistance
+ Temperature
+ Coefficient
+ Metal3 Sheet           TC1RSMET3      ppm/K          3500          [A.af]
+ Resistance
+ Temperature
+ Coefficient
+ Metal4 Sheet           TC1RSMET4      ppm/K          3500          [A.af]
+ Resistance
+ Temperature
+ Coefficient
+ TopMetal1 Sheet        TC1RSTM1       ppm/K          3700          [A.af]
+ Resistance
+ Temperature
+ Coefficient
+
+
+
+
+                                                                                 16 of 25
+                         SG13CMOS5L Process Specification Rev. 0.2
+
+
+3.4 Contact and Via Resistances
+
+                                                        Tar-         Meas.
+ Parameter               Name           Unit    Min            Max           Comment
+                                                        get          Cond.
+ Metal1 to Silicide on   RCM1NSD       Ω/CNT    8      17      22            V = 1V, 93740
+ nSD-Activ                                                                   contact chain
+ Metal1 to Silicide on   RCM1NPD       Ω/CNT    8      17      22            V = 1V, 93740
+ pSD-Activ                                                                   contact chain
+ Metal1 to Silicide on   RCM1NPLY      Ω/CNT    8      15      20            V = 1V, 98566
+ GatPoly (n+ )                                                               contact chain
+ Metal1 to Silicide on   RCM1PPLY      Ω/CNT    8      15      20            V = 1V, 98566
+ GatPoly (p+ )                                                               contact chain
+ Metal2 - Metal1         RVIA1          Ω/VIA   5      9       20            V = 1V,
+                                                                             103840
+                                                                             contact chain
+ Metal3 - Metal2         RVIA2          Ω/VIA   5      9       20            V = 1V,
+                                                                             103840
+                                                                             contact chain
+ Metal4 - Metal3         RVIA3          Ω/VIA   5      9       20            V = 1V,
+                                                                             103840
+                                                                             contact chain
+ TopMetal1 - Metal4      tbd            Ω/VIA   tbd    tbd     tbd           tbd
+
+
+
+
+                                                                                    17 of 25
+                       SG13CMOS5L Process Specification Rev. 0.2
+
+
+3.5 Maximum Current Densities
+(11 years @ 105°C)
+
+
+                                                      Tar-          Meas.
+ Parameter             Name           Unit    Min            Max            Comment
+                                                      get           Cond.
+ Contact               JMAXCNT       mA/Cnt                  0.3    [A.v]
+ Metal1                IMAXM1          mA                    0.36   [A.v]   w = 0.16 ...
+                                                                            0.36 µm
+ Metal1                JMAXM1        mA/µm                   1      [A.v]   w > 0.36 µm
+ Via1                  JMAXVIA1      mA/Via                  0.4    [A.v]
+ Metal2                IMAXM2          mA                    0.6    [A.v]   w = 0.2 ... 0.3
+                                                                            µm
+ Metal2                JMAXM2        mA/µm                   2      [A.v]   w > 0.3 µm
+ Via2                  JMAXVIA2      mA/Via                  0.4    [A.v]
+ Metal3                IMAXM3          mA                    0.6    [A.v]   w = 0.2 ... 0.3
+                                                                            µm
+ Metal3                JMAXM3        mA/µm                   2      [A.v]   w > 0.3 µm
+ Via3                  JMAXVIA3      mA/Via                  0.4    [A.v]
+ Metal4                IMAXM4          mA                    0.6    [A.v]   w = 0.2 ... 0.3
+                                                                            µm
+ Metal4                JMAXM4        mA/µm                   2      [A.v]   w > 0.3 µm
+ TopVia1               JMAXTVIA1     mA/Via                  1.4    [A.v]
+ TopMetal1             JMAXM6        mA/µm                   15     [A.v]
+
+
+
+
+                                                                                    18 of 25
+                        SG13CMOS5L Process Specification Rev. 0.2
+
+
+3.6 Layer Thickness Values
+
+                                                       Tar-          Meas.
+ Parameter             Name            Unit    Min            Max             Comment
+                                                       get           Cond.
+ Shallow Trench        TSTI             nm            400            [A.ag]
+ Isolator Thickness
+ Gate Polysilicon      TGATPOLY         nm     150    160     170    [A.w]
+ Thickness
+ Thickness of Gate     TGOXNW           nm     2.25   2.45    2.65   [A.x]
+ Oxide
+ Thickness of Gate     TGOX1NW          nm     6.8    7.3     7.8    [A.x]
+ Oxide HV-MOS
+ Thickness of Gate     TGOXPW           nm     2.45   2.65    2.85   [A.x]
+ Oxide
+ Thickness of Gate     TGOX1PW          nm     7.0    7.5     8.0    [A.x]
+ Oxide HV-MOS
+ Isolator Thickness    TILD0            nm            640            [A.ag]   [A.w]
+ between Activ and
+ Metal1
+ Metal1 Layer          TMET1            nm            420            [A.ag]
+ Thickness
+ Isolator Thickness    TILD1            nm            540            [A.ag]   [A.w]
+ between Metal1 and
+ Metal2
+ Metal2 Layer          TMET2            nm            490            [A.ag]
+ Thickness
+ Isolator Thickness    TILD2            nm            540            [A.ag]   [A.w]
+ between Metal2 and
+ Metal3
+ Metal3 Layer          TMET3            nm            490            [A.ag]
+ Thickness
+ Isolator Thickness    TILD3            nm            540            [A.ag]   [A.w]
+ between Metal3 and
+ Metal4
+ Metal4 Layer          TMET4            nm            490            [A.ag]
+ Thickness
+ Isolator Thickness    TILDTM1          nm            850            [A.ag]   [A.w]
+ between Metal4 and
+ TopMetal1
+ TopMetal1 Layer       TTM1             nm            2000           [A.ag]
+ Thickness
+                                                      1500
+ Thickness Values of   TPASS1           nm                           [A.ag]   Oxide layer
+                       TPASS2                         400
+ Passivation Layers                                                           SiN layer
+
+
+
+
+                                                                                      19 of 25
+                        SG13CMOS5L Process Specification Rev. 0.2
+
+
+3.7 Parasitic Capacitances
+
+                                                       Tar-         Meas.
+ Parameter              Name           Unit    Min            Max            Comment
+                                                       get          Cond.
+ Metal1 - Activ Area    CAMET1ACT     aF/µm2   49     59      69    [A.aq]   A = 250 x
+ Capacitance                                                                 1200 µm2
+ Metal1 - Substrate     CAMET1SUB     aF/µm2   31     37      43    [A.aq]   A = 250 x
+ Area Capacitance                                                            1200 µm2
+ Metal1 - Metal2 Area   CAMET1/2      aF/µm2   54     68      82    [A.aq]   A = 250 x
+ Capacitance                                                                 1200 µm2
+ Metal2 - Metal3 Area   CAMET2/3      aF/µm2   54     68      82    [A.aq]   A = 250 x
+ Capacitance                                                                 1200 µm2
+ Metal3 - Metal4 Area   CAMET3/4      aF/µm2   54     68      82    [A.aq]   A = 250 x
+ Capacitance                                                                 1200 µm2
+ Metal4 - TopMetal1     tbd           aF/µm2   tbd    tbd     tbd   [A.aq]   A = 250 x
+ Area Capacitance                                                            1200 µm2
+
+
+
+
+                                                                                   20 of 25
+                             SG13CMOS5L Process Specification Rev. 0.2
+
+
+
+
+Appendix A: Measurement Conditions
+
+
+[A.aq] capacitance of metal layer to active or substrate
+       v = 0 v; f = 100 khz.
+
+[A.ac] resistor matching coefficient k
+       measuring the matching behavior of resistor pairs, differing in the resistor area, are investigated.
+       the least square fit δ(dr/r) vs. inverse square root of area is estimated: δ(dr/r) = k x a-0.5 .
+
+[A.af] resistor temperature coefficients
+       measurement of r as a function of temperature in the range −40 to 125.
+       temperature coefficients tC1 and tC2 ; t0 = 300k
+       r(t) = r(t0 ) * [1 + tC1 * (t - t0 ) + tC2 * (t – t0 )2 ].
+
+[A.ae] salicide to gatpoly contact resistance
+       rRES = (2* rCON T / # of contacts) + (2 x rC2P OLY / resistor width) + rP OLY
+       note that this formula is only valid for resistors with same width of unsalicided and salicided regions
+       rRES : Total resistance of a resistor; rCON T : Contribution of a single w-plug (typically < 1ω)
+       rC2P OLY : Salicide to gatpoly contact resistance
+       rP OLY : Contribution of the unsalicided polysilicon stripe (= rS x l / w).
+
+[A.ag] sem cross section analysis.
+
+[A.a1] threshold voltage:
+       vDS = +0.05 v / -0.05 v (n-channel / p-channel device); vBS = 0 v;
+       vT is extrapolated from the maximum slope of the active transfer characteristic region.
+       a linear regression is performed to find this slope. vT = v0 – vDS /2;
+       v0 is the gate voltage intercept of the slope.
+       isolated nmos: VnW ell = 0 v.
+
+[A.a2] threshold voltage:
+       vDS = +0.1 v / -0.1 v (n-channel / p-channel device); vBS = 0v;
+       vT is extrapolated from the maximum slope of the active transfer characteristic region.
+       a linear regression is performed to find this slope. vT = v0 – vDS /2;
+       v0 is the gate voltage intercept of the slope.
+       isolated nmos: VnW ell = 0 v.
+
+[A.b1] saturation current:
+       vDS = vGS = +1.2 v / -1.2 v (n-channel / p-channel device); vBS = 0 v
+       isolated nmos: VnW ell = 0 v.
+
+[A.b2] saturation current:
+       vDS = vGS = +3.3 v / -3.3 v (n-channel / p-channel device); vBS = 0 v
+       isolated nmos: VnW ell = 0 v.
+
+[A.c1] off-current:
+       vDS = +1.2 v / -1.2 v (n-channel / p-channel device); vGS = vBS = 0 v; iD measured
+       isolated nmos: VnW ell = 0 v.
+
+[A.c2] off-current:
+       vDS = +3.3 v / -3.3 v (n-channel / p-channel device); vGS = vBS = 0 v; iD measured
+       isolated nmos: VnW ell = 0 v.
+
+[A.d1] drain induced barrier lowering:
+       dibl = [vGS (vDS1 ) – vGS (vDS2 )]/(vDS1 -vDS2 ) at iD = jss*w/l
+       vDS1 = +0.1 v; vDS2 = +1.2 v; vBS = 0 v; jss = 0.5 na (n-channel device)
+       vDS1 = -0.1 v; vDS2 = -1.2 v; vBS = 0 v; jss = 0.1 na (p-channel device).
+
+
+
+                                                                                                     21 of 25
+                              SG13CMOS5L Process Specification Rev. 0.2
+
+
+[A.d2] drain induced barrier lowering:
+       dibl = [vGS (vDS1 ) – vGS (vDS2 )]/(vDS1 -vDS2 ) at iD = jss*w/l
+       vDS1 = +0.1 v; vDS2 = +3.3 v; vBS = 0 v; jss = 1 na (n-channel device)
+       vDS1 = -0.1 v; vDS2 = -3.3 v; vBS = 0 v; jss = 0.4 na (p-channel device).
+
+[A.e]   sub threshold slope:
+        vDS = +0.1 v / -0.1 v (n-channel / p-channel device); vBS = 0 v
+        the slope is estimated from the two drain currents iD1 = jss1*w/l and iD2 = jss2*w/l
+        jss1 = 0.5 na, iss2 = 5 na (n-channel device);
+        jss2 = 0.1 na, iss2 = 1 na (p-channel device);.
+
+[A.f3] breakdown voltage:
+       j = 1 ma / cm2 for s/d to body diode surrounded by sti.
+
+[A.f1] breakdown voltage:
+       vGS = vBS = 0 v; iD = iD0 = +10 na/μm / -10 na/μm (n-channel / p-channel device).
+
+[A.f2] breakdown voltage:
+       vGS = vBS = 0 v; iD = iD0 = +100 pa/μm / -100 pa/μm (n-channel / p-channel device).
+
+[A.g1] effective channel length:
+       extrapolated from linear regions of transistors with gate lengths of 0.13 μm, 0.18 μm;
+       vDS = +0.05 v / -0.05 v (n-channel / p-channel device)
+       method (p. i. suciu and r. l. johnston, ”experimental derivation of the source and drain
+       resistance of mos transistors,” in ieee transactions on electron devices, vol. 27, no. 9,
+       pp. 1846-1848, 1980)
+       basic equations:
+       (1) iD = β(vGSef f – vDS /2) vDS
+       (2) vGSef f = vGS – vT
+       (3) µ= µ0 / (1 + u0 vGSef f )
+       (4) 1/β(vGSef f ) = (l – δl) / (w µcOX ) = (l – δl) (1 + u0 vGSef f ) / (w µ0 cOX )
+       (5) 1/β0 (l) = (l - δl) / (w µ0 cOX )
+       first step: according to equ.(4), linear extrapolation of 1/β0 = 1/β(vGSef f = 0) from two
+       working points vGSef f 1 = +1v / -1v; vGSef f 2 = +1.5v / -1.5v (n-channel / p-channel device)
+       for all transistors with different gate length
+       second step: linear regression of δl from all 1/β0 (l) numbers according to equ.(5).
+
+[A.g2] effective channel length:
+       extrapolated from linear regions of transistors with gate lengths of 0.33 μm (only sg13s);
+       0.45 µm, 10 µm (only sg13s), 0.4 µm, 10 µm;
+       vDS = +0.1 v / -0.1 v (n-channel / p-channel device)
+       method (p. i. suciu and r. l. johnston, ”experimental derivation of the source and drain
+       resistance of mos transistors,” in ieee transactions on electron devices, vol. 27, no. 9,
+       pp. 1846-1848, 1980)
+       basic equations:
+       (1) iD = β(vGSef f – vDS /2) vDS
+       (2) vGSef f = vGS – vT
+       (3) µ= µ0 / (1 + u0 vGSef f )
+       (4) 1/β(vGSef f ) = (l – δl) / (w µcOX ) = (l – δl) (1 + u0 vGSef f ) / (w µ0 cOX )
+       (5) 1/β0 (l) = (l - δl) / (w µ0 cOX )
+       first step: according to equ.(4), linear extrapolation of 1/β0 = 1/β(vGSef f = 0) from two
+       working points vGSef f 1 = +1v / -1v; vGSef f 2 = +1.5v / -1.5v (n-channel / p-channel device)
+       for all transistors with different gate length
+       second step: linear regression of δl from all 1/β0 (l) numbers according to equ.(5).
+
+[A.h1] effective channel length:
+       extrapolated from linear regions of transistors with gate lengths of 0.15 µm, 10.0 µm;
+       (not isolated nmos); vDS = +0.05 v / -0.05 v (n-channel / p-channel device)
+       basic equations:
+       (1) iD = β(vGSef f – vDS /2) vDS
+       (2) vGSef f = vGS – vT
+
+
+                                                                                                        22 of 25
+                              SG13CMOS5L Process Specification Rev. 0.2
+
+
+        (3) µ= µ0 / (1 + u0 vGSef f )
+        (4) 1/β(vGSef f ) = l / [(w - δw) µcOX ] = [l (1 + u0 vGSef f )] / [(w - δw) µ0 cOX ]
+        (5) β0 (w) = (w - δw) µ0 cOX / l
+        first step: according to equ.(4), linear extrapolation of 1/β0 = 1/β(vGSef f = 0) from two
+        working points vGSef f 1 = +1v / -1v; vGSef f 2 = +1.5v / -1.5v (n-channel / p-channel device)
+        for all transistors with different gate width
+        second step: linear regression of δw from all β0 (w) numbers according to equ.(5).
+
+[A.h2] effective channel length:
+       extrapolated from linear regions of transistors with gate lengths of 0.3 µm, 10.0 µm;
+       vDS = +0.1 v / -0.1 v (n-channel / p-channel device)
+       basic equations:
+       (1) iD = β(vGSef f – vDS /2) vDS
+       (2) vGSef f = vGS – vT
+       (3) µ= µ0 / (1 + u0 vGSef f )
+       (4) 1/β(vGSef f ) = l / [(w - δw) µcOX ] = [l (1 + u0 vGSef f )] / [(w - δw) µ0 cOX ]
+       (5) β0 (w) = (w - δw) µ0 cOX / l
+       first step: according to equ.(4), linear extrapolation of 1/β0 = 1/β(vGSef f = 0) from two
+       working points vGSef f 1 = +1v / -1v; vGSef f 2 = +1.5v / -1.5v (n-channel / p-channel device)
+       for all transistors with different gate width
+       second step: linear regression of δw from all β0 (w) numbers according to equ.(5).
+
+[A.i]   sheet resistance, line width delta
+        the sheet resistance rS and the line width delta (δw) values are calculated from the resistances
+        of two resistors r1 and rN :
+        - r1 : one single stripe with the dimension w x l
+        - rN : N stripes in parallel with dimensions (w/n) x l each
+        formulas: R1 = rS l / (w + δw) and rN = rS (l/n) / (w/n + δw)
+        voltage across both resistors in series: 0.5v.
+
+[A.k]   capacitance measurements, area capacitance
+        v = 0 v; f = 100 khz; area capacitance = cmeasure / area.
+
+[A.k1] capacitance measurements mim, area capacitance
+       v = 2 v applied to top plate; f = 100 khz.
+
+[A.v]   maximum current density of metal lines, contacts and vias
+        the maximum current density is determined via electromigration measurements as part of the
+        process qualification procedure. the current density values given were estimated to reach less
+        than 0.01 % failure in 11 years of operation at 105°c (for sg13rh: 20 years at 125°c).
+
+[A.w] optical layer thickness
+      the thickness of the layer is measured by means of optical interferometry / ellipsometry.
+
+[A.x]   gateoxide thickness measurement using cox extrapolation
+        measured capacitance corrected for offset and miller capacitance. tox = 3.9 x eps0 x area / cox.
+
+
+
+
+                                                                                                         23 of 25
+                      SG13CMOS5L Process Specification Rev. 0.2
+
+
+
+
+4 Change History
+
+
+Version          Gen. by:   Changes / Remarks
+0.1 2025-12-15   CW         initial version
+0.2 2025-12-15   CW         minor updates
+
+
+
+
+                                                                  24 of 25
+                 SG13CMOS5L Process Specification Rev. 0.2
+
+
+
+
+5 Known Issues
+
+
+
+
+                                                             25 of 25
+

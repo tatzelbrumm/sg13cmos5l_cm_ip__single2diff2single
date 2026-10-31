@@ -1,0 +1,2526 @@
+         IHP
+SG13CMOS5L
+    Open Source
+
+
+  Layout Rules
+ Rev. 0.1 (2025-12-08)
+                                   SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+License
+
+
+Copyright 2025 IHP PDK Authors
+
+Licensed under the Apache License, Version 2.0 (the ”License”); you may not use this file except in compli-
+ance with the License. You may obtain a copy of the License at
+
+https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+on an ”AS IS” BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and limitations under the License.
+
+
+
+
+                                                                                                        1 of 60
+                                    SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+Contents
+
+
+1 General                                                                                                          4
+  1.1 Scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      4
+  1.2 List of Abbreviations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      4
+  1.3 Reference Documents . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          4
+
+2 Layer Table                                                                                                       5
+
+3 General Requirements                                                                                         15
+  3.1 Grid Rules . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+  3.2 Forbidden Layers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+4 Terminology                                                                                               16
+  4.1 Design Rule Terminology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+  4.2 Special Layer Configuration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+5 Physical Layer Design Rules                                                                                      18
+  5.1 NWell . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      18
+  5.2 PWell:block . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      20
+  5.3 Activ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    21
+  5.4 Activ:filler . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   22
+  5.5 ThickGateOxide . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         23
+  5.6 GatPoly . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      24
+  5.7 GatPoly:filler . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     25
+  5.8 pSD . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      26
+  5.9 nSD:block . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      28
+  5.10 EXTBlock . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      29
+  5.11 SalBlock . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    30
+  5.12 Cont . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    31
+  5.13 ContBar . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     32
+  5.14 Metal1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    33
+  5.15 Metal(n=2-4) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      34
+  5.16 Metal(n=1-4):filler . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   35
+  5.17 Via1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    36
+  5.18 Via(n=2-3) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    37
+  5.19 TopVia1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     38
+  5.20 TopMetal1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     39
+  5.21 TopMetal1:filler . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    40
+  5.22 Passiv . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    41
+
+6 Device Layout Rules                                                                                              42
+  6.1 Rsil . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     42
+  6.2 Rppd . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     43
+  6.3 Rhigh . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      44
+  6.4 Pad Dimensions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         45
+      6.4.1 Solder Bump Rules . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .            46
+      6.4.2 Copper Pillar Rules . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          47
+  6.5 Sealring . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     49
+  6.6 Inductors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      51
+
+7 Special Rules                                                                                                    52
+  7.1 Antenna Rules . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        52
+  7.2 Latch-up Guidelines . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        54
+      7.2.1 Latch-up Protection on Output Buffers . . . . . . . . . . . . . . . . . . . . . . . . . . .            54
+      7.2.2 Additional Rules for Subtrate and NWell Ties . . . . . . . . . . . . . . . . . . . . . . .             54
+
+
+                                                                                                             2 of 60
+                                   SG13CMOS5L Layout Rules Rev. 0.1
+
+
+   7.3 Metal Slits . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+   7.4 Pin Layer Rules . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+
+8 Rules of Digital Design                                                                                       58
+  8.1 DigiBnd Layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   58
+      8.1.1 NWell . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     58
+      8.1.2 Cont . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    58
+  8.2 DigiSub Layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   58
+  8.3 SRAM Layer . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      58
+
+9 Change history                                                                                                59
+
+10 Known Issues                                                                                                 60
+
+
+
+
+                                                                                                           3 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+1 General
+
+
+1.1 Scope
+This document describes the design rules for IHPs SG13CMOS5L technology.
+1.2 List of Abbreviations
+Table 1.1: List of abbreviations used within this document
+
+ Abbreviation                 Explanation
+ BiCMOS                       Bipolar CMOS
+ HBT                          Heterojunction Bipolar Transistor
+ IC                           Integrated Circuit
+ IHP                          Innovations for High Performance Microelectronics
+ MIM                          Metal-Insulator-Metal
+ NMOS                         Negative Channel Metal Oxide Semiconductor
+ PMOS                         Positive Channel Metal Oxide Semiconductor
+ RD                           Reference Document
+ SiGe                         Silicon Germanium
+ OPC                          Optical Proximity Correction
+
+1.3 Reference Documents
+[RD 1] IHP SG13 Minimum Layout Rules Rev. 1.2
+
+
+
+
+                                                                                  4 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+2 Layer Table
+
+
+This chapter is a documentation of IHP layers definition which is valid in all technologies.
+
+Remark: Only the layers described in the following table are allowed to be used in layout designs. Do not
+use layers exclusively reserved for internal usage.
+
+ Layer name           Purpose        GDS          GDS        Description
+                                    Number      Datatype
+ Activ                drawing           1            0       Defines active regions in substrate, where
+                                                             transistors, diodes and/or capacitors will be
+                                                             fabricated
+ Activ                pin               1            2       Activ pin layer
+ Activ                mask              1           20       added to Active:drawing at mask generation
+ Activ                filler            1           22       Activ filler layer
+ Activ                nofill            1           23       Activ filler exclusion layer
+ Activ                OPC               1           26       Activ outer OPC definition layer
+ Activ                iOPC              1           27       Activ inner OPC definition layer
+ Activ                noqrc             1           28       No parasitics extraction
+ BiWind               drawing           3            0       Defines active npn collector region
+ BiWind               OPC               3           26       BiWind OPC definition layer
+ GatPoly              drawing           5            0       Defines polysilicon gates and interconnect
+ GatPoly              pin               5            2       GatPoly pin layer
+ GatPoly              filler            5           22       GatPoly filler layer
+ GatPoly              nofill            5           23       GatPoly filler exclusion layer
+ GatPoly              OPC               5           26       GatPoly outer OPC definition layer
+ GatPoly              iOPC              5           27       GatPoly inner OPC definition layer
+ GatPoly              noqrc             5           28       No parasitics extraction
+ Cont                 drawing           6            0       Defines 1-st metal contacts to Activ, GatPoly
+ Cont                 OPC               6           26       Cont OPC definition layer
+ nSD                  drawing           7            0       Defines areas to receive N+ source/drain
+                                                             implant
+ nSD                  block             7           21       Defines areas which do not receive S/D
+                                                             implants
+ Metal1               drawing           8            0       Defines 1-st metal interconnect
+ Metal1               pin               8            2       Metal1 pin layer
+ Metal1               mask              8           20       added to Metal1:drawing at mask generation
+ Metal1               filler            8           22       Metal1 filler layer
+ Metal1               nofill            8           23       Metal1 filler exclusion layer
+ Metal1               slit              8           24       Metal1 slit definition layer
+
+
+
+                                                                                                      5 of 60
+                       SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+Metal1       text          8        25      Text layer for Metal1, used for LVS
+Metal1       OPC           8        26      Metal1 OPC definition layer
+Metal1       noqrc         8        28      No parasitics extraction
+Metal1       res           8        29      Wire resistor
+Metal1       iprobe        8        33      Current probe
+Metal1       diffprb       8        34      Differential current probe
+Passiv       drawing       9         0      Defines regions where passivation coating is
+                                            removed
+Passiv       pin           9         2      Passiv pin layer
+Passiv       sbump         9        36      Defines passivation openings for solder
+                                            bump bonding
+Passiv       pillar        9        35      Defines passivation openings for copper
+                                            pillar formation
+Passiv       pdl           9        40      Plasma dicing line
+Metal2       drawing      10         0      Defines 2-nd metal interconnect
+Metal2       pin          10         2      Metal2 pin layer
+Metal2       mask         10        20      added to Metal2:drawing at mask generation
+Metal2       filler       10        22      Metal2 filler layer
+Metal2       nofill       10        23      Metal2 filler exclusion layer
+Metal2       slit         10        24      Metal2 slit definition layer
+Metal2       text         10        25      Text layer for Metal2, used for LVS
+Metal2       OPC          10        26      Metal2 OPC definition layer
+Metal2       noqrc        10        28      No parasitics extraction
+Metal2       res          10        29      Wire resistor
+Metal2       iprobe       10        33      Current probe
+Metal2       diffprb      10        34      Differential current probe
+BasPoly      drawing      13         0      Defines npn base poly region
+BasPoly      pin          13         2      BasPoly pin layer
+pSD          drawing      14         0      Defines areas to receive P+ source/drain
+                                            implant
+NLDB         drawing      15         0      Reserved for internal LDMOS development
+DigiBnd      drawing      16         0      surrounds areas were digital DRC is valid
+Via1         drawing      19         0      Defines 1-st metal to 2-nd metal contact
+BackMetal1   drawing      20         0      Defines 1-st back-side metal interconnect
+BackMetal1   pin          20         2      BackMetal1 pin layer
+BackMetal1   mask         20        20      added to BackMetal1:drawing at mask
+                                            generation
+BackMetal1   filler       20        22      BackMetal1 filler layer
+BackMetal1   nofill       20        23      BackMetal1 filler exclusion layer
+BackMetal1   slit         20        24      BackMetal1 slit definition layer
+
+
+
+                                                                                      6 of 60
+                        SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+BackMetal1    text         20        25      Text layer for BackMetal1, used for LVS
+BackMetal1    OPC          20        26      BackMetal1 OPC definition layer
+BackMetal1    noqrc        20        28      No parasitics extraction
+BackMetal1    res          20        29      Wire resistor
+BackMetal1    iprobe       20        33      Current probe
+BackMetal1    diffprb      20        34      Differential current probe
+GainImplant   drawing      22         0      Defines avalanche multiplication region
+BackPassiv    drawing      23         0      Defines regions where passivation coating is
+                                             removed
+RES           drawing      24         0      Identifies resistor areas
+SRAM          drawing      25         0      Identifies memory areas
+TRANS         drawing      26         0      Identifies bipolar transistor areas
+IND           drawing      27         0      Identifies inductor areas
+IND           pin          27         2      IND pin layer
+IND           text         27        25      IND text layer
+SalBlock      drawing      28         0      Defines non salicided Activ and GatPoly,
+                                             BasPoly areas
+Via2          drawing      29         0      Defines 2-nd metal to 3-rd metal contact
+Metal3        drawing      30         0      Defines 3-rd metal interconnect
+Metal3        pin          30         2      Metal3 pin layer
+Metal3        mask         30        20      added to Metal3:drawing at mask generation
+Metal3        filler       30        22      Metal3 filler layer
+Metal3        nofill       30        23      Metal3 filler exclusion layer
+Metal3        slit         30        24      Metal3 slit definition layer
+Metal3        text         30        25      Text layer for Metal3, used for LVS
+Metal3        OPC          30        26      Metal3 OPC definition layer
+Metal3        noqrc        30        28      No parasitics extraction
+Metal3        res          30        29      Wire resistor
+Metal3        iprobe       30        33      Current probe
+Metal3        diffprb      30        34      Differential current probe
+NWell         drawing      31         0      Defines the regions that receive P-Channel
+                                             VT adjust, P-Channel Punch-Through and
+                                             N-Well implants
+NWell         pin          31         2      NWell pin layer
+nBuLay        drawing      32         0      Defines bipolar sub collector and isolated
+                                             NMOS devices
+nBuLay        pin          32         2      nBuLay pin Layer
+nBuLay        block        32        21      Defines areas where no nBuLay implant is
+                                             allowed
+EmWind        drawing      33         0      Defines npn emitter window
+
+
+
+                                                                                       7 of 60
+                         SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+EmWind        OPC           33        26      EmWind OPC definition layer
+DeepCo        drawing       35         0      Defines deep collector regions
+MIM           drawing       36         0      Defines Metal-Insulator-Metal capacitor area
+EdgeSeal      drawing       39         0      Sealring recognition layer
+EdgeSeal      boundary      39         4      Defines the outer extends of the sealring
+Substrate     drawing       40         0      Substrate recognition layer for LVS
+Substrate     text          40        25      Substrate recognition text for LVS
+dfpad         drawing       41         0      Pad recognition layer
+dfpad         pillar        41        35      Copper pillar pad recognition layer
+dfpad         sbump         41        36      Solder bump pad recognition layer
+ThickGateOx   drawing       44         0      Thick Gate Oxide
+PLDB          drawing       45         0      Reserved for internal LDMOS development
+PWell         drawing       46         0      Reserved for internal use
+PWell         pin           46         2      Pwell pin layer
+PWell         block         46        21      Defines areas where no well implants are
+                                              allowed
+IC            drawing       48         0      Reserved for internal use
+Via3          drawing       49         0      Defines 3-rd metal to 4-th metal contact
+Metal4        drawing       50         0      Defines 4-th metal interconnect
+Metal4        pin           50         2      Metal4 pin layer
+Metal4        mask          50        20      added to Metal4:drawing at mask generation
+Metal4        filler        50        22      Metal4 filler layer
+Metal4        nofill        50        23      Metal4 filler exclusion layer
+Metal4        slit          50        24      Metal4 slit definition layer
+Metal4        text          50        25      Text layer for Metal4, used for LVS
+Metal4        OPC           50        26      Metal4 OPC definition layer
+Metal4        noqrc         50        28      No parasitics extraction
+Metal4        res           50        29      Wire resistor
+Metal4        iprobe        50        33      Current probe
+Metal4        diffprb       50        34      Differential current probe
+HeatTrans     drawing       51         0      Defines heat source for transistors
+HeatRes       drawing       52         0      Defines heat source for resistors
+FBE           drawing       54         0      Fluidic back side etch
+EmPoly        drawing       55         0      Defines npn emitter poly region and pnp
+                                              base poly region
+DigiSub       drawing       60         0      Substrate recognition layer for LVS
+NoDRC         drawing       62         0      Excludes areas from design rule checking.
+                                              Designs with NoDRC are rejected!
+TEXT          drawing       63         0      Macrocell name, element text layer
+
+
+
+                                                                                         8 of 60
+                       SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+Via4         drawing      66         0      Defines 4-th metal to 5-th metal contact
+Metal5       drawing      67         0      Defines 5-th metal interconnect
+Metal5       pin          67         2      Metal5 pin layer
+Metal5       mask         67        20      added to Metal5:drawing at mask generation
+Metal5       filler       67        22      Metal5 filler layer
+Metal5       nofill       67        23      Metal5 filler exclusion layer
+Metal5       slit         67        24      Metal5 slit definition layer
+Metal5       text         67        25      Text layer for Metal5
+Metal5       OPC          67        26      Metal5 OPC definition layer
+Metal5       noqrc        67        28      No parasitics extraction
+Metal5       res          67        29      Wire resistor
+Metal5       iprobe       67        33      Current probe
+Metal5       diffprb      67        34      Differential current probe
+RadHard      drawing      68         0      Defines regions where special radiation hard
+                                            design rules are applied
+MemCap       drawing      69         0      Defines position of RFMEMS cap
+Varicap      drawing      70         0      Well implant for varicap devices
+IntBondVia   drawing      72         0      Via on top of interposer’s TopMetal2
+IntBondMet   drawing      73         0      Metal connected to IntBondVia
+DevBondVia   drawing      74         0      Via on top of device’s TopMetal2
+DevBondMet   drawing      75         0      Metal connected to DevBondVia
+DevTrench    drawing      76         0      Deep trench from front side for plasma dicing
+                                            approach
+Redist       drawing      77         0      Redistribution layer for metal wiring after chip
+                                            IO
+GraphBot     drawing      78         0      1st graphene layer
+GraphTop     drawing      79         0      2nd graphene layer
+AntVia1      drawing      83         0      Deep via between TopMetal2 and AntMetal1
+AntMetal2    drawing      84         0      Extra second-metal layer for antenna and
+                                            passive integration
+GraphCont    drawing      85         0      GraphBot, GraphTop and GraphGat to
+                                            GraphMetal1 or GraphMet1L contact
+SiWG         drawing      86         0      Backend integrated Si waveguide
+SiWG         filler       86        22      SiWG filler layer
+SiWG         nofill       86        23      SiWG filler exclusion layer
+SiGrating    drawing      87         0      Si waveguide etching layer
+SiNGrating   drawing      88         0      SiN waveguide etching layer
+GraphPas     drawing      89         0      Additional passivation for graphene
+                                            structures
+EmWind3      drawing      90         0      Defines G3 npn emitter window
+
+
+
+                                                                                       9 of 60
+                        SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+EmWiHV3       drawing      91         0      Defines G3 HV npn emitter window
+RedBuLay      drawing      92         0      Burried Layer with reduced dose for isolated
+                                             NLDMOS
+SMOS          drawing      93         0      Extraction recognition layer for special
+                                             CMOS devices
+GraphPad      drawing      97         0      Passivation opening
+Polimide      drawing      98         0      Reserved for future use
+Polimide      pin          98         2      Polimide pin layer
+Recog         drawing      99         0      general device recognition shape for device
+                                             extraction
+Recog         pin          99         2      General device pin recognition layer
+Recog         esd          99        30      ESD device recognition layer
+Recog         diode        99        31      Active diode recognition layer
+Recog         tsv          99        32      TSV device recognition layer
+Recog         iprobe       99        33      Current probe
+Recog         diffprb      99        34      Differential current probe
+Recog         pillar       99        35      Copper pillar pad recognition layer
+Recog         sbump        99        36      Solder bump pad recognition layer
+Recog         otp          99        37      OTP device recognition layer
+Recog         pdiode       99        38      Enables extraction of parasitic diodes
+Recog         mom          99        39      Metal-on-metal (MOM) capacitor recognition
+                                             layer
+Recog         pcm          99        100     Process control structure recognition layer
+ColOpen       drawing      101        0      Defines additional collector opening in SG13
+                                             HBTs
+GraphMetal1   drawing      109        0      Graphene-metal standard interconnect
+GraphMetal1   filler       109       22      GraphMetal1 filler layer
+GraphMetal1   nofill       109       23      GraphMetal1 filler exclusion layer
+GraphMetal1   slit         109       24      GraphMetal1 slit definition layer
+GraphMetal1   OPC          109       26      Graphene-metal opc
+GraphMet1L    drawing      110        0      Graphene-metal lift-off interconnect
+GraphMet1L    filler       110       22      GraphMet1L filler layer
+GraphMet1L    nofill       110       23      GraphMet1L filler exclusion layer
+GraphMet1L    slit         110       24      GraphMet1L slit definition layer
+GraphMet1L    OPC          110       26      Graphene-metal lift-off opc
+EXTBlock      drawing      111        0      Block tip and halo implants
+NLDD          drawing      112        0      Dedicated pwell body for NLDMOS
+PLDD          drawing      113        0      Dedicated nwell body for PLDMOS
+NExt          drawing      114        0      Reserved for internal LDMOS development
+PExt          drawing      115        0      Reserved for internal use
+
+
+
+                                                                                        10 of 60
+                      SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+NExtHV      drawing      116        0      Reserved for internal use
+PExtHV      drawing      117        0      Reserved for internal use
+GraphGate   drawing      118        0      Graphene GFET gate
+SiNWG       drawing      119        0      Backend integrated SiN waveguide
+SiNWG       filler       119       22      SiNWG filler layer
+SiNWG       nofill       119       23      SiNWG filler exclusion layer
+MEMPAD      drawing      124        0      Dedicated to open Pads in RF-MEMS
+                                           module
+TopVia1     drawing      125        0      Defines 3-rd (or 5-th) metal to TopMetal1
+                                           contact
+TopMetal1   drawing      126        0      Defines 1-st thick TopMetal layer
+TopMetal1   pin          126        2      TopMetal1 pin layer
+TopMetal1   mask         126       20      added to TopMetal1:drawing at mask
+                                           generation
+TopMetal1   filler       126       22      TopMetal1 filler layer
+TopMetal1   nofill       126       23      TopMetal1 filler exclusion layer
+TopMetal1   slit         126       24      TopMetal1 slit definition layer
+TopMetal1   text         126       25      Text layer for TopMetal1, used for LVS
+TopMetal1   noqrc        126       28      No parasitics extraction
+TopMetal1   res          126       29      Wire resistor
+TopMetal1   iprobe       126       33      Current probe
+TopMetal1   diffprb      126       34      Differential current probe
+INLDPWL     drawing      127        0      Dedicated PWell body for isolated NLDMOS
+PolyRes     drawing      128        0      used to mark net resistors
+PolyRes     pin          128        2      Defines polysilicon gates and interconnect
+Vmim        drawing      129        0      used to mark net mim capacitors
+nBuLayCut   drawing      131        0      P-separation implat INLDMOS (internal use)
+AntMetal1   drawing      132        0      Extra first-metal layer for antenna and
+                                           passive integration
+TopVia2     drawing      133        0      Defines via between TopMetal1 and
+                                           TopMetal2
+TopMetal2   drawing      134        0      Defines 2-nd thick TopMetal layer
+TopMetal2   pin          134        2      TopMetal2 pin layer
+TopMetal2   mask         134       20      added to TopMetal2:drawing at mask
+                                           generation
+TopMetal2   filler       134       22      TopMetal2 filler layer
+TopMetal2   nofill       134       23      TopMetal2 filler exclusion layer
+TopMetal2   slit         134       24      TopMetal2 slit definition layer
+TopMetal2   text         134       25      Text layer for TopMetal2
+TopMetal2   noqrc        134       28      No parasitics extraction
+
+
+
+                                                                                     11 of 60
+                        SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+TopMetal2     res          134       29      Wire resistor
+TopMetal2     iprobe       134       33      Current probe
+TopMetal2     diffprb      134       34      Differential current probe
+SNSRing       drawing      135        0      Sensor package ring
+Sensor        drawing      136        0      Sensor recognition layer
+SNSArms       drawing      137        0      Arms of the Sensor
+SNSCMOSVia    drawing      138        0      Defines via between BiCMOS wafer and
+                                             sensor
+ColWind       drawing      139        0      Defines enclosed active transistor region
+FLM           drawing      142        0      Defines fluidic channel
+HafniumOx     drawing      143        0      MEMRES dielectric layer
+MEMVia        drawing      145        0      Local Vias within RFM area
+ThinFilmRes   drawing      146        0      ThinFilmRes (V) and recognition layer for
+                                             RFMEMS
+RFMEM         drawing      147        0      Areas for integrated RF MEMS devices
+NoRCX         drawing      148        0      No parasitics extraction
+NoRCX         m2m3         148       41      No parasitics extraction in Metal2 and Metal3
+NoRCX         m2m4         148       42      No parasitics extraction in Metal2 and Metal4
+NoRCX         m2m5         148       43      No parasitics extraction in Metal2 and Metal5
+NoRCX         m2tm1        148       44      No parasitics extraction in Metal2 and
+                                             TopMetal1
+NoRCX         m2tm2        148       45      No parasitics extraction in Metal2 and
+                                             TopMetal2
+NoRCX         m3m4         148       46      No parasitics extraction in Metal3 and Metal4
+NoRCX         m3m5         148       47      No parasitics extraction in Metal3 and Metal5
+NoRCX         m3tm1        148       48      No parasitics extraction in Metal3 and
+                                             TopMetal1
+NoRCX         m3tm2        148       49      No parasitics extraction in Metal3 and
+                                             TopMetal2
+NoRCX         m4m5         148       50      No parasitics extraction in Metal4 and Metal5
+NoRCX         m4tm1        148       51      No parasitics extraction in Metal4 and
+                                             TopMetal1
+NoRCX         m4tm2        148       52      No parasitics extraction in Metal4 and
+                                             TopMetal2
+NoRCX         m5tm1        148       53      No parasitics extraction in Metal5 and
+                                             TopMetal1
+NoRCX         m5tm2        148       54      No parasitics extraction in Metal5 and
+                                             TopMetal2
+NoRCX         tm1tm2       148       55      No parasitics extraction in TopMetal1 and
+                                             TopMetal2
+NoRCX         m1sub        148       123     No parasitics extraction in Metal1 and
+                                             Substrate
+
+
+
+                                                                                      12 of 60
+                        SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+NoRCX         m2sub        148       124     No parasitics extraction in Metal2 and
+                                             Substrate
+NoRCX         m3sub        148       125     No parasitics extraction in Metal3 and
+                                             Substrate
+NoRCX         m4sub        148       126     No parasitics extraction in Metal4 and
+                                             Substrate
+NoRCX         m5sub        148       127     No parasitics extraction in Metal5 and
+                                             Substrate
+NoRCX         tm1sub       148       300     No parasitics extraction in TopMetal1 and
+                                             Substrate
+NoRCX         tm2sub       148       301     No parasitics extraction in TopMetal2 and
+                                             Substrate
+SNSBotVia     drawing      149        0      Sensor bottom via
+SNSTopVia     drawing      151        0      Sensor top via
+DeepVia       drawing      152        0      Through Silicon Via
+FGEtch        drawing      153        0      At this place the 1-st poly-Si layer
+                                             (floating-gate) is etched before the 2-nd
+                                             poly-Si layer (control-gate) is deposited
+CtrGat        drawing      154        0      This layer patterns the 2-nd poly-Si layer
+                                             (control-gate)
+FGImp         drawing      155        0      Defines areas where the Floating-gate is
+                                             doped and the p-well of the flash-cells is
+                                             formed
+EmWiHV        drawing      156        0      EmWind layer for high voltage HBT
+LBE           drawing      157        0      For localized back side etch
+AlCuStop      drawing      159        0      Reserved for internal use
+NoMetFiller   drawing      160        0      Exclude all metall filler
+prBoundary    drawing      189        0      Defines boundary of layour cells
+Exchange0     drawing      190        0      Support layer for layout data exchange (not
+                                             used in mask preparation)
+Exchange0     pin          190        2      Pin layer of Exchange0
+Exchange0     text         190       25      Text layer of Exchange0
+Exchange1     drawing      191        0      Support layer for layout data exchange (not
+                                             used in mask preparation)
+Exchange1     pin          191        2      Pin layer of Exchange1
+Exchange1     text         191       25      Text layer of Exchange1
+Exchange2     drawing      192        0      Support layer for layout data exchange (not
+                                             used in mask preparation)
+Exchange2     pin          192        2      Pin layer of Exchange2
+Exchange2     text         192       25      Text layer of Exchange2
+Exchange3     drawing      193        0      Support layer for layout data exchange (not
+                                             used in mask preparation)
+Exchange3     pin          193        2      Pin layer of Exchange3
+
+
+
+                                                                                      13 of 60
+                      SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+Exchange3   text         193       25      Text layer of Exchange3
+Exchange4   drawing      194        0      Support layer for layout data exchange (not
+                                           used in mask preparation)
+Exchange4   pin          194        2      Pin layer of Exchange4
+Exchange4   text         194       25      Text layer of Exchange4
+isoNWell    drawing      257        0      Defines regions with alternative NWell
+                                           implant to form isolated NWell
+
+
+
+
+                                                                                    14 of 60
+                                    SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+3 General Requirements
+
+
+3.1 Grid Rules
+   • All rules are defined in microns [µm] by default if there is no other unit mentioned
+   • All features are on a drawing grid of 5 nm (0.005 µm)
+   • Shapes with acute angles <87 degree are not allowed on any layer
+   • Following layers are only allowed on 90, 180 degree angles: Cont, Via1, Via2, Via3, TopVia1
+   • Following layers are only allowed on 90, 135, 180, 225, and 270 degree angles: GatPoly, Activ, Metal1,
+     Metal2, Metal3, Metal4, TopMetal1
+   • Self-intersecting polygons must be avoided
+   • Design elements, which are snapped to grid must not violate any geometries in this document.
+
+There are several layers which are not considered for mask generation. Offgrid and angle checks are
+not applied on the following layers (in alphabetical order): DigiBnd, DigiSub, dfpad, EdgeSeal, HeatRes,
+HeatTrans, IND, NoDRC, NoMetFiller, NoRCX, RadHard, Recog, RES, Scribe, SRAM, TEXT
+3.2 Forbidden Layers
+Following layers are forbidden in designs submitted for all 0.13 µm technologies. Layout data containing
+these layers will be rejected from the tape-in procedure automatically.
+
+ Layer name                Purpose           GDS           GDS
+                                            Number       Datatype
+ BiWind                    drawing             3             0
+ PEmWind                   drawing            11             0
+ BasPoly                   drawing            13             0
+ TRANS                     drawing            26             0
+ nBuLay                    drawing            32             0
+ DeepCo                    drawing            35             0
+ MIM                       drawing            36             0
+ PEmPoly                   drawing            53             0
+ EmPoly                    drawing            55             0
+ LDMOS                     drawing            57             0
+ PBiWind                   drawing            58             0
+ NoDRC                     drawing            62             0
+ Via4                      drawing            66             0
+ Metal5                    drawing            67             0
+ Metal5                    filler             67            22
+ Flash                     drawing            71             0
+ Vmim                      drawing           129             0
+ TopVia2                   drawing           133             0
+ TopMetal2                 drawing           134             0
+ TopMetal2                 filler            134            22
+ ColWind                   drawing           139             0
+
+
+
+
+                                                                                                  15 of 60
+                                         SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+4 Terminology
+
+
+4.1 Design Rule Terminology
+Critical design rules are defined in [RD 2]. These rules are checked during tape-in. If any of them are vio-
+lated, the layout is rejected. Critical design rules ensure that violations in your own layout do not negatively
+influence other customer layouts and no damage occurs in the cleanroom.
+Since no waivers are granted, IHP recommends performing the online MPW Rejection Test (https://dk.ihp-
+microelectronics.com) at an early stage.
+
+Standard design rules define criteria that a layout must satisfy to ensure correct fabrication. Violations
+typically lead to errors that prevent successful chip production.
+
+Recommended design rules are non-mandatory design rules. These rules focus on improving design
+manufacturability and reliablity. They offer hints for optimizing layouts to minimize variability and improve
+yield.
+
+unrelated - two regions which do not touch each other
+abut - two edges of two different layers touching each other
+A two-layer spacing check always excludes the touch and overlap of both layers as well.
+
+A description of a selection of different design rule types can be found in Fig. 4.1.
+
+4.2 Special Layer Configuration
+Various rule definitions require derived layers instead of the original layers defined in chapter 2. The gener-
+ation rules for the derived layers are described below.
+
+  Layer name               Definition
+  PWell                    NOT (NWell OR PWell:block) OR PWell:drawing
+        1
+  nSD                      NOT (pSD OR nSD:block) OR nSD:drawing
+  NWell tie                (Activ AND nSD) inside NWell
+  Substrate tie            (Activ AND pSD) inside PWell
+  N+Activ                  Activ AND nSD
+  P+Activ                  Activ AND pSD
+  Gate                     Activ AND GatPoly
+  NFET                     GatPoly over (Activ AND NOT pSD)
+  PFET                     GatPoly over ((Activ AND pSD) inside NWell)
+
+
+
+
+  1 nSD as a drawing layer only valid if pSD and nSD are identical. E.g. rhigh resistor (see 6.3)
+
+
+
+
+                                                                                                       16 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+             Min. Layer A width                  Min. Layer A space or notch
+
+
+
+
+             Min. Layer A space                             Min. Layer A enclosure
+             to Layer B                                     of Layer B
+
+
+
+
+             Min. Layer A overlap of Layer B
+
+
+
+
+             Min. Layer A extension of Layer B
+
+
+
+
+             Min. Layer A area              Min. Layer A enclosed area
+
+
+
+                                                                               Layer A
+                                                                               Layer B
+
+
+Figure 4.1: Rule check schematics.
+
+
+
+
+                                                                                         17 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+5 Physical Layer Design Rules
+
+
+5.1 NWell
+
+ Rule              Description                                                              Value
+ NW.a              Min. NWell width                                                          0.62
+ NW.b              Min. NWell space or notch (same net). NWell regions separated by          0.62
+                   less than this value will be merged.
+ NW.b1             Min. PWell width between NWell regions (different net) (Note 3)           1.80
+ NW.c              Min. NWell enclosure of P+Activ not inside ThickGateOx                    0.31
+ NW.c1             Min. NWell enclosure of P+Activ inside ThickGateOx                        0.62
+ NW.d              Min. NWell space to external N+Activ not inside ThickGateOx               0.31
+ NW.d1             Min. NWell space to external N+Activ inside ThickGateOx                   0.62
+ NW.e              Min. NWell enclosure of NWell tie surrounded entirely by NWell in         0.24
+                   N+Activ not inside ThickGateOx
+ NW.e1             Min. NWell enclosure of NWell tie surrounded entirely by NWell in         0.62
+                   N+Activ inside ThickGateOx
+ NW.f              Min. NWell space to substrate tie in P+Activ not inside                   0.24
+                   ThickGateOx
+ NW.f1             Min. NWell space to substrate tie in P+Activ inside ThickGateOx           0.62
+
+Notes
+
+  1. Activ regions are allowed to cross well boundaries in some ESD protection layouts.
+  2. Substrate ties for internal logic are required due to p-silicon substrate.
+  3. A certain distance between NWell and PWell (see section 4.2) on different nets is required to prevent
+     punchthrough due to different potentials.
+
+
+
+
+                                                                                                 18 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+                                        e
+
+
+            a           b             NWell tie
+
+
+
+
+                                                                      c      d
+                                                         P+Activ                   N+Activ
+                                  b
+                                  (notch)
+
+                                  a                                         f    Substrate
+                                                                                    tie
+
+
+
+
+                             b1                                     b1
+
+
+
+
+                Activ       GatPoly         NWell      nBuLay        pSD         PWell:block
+
+Figure 5.1: NWell dimensions (only rule variants without ThickGatOx are shown in this figure)
+
+
+
+
+                                                                                                19 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.2 PWell:block
+PWell:block layer is used to generate regions where both NWell and PWell implants are blocked.
+
+ Rule               Description                                                          Value
+ PWB.a              Min. PWell:block width                                               0.62
+ PWB.b              Min. PWell:block space or notch                                      0.62
+ PWB.c              Min. PWell:block space to NWell                                      0.62
+ PWB.d              Overlap of PWell:block and NWell is allowed
+ PWB.e              Min. PWell:block space to (N+Activ not inside ThickGateOx) in        0.31
+                    PWell
+ PWB.e1             Min. PWell:block space to (N+Activ inside ThickGateOx) in PWell      0.62
+ PWB.f              Min. PWell:block space to (P+Activ not inside ThickGateOx) in        0.24
+                    PWell
+ PWB.f1             Min. PWell:block space to (P+Activ inside ThickGateOx) in PWell      0.62
+
+
+
+                                                           b                c
+                       f
+          P+Activ
+
+
+
+                                                                       d
+                      e
+          N+Activ
+
+                                      b        a
+
+
+
+
+                                                   Activ       NWell   PWell:block       pSD
+
+Figure 5.2: PWell:block dimensions
+
+
+
+
+                                                                                             20 of 60
+                                   SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.3 Activ
+
+ Rule             Description                                                       Value
+ Act.a            Min. Activ width                                                  0.15
+ Act.b            Min. Activ space or notch                                         0.21
+ Act.c            Min. Activ drain/source extension                                 0.23
+ Act.d            Min. Activ area (µm²)                                             0.122
+ Act.e            Min. Activ enclosed area (µm²)                                    0.15
+
+
+
+
+                               b                      c        b
+                                                            (notch)
+
+                      a
+
+
+
+
+                  d                       e
+                                                                      e
+
+
+
+
+                                                                Activ     GatPoly
+
+Figure 5.3: Activ dimensions
+
+
+
+
+                                                                                        21 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.4 Activ:filler
+Activ:filler pattern are required in order to reduce layout sensitivity due to etching and CMP process steps.
+
+ Rule               Description                                                                  Value
+ AFil.a             Max. Activ:filler width                                                      5.00
+ AFil.a1            Min. Activ:filler width                                                      1.00
+ AFil.b             Min. Activ:filler space                                                      0.42
+ AFil.c             Min. Activ:filler space to Cont, GatPoly                                     1.10
+ AFil.c1            Min. Activ:filler space to Activ                                             0.42
+ AFil.d             Min. Activ:filler space to NWell, nBuLay                                     1.00
+ AFil.g             Min. global Activ density [%]                                                35.00
+ AFil.g1            Max. global Activ density [%]                                                55.00
+ AFil.g2            Min. Activ coverage ratio for any 800 x 800 µm2 chip area [%]                25.00
+ AFil.g3            Max. Activ coverage ratio for any 800 x 800 µm2 chip area [%]                65.00
+ AFil.i             Min. Activ:filler space to edges of PWell:block                              1.50
+ AFil.j             Min. nSD:block and SalBlock enclosure of Activ:filler inside                 0.25
+                    PWell:block
+
+Notes
+
+  1. Activ:nofill layer can be used for filler pattern exclusion within specific device areas such as inductors
+     or transformers as long as AFil.g2 and AFil.g3 are fulfilled. For larger sensitive areas it is recommended
+     to minimize the conductivity of Activ:filler patterns by using SalBlock, nSD:block and PWell:block.
+
+
+
+
+                                                                d
+
+                                                                d
+
+                       j                                 b          c
+                                      i       i
+
+
+                                                     a              c1
+
+
+
+
+                      Activ       Activ:filler       GatPoly        NWell
+                      PWell:block         SalBlock
+
+Figure 5.4: Activ:filler dimensions
+
+
+
+
+                                                                                                      22 of 60
+                               SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.5 ThickGateOxide
+
+ Rule            Description                                                            Value
+ TGO.a           Min. ThickGateOx extension over Activ                                  0.27
+ TGO.b           Min. space between ThickGateOx and Activ outside thick gate            0.27
+                 oxide region
+ TGO.c           Min. ThickGateOx extension over GatPoly over Activ                     0.34
+ TGO.d           Min. space between ThickGateOx and GatPoly over Activ outside          0.34
+                 thick gate oxide region
+ TGO.e           Min. ThickGateOx space (merge if less than this value)                 0.86
+ TGO.f           Min. ThickGateOx width                                                 0.86
+
+
+
+
+                                                                               f
+
+
+
+
+                               d      c                     a         e
+
+
+
+
+                                                  b
+
+
+
+
+                                                 Activ      GatPoly       ThickGateOx
+
+Figure 5.5: ThickGateOx dimensions
+
+
+
+
+                                                                                            23 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.6 GatPoly
+
+ Rule            Description                                                                         Value
+ Gat.a           Min. GatPoly width                                                                   0.13
+ Gat.a1          Min. GatPoly width for channel length of 1.2 V NFET                                  0.13
+ Gat.a2          Min. GatPoly width for channel length of 1.2 V PFET                                  0.13
+ Gat.a3          Min. GatPoly width for channel length of 3.3 V NFET                                  0.45
+ Gat.a4          Min. GatPoly width for channel length of 3.3 V PFET                                  0.40
+ Gat.b           Min. GatPoly space or notch                                                          0.18
+ Gat.b1          Min. space between unrelated 3.3 V GatPoly over Activ regions                        0.25
+ Gat.c           Min. GatPoly extension over Activ (end cap)                                          0.18
+ Gat.d           Min. GatPoly space to Activ                                                          0.07
+ Gat.e           Min. GatPoly area (µm²)                                                              0.09
+ Gat.f           45-degree and 90-degree angles for GatPoly on Activ area are not
+                 allowed
+ Gat.g           Min. GatPoly width for 45-degree bent shapes if the bend GatPoly                     0.16
+                 length is > 0.39 µm
+
+
+
+
+                                                                          d
+
+                  d
+                                                                                            39
+
+
+                                                    a
+                                                                                        0.
+
+                                                                                                 g
+                                                                                        >
+
+
+
+
+                                      b                 b
+                                     (space)
+
+
+
+
+                                                        (notch)
+
+
+
+
+                         d                                                c
+
+
+
+
+                                                                                                       e
+
+
+
+
+                                               b1
+
+
+
+
+                                                                  Activ       GatPoly   ThickGateOx
+
+Figure 5.6: GatPoly dimensions
+
+
+                                                                                                           24 of 60
+                                    SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.7 GatPoly:filler
+GatPoly:filler pattern are required in order to reduce layout sensitivity due to etching and CMP process
+steps.
+
+ Rule                Description                                                             Value
+ GFil.a              Max. GatPoly:filler width                                                5.00
+ GFil.b              Min. GatPoly:filler width                                                0.70
+ GFil.c              Min. GatPoly:filler space                                                0.80
+ GFil.d              Min. GatPoly:filler space to Activ, GatPoly, Cont, pSD,                  1.10
+                     nSD:block, SalBlock
+ GFil.e              Min. GatPoly:filler space to NWell, nBuLay                               1.10
+ GFil.g              Min. global GatPoly density [%]                                         15.00
+ GFil.i              Max. GatPoly:nofill area (µm²)                                         400 x 400
+ GFil.j              Min. GatPoly:filler extension over Activ:filler (end cap)                0.18
+
+Notes
+
+  1. GatPoly:nofill layer can be used for filler pattern exclusion within specific device areas such as in-
+     ductors or transformers.
+
+
+
+                                                          j         d
+
+                                     e      e
+                                                  b
+                                                              c     d
+
+                                                      a
+
+
+
+
+                      Activ        Activ:filler       GatPoly     GatPoly:filler    NWell
+
+Figure 5.7: GatPoly:filler dimensions
+
+
+
+
+                                                                                                  25 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.8 pSD
+Defines regions which receive p+ implants. Typically used for source/drain implants, resistors and substrate
+ties.
+
+ Rule               Description                                                               Value
+ pSD.a              Min. pSD width                                                             0.31
+ pSD.b              Min. pSD space or notch (Note 1)                                           0.31
+ pSD.c              Min. pSD enclosure of P+Activ in NWell                                     0.18
+ pSD.c1             Min. pSD enclosure of P+Activ in PWell                                     0.03
+ pSD.d              Min. pSD space to unrelated N+Activ in PWell                               0.18
+ pSD.d1             Min. pSD space to N+Activ in NWell                                         0.03
+ pSD.e              Min. pSD overlap of Activ at one position when forming abutted             0.30
+                    substrate tie (Note 2)
+ pSD.f              Min. Activ extension over pSD at one position when forming                 0.30
+                    abutted NWell tie (Note 2)
+ pSD.g              Min. N+Activ or P+Activ area (µm²) when forming abutted tie                0.09
+                    (Note 2)
+ pSD.i              Min. pSD enclosure of PFET gate not inside ThickGateOx                     0.30
+ pSD.i1             Min. pSD enclosure of PFET gate inside ThickGateOx                         0.40
+ pSD.j              Min. pSD space to NFET gate not inside ThickGateOx                         0.30
+ pSD.j1             Min. pSD space to NFET gate inside ThickGateOx                             0.40
+ pSD.k              Min. pSD area (µm²)                                                        0.25
+ pSD.l              Min. pSD enclosed area (µm²)                                               0.25
+ pSD.m              Min. pSD space to n-type poly resistors                                    0.18
+ pSD.n              Min. pSD enclosure of p-type poly resistors                                0.18
+
+Notes
+
+  1. pSD regions separated by less than this value will be merged.
+  2. These rules are for abutted ties: An electrical connection from P+Activ to NWell tie (or N+ Activ to
+     P-sub tie) is made through the source/drain silicide. For a good electrical connection rule pSD.g is
+     important together with rule pSD.e or pSD.f (see Fig. 5.8).
+
+
+
+
+                                                                                                   26 of 60
+                                          SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+     f not required                                                  e not required
+
+
+
+                                                               b
+
+
+                                                                                                          j
+                                                          b
+
+         g                                                                  g
+          f                                                                     e
+
+     abutted tie                            c                                                                  c1
+                                                                      abutted tie             d   j
+
+
+
+                                                                                        a
+                         i                          d1
+
+
+
+
+                                                                                                      k
+                                                              pSD enclosed area
+                   p-type poly resistor
+
+
+
+                                                                                    l
+                             n
+                             m                                                                        l
+
+
+
+                   n-type poly resistor
+
+                                                Activ    GatPoly    NWell               pSD
+
+Figure 5.8: pSD dimensions
+
+
+
+
+                                                                                                              27 of 60
+                                SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.9 nSD:block
+nSD:block layer is used to generate regions where n+ S/D implants are blocked. The final mask data nSD
+are generated by: nSD: = NOT (pSD OR nSD:block).
+
+ Rule             Description                                                            Value
+ nSDB.a           Min. nSD:block width                                                   0.31
+ nSDB.b           Min. nSD:block space or notch                                          0.31
+ nSDB.c           Min. nSD:block space to pSD                                            0.31
+ nSDB.d           Overlap of nSD:block and pSD is allowed
+ nSDB.e           Min. nSD:block space to Cont (Note 1)                                  0.00
+
+Notes
+
+  1. nSD:block and Cont do not overlap.
+
+
+                                             b                   c
+
+
+
+                                                             d
+
+                                       b           e
+
+
+                                        a
+
+
+
+                           nSD:block        Cont       pSD
+
+Figure 5.9: nSD:block dimensions
+
+
+
+
+                                                                                              28 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.10 EXTBlock
+EXTBlock layer is used to generate regions where all tip and halo implants are blocked.
+
+ Rule              Description                                                            Value
+ EXTB.a            Min. EXTBlock width                                                    0.31
+ EXTB.b            Min. EXTBlock space or notch                                           0.31
+ EXTB.c            Min. EXTBlock space to pSD                                             0.31
+
+
+
+                                              b                  c
+
+
+
+
+                                         b
+
+
+                                         a
+
+
+
+                            EXTBlock         pSD
+
+Figure 5.10: EXTBlock dimensions
+
+
+
+
+                                                                                              29 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.11 SalBlock
+SalBlock is used to block salicidation of GatPoly or source/drain areas.
+
+ Rule              Description                                                        Value
+ Sal.a             Min. SalBlock width                                                0.42
+ Sal.b             Min. SalBlock space or notch                                       0.42
+ Sal.c             Min. SalBlock extension over Activ or GatPoly                      0.20
+ Sal.d             Min. SalBlock space to unrelated Activ or GatPoly                  0.20
+ Sal.e             Min. SalBlock space to Cont                                        0.20
+
+
+
+
+                                           a
+                                    c                                      Cont
+                             d                                             GatPoly
+                                    b
+                                                                           Activ
+
+                         e                                                 SalBlock
+
+
+
+
+Figure 5.11: SalBlock dimensions
+
+
+
+
+                                                                                          30 of 60
+                                   SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.12 Cont
+This section describes design rules for square-shaped Cont regions. All non-square shapes in layer Cont
+are covered in section 5.13.
+
+ Rule              Description                                                                 Value
+ Cnt.a             Min. and max. Cont width                                                     0.16
+ Cnt.b             Min. Cont space                                                              0.18
+ Cnt.b1            Min. Cont space in a contact array of more than 4 rows and more              0.20
+                   then 4 columns (Note 1)
+ Cnt.c             Min. Activ enclosure of Cont                                                 0.07
+ Cnt.d             Min. GatPoly enclosure of Cont                                               0.07
+ Cnt.e             Min. Cont on GatPoly space to Activ                                          0.14
+ Cnt.f             Min. Cont on Activ space to GatPoly                                          0.11
+ Cnt.g             Cont must be within Activ or GatPoly
+ Cnt.g1            Min. pSD space to Cont on nSD-Activ                                          0.09
+ Cnt.g2            Min. pSD overlap of Cont on pSD-Activ                                        0.09
+ Cnt.h             Cont must be covered with Metal1
+ Cnt.j             Cont on GatPoly over Activ is not allowed
+
+Notes
+
+  1. Cnt.b1 is only required in one direction. The distance of the other direction must be at least Cnt.b.
+
+
+
+
+                                                              f
+                                                        b         c
+
+                                                                                            Cont
+                                                              f
+                                                                                            Activ
+          d                    e                                                            GatPoly
+                    a                          j
+                                                                                            pSD
+
+
+                                                   g1 g2
+                        g
+
+
+
+
+Figure 5.12: Cont dimensions
+
+
+
+
+                                                                                                       31 of 60
+                                   SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.13 ContBar
+Any Cont shape not being a square shape is considered a ContBar.
+
+ Rule              Description                                                Value
+ CntB.a            Min. and max. ContBar width                                0.16
+ CntB.a1           Min. ContBar length                                        0.34
+ CntB.b            Min. ContBar space                                         0.28
+ CntB.b1           Min. ContBar space with common run > 5 µm                  0.36
+ CntB.b2           Min. ContBar space to Cont                                 0.22
+ CntB.c            Min. Activ enclosure of ContBar                            0.07
+ CntB.d            Min. GatPoly enclosure of ContBar                          0.07
+ CntB.e            Min. ContBar on GatPoly space to Activ                     0.14
+ CntB.f            Min. ContBar on Activ space to GatPoly                     0.11
+ CntB.g            ContBar must be within Activ or GatPoly
+ CntB.g1           Min. pSD space to ContBar on nSD-Activ                     0.09
+ CntB.g2           Min. pSD overlap of ContBar on pSD-Activ                   0.09
+ CntB.h            ContBar must be covered with Metal1
+ CntB.h1           Min. Metal1 enclosure of ContBar                           0.05
+ CntB.j            ContBar on GatPoly over Activ is not allowed
+
+
+
+
+                                                   b1
+
+
+
+
+                                                            f
+                                                    b           c     Cont
+                                           a
+                                                                      Activ
+                                                            f
+                       d                                              GatPoly
+
+              a1               e                                      pSD
+                                               j
+
+
+
+
+                                          b2        g1 g2
+                           g
+
+
+
+
+Figure 5.13: ContBar dimensions
+
+
+
+
+                                                                                     32 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.14 Metal1
+
+ Rule              Description                                                                  Value
+ M1.a              Min. Metal1 width                                                                0.16
+ M1.b              Min. Metal1 space or notch                                                       0.18
+ M1.c              Min. Metal1 enclosure of Cont                                                    0.00
+ M1.c1             Min. Metal1 endcap enclosure of Cont (Note 1)                                    0.05
+ M1.d              Min. Metal1 area (µm²)                                                           0.09
+ M1.e              Min. space of Metal1 lines if, at least one line is wider than 0.3 µm            0.22
+                   and the parallel run is more than 1.0 µm
+ M1.f              Min. space of Metal1 lines if, at least one line is wider than 10.0 µm           0.60
+                   and the parallel run is more than 10.0 µm
+ M1.g              Min. 45-degree bent Metal1 width if the bent metal length is >                   0.20
+                   0.5 µm
+ M1.i              Min. space of Metal1 lines of which at least one is bent by                      0.22
+                   45-degree
+ M1.j              Min. global Metal1 density [%]                                                   35.0
+ M1.k              Max. global Metal1 density [%]                                                   60.0
+
+Notes
+
+  1. For contacts at Metal1 corners at least one side must be treated as an endcap and for the other sides
+     rule M1.c can be applied.
+
+
+
+
+                          b
+                                                                                                           e
+                                                                         > 1.0 µm
+
+
+        c1    b                                                      > 0.3 µm
+                                                d
+                              i
+  c                       g
+                  >
+
+
+
+
+                                            a
+                   0.
+                      5
+
+
+
+
+                                                                                           Metal1          Cont
+                      µm
+
+
+
+
+Figure 5.14: Metal1 dimensions
+
+
+
+
+                                                                                                       33 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.15 Metal(n=2-4)
+
+ Rule             Description                                                               Value
+ Mn.a             Min. Metal(n) width                                                       0.20
+ Mn.b             Min. Metal(n) space or notch                                              0.21
+ Mn.c             Min. Metal(n) enclosure of Via(n-1)                                       0.005
+ Mn.c1            Min. Metal(n) endcap enclosure of Via(n-1) (Note 1)                       0.05
+ Mn.d             Min. Metal(n) area (µm²)                                                  0.144
+ Mn.e             Min. space of Metal(n) lines if, at least one line is wider than          0.24
+                  0.39 µm and the parallel run is more than 1.0 µm
+ Mn.f             Min. space of Metal(n) lines if, at least one line is wider than          0.60
+                  10.0 µm and the parallel run is more than 10.0 µm
+ Mn.g             Min. 45-degree bent Metal(n) width if the bent metal length is >          0.24
+                  0.5 µm
+ Mn.i             Min. space of Metal(n) lines of which at least one is bent by             0.24
+                  45-degree
+ Mn.j             Min. global Metal(n) density [%]                                          35.00
+ Mn.k             Max. global Metal(n) density [%]                                          60.00
+
+Notes
+
+  1. For vias at Metal(n) corners at least one side must be treated as an endcap and for the other sides
+     rule Mn.c can be applied.
+
+
+
+
+                          b
+                                                                                                    e
+                                                                         > 1.0 µm
+
+
+         c1   b                                                      > 0.39 µm
+                                                d
+                              i
+  c                       g
+                  >
+
+
+
+
+                                            a
+                    0.
+                      5
+
+
+
+
+                                                                                 Metal(n)   Via(n-1)
+                      µm
+
+
+
+
+Figure 5.15: Metal(n) dimensions
+
+
+
+
+                                                                                                34 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.16 Metal(n=1-4):filler
+Metal(n):filler pattern are required in order to reduce layout sensitivity due to metal etching and CMP pro-
+cess steps.
+
+ Rule               Description                                                               Value
+ MFil.a1            Min. Metal(n):filler width                                                 1.00
+ MFil.a2            Max. Metal(n):filler width                                                 5.00
+ MFil.b             Min. Metal(n):filler space                                                 0.42
+ MFil.c             Min. Metal(n):filler space to Metal(n)                                     0.42
+ MFil.h             Min. Metal(n) and Metal(n):filler coverage ratio for any 800 x            25.00
+                    800 µm2 chip area [%]
+ MFil.k             Max. Metal(n) and Metal(n):filler coverage ratio for any 800 x            75.00
+                    800 µm2 chip area [%]
+
+Notes
+
+  1. A smaller coverage or larger filler exclusion area leads to smaller metal lines and higher sheet resis-
+     tance. Sheet resistance of minimum width Metal(n) lines is increasing by 10 % if metal coverage is
+     lower than 30 %.
+  2. Metal(n):filler must be generated prior to the tape out procedure. For sensitive areas of the circuit,
+     designers should exclude Metal(n):filler using the Metal(n):nofill or NoMetFiller exclusion layer, or
+     should place defined metal structures to prevent metal fill.
+
+
+
+
+                                                     a2             Metal(n)
+
+                                      c    a1                       Metal(n):filler
+
+
+                                                 b
+
+
+
+
+Figure 5.16: Metal(n):filler dimensions
+
+
+
+
+                                                                                                   35 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.17 Via1
+
+ Rule              Description                                                               Value
+ V1.a              Min. and max. Via1 width                                                   0.19
+ V1.b              Min. Via1 space                                                            0.22
+ V1.b1             Min. Via1 space in an array of more than 3 rows and more then 3            0.29
+                   columns (Note 1)
+ V1.c              Min. Metal1 enclosure of Via1                                              0.01
+ V1.c1             Min. Metal1 endcap enclosure of Via1 (Note 2)                              0.05
+
+Notes
+
+  1. V1.b1 is only required in one direction. The distance of the other direction must be at least V1.b.
+  2. For Via1 at Metal1 corners at least one side must be treated as an endcap and for the other sides rule
+     V1.c can be applied.
+
+
+                                                                                           Metal1
+                                                                                           Via1
+         b                                                       b
+                                         b1
+                                                                                 c
+                   a
+                                                                            c1
+
+Figure 5.17: Via1 dimensions
+
+
+
+
+                                                                                                  36 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.18 Via(n=2-3)
+
+ Rule              Description                                                              Value
+ Vn.a              Min. and max. Via(n) width                                                0.19
+ Vn.b              Min. Via(n) space                                                         0.22
+ Vn.b1             Min. Via(n) space in an array of more than 3 rows and more then 3         0.29
+                   columns (Note 1)
+ Vn.c              Min. Metal(n) enclosure of Via(n)                                        0.005
+ Vn.c1             Min. Metal(n) endcap enclosure of Via(n) (Note 2)                         0.05
+
+Notes
+
+  1. Vn.b1 is only required in one direction. The distance of the other direction must be at least Vn.b.
+  2. For Via(n) at Metal(n) corners at least one side must be treated as an endcap and for the other sides
+     rule Vn.c can be applied.
+
+
+                                                                                         Metal(n)
+                                                                                          Via(n)
+         b                                                     b
+                                       b1
+                                                                               c
+                  a
+                                                                          c1
+
+Figure 5.18: Via(n) dimensions
+
+
+
+
+                                                                                                   37 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.19 TopVia1
+
+ Rule              Description                                                  Value
+ TV1.a             Min. and max. TopVia1 width                                  0.42
+ TV1.b             Min. TopVia1 space                                           0.42
+ TV1.c             Min. Metal4 enclosure of TopVia1                             0.10
+ TV1.d             Min. TopMetal1 enclosure of TopVia1                          0.42
+
+
+
+               d                                           c        TopMetal1
+                                   a      b
+                                                                    TopVia1
+                                                                    Metal5
+
+
+Figure 5.19: TopVia1 dimensions
+
+
+
+
+                                                                                    38 of 60
+                               SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.20 TopMetal1
+
+ Rule            Description                                             Value
+ TM1.a           Min. TopMetal1 width                                    1.64
+ TM1.b           Min. TopMetal1 space or notch                           1.64
+ TM1.c           Min. global TopMetal1 density [%]                       25.00
+ TM1.d           Max. global TopMetal1 density [%]                       70.00
+
+
+
+
+                                            a
+                                                             TopMetal1
+
+
+                                            b
+
+
+
+
+                                            b
+
+
+
+
+Figure 5.20: TopMetal1 dimensions
+
+
+
+
+                                                                             39 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.21 TopMetal1:filler
+TopMetal1:filler pattern are required in order to reduce layout sensitivity due to metal etching and CMP
+process steps.
+
+ Rule              Description                                                             Value
+ TM1Fil.a          Min. TopMetal1:filler width                                             5.00
+ TM1Fil.a1         Max. TopMetal1:filler width                                             10.00
+ TM1Fil.b          Min. TopMetal1:filler space                                             3.00
+ TM1Fil.c          Min. TopMetal1:filler space to TopMetal1                                3.00
+
+
+
+
+                                                  a1            TopMetal1
+
+                                   c    a                       TopMetal1:filler
+
+
+                                             b
+
+
+
+
+Figure 5.21: TopMetal1:filler dimensions
+
+
+
+
+                                                                                               40 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+5.22 Passiv
+
+ Rule             Description                                           Value
+ Pas.a            Min. Passiv width                                     2.10
+ Pas.b            Min. Passiv space or notch                            3.50
+ Pas.c            Min. TopMetal1 enclosure of Passiv (Note 1)           2.10
+
+Notes
+
+  1. Not checked outside of sealring (edge-seal-passive)
+
+
+                                                                    c
+
+
+                                 a
+
+
+                                 b                                  b
+
+
+
+
+              Passiv      TopMetal1
+
+Figure 5.22: Passiv dimensions
+
+
+
+
+                                                                            41 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+6 Device Layout Rules
+
+
+6.1 Rsil
+Rsil represents the salicided n+ doped GatPoly resistor.
+
+Device recognition: Rsil = RES + GatPoly
+
+ Rule              Description                                                               Value
+ Rsil.a            Min. GatPoly width                                                        0.50
+ Rsil.b            Min. RES space to Cont                                                    0.12
+ Rsil.c            Min. RES extension over GatPoly                                           0.00
+ Rsil.d            Min. pSD space to GatPoly                                                 0.18
+ Rsil.e            Min. EXTBlock enclosure of GatPoly                                        0.18
+ Rsil.f            Min. RES length                                                           0.50
+
+Notes
+
+  1. RES represents the resistor definition layer and is required for back annotation.
+
+
+                                      f
+
+                        b                                                         Cont
+                                 a
+                                                                                  GatPoly
+                                                c
+                                                                                  pSD
+                                       e
+                                                      d                           EXTBlock
+                                                                                  RES
+
+
+
+Figure 6.1: Rsil dimensions
+
+
+
+
+                                                                                                 42 of 60
+                                SG13CMOS5L Layout Rules Rev. 0.1
+
+
+6.2 Rppd
+Rppd represents the unsalicided p+ doped GatPoly resistor.
+
+Device recognition: Rppd = SalBlock + GatPoly + pSD
+
+ Rule             Description                                             Value
+ Rppd.a           Min. GatPoly width                                         0.50
+ Rppd.b           Min. pSD enclosure of GatPoly                              0.18
+ Rppd.c           Min. and max. SalBlock space to Cont                       0.20
+ Rppd.d           Min. EXTBlock enclosure of GatPoly                         0.18
+ Rppd.e           Min. SalBlock length                                       0.50
+
+
+                                e                                  Cont
+                                                         b,d       GatPoly
+                   c
+                            a                                      pSD
+                                                                   SalBlock
+                                                                   EXTBlock
+
+Figure 6.2: Rppd dimensions
+
+
+
+
+                                                                                43 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+6.3 Rhigh
+Rhigh represents an unsalicided partial compensated low n-doped GatPoly resistor.
+
+Device recognition: Rhigh = SalBlock + GatPoly + pSD + nSD
+
+ Rule              Description                                                              Value
+ Rhi.a             Min. GatPoly width                                                        0.50
+ Rhi.b             pSD and nSD are identical (Note 1)
+ Rhi.c             Min. pSD and nSD enclosure of GatPoly                                     0.18
+ Rhi.d             Min. and max. SalBlock space to Cont                                      0.20
+ Rhi.e             Min. EXTBlock enclosure of GatPoly                                        0.18
+ Rhi.f             Min. SalBlock length                                                      0.50
+
+Notes
+
+  1. nSD:drawing is only permitted within Rhigh resistors. Apart from that, nSD is generated automatically
+     (see section 4.2).
+
+
+                                     f                                          Cont
+                                                              c,e               GatPoly
+                       d
+                                 a                                              pSD / nSD
+                                                                                SalBlock
+                                                                                EXTBlock
+
+Figure 6.3: Rhigh dimensions
+
+
+
+
+                                                                                                 44 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+6.4 Pad Dimensions
+Device recognition: Pad = (Passiv + Passiv:sbump + Passiv:pillar) + dfpad
+
+Pad rules are tested only within dfpad recognition layer. Pad rules are only tested on metal structures which
+are on same net as TopMetal1. The following design rules must be also applied to solder bump pads and
+Cu pillar pads.
+
+ Rule               Description                                                                  Value
+ Pad.aR             Min. recommended Pad width                                                   30.00
+ Pad.a1             Max. Pad width                                                             150.00
+ Pad.bR             Min. recommended Pad space                                                     8.40
+ Pad.d              Min. Pad space to EdgeSeal                                                     7.50
+ Pad.dR             Min. recommended Pad to EdgeSeal space (Note 1)                              25.00
+ Pad.d1R            Min. recommended Pad to Activ (inside chip area) space                        11.20
+ Pad.eR             Min. recommended Metal(n), TopMetal1 exit width                                7.00
+ Pad.fR             Min. recommended Metal(n), TopMetal1 exit length                               7.00
+ Pad.gR             Min. recommended Metal4 (within dfpad) enclosure of TopVia1                    1.40
+ Pad.i              dfpad without TopMetal1 not allowed
+ Pad.jR             No devices under Pad allowed (Note 2)
+ Pad.kR             TopVia1 under Pad not allowed (Note 3)
+
+Notes
+
+  1. Distance of Pad opening to EdgeSeal strongly depends on bonding procedure. For flip chip bonding
+     via solder bumps (see section 6.4.1) or copper pillars (see section 6.4.2) or manual bonding a bigger
+     distance may be required. We strongly recommend 25 µm distance for wedge-wedge wire bonding.
+  2. Components under pads can be damaged by mechanical stress.
+  3. TopVia1 may be damaged during packaging process, we recommend not to use them below Passiv.
+
+
+
+
+                           eR
+
+                                  fR                              d1R
+                                                                                             Sealring
+
+
+
+
+                         aR, a1               b                                   d, dR
+
+
+
+
+                                         Passiv         TopMetal1         Activ       EdgeSeal
+
+Figure 6.4: Pad dimensions.
+
+
+
+
+                                                                                                        45 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+6.4.1 Solder Bump Rules
+These rules are valid within pads used for solder bumping and flip chip assembling. These pad rules are valid
+for 60 μm passive opening and 80 μm bump ball size. Bump ball standard is PacTech SAC305 (SnAgCu).
+
+We recommend to use Solder Bump option in Pcell provided in the PDK.
+
+For different geometries refer to design rule manual of our partner PacTech or the design rule manual of
+your specific bumping provider.
+
+Device recognition: SBumpPad = Passiv:sbump + dfpad
+
+ Rule               Description                                                                  Value
+ Padb.a             SBumpPad size                                                                60.00
+ Padb.b             Min. SBumpPad space                                                          70.00
+ Padb.c             Min. TopMetal1 (within dfpad) enclosure of SBumpPad                          10.00
+ Padb.d             Min. SBumpPad space to EdgeSeal                                              50.00
+ Padb.e             Min. SBumpPad pitch (Note 1)                                               130.00
+ Padb.f             Allowed passivation opening shape (Note 1)                               Octagon
+                                                                                              Circle
+
+Notes
+
+  1. Underlying TopMetal1 may have a different shape. This rule is not checked during DRC.
+
+
+
+                                                                  c
+
+
+
+                                                                                             Sealring
+                           a                  b                                    d
+
+
+
+
+                                              e
+
+
+                         SBumpPad            TopMetal1         EdgeSeal
+
+Figure 6.5: Pad dimensions for solder bumping process.
+
+
+
+
+                                                                                                        46 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+6.4.2 Copper Pillar Rules
+These rules are valid within pads used for assembly with copper pillars. The given pad rules are valid for a
+number of different geometries offered by our partner PacTech given in table 6.1.
+
+Important: Please note that pad opening may have an impact on final testing. If the passivation openings
+are too small, wafer-level testing may be prevented because the pad metal cannot be sufficiently contacted.
+
+We recommend to use Solder Bump option in Pcell provided in the PDK.
+
+Device recognition: CuPillarPad = Passiv:pillar + dfpad
+
+* Thickness of optional SnAg cap after reflow at peak temperature 260 °C would be higher than that of after
+plating/ before reflow in the factor of 1.4 - 1.7, depending on the SnAg height as well.
+
+                                    Without cap            With cap
+
+                                                                   B
+
+                                            A                      A
+
+
+Figure 6.6: Copper pillar layer stack with and without optional SnAg cap.
+
+For different geometries than listed in table 6.1, refer to the design rule manual of our partner PacTech or
+the design rule manual of your specific bumping provider.
+
+The following table defines design rules for PacTech’s copper pillar option with minimum passivation open-
+ing, copper pillar height and copper pillar pitch.
+
+Table 6.1: Valid pad geometries and design rules for Cu pillars.
+
+                    Passiv opening              35       40            45     Padc.a
+                    Opening spacing             40       40            50     Padc.b
+                    Opening enclosure           7.5     7.5            7.5    Padc.c
+                    CuPillarPad pitch           75       80            95     Padc.e
+                    Cu pillar height        50 ± 7     55 ± 7      65 ± 7
+                    Cu pillar diameter      44 ± 3     49 ± 3      54 ± 3
+                    Cu height (A)           28 ± 2     32 ± 2      42 ± 2
+                    SnAg height* (B)        16 ± 1     16 ± 1      19 ± 2
+
+Notes
+
+  1. Passivation openings highlighted in green are suited for on-wafer measurements
+  2. Pads with passivation openings of 45 µm and 55 µm are suited for PCB applications. Minimum rec-
+     ommended pitch 250 µm; recommended standard pitch 500 µm.
+
+
+
+
+                                                                                                   47 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+ Rule              Description                                                             Value
+ Padc.a            CuPillarPad size                                                   Table 6.1
+ Padc.b            Min. CuPillarPad space                                             Table 6.1
+ Padc.c            Min. TopMetal1 (within dfpad) enclosure of CuPillarPad             Table 6.1
+ Padc.d            Min. CuPillarPad space to EdgeSeal                                      30.00
+ Padc.e            Min. CuPillarPad pitch (Note 1)                                    Table 6.1
+ Padc.f            Allowed passivation opening shape (Note 1)                             Circle
+
+Notes
+
+  1. Underlying TopMetal1 may have a different shape. This rule is not checked during DRC.
+
+
+
+                                                                c
+
+
+
+
+                                                                                       Sealring
+                          a                 b                                d
+
+
+
+
+                                            e
+
+
+
+                        CuPillarPad         TopMetal1     EdgeSeal
+
+Figure 6.7: Pad dimensions for copper pillar process.
+
+
+
+
+                                                                                                  48 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+6.5 Sealring
+A sealring is an uninterrupted ring of metal and via layers. The purpose of the sealring is to reduce the
+effects of mechanical stress on the circuit that occurs during dicing of various chips. The sealring must be
+enclosed by an unbrokend ring of Passiv. Figure 6.8 shows distance between EdgeSeal and the sealring
+boundary (30 µm) and the passivation opening. Please be aware that corresponding standard metal and
+via rules are not checked within EdgeSeal regions.
+
+Device recognition: EdgeSeal
+
+ Rule               Description                                                               Value
+ Seal.a             Min. EdgeSeal-Activ, EdgeSeal-pSD, EdgeSeal-Metal(n=1-4),                  3.50
+                    EdgeSeal-TopMetal1 width
+ Seal.b             Min. Activ space to EdgeSeal-Activ, EdgeSeal-pSD,                          4.90
+                    EdgeSeal-Metal(n=1-4), EdgeSeal-TopMetal1
+ Seal.c             EdgeSeal-Cont ring width                                                   0.16
+ Seal.c1            EdgeSeal-Via(n=1-3) ring width                                             0.19
+ Seal.c2            EdgeSeal-TopVia1 ring width                                                0.42
+ Seal.d             Min. EdgeSeal-Activ enclosure of EdgeSeal-Cont,                            1.30
+                    EdgeSeal-Via(n=1-3), EdgeSeal-TopVia1 ring
+ Seal.e             Min. Passiv ring width outside of sealring                                 4.20
+ Seal.f             Min. Passiv ring outside of sealring space to EdgeSeal-Activ,              1.00
+                    EdgeSeal-Metal(n=1-4), EdgeSeal-TopMetal1
+ Seal.k             Min. EdgeSeal 45-degree corner length (Note 1)                            21.00
+ Seal.l             No structures outside sealring boundary allowed
+ Seal.m             Only one sealring per chip allowed (Note 1)
+ Seal.n             Sealring must be enclosed by an unbroken Passiv ring
+
+Notes
+
+  1. Not checked during DRC
+
+
+
+
+                                                                                                   49 of 60
+                               SG13CMOS5L Layout Rules Rev. 0.1
+
+
+           Sealring boundary
+                                                        a
+                                 k                                          EdgeSeal
+                                     k                                      Passiv
+         45 degree                                                          TopMetal1
+         corner
+                                                                            TopVia1
+                                                                            Metal(n)
+                                                            c2              Via(n)
+                      EdgeSeal                   b               f          Metal1
+                                                            c1        e
+                                                                            Cont
+                                                            c
+                                                                            Activ
+                 Note 4                                 d
+                                          Inside     EdgeSeal    Outside
+                                          EdgeSeal   ring        EdgeSeal
+
+Figure 6.8: EdgeSeal and Sealring dimensions.
+
+
+
+
+                                                                                     50 of 60
+                                   SG13CMOS5L Layout Rules Rev. 0.1
+
+
+6.6 Inductors
+In order to verify a custom inductor in the LVS check, additional layers must be added to the actual inductor
+layout (see Fig. 6.9). The inductor must be completely enclosed by the IND layer. To define the connection
+points, rectangles in layer IND:pin must be placed on the inductor metal. The connection points must touch
+the edge of the IND layer and contain a pre-defined text label in layer IND:text. These text labels are ”LA”
+and ”LB” for inductors with two connections or ”LA”, ”LB” and ”LC” for inductors with three connections.
+
+Parasitic extraction of metal lines is excluded from inductors defined by this procedure. Within this layer
+there is by default no filler generation.
+
+Following rules will not be checked within this layer: metal slit rules, AFil.g2, MFil.h, TM2.bR
+
+
+
+
+                                                                               IND
+                                                                               IND:pin
+                                                                               IND:text
+                                                                               TopMetal1
+
+
+
+
+                                   LA            LB
+
+
+
+                                  Pin regions to
+                                  connect inductor
+Figure 6.9: Custom inductor connection method.
+
+
+
+
+                                                                                                    51 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+7 Special Rules
+
+
+7.1 Antenna Rules
+The antenna effect occurs when metal layers on a chip are etched during the semiconductor manufacturing
+process. As the metal layers are etched, the remaining metal traces collect charge during the etching
+process. When these metal traces discharge, it can lead to damage or unwanted changes in the properties
+of the connected devices.
+
+The design rules related to unprotected devices are determined by using gate leakage current (shift of 10 %
+for nominal devices) as failure criterion.
+
+Antenna Rules are not checked by default. Antenna rule checking must be switched on separately.
+
+ Rule              Description                                                               Value
+ Ant.a             Max. ratio of GatPoly over field oxide area to connected Gate area        200.00
+ Ant.b             Max. ratio of cumulative metal area (from Metal1 to TopMetal1) to         200.00
+                   connected Gate area (without protection diode)
+ Ant.c             Max. ratio of Cont area to connected Gate area                            20.00
+ Ant.d             Max. ratio of cumulative via area (from Via1 to TopVia1) to               20.00
+                   connected Gate area (without protection diode)
+ Ant.e             Max. ratio of cumulative metal area (from Metal1 to TopMetal1) to       20000.00
+                   connected Gate area (with protection diode)
+ Ant.f             Max. ratio of cumulative via area (from Via1 to TopVia1) to               500.00
+                   connected Gate area (with protection diode)
+ Ant.g             Size of protection diode (µm²) (Note 4)                                    0.16
+ Ant.h             dantenna in NWell not allowed
+ Ant.i             dpantenna in PWell not allowed
+
+Notes
+
+  1. The rules apply for both types of oxide.
+  2. Vn_area = cumulative area Cont, Via1 to TopVia1
+  3. Via_area = cumulative area Via1 to TopVia1
+  4. PDarea (µm²) = 0.02 x (Vn_area / (GatPoly over Activ)_area)
+
+
+
+                             Area{M1 (i)} + Area{M2 (i)}             Area{M3 (i)}
+          AreaRatio (G1) =                               +
+                                    Area{G1}               Area{G1} + Area{G2} + Area{G3}
+
+
+
+                       Area{M1 (ii)}       Area{M2 (ii)}             Area{M3 (i)}
+    AreaRatio (G2) =                 +                    +
+                        Area{G2}       Area{G2} + Area{G3} Area{G1} + Area{G2} + Area{G3}
+
+
+
+Recommendations
+
+   • To get DRC clean layouts it is recommended to connect the antenna node to the output of the driver
+     at low metal level to reduce the antenna area or connect the antenna node to a diode.
+   • To get DRC clean layouts it is recommended to use stacked vias to connect large metal or via areas
+     as shown in Fig. 7.2.
+
+                                                                                                  52 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+                 M3(i)
+                                                                                                 Via3
+     Metal3
+                                                                                                 Metal3
+                 M2(i)                                            M2(ii)                         Via2
+     Metal2                                                                                      Metal2
+                                                                                                 Via1
+                         M1(i)                M1(ii)                       M1(iii)               Metal1
+     Metal1
+                                                                                                 Cont
+
+
+                         G1                      G2                        G3
+Figure 7.1: Cumulated area ratio calculation example.
+
+                                                           Use stacked vias!
+Metal4
+
+                                                                      Large Metal3 area
+Metal3
+
+                                                                                                 Via2 array
+
+Metal2
+                                                                      Large Metal2 area
+
+Metal1
+                                                         Avoid this connection!
+
+                   G1
+
+         Cont       Metal1        Via1      Metal2        Via2       Metal3          Via3    Metal4
+
+Figure 7.2: Usage of stacked vias to avoid antenna area ratio violations. Please note that this figure is only
+an example. The stacked via method can be applied up to TopMetal1.
+
+
+   • To protect the gate of an isolated nMOS transistors it is recommended to place the antenna-protection
+     diode in a separate (non isolated) p-body region.
+   • For applications which are especially sensitive to Vt variation or mismatch (sense amplifers, certain
+     analog circuits, etc.), each gate should be tied directly to an nSD/PWell or pSD/NWell diode in Metal1.
+
+
+
+
+                                                                                                      53 of 60
+                                    SG13CMOS5L Layout Rules Rev. 0.1
+
+
+7.2 Latch-up Guidelines
+Latch-up is an undesirable phenomenon in integrated circuit (IC) design that can lead to the inadvertent
+creation of a low-impedance path between the power supply rails or any other regions forming a parasitic
+thyristor. The effect is trigged by unwated injection of charges into this structure. This can lead to destruction
+of circuit parts due to overcurrent.
+
+Latch-up rules are not checked by default. Latch-up rule checking must be switched on separately.
+7.2.1 Latch-up Protection on Output Buffers
+  1. Connect source of NMOS and PMOS devices to VSS and VDD, respectively.
+  2. Connect drain of NMOS and PMOS devices directly to the output pad.
+  3. Place guard rings (VSS, VDD ties) around any NMOS and PMOS devices, which are directly tied to a
+     pad.
+  4. Double guard rings (N-Well isolator and P+ isolator) should be inserted between n-channel and p-
+     channel output buffers.
+  5. Double guard rings (N-Well isolator and P+ isolator) should be inserted between output buffers and
+     internal circuit area.
+
+                          P+ guard ring                                          N+ guard ring
+
+
+
+
+                Vss        Gate Vss               VDD      Vss          VDD      Gate VDD
+
+
+
+
+                         n-channel                                            p-channel
+                         buffer            N+ isolator    P+ isolator         buffer
+
+                                                         GatPoly         NWell        pSD        nSD
+
+Figure 7.3: I/O latch-up protection scheme.
+
+7.2.2 Additional Rules for Subtrate and NWell Ties
+
+ Rule                 Description                                                                  Value
+ LU.a                 Max. space from any portion of P+Activ inside NWell to an                    20.00
+                      nSD-NWell tie
+ LU.b                 Max. space from any portion of N+Activ inside PWell to an                    20.00
+                      pSD-PWell tie
+ LU.c                 Max. extension of an abutted NWell tie beyond Cont                            6.00
+ LU.c1                Max. extension of an abutted substrate tie beyond Cont                        6.00
+ LU.d                 Max. extension of NWell tie Activ tie beyond Cont                             6.00
+ LU.d1                Max. extension of an substrate tie Activ beyond Cont                          6.00
+
+
+
+
+                                                                                                         54 of 60
+                                   SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+                               b                                              a
+
+
+
+
+          c                                               c1
+                                         d1                                             d
+
+
+
+
+                                              Cont    GatPoly         Activ       pSD       NWell
+
+Figure 7.4: Latch-up protection rules.
+
+
+
+
+                                                                                             55 of 60
+                                 SG13CMOS5L Layout Rules Rev. 0.1
+
+
+7.3 Metal Slits
+Large areas of metal are subject to mechanical stress during production. This can cause metal detachment
+from the oxide. The use of metal slits leads to reduction of mechanical stress.
+
+Metal stands for all metal layers (Metal(n=1-4) and TopMetal1).
+Metal = Metal(n=1-4) + TopMetal1
+
+ Rule              Description                                                                Value
+ Slt.a             Min. Metal:slit width                                                      2.80
+ Slt.b             Max. Metal:slit width                                                      20.00
+ Slt.c             Max. Metal width without requiring a slit                                  30.00
+ Slt.e             No slits required on pads
+ Slt.e1            No slits required on MIM
+ Slt.e2            No slits required inside IND
+ Slt.f             Min. Metal enclosure of Metal:slit                                         1.00
+ Slt.g             Min. Metal5:slit and TopMetal1:slit space to MIM                           0.60
+ Slt.h1            Min. Metal1:slit space to Cont and Via1                                    0.30
+ Slt.h2            Min. Metal(n):slit space to Via(n-1) and Via(n)                            0.30
+ Slt.h3            Min. TopMetal1:slit space to TopVia1 and TopVia1                           1.00
+ Slt.i             Min. Metal:slit density for any Metal plate bigger than 35 µm x            6.00
+                   35 µm [%]
+
+
+
+                                                      a
+
+
+                    c
+                                                        b
+                                                                                       f
+
+
+
+                                                               Metal(n)       Metal(n):slit
+
+Figure 7.5: Metal slits dimensions.
+
+
+
+
+                                                                                                  56 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+7.4 Pin Layer Rules
+Circuit designers should use only drawing purpose 0 (data types) for layouts. Only exception is pin purpose
+2 for symbolic pins. Data type 2 (purpose pin) is used for symbolic connectivity information. Pin areas must
+be fully covered by drawing. These rules are tested because pin areas are not used for mask generation
+and a potential issue due to false postive LVS matchs.
+
+ Rule               Description                                                               Value
+ Pin.a              Min. Activ enclosure of Activ:pin                                          0.00
+ Pin.b              Min. GatPoly enclosure of GatPoly:pin                                      0.00
+ Pin.e              Min. Metal1 enclosure of Metal1:pin                                        0.00
+ Pin.f              Min. Metal(n=2-4) enclosure of Metal(n=2-4):pin                            0.00
+ Pin.g              Min. TopMetal1 enclosure of TopMetal1:pin                                  0.00
+
+
+
+
+                                                                                                   57 of 60
+                                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+8 Rules of Digital Design
+
+
+8.1 DigiBnd Layer
+Digital designs can be marked with the DigiBnd layer. This layer must be used when using IHP’s standard
+digital libraries. DigiBnd must enclose the complete layout of the digital components. Within the DigiBnd
+layer the following design rules are changed compared to the analog flow.
+8.1.1 NWell
+Refer to section 5.1 for NWell standard rule definitions.
+
+ Rule               Description                                                               Value
+ NW.c1              Min. NWell enclosure of P+Activ inside ThickGateOx inside                  0.31
+                    DigiBnd
+ NW.d1              Min. NWell space to external N+Activ inside ThickGateOx inside             0.31
+                    DigiBnd
+ NW.e1              Min. NWell enclosure of NWell tie surrounded entirely by NWell in          0.24
+                    N+Activ inside ThickGateOx inside DigiBnd
+ NW.f1              Min. NWell space to substrate tie in P+Activ inside ThickGateOx            0.24
+                    inside DigiBnd
+
+8.1.2 Cont
+Refer to section 5.12 for Cont standard rule definitions.
+
+ Rule               Description                                                               Value
+ Cnt.c              Min. Activ enclosure of Cont inside DigiBnd                                0.05
+
+8.2 DigiSub Layer
+The DigiSub layer is used to define an area of a layout in which substrate contacts are extracted as a short
+instead of a resistive component. It is assumed that the substrate in which the components are located has
+the same potential as the metal connections that are connected to the substrate contact. There is no voltage
+drop within the substrate.
+8.3 SRAM Layer
+Work in progress.
+
+
+
+
+                                                                                                   58 of 60
+                        SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+9 Change history
+
+
+Revision   Date         Changes
+Rev. 0.1   2025-12-08   Initial revision
+
+
+
+
+                                                           59 of 60
+                  SG13CMOS5L Layout Rules Rev. 0.1
+
+
+
+
+10 Known Issues
+
+
+
+
+                                                     60 of 60
+
