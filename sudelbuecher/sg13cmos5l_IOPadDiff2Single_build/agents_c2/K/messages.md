@@ -18,3 +18,17 @@ A5's `inputs.md`, the two PDK PDFs as text from A5's `work/txt/`, `layout_primit
 > From the lead, relaying Christoph (2026-10-31, about 16:50 CET), verbatim: "Leave CMB as is for now. When task F reports back, discuss options what to do with CMB. Maybe it's advantageous to split CMB into different parallel capacitors that, combined, will be a linear-ish capacitor without the area requirements of an actual linear, passive, capacitor."
 >
 > For your stage 3 (splits) and stage 4 (phase margin): treat this as a design target for CMB in particular. Look for parallel combinations of MOS-type capacitors (e.g. hv PMOS in accumulation in both orientations, moscap_n / moscap_p, S-Varicap) whose C(V) curves complement each other, so that the sum is roughly flat over the voltage CMB sees across the whole pad swing. Compare them with a passive MOM capacitor of the same capacitance on area and flatness (max/min of C over the swing). Keep within your deck limit, and carry on with your stages as briefed. No reply needed.
+
+## 17:33, K's final reply (summary)
+
+All four stages in `report.md` (9 of 10 decks). Model files match A5's hashes. S-Varicap = the thick-oxide gate that does
+not invert; the hv PMOS loses C in depletion, not inversion. MOM: only M1–M2, 1270 µm² per capacitor. Linear swing 0.94–2.31 V;
+PM at 100 pF 72.6–78.4° (present), 71–80° for every variant; flattest CMB = S-Varicap 80 % ∥ turned 20 % (max / min 1.04,
+≈ 400 µm²). Recommendation: CMA as is; CMB as is for now; first option "turn CMB around" (74.6° mid-rail, ≥ 40.4° at
+300 pF, fits). Open: S-Varicap breaks CACE convergence (klu); 300 pF unloaded PM 39.7° at pad 2.29 V (driver); a second
+stable state at the top rail.
+
+## 17:3x, the lead's check
+
+Logs grepped: `Transient op started` only in deck 9 v4 (S-Varicap pair at 300 pF), which K reports as invalid and leaves
+out; no `Timestep too small`; the "gmin stepping failed" runs continue with completed source stepping (valid ops).

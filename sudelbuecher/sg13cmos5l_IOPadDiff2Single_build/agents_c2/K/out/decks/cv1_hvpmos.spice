@@ -1,0 +1,50 @@
+* K deck 1: C(V) of the present Miller capacitors, hv PMOS W 7.96u L 32.16u ng 1 (256 um2 gate)
+* XKA: CMA connection, gate = T1, S/D/NW = T2  -> V = V(gate) - V(well)  (CMA: V(a) - V(pad))
+* XKB: CMB connection, gate = T2, S/D/NW = T1  -> V = V(well) - V(gate)  (CMB: V(b) - V(pad))
+* XKS: hv PMOS of the same area as 8 fingers of W 7.96u L 4.02u (more gate-edge overlap), CMA connection
+* XKR / XKRS: XKA / XKS with rfmode=1 (PSP NQS model, swnqs = 5), C read at 100 kHz and at 2 MHz (loop crossover ~1.4 MHz)
+* columns: V, A, B, S (100 kHz), R, RS (100 kHz), A, R, RS (2 MHz)
+.lib cornerMOShv.lib mos_tt
+.temp 27
+VKA ta 0 dc 0 ac 1
+XKA 0 ta 0 0 sg13_hv_pmos w=7.96u l=32.16u ng=1
+VKB tb 0 dc 0 ac 1
+XKB tb 0 tb tb sg13_hv_pmos w=7.96u l=32.16u ng=1
+VKS ts 0 dc 0 ac 1
+XKS 0 ts 0 0 sg13_hv_pmos w=7.96u l=4.02u ng=1 m=8
+VKR tr 0 dc 0 ac 1
+XKR 0 tr 0 0 sg13_hv_pmos w=7.96u l=32.16u ng=1 rfmode=1
+VKRS trs 0 dc 0 ac 1
+XKRS 0 trs 0 0 sg13_hv_pmos w=7.96u l=4.02u ng=1 m=8 rfmode=1
+.control
+let k = 0
+shell rm -f /home/user/c2/K/out/logs/cv1_hvpmos.dat
+while k < 133
+  let vx = k*0.05 - 3.3
+  alter VKA dc = $&vx
+  alter VKB dc = $&vx
+  alter VKS dc = $&vx
+  alter VKR dc = $&vx
+  alter VKRS dc = $&vx
+  ac lin 2 100k 2meg
+* C per um2 of gate (256 um2), fF/um2; I(V) flows into the + node, so C = -Im(I)/(2 pi f)
+  let w = 2*pi*frequency
+  let cka = -imag(i(vka))/w/256e-12*1e3
+  let ckb = -imag(i(vkb))/w/256e-12*1e3
+  let cks = -imag(i(vks))/w/256e-12*1e3
+  let ckr = -imag(i(vkr))/w/256e-12*1e3
+  let ckrs = -imag(i(vkrs))/w/256e-12*1e3
+  let o0 = cka[0]
+  let o1 = ckb[0]
+  let o2 = cks[0]
+  let o3 = ckr[0]
+  let o4 = ckrs[0]
+  let o5 = cka[1]
+  let o6 = ckr[1]
+  let o7 = ckrs[1]
+  echo $&vx $&o0 $&o1 $&o2 $&o3 $&o4 $&o5 $&o6 $&o7 >> /home/user/c2/K/out/logs/cv1_hvpmos.dat
+  destroy all
+  let k = k + 1
+end
+.endc
+.end

@@ -1,0 +1,243 @@
+Warning : Nodeset on non-existent node - fb, ignored
+   Please check line .nodeset v(fb)=1.650077e+00
+
+Warning : Nodeset on non-existent node - inj, ignored
+   Please check line .nodeset v(inj)=0.000000e+00
+
+Note: Starting spice3 gmin stepping
+Warning: spice3 gmin stepping failed
+Note: Starting source stepping
+Note: Source stepping completed
+
+Note: No compatibility mode selected!
+
+
+Circuit: * k deck 8: closed-loop step response (fixture with vfb = vout) of a cma / cmb variant (variant.inc), 1 kohm to 1.65 v || 100 pf.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+OSDI(debug) n.x1.xsel.xd.xa.xr.nr1: WARNING: V(i1,c) voltage is greater than specified by vmax
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vdd                                        3.3
+s0                                           0
+s1                                           0
+vext                                       3.3
+xg                                     1.97641
+ibias                                  0.93193
+vref                                      1.65
+vic                                       1.65
+vinp                                       1.4
+dp                                        -0.5
+vinn                                       1.9
+vout                                   1.40004
+vterm                                     1.65
+x1.xsel.xd.xa.sa                       2.16088
+x1.xsel.vbp                            1.97211
+x1.xsel.xd.xa.sb                       2.36584
+x1.xsel.xd.y                          0.380355
+x1.xsel.xd.x                          0.379559
+x1.xsel.xd.xa.xr.dt                          0
+x1.xsel.xd.xb.sa                       2.41057
+x1.xsel.xd.xb.sb                       2.61548
+x1.xsel.xd.xb.xr.dt                          0
+x1.xsel.xd.xc1.sa                      2.36584
+x1.xsel.xd.xc1.sb                      2.16091
+x1.xsel.xd.xc1.xr.dt                         0
+x1.xsel.xd.xc2.sa                      2.36584
+x1.xsel.xd.xc2.sb                      2.16091
+x1.xsel.xd.xc2.xr.dt                         0
+x1.xsel.xd.l2                          2.29685
+x1.xsel.vabn                           1.62247
+x1.xsel.xd.l1                         0.645488
+x1.xsel.vbnc                           1.20825
+x1.xsel.vbn                           0.913752
+x1.xsel.xd.pl                          2.97713
+x1.xsel.vbpc                           1.91277
+x1.xsel.vabp                           1.52221
+x1.xsel.xd.pr                           2.9775
+x1.xsel.net2                           2.62193
+x1.xsel.net3                          0.755424
+x1.xsel.net1                           2.58772
+x1.xsel.net4                          0.696927
+x1.xsel.xg.en_oa_b                     3.29998
+x1.xsel.xg.xda.n1                      2.53361
+x1.xsel.xg.en_oa                   5.30059e-09
+x1.xsel.xg.en_bg_b                     3.29998
+x1.xsel.xg.xdc.n1                      2.53361
+x1.xsel.xg.en_bg                   5.30059e-09
+x1.xsel.xg.xde.p1                          3.3
+x1.xsel.xg.s00                         3.29999
+x1.xsel.xg.en_ext_b                2.12021e-08
+x1.xsel.xg.xdf.n1                  1.06011e-08
+x1.xsel.xg.en_ext                          3.3
+x1.xsel.xg.xoa.ks                  5.05062e-09
+x1.xsel.xg.xoa.vbr                  0.00555372
+x1.xsel.xg.xoa.vpc                     2.76709
+x1.xsel.xg.xoa.vpg                     3.29998
+x1.xsel.xg.xoa.d10                 0.000647931
+x1.xsel.xg.xoa.vnc                  0.00824815
+x1.xsel.xg.xoa.vres                 0.00019514
+x1.xsel.xg.xoa.c8                    0.0879565
+x1.xsel.xg.xoa.c2                     0.070804
+x1.xsel.xg.xoa.co                      0.11808
+x1.xsel.iref                          0.921723
+x1.xsel.xg.xoa.net1                  0.0661602
+x1.xsel.xg.xoa.net2                  0.0661556
+x1.xsel.xg.xoa.net3                  0.0661556
+x1.xsel.xg.xoa.net4                  0.0661556
+x1.xsel.xg.xoa.net5                  0.0661556
+x1.xsel.xg.xoa.net6                  0.0661556
+x1.xsel.xg.xoa.net7                  0.0661556
+x1.xsel.xg.xbg.ks                  5.05062e-09
+x1.xsel.xg.xbg.g                     0.0103023
+x1.xsel.xg.xbg.vpc                     2.96193
+x1.xsel.xg.xbg.vpg                     3.29998
+x1.xsel.xg.xbg.eb                  5.27669e-08
+x1.xsel.xg.xbg.e2                  5.26864e-08
+x1.xsel.xg.xbg.ca                     0.136324
+x1.xsel.xg.xbg.ea                  1.82938e-08
+x1.xsel.xg.xbg.co                     0.188317
+x1.xsel.xg.xbg.n1b[8]              4.74889e-08
+x1.xsel.xg.xbg.xr1b[9].dt                    0
+x1.xsel.xg.xbg.n1b[7]              4.22113e-08
+x1.xsel.xg.xbg.xr1b[8].dt                    0
+x1.xsel.xg.xbg.n1b[6]              3.69341e-08
+x1.xsel.xg.xbg.xr1b[7].dt                    0
+x1.xsel.xg.xbg.n1b[5]              3.16572e-08
+x1.xsel.xg.xbg.xr1b[6].dt                    0
+x1.xsel.xg.xbg.n1b[4]              2.63805e-08
+x1.xsel.xg.xbg.xr1b[5].dt                    0
+x1.xsel.xg.xbg.n1b[3]              2.11041e-08
+x1.xsel.xg.xbg.xr1b[4].dt                    0
+x1.xsel.xg.xbg.n1b[2]              1.58279e-08
+x1.xsel.xg.xbg.xr1b[3].dt                    0
+x1.xsel.xg.xbg.n1b[1]              1.05519e-08
+x1.xsel.xg.xbg.xr1b[2].dt                    0
+x1.xsel.xg.xbg.n1b[0]              5.27592e-09
+x1.xsel.xg.xbg.xr1b[1].dt                    0
+x1.xsel.xg.xbg.xr1b[0].dt                    0
+x1.xsel.xg.xbg.n0[16]              5.27585e-08
+x1.xsel.xg.xbg.xr0[17].dt                    0
+x1.xsel.xg.xbg.n0[15]              5.27505e-08
+x1.xsel.xg.xbg.xr0[16].dt                    0
+x1.xsel.xg.xbg.n0[14]              5.27429e-08
+x1.xsel.xg.xbg.xr0[15].dt                    0
+x1.xsel.xg.xbg.n0[13]              5.27359e-08
+x1.xsel.xg.xbg.xr0[14].dt                    0
+x1.xsel.xg.xbg.n0[12]              5.27293e-08
+x1.xsel.xg.xbg.xr0[13].dt                    0
+x1.xsel.xg.xbg.n0[11]              5.27232e-08
+x1.xsel.xg.xbg.xr0[12].dt                    0
+x1.xsel.xg.xbg.n0[10]              5.27175e-08
+x1.xsel.xg.xbg.xr0[11].dt                    0
+x1.xsel.xg.xbg.n0[9]               5.27124e-08
+x1.xsel.xg.xbg.xr0[10].dt                    0
+x1.xsel.xg.xbg.n0[8]               5.27076e-08
+x1.xsel.xg.xbg.xr0[9].dt                     0
+x1.xsel.xg.xbg.n0[7]               5.27034e-08
+x1.xsel.xg.xbg.xr0[8].dt                     0
+x1.xsel.xg.xbg.n0[6]               5.26996e-08
+x1.xsel.xg.xbg.xr0[7].dt                     0
+x1.xsel.xg.xbg.n0[5]               5.26963e-08
+x1.xsel.xg.xbg.xr0[6].dt                     0
+x1.xsel.xg.xbg.n0[4]               5.26935e-08
+x1.xsel.xg.xbg.xr0[5].dt                     0
+x1.xsel.xg.xbg.n0[3]               5.26911e-08
+x1.xsel.xg.xbg.xr0[4].dt                     0
+x1.xsel.xg.xbg.n0[2]               5.26893e-08
+x1.xsel.xg.xbg.xr0[3].dt                     0
+x1.xsel.xg.xbg.n0[1]               5.26878e-08
+x1.xsel.xg.xbg.xr0[2].dt                     0
+x1.xsel.xg.xbg.n0[0]               5.26869e-08
+x1.xsel.xg.xbg.xr0[1].dt                     0
+x1.xsel.xg.xbg.xr0[0].dt                     0
+x1.xsel.xg.xbg.n1a[9]              1.66302e-08
+x1.xsel.xg.xbg.xr1a[10].dt                   0
+x1.xsel.xg.xbg.n1a[8]              1.49668e-08
+x1.xsel.xg.xbg.xr1a[9].dt                    0
+x1.xsel.xg.xbg.n1a[7]              1.33035e-08
+x1.xsel.xg.xbg.xr1a[8].dt                    0
+x1.xsel.xg.xbg.n1a[6]              1.16403e-08
+x1.xsel.xg.xbg.xr1a[7].dt                    0
+x1.xsel.xg.xbg.n1a[5]              9.97719e-09
+x1.xsel.xg.xbg.xr1a[6].dt                    0
+x1.xsel.xg.xbg.n1a[4]              8.31419e-09
+x1.xsel.xg.xbg.xr1a[5].dt                    0
+x1.xsel.xg.xbg.n1a[3]              6.65126e-09
+x1.xsel.xg.xbg.xr1a[4].dt                    0
+x1.xsel.xg.xbg.n1a[2]               4.9884e-09
+x1.xsel.xg.xbg.xr1a[3].dt                    0
+x1.xsel.xg.xbg.n1a[1]              3.32557e-09
+x1.xsel.xg.xbg.xr1a[2].dt                    0
+x1.xsel.xg.xbg.n1a[0]              1.66278e-09
+x1.xsel.xg.xbg.xr1a[1].dt                    0
+x1.xsel.xg.xbg.xr1a[0].dt                    0
+x1.xsel.xg.xbg.net1                  0.0661602
+x1.xsel.xg.xbg.net2                  0.0661556
+x1.xsel.xg.xbg.net3                  0.0661556
+x1.xsel.xg.xbg.net4                  0.0661556
+x1.xsel.xg.xbg.net5                  0.0661556
+x1.xsel.xg.xbg.net6                  0.0661556
+x1.xsel.xg.xbg.net7                  0.0661556
+x1.xsel.xg.xbg.xrdum[1].dt                   0
+x1.xsel.xg.xbg.xrdum[0].dt                   0
+x1.xsel.xt.ni                         0.911567
+x1.xsel.xksb5.w0                      0.755424
+x1.xsel.xksb5.2                       0.755424
+x1.xsel.xksb5.4                              0
+x1.xsel.xksb5.bi1                     0.755424
+x1.xsel.xksb5.bi2                     0.755424
+x1.xsel.xksb5.w1                   1.01622e-10
+x1.xsel.xksb5.g2a                      1.40004
+x1.xsel.xksb6.w0                       1.40004
+x1.xsel.xksb6.2                        1.40004
+x1.xsel.xksb6.4                              0
+x1.xsel.xksb6.bi1                      1.40004
+x1.xsel.xksb6.bi2                      1.40004
+x1.xsel.xksb6.w1                   2.26497e-10
+x1.xsel.xksb6.g2a                     0.755424
+en#branch                             -3.8e-10
+ep#branch                             -2.8e-10
+vd#branch                                5e-11
+vterm#branch                      -0.000249963
+vic#branch                           -8.25e-10
+vref#branch                          -8.25e-10
+vext#branch                       -1.00135e-05
+vs1#branch                                   0
+vs0#branch                                   0
+vdd#branch                        -0.000220188
+
+Instance: d.x1.xsel.xksb6.dsubw Model: x1.xsel.xksb6:dsubw Time: 0 Pd=inf W at Vd=-1.4 V has exceeded Pd_max=1e+99 W
+Instance: d.x1.xsel.xksb5.dsubw Model: x1.xsel.xksb5:dsubw Time: 0 Pd=inf W at Vd=-0.7554 V has exceeded Pd_max=1e+99 W
+ Reference value :  0.00000e+00Instance: d.x1.xsel.xksb6.dsubw Model: x1.xsel.xksb6:dsubw Time: 2e-11 Pd=inf W at Vd=-1.4 V has exceeded Pd_max=1e+99 W
+Instance: d.x1.xsel.xksb5.dsubw Model: x1.xsel.xksb5:dsubw Time: 2e-11 Pd=inf W at Vd=-0.7554 V has exceeded Pd_max=1e+99 W
+Instance: d.x1.xsel.xksb6.dsubw Model: x1.xsel.xksb6:dsubw Time: 4e-11 Pd=inf W at Vd=-1.4 V has exceeded Pd_max=1e+99 W
+ Reference value :  8.05600e-08 Reference value :  2.06560e-07 Reference value :  2.26810e-07 Reference value :  3.34310e-07 Reference value :  4.42560e-07 Reference value :  5.78060e-07 Reference value :  6.04810e-07 Reference value :  6.27560e-07 Reference value :  7.33810e-07 Reference value :  7.45560e-07 Reference value :  7.57310e-07 Reference value :  7.67060e-07 Reference value :  7.76810e-07 Reference value :  8.58310e-07 Reference value :  9.50310e-07 Reference value :  1.00238e-06 Reference value :  1.05119e-06 Reference value :  1.12519e-06 Reference value :  1.19719e-06 Reference value :  1.28119e-06 Reference value :  1.39919e-06 Reference value :  1.51719e-06 Reference value :  1.54694e-06 Reference value :  1.66694e-06 Reference value :  1.75494e-06 Reference value :  1.84094e-06 Reference value :  1.92694e-06 Reference value :  2.02094e-06 Reference value :  2.10894e-06 Reference value :  2.17519e-06 Reference value :  2.29469e-06 Reference value :  2.39069e-06 Reference value :  2.47869e-06 Reference value :  2.56269e-06 Reference value :  2.64669e-06 Reference value :  2.73069e-06 Reference value :  2.81869e-06 Reference value :  2.94869e-06 Reference value :  3.07069e-06 Reference value :  3.18269e-06 Reference value :  3.27069e-06 Reference value :  3.35669e-06 Reference value :  3.43869e-06 Reference value :  3.57069e-06 Reference value :  3.69869e-06 Reference value :  3.82069e-06 Reference value :  3.92269e-06 Reference value :  4.00469e-06 Reference value :  4.11069e-06 Reference value :  4.21669e-06 Reference value :  4.30069e-06 Reference value :  4.38669e-06 Reference value :  4.49469e-06 Reference value :  4.58869e-06 Reference value :  4.66869e-06 Reference value :  4.75669e-06 Reference value :  4.85469e-06 Reference value :  4.93869e-06 Reference value :  5.00394e-06 Reference value :  5.06022e-06 Reference value :  5.12822e-06 Reference value :  5.18222e-06 Reference value :  5.24022e-06 Reference value :  5.29622e-06 Reference value :  5.37222e-06 Reference value :  5.47422e-06 Reference value :  5.57222e-06 Reference value :  5.66622e-06 Reference value :  5.76422e-06 Reference value :  5.86822e-06 Reference value :  5.90447e-06 Reference value :  6.01197e-06 Reference value :  6.12597e-06 Reference value :  6.12772e-06 Reference value :  6.23172e-06 Reference value :  6.33572e-06 Reference value :  6.43372e-06 Reference value :  6.53972e-06 Reference value :  6.64572e-06 Reference value :  6.75172e-06 Reference value :  6.85572e-06 Reference value :  6.95972e-06 Reference value :  7.04772e-06 Reference value :  7.15572e-06 Reference value :  7.26172e-06 Reference value :  7.38372e-06 Reference value :  7.51172e-06 Reference value :  7.62572e-06 Reference value :  7.73772e-06 Reference value :  7.84972e-06 Reference value :  7.96172e-06 Reference value :  8.06772e-06 Reference value :  8.16572e-06 Reference value :  8.27772e-06 Reference value :  8.37772e-06 Reference value :  8.48572e-06 Reference value :  8.60572e-06 Reference value :  8.70972e-06 Reference value :  8.80772e-06 Reference value :  8.89372e-06 Reference value :  9.00004e-06 Reference value :  9.04582e-06 Reference value :  9.12582e-06 Reference value :  9.20382e-06 Reference value :  9.28782e-06 Reference value :  9.40582e-06 Reference value :  9.51382e-06 Reference value :  9.63182e-06 Reference value :  9.74982e-06 Reference value :  9.87382e-06 Reference value :  9.98182e-06 Reference value :  1.00798e-05 Reference value :  1.01718e-05 Reference value :  1.02618e-05 Reference value :  1.03618e-05 Reference value :  1.04738e-05 Reference value :  1.05558e-05 Reference value :  1.06518e-05 Reference value :  1.07378e-05 Reference value :  1.08198e-05 Reference value :  1.09118e-05 Reference value :  1.09938e-05 Reference value :  1.10818e-05 Reference value :  1.11698e-05 Reference value :  1.12738e-05 Reference value :  1.13658e-05 Reference value :  1.14738e-05 Reference value :  1.15758e-05 Reference value :  1.16818e-05 Reference value :  1.18138e-05 Reference value :  1.19198e-05 Reference value :  1.20298e-05 Reference value :  1.21378e-05 Reference value :  1.22498e-05 Reference value :  1.23298e-05 Reference value :  1.24218e-05 Reference value :  1.25078e-05 Reference value :  1.25918e-05 Reference value :  1.26938e-05 Reference value :  1.27998e-05 Reference value :  1.29078e-05 Reference value :  1.30003e-05 Reference value :  1.30642e-05 Reference value :  1.31462e-05 Reference value :  1.32442e-05 Reference value :  1.33422e-05 Reference value :  1.34202e-05 Reference value :  1.34465e-05 Reference value :  1.35460e-05 Reference value :  1.36600e-05 Reference value :  1.37720e-05 Reference value :  1.38880e-05 Reference value :  1.39780e-05 Reference value :  1.40342e-05 Reference value :  1.40400e-05 Reference value :  1.40595e-05 Reference value :  1.40672e-05 Reference value :  1.40850e-05 Reference value :  1.41045e-05 Reference value :  1.41260e-05 Reference value :  1.41577e-05 Reference value :  1.41732e-05 Reference value :  1.41945e-05 Reference value :  1.42267e-05 Reference value :  1.42385e-05 Reference value :  1.42482e-05 Reference value :  1.42580e-05 Reference value :  1.42677e-05 Reference value :  1.42775e-05 Reference value :  1.42987e-05 Reference value :  1.43305e-05 Reference value :  1.43662e-05 Reference value :  1.45062e-05 Reference value :  1.46262e-05 Reference value :  1.47402e-05 Reference value :  1.48702e-05 Reference value :  1.49702e-05 Reference value :  1.50622e-05 Reference value :  1.51502e-05 Reference value :  1.52342e-05 Reference value :  1.53162e-05 Reference value :  1.54102e-05 Reference value :  1.55062e-05 Reference value :  1.55922e-05 Reference value :  1.56702e-05 Reference value :  1.57522e-05 Reference value :  1.58382e-05 Reference value :  1.59282e-05 Reference value :  1.60102e-05 Reference value :  1.60942e-05 Reference value :  1.61842e-05 Reference value :  1.62742e-05 Reference value :  1.63682e-05 Reference value :  1.64762e-05 Reference value :  1.65642e-05 Reference value :  1.66462e-05 Reference value :  1.67502e-05 Reference value :  1.68045e-05 Reference value :  1.68117e-05 Reference value :  1.69317e-05 Reference value :  1.69600e-05 Reference value :  1.69755e-05 Reference value :  1.70504e-05 Reference value :  1.71324e-05 Reference value :  1.72244e-05 Reference value :  1.73624e-05 Reference value :  1.74804e-05 Reference value :  1.74906e-05 Reference value :  1.75701e-05 Reference value :  1.76901e-05 Reference value :  1.77104e-05 Reference value :  1.77819e-05 Reference value :  1.77881e-05 Reference value :  1.78576e-05 Reference value :  1.79196e-05 Reference value :  1.79896e-05 Reference value :  1.80716e-05 Reference value :  1.81556e-05 Reference value :  1.82356e-05 Reference value :  1.83136e-05 Reference value :  1.83896e-05 Reference value :  1.84536e-05 Reference value :  1.85156e-05 Reference value :  1.85936e-05 Reference value :  1.86856e-05 Reference value :  1.87736e-05 Reference value :  1.88616e-05 Reference value :  1.89496e-05 Reference value :  1.90336e-05 Reference value :  1.90976e-05 Reference value :  1.92736e-05 Reference value :  1.93936e-05 Reference value :  1.94836e-05 Reference value :  1.96736e-05 Reference value :  1.98936e-05 Reference value :  2.01116e-05 Reference value :  2.03516e-05 Reference value :  2.05956e-05 Reference value :  2.07956e-05
+No. of Data Rows : 10674
+v0                  =  1.40004e+00
+v1                  =  1.89998e+00
+t10r                =  1.03893e-06
+t90r                =  1.20451e-06
+t90f                =  5.03780e-06
+t10f                =  5.21097e-06
+vnmax               =  1.00012e+00 at=  1.49719e-06
+vnmin               =  -2.06277e-08 at=  6.17372e-06
+tsr                 =  1.31331e-06
+tsf                 =  5.37741e-06
+v0                  =  2.04968e+00
+v1                  =  2.29196e+00
+t10r                =  1.30339e-05
+t90r                =  1.31479e-05
+t90f                =  1.70321e-05
+t10f                =  1.71572e-05
+vnmax               =  1.00026e+00 at=  1.34162e-05
+vnmin               =  -1.67441e-04 at=  1.74164e-05
+tsr                 =  1.32418e-05
+tsf                 =  1.72482e-05
+Note: Simulation executed from .control section 

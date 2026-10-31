@@ -13,3 +13,7 @@ names an agent's own render.
 |---|---|
 | `pad_cell_before_C2.png` | the pad cell as committed on `toplevel` 8a72dd8, before C2: y 0–88 drawn, y 88–178 empty |
 | `F_floorplan_stage1.png` | F stage 1 (16:58): floorplan variants 1 (recommended) and 2, F's own render |
+| `K_cv_candidates.png` | K stage 2: C(V) per µm² of every candidate (hv PMOS, S-Varicap, moscap_p / _n, MOM), K's own plot |
+| `K_cv_thick_oxide.png` | K stage 2: the thick-oxide candidates (hv PMOS, S-Varicap) |
+| `K_c_along_swing.png` | K stage 3: capacitance of CMA / CMB and of the splits along the pad's DC swing |
+| `K_step_response.png` | K stage 4: closed-loop step at 1 kΩ ∥ 100 pF, present caps and variants |

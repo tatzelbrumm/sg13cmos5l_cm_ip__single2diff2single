@@ -1,0 +1,61 @@
+* K deck 9 (= deck 7 at the CACE worst-case load, unloaded || 300 pF): loop gain T = -v(vout)/v(fb) of the fixture d2s_mpdda_pd_sel with a CMA / CMB variant (dut_variants.spice,
+* chosen by variant.inc). Sources, load (1 kOhm to 1.65 V || 100 pF) and measurement as the CACE template
+* d2s_mpdda_pd_sel_tb_loop.sch, plus a differential input vd (template: 0): vd = 0 / +1.3 / -1.3 V -> pad 1.65 / 2.3 / 1.0 V,
+* one vd per run (-1.3), op seeded by .nodeset from the present variant's op at the same vd (nodeset.inc; empty for v0).
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.lib cornerPNP.lib typ
+.include /home/user/c2/K/out/decks/dut_variants.spice
+.include /home/user/c2/K/work/variant.inc
+.include /home/user/c2/K/work/nodeset.inc
+Vdd vdd 0 3.3
+Vs0 s0 0 0
+Vs1 s1 0 0
+Vext vext 0 3.3
+Iext xg 0 5e-06
+XKEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XKEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
+Vref vref 0 1.65
+Vic vic 0 1.65
+Ep vinp vic dp 0 0.5
+En vinn vic dp 0 -0.5
+RL vout vterm 1G
+Vterm vterm 0 1.65
+CL vout 0 3e-10
+
+Vd dp 0 0
+x1 vdd 0 vdd 0 vinp vinn vref vout fb ibias vdd s0 s1 0 fix_sel
+Lb vout fb 1G
+Cb fb inj 1
+Vinj inj 0 dc 0 ac 1
+.temp 27
+* no klu: KLU + the mosvar OSDI (S-Varicap) aborts with 'doAnalyses: out of memory'; rshunt 10 GOhm on every node
+* and source stepping are needed for a valid op with S-Varicaps (else Transient op into a latched state, pad 3.28 V)
+.options method=gear reltol=1e-4 abstol=1e-15 gmin=1e-15
+.option warn=1 rshunt=1e10 itl1=500 gminsteps=50
+
+.control
+set vdv = -1.3
+  alter Vd dc = -1.3
+  op
+  print all > /home/user/c2/K/work/op9_v4_-1.3.txt
+  let vo = v(vout)
+  let va = v(x1.xsel.net2)
+  let vb = v(x1.xsel.net3)
+  set svo = "$&vo"
+  set sva = "$&va"
+  set svb = "$&vb"
+  ac dec 50 1 1G
+  let T = -v(vout)/v(fb)
+  let Tdb = vdb(T)
+  let Tph = cph(T)*180/pi
+  meas ac T0 find Tdb at=10
+  meas ac fc when Tdb=0 fall=1
+  meas ac phc find Tph when Tdb=0 fall=1
+  let PM = 180 + phc
+  meas ac gmdb find Tdb when Tph=-180 cross=1
+  let GM = -gmdb
+  echo v4 -1.3 $svo $sva $svb $&T0 $&fc $&PM $&GM >> /home/user/c2/K/out/logs/loop9.dat
+.endc
+.end
