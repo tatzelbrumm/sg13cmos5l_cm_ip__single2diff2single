@@ -1,0 +1,10 @@
+DRC sinks_6x6_c: items=0 exceptions=0
+LVS sinks_6x6_c: Outcome          | Comparison mode: PASS (netlists match).                      |
+DRC sinks_6x6_s2d_c: items=0 exceptions=0
+LVS sinks_6x6_s2d_c: Outcome          | Comparison mode: PASS (netlists match).                      |
+DRC d2s_casc_n_c: items=0 exceptions=0
+LVS d2s_casc_n_c: Outcome          | Comparison mode: PASS (netlists match).                      |
+DRC d2s_ab_n_c: items=0 exceptions=0
+LVS d2s_ab_n_c: Outcome          | Comparison mode: PASS (netlists match).                      |
+DRC d2s_pd_n_c: items=0 exceptions=0
+LVS d2s_pd_n_c: Outcome          | Comparison mode: PASS (netlists match).                      |

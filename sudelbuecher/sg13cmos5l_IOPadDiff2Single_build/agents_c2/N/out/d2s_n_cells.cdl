@@ -1,0 +1,62 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_n_cells.cdl: reference netlists of d2s_n_cells.gds, devices as drawn (one line per finger,
+* dummies included), written by build_d2s_n.py 2026-10-31 (agent N). Bulk = vss (the p tie of the cell).
+
+.SUBCKT sinks_6x6_c vbn vss x y
+MBN_A0 vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_A1 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_A2 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_A3 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_A4 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_A5 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_A6 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_A7 vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+Mdummy_B0 vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MSX_B1 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_B2 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_B3 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_B4 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_B5 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_B6 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_B7 vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+.ENDS sinks_6x6_c
+
+.SUBCKT sinks_6x6_s2d_c vbn vss x y
+MBN_A0 vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_A1 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_A2 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_A3 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_A4 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_A5 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_A6 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_A7 vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+Mdummy_B0 vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MSX_B1 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_B2 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_B3 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_B4 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_B5 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_B6 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_B7 vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+.ENDS sinks_6x6_s2d_c
+
+.SUBCKT d2s_casc_n_c b l1 vbnc vss x y
+MCX_0 l1 vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCX_1 l1 vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCY_0 b vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCY_1 b vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1
+.ENDS d2s_casc_n_c
+
+.SUBCKT d2s_ab_n_c a b dabn l1 l2 vabn vss
+MABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+MFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+MRN2 vabn vabn dabn vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+.ENDS d2s_ab_n_c
+
+.SUBCKT d2s_pd_n_c b en_3v3_b vabn vss vsso
+MSB b en_3v3_b vsso vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MSABN vabn en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_pd_n_c
+

@@ -32,3 +32,9 @@ cascodes), LVS the pad flat, check the tree against "sheet minus diodes" as a pr
 > 5. Add **previews**: whenever you have an intermediate layout picture worth looking at (a drawn cell, a partial assembly), put a PNG in `out/previews/` with a name that says what it is. Christoph looks at them and may suggest corrections.
 >
 > Reply at the end of stage 2 with a summary of no more than 15 lines (cells drawn, sizes, DRC / LVS, the rhigh capacitor-only node count if you already have it), then wait for stage 3.
+
+## 17:45, from the lead (summary; verbatim text in the session)
+
+N's cells passed the lead's check, read-only copy in `/home/user/c2/F/inputs_N/` (sizes, check results, the decision on
+SB's bulk = vss, to go into F's `netlist_changes.md`; XSA's bulk likewise vdd if P draws SA in the shared iovdd NWell);
+CMB: Christoph is deciding between keeping it and turning it around; keep it local to its own region.

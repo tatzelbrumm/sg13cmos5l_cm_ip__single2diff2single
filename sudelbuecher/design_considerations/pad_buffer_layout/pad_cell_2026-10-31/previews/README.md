@@ -17,3 +17,7 @@ names an agent's own render.
 | `K_cv_thick_oxide.png` | K stage 2: the thick-oxide candidates (hv PMOS, S-Varicap) |
 | `K_c_along_swing.png` | K stage 3: capacitance of CMA / CMB and of the splits along the pad's DC swing |
 | `K_step_response.png` | K stage 4: closed-loop step at 1 kΩ ∥ 100 pF, present caps and variants |
+| `N_sinks_6x6_c.png` | N's cell sinks_6x6_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `N_d2s_casc_n_c.png` | N's cell d2s_casc_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `N_d2s_ab_n_c.png` | N's cell d2s_ab_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `N_d2s_pd_n_c.png` | N's cell d2s_pd_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |

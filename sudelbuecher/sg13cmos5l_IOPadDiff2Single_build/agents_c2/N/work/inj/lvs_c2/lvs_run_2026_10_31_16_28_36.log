@@ -1,0 +1,18 @@
+31-Oct-2026 16:28:36 | INFO    | Your Klayout version is: KLayout 0.30.12
+31-Oct-2026 16:28:36 | INFO    | Running SG13CMOS5L LVS checks on design /home/user/c2/N/work/inj/casc_novia.gds on cell d2s_casc_n_c
+31-Oct-2026 16:28:40 | INFO    | ==============================================================================
+31-Oct-2026 16:28:40 | INFO    | Important Summary
+31-Oct-2026 16:28:40 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 16:28:40 | INFO    | | Status           | FAIL                                                         |
+31-Oct-2026 16:28:40 | INFO    | | Mode             | COMPARE                                                      |
+31-Oct-2026 16:28:40 | INFO    | | Outcome          | Comparison mode: FAIL (netlists do not match).               |
+31-Oct-2026 16:28:40 | INFO    | | Layout           | casc_novia.gds                                               |
+31-Oct-2026 16:28:40 | INFO    | | Top Cell         | d2s_casc_n_c                                                 |
+31-Oct-2026 16:28:40 | INFO    | | Results Dir      | /home/user/c2/N/work/inj/lvs_c2                              |
+31-Oct-2026 16:28:40 | INFO    | | Warnings         | 0                                                            |
+31-Oct-2026 16:28:40 | INFO    | | Errors           | 1                                                            |
+31-Oct-2026 16:28:40 | INFO    | | Run Time (s)     | 4.146                                                        |
+31-Oct-2026 16:28:40 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 16:28:40 | ERROR   | Key errors:
+31-Oct-2026 16:28:40 | ERROR   |   - 2026-10-31 16:28:40 +0000: Memory Usage (464676K) : ERROR : Netlists don't match
+31-Oct-2026 16:28:40 | INFO    | ==============================================================================

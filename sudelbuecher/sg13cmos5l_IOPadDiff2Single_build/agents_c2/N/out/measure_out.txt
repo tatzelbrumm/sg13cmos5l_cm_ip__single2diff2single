@@ -1,0 +1,60 @@
+== sinks_6x6_c  bbox (0.000, 0.000) .. (15.525, 46.790)  size 15.525 x 46.790 = 726.4 um2
+   layers: 1/0 5/0 5/2 6/0 8/0 8/2 8/25 10/0 10/2 10/25 14/0 19/0 44/0 51/0 63/0
+   pin vss       Metal1 edge=right        box x 14.925..15.525 y 5.540..6.140 (w 0.600 h 0.600) centre (15.225, 5.840)
+   pin vbn       Metal2 edge=bottom       box x 1.325..1.615 y 0.000..0.570 (w 0.290 h 0.570) centre (1.470, 0.285)
+   pin x         Metal2 edge=left         box x 0.000..0.700 y 17.375..17.665 (w 0.700 h 0.290) centre (0.350, 17.520)
+   pin y         Metal2 edge=left         box x 0.000..0.700 y 11.125..11.415 (w 0.700 h 0.290) centre (0.350, 11.270)
+   pin x         Metal2 edge=bottom       box x 10.655..10.945 y 0.000..0.600 (w 0.290 h 0.600) centre (10.800, 0.300)
+   pin y         Metal2 edge=bottom       box x 11.165..11.455 y 0.000..0.600 (w 0.290 h 0.600) centre (11.310, 0.300)
+   tie Activ boxes: ['x 14.955..15.255 y 0.520..46.270']
+   TGO: 1 polygon(s), bbox (0,0;15.525,46.79)
+   LU.b: farthest N+Activ vertex to the nearest tie Activ: 14.69 um (limit 20)
+   NWell shapes: 0
+== sinks_6x6_s2d_c  bbox (0.000, 0.000) .. (46.790, 15.525)  size 46.790 x 15.525 = 726.4 um2
+   layers: 1/0 5/0 5/2 6/0 8/0 8/2 8/25 10/0 10/2 10/25 14/0 19/0 44/0 51/0 63/0
+   pin vss       Metal1 edge=top          box x 40.650..41.250 y 14.925..15.525 (w 0.600 h 0.600) centre (40.950, 15.225)
+   pin vbn       Metal2 edge=right        box x 46.220..46.790 y 1.325..1.615 (w 0.570 h 0.290) centre (46.505, 1.470)
+   pin x         Metal2 edge=bottom       box x 29.125..29.415 y 0.000..0.700 (w 0.290 h 0.700) centre (29.270, 0.350)
+   pin y         Metal2 edge=bottom       box x 35.375..35.665 y 0.000..0.700 (w 0.290 h 0.700) centre (35.520, 0.350)
+   pin x         Metal2 edge=right        box x 46.190..46.790 y 10.655..10.945 (w 0.600 h 0.290) centre (46.490, 10.800)
+   pin y         Metal2 edge=right        box x 46.190..46.790 y 11.165..11.455 (w 0.600 h 0.290) centre (46.490, 11.310)
+   tie Activ boxes: ['x 0.520..46.270 y 14.955..15.255']
+   TGO: 1 polygon(s), bbox (0,0;46.79,15.525)
+   LU.b: farthest N+Activ vertex to the nearest tie Activ: 14.69 um (limit 20)
+   NWell shapes: 0
+== d2s_casc_n_c  bbox (0.000, 0.000) .. (9.730, 33.120)  size 9.730 x 33.120 = 322.3 um2
+   layers: 1/0 5/0 5/2 6/0 8/0 8/2 8/25 10/0 10/2 10/25 14/0 19/0 44/0 51/0 63/0
+   pin vss       Metal1 edge=right        box x 9.420..9.730 y 5.020..5.330 (w 0.310 h 0.310) centre (9.575, 5.175)
+   pin l1        Metal2 edge=bottom       box x 0.275..0.565 y 0.000..0.600 (w 0.290 h 0.600) centre (0.420, 0.300)
+   pin x         Metal2 edge=top          box x 3.655..3.945 y 32.520..33.120 (w 0.290 h 0.600) centre (3.800, 32.820)
+   pin y         Metal2 edge=top          box x 4.165..4.455 y 32.520..33.120 (w 0.290 h 0.600) centre (4.310, 32.820)
+   pin b         Metal2 edge=bottom       box x 7.545..7.835 y 0.000..0.600 (w 0.290 h 0.600) centre (7.690, 0.300)
+   pin vbnc      Metal2 edge=left         box x 0.000..0.700 y 30.950..31.240 (w 0.700 h 0.290) centre (0.350, 31.095)
+   tie Activ boxes: ['x 9.160..9.460 y 0.520..32.600']
+   TGO: 1 polygon(s), bbox (0,0;9.73,33.12)
+   LU.b: farthest N+Activ vertex to the nearest tie Activ: 8.89 um (limit 20)
+   NWell shapes: 0
+== d2s_ab_n_c  bbox (0.000, 0.000) .. (6.860, 5.440)  size 6.860 x 5.440 = 37.3 um2
+   layers: 1/0 5/0 5/2 6/0 8/0 8/2 8/25 10/0 10/2 10/25 14/0 19/0 44/0 51/0 63/0
+   pin a         Metal1 edge=bottom       box x 2.165..2.455 y 0.000..0.320 (w 0.290 h 0.320) centre (2.310, 0.160)
+   pin dabn      Metal1 edge=bottom       box x 5.945..6.235 y 0.000..0.320 (w 0.290 h 0.320) centre (6.090, 0.160)
+   pin vss       Metal1 edge=left         box x 0.000..0.310 y 2.020..2.330 (w 0.310 h 0.310) centre (0.155, 2.175)
+   pin vabn      Metal2 edge=top          box x 4.565..4.855 y 4.840..5.440 (w 0.290 h 0.600) centre (4.710, 5.140)
+   pin l1        Metal2 edge=top          box x 2.675..2.965 y 4.840..5.440 (w 0.290 h 0.600) centre (2.820, 5.140)
+   pin l2        Metal2 edge=top          box x 4.055..4.345 y 4.840..5.440 (w 0.290 h 0.600) centre (4.200, 5.140)
+   pin b         Metal2 edge=bottom       box x 0.785..1.075 y 0.000..0.600 (w 0.290 h 0.600) centre (0.930, 0.300)
+   tie Activ boxes: ['x 0.270..0.570 y 0.520..4.920']
+   TGO: 1 polygon(s), bbox (0,0;6.86,5.44)
+   LU.b: farthest N+Activ vertex to the nearest tie Activ: 5.67 um (limit 20)
+   NWell shapes: 0
+== d2s_pd_n_c  bbox (0.000, 0.000) .. (3.520, 2.040)  size 3.520 x 2.040 = 7.2 um2
+   layers: 1/0 5/0 5/2 6/0 8/0 8/2 8/25 14/0 44/0 51/0 63/0
+   pin en_3v3_b  Metal1 edge=top          box x 0.690..0.980 y 1.720..2.040 (w 0.290 h 0.320) centre (0.835, 1.880)
+   pin vsso      Metal1 edge=bottom       box x 0.275..0.565 y 0.000..0.320 (w 0.290 h 0.320) centre (0.420, 0.160)
+   pin b         Metal1 edge=bottom       box x 1.105..1.395 y 0.000..0.320 (w 0.290 h 0.320) centre (1.250, 0.160)
+   pin vss       Metal1 edge=top          box x 1.615..1.905 y 1.720..2.040 (w 0.290 h 0.320) centre (1.760, 1.880)
+   pin vabn      Metal1 edge=top          box x 2.445..2.735 y 1.720..2.040 (w 0.290 h 0.320) centre (2.590, 1.880)
+   tie Activ boxes: ['x 2.950..3.250 y 0.520..1.520']
+   TGO: 1 polygon(s), bbox (0,0;3.52,2.04)
+   LU.b: farthest N+Activ vertex to the nearest tie Activ: 2.68 um (limit 20)
+   NWell shapes: 0
