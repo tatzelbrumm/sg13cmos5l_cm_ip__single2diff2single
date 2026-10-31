@@ -1,0 +1,9 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 31/10/2026 16:47
+
+.SUBCKT d2s_rhigh sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vss
+R$1 vss vss vss rhigh w=0.5u l=12.65u ps=0u b=0 m=2
+R$2 sb_A sa_A vss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$11 sb_B sa_B vss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$12 sb_C1 sa_C1 vss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$13 sb_C2 sa_C2 vss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+.ENDS d2s_rhigh

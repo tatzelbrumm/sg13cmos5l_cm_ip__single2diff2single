@@ -1,0 +1,6 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_cma (agent F, C2 2026-10-31): Miller capacitor CMA as in the sheet (XCMA pad a pad pad), hv PMOS 7.96/32.16
+.SUBCKT d2s_cma a pad
+MCMA pad a pad pad sg13_hv_pmos w=7.96u l=32.16u ng=1 m=1
+.ENDS d2s_cma

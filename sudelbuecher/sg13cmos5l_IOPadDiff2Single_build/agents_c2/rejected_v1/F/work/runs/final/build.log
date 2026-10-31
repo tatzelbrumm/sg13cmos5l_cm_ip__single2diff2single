@@ -1,0 +1,17 @@
+d2s_rhigh: bbox (-0.93,-1.38;12.99,14.03) = 13.920 x 15.410 um = 214.5 um2 (library 14.76 x 17.50 = 258.3)
+pins (top edge, M2): [('sa_A', 0.93), ('sa_B', 1.61), ('sa_C1', 2.29), ('sa_C2', 2.97), ('sb_A', 11.13), ('sb_B', 10.45), ('sb_C1', 9.77), ('sb_C2', 9.09)]
+bias_tree_pd: bbox (0,-0.185;52.36,11.635) = 52.36 x 11.82 um = 619 um2 (library parts: 27.42x11.11 + 18.79x11.63 + 2 switches)
+cascp   d2s_casc_p_c    (2.5,89.2;13.82,122.84)
+loads   d2s_loads_c     (2.5,124.3;13.82,154.32)
+rh      d2s_rhigh       (15.2,89.2;29.12,104.61)
+abn     d2s_ab_n_c      (31,89.2;37.86,94.64)
+abp     d2s_ab_p_c      (38.6,89.2;44.61,97.1)
+pdp     d2s_pd_p_c      (45.3,89.2;49.01,92.17)
+pdn     d2s_pd_n_c      (49.7,89.2;53.22,91.24)
+cascn   d2s_casc_n_c    (67.5,89.2;77.23,122.32)
+sinks   sinks_6x6_c     (60.5,122.32;76.025,169.11)
+tails   d2s_tails_c     (18.07,109;50.34,123.81)
+inputs  d2s_inputs_c    (15.6,125.61;47.65,152.32)
+tree    bias_tree_pd    (2.6,154.7;54.96,166.52)
+d2s_block bbox (0,83.945;80,180)
+pad: top sg13cmos5l_IOPadDiff2Single; junction Via1 removed 332; d2s_cma column Via1 88

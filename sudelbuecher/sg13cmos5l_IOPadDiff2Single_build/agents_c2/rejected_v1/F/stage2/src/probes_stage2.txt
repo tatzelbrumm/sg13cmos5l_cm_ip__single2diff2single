@@ -1,0 +1,31 @@
+# iovdd_a = M3/M4/TM1 band 66-91.5, iovdd_b = band 93.5-119 (separate nets inside the cell; the IO ring joins them)
+pad   M2 20.0 40.3     # junction left half
+pad   M1 3.6 45.0      # CMA left column (new feed)
+pad   M1 36.8 45.0     # CMA right column
+pad   M2 20.0 1.5      # pad exit
+a     M1 20.0 50.6     # CMA gate head
+a     M2 20.0 86.7     # a join
+b     M2 20.0 87.7     # b join
+b     M1 57.0 41.7     # CMB S/D U
+iovss M1 1.54 45.0     # cma_ring left leg
+iovss M1 38.74 45.0    # cma_ring right leg
+iovss M1 20.0 40.4     # cma_ring bottom leg
+iovss M1 40.0 51.6     # DCPDiode guard ring
+iovss M1 40.0 84.1     # P frame outer p+ ring
+iovss M1 0.6 110.0     # left p+ stub
+iovss M1 79.4 110.0    # right p+ stub
+iovss M3 40.0 130.0    # M3 iovss rail 126-134
+iovss M3 40.0 47.0     # M3 iovss rail 34.5-60
+iovdd_a M2 1.45 50.0     # guard_tie
+iovdd_a M1 2.0 30.0      # DCN guard ring (guard)
+iovdd_a M1 20.0 84.94    # NWell isolator
+iovdd_b M1 0.6 148.5     # left iovdd stub
+iovdd_b M1 79.4 148.5    # right iovdd stub
+iovdd_a M3 40.0 70.0     # M3 iovdd 66-91.5
+iovdd_b M3 40.0 100.0    # M3 iovdd 93.5-119
+vss   M1 0.8 157.0     # left vss stub
+vss   M1 79.2 157.0    # right vss stub
+vss   M3 40.0 150.0    # M3 vss
+vdd   M1 0.25 167.0    # left vdd stub
+vdd   M1 79.75 167.0   # right vdd stub
+vdd   M3 40.0 170.0    # M3 vdd

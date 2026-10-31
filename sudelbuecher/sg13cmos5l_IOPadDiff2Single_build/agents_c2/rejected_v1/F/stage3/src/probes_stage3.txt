@@ -1,0 +1,62 @@
+# expected-net probes on the final pad (metal-only extraction: --metal). iovdd_a / iovdd_b = the two M3/M4/TM1
+# iovdd bands (66-91.5, 93.5-119): separate nets inside the cell, joined by the IO ring outside.
+pad     M2 20.0 40.3      # junction left half
+pad     M2 20.0 1.5       # pad exit
+pad     M1 3.6 45.0       # CMA left column
+pad     M2 2.05 100.0     # vfb Kelvin line
+pad     M2 15.75 126.30   # inputs' vfb pin
+pad     M1 57.0 50.64     # CMB gate head
+a       M2 20.0 86.7      # a join
+a       M1 3.78 88.0      # casc_p a drop
+a       M1 33.31 88.0     # ab_n a drop
+a       M1 42.86 88.0     # ab_p a drop
+a       M1 46.07 88.0     # pd_p a drop
+a       M1 20.0 50.64     # CMA gate head
+b       M2 20.0 87.7      # b join
+b       M2 75.19 88.3     # casc_n b drop
+b       M2 31.93 88.3     # ab_n b drop
+b       M2 43.84 88.3     # ab_p b drop
+b       M1 50.95 88.3     # pd_n b drop
+b       M1 57.0 41.7      # CMB S/D U
+dabp    M2 39.245 75.0    # replica line on RP1's drain
+dabp    M1 39.88 88.3     # ab_p dabp hop
+dabn    M2 38.3 30.0      # replica line on RN1's drain
+dabn    M1 37.09 88.3     # ab_n dabn hop
+iovdd_a M3 40.0 70.0
+iovdd_a M1 20.0 84.94     # NWell isolator
+iovdd_a M2 46.9 85.95     # SA's vddo tap
+iovdd_a M2 49.395 85.95   # pd_p vdd tap
+iovdd_a M1 2.0 30.0       # guard (DCN guard ring)
+iovdd_b M3 40.0 100.0
+iovdd_b M1 2.5 104.85     # loads / casc_p vdd tap
+iovdd_b M2 55.3 140.0     # tree vdd line
+iovdd_b M1 0.6 148.5      # left iovdd edge stub
+iovdd_b M1 79.4 148.5     # right iovdd edge stub
+iovss   M3 40.0 130.0
+iovss   M3 40.0 47.0
+iovss   M1 40.0 84.1      # P frame outer p+ ring
+iovss   M1 1.54 45.0      # CMA ring
+iovss   M1 75.94 45.0     # CMB ring right leg
+iovss   M2 50.4 85.0      # SB's vsso tap
+iovss   M2 31.155 85.0    # ab_n vss tap
+iovss   M2 53.405 85.0    # pd_n vss tap
+iovss   M1 78.0 94.375    # casc_n vss to the right stub
+iovss   M2 3.04 140.0     # tree vss line
+iovss   M1 0.6 110.0      # left p+ stub
+vss     M3 40.0 150.0
+vss     M1 0.8 157.0
+vdd     M3 40.0 170.0
+vdd     M1 0.25 167.0
+vinp    M2 57.8 179.5
+vref    M2 58.3 179.5
+vinn    M2 58.8 179.5
+vbp     M2 55.8 140.0
+vbn     M2 56.3 140.0
+vabn    M2 56.8 140.0
+vbnc    M2 57.3 140.0
+en_3v3  M2 59.3 140.0
+en_3v3_b M2 59.8 140.0
+x       M1 52.0 139.84
+y       M2 49.0 136.0
+vbpc    M2 13.96 110.0
+vabp    M2 14.6 110.0

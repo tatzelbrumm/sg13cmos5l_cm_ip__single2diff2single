@@ -17,23 +17,27 @@ names an agent's own render.
 | `K_cv_thick_oxide.png` | K stage 2: the thick-oxide candidates (hv PMOS, S-Varicap) |
 | `K_c_along_swing.png` | K stage 3: capacitance of CMA / CMB and of the splits along the pad's DC swing |
 | `K_step_response.png` | K stage 4: closed-loop step at 1 kΩ ∥ 100 pF, present caps and variants |
-| `N_sinks_6x6_c.png` | N's cell sinks_6x6_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
-| `N_d2s_casc_n_c.png` | N's cell d2s_casc_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
-| `N_d2s_ab_n_c.png` | N's cell d2s_ab_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
-| `N_d2s_pd_n_c.png` | N's cell d2s_pd_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
-| `P_d2s_inputs_c.png` | P's cell d2s_inputs_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
-| `P_d2s_tails_c.png` | P's cell d2s_tails_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
-| `P_d2s_loads_c.png` | P's cell d2s_loads_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
-| `P_d2s_casc_p_c.png` | P's cell d2s_casc_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
-| `P_d2s_ab_p_c.png` | P's cell d2s_ab_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
-| `P_d2s_pd_p_c.png` | P's cell d2s_pd_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
-| `F_stage2_bias_tree_pd_cell.png` | F stage 2 (about 17:50), F's own render |
-| `F_stage2_d2s_rhigh_cell.png` | F stage 2 (about 17:50), F's own render |
-| `F_stage2_floorplan_v1_stage2.png` | F stage 2 (about 17:50), F's own render |
-| `F_stage2_pad_stage2_cma_ring_left.png` | F stage 2 (about 17:50), F's own render |
-| `F_stage2_pad_stage2_cma_ring_right.png` | F stage 2 (about 17:50), F's own render |
-| `F_stage2_pad_stage2_isolator_left.png` | F stage 2 (about 17:50), F's own render |
-| `F_stage2_pad_stage2_left_edge_top.png` | F stage 2 (about 17:50), F's own render |
-| `F_stage3_placement.png` | F stage 3 (18:11): bottom-up placement of the drawn cells in the pad context, before routing, F's own render |
+| `N_sinks_6x6_c.png` | REJECTED (18:55): N's cell sinks_6x6_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `N_d2s_casc_n_c.png` | REJECTED (18:55): N's cell d2s_casc_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `N_d2s_ab_n_c.png` | REJECTED (18:55): N's cell d2s_ab_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `N_d2s_pd_n_c.png` | REJECTED (18:55): N's cell d2s_pd_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `P_d2s_inputs_c.png` | REJECTED (18:55): P's cell d2s_inputs_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_tails_c.png` | REJECTED (18:55): P's cell d2s_tails_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_loads_c.png` | REJECTED (18:55): P's cell d2s_loads_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_casc_p_c.png` | REJECTED (18:55): P's cell d2s_casc_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_ab_p_c.png` | REJECTED (18:55): P's cell d2s_ab_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_pd_p_c.png` | REJECTED (18:55): P's cell d2s_pd_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `F_stage2_bias_tree_pd_cell.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_d2s_rhigh_cell.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_floorplan_v1_stage2.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_cma_ring_left.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_cma_ring_right.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_isolator_left.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_left_edge_top.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage3_placement.png` | REJECTED (18:55): F stage 3 (18:11): bottom-up placement of the drawn cells in the pad context, before routing, F's own render |
 | `K_pz_vs_pad.png` | K stage 6: poles / zeros of the loop gain against the pad voltage (vector fit), K's own plot |
 | `K_pm_fc_gm_vs_pad.png` | K stage 6: PM, fc, GM against the pad voltage, variants v0, v5–v8, K's own plot |
+| `F_stage3_routed_in_pad.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
+| `F_stage3_detail_bottom.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
+| `F_stage3_detail_right_channel.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
+| `F_stage3_detail_left_edge.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |

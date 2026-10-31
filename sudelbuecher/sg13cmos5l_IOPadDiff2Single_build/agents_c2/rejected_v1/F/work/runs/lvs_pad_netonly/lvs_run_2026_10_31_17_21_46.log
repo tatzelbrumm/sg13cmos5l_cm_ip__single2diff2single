@@ -1,0 +1,16 @@
+31-Oct-2026 17:21:46 | INFO    | Your Klayout version is: KLayout 0.30.12
+31-Oct-2026 17:21:46 | INFO    | Running SG13CMOS5L LVS checks on design /home/user/c2/F/work/runs/pad3.gds on cell sg13cmos5l_IOPadDiff2Single
+31-Oct-2026 17:21:51 | INFO    | ==============================================================================
+31-Oct-2026 17:21:51 | INFO    | Important Summary
+31-Oct-2026 17:21:51 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 17:21:51 | INFO    | | Status           | NET_ONLY                                                     |
+31-Oct-2026 17:21:51 | INFO    | | Mode             | NET_ONLY                                                     |
+31-Oct-2026 17:21:51 | INFO    | | Outcome          | NET_ONLY mode: extracted netlist generated from layout only. |
+31-Oct-2026 17:21:51 | INFO    | | Layout           | pad3.gds                                                     |
+31-Oct-2026 17:21:51 | INFO    | | Top Cell         | sg13cmos5l_IOPadDiff2Single                                  |
+31-Oct-2026 17:21:51 | INFO    | | Results Dir      | /home/user/c2/F/work/runs/lvs_pad_netonly                    |
+31-Oct-2026 17:21:51 | INFO    | | Warnings         | 0                                                            |
+31-Oct-2026 17:21:51 | INFO    | | Errors           | 0                                                            |
+31-Oct-2026 17:21:51 | INFO    | | Run Time (s)     | 5.614                                                        |
+31-Oct-2026 17:21:51 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 17:21:51 | INFO    | ==============================================================================

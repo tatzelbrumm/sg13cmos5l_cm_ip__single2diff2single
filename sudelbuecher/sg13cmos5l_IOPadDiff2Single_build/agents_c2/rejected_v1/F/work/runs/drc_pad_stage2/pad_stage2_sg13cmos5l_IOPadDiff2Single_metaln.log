@@ -1,0 +1,351 @@
+# Logfile created on 2026-10-31 16:48:37 +0000 by logger.rb/v1.5.3
+2026-10-31 16:48:37 +0000: Memory Usage (429728K) : Starting running IHP-SG13CMOS5L KLayout DRC runset on /home/user/c2/F/work/pad_stage2.gds
+2026-10-31 16:48:37 +0000: Memory Usage (429728K) : Ruby Version for klayout: 3.2.3
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : Loading database to memory is complete.
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : IHP-SG13CMOS5L KLayout DRC runset output at: /home/user/c2/F/work/runs/drc_pad_stage2/pad_stage2_sg13cmos5l_IOPadDiff2Single_metaln.lyrdb
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : Evaluate switches.
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : tables selected: metaln
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : KLayout will use 4 thread(s) in tiled mode.
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : deep mode is enabled.
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : FEOL enabled: false
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : BEOL enabled: false
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : OFFGRID enabled: true
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : ANGLE enabled: true
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : PIN enabled: false
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : FORBIDDEN enabled: false
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : RECOMMENDED enabled: true
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : Minimum DRC enabled: false
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : CONNECTIVITY_RULES enabled: false.
+2026-10-31 16:48:37 +0000: Memory Usage (430944K) : Read in polygons from layers.
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : activ_drw has 79 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : activ_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : activ_mask has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : activ_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : activ_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : activ_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : activ_iopc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : activ_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : biwind_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : biwind_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432448K) : pemwind_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432576K) : gatpoly_drw has 115 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432576K) : gatpoly_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432832K) : gatpoly_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432832K) : gatpoly_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432832K) : gatpoly_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432832K) : gatpoly_iopc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (432832K) : gatpoly_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433216K) : cont_drw has 15437 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433344K) : cont_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433472K) : nsd_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433472K) : nsd_block has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433600K) : metal1_drw has 332 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433600K) : metal1_pin has 87 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433600K) : metal1_mask has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433728K) : metal1_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433728K) : metal1_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433728K) : metal1_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433984K) : metal1_text has 87 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (433984K) : metal1_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434112K) : metal1_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434112K) : metal1_res has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434240K) : metal1_iprobe has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434240K) : metal1_diffprb has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434368K) : passiv_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434368K) : passiv_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434496K) : passiv_sbump has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434496K) : passiv_pillar has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434496K) : passiv_pdl has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434624K) : metal2_drw has 159 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434624K) : metal2_pin has 7 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434752K) : metal2_mask has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434752K) : metal2_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434880K) : metal2_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (434880K) : metal2_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435008K) : metal2_text has 7 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435008K) : metal2_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435136K) : metal2_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435136K) : metal2_res has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435264K) : metal2_iprobe has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435264K) : metal2_diffprb has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435392K) : baspoly_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435392K) : baspoly_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435392K) : psd_drw has 38 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435520K) : nldb_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435520K) : digibnd_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435648K) : via1_drw has 4844 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435776K) : backmetal1_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435904K) : backmetal1_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435904K) : backmetal1_mask has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (435904K) : backmetal1_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436032K) : backmetal1_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436032K) : backmetal1_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436160K) : backmetal1_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436160K) : backmetal1_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436160K) : backmetal1_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436288K) : backmetal1_res has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436288K) : backmetal1_iprobe has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436416K) : backmetal1_diffprb has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436416K) : backpassiv_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436544K) : res_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436544K) : sram_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436544K) : trans_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436672K) : ind_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436672K) : ind_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436800K) : ind_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436800K) : salblock_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436928K) : via2_drw has 2249 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (436928K) : metal3_drw has 8 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437056K) : metal3_pin has 8 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437056K) : metal3_mask has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437184K) : metal3_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437184K) : metal3_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437312K) : metal3_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437312K) : metal3_text has 8 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437440K) : metal3_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437440K) : metal3_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437568K) : metal3_res has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437568K) : metal3_iprobe has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437568K) : metal3_diffprb has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437696K) : nwell_drw has 30 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437696K) : nwell_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437824K) : nbulay_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437824K) : nbulay_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437952K) : nbulay_block has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (437952K) : emwind_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438080K) : emwind_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438080K) : deepco_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438208K) : deepco_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438208K) : mim_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438208K) : edgeseal_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438208K) : edgeseal_bound has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438208K) : substrate_drw has 29 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438208K) : substrate_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438208K) : dfpad_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438208K) : dfpad_pillar has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438336K) : dfpad_sbump has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438336K) : thickgateox_drw has 5 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438336K) : pldb_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438464K) : pwell_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438464K) : pwell_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438592K) : pwell_block has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438592K) : ic_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438720K) : via3_drw has 2087 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438848K) : metal4_drw has 8 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438848K) : metal4_pin has 8 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438976K) : metal4_mask has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438976K) : metal4_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (438976K) : metal4_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439104K) : metal4_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439104K) : metal4_text has 8 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439232K) : metal4_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439232K) : metal4_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439360K) : metal4_res has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439360K) : metal4_iprobe has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439488K) : metal4_diffprb has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439488K) : heattrans_drw has 2 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439488K) : heatres_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439616K) : pempoly_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439616K) : fbe_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439744K) : empoly_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439744K) : ldmos_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439872K) : pbiwind_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (439872K) : digisub_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440000K) : nodrc_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440000K) : text_drw has 9 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440000K) : via4_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440128K) : metal5_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440128K) : metal5_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440128K) : metal5_mask has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440256K) : metal5_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440256K) : metal5_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440384K) : metal5_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440384K) : metal5_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440512K) : metal5_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440512K) : metal5_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440640K) : metal5_res has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440640K) : metal5_iprobe has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440768K) : metal5_diffprb has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440768K) : radhard_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440896K) : memcap_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440896K) : varicap_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (440896K) : flash_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441024K) : intbondvia_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441024K) : intbondmet_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441152K) : devbondvia_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441152K) : devbondmet_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441280K) : devtrench_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441280K) : redist_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441408K) : graphbot_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441408K) : graphtop_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441536K) : antvia1_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441536K) : antmetal2_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441536K) : graphcont_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441664K) : siwg_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441664K) : siwg_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441792K) : siwg_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441792K) : sigrating_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441920K) : singrating_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (441920K) : graphpas_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442048K) : emwind3_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442048K) : emwihv3_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442048K) : redbulay_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442176K) : smos_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442176K) : graphpad_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442304K) : polimide_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442304K) : polimide_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442432K) : recog_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442432K) : recog_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442560K) : recog_esd has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442560K) : recog_diode has 4 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442688K) : recog_tsv has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442688K) : recog_iprobe has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442688K) : recog_diffprb has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442816K) : recog_pillar has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442816K) : recog_sbump has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442944K) : recog_otp has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (442944K) : recog_pdiode has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443072K) : recog_mom has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443072K) : recog_momf has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443200K) : recog_pcm has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443200K) : colopen_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443328K) : graphmetal1_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443328K) : graphmetal1_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443328K) : graphmetal1_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443456K) : graphmetal1_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443456K) : graphmetal1_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443584K) : graphmet1l_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443584K) : graphmet1l_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443712K) : graphmet1l_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443712K) : graphmet1l_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443840K) : graphmet1l_opc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443840K) : extblock_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443968K) : nldd_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443968K) : pldd_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (443968K) : next_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444096K) : pext_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444096K) : nexthv_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444224K) : pexthv_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444224K) : graphgate_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444352K) : sinwg_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444352K) : sinwg_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : sinwg_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : mempad_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topvia1_drw has 1783 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_drw has 6 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_pin has 6 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_mask has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_text has 6 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_res has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_iprobe has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal1_diffprb has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : inldpwl_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : polyres_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : polyres_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : vmim_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : nbulaycut_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : antmetal1_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topvia2_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_mask has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_filler has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_nofill has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_slit has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_noqrc has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_res has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_iprobe has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : topmetal2_diffprb has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : snsring_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : sensor_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : snsarms_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : snscmosvia_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : colwind_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : flm_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : hafniumox_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : memvia_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : thinfilmres_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : rfmem_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m2m3 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m2m4 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m2m5 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m2tm1 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m2tm2 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m3m4 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m3m5 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m3tm1 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m3tm2 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m4m5 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m4tm1 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m4tm2 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m5tm1 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m5tm2 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_tm1tm2 has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m1sub has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m2sub has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m3sub has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m4sub has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_m5sub has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_tm1sub has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : norcx_tm2sub has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : snsbotvia_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : snstopvia_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : deepvia_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : fgetch_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : ctrgat_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : fgimp_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : emwihv_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : lbe_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : alcustop_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : nometfiller_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : prboundary_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange0_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange0_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange0_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange1_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange1_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange1_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange2_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange2_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange2_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange3_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange3_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange3_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange4_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange4_pin has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : exchange4_text has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : isonwell_drw has 0 polygons
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : Total no. of polygons in the design is 27456
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : Loaded TECH DRC rules values from /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json
+2026-10-31 16:48:37 +0000: Memory Usage (444480K) : Loaded default DRC rules values from /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json
+2026-10-31 16:48:37 +0000: Memory Usage (445508K) : Total area of the design is 14673.5688 um^2.
+2026-10-31 16:48:37 +0000: Memory Usage (445508K) : The design dimensions are 81.24000000000001 um * 180.62 um.
+2026-10-31 16:48:37 +0000: Memory Usage (445508K) : Starting general IHP-SG13CMOS5L derivations.
+2026-10-31 16:48:37 +0000: Memory Usage (445508K) : Starting Pwell derivations
+2026-10-31 16:48:37 +0000: Memory Usage (447652K) : Starting IHP-SG13CMOS5L DRC rules.
+2026-10-31 16:48:37 +0000: Memory Usage (447652K) : Starting 5.17 Metaln table
+2026-10-31 16:48:37 +0000: Memory Usage (447652K) : Executing rule M2.a
+2026-10-31 16:48:37 +0000: Memory Usage (448164K) : Executing rule M2.b
+2026-10-31 16:48:37 +0000: Memory Usage (448848K) : Executing rule M2.e
+2026-10-31 16:48:37 +0000: Memory Usage (449104K) : Executing rule M2.f
+2026-10-31 16:48:37 +0000: Memory Usage (449104K) : Executing rule M2.g
+2026-10-31 16:48:37 +0000: Memory Usage (449360K) : Executing rule M2.i
+2026-10-31 16:48:37 +0000: Memory Usage (449360K) : Executing rule M3.a
+2026-10-31 16:48:37 +0000: Memory Usage (449360K) : Executing rule M3.b
+2026-10-31 16:48:37 +0000: Memory Usage (449360K) : Executing rule M3.e
+2026-10-31 16:48:37 +0000: Memory Usage (449360K) : Executing rule M3.f
+2026-10-31 16:48:37 +0000: Memory Usage (449360K) : Executing rule M3.g
+2026-10-31 16:48:38 +0000: Memory Usage (449360K) : Executing rule M3.i
+2026-10-31 16:48:38 +0000: Memory Usage (449360K) : Executing rule M4.a
+2026-10-31 16:48:38 +0000: Memory Usage (449360K) : Executing rule M4.b
+2026-10-31 16:48:38 +0000: Memory Usage (449360K) : Executing rule M4.e
+2026-10-31 16:48:38 +0000: Memory Usage (449360K) : Executing rule M4.f
+2026-10-31 16:48:38 +0000: Memory Usage (449360K) : Executing rule M4.g
+2026-10-31 16:48:38 +0000: Memory Usage (449360K) : Executing rule M4.i
+2026-10-31 16:48:38 +0000: Memory Usage (449360K) : KLayout DRC run for tables 'metaln' completed in 1.11 seconds

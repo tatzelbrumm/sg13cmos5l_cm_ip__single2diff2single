@@ -1,0 +1,16 @@
+31-Oct-2026 17:39:12 | INFO    | Your Klayout version is: KLayout 0.30.12
+31-Oct-2026 17:39:12 | INFO    | Running SG13CMOS5L LVS checks on design /home/user/c2/F/out/cells/bias_tree_pd.gds on cell bias_tree_pd
+31-Oct-2026 17:39:16 | INFO    | ==============================================================================
+31-Oct-2026 17:39:16 | INFO    | Important Summary
+31-Oct-2026 17:39:16 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 17:39:16 | INFO    | | Status           | PASS                                                         |
+31-Oct-2026 17:39:16 | INFO    | | Mode             | COMPARE                                                      |
+31-Oct-2026 17:39:16 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+31-Oct-2026 17:39:16 | INFO    | | Layout           | bias_tree_pd.gds                                             |
+31-Oct-2026 17:39:16 | INFO    | | Top Cell         | bias_tree_pd                                                 |
+31-Oct-2026 17:39:16 | INFO    | | Results Dir      | /home/user/c2/F/work/runs/chk/lvs_bias_tree_pd               |
+31-Oct-2026 17:39:16 | INFO    | | Warnings         | 0                                                            |
+31-Oct-2026 17:39:16 | INFO    | | Errors           | 0                                                            |
+31-Oct-2026 17:39:16 | INFO    | | Run Time (s)     | 3.852                                                        |
+31-Oct-2026 17:39:16 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 17:39:16 | INFO    | ==============================================================================

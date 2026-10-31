@@ -1,0 +1,16 @@
+31-Oct-2026 17:38:58 | INFO    | Your Klayout version is: KLayout 0.30.12
+31-Oct-2026 17:38:58 | INFO    | Running SG13CMOS5L LVS checks on design /home/user/c2/F/out/pad_candidate.gds on cell sg13cmos5l_IOPadDiff2Single
+31-Oct-2026 17:39:03 | INFO    | ==============================================================================
+31-Oct-2026 17:39:03 | INFO    | Important Summary
+31-Oct-2026 17:39:03 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 17:39:03 | INFO    | | Status           | PASS                                                         |
+31-Oct-2026 17:39:03 | INFO    | | Mode             | COMPARE                                                      |
+31-Oct-2026 17:39:03 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+31-Oct-2026 17:39:03 | INFO    | | Layout           | pad_candidate.gds                                            |
+31-Oct-2026 17:39:03 | INFO    | | Top Cell         | sg13cmos5l_IOPadDiff2Single                                  |
+31-Oct-2026 17:39:03 | INFO    | | Results Dir      | /home/user/c2/F/work/runs/chk/lvs_pad                        |
+31-Oct-2026 17:39:03 | INFO    | | Warnings         | 0                                                            |
+31-Oct-2026 17:39:03 | INFO    | | Errors           | 0                                                            |
+31-Oct-2026 17:39:03 | INFO    | | Run Time (s)     | 5.095                                                        |
+31-Oct-2026 17:39:03 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 17:39:03 | INFO    | ==============================================================================
