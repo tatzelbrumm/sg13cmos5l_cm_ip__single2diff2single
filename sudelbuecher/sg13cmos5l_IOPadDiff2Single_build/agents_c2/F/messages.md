@@ -60,3 +60,10 @@ and P's notes); the lead's check of stage 2 (passed; `row_check.py` label bug fi
 ## about 18:00, from the lead (verbatim)
 
 > From the lead, correction to my 17:57 message. Christoph rejects sharing a well between CMA and CMB (my suggestion; withdrawn). CMA and CMB stay separate devices, each with its own well, its own region and its own guard ring, whatever is decided for CMB's orientation. Do not merge or abut their wells, and keep CMB as in the sheet until told otherwise. No reply needed.
+
+## about 18:15, from the lead (summary; verbatim text in the session)
+
+Christoph: "yes, have F reserve a spot for the CMB stage". Reserve a spot for IHP's secondary stage in front of CMB's gate
+(2 kΩ case: rppd 1 × 7.435 µm, dantenna 0.64 × 3.1 to the substrate, dpantenna 0.64 × 4.98 to iovdd), with a short wide
+pad-side connection and a short line to CMB's gate; in the ESD zone if it fits, else above y 88; keep CMB's gate feed as it is
+but cuttable at one place; mark the reserve in the previews and the report; don't draw the stage yet.
