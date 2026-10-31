@@ -1,0 +1,26 @@
+mkdir -p verification/drc
+sak-drc.sh -d -m -f "*" -w verification/drc layout/gds/bg_core_pd.gds
+[INFO] DEBUG is enabled!
+[INFO] flag -m is set.
+[INFO] flag -f is set to <*>.
+[INFO] flag -w is set to <verification/drc>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using layout file <layout/gds/bg_core_pd.gds>.
+[INFO] Running DRC of <layout/gds/bg_core_pd.gds>.
+[INFO] Results are put into </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/bg_core_pd/verification/drc>.
+[INFO] Launching Magic DRC...
+[INFO] Magic runs DRC on the .gds file.
+---
+[INFO] Magic DRC is clean!
+---
+CONGRATULATIONS! No DRC errors in <bg_core_pd> found!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |    \_____/    |
+   \             /
+    '.         .'
+      '-.....-'
+---
+[DONE] Bye!
