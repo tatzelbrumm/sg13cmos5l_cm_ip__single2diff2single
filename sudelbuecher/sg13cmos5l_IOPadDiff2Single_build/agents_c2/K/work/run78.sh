@@ -7,6 +7,6 @@ for deck in $DECKS; do for v in $VARIANTS; do for vd in ${VDS:-0}; do
   printf '.subckt fix_sel vdd vss vddo vsso vinp vinn vref vout vfb ibias en_3v3 sel0_3v3 sel1_3v3 en_3v3_b\nxsel vdd vss vddo vsso vinp vinn vref vout vfb ibias en_3v3 sel0_3v3 sel1_3v3 en_3v3_b fix_%s\n.ends\n' $v > $W/variant.inc
   if [ $v = v0 ] || [ ! -f $W/${OPP:-op}_v0_$vd.txt ]; then : > $W/nodeset.inc
   else awk '$2=="=" && $1 !~ /#|\(|^@|^x1\.xsel\.xk/ {print ".nodeset v(" $1 ")=" $3}' $W/${OPP:-op}_v0_$vd.txt > $W/nodeset.inc; fi
-  sed "s/\$variant/$v/g; s/\$vdv/$vd/g" $deck.spice > $W/run_$deck.spice
-  timeout 900 ngspice -b $W/run_$deck.spice > ../logs/${deck}_${v}_$vd.log 2>&1
+  sed "s/\$variant/$v/g; s/\$vdv/$vd/g; s/\$rload/${RLOAD:-1000}/g; s/\$cload/${CLOAD:-1e-10}/g" $deck.spice > $W/run_$deck.spice
+  timeout 900 ngspice -b $W/run_$deck.spice > ../logs/${deck}_${v}_$vd${CLOAD:+_$CLOAD}.log 2>&1
 done; done; done

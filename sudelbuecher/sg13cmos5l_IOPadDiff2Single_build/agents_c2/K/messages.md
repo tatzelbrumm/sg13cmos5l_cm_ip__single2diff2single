@@ -57,3 +57,15 @@ Christoph's symmetry remark verbatim and "yes, resume K with (1)". Stage 6: vari
 (the same rppd also in series with CMA's pad-side plate; optional dummy diodes at CMA), sweep of the pad over 0.94–2.31 V
 (≈ 9 points) at 100 pF and 300 pF unloaded, pole–zero map (`.pz` or fitted), fc / PM / GM per point, symmetry of sourcing
 and sinking; up to 3 more decks; plots `pz_vs_pad.png`, `pm_fc_gm_vs_pad.png`.
+
+## 18:40, K's stage 6 reply (summary)
+
+Deck 13 (`loop13_sweep.spice`), 108 runs: 9 pad points 0.94–2.29 V × 2 loads × 6 variants. `.pz` does not converge; poles /
+zeros by vector fitting of T(jω) (≤ 0.06 dB at 103 of 108 points). The asymmetry is the driver's: on the sourcing half
+(pad ≥ 2.17 V) an LHP zero falls to 7–9 MHz and the RHP zero from ≈ 250 to 56 MHz, GM 16.8 dB and PM 39.7° (300 pF) at
+2.29 V; the sinking half stays flat. Series R (CMB only or symmetric) moves PM / GM by ≤ 0.6; best worst case symmetric 2 kΩ
+73.2° / 40.2°; dummy diodes at CMA irrelevant (≤ 0.1°).
+
+## 18:41, the lead's check
+
+108 deck-13 logs: no `Transient op started`, no `Timestep too small`; added devices XK….

@@ -443,3 +443,94 @@ R × C_CMB, with C_CMB from §3.2 (present hv PMOS at the deck-6 bias) [sim inpu
   nothing in loop terms and ≈ 6 µm² of devices plus a 1 × 2 µm (or 1 × 7.4 µm) rppd. Whether that makes the gate CDM-safe is
   an ESD question (task F), not answered here. Next to "turn CMB around" (§Recommendation) this is now a second way to get the
   gate oxide off the bare pad, without a second pad-connected n-well.
+
+## Stage 6 — symmetry and pole–zero map over the swing (requested 18:25)
+
+Christoph: "the small signal poles and zeros depend on output voltage, and the consequences may get overlooked by just
+standard AC analysis at output voltage = output reference voltage."
+
+### 6.1 Setup [sim]
+
+- Variants (CMA / CMB orientation as now; `dut_variants.spice`): **v0** present; **v5 / v6** CMB-only secondary stage (stage 5,
+  587 Ω / 1992 Ω rppd + dantenna + dpantenna at CMB's gate); **v7 / v8 symmetric**: v5 / v6 plus the same rppd between the
+  pad and CMA's S/D/well (node `kca`, `XKRA8` / `XKRA9`), no diodes at CMA; **v7d** = v7 plus a dummy dantenna + dpantenna
+  at `kca` (`XKEN10`, `XKEP10`).
+- **Deck 13** `loop13_sweep.spice` (= deck 11 without the R check, plus `wrdata` of T(f)): the one pad sweep, vd = −1.4,
+  −1.05, −0.7, −0.35, 0, 0.35, 0.7, 1.05, 1.3 V → pad 0.937 … 2.292 V (9 points), at 1 kΩ ∥ 100 pF and at unloaded ∥ 300 pF;
+  6 variants × 9 × 2 = 108 runs (`work/run13.sh`), v0 first at each point, its op seeding the others' `.nodeset`.
+  Logs `out/logs/loop13_sweep_*` (108): no `Transient op started`, no `Timestep too small`; v0's op via "Source stepping
+  completed" (after "spice3 gmin stepping failed"), the others converged directly from the nodeset. Results
+  `out/logs/loop13.dat`, T(f) in `work/T13/`.
+- **Poles / zeros: fitted, not `.pz`.** A trial of ngspice's `pz` on this circuit (deck 13 at vd = 0, v0, 2.6 min) returned
+  60 identical garbage roots (−7.6e-7 ± j1e8 rad/s): it does not converge here. The poles and zeros are therefore fitted
+  from the loop-gain response T(jω), 1 Hz … 300 MHz, by vector fitting (Gustavsen & Semlyen, real formulation, relative
+  weighting; `work/vfit.py`), order 6 (order 5–10 where 6 gave roots that do not classify), pole–zero doublets above 10 kHz
+  within 5 % removed, roots below 1 Hz dropped (outside the band). Fit error 0.001–0.06 dB / 0.01–0.3° at 103 of 108
+  points; one point needed order 8 (0.001 dB) and 5 points order 5, fitting to 0.11–1.7 dB / 0.8–5.5° (v0 300 pF mid-rail, v5
+  100 pF mid-rail, v6 300 pF pad 1.48 V, v8 both loads at pad 0.94 V; low confidence, marked in `out/logs/stage6_table.txt`,
+  columns "fit_err" and "order"). PM / fc / GM come from the AC data directly, not from the fit. The full
+  table (T0, fc, PM, GM, p1, |p2| and its damping, |p3|, lowest LHP and RHP zero per point) is `out/logs/stage6_table.txt`;
+  the summary `stage6_summary.txt`; plots `out/pm_fc_gm_vs_pad.png`, `out/pz_vs_pad.png`.
+
+### 6.2 PM, fc, GM over the swing — v0 present [sim]
+
+| pad (V) | 0.94 | 1.12 | 1.30 | 1.48 | 1.65 | 1.83 | 2.00 | 2.17 | 2.29 |
+|---|---|---|---|---|---|---|---|---|---|
+| 100 pF: PM (°) | 79.0 | 76.8 | 74.9 | 73.2 | **72.6** | 72.7 | 73.9 | 75.1 | 75.4 |
+| 100 pF: fc (MHz) | 1.52 | 1.57 | 1.52 | 1.43 | 1.37 | 1.42 | 1.51 | 1.64 | 1.79 |
+| 100 pF: GM (dB) | 22.5 | 22.8 | 23.3 | 23.7 | 23.1 | 21.4 | 19.7 | 18.1 | **16.8** |
+| 300 pF: PM (°) | 44.2 | 43.0 | 42.4 | 42.1 | 42.2 | 42.1 | 42.2 | 41.6 | **39.7** |
+| 300 pF: fc (MHz) | 1.29 | 1.35 | 1.38 | 1.39 | 1.39 | 1.40 | 1.39 | 1.42 | 1.47 |
+| 300 pF: GM (dB) | 20.5 | 19.9 | 19.6 | 19.4 | 19.3 | 19.1 | 19.1 | 18.6 | **17.5** |
+
+### 6.3 Poles and zeros over the swing — v0, 1 kΩ ∥ 100 pF [sim, fitted]
+
+| pad (V) | 0.94 | 1.12 | 1.30 | 1.48 | 1.65 | 1.83 | 2.00 | 2.17 | 2.29 |
+|---|---|---|---|---|---|---|---|---|---|
+| p1 (Hz) | 124 | 137 | 152 | 166 | 168 | 145 | 105 | 70 | 56 |
+| \|p2\| (MHz), damping | 10.4, 0.73 | 10.3, 0.80 | 10.2, 0.91 | 8.0, 0.98 | 6.0, real | 6.9, real | 9.3, real | 9.4, 0.95 | 11.0, 0.88 |
+| lowest LHP zero (MHz) | 26 | 24 | 26 | 11 | 39 | 47 | 52 | **7.1** | **8.5** |
+| lowest RHP zero (MHz) | 247 | 249 | 258 | 258 | 261 | 259 | 157 | **56** | **58** |
+
+At unloaded ∥ 300 pF: p1 6.3–7.5 Hz (T0 103–105 dB), p2 = the output pole 1.45–1.51 MHz (real, nearly constant), LHP
+zero 38–44 MHz, dropping to 22 MHz at pad 2.29 V; RHP zero 190–330 MHz.
+
+### 6.4 Variants: worst-case PM and symmetry [sim]
+
+Symmetry = |PM(+x) − PM(−x)| for mirrored vd (x = 0.35 / 0.7 / 1.05 V, and the ends vd = −1.4 / +1.3 V).
+
+| variant | worst PM 100 pF (at pad) | worst PM 300 pF (at pad) | min GM 100 / 300 pF | \|ΔPM\| mirrored, 100 pF | \|ΔPM\| mirrored, 300 pF | fc max / min 100 / 300 pF |
+|---|---|---|---|---|---|---|
+| v0 present | 72.6 (1.65) | 39.7 (2.29) | 16.8 / 17.5 | 0.5 / 0.9 / 1.8 / 3.6 | 0.1 / 0.2 / 1.3 / 4.6 | 1.31 / 1.14 |
+| v5 CMB 587 Ω | 72.6 (1.65) | 39.8 (2.29) | 16.8 / 17.6 | 0.5 / 0.9 / 1.6 / 3.5 | 0.0 / 0.1 / 1.3 / 4.5 | 1.31 / 1.14 |
+| v6 CMB 2 kΩ | 72.9 (1.65) | 40.1 (2.29) | 16.6 / 17.9 | 0.4 / 0.7 / 1.4 / 3.1 | 0.0 / 0.0 / 1.1 / 4.2 | 1.31 / 1.14 |
+| v7 sym 587 Ω | 72.7 (1.65) | 39.8 (2.29) | 16.8 / 17.7 | 0.5 / 0.9 / 1.8 / 3.6 | 0.1 / 0.2 / 1.3 / 4.6 | 1.31 / 1.14 |
+| **v8 sym 2 kΩ** | **73.2** (1.65) | **40.2** (2.29) | 16.8 / **18.1** | 0.5 / 1.0 / 1.7 / 3.6 | 0.1 / 0.2 / 1.3 / 4.5 | 1.31 / 1.14 |
+| v7d sym 587 Ω + dummy diodes | 72.7 (1.65) | 39.8 (2.29) | 16.8 / 17.7 | identical to v7 | identical to v7 | 1.31 / 1.14 |
+
+### 6.5 Reading
+
+- **What moves with the pad voltage** [sim, fitted]: the dominant pole p1 (×3 at 100 pF: 168 Hz at mid-rail, 56 Hz at the
+  top, together with T0 rising from 78.5 to 90 dB — the gain-bandwidth stays near 1.4–1.8 MHz); the non-dominant pole
+  (6 MHz real at mid-rail, 10–11 MHz and complex with damping 0.73–0.88 at both ends); and, **only on the sourcing half
+  (pad ≥ 2.17 V)**, a zero pair: an LHP zero comes down to 7–9 MHz and the RHP zero from ≈ 250 MHz to 55–58 MHz. On the
+  sinking half (pad ≤ 1.30 V) the zeros stay where they are at mid-rail (LHP 24–26 MHz, RHP ≈ 250 MHz). The output pole at
+  300 pF (≈ 1.5 MHz) does not move.
+- **The two halves are not symmetric**, and the asymmetry is the driver's, not the capacitors': at 100 pF PM rises toward
+  both ends but more on the sinking side (79.0° at 0.94 V against 75.4° at 2.29 V), GM falls only on the sourcing side
+  (23.7 → 16.8 dB, 1.8 dB above the 15 dB proposal); at 300 pF PM is flat at 42–44° on the sinking side and drops to 39.7°
+  at 2.29 V. In the sourcing half the class-AB control pushes b (ON's gate) to 0.62–0.65 V, close to ON's threshold, so the
+  b-side path (ON, CMB) loses gm; that is where the extra zero pair appears [mechanism est; numbers sim].
+- **Christoph's point holds**: the mid-rail AC analysis that CACE runs shows the *lowest* PM at 100 pF (72.6°), but hides
+  the worst GM (16.8 dB) and, at 300 pF, the worst PM (39.7°, below the 40° proposal), both at the top of the swing.
+- **The series R, one-sided or symmetric, changes almost nothing** [sim]: PM within +0.6°, GM within +0.6 dB, fc within
+  0.3 %, the same pole-zero pattern and the same asymmetry (|ΔPM| at the ends 3.1–3.6° at 100 pF, 4.2–4.6° at 300 pF for
+  every variant). Making CMA's network a mirror of CMB's (v7 / v8) does not make the loop symmetric, because the loop's
+  asymmetry does not come from the capacitor networks.
+- **Best variant:** v8 (2 kΩ in front of both caps) has the highest worst-case PM over the whole swing (73.2° at 100 pF,
+  40.2° at 300 pF) and the highest worst-case GM at 300 pF (18.1 dB); v6 (2 kΩ at CMB only) is the most symmetric by a
+  small margin (end asymmetry 3.1° / 4.2°). The differences to v0 are 0.5° — within what a corner or layout parasitic
+  would move. Neither is a reason to choose a variant; the choice of CMB's protection can be made on ESD grounds alone.
+- **Dummy junction capacitance at CMA** (v7d against v7): identical to 0.1° and 0.1 dB everywhere [sim]; the ≈ 5 fF of the
+  diodes [est] is nothing next to ≈ 0.5–1.2 pF of CMA. Matching it is not needed.
+- Deck budget: deck 13 only (decks 14–15 unused); the `.pz` trial was deck 13 with an added `pz` line.

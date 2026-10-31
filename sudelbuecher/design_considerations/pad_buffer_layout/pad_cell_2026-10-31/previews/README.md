@@ -35,3 +35,5 @@ names an agent's own render.
 | `F_stage2_pad_stage2_isolator_left.png` | F stage 2 (about 17:50), F's own render |
 | `F_stage2_pad_stage2_left_edge_top.png` | F stage 2 (about 17:50), F's own render |
 | `F_stage3_placement.png` | F stage 3 (18:11): bottom-up placement of the drawn cells in the pad context, before routing, F's own render |
+| `K_pz_vs_pad.png` | K stage 6: poles / zeros of the loop gain against the pad voltage (vector fit), K's own plot |
+| `K_pm_fc_gm_vs_pad.png` | K stage 6: PM, fc, GM against the pad voltage, variants v0, v5–v8, K's own plot |
