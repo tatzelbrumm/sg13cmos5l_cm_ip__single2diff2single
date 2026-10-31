@@ -56,3 +56,7 @@ and P's notes); the lead's check of stage 2 (passed; `row_check.py` label bug fi
 > From the lead, about 18:00 CET. One more from Christoph, verbatim: "F can tweak the layout primitives ex post facto and build the floorplan from there."
 >
 > So you may change your copies of P's and N's cells (pin positions, outlines, tie strips, aspect, column pitch of the tails to match the tubs, etc.) and then build the floorplan from the tweaked cells. Keep each tweaked cell DRC clean and LVS-matched on its own, name it distinctly (e.g. `<cell>_f`), and list every change in your report. No reply needed.
+
+## about 18:10, from the lead (verbatim)
+
+> From the lead, correction to my 17:57 message. Christoph rejects sharing a well between CMA and CMB (my suggestion; withdrawn). CMA and CMB stay separate devices, each with its own well, its own region and its own guard ring, whatever is decided for CMB's orientation. Do not merge or abut their wells, and keep CMB as in the sheet until told otherwise. No reply needed.
