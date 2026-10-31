@@ -7,6 +7,12 @@
 * (scripts/cace/pex_for_sim.py --mm-ok --tie; make cores-pex-sim). pnpMPA has no mismatch model.
 * Included before the DUT netlist: ngspice keeps these definitions of oa_core_pd / bg_core_pd and ignores the
 * DUT netlist's own ("redefinition of .subckt ..., ignored" in the ngspice log). Relative paths resolve from this file.
+* Convergence: 2 of the 600 runs of mm_params fell back to a transient op with the defaults; same settings as
+* magic_pex_3.spice (itl1 5000 for the op, reltol 1e-3 at run time, since the template's later .options would win).
+.option itl1=5000
+.control
+option reltol=1e-3
+.endc
 .include oa_core_pd_magic_pex_2_mm_ok.spice
 .include bg_core_pd_magic_pex_2_mm_ok.spice
 .subckt oa_core_pd vdd vss iout en_3v3 en_3v3_b

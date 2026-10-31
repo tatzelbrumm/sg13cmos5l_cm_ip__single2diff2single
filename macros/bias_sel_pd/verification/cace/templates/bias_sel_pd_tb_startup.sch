@@ -105,6 +105,9 @@ set dcabn = $&t
 let ts = CACE\{tramp\} + 1m
 let tstep = ts / 4000
 set tss = $&ts
+* reltol back to 1e-4 for the transient: the core views magic_pex_3 / magic_pex_2_mm_ok loosen it to 1e-3 at run time
+* for the op (no effect with the other views)
+option reltol=1e-4
 tran $&tstep $&ts uic
 let ib = abs(i(Vmbp))
 let ia = abs(i(Vmabn))

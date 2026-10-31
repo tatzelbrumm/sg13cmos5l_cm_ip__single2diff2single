@@ -87,6 +87,9 @@ XIBN en_3v3_b en_3v3 0 0 sg13_hv_nmos w=1u l=0.45u ng=1
 Vs0 sel0_3v3 0 PWL(0 \{i0*vd\} \{tsc\} \{i0*vd\} \{tsc+100p\} \{f0*vd\})
 Vs1 sel1_3v3 0 PWL(0 \{i1*vd\} \{tsc\} \{i1*vd\} \{tsc+100p\} \{f1*vd\})
 .control
+* reltol 1e-4 for the transient: the core views magic_pex_3 / magic_pex_2_mm_ok loosen it to 1e-3 at run time for
+* the op; settling to 1 % needs 1e-4 (no effect with the other views, which keep the 1e-4 of .options)
+option reltol=1e-4
 tran 20n 200u
 let tev = CACE\{step\} lt 3
 let tev = tev * 1e-6 + (1 - tev) * 100e-6
