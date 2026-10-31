@@ -121,7 +121,9 @@ don't carry `Recog.esd`. What IHP does publish, and what follows for this cell:
 `/foss/setup.log` needs `APT_OK`, `PIP_OK`, `TOOLS_OK`, `PDK_OK` and `SETUP_DONE`, and no `KLAYOUT_DEB_FAILED`.
 Record the versions as C0 did: klayout, magic, netgen, xschem, and `git -C /foss/pdks/IHP-Open-PDK rev-parse HEAD`.
 PDK paths in this brief are relative to `/foss/pdks/ihp-sg13cmos5l/`, and IHP's I/O cells are in
-`libs.ref/sg13cmos5l_io/gds/`. The OSDI models aren't needed, because nothing is simulated.
+`libs.ref/sg13cmos5l_io/gds/`. Agent K simulates, so `/foss/setup.log` also needs `OSDI_OK` and `CACE_OK`
+(claude-cloud-config installs CACE 2.11.0 under `python3.12` with `python3-tk`, since 2026-10-31; check
+`cace --version`). Without `CACE_OK` the environment still runs the old setup script: say so and stop.
 
 ## Phase 1, lead: frame, partition, budget
 
@@ -200,6 +202,14 @@ At most 10 decks, no sweeps beyond a C(V) curve and the DC swing.
 **Simulation setup:**
 - PDK `/foss/pdks/ihp-sg13cmos5l` at the environment's `df4c5054`. First compare its capacitor model files with the
   sha256 in A5's `inputs.md` and note any difference.
+- **Checks from C1** (`sudelbuecher/cloud_sessions/C1_core_pex_bias_verification_report.md`):
+  - Grep every ngspice log for `Transient op started` and `Timestep too small`. A failed op that falls back to a
+    transient op gives plausible, wrong numbers (+18 % in C1), and CACE still reports pass. "Dynamic gmin stepping
+    failed" followed by a successful true gmin stepping is a valid op.
+  - SPICE names are case-insensitive: `XRP1` and `XRp1` are the same instance, and ngspice-47 stops ("device already
+    exists"). Give every added device a name that differs from the template's by more than case.
+  - Run every pad template once, unchanged, before trusting or extending it: in C1 two templates had not run since an
+    edit. All 17 pad templates default to `sel` = 0 (harness current, cores off).
 - ngspice-47 and the prebuilt OSDI models (`OSDI_OK` in `/foss/setup.log`). Compile a missing model with the openvaf of
   claude-cloud-config's tools, and record it.
 
@@ -247,7 +257,10 @@ The lead passes each stage on to F.
 ## Phase 3, agent F (as A2): floorplan and assembly
 
 - **Also F's own cells:**
-  - the `d2s_rhigh` R block (rhigh chains, as `bg_res_c`);
+  - the `d2s_rhigh` R block (rhigh chains, as `bg_res_c`). Every extraction of `bg_core_pd` has one node next to each
+    rhigh segment that only capacitors touch (41 there); LVS doesn't see them, a simulation goes singular. Count them
+    in F's extraction and report them (the count: `git show origin/claude/c1-core-pex-verif:scripts/cace/pex_for_sim.py`,
+    not in `toplevel` yet);
   - CMA / CMB units (MOS capacitors, `d2s_cma` / `d2s_cmb`), with agent K's latest result;
   - the guard rings and band ties of rule ESD / phase 1;
   - `bias_tree_pd` drawn to its present sheet, if the budget lets it in.
@@ -286,7 +299,10 @@ The lead passes each stage on to F.
      `$latchUpRules` on.
 
    After that, phase 1's row checks on the final cell.
-4. **The open points of 2026-10-28**, each either closed or still open:
+4. **The pad's CACE results become stale** with the backannotated sheets (C1: `bias_sel_pd`'s results predated the
+   cores' redraw and moved by up to 1 %). Either rerun the groups the changed sheets touch, or state in the report that
+   the committed results predate them.
+5. **The open points of 2026-10-28**, each either closed or still open:
    - the a / b joins above the P frame;
    - `guard` not tied inside the cell;
    - CMA's ring;
@@ -301,6 +317,17 @@ The lead passes each stage on to F.
   clean after three rounds is reported and left; the work goes on with the others.
 - The lead does not redo an agent's work; it checks it.
 - `report.md` is updated after every phase, then committed and pushed.
+
+## Session mechanics (lessons of C1)
+
+- A background command is killed after 2 h. Keep each background job well under that; chain jobs, not one long loop.
+- Kill processes by PID. `pkill -f <pattern>` also kills the lead's own shell when the pattern is in its command line.
+- Status: check long runs at most every 15 min and don't reread logs in between. Asked for status, give runs done and
+  remaining, the finish estimate, and, if more than 1 h remains, what to drop to finish within 30 min.
+- Commit and push each finished result as it lands, renders and plots included (Christoph wants them). Give transient
+  files names that `.gitignore` covers or delete them, so the stop hook stays quiet.
+- A rerun that replaces results: its predecessor's logs go to `superseded_<reason>/` in the log folder, one line each
+  in the report saying why.
 
 ## Git, for this task only (Christoph's permission)
 
