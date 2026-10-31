@@ -1277,3 +1277,48 @@ From now on I'll end each task with the list of new paths to add, so you don't h
 
   The cloud credit runs until 2026-11-05 08:59 CET.
 - **Compaction at 15:53:** the transcript file was continued, so nothing was lost.
+
+## 2026-10-31 16:07–16:25 C2 launched (Christoph, 16:07: "steps 2 and 3: I notice you're creating these branches locally first now. IMPLICIT ASSUMPTION: Should I create this branch from the _sudelbuecher worktree directory? ... and I think I did step 2 before the git add and commit instructions you mentioned. Do I need to fix something?"; 16:15: "Step 5: Opus 5.5 High or Extra?"; 16:17, with a screenshot of the launch screen: "Good to go?"; 16:19: "Sent. When, again, should I check back before I run off?"; 16:22: "i can check that from my remote android device with Claude app, right? Anyhow, update log and chatlog, then we take a break and be Old Men Staring at clouds.")
+
+- **16:07, branches** (read-only check on the computer):
+  - Steps 1 and 2 were done: `toplevel`, `origin/toplevel`, `claude/c2-pad-layout` and `origin/claude/c2-pad-layout`
+    were all at 8a72dd8. Nothing to fix.
+  - The 15:58 reply said to commit the logs "before step 2"; it meant step 3 (the notes branch). The session's mistake.
+  - Step 3 works in either folder. Both are checkouts of one repository and share their branches, and
+    `git branch claude/c2-pad-layout-sudel sudel_buecher` names its own starting point. Suggested: the main folder, as
+    for step 2; `git branch` doesn't switch, so `sudel_buecher` stays checked out in the `_sudelbuecher` folder.
+  - Suggested order: step 3 first, at 21d022e, then the log commits in the `_sudelbuecher` folder and the push of
+    `sudel_buecher`. C2 writes neither the build log nor the chat log.
+- **16:15, effort: High,** not Extra. The brief puts the lead at Opus / high and no role above high. If deliveries keep
+  failing the lead's checks, the brief's remedy is a stronger model for that agent, not more effort for the lead.
+- **16:17, launch screen** (Christoph's screenshot; the chat log holds text only):
+  - "New session", environment `sg13cmos5l` ticked, repository `tatzelbrumm/sg13cmos5l_cm_ip__singl…`, branch
+    `claude/c2-pad-layout`, "Opus 5.5 High", "Auto";
+  - "Claude will push directly to `claude/c2-pad-layout`".
+
+  Read-only check:
+  - `claude/c2-pad-layout-sudel` = `origin/claude/c2-pad-layout-sudel` = 21d022e;
+  - `sudel_buecher` = `origin/sudel_buecher` = cce0e0c: 876d107 (log entry 15:48) and cce0e0c (chat log to 15:58) on
+    top of 21d022e.
+
+  So the prompt's "(it starts at the same commit)" was no longer true: the brief's worktree command now starts at
+  cce0e0c, and its push onto the notes branch is a fast-forward. The prompt was rewritten for that.
+  - "Auto" is in none of the notes, so the session didn't judge it.
+  - Step 4 (the new setup script) could not be checked from here. The reply asked whether it had saved; Christoph
+    sent the prompt.
+- **16:19, sent.** The launch prompt, verbatim:
+
+  > You are on claude/c2-pad-layout, created from toplevel (8a72dd8) for this task; don't create it again.
+  > claude/c2-pad-layout-sudel also exists on origin, created from sudel_buecher (21d022e); origin/sudel_buecher has two
+  > log commits more since (cce0e0c). Use the brief's worktree command unchanged and push to that existing branch: it
+  > is a fast-forward. The "(draft)" in the brief's title is only part of its name; the brief is final. Run git fetch
+  > origin sudel_buecher, read sudelbuecher/cloud_sessions/C2_pad_cram_draft.md from origin/sudel_buecher, and carry
+  > it out exactly.
+- **First check at about 16:35:**
+  - first the changed setup script runs (about 5 min or more), then phase 0;
+  - good: tool versions with `OSDI_OK` and `CACE_OK`;
+  - stopped without `CACE_OK`: the setup script didn't save.
+
+  The other stop C2 can make on its own is in phase 1, if the d2s front end doesn't fit even compacted.
+- **Checking from the phone (16:22):** Claude Code runs on mobile as well as on the web and the desktop, so the
+  Android app should show the session. The session didn't describe the app's screens.
