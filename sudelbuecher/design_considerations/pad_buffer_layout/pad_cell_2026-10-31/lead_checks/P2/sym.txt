@@ -1,0 +1,16 @@
+d2s_inputs_c2: Activ bbox (0.62,1.7;40.3,24.74); axes x = 20.46, y = 13.22 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+d2s_tails_c2: Activ bbox (0.62,0.62;34.07,14.19); axes x = 17.345, y = 7.405 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+d2s_loads_c2: Activ bbox (0.62,0.62;30.07,13.05); axes x = 15.345, y = 6.835 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+d2s_casc_p_c2: Activ bbox (0.62,0.62;35.04,13.05); axes x = 17.83, y = 6.835 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+tub_p20x1_c2: Activ bbox (-0.51,0;3.57,10); axes x = 1.53, y = 5 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+d2s_ab_p_c2: Activ bbox (0.62,0.62;7.86,8.38); axes x = 4.24, y = 4.5 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+d2s_pd_p_c2: Activ bbox (0.62,0.62;3.09,2.35); axes x = 1.855, y = 1.485 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+bias_tree_p_c2: Activ bbox (0.62,0.62;17.57,8.7); axes x = 9.095, y = 4.66 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

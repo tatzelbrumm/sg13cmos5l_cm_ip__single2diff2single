@@ -1,0 +1,8 @@
+pmosHV_w5_l6         vs library pmosHV$1  XOR area 0 dbu2
+pmosHV_w6_l4         vs library pmosHV$2  XOR area 0 dbu2
+pmosHV_w15_l3        vs library pmosHV$3  XOR area 0 dbu2
+pmosHV_w1_l4         vs library pmosHV$4  XOR area 0 dbu2
+pmosHV_w6p66_l0p6    vs library pmosHV$5  XOR area 0 dbu2
+pmosHV_w1_l0p45      vs library pmosHV$7  XOR area 0 dbu2
+pmosHV_w20_l1_ng2    vs library pmosHV    XOR area 0 dbu2
+pmosHV_w2_l6         vs library pmosHV$8  XOR area 0 dbu2

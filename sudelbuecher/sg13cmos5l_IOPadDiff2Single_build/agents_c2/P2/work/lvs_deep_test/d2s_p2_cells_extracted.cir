@@ -1,0 +1,21 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 31/10/2026 19:21
+
+.SUBCKT d2s_inputs_c2 sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vdd vfb vinn
++ vinp vref x y
+X$1 vdd vdd vdd tub_p20x1_c2
+X$2 vdd vdd vdd tub_p20x1_c2
+X$3 vref sa_B y tub_p20x1_c2
+X$4 vfb sb_C1 x tub_p20x1_c2
+X$5 vfb sb_C2 x tub_p20x1_c2
+X$6 vinp sa_A y tub_p20x1_c2
+X$7 vdd vdd vdd tub_p20x1_c2
+X$8 vdd vdd vdd tub_p20x1_c2
+X$9 vref sb_A x tub_p20x1_c2
+X$10 vref sa_C2 y tub_p20x1_c2
+X$11 vref sa_C1 y tub_p20x1_c2
+X$12 vinn sb_B x tub_p20x1_c2
+.ENDS d2s_inputs_c2
+
+.SUBCKT tub_p20x1_c2 g s d
+M$1 s g d s sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u PD=31.06u rfmode=0
+.ENDS tub_p20x1_c2

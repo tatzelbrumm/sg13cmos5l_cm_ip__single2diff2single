@@ -1,0 +1,9 @@
+tub_p20x1_c2: 5.32 x 11.24 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_tails_c2: 34.69 x 14.81 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_loads_c2: 30.69 x 13.67 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_casc_p_c2: 35.66 x 13.67 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_ab_p_c2: 8.48 x 9.00 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_pd_p_c2: 3.71 x 2.97 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+bias_tree_p_c2: 18.19 x 9.32 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_inputs_c2: 40.92 x 26.44 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+ALLDONE

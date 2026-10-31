@@ -1,0 +1,18 @@
+31-Oct-2026 19:20:57 | INFO    | Your Klayout version is: KLayout 0.30.12
+31-Oct-2026 19:20:57 | INFO    | Running SG13CMOS5L LVS checks on design /home/user/c2/P2/out/d2s_p2_cells.gds on cell d2s_inputs_c2
+31-Oct-2026 19:21:01 | INFO    | ==============================================================================
+31-Oct-2026 19:21:01 | INFO    | Important Summary
+31-Oct-2026 19:21:01 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 19:21:01 | INFO    | | Status           | FAIL                                                         |
+31-Oct-2026 19:21:01 | INFO    | | Mode             | COMPARE                                                      |
+31-Oct-2026 19:21:01 | INFO    | | Outcome          | Comparison mode: FAIL (netlists do not match).               |
+31-Oct-2026 19:21:01 | INFO    | | Layout           | d2s_p2_cells.gds                                             |
+31-Oct-2026 19:21:01 | INFO    | | Top Cell         | d2s_inputs_c2                                                |
+31-Oct-2026 19:21:01 | INFO    | | Results Dir      | /home/user/c2/P2/work/lvs_flat_test                          |
+31-Oct-2026 19:21:01 | INFO    | | Warnings         | 0                                                            |
+31-Oct-2026 19:21:01 | INFO    | | Errors           | 1                                                            |
+31-Oct-2026 19:21:01 | INFO    | | Run Time (s)     | 3.884                                                        |
+31-Oct-2026 19:21:01 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 19:21:01 | ERROR   | Key errors:
+31-Oct-2026 19:21:01 | ERROR   |   - 2026-10-31 19:21:00 +0000: Memory Usage (461904K) : ERROR : Netlists don't match
+31-Oct-2026 19:21:01 | INFO    | ==============================================================================

@@ -1,0 +1,83 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_p2_cells.cdl: reference netlists of d2s_p2_cells.gds, written by build_d2s_p2.py (C2, agent P2, 2026-10-31).
+* Devices as drawn, one line per finger, dummies included (D = S = vdd).
+
+.SUBCKT tub_p20x1_c2 d g s
+M0 d g s s sg13_hv_pmos w=20u l=1u ng=2 m=1
+.ENDS tub_p20x1_c2
+
+.SUBCKT d2s_inputs_c2 sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vdd vfb vinn vinp vref x y
+XDlo0 vdd vdd vdd tub_p20x1_c2
+XBb x vinn sb_B tub_p20x1_c2
+XC1a y vref sa_C1 tub_p20x1_c2
+XC2a y vref sa_C2 tub_p20x1_c2
+XAb x vref sb_A tub_p20x1_c2
+XDlo5 vdd vdd vdd tub_p20x1_c2
+XDup0 vdd vdd vdd tub_p20x1_c2
+XAa y vinp sa_A tub_p20x1_c2
+XC2b x vfb sb_C2 tub_p20x1_c2
+XC1b x vfb sb_C1 tub_p20x1_c2
+XBa y vref sa_B tub_p20x1_c2
+XDup5 vdd vdd vdd tub_p20x1_c2
+.ENDS d2s_inputs_c2
+
+.SUBCKT d2s_tails_c2 sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vbp vdd
+MDl0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTBb sb_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC1a sa_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC2a sa_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTAb sb_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MDl5 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTAa sa_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC2b sb_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC1b sb_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTBa sa_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MDu5 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS d2s_tails_c2
+
+.SUBCKT d2s_loads_c2 l2 pl pr vdd
+MDl0 vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MR1l pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+ML2l pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+ML3l pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR4l pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDl5 vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MDu0 vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+ML1u pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR2u pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR3u pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+ML4u pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDu5 vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS d2s_loads_c2
+
+.SUBCKT d2s_casc_p_c2 a l2 pl pr vbpc vdd
+MPCRlo a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MDUM vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MPCLlo l2 vbpc pl vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MPCLup l2 vbpc pl vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MPCRup a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+.ENDS d2s_casc_p_c2
+
+.SUBCKT d2s_ab_p_c2 a b dabp l1 l2 vabp vdd
+MD0 vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MD4 vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+.ENDS d2s_ab_p_c2
+
+.SUBCKT d2s_pd_p_c2 a en_3v3 vabp vdd vddo
+MSA a en_3v3 vddo vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MSABP vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_pd_p_c2
+
+.SUBCKT bias_tree_p_c2 en_3v3_b iref ni vabn vbn vbnc vbp vdd
+MPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MD vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS bias_tree_p_c2

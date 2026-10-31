@@ -1,0 +1,4 @@
+bias_tree_p_c2: Activ bbox (0.62,0.62;17.35,8.7); axes x = 8.985, y = 4.66 um
+  N gate-contact poly narrower than 0.30 um at (1.17,2.36;1.17,8.36)
+  N gate-contact poly narrower than 0.30 um at (16.61,2.36;16.61,8.36)
+  summary: max mirror XOR 0.0000 um2, 2 narrow-poly hits
