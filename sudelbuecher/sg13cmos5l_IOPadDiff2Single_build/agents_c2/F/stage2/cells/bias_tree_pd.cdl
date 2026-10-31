@@ -1,0 +1,18 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias_tree_pd as drawn by agent F (C2 2026-10-31): the sheet's bias_tree_pd WITHOUT Xd = bias_diodes (BP, BN,
+* BNC, BPC are drawn in the tails, sinks and cascode cells); the library dummies as devices.
+.SUBCKT bias_tree_pd vdd vss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b
+MTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MNBP vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MNBPC vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+MNABP vabp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MNdummy vss ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+MPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPdummy vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+.ENDS bias_tree_pd

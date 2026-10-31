@@ -1,0 +1,5 @@
+.SUBCKT d2s_pd_p a en_3v3 vabp vdd
+* no tap in the cell (bulk on net nw, tied by the parent); vdd shared between SA and SABP
+Md2s_pd_p_SA_0 a en_3v3 vdd nw sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+Md2s_pd_p_SABP_1 vabp en_3v3 vdd nw sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_pd_p

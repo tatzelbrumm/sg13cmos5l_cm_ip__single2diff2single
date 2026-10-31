@@ -87,6 +87,10 @@ def build_row(ly, out):
 
 
 def nets_md(ly, top, length, out):
+    # extract on a flat copy: in a hierarchical extraction, net names of different subcircuits collide in `names`
+    flat = db.Layout(); flat.dbu = ly.dbu
+    ftop = flat.create_cell('row'); ftop.copy_tree(top); ftop.flatten(True)
+    src, ly, top = ly, flat, ftop
     l2n = db.LayoutToNetlist(db.RecursiveShapeIterator(ly, top, []))
     L = {n: l2n.make_layer(ly.layer(*ld), n) for n, ld in LAYERS.items()}
     activ = L['Activ'] - L['GatPoly']
@@ -156,7 +160,7 @@ def nets_md(ly, top, length, out):
         ok = bool(set.intersection(*f.values()))
         lines.append(f'| {name} | {y0:g}–{y1:g} | {rail} | {have} of {len(f)} | {len(allnets)} | {"pass" + label(f) if ok else "FAIL: " + detail(f)} |')
     for mname in ('Metal3', 'Metal4', 'TopMetal1'):
-        for y0, y1 in edge_intervals(ly, ly.cell('sg13cmos5l_IOPadAnalog'), ly.find_layer(*LAYERS[mname]), 0.0):
+        for y0, y1 in edge_intervals(src, src.cell('sg13cmos5l_IOPadAnalog'), src.find_layer(*LAYERS[mname]), 0.0):
             f = nets_in(L[mname], y0 + 0.05, y1 - 0.05)
             allnets = set().union(*f.values())
             have = sum(1 for v in f.values() if v)

@@ -21,3 +21,16 @@ names an agent's own render.
 | `N_d2s_casc_n_c.png` | N's cell d2s_casc_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
 | `N_d2s_ab_n_c.png` | N's cell d2s_ab_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
 | `N_d2s_pd_n_c.png` | N's cell d2s_pd_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `P_d2s_inputs_c.png` | P's cell d2s_inputs_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_tails_c.png` | P's cell d2s_tails_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_loads_c.png` | P's cell d2s_loads_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_casc_p_c.png` | P's cell d2s_casc_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_ab_p_c.png` | P's cell d2s_ab_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_pd_p_c.png` | P's cell d2s_pd_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `F_stage2_bias_tree_pd_cell.png` | F stage 2 (about 17:50), F's own render |
+| `F_stage2_d2s_rhigh_cell.png` | F stage 2 (about 17:50), F's own render |
+| `F_stage2_floorplan_v1_stage2.png` | F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_cma_ring_left.png` | F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_cma_ring_right.png` | F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_isolator_left.png` | F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_left_edge_top.png` | F stage 2 (about 17:50), F's own render |

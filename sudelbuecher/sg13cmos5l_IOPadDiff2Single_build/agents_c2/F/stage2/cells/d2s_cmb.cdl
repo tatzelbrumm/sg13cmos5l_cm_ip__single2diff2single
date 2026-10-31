@@ -1,0 +1,6 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_cmb (agent F, C2 2026-10-31): Miller capacitor CMB as in the sheet (XCMB b pad b b), hv PMOS 7.96/32.16
+.SUBCKT d2s_cmb b pad
+MCMB b pad b b sg13_hv_pmos w=7.96u l=32.16u ng=1 m=1
+.ENDS d2s_cmb

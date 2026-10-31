@@ -51,16 +51,16 @@ def devices(netlist_text, cell):
             continue
         if on and t[0].upper() == '.ENDS':
             break
-        if on and t[0][0] in 'MmXx':
+        if on and t[0][0] in 'MmXxRr':
             body.append(t)
     table = collections.defaultdict(lambda: [0, 0.0])
     for t in body:
         params = dict(p.lower().split('=', 1) for p in t if '=' in p)
         pos = [p for p in t[1:] if '=' not in p]
-        model = pos[4] if len(pos) > 4 else pos[-1]
+        model, nets = pos[-1], pos[:-1]
         val = lambda k: float(re.sub(r'u$', 'e-6', params.get(k, '0')))
         m = float(params.get('m', '1'))
-        key = (model.lower(), *pos[:4], round(val('l') * 1e6, 4))
+        key = (model.lower(), *(nets + [''] * (4 - len(nets)))[:4], round(val('l') * 1e6, 4))
         table[key][0] += int(m)
         table[key][1] += round(val('w') * 1e6 * m, 4)
     return table

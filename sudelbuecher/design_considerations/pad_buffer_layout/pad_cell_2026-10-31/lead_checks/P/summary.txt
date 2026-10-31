@@ -1,0 +1,10 @@
+d2s_inputs_c: 32.05 x 26.71 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_tails_c: 32.27 x 14.81 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_loads_c: 11.32 x 30.02 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_casc_p_c: 11.32 x 33.64 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_ab_p_c: 6.01 x 7.90 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_pd_p_c: 3.71 x 2.97 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+
+real	2m59.711s
+user	8m55.975s
+sys	0m46.076s

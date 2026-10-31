@@ -38,3 +38,21 @@ cascodes), LVS the pad flat, check the tree against "sheet minus diodes" as a pr
 N's cells passed the lead's check, read-only copy in `/home/user/c2/F/inputs_N/` (sizes, check results, the decision on
 SB's bulk = vss, to go into F's `netlist_changes.md`; XSA's bulk likewise vdd if P draws SA in the shared iovdd NWell);
 CMB: Christoph is deciding between keeping it and turning it around; keep it local to its own region.
+
+## about 17:50, F's stage 2 reply (summary)
+
+d2s_rhigh 13.92 × 15.41 (18 capacitor-only nodes in a magic PEX, mode 2), bias_tree_pd 52.36 × 11.82 (without its diodes,
+moved to the top band), d2s_cma / d2s_cmb one hv PMOS unit each, CMA's p+ guard ring closed (CMA's junction vias moved to M2
+tabs), `guard` tied to iovdd, NWell isolator, edge stubs; `pad_stage2.gds` DRC 0, row check passes. Files: `stage2/`.
+
+## 17:57, from the lead (summary; verbatim text in the session)
+
+Stage 3 go. Christoph's two messages of about 17:55, verbatim; bottom-up floorplan from the drawn cells in the pad context,
+nothing back to P / N, a placement preview before routing; P's cells passed the check (`/home/user/c2/F/inputs_P/`, sizes
+and P's notes); the lead's check of stage 2 (passed; `row_check.py` label bug fixed); CMB still undecided.
+
+## about 18:00, from the lead (verbatim)
+
+> From the lead, about 18:00 CET. One more from Christoph, verbatim: "F can tweak the layout primitives ex post facto and build the floorplan from there."
+>
+> So you may change your copies of P's and N's cells (pin positions, outlines, tie strips, aspect, column pitch of the tails to match the tubs, etc.) and then build the floorplan from the tweaked cells. Keep each tweaked cell DRC clean and LVS-matched on its own, name it distinctly (e.g. `<cell>_f`), and list every change in your report. No reply needed.

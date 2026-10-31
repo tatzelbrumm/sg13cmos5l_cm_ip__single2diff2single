@@ -1,0 +1,71 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_p_cells.cdl: reference netlists of d2s_p_cells.gds (build_d2s_p.py, agent P, 2026-10-31).
+* Devices as drawn, dummies included (D = S for a dummy).
+
+* SA bulk = vdd here (one NWell with the tie on vdd); the circuit has vddo
+.SUBCKT d2s_pd_p_c a en_3v3 vabp vddo vdd
+MSA a en_3v3 vddo vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MSABP vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_pd_p_c
+
+* RP1 is in the clamp frame (not here)
+.SUBCKT d2s_ab_p_c a b dabp l1 l2 vabp vdd
+MRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+.ENDS d2s_ab_p_c
+
+.SUBCKT d2s_casc_p_c a l2 pl pr vbpc vdd
+MPCL1 l2 vbpc pl vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MPCL2 l2 vbpc pl vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MPCR1 a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MPCR2 a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MDUM vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS d2s_casc_p_c
+
+.SUBCKT d2s_loads_c l2 pl pr vdd
+Md0 vdd l2 vdd vdd sg13_hv_pmos w=2u l=4u ng=1 m=1
+ML1 pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR2 pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR3 pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+ML4 pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+ML5 pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR6 pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR7 pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+ML8 pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+Md9 vdd l2 vdd vdd sg13_hv_pmos w=2u l=4u ng=1 m=1
+.ENDS d2s_loads_c
+
+* tail rows: row 1 Aa C2b C1b Ba, row 2 Bb C1a C2a Ab; BP at the right end of row 2
+.SUBCKT d2s_tails_c sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vbp vdd
+MTd1 vdd vbp vdd vdd sg13_hv_pmos w=0.3u l=6u ng=1 m=1
+MTAa sa_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC2b sb_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC1b sb_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTBa sa_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTd5 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTd2 vdd vbp vdd vdd sg13_hv_pmos w=0.3u l=6u ng=1 m=1
+MTBb sb_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC1a sa_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC2a sa_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTAb sb_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS d2s_tails_c
+
+* tubs: ng = 2, w = 20u (2 x 10/1), bulk = source; dummies 10/1 ng=1 on vdd
+.SUBCKT d2s_inputs_c vinp vref vinn vfb x y sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vdd
+MAa y vinp sa_A sa_A sg13_hv_pmos w=20u l=1u ng=2 m=1
+MC2b x vfb sb_C2 sb_C2 sg13_hv_pmos w=20u l=1u ng=2 m=1
+MC1b x vfb sb_C1 sb_C1 sg13_hv_pmos w=20u l=1u ng=2 m=1
+MBa y vref sa_B sa_B sg13_hv_pmos w=20u l=1u ng=2 m=1
+MBb x vinn sb_B sb_B sg13_hv_pmos w=20u l=1u ng=2 m=1
+MC1a y vref sa_C1 sa_C1 sg13_hv_pmos w=20u l=1u ng=2 m=1
+MC2a y vref sa_C2 sa_C2 sg13_hv_pmos w=20u l=1u ng=2 m=1
+MAb x vref sb_A sb_A sg13_hv_pmos w=20u l=1u ng=2 m=1
+MDm00 vdd vdd vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+MDm10 vdd vdd vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+MDm01 vdd vdd vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+MDm11 vdd vdd vdd vdd sg13_hv_pmos w=10u l=1u ng=1 m=1
+.ENDS d2s_inputs_c
