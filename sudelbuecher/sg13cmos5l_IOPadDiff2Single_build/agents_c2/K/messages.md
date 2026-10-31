@@ -50,3 +50,10 @@ worst case 39.8 / 40.1° against 39.7°; steps 0.3 % / 2 % slower, no overshoot;
 ## about 18:10, the lead's check
 
 Logs of decks 11 and 12 grepped: no `Transient op started`, `Timestep too small` or failure; added devices named XK….
+
+## about 18:25, from the lead (resume; summary — verbatim text in the session)
+
+Christoph's symmetry remark verbatim and "yes, resume K with (1)". Stage 6: variants v0, v5 / v6 (CMB-only stage), v7 / v8
+(the same rppd also in series with CMA's pad-side plate; optional dummy diodes at CMA), sweep of the pad over 0.94–2.31 V
+(≈ 9 points) at 100 pF and 300 pF unloaded, pole–zero map (`.pz` or fitted), fc / PM / GM per point, symmetry of sourcing
+and sinking; up to 3 more decks; plots `pz_vs_pad.png`, `pm_fc_gm_vs_pad.png`.
