@@ -1,0 +1,43 @@
+* K deck 6: DC swing of the pad (schematic netlist, CACE tb_dc sources unchanged), one sweep vd = -3.3 ... +3.3 V.
+* x1: the template's load (1 kOhm to vterm 1.65 V, 100 pF); x2: unloaded (1 GOhm). Records pad, a, b for both,
+* (a, b are net2, net3 in the netlisted pad), i.e. the bias of CMA (V_GW = a - pad) and CMB (V_GW = pad - b).
+x1 iovdd 0 vcore 0 pad vinp vinn vref ibias en s0 s1 s12 s33 sg13cmos5l_IOPadDiff2Single
+x2 iovdd 0 vcore 0 pad2 vinp vinn vref ibias en s0 s1 s12 s33 sg13cmos5l_IOPadDiff2Single
+.lib cornerMOShv.lib mos_tt
+.lib cornerMOSlv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.lib cornerPNP.lib typ
+.lib cornerDIO.lib dio_tt
+.include sg13cmos5l_io.spice
+Vio iovdd 0 dc 3.3 ac 0
+Vcore vcore 0 1.2
+Ven en 0 1.2
+Vs0 s0 0 0
+Vs1 s1 0 0
+Vs12 s12 0 1.2
+Vs33 s33 0 3.3
+Vext vext 0 3.3
+Iext xg 0 5e-06
+XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
+Vref vref 0 1.65
+Vic vic 0 dc 1.65 ac 0
+Vd dp 0 dc 0 ac 0
+Ep vinp vic dp 0 0.5
+En vinn vic dp 0 -0.5
+RL pad vterm 1000
+Vterm vterm 0 1.65
+CL pad 0 1e-10
+RL2 pad2 0 1G
+CL2 pad2 0 1e-10
+.include /home/user/c2/K/out/decks/dut_pad.spice
+.temp 27
+.options savecurrents klu method=gear reltol=1e-4 abstol=1e-15 gmin=1e-15
+.option warn=1
+.control
+save v(pad) v(x1.net2) v(x1.net3) v(pad2) v(x2.net2) v(x2.net3)
+dc Vd -3.3 3.3 0.02
+wrdata /home/user/c2/K/out/logs/dc6_swing.dat v(pad) v(x1.net2) v(x1.net3) v(pad2) v(x2.net2) v(x2.net3)
+.endc
+.end

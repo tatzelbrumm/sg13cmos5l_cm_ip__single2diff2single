@@ -1,0 +1,42 @@
+Sat Oct 31 18:34:12 CET 2026
+DRC sg13cmos5l_IOPadDiff2Single: 0 violations ; exceptions in log: 0; lyrdb files: 1
+DRC d2s_block: 0 violations ; exceptions in log: 0; lyrdb files: 1
+DRC d2s_rhigh: 0 violations ; exceptions in log: 0; lyrdb files: 1
+DRC bias_tree_pd: 0 violations ; exceptions in log: 0; lyrdb files: 1
+DRC d2s_cma: 0 violations ; exceptions in log: 0; lyrdb files: 1
+DRC d2s_cmb: 0 violations ; exceptions in log: 0; lyrdb files: 1
+DRC cm_rings: 0 violations ; exceptions in log: 0; lyrdb files: 1
+LVS sg13cmos5l_IOPadDiff2Single: MATCH
+    2026-10-31 17:39:00 +0000: Memory Usage (428644K) : Selected IGNORE_TOP_PORTS_MISMATCH option: true
+    2026-10-31 17:39:02 +0000: Memory Usage (470916K) : INFO : Congratulations! Netlists match.
+    31-Oct-2026 17:39:03 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+    31-Oct-2026 17:39:03 | INFO    | | Errors           | 0                                                            |
+LVS d2s_block: MATCH
+    2026-10-31 17:39:05 +0000: Memory Usage (428548K) : Selected IGNORE_TOP_PORTS_MISMATCH option: true
+    2026-10-31 17:39:07 +0000: Memory Usage (462964K) : INFO : Congratulations! Netlists match.
+    31-Oct-2026 17:39:07 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+    31-Oct-2026 17:39:07 | INFO    | | Errors           | 0                                                            |
+LVS d2s_rhigh: MATCH
+    2026-10-31 17:39:11 +0000: Memory Usage (457104K) : flag_missing_ports enabled: missing/mislabeled top-level ports are treated as errors.
+    2026-10-31 17:39:11 +0000: Memory Usage (457232K) : INFO : Congratulations! Netlists match.
+    31-Oct-2026 17:39:12 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+    31-Oct-2026 17:39:12 | INFO    | | Errors           | 0                                                            |
+LVS bias_tree_pd: MATCH
+    2026-10-31 17:39:15 +0000: Memory Usage (455752K) : flag_missing_ports enabled: missing/mislabeled top-level ports are treated as errors.
+    2026-10-31 17:39:15 +0000: Memory Usage (455880K) : INFO : Congratulations! Netlists match.
+    31-Oct-2026 17:39:16 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+    31-Oct-2026 17:39:16 | INFO    | | Errors           | 0                                                            |
+LVS d2s_cma: MATCH
+    2026-10-31 17:39:20 +0000: Memory Usage (452500K) : flag_missing_ports enabled: missing/mislabeled top-level ports are treated as errors.
+    2026-10-31 17:39:20 +0000: Memory Usage (452628K) : INFO : Congratulations! Netlists match.
+    31-Oct-2026 17:39:20 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+    31-Oct-2026 17:39:20 | INFO    | | Errors           | 0                                                            |
+LVS d2s_cmb: MATCH
+    2026-10-31 17:39:24 +0000: Memory Usage (452600K) : flag_missing_ports enabled: missing/mislabeled top-level ports are treated as errors.
+    2026-10-31 17:39:24 +0000: Memory Usage (452728K) : INFO : Congratulations! Netlists match.
+    31-Oct-2026 17:39:25 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+    31-Oct-2026 17:39:25 | INFO    | | Errors           | 0                                                            |
+PROBES: PASS (23 nets, 23 probes)
+antenna items: 0
+row check: 0 edge layers DIFFERENT, 0 bands/rails FAIL
+DRC row: 0 violations ; exceptions in log: 0; lyrdb files: 1

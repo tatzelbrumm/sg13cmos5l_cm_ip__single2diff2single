@@ -1,0 +1,32 @@
+Warning: singular matrix:  check node x1.xd.xc1.sb
+
+Warning: singular matrix:  check node x1.xd.xc1.sb
+
+Note: Starting dynamic gmin stepping
+Warning: singular matrix:  check node x2.net2
+
+Note: Dynamic gmin stepping completed
+
+Note: No compatibility mode selected!
+
+
+Circuit: * k deck 6: dc swing of the pad (schematic netlist, cace tb_dc sources unchanged), one sweep vd = -3.3 ... +3.3 v.
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using KLU as Direct Linear Solver
+ Reference value : -3.30000e+00 Reference value : -2.92000e+00 Reference value : -2.54000e+00 Reference value : -1.94000e+00 Reference value : -1.50000e+00 Reference value : -1.16000e+00 Reference value : -8.20000e-01 Reference value : -5.60000e-01 Reference value : -1.60000e-01 Reference value :  2.80000e-01 Reference value :  7.40000e-01 Reference value :  1.10000e+00 Reference value :  1.36000e+00Warning: singular matrix:  check node n.x2.xt.xnbp.nsg13_hv_nmos#NOI
+
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+OSDI(debug) n.x2.xd.xc2.xr.nr1: WARNING: V(i1,c) voltage is greater than specified by vmax
+OSDI(debug) n.x2.xd.xc2.xr.nr1: WARNING: V(i2,c) voltage is greater than specified by vmax
+OSDI(debug) n.x2.xd.xb.xr.nr1: WARNING: V(i1,c) voltage is greater than specified by vmax
+OSDI(debug) n.x2.xd.xb.xr.nr1: WARNING: V(i2,c) voltage is greater than specified by vmax
+OSDI(debug) n.x2.xd.xc1.xr.nr1: WARNING: V(i1,c) voltage is greater than specified by vmax
+OSDI(debug) n.x2.xd.xc1.xr.nr1: WARNING: V(i2,c) voltage is greater than specified by vmax
+OSDI(debug) n.x2.xd.xa.xr.nr1: WARNING: V(i1,c) voltage is greater than specified by vmax
+OSDI(debug) n.x2.xd.xa.xr.nr1: WARNING: V(i2,c) voltage is greater than specified by vmax
+ Reference value :  1.46000e+00 Reference value :  1.86000e+00 Reference value :  2.42000e+00 Reference value :  3.04000e+00
+No. of Data Rows : 331
+Note: Simulation executed from .control section 

@@ -1,0 +1,53 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 31/10/2026 19:11
+
+.SUBCKT d2s_inputs_c2 d|g|s|vdd d|x d|y s|sa_A s|sa_B s|sa_C1 s|sa_C2 s|sb_A
++ s|sb_B s|sb_C1 s|sb_C2
+M$1 d|g|s|vdd \$22 d|g|s|vdd d|g|s|vdd sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p
++ PS=10.68u PD=5.38u rfmode=0
+M$2 d|g|s|vdd \$23 d|g|s|vdd d|g|s|vdd sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p
++ PS=5.38u PD=10.68u rfmode=0
+M$3 s|sb_B \$28 d|x s|sb_B sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p PS=10.68u
++ PD=5.38u rfmode=0
+M$4 d|x \$26 s|sb_B s|sb_B sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p PS=5.38u
++ PD=10.68u rfmode=0
+M$5 s|sa_C1 \$31 d|y s|sa_C1 sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p PS=10.68u
++ PD=5.38u rfmode=0
+M$6 d|y \$29 s|sa_C1 s|sa_C1 sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p PS=5.38u
++ PD=10.68u rfmode=0
+M$7 s|sa_C2 \$35 d|y s|sa_C2 sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p PS=10.68u
++ PD=5.38u rfmode=0
+M$8 d|y \$33 s|sa_C2 s|sa_C2 sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p PS=5.38u
++ PD=10.68u rfmode=0
+M$9 s|sb_A \$36 d|x s|sb_A sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p PS=10.68u
++ PD=5.38u rfmode=0
+M$10 d|x \$37 s|sb_A s|sb_A sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p PS=5.38u
++ PD=10.68u rfmode=0
+M$11 d|g|s|vdd \$25 d|g|s|vdd d|g|s|vdd sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p
++ PS=10.68u PD=5.38u rfmode=0
+M$12 d|g|s|vdd \$24 d|g|s|vdd d|g|s|vdd sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p
++ PS=5.38u PD=10.68u rfmode=0
+M$13 d|g|s|vdd \$66 d|g|s|vdd d|g|s|vdd sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p
++ PS=10.68u PD=5.38u rfmode=0
+M$14 d|g|s|vdd \$65 d|g|s|vdd d|g|s|vdd sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p
++ PS=5.38u PD=10.68u rfmode=0
+M$15 s|sa_A \$67 d|y s|sa_A sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p PS=10.68u
++ PD=5.38u rfmode=0
+M$16 d|y \$68 s|sa_A s|sa_A sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p PS=5.38u
++ PD=10.68u rfmode=0
+M$17 s|sb_C2 \$69 d|x s|sb_C2 sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p PS=10.68u
++ PD=5.38u rfmode=0
+M$18 d|x \$70 s|sb_C2 s|sb_C2 sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p PS=5.38u
++ PD=10.68u rfmode=0
+M$19 s|sb_C1 \$71 d|x s|sb_C1 sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p PS=10.68u
++ PD=5.38u rfmode=0
+M$20 d|x \$72 s|sb_C1 s|sb_C1 sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p PS=5.38u
++ PD=10.68u rfmode=0
+M$21 s|sa_B \$73 d|y s|sa_B sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p PS=10.68u
++ PD=5.38u rfmode=0
+M$22 d|y \$74 s|sa_B s|sa_B sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p PS=5.38u
++ PD=10.68u rfmode=0
+M$23 d|g|s|vdd \$75 d|g|s|vdd d|g|s|vdd sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p
++ PS=10.68u PD=5.38u rfmode=0
+M$24 d|g|s|vdd \$76 d|g|s|vdd d|g|s|vdd sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p
++ PS=5.38u PD=10.68u rfmode=0
+.ENDS d2s_inputs_c2

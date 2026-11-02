@@ -1,0 +1,18 @@
+31-Oct-2026 16:28:22 | INFO    | Your Klayout version is: KLayout 0.30.12
+31-Oct-2026 16:28:22 | ERROR   | The input netlist file path /home/user/c2/N/work/d2s_n_cells.cdl doesn't exist, please recheck.
+31-Oct-2026 16:28:22 | INFO    | ==============================================================================
+31-Oct-2026 16:28:22 | INFO    | Important Summary
+31-Oct-2026 16:28:22 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 16:28:22 | INFO    | | Status           | FAIL                                                         |
+31-Oct-2026 16:28:22 | INFO    | | Mode             | COMPARE                                                      |
+31-Oct-2026 16:28:22 | INFO    | | Outcome          | Comparison mode: outcome unknown (layout log not found).     |
+31-Oct-2026 16:28:22 | INFO    | | Layout           | casc_novia.gds                                               |
+31-Oct-2026 16:28:22 | INFO    | | Top Cell         | d2s_casc_n_c                                                 |
+31-Oct-2026 16:28:22 | INFO    | | Results Dir      | /home/user/c2/N/work/inj/lvs_c                               |
+31-Oct-2026 16:28:22 | INFO    | | Warnings         | 0                                                            |
+31-Oct-2026 16:28:22 | INFO    | | Errors           | 1                                                            |
+31-Oct-2026 16:28:22 | INFO    | | Run Time (s)     | 0.195                                                        |
+31-Oct-2026 16:28:22 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 16:28:22 | ERROR   | Key errors:
+31-Oct-2026 16:28:22 | ERROR   |   - The input netlist file path /home/user/c2/N/work/d2s_n_cells.cdl doesn't exist, please recheck.
+31-Oct-2026 16:28:22 | INFO    | ==============================================================================

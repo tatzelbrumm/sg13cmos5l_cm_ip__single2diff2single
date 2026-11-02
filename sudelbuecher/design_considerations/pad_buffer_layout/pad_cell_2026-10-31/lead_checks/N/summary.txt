@@ -1,0 +1,9 @@
+sinks_6x6_c: 15.53 x 46.79 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+sinks_6x6_s2d_c: 46.79 x 15.53 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_casc_n_c: 9.73 x 33.12 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_ab_n_c: 6.86 x 5.44 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_pd_n_c: 3.52 x 2.04 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+
+real	6m23.471s
+user	9m34.761s
+sys	0m42.444s

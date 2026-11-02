@@ -1,0 +1,23 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 31/10/2026 16:48
+
+.SUBCKT d2s_inputs_c sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vdd vfb vinn
++ vinp vref x y
+M$1 vdd vdd vdd vdd sg13_hv_pmos L=1u W=40u AS=13.6p AD=13.6p PS=82.72u
++ PD=82.72u rfmode=0
+M$2 sb_B vinn x sb_B sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$4 sa_C1 vref y sa_C1 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$6 sa_C2 vref y sa_C2 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$8 sb_A vref x sb_A sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$12 sa_A vinp y sa_A sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$14 sb_C2 vfb x sb_C2 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$16 sb_C1 vfb x sb_C1 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$18 sa_B vref y sa_B sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+.ENDS d2s_inputs_c

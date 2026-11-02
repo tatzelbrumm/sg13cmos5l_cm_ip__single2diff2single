@@ -1,0 +1,134 @@
+make: Entering directory '/home/user/c2/F/work/repo/macros/sg13cmos5l_IOPadDiff2Single'
+mkdir -p netlist/pex
+make symbol-pex CELL=sg13cmos5l_IOPadDiff2Single
+make[1]: Entering directory '/home/user/c2/F/work/repo/macros/sg13cmos5l_IOPadDiff2Single'
+Wrote schematic/xschem/sg13cmos5l_IOPadDiff2Single_pex.sym (copy of sg13cmos5l_IOPadDiff2Single.sym with type=primitive).
+make[1]: Leaving directory '/home/user/c2/F/work/repo/macros/sg13cmos5l_IOPadDiff2Single'
+sak-pex.sh -d -m 2 -n sg13cmos5l_IOPadDiff2Single_pex -t 10000 -r 1000 -y 1 -w netlist/pex layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds
+[INFO] DEBUG is enabled!
+[INFO] flag -m is set to <2>.
+[INFO] flag -n is set to <sg13cmos5l_IOPadDiff2Single_pex>.
+[INFO] flag -t is set to <10000>.
+[INFO] flag -r is set to <1000>.
+[INFO] flag -y is set to <1>.
+[INFO] flag -w is set to <netlist/pex>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using layout file <layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds>.
+[INFO] GDS mode is selected.
+[INFO] Running PEX of <layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds>.
+[INFO] Results are put into </home/user/c2/F/work/repo/macros/sg13cmos5l_IOPadDiff2Single/netlist/pex>.
+
+Magic 8.3 revision 685 - Compiled on Fri Oct 30 17:15:33 UTC 2026.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+WARNING: RLIMIT_NOFILE is above 1024 and Tcl_Version<9 this may cause runtime issues [rlim_cur=20000]
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology ihp-sg13cmos5l ...
+2 Magic internal units = 1 Lambda
+Input style sg13cmos5l(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    pblock pbase sealcont difffill sealvia1 sealvia2 sealvia3 sealvia4 seal glass thruvia inductor 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading ihp-sg13cmos5l Device Generator Menu ...
+Loading "/home/user/c2/F/work/repo/macros/sg13cmos5l_IOPadDiff2Single/netlist/pex/pex_sg13cmos5l_IOPadDiff2Single.tcl" from command line.
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "$$$CONTEXT_INFO$$$".
+Error while reading cell "$$$CONTEXT_INFO$$$" (byte position 128): Unknown layer/datatype in boundary, layer=0 type=0
+Reading "nmosHV$4".
+Reading "pmosHV$1$1".
+Reading "pmosHV$7$1".
+Reading "ntap1$11".
+Reading "pmosHV$8".
+Reading "nmosHV$6".
+Reading "nmosHV$5$1".
+Reading "ptap1$26".
+Moving label "sub!" from space to ptapdiff in cell ptap1$26.
+Reading "ptap1$27".
+Moving label "sub!" from space to ptapdiff in cell ptap1$27.
+Reading "ntap1$28".
+Reading "ntap1$29".
+Reading "pmosHV$14".
+Reading "pmosHV".
+Reading "pmosHV$1".
+Reading "pmosHV_w0p3_l6".
+Reading "pmosHV$2".
+Reading "pmosHV$15".
+Reading "pmosHV$4".
+Reading "pmosHV$3".
+Reading "pmosHV$5".
+Reading "pmosHV$7".
+Reading "nmosHV$12".
+Reading "nmosHV".
+Reading "nmosHV$2".
+Reading "nmosHV$1".
+Reading "nmosHV$3".
+Reading "nmosHV$5".
+Reading "rhigh".
+Reading "bias_tree_swp".
+Reading "bias_tree_sw".
+CIF file read warning: CIF style sg13cmos5l(): units rescaled by factor of 5 / 1
+Reading "bias_tree_p".
+Reading "bias_tree_n".
+Reading "d2s_inputs_c".
+Reading "d2s_tails_c".
+Reading "d2s_loads_c".
+Reading "d2s_casc_p_c".
+Reading "d2s_ab_p_c".
+Reading "d2s_pd_p_c".
+Reading "sinks_6x6_c".
+Reading "d2s_casc_n_c".
+Reading "d2s_ab_n_c".
+Reading "d2s_pd_n_c".
+Reading "d2s_rhigh".
+Reading "bias_tree_pd".
+Reading "vfb_kelvin".
+Reading "d2s_block".
+Reading "edge_stubs".
+Reading "nw_isolator".
+Reading "guard_tie".
+Reading "cm_rings".
+Reading "DCPDiode".
+Reading "DCNDiode".
+Reading "Clamp_N_M1_wiring$1".
+Reading "Clamp_N_M1_wiring".
+Reading "Clamp_N_M1".
+Reading "Clamp_P_M1_wiring".
+Reading "Clamp_P_M1".
+Reading "TopLayersTo4".
+Reading "Metal3ViasUp".
+Reading "contacts".
+Reading "d2s_cma".
+Reading "d2s_cmb".
+Reading "m2_comb_n".
+Reading "m2_comb_p".
+Reading "m2_junction".
+Reading "replica_lines".
+Reading "gate_feeds".
+Reading "sg13cmos5l_IOPadDiff2Single".
+Extracting sg13cmos5l_IOPadDiff2Single_pex into /home/user/c2/F/work/repo/macros/sg13cmos5l_IOPadDiff2Single/netlist/pex/sg13cmos5l_IOPadDiff2Single_pex.ext:
+Processing sg13cmos5l_IOPadDiff2Single_pex
+sg13cmos5l_IOPadDiff2Single_pex: 19 warnings
+Total of 19 warnings.
+exttospice finished.
+[INFO] PEX (C-coupled) done, the extracted SPICE netlist is </home/user/c2/F/work/repo/macros/sg13cmos5l_IOPadDiff2Single/netlist/pex/sg13cmos5l_IOPadDiff2Single.pex.spice>.
+[DONE] Bye!
+mv netlist/pex/sg13cmos5l_IOPadDiff2Single.pex.spice netlist/pex/sg13cmos5l_IOPadDiff2Single_magic_pex_2.spice
+rm -f netlist/pex/pex_sg13cmos5l_IOPadDiff2Single.tcl
+Reordering pins in sg13cmos5l_IOPadDiff2Single_magic_pex_2.spice to match sg13cmos5l_IOPadDiff2Single_pex.sym...
+Symbol file:  schematic/xschem/sg13cmos5l_IOPadDiff2Single_pex.sym
+Netlist file: netlist/pex/sg13cmos5l_IOPadDiff2Single_magic_pex_2.spice
+Subcircuit:   sg13cmos5l_IOPadDiff2Single_pex
+Format:       spice
+Match mode:   name (identical)
+Sym pins:     14
+Netlist pins: 1
+[ERROR] Pin count mismatch: sym has 14, netlist has 1 (after bus expansion)
+make: *** [Makefile:372: magic-pex] Error 1
+make: Leaving directory '/home/user/c2/F/work/repo/macros/sg13cmos5l_IOPadDiff2Single'

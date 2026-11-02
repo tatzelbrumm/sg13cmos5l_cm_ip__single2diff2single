@@ -1,0 +1,74 @@
+<!--
+SPDX-FileCopyrightText: 2026 Christoph Maier
+SPDX-License-Identifier: Apache-2.0
+-->
+# C2 previews
+
+Intermediate pictures shown to Christoph during session C2 (his request, about 17:00: "keep previews for documentation
+purposes, out of the mainstream"). Kept here on the notes branch, not in the design branch. Rendered with `../render.py`
+(KLayout LayoutView, PDK layer properties, the ring metals M3 / M4 / TM1 and their vias hidden), unless the file name
+names an agent's own render.
+
+| file | what |
+|---|---|
+| `pad_cell_before_C2.png` | the pad cell as committed on `toplevel` 8a72dd8, before C2: y 0–88 drawn, y 88–178 empty |
+| `F_floorplan_stage1.png` | F stage 1 (16:58): floorplan variants 1 (recommended) and 2, F's own render |
+| `K_cv_candidates.png` | K stage 2: C(V) per µm² of every candidate (hv PMOS, S-Varicap, moscap_p / _n, MOM), K's own plot |
+| `K_cv_thick_oxide.png` | K stage 2: the thick-oxide candidates (hv PMOS, S-Varicap) |
+| `K_c_along_swing.png` | K stage 3: capacitance of CMA / CMB and of the splits along the pad's DC swing |
+| `K_step_response.png` | K stage 4: closed-loop step at 1 kΩ ∥ 100 pF, present caps and variants |
+| `N_sinks_6x6_c.png` | REJECTED (18:55): N's cell sinks_6x6_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `N_d2s_casc_n_c.png` | REJECTED (18:55): N's cell d2s_casc_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `N_d2s_ab_n_c.png` | REJECTED (18:55): N's cell d2s_ab_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `N_d2s_pd_n_c.png` | REJECTED (18:55): N's cell d2s_pd_n_c (delivered about 17:37, passed the lead's check 17:45), N's own render |
+| `P_d2s_inputs_c.png` | REJECTED (18:55): P's cell d2s_inputs_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_tails_c.png` | REJECTED (18:55): P's cell d2s_tails_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_loads_c.png` | REJECTED (18:55): P's cell d2s_loads_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_casc_p_c.png` | REJECTED (18:55): P's cell d2s_casc_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_ab_p_c.png` | REJECTED (18:55): P's cell d2s_ab_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `P_d2s_pd_p_c.png` | REJECTED (18:55): P's cell d2s_pd_p_c (delivered about 17:52, passed the lead's check 17:55), P's own render |
+| `F_stage2_bias_tree_pd_cell.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_d2s_rhigh_cell.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_floorplan_v1_stage2.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_cma_ring_left.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_cma_ring_right.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_isolator_left.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage2_pad_stage2_left_edge_top.png` | REJECTED (18:55): F stage 2 (about 17:50), F's own render |
+| `F_stage3_placement.png` | REJECTED (18:55): F stage 3 (18:11): bottom-up placement of the drawn cells in the pad context, before routing, F's own render |
+| `K_pz_vs_pad.png` | K stage 6: poles / zeros of the loop gain against the pad voltage (vector fit), K's own plot |
+| `K_pm_fc_gm_vs_pad.png` | K stage 6: PM, fc, GM against the pad voltage, variants v0, v5–v8, K's own plot |
+| `F_stage3_routed_in_pad.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
+| `F_stage3_detail_bottom.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
+| `F_stage3_detail_right_channel.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
+| `F_stage3_detail_left_edge.png` | REJECTED (18:55): F stage 3 (about 18:43), F's own render |
+| `N2_bias_tree_n_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_bias_tree_n_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_ab_n_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_ab_n_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_casc_n_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_casc_n_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_casc_n_c2_gate.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_pd_n_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_pd_n_c2_gate.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_rhigh_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_d2s_rhigh_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_sinks_6x6_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_sinks_6x6_c2_end.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_sinks_6x6_c2_gate.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `N2_sinks_6x6_s2d_c2.png` | N2 (Opus) rebuild, for Christoph's review; N2's own render |
+| `P2_bias_tree_p_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_bias_tree_p_c2_row_end.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_bias_tree_p_c2_tgp.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_ab_p_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_ab_p_c2_gate.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_casc_p_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_casc_p_c2_row_end.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_inputs_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_inputs_c2_row_end.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_loads_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_loads_c2_row_end.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_pd_p_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_tails_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_d2s_tails_c2_row_end.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_tub_p20x1_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `P2_tub_p20x1_c2_gate.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |

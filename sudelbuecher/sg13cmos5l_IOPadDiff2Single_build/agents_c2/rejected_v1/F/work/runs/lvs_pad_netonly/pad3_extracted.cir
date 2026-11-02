@@ -1,0 +1,148 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 31/10/2026 17:21
+
+.SUBCKT sg13cmos5l_IOPadDiff2Single a anode|cathode|pad|vfb
++ anode|guard|iovss|vss|vsso b cathode|guard|iovdd|vdd|vddo dabn dabp en_3v3
++ en_3v3_b iref l1 l2 ni pl pr sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vabn
++ vabp vbn vbnc vbp vbpc vinn vinp vref x y
+M$1 anode|guard|iovss|vss|vsso b anode|cathode|pad|vfb
++ anode|guard|iovss|vss|vsso sg13_hv_nmos L=1u W=299.2u AS=136.268p AD=138.644p
++ PS=369.94u PD=371.02u rfmode=0
+M$52 anode|guard|iovss|vss|vsso dabn dabn anode|guard|iovss|vss|vsso
++ sg13_hv_nmos L=1u W=8.8u AS=4.004p AD=4.004p PS=10.62u PD=10.62u rfmode=0
+M$71 b vabn a anode|guard|iovss|vss|vsso sg13_hv_nmos L=1u W=4.4u AS=1.496p
++ AD=1.496p PS=9.48u PD=9.48u rfmode=0
+M$72 l1 vabn l2 anode|guard|iovss|vss|vsso sg13_hv_nmos L=1u W=4.4u AS=1.496p
++ AD=1.496p PS=9.48u PD=9.48u rfmode=0
+M$73 vabn vabn dabn anode|guard|iovss|vss|vsso sg13_hv_nmos L=1u W=4.4u
++ AS=1.496p AD=1.496p PS=9.48u PD=9.48u rfmode=0
+M$74 anode|guard|iovss|vss|vsso en_3v3_b b anode|guard|iovss|vss|vsso
++ sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u PD=2.68u rfmode=0
+M$75 anode|guard|iovss|vss|vsso en_3v3_b vabn anode|guard|iovss|vss|vsso
++ sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u PD=2.68u rfmode=0
+M$76 anode|guard|iovss|vss|vsso vbn y anode|guard|iovss|vss|vsso sg13_hv_nmos
++ L=6u W=36u AS=12.24p AD=12.24p PS=76.08u PD=76.08u rfmode=0
+M$77 anode|guard|iovss|vss|vsso vbn x anode|guard|iovss|vss|vsso sg13_hv_nmos
++ L=6u W=36u AS=12.24p AD=12.24p PS=76.08u PD=76.08u rfmode=0
+M$78 anode|guard|iovss|vss|vsso vbn vbn anode|guard|iovss|vss|vsso sg13_hv_nmos
++ L=6u W=6u AS=2.04p AD=2.04p PS=12.68u PD=12.68u rfmode=0
+M$82 anode|guard|iovss|vss|vsso vbnc vbnc anode|guard|iovss|vss|vsso
++ sg13_hv_nmos L=8u W=1u AS=0.34p AD=0.34p PS=2.68u PD=2.68u rfmode=0
+M$83 l1 vbnc x anode|guard|iovss|vss|vsso sg13_hv_nmos L=3u W=30u AS=10.2p
++ AD=10.2p PS=61.36u PD=61.36u rfmode=0
+M$89 anode|guard|iovss|vss|vsso vbn anode|guard|iovss|vss|vsso
++ anode|guard|iovss|vss|vsso sg13_hv_nmos L=6u W=6u AS=2.04p AD=2.04p PS=14.04u
++ PD=14.04u rfmode=0
+M$92 y vbnc b anode|guard|iovss|vss|vsso sg13_hv_nmos L=3u W=30u AS=10.2p
++ AD=10.2p PS=61.36u PD=61.36u rfmode=0
+M$94 anode|guard|iovss|vss|vsso ni anode|guard|iovss|vss|vsso
++ anode|guard|iovss|vss|vsso sg13_hv_nmos L=6u W=2.4u AS=0.816p AD=0.816p
++ PS=5.48u PD=5.48u rfmode=0
+M$95 anode|guard|iovss|vss|vsso ni vabp anode|guard|iovss|vss|vsso sg13_hv_nmos
++ L=6u W=6u AS=2.04p AD=2.04p PS=12.68u PD=12.68u rfmode=0
+M$96 anode|guard|iovss|vss|vsso ni ni anode|guard|iovss|vss|vsso sg13_hv_nmos
++ L=6u W=6u AS=2.04p AD=2.04p PS=12.68u PD=12.68u rfmode=0
+M$97 anode|guard|iovss|vss|vsso ni vbp anode|guard|iovss|vss|vsso sg13_hv_nmos
++ L=6u W=6u AS=2.04p AD=2.04p PS=12.68u PD=12.68u rfmode=0
+M$98 anode|guard|iovss|vss|vsso ni vbpc anode|guard|iovss|vss|vsso sg13_hv_nmos
++ L=6u W=2.4u AS=0.816p AD=0.816p PS=5.48u PD=5.48u rfmode=0
+M$99 anode|guard|iovss|vss|vsso en_3v3_b ni anode|guard|iovss|vss|vsso
++ sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.19p PS=2.68u PD=1.38u rfmode=0
+M$100 ni en_3v3 iref anode|guard|iovss|vss|vsso sg13_hv_nmos L=0.45u W=1u
++ AS=0.19p AD=0.34p PS=1.38u PD=2.68u rfmode=0
+M$104 anode|cathode|pad|vfb a anode|cathode|pad|vfb anode|cathode|pad|vfb
++ sg13_hv_pmos L=32.16u W=7.96u AS=2.7064p AD=2.7064p PS=16.6u PD=16.6u rfmode=0
+M$105 b anode|cathode|pad|vfb b b sg13_hv_pmos L=32.16u W=7.96u AS=2.7064p
++ AD=2.7064p PS=16.6u PD=16.6u rfmode=0
+M$106 cathode|guard|iovdd|vdd|vddo a anode|cathode|pad|vfb
++ cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=0.6u W=546.12u AS=248.6844p
++ AD=252.2808p PS=634.12u PD=635.2u rfmode=0
+M$126 cathode|guard|iovdd|vdd|vddo cathode|guard|iovdd|vdd|vddo dabp
++ cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=0.6u W=13.32u AS=4.2624p
++ AD=7.8588p PS=14.6u PD=15.68u rfmode=0
+M$127 dabp dabp cathode|guard|iovdd|vdd|vddo cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=0.6u W=13.32u AS=7.8588p AD=4.2624p PS=15.68u PD=14.6u rfmode=0
+M$192 cathode|guard|iovdd|vdd|vddo l2 cathode|guard|iovdd|vdd|vddo
++ cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=4u W=4u AS=1.36p AD=1.36p
++ PS=9.36u PD=9.36u rfmode=0
+M$193 a vbpc pr cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=3u W=30u AS=10.2p
++ AD=10.2p PS=61.36u PD=61.36u rfmode=0
+M$195 cathode|guard|iovdd|vdd|vddo vbpc cathode|guard|iovdd|vdd|vddo
++ cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=4u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$196 pl vbpc l2 cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=3u W=30u AS=10.2p
++ AD=10.2p PS=61.36u PD=61.36u rfmode=0
+M$198 cathode|guard|iovdd|vdd|vddo vbpc vbpc cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=4u W=1u AS=0.34p AD=0.34p PS=2.68u PD=2.68u rfmode=0
+M$199 cathode|guard|iovdd|vdd|vddo l2 pl cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=4u W=24u AS=8.16p AD=8.16p PS=50.72u PD=50.72u rfmode=0
+M$200 cathode|guard|iovdd|vdd|vddo cathode|guard|iovdd|vdd|vddo
++ cathode|guard|iovdd|vdd|vddo cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=1u
++ W=40u AS=13.6p AD=13.6p PS=82.72u PD=82.72u rfmode=0
+M$201 cathode|guard|iovdd|vdd|vddo vbp cathode|guard|iovdd|vdd|vddo
++ cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=6u W=7.6u AS=2.584p AD=2.584p
++ PS=17.92u PD=17.92u rfmode=0
+M$203 cathode|guard|iovdd|vdd|vddo vbp sb_B cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$204 sa_A vbp cathode|guard|iovdd|vdd|vddo cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$205 sb_B vinn x sb_B sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$207 cathode|guard|iovdd|vdd|vddo vbp sa_C1 cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$208 sb_C2 vbp cathode|guard|iovdd|vdd|vddo cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$209 sa_C1 vref y sa_C1 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$211 sb_C1 vbp cathode|guard|iovdd|vdd|vddo cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$212 cathode|guard|iovdd|vdd|vddo vbp sa_C2 cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$213 sa_C2 vref y sa_C2 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$215 cathode|guard|iovdd|vdd|vddo vbp sb_A cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$216 sa_B vbp cathode|guard|iovdd|vdd|vddo cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$217 sb_A vref x sb_A sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$219 dabp vabp vabp cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=0.6u W=6.66u
++ AS=2.2644p AD=2.2644p PS=14u PD=14u rfmode=0
+M$220 l2 vabp l1 cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=0.6u W=6.66u
++ AS=2.2644p AD=2.2644p PS=14u PD=14u rfmode=0
+M$221 a vabp b cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=0.6u W=6.66u
++ AS=2.2644p AD=2.2644p PS=14u PD=14u rfmode=0
+M$223 cathode|guard|iovdd|vdd|vddo vbp vbp cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$225 a en_3v3 cathode|guard|iovdd|vdd|vddo cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u PD=2.68u rfmode=0
+M$226 cathode|guard|iovdd|vdd|vddo en_3v3 vabp cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u PD=2.68u rfmode=0
+M$228 cathode|guard|iovdd|vdd|vddo l2 pr cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=4u W=24u AS=8.16p AD=8.16p PS=50.72u PD=50.72u rfmode=0
+M$232 sa_A vinp y sa_A sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$234 sb_C2 anode|cathode|pad|vfb x sb_C2 sg13_hv_pmos L=1u W=20u AS=5.3p
++ AD=5.3p PS=31.06u PD=31.06u rfmode=0
+M$236 sb_C1 anode|cathode|pad|vfb x sb_C1 sg13_hv_pmos L=1u W=20u AS=5.3p
++ AD=5.3p PS=31.06u PD=31.06u rfmode=0
+M$238 sa_B vref y sa_B sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$245 ni en_3v3_b iref cathode|guard|iovdd|vdd|vddo sg13_hv_pmos L=0.45u W=1u
++ AS=0.34p AD=0.34p PS=2.68u PD=2.68u rfmode=0
+M$247 cathode|guard|iovdd|vdd|vddo vbp vabn cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$248 cathode|guard|iovdd|vdd|vddo vbp vbn cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u rfmode=0
+M$249 cathode|guard|iovdd|vdd|vddo vbp vbnc cathode|guard|iovdd|vdd|vddo
++ sg13_hv_pmos L=6u W=2u AS=0.68p AD=0.68p PS=4.68u PD=4.68u rfmode=0
+D$250 anode|guard|iovss|vss|vsso anode|cathode|pad|vfb dantenna A=85.176p
++ P=137.72u m=2
+D$252 anode|cathode|pad|vfb cathode|guard|iovdd|vdd|vddo dpantenna A=82.908p
++ P=134.12u m=2
+R$254 anode|guard|iovss|vss|vsso anode|guard|iovss|vss|vsso
++ anode|guard|iovss|vss|vsso rhigh w=0.5u l=12.65u ps=0u b=0 m=2
+R$256 sb_B sa_B anode|guard|iovss|vss|vsso rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$257 sb_C1 sa_C1 anode|guard|iovss|vss|vsso rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$258 sb_C2 sa_C2 anode|guard|iovss|vss|vsso rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$262 sa_A sb_A anode|guard|iovss|vss|vsso rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+.ENDS sg13cmos5l_IOPadDiff2Single

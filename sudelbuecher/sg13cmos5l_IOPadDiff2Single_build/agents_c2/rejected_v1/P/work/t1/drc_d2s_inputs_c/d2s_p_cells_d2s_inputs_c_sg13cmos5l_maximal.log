@@ -1,0 +1,9 @@
+# Logfile created on 2026-10-31 16:46:10 +0000 by logger.rb/v1.5.3
+2026-10-31 16:46:10 +0000: Memory Usage (429396K) : Starting running IHP-SG13CMOS5L Klayout DRC maximum runset on /home/user/c2/P/work/t1/d2s_p_cells.gds
+2026-10-31 16:46:10 +0000: Memory Usage (429396K) : Ruby Version for klayout: 3.2.3
+2026-10-31 16:46:10 +0000: Memory Usage (430612K) : Loading database to memory is complete.
+2026-10-31 16:46:10 +0000: Memory Usage (430612K) : IHP-SG13CMOS5L Klayout DRC maximum runset output at: /home/user/c2/P/work/t1/drc_d2s_inputs_c/d2s_p_cells_d2s_inputs_c_sg13cmos5l_maximal.lyrdb
+2026-10-31 16:46:10 +0000: Memory Usage (430612K) : Evaluate switches.
+2026-10-31 16:46:10 +0000: Memory Usage (430612K) : Klayout will use  thread(s)
+2026-10-31 16:46:10 +0000: Memory Usage (430612K) : deep mode is enabled for sg13cmos5l_maximal runset.
+2026-10-31 16:46:26 +0000: Memory Usage (447772K) : KLayout DRC run for maximum ruleSet completed in 16.33 seconds

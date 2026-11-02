@@ -1,0 +1,2 @@
+d2s_loads_c2: Activ bbox (0.62,0.62;30.07,13.05); axes x = 15.345, y = 6.835 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

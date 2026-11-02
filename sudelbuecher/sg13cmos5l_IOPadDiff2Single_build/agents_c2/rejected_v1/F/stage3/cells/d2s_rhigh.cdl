@@ -1,0 +1,24 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_rhigh (build_d2s_rhigh.py, agent F, C2 2026-10-31): unit_r2's 4 resistors, each 4 x 0.5/12.65 um
+* rhigh in series (50.6 um, as rl=50.6u), 2 dummies shorted to vss; bulk = substrate (vss)
+.SUBCKT d2s_rhigh sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vss
+RA_0 sa_A A_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RA_1 A_1 A_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RA_2 A_2 A_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RA_3 A_3 sb_A vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_0 sa_B B_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_1 B_1 B_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_2 B_2 B_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_3 B_3 sb_B vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_0 sa_C1 C1_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_1 C1_1 C1_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_2 C1_2 C1_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_3 C1_3 sb_C1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_0 sa_C2 C2_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_1 C2_1 C2_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_2 C2_2 C2_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_3 C2_3 sb_C2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rdummy_L vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+Rdummy_R vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+.ENDS d2s_rhigh

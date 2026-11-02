@@ -1,0 +1,25 @@
+* K deck 2: C(V) of moscap_p (sg13_moscap_p G NW: thin-oxide PMOS, S/D/B = NW), V = V(G) - V(NW), fF/um2 of W*L
+* KP1: 10u x 10u; KP2: 2u x 2u (edge share)
+.lib cornerMOSCAP.lib moscap_tt
+.temp 27
+VKP1 t1 0 dc 0 ac 1
+XKP1 t1 0 sg13_moscap_p w=10u l=10u
+VKP2 t2 0 dc 0 ac 1
+XKP2 t2 0 sg13_moscap_p w=2u l=2u
+.control
+let k = 0
+shell rm -f /home/user/c2/K/out/logs/cv2_moscap_p.dat
+while k < 133
+  let vx = k*0.05 - 3.3
+  alter VKP1 dc = $&vx
+  alter VKP2 dc = $&vx
+  ac lin 1 100k 100k
+* C per um2, fF/um2; I(V) flows into the + node, so C = -Im(I)/(2 pi f)
+  let ckp1 = -imag(i(vkp1))/(2*pi*100e3)/100e-12*1e3
+  let ckp2 = -imag(i(vkp2))/(2*pi*100e3)/4e-12*1e3
+  echo $&vx $&ckp1 $&ckp2 >> /home/user/c2/K/out/logs/cv2_moscap_p.dat
+  destroy all
+  let k = k + 1
+end
+.endc
+.end

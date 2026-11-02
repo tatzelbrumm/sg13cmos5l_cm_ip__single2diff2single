@@ -1,0 +1,31 @@
+Note: Starting spice3 gmin stepping
+Warning: spice3 gmin stepping failed
+Note: Starting source stepping
+Note: Source stepping completed
+
+Note: No compatibility mode selected!
+
+
+Circuit: * k deck 7: loop gain t = -v(vout)/v(fb) of the fixture d2s_mpdda_pd_sel with a cma / cmb variant (dut_variants.spice,
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+ Reference value :  0.00000e+00Note: Starting spice3 gmin stepping
+Warning: spice3 gmin stepping failed
+Note: Starting source stepping
+Note: Source stepping completed
+Instance: d.x1.xsel.xksb3.dsubw Model: x1.xsel.xksb3:dsubw Pd=inf W at Vd=-0.705 V has exceeded Pd_max=1e+99 W
+Instance: d.x1.xsel.xksa3.dsubw Model: x1.xsel.xksa3:dsubw Pd=inf W at Vd=-1.65 V has exceeded Pd_max=1e+99 W
+
+No. of Data Rows : 1
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+ Reference value :  1.00000e+00
+No. of Data Rows : 451
+t0                  =  7.78155e+01
+fc                  =  1.32365e+06
+phc                 =  -1.06877e+02
+gmdb                =  -2.32895e+01
+Note: Simulation executed from .control section 

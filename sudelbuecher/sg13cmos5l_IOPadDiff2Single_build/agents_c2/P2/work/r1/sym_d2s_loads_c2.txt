@@ -1,0 +1,6 @@
+d2s_loads_c2: Activ bbox (0.62,0.62;29.85,13.05); axes x = 15.235, y = 6.835 um
+  N gate-contact poly narrower than 0.30 um at (1.17,1.47;1.17,5.47)
+  N gate-contact poly narrower than 0.30 um at (1.17,8.2;1.17,12.2)
+  N gate-contact poly narrower than 0.30 um at (29.11,1.47;29.11,5.47)
+  N gate-contact poly narrower than 0.30 um at (29.11,8.2;29.11,12.2)
+  summary: max mirror XOR 0.0000 um2, 4 narrow-poly hits

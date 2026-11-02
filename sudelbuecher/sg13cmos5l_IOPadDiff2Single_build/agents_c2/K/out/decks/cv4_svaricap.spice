@@ -1,0 +1,26 @@
+* K deck 4: C(V) of the S-Varicap sg13_hv_svaricap (G1 W G2 bn), G1 = G2 = T1, W = T2 = 0, bn = 0; V = V(G) - V(W)
+* normalised to drawn gate area 2*Nx*w*l. KV1: spec structure Nx 10, w 3.74u, l 0.3u (22.44 um2 gate);
+* KV2: largest PCell, Nx 10, w 9.74u, l 0.8u (155.84 um2 gate)
+.lib cornerMOShv.lib mos_tt
+.temp 27
+VKV1 t1 0 dc 0 ac 1
+XKV1 t1 0 t1 0 sg13_hv_svaricap w=3.74u l=0.3u Nx=10
+VKV2 t2 0 dc 0 ac 1
+XKV2 t2 0 t2 0 sg13_hv_svaricap w=9.74u l=0.8u Nx=10
+.control
+let k = 0
+shell rm -f /home/user/c2/K/out/logs/cv4_svaricap.dat
+while k < 133
+  let vx = k*0.05 - 3.3
+  alter VKV1 dc = $&vx
+  alter VKV2 dc = $&vx
+  ac lin 1 100k 100k
+* C per um2, fF/um2; I(V) flows into the + node, so C = -Im(I)/(2 pi f)
+  let ckv1 = -imag(i(vkv1))/(2*pi*100e3)/22.44e-12*1e3
+  let ckv2 = -imag(i(vkv2))/(2*pi*100e3)/155.84e-12*1e3
+  echo $&vx $&ckv1 $&ckv2 >> /home/user/c2/K/out/logs/cv4_svaricap.dat
+  destroy all
+  let k = k + 1
+end
+.endc
+.end

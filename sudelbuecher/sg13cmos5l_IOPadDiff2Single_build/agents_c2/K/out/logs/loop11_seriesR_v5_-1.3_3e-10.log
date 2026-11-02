@@ -1,0 +1,21 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * k deck 11 (= deck 7 with the load as 1g || 3e-10, run at 1k || 100p and 1g || 300p; .lib cornerdio.lib added for the secondary-stage diodes): loop gain t = -v(vout)/v(fb) of the fixture d2s_mpdda_pd_sel with a cma / cmb variant (dut_variants.spice,
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+ Reference value :  0.00000e+00
+No. of Data Rows : 1
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 451
+t0                  =  1.03080e+02
+fc                  =  1.31232e+06
+phc                 =  -1.36257e+02
+gmdb                =  -2.03072e+01
+Note: Simulation executed from .control section 

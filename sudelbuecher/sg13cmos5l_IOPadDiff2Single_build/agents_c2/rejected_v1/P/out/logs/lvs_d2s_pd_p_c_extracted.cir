@@ -1,0 +1,8 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 31/10/2026 16:52
+
+.SUBCKT d2s_pd_p_c a en_3v3 vabp vdd vddo
+M$1 a en_3v3 vddo vdd sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$2 vdd en_3v3 vabp vdd sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+.ENDS d2s_pd_p_c

@@ -1,0 +1,16 @@
+31-Oct-2026 17:39:21 | INFO    | Your Klayout version is: KLayout 0.30.12
+31-Oct-2026 17:39:21 | INFO    | Running SG13CMOS5L LVS checks on design /home/user/c2/F/out/cells/d2s_cmb.gds on cell d2s_cmb
+31-Oct-2026 17:39:25 | INFO    | ==============================================================================
+31-Oct-2026 17:39:25 | INFO    | Important Summary
+31-Oct-2026 17:39:25 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 17:39:25 | INFO    | | Status           | PASS                                                         |
+31-Oct-2026 17:39:25 | INFO    | | Mode             | COMPARE                                                      |
+31-Oct-2026 17:39:25 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+31-Oct-2026 17:39:25 | INFO    | | Layout           | d2s_cmb.gds                                                  |
+31-Oct-2026 17:39:25 | INFO    | | Top Cell         | d2s_cmb                                                      |
+31-Oct-2026 17:39:25 | INFO    | | Results Dir      | /home/user/c2/F/work/runs/chk/lvs_d2s_cmb                    |
+31-Oct-2026 17:39:25 | INFO    | | Warnings         | 0                                                            |
+31-Oct-2026 17:39:25 | INFO    | | Errors           | 0                                                            |
+31-Oct-2026 17:39:25 | INFO    | | Run Time (s)     | 4.231                                                        |
+31-Oct-2026 17:39:25 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 17:39:25 | INFO    | ==============================================================================

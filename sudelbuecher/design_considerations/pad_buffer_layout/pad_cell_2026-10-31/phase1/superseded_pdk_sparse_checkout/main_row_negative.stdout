@@ -1,0 +1,1151 @@
+31-Oct-2026 15:29:25 | INFO    | KLayout version detected: 0.30.12
+31-Oct-2026 15:29:25 | INFO    | Using DRC JSON file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:27 | ERROR   | activ generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activ.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activ.log' -rd tables="activ"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activ.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activ.log' -rd tables="activ"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activ.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activ.log' -rd tables="activ"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:28 | ERROR   | activfiller generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activfiller.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activfiller.log' -rd tables="activfiller"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activfiller.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activfiller.log' -rd tables="activfiller"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activfiller.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_activfiller.log' -rd tables="activfiller"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:29 | ERROR   | nwell generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nwell.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nwell.log' -rd tables="nwell"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nwell.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nwell.log' -rd tables="nwell"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nwell.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nwell.log' -rd tables="nwell"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:30 | ERROR   | gatpolyfiller generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpolyfiller.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpolyfiller.log' -rd tables="gatpolyfiller"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpolyfiller.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpolyfiller.log' -rd tables="gatpolyfiller"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpolyfiller.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpolyfiller.log' -rd tables="gatpolyfiller"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+31-Oct-2026 15:29:31 | ERROR   | gatpoly generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpoly.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpoly.log' -rd tables="gatpoly"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpoly.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpoly.log' -rd tables="gatpoly"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpoly.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_gatpoly.log' -rd tables="gatpoly"' returned non-zero exit status 1.
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:31 | ERROR   | pwellblock generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pwellblock.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pwellblock.log' -rd tables="pwellblock"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pwellblock.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pwellblock.log' -rd tables="pwellblock"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pwellblock.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pwellblock.log' -rd tables="pwellblock"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:33 | ERROR   | cont generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_cont.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_cont.log' -rd tables="cont"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_cont.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_cont.log' -rd tables="cont"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_cont.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_cont.log' -rd tables="cont"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+31-Oct-2026 15:29:34 | ERROR   | contbar generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_contbar.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_contbar.log' -rd tables="contbar"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_contbar.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_contbar.log' -rd tables="contbar"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_contbar.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_contbar.log' -rd tables="contbar"' returned non-zero exit status 1.
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:34 | ERROR   | thickgateox generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_thickgateox.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_thickgateox.log' -rd tables="thickgateox"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_thickgateox.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_thickgateox.log' -rd tables="thickgateox"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_thickgateox.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_thickgateox.log' -rd tables="thickgateox"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:36 | ERROR   | latchup generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_latchup.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_latchup.log' -rd tables="latchup"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_latchup.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_latchup.log' -rd tables="latchup"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_latchup.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_latchup.log' -rd tables="latchup"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:36 | ERROR   | psd generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_psd.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_psd.log' -rd tables="psd"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_psd.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_psd.log' -rd tables="psd"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_psd.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_psd.log' -rd tables="psd"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:37 | ERROR   | nbulay generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nbulay.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nbulay.log' -rd tables="nbulay"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nbulay.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nbulay.log' -rd tables="nbulay"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nbulay.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_nbulay.log' -rd tables="nbulay"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:38 | ERROR   | topmetal1 generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1.log' -rd tables="topmetal1"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1.log' -rd tables="topmetal1"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1.log' -rd tables="topmetal1"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:39 | ERROR   | metal1 generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metal1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metal1.log' -rd tables="metal1"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metal1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metal1.log' -rd tables="metal1"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metal1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metal1.log' -rd tables="metal1"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:40 | ERROR   | pad generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pad.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pad.log' -rd tables="pad"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pad.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pad.log' -rd tables="pad"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pad.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pad.log' -rd tables="pad"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:41 | ERROR   | topmetal1filler generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1filler.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1filler.log' -rd tables="topmetal1filler"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1filler.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1filler.log' -rd tables="topmetal1filler"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1filler.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topmetal1filler.log' -rd tables="topmetal1filler"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:42 | ERROR   | passiv generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_passiv.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_passiv.log' -rd tables="passiv"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_passiv.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_passiv.log' -rd tables="passiv"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_passiv.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_passiv.log' -rd tables="passiv"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:43 | ERROR   | metaln generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metaln.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metaln.log' -rd tables="metaln"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metaln.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metaln.log' -rd tables="metaln"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metaln.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metaln.log' -rd tables="metaln"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:43 | ERROR   | metalslits generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalslits.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalslits.log' -rd tables="metalslits"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalslits.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalslits.log' -rd tables="metalslits"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalslits.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalslits.log' -rd tables="metalslits"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:44 | ERROR   | topvia1 generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topvia1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topvia1.log' -rd tables="topvia1"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topvia1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topvia1.log' -rd tables="topvia1"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topvia1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_topvia1.log' -rd tables="topvia1"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:45 | ERROR   | metalnfiller generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalnfiller.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalnfiller.log' -rd tables="metalnfiller"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalnfiller.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalnfiller.log' -rd tables="metalnfiller"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalnfiller.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_metalnfiller.log' -rd tables="metalnfiller"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:46 | ERROR   | sealring generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_sealring.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_sealring.log' -rd tables="sealring"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_sealring.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_sealring.log' -rd tables="sealring"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_sealring.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_sealring.log' -rd tables="sealring"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:47 | ERROR   | via1 generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_via1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_via1.log' -rd tables="via1"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_via1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_via1.log' -rd tables="via1"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_via1.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_via1.log' -rd tables="via1"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:48 | ERROR   | lbe generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_lbe.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_lbe.log' -rd tables="lbe"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_lbe.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_lbe.log' -rd tables="lbe"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_lbe.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_lbe.log' -rd tables="lbe"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:50 | ERROR   | vian generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_vian.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_vian.log' -rd tables="vian"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_vian.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_vian.log' -rd tables="vian"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_vian.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_vian.log' -rd tables="vian"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:50 | ERROR   | forbidden_cmos5l generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden_cmos5l.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden_cmos5l.log' -rd tables="forbidden_cmos5l"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden_cmos5l.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden_cmos5l.log' -rd tables="forbidden_cmos5l"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden_cmos5l.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden_cmos5l.log' -rd tables="forbidden_cmos5l"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:51 | ERROR   | forbidden generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden.log' -rd tables="forbidden"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden.log' -rd tables="forbidden"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_forbidden.log' -rd tables="forbidden"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+31-Oct-2026 15:29:52 | ERROR   | angle generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_angle.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_angle.log' -rd tables="angle"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_angle.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_angle.log' -rd tables="angle"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_angle.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_angle.log' -rd tables="angle"' returned non-zero exit status 1.
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:53 | ERROR   | offgrid generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_offgrid.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_offgrid.log' -rd tables="offgrid"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_offgrid.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_offgrid.log' -rd tables="offgrid"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_offgrid.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_offgrid.log' -rd tables="offgrid"' returned non-zero exit status 1.
+ERROR: In /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion
+ERROR: RuntimeError: Unable to open file: /foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks//layers_def.drc (errno=2) in MacroInterpreter::include_expansion in Executable::execute
+  :/built-in-macros/drc_interpreters.lym:27:in `include_expansion'
+  :/built-in-macros/drc_interpreters.lym:27:in `execute'
+31-Oct-2026 15:29:54 | ERROR   | pin generated an exception: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pin.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pin.log' -rd tables="pin"' returned non-zero exit status 1.
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.13/concurrent/futures/process.py", line 255, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 652, in run_check
+    check_call(run_cmd, shell=True)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/subprocess.py", line 420, in check_call
+    raise CalledProcessError(retcode, cmd)
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pin.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pin.log' -rd tables="pin"' returned non-zero exit status 1.
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/run_drc.py", line 721, in run_parallel_run
+    result_db_files.append(future.result())
+                           ~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 453, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+subprocess.CalledProcessError: Command 'klayout -b -r '/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc' -rd threads='4' -rd drc_json_default='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/rule_decks/sg13cmos5l_tech_default.json' -rd drc_json='/foss/pdks/IHP-Open-PDK/ihp-sg13cmos5l/libs.tech/klayout/python/sg13cmos5l_pycell_lib/sg13cmos5l_tech_mod.json' -rd run_mode='deep' -rd precheck_drc='false' -rd disable_extra_rules='false' -rd no_feol='true' -rd no_beol='true' -rd no_offgrid='false' -rd no_angle='false' -rd density_sanity='false' -rd density='false' -rd no_forbidden='true' -rd no_pin='true' -rd no_recommended='false' -rd topcell='row' -rd input='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds' -rd report='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pin.lyrdb' -rd log='/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_pin.log' -rd tables="pin"' returned non-zero exit status 1.
+2026-10-31 15:29:28 +0000: Memory Usage (429396K) : Starting running IHP-SG13CMOS5L Klayout DRC maximum runset on /home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/row_negative.gds
+2026-10-31 15:29:28 +0000: Memory Usage (429396K) : Ruby Version for klayout: 3.2.3
+2026-10-31 15:29:28 +0000: Memory Usage (433140K) : Loading database to memory is complete.
+2026-10-31 15:29:28 +0000: Memory Usage (433140K) : IHP-SG13CMOS5L Klayout DRC maximum runset output at: /home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/phase1/main_row_negative/row_negative_row_sg13cmos5l_maximal.lyrdb
+2026-10-31 15:29:28 +0000: Memory Usage (433140K) : Evaluate switches.
+2026-10-31 15:29:28 +0000: Memory Usage (433140K) : Klayout will use  thread(s)
+2026-10-31 15:29:28 +0000: Memory Usage (433140K) : deep mode is enabled for sg13cmos5l_maximal runset.
+Rule NW.a: 0 error(s)
+Rule NW.c: 0 error(s)
+Rule NW.c1: 0 error(s)
+Rule NW.d: 0 error(s)
+Rule NW.d1: 0 error(s)
+Rule NW.e: 0 error(s)
+Rule NW.e1: 0 error(s)
+Rule NW.f: 0 error(s)
+Rule NW.f1: 0 error(s)
+Rule PWB.a: 0 error(s)
+Rule PWB.b: 0 error(s)
+Rule PWB.c: 0 error(s)
+Rule NBL.a: 0 error(s)
+Rule NBLB.a: 0 error(s)
+Rule NBLB.b: 0 error(s)
+Rule NBLB.c: 0 error(s)
+Rule NBLB.d: 0 error(s)
+Rule Act.c: 0 error(s)
+Rule Act.d: 0 error(s)
+Rule Act.e: 0 error(s)
+Rule AFil.a: 0 error(s)
+Rule AFil.a1: 0 error(s)
+Rule AFil.b: 0 error(s)
+Rule AFil.i: 0 error(s)
+Rule TGO.a: 0 error(s)
+Rule TGO.b: 0 error(s)
+Rule TGO.c: 0 error(s)
+Rule TGO.d: 0 error(s)
+Rule TGO.e: 0 error(s)
+Rule Gat.a3: 0 error(s)
+Rule Gat.a4: 0 error(s)
+Rule Gat.b1: 0 error(s)
+Rule Gat.c: 0 error(s)
+Rule Gat.c: 0 error(s)
+Rule Gat.e: 0 error(s)
+Rule Gat.f: 0 error(s)
+Rule GFil.a: 0 error(s)
+Rule GFil.b: 0 error(s)
+Rule GFil.c: 0 error(s)
+Rule GFil.j: 0 error(s)
+Rule pSD.a: 0 error(s)
+Rule pSD.b: 0 error(s)
+Rule pSD.c: 0 error(s)
+Rule pSD.d: 0 error(s)
+Rule pSD.d1: 0 error(s)
+Rule pSD.e: 0 error(s)
+Rule pSD.f: 0 error(s)
+Rule pSD.g: 0 error(s)
+Rule pSD.g: 0 error(s)
+Rule pSD.i: 0 error(s)
+Rule pSD.i1: 0 error(s)
+Rule pSD.j: 0 error(s)
+Rule pSD.j1: 0 error(s)
+Rule pSD.k: 0 error(s)
+Rule pSD.l: 0 error(s)
+Rule pSD.m: 0 error(s)
+Rule pSD.n: 0 error(s)
+Rule nSDB.a: 0 error(s)
+Rule nSDB.b: 0 error(s)
+Rule nSDB.c: 0 error(s)
+Rule nSDB.e: 0 error(s)
+Rule EXTB.a: 0 error(s)
+Rule EXTB.b: 0 error(s)
+Rule EXTB.c: 0 error(s)
+Rule Sal.a: 0 error(s)
+Rule Sal.b: 0 error(s)
+Rule Sal.c: 0 error(s)
+Rule Sal.c: 0 error(s)
+Rule Sal.d: 0 error(s)
+Rule Sal.d: 0 error(s)
+Rule Sal.e: 0 error(s)
+Rule Cnt.b1: 0 error(s)
+Rule Cnt.f: 0 error(s)
+Rule Cnt.g: 0 error(s)
+Rule Cnt.h: 0 error(s)
+Rule Cnt.j: 0 error(s)
+Rule CntB.a: 0 error(s)
+Rule CntB.a: 0 error(s)
+Rule CntB.a1: 0 error(s)
+Rule CntB.b: 0 error(s)
+Rule CntB.b2: 0 error(s)
+Rule CntB.c: 0 error(s)
+Rule CntB.d: 0 error(s)
+Rule CntB.e: 0 error(s)
+Rule CntB.f: 0 error(s)
+Rule CntB.g: 0 error(s)
+Rule CntB.g1: 0 error(s)
+Rule CntB.g2: 0 error(s)
+Rule CntB.h: 0 error(s)
+Rule CntB.j: 0 error(s)
+Rule M1.c: 0 error(s)
+Rule M1.c1: 0 error(s)
+Rule M1.d: 0 error(s)
+Rule M2.c: 0 error(s)
+Rule M2.c1: 0 error(s)
+Rule M2.d: 0 error(s)
+Rule M3.c: 0 error(s)
+Rule M3.c1: 0 error(s)
+Rule M3.d: 0 error(s)
+Rule M4.c: 0 error(s)
+Rule M4.c1: 0 error(s)
+Rule M4.d: 0 error(s)
+Rule M1Fil.a1: 0 error(s)
+Rule M1Fil.b: 0 error(s)
+Rule M2Fil.a1: 0 error(s)
+Rule M2Fil.b: 0 error(s)
+Rule M3Fil.a1: 0 error(s)
+Rule M3Fil.b: 0 error(s)
+Rule M4Fil.a1: 0 error(s)
+Rule M4Fil.b: 0 error(s)
+Rule TM1Fil.a: 0 error(s)
+Rule TM1Fil.b: 0 error(s)
+Rule V1.b1: 0 error(s)
+Rule V1.c1: 0 error(s)
+Rule V2.b1: 0 error(s)
+Rule V2.c1: 0 error(s)
+Rule V3.b1: 0 error(s)
+Rule V3.c1: 0 error(s)
+Rule Rsil.a: 0 error(s)
+Rule Rsil.b: 0 error(s)
+Rule Rsil.c: 0 error(s)
+Rule Rsil.d: 0 error(s)
+Rule Rsil.e: 0 error(s)
+Rule Rsil.f: 0 error(s)
+Rule Rppd.a: 0 error(s)
+Rule Rppd.b: 0 error(s)
+Rule Rppd.c: 0 error(s)
+Rule Rppd.c: 0 error(s)
+Rule Rppd.d: 0 error(s)
+Rule Rppd.e: 0 error(s)
+Rule Rhi.a: 0 error(s)
+Rule Rhi.b: 0 error(s)
+Rule Rhi.c: 0 error(s)
+Rule Rhi.d: 0 error(s)
+Rule Rhi.d: 0 error(s)
+Rule Rhi.e: 0 error(s)
+Rule Rhi.f: 0 error(s)
+Rule nmosi.b: 0 error(s)
+Rule nmosi.c: 0 error(s)
+Rule nmosi.d: 0 error(s)
+Rule nmosi.f: 0 error(s)
+Rule nmosi.g: 0 error(s)
+Rule Sdiod.a: 0 error(s)
+Rule Sdiod.b: 0 error(s)
+Rule Sdiod.c: 0 error(s)
+Rule Pad.aR: 0 error(s)
+Rule Pad.a1: 0 error(s)
+Rule Pad.bR: 0 error(s)
+Rule Pad.d: 0 error(s)
+Rule Pad.dR: 0 error(s)
+Rule Pad.d1R: 0 error(s)
+Rule Pad.jR: 0 error(s)
+Rule Padc.d: 0 error(s)
+Rule Seal.a_Activ: 0 error(s)
+Rule Seal.a_pSD: 0 error(s)
+Rule Seal.a_Metal1: 0 error(s)
+Rule Seal.a_Metal2: 0 error(s)
+Rule Seal.a_Metal3: 0 error(s)
+Rule Seal.a_Metal4: 0 error(s)
+Rule Seal.a_TopMetal1: 0 error(s)
+Rule Seal.c: 0 error(s)
+Rule Seal.c: 0 error(s)
+Rule Seal.c1.Via1: 0 error(s)
+Rule Seal.c1.Via1: 0 error(s)
+Rule Seal.c1.Via2: 0 error(s)
+Rule Seal.c1.Via2: 0 error(s)
+Rule Seal.c1.Via3: 0 error(s)
+Rule Seal.c1.Via3: 0 error(s)
+Rule Seal.c2: 0 error(s)
+Rule Seal.c2: 0 error(s)
+Rule Seal.d.Cont: 0 error(s)
+Rule Seal.d.Via1: 0 error(s)
+Rule Seal.d.Via2: 0 error(s)
+Rule Seal.d.Via3: 0 error(s)
+Rule Seal.d.TopVia1: 0 error(s)
+Rule Seal.e: 0 error(s)
+Rule Seal.f.Activ: 0 error(s)
+Rule Seal.f.pSD: 0 error(s)
+Rule Seal.f.Metal1: 0 error(s)
+Rule Seal.f.Metal2: 0 error(s)
+Rule Seal.f.Metal3: 0 error(s)
+Rule Seal.f.Metal4: 0 error(s)
+Rule Seal.f.TopMetal1: 0 error(s)
+Rule LU.a: 1 error(s)
+Rule LU.c: 0 error(s)
+Rule LU.c1: 0 error(s)
+Rule LU.d: 0 error(s)
+Rule LU.d1: 0 error(s)
+Rule Slt.a.M1: 0 error(s)
+Rule Slt.b.M1: 0 error(s)
+Rule Slt.c.M1: 0 error(s)
+Rule Slt.e.M1: 0 error(s)
+Rule Slt.f.M1: 0 error(s)
+Rule Slt.h1: 0 error(s)
+Rule Slt.h1: 0 error(s)
+Rule Slt.a.M2: 0 error(s)
+Rule Slt.b.M2: 0 error(s)
+Rule Slt.c.M2: 0 error(s)
+Rule Slt.e.M2: 0 error(s)
+Rule Slt.f.M2: 0 error(s)
+Rule Slt.h2.M2: 0 error(s)
+Rule Slt.h2.M2: 0 error(s)
+Rule Slt.a.M3: 0 error(s)
+Rule Slt.b.M3: 0 error(s)
+Rule Slt.c.M3: 0 error(s)
+Rule Slt.e.M3: 0 error(s)
+Rule Slt.f.M3: 0 error(s)
+Rule Slt.h2.M3: 0 error(s)
+Rule Slt.h2.M3: 0 error(s)
+Rule Slt.a.M4: 0 error(s)
+Rule Slt.b.M4: 0 error(s)
+Rule Slt.c.M4: 0 error(s)
+Rule Slt.e.M4: 0 error(s)
+Rule Slt.f.M4: 0 error(s)
+Rule Slt.h2.M4: 0 error(s)
+Rule Slt.a.TM1: 0 error(s)
+Rule Slt.b.TM1: 0 error(s)
+Rule Slt.c.TM1: 0 error(s)
+Rule Slt.e.TM1: 0 error(s)
+Rule Slt.f.TM1: 0 error(s)
+Rule Slt.h3: 0 error(s)
+Rule NW.c1.dig: 0 error(s)
+Rule NW.d1.dig: 0 error(s)
+Rule NW.e1.dig: 0 error(s)
+Rule NW.f1.dig: 0 error(s)
+Rule Cnt.c.Digi: 0 error(s)
+Rule LBE.b2: 0 error(s)
+Rule LBE.e.dfPad: 0 error(s)
+Rule LBE.e.Passiv: 0 error(s)
+Rule LBE.f: 0 error(s)
+Number of DRC errors for maximum rule set: 1
+2026-10-31 15:30:00 +0000: Memory Usage (623956K) : KLayout DRC run for maximum ruleSet completed in 31.41 seconds
+31-Oct-2026 15:30:00 | ERROR   | ==================================================================================
+31-Oct-2026 15:30:00 | ERROR   | KLayout DRC Check Failed: Violations were detected in the layout.
+31-Oct-2026 15:30:00 | ERROR   | ==================================================================================
+31-Oct-2026 15:30:00 | ERROR   | Violated rules are : {'LU.a'}
+
+31-Oct-2026 15:30:00 | INFO    | Total DRC Run time: 35.50 seconds (including execution, analysis, and reporting)
+
+real	0m35.710s
+user	1m38.787s
+sys	0m8.054s

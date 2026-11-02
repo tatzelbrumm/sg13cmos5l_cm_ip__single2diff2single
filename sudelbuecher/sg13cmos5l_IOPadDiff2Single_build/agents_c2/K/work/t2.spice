@@ -1,0 +1,12 @@
+* debug: DC gate current of the S-Varicap
+.lib cornerMOShv.lib mos_tt
+V1 t1 0 dc 1
+X1 t1 0 t1 0 sg13_hv_svaricap w=9.74u l=0.8u Nx=6
+.control
+foreach v -2 -1 0 1 2 3
+alter V1 dc = $v
+op
+print i(v1)
+end
+.endc
+.end

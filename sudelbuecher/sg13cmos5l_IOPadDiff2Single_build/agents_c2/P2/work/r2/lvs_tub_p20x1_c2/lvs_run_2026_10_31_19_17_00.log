@@ -1,0 +1,16 @@
+31-Oct-2026 19:17:00 | INFO    | Your Klayout version is: KLayout 0.30.12
+31-Oct-2026 19:17:00 | INFO    | Running SG13CMOS5L LVS checks on design /home/user/c2/P2/out/d2s_p2_cells.gds on cell tub_p20x1_c2
+31-Oct-2026 19:17:04 | INFO    | ==============================================================================
+31-Oct-2026 19:17:04 | INFO    | Important Summary
+31-Oct-2026 19:17:04 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 19:17:04 | INFO    | | Status           | PASS                                                         |
+31-Oct-2026 19:17:04 | INFO    | | Mode             | COMPARE                                                      |
+31-Oct-2026 19:17:04 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+31-Oct-2026 19:17:04 | INFO    | | Layout           | d2s_p2_cells.gds                                             |
+31-Oct-2026 19:17:04 | INFO    | | Top Cell         | tub_p20x1_c2                                                 |
+31-Oct-2026 19:17:04 | INFO    | | Results Dir      | /home/user/c2/P2/work/r2/lvs_tub_p20x1_c2                    |
+31-Oct-2026 19:17:04 | INFO    | | Warnings         | 0                                                            |
+31-Oct-2026 19:17:04 | INFO    | | Errors           | 0                                                            |
+31-Oct-2026 19:17:04 | INFO    | | Run Time (s)     | 3.893                                                        |
+31-Oct-2026 19:17:04 | INFO    | +------------------+--------------------------------------------------------------+
+31-Oct-2026 19:17:04 | INFO    | ==============================================================================

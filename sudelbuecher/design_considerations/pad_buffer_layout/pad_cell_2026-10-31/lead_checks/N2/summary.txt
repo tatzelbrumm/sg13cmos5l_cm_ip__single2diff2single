@@ -1,0 +1,8 @@
+sinks_6x6_c2: 51.68 x 16.51 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+sinks_6x6_s2d_c2: 16.51 x 51.68 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_casc_n_c2: 40.70 x 12.41 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_ab_n_c2: 20.68 x 4.02 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_pd_n_c2: 4.73 x 2.95 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+bias_tree_n_c2: 30.26 x 8.59 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_rhigh_c2: 13.80 x 17.29 um | XOR empty | DRC clean | LVS match | W per (model, L) DIFFERENT
+ALLDONE

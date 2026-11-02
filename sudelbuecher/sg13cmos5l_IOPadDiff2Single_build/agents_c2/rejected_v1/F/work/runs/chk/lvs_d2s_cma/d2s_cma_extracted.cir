@@ -1,0 +1,6 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 31/10/2026 17:39
+
+.SUBCKT d2s_cma a pad
+M$1 pad a pad pad sg13_hv_pmos L=32.16u W=7.96u AS=2.7064p AD=2.7064p PS=16.6u
++ PD=16.6u rfmode=0
+.ENDS d2s_cma

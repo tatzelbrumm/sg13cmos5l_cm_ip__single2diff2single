@@ -1,0 +1,8 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 31/10/2026 19:10
+
+.SUBCKT tub_p20x1_c2 d s
+M$1 s \$5 d s sg13_hv_pmos L=1u W=5u AS=1.7p AD=0.95p PS=10.68u PD=5.38u
++ rfmode=0
+M$2 d \$6 s s sg13_hv_pmos L=1u W=5u AS=0.95p AD=1.7p PS=5.38u PD=10.68u
++ rfmode=0
+.ENDS tub_p20x1_c2

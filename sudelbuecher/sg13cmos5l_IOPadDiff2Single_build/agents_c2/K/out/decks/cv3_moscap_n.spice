@@ -1,0 +1,24 @@
+* K deck 3: C(V) of moscap_n (sg13_moscap_n G SUB: thin-oxide NMOS on the substrate, S/D/B = SUB), V = V(G) - V(SUB), fF/um2 of W*L
+.lib cornerMOSCAP.lib moscap_tt
+.temp 27
+VKN1 t1 0 dc 0 ac 1
+XKN1 t1 0 sg13_moscap_n w=10u l=10u
+VKN2 t2 0 dc 0 ac 1
+XKN2 t2 0 sg13_moscap_n w=2u l=2u
+.control
+let k = 0
+shell rm -f /home/user/c2/K/out/logs/cv3_moscap_n.dat
+while k < 133
+  let vx = k*0.05 - 3.3
+  alter VKN1 dc = $&vx
+  alter VKN2 dc = $&vx
+  ac lin 1 100k 100k
+* C per um2, fF/um2; I(V) flows into the + node, so C = -Im(I)/(2 pi f)
+  let ckn1 = -imag(i(vkn1))/(2*pi*100e3)/100e-12*1e3
+  let ckn2 = -imag(i(vkn2))/(2*pi*100e3)/4e-12*1e3
+  echo $&vx $&ckn1 $&ckn2 >> /home/user/c2/K/out/logs/cv3_moscap_n.dat
+  destroy all
+  let k = k + 1
+end
+.endc
+.end

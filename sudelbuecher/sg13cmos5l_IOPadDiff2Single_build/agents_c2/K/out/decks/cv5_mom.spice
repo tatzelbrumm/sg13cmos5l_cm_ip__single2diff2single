@@ -1,0 +1,33 @@
+* K deck 5: C(V) of the MOM capacitors, 20u x 20u footprint (400 um2), normalised to the footprint
+* KF12 cap_cmomf M1-M2, KF14 cap_cmomf M1-M4, KI12 cap_cmomi M1-M2 (N=2 extrapolated), KI14 cap_cmomi M1-M4
+.lib cornerCAP.lib cap_typ
+.temp 27
+VKF12 t1 0 dc 0 ac 1
+XKF12 t1 0 cap_cmomf w=20e-6 l=20e-6 mmin=1 mmax=2
+VKF14 t2 0 dc 0 ac 1
+XKF14 t2 0 cap_cmomf w=20e-6 l=20e-6 mmin=1 mmax=4
+VKI12 t3 0 dc 0 ac 1
+XKI12 t3 0 cap_cmomi w=20e-6 l=20e-6 mmin=1 mmax=2
+VKI14 t4 0 dc 0 ac 1
+XKI14 t4 0 cap_cmomi w=20e-6 l=20e-6 mmin=1 mmax=4
+.control
+let k = 0
+shell rm -f /home/user/c2/K/out/logs/cv5_mom.dat
+while k < 133
+  let vx = k*0.05 - 3.3
+  alter VKF12 dc = $&vx
+  alter VKF14 dc = $&vx
+  alter VKI12 dc = $&vx
+  alter VKI14 dc = $&vx
+  ac lin 1 100k 100k
+* C per um2, fF/um2; I(V) flows into the + node, so C = -Im(I)/(2 pi f)
+  let ckf12 = -imag(i(vkf12))/(2*pi*100e3)/400e-12*1e3
+  let ckf14 = -imag(i(vkf14))/(2*pi*100e3)/400e-12*1e3
+  let cki12 = -imag(i(vki12))/(2*pi*100e3)/400e-12*1e3
+  let cki14 = -imag(i(vki14))/(2*pi*100e3)/400e-12*1e3
+  echo $&vx $&ckf12 $&ckf14 $&cki12 $&cki14 >> /home/user/c2/K/out/logs/cv5_mom.dat
+  destroy all
+  let k = k + 1
+end
+.endc
+.end
