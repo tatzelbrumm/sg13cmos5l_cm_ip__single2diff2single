@@ -1,4 +1,4 @@
-/home/user/c2/F2/work/rbB4_logs/runs/pex/sg13cmos5l_IOPadDiff2Single.pex.spice -> /home/user/c2/F2/work/rbB4_logs/runs/pex/tied.spice: 21 capacitor-only nodes tied to iovss through 1e12 Ohm
+/home/user/c2/F2/work/b2/logs/runs/pex/sg13cmos5l_IOPadDiff2Single.pex.spice -> /home/user/c2/F2/work/b2/logs/runs/pex/tied.spice: 21 capacitor-only nodes tied to iovss through 1e12 Ohm
 Rtie0 TopLayersTo4_0.vdd iovss 1e12
 Rtie1 a_10054_29666# iovss 1e12
 Rtie2 a_10190_29666# iovss 1e12

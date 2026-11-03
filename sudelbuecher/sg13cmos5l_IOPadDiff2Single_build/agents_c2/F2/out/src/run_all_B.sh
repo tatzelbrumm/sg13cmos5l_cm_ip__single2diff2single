@@ -18,6 +18,7 @@ python3 -B "$S/strip_tub_labels.py" "$P2/d2s_p2_cells.gds" "$O/cells/p2_tubnolab
 cp "$O/cells/d2s_f2b_n_cells.gds" "$O/cells/f2b_n.gds"; cp "$O/cells/d2s_f2b_p_cells.gds" "$O/cells/f2b_p.gds"
 cp "$O/cells/d2s_f2b_sp_cells.gds" "$O/cells/f2b_sp.gds"
 python3 -B "$S/route_block.py" "$S/block_cfg.py" "$O/cells/d2s_block.gds" > "$O/cells/route.txt"
+python3 -B "$S/relabel_block.py" "$O/cells/d2s_block.gds" >> "$O/cells/route.txt"
 rm -f "$O/cells/f2b_n.gds" "$O/cells/f2b_p.gds" "$O/cells/f2b_sp.gds"
 python3 -B "$S/build_pad_B.py" "$O/padctx/pad_ctx.gds" "$O/cells/d2s_block.gds" "$O/pad_candidate.gds"
 python3 -B "$S/compose_cdl.py" "$P2/d2s_p2_cells.cdl" "$O/cells/d2s_f2b_p_cells.cdl" "$O/cells/d2s_f2b_n_cells.cdl" \

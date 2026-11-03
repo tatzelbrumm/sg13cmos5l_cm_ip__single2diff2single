@@ -3,4 +3,4 @@ pad LVS: PASS (netlists match)
 block LVS: PASS (netlists match)
 row check: 0 edge layers DIFFERENT, 0 bands / rails FAIL
 router metal over gates: total 0.000 um2 of router Metal1 / Metal2 over gates
-PEX (magic, C-coupled, mode 2): /home/user/c2/F2/work/rbB4_logs/runs/pex/sg13cmos5l_IOPadDiff2Single.pex.spice -> /home/user/c2/F2/work/rbB4_logs/runs/pex/tied.spice: 21 capacitor-only nodes tied to iovss through 1e12 Ohm
+PEX (magic, C-coupled, mode 2): /home/user/c2/F2/work/b2/logs/runs/pex/sg13cmos5l_IOPadDiff2Single.pex.spice -> /home/user/c2/F2/work/b2/logs/runs/pex/tied.spice: 21 capacitor-only nodes tied to iovss through 1e12 Ohm

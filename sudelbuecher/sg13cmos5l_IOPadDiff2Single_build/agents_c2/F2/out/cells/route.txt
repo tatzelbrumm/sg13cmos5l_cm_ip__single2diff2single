@@ -42,4 +42,5 @@ latch-up nmos/ptap: all device diffusion within reach
   iovss_m    M1  15.34 um  M2  22.01 um  vias 9
   iovss_sk   M1   1.08 um  M2   0.00 um  vias 1
   iovss_o    M1   4.54 um  M2   9.38 um  vias 1
-failed: [] time 21 s
+failed: [] time 29 s
+relabel_block: vdd 6, vddo 1, vss 6, vsso 1

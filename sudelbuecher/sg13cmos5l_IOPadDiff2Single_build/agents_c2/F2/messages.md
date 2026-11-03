@@ -64,3 +64,15 @@ shared ring leg, dummy convention, symbol ports. The harness refused `report.md`
 Christoph's answers (keep lines, shared leg ok, keep dummies / abutment, wrapper for the ports by the lead); one fix:
 rename the block's vdd / vss / vddo / vsso labels on the iovdd / iovss nets, so that in the flat pad `vdd` / `vss` sit only
 on the 1.2 V rails; rerun DRC / LVS / row check; new sha256.
+
+## about 15:57, F2's stage B2 reply (summary)
+
+`relabel_block.py`: in d2s_block vdd / vddo → iovdd (7 texts), vss → iovss (6), vsso dropped (1); in the flat pad `vdd` /
+`vss` only on the 1.2 V rails. Pad geometry XOR vs stage B empty; DRC, LVS, row check pass; `pad_candidate.gds`
+8946d2a0c95e, `.cdl` b06a4f5ba6de.
+
+## the lead's check of B2
+
+Rebuild byte-identical; geometry XOR vs stage B empty; own label audit: `vdd` / `vss` only in Metal3ViasUp / TopLayersTo4 at
+y 148–170 (the 1.2 V rails); own DRC clean, own LVS match; row check 0 FAIL, 0 DIFFERENT. Stage-B report saved as
+`report_stageB.md`.
