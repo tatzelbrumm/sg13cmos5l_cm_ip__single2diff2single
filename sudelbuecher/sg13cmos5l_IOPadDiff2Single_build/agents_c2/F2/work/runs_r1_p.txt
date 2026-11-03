@@ -1,0 +1,2 @@
+d2s_ab_p_f2 | DRC: 03-Nov-2026 12:46:23 | INFO    | Total DRC Run time: 21.71 seconds (including execution, analysis, and reporting) (exceptions 0) | LVS match lines: 2 |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+bias_tree_p_f2 | DRC: 03-Nov-2026 12:46:50 | INFO    | Total DRC Run time: 22.98 seconds (including execution, analysis, and reporting) (exceptions 0) | LVS match lines: 2 |   summary: max mirror XOR 29.1528 um2, 0 narrow-poly hits

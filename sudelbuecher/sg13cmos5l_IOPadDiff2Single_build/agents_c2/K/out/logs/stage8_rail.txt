@@ -1,0 +1,12 @@
+v0 into top rail    pad 1.650 -> 3.277 V; a 0.299 b 0.272; delay(10 mV) 0.016 us; ts1% 3.993 us; overshoot 0.00 %
+v0 top rail -> mid  pad 3.277 -> 1.650 V; a 2.587 b 0.705; delay(10 mV) 0.168 us; ts1% 0.709 us; overshoot 0.03 %
+v0 into bottom      pad 1.650 -> 0.700 V; a 2.648 b 0.875; delay(10 mV) 0.017 us; ts1% 0.531 us; overshoot 0.00 %
+v0 bottom -> mid    pad 0.700 -> 1.650 V; a 2.587 b 0.705; delay(10 mV) 0.010 us; ts1% 0.306 us; overshoot 0.03 %
+v8 into top rail    pad 1.650 -> 3.277 V; a 0.299 b 0.272; delay(10 mV) 0.016 us; ts1% 4.002 us; overshoot 0.00 %
+v8 top rail -> mid  pad 3.277 -> 1.650 V; a 2.587 b 0.705; delay(10 mV) 0.171 us; ts1% 0.717 us; overshoot 0.01 %
+v8 into bottom      pad 1.650 -> 0.700 V; a 2.648 b 0.875; delay(10 mV) 0.014 us; ts1% 0.539 us; overshoot 0.00 %
+v8 bottom -> mid    pad 0.700 -> 1.650 V; a 2.587 b 0.705; delay(10 mV) 0.009 us; ts1% 0.318 us; overshoot 0.01 %
+v9 into top rail    pad 1.650 -> 3.277 V; a 0.299 b 0.272; delay(10 mV) 0.016 us; ts1% 3.907 us; overshoot 0.00 %
+v9 top rail -> mid  pad 3.277 -> 1.650 V; a 2.587 b 0.705; delay(10 mV) 0.171 us; ts1% 0.786 us; overshoot 0.00 %
+v9 into bottom      pad 1.650 -> 0.700 V; a 2.648 b 0.875; delay(10 mV) 0.015 us; ts1% 0.556 us; overshoot 0.00 %
+v9 bottom -> mid    pad 0.700 -> 1.650 V; a 2.587 b 0.705; delay(10 mV) 0.010 us; ts1% 0.416 us; overshoot 0.00 %

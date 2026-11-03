@@ -72,3 +72,21 @@ names an agent's own render.
 | `P2_d2s_tails_c2_row_end.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
 | `P2_tub_p20x1_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
 | `P2_tub_p20x1_c2_gate.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `K_pm_fc_gm_v9.png` | K stage 7: PM / fc / GM over the swing, v0 / v8 / v9 (both turned + symmetric 2 kΩ), K's own plot |
+| `F2_bias_tree_n_f2.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_bias_tree_n_f2_switches.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_bias_tree_p_f2.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_bias_tree_p_f2_tgp.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_d2s_ab_n_f2.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_d2s_ab_p_f2.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_d2s_casc_n_f2.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_d2s_pd_n_f2.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_d2s_rhigh_f2.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_d2s_sp2k_f2.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_placement_A.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_placement_A_bottom.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_placement_A_top_switches.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_sinks_6x6_f2.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `F2_sinks_6x6_f2_end.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
+| `K_steps_large.png` | K stage 8: large steps to the swing ends, v0 / v8 / v9, K's own plot |
+| `K_rail_recovery.png` | K stage 8: rail drive and recovery, v0 / v8 / v9, K's own plot |

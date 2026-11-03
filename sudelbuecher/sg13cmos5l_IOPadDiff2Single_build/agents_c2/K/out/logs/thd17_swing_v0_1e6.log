@@ -1,0 +1,197 @@
+Note: Starting spice3 gmin stepping
+Warning: spice3 gmin stepping failed
+Note: Starting source stepping
+Note: Source stepping completed
+
+Note: No compatibility mode selected!
+
+
+Circuit: * k deck 17: thd at the linear-swing amplitude, 1 kohm || 100 pf; setup and measurement of the cace template
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+vdd                                        3.3
+s0                                           0
+s1                                           0
+vext                                       3.3
+xg                                     1.97641
+ibias                                  0.93193
+vref                                      1.65
+vic                                       1.65
+vinp                                      1.65
+dp                                           0
+vinn                                      1.65
+vout                                   1.65008
+vterm                                     1.65
+x1.xsel.xd.xa.sa                       2.39022
+x1.xsel.vbp                            1.97211
+x1.xsel.xd.xa.sb                       2.39022
+x1.xsel.xd.y                          0.380016
+x1.xsel.xd.x                          0.379535
+x1.xsel.xd.xa.xr.dt                          0
+x1.xsel.xd.xb.sa                       2.39022
+x1.xsel.xd.xb.sb                       2.39022
+x1.xsel.xd.xb.xr.dt                          0
+x1.xsel.xd.xc1.sa                      2.39023
+x1.xsel.xd.xc1.sb                      2.39029
+x1.xsel.xd.xc1.xr.dt                         0
+x1.xsel.xd.xc2.sa                      2.39023
+x1.xsel.xd.xc2.sb                      2.39029
+x1.xsel.xd.xc2.xr.dt                         0
+x1.xsel.xd.l2                          2.29679
+x1.xsel.vabn                           1.62247
+x1.xsel.xd.l1                         0.645458
+x1.xsel.vbnc                           1.20825
+x1.xsel.vbn                           0.913752
+x1.xsel.xd.pl                          2.97716
+x1.xsel.vbpc                           1.91277
+x1.xsel.vabp                           1.52221
+x1.xsel.xd.pr                          2.97747
+x1.xsel.net2                           2.58709
+x1.xsel.net3                          0.705044
+x1.xsel.net1                           2.58772
+x1.xsel.net4                          0.696927
+x1.xsel.xg.en_oa_b                     3.29998
+x1.xsel.xg.xda.n1                      2.53361
+x1.xsel.xg.en_oa                   5.30059e-09
+x1.xsel.xg.en_bg_b                     3.29998
+x1.xsel.xg.xdc.n1                      2.53361
+x1.xsel.xg.en_bg                   5.30059e-09
+x1.xsel.xg.xde.p1                          3.3
+x1.xsel.xg.s00                         3.29999
+x1.xsel.xg.en_ext_b                2.12021e-08
+x1.xsel.xg.xdf.n1                  1.06011e-08
+x1.xsel.xg.en_ext                          3.3
+x1.xsel.xg.xoa.ks                  5.05062e-09
+x1.xsel.xg.xoa.vbr                  0.00555372
+x1.xsel.xg.xoa.vpc                     2.76709
+x1.xsel.xg.xoa.vpg                     3.29998
+x1.xsel.xg.xoa.d10                 0.000647931
+x1.xsel.xg.xoa.vnc                  0.00824815
+x1.xsel.xg.xoa.vres                0.000195139
+x1.xsel.xg.xoa.c8                    0.0879565
+x1.xsel.xg.xoa.c2                     0.070804
+x1.xsel.xg.xoa.co                      0.11808
+x1.xsel.iref                          0.921723
+x1.xsel.xg.xoa.net1                  0.0661602
+x1.xsel.xg.xoa.net2                  0.0661556
+x1.xsel.xg.xoa.net3                  0.0661556
+x1.xsel.xg.xoa.net4                  0.0661556
+x1.xsel.xg.xoa.net5                  0.0661556
+x1.xsel.xg.xoa.net6                  0.0661556
+x1.xsel.xg.xoa.net7                  0.0661556
+x1.xsel.xg.xbg.ks                  5.05062e-09
+x1.xsel.xg.xbg.g                     0.0103023
+x1.xsel.xg.xbg.vpc                     2.96193
+x1.xsel.xg.xbg.vpg                     3.29998
+x1.xsel.xg.xbg.eb                  5.27669e-08
+x1.xsel.xg.xbg.e2                  5.26864e-08
+x1.xsel.xg.xbg.ca                     0.136324
+x1.xsel.xg.xbg.ea                  1.82938e-08
+x1.xsel.xg.xbg.co                     0.188317
+x1.xsel.xg.xbg.n1b[8]              4.74889e-08
+x1.xsel.xg.xbg.xr1b[9].dt                    0
+x1.xsel.xg.xbg.n1b[7]              4.22113e-08
+x1.xsel.xg.xbg.xr1b[8].dt                    0
+x1.xsel.xg.xbg.n1b[6]              3.69341e-08
+x1.xsel.xg.xbg.xr1b[7].dt                    0
+x1.xsel.xg.xbg.n1b[5]              3.16572e-08
+x1.xsel.xg.xbg.xr1b[6].dt                    0
+x1.xsel.xg.xbg.n1b[4]              2.63805e-08
+x1.xsel.xg.xbg.xr1b[5].dt                    0
+x1.xsel.xg.xbg.n1b[3]              2.11041e-08
+x1.xsel.xg.xbg.xr1b[4].dt                    0
+x1.xsel.xg.xbg.n1b[2]              1.58279e-08
+x1.xsel.xg.xbg.xr1b[3].dt                    0
+x1.xsel.xg.xbg.n1b[1]              1.05519e-08
+x1.xsel.xg.xbg.xr1b[2].dt                    0
+x1.xsel.xg.xbg.n1b[0]              5.27592e-09
+x1.xsel.xg.xbg.xr1b[1].dt                    0
+x1.xsel.xg.xbg.xr1b[0].dt                    0
+x1.xsel.xg.xbg.n0[16]              5.27585e-08
+x1.xsel.xg.xbg.xr0[17].dt                    0
+x1.xsel.xg.xbg.n0[15]              5.27505e-08
+x1.xsel.xg.xbg.xr0[16].dt                    0
+x1.xsel.xg.xbg.n0[14]              5.27429e-08
+x1.xsel.xg.xbg.xr0[15].dt                    0
+x1.xsel.xg.xbg.n0[13]              5.27359e-08
+x1.xsel.xg.xbg.xr0[14].dt                    0
+x1.xsel.xg.xbg.n0[12]              5.27293e-08
+x1.xsel.xg.xbg.xr0[13].dt                    0
+x1.xsel.xg.xbg.n0[11]              5.27232e-08
+x1.xsel.xg.xbg.xr0[12].dt                    0
+x1.xsel.xg.xbg.n0[10]              5.27175e-08
+x1.xsel.xg.xbg.xr0[11].dt                    0
+x1.xsel.xg.xbg.n0[9]               5.27124e-08
+x1.xsel.xg.xbg.xr0[10].dt                    0
+x1.xsel.xg.xbg.n0[8]               5.27076e-08
+x1.xsel.xg.xbg.xr0[9].dt                     0
+x1.xsel.xg.xbg.n0[7]               5.27034e-08
+x1.xsel.xg.xbg.xr0[8].dt                     0
+x1.xsel.xg.xbg.n0[6]               5.26996e-08
+x1.xsel.xg.xbg.xr0[7].dt                     0
+x1.xsel.xg.xbg.n0[5]               5.26963e-08
+x1.xsel.xg.xbg.xr0[6].dt                     0
+x1.xsel.xg.xbg.n0[4]               5.26935e-08
+x1.xsel.xg.xbg.xr0[5].dt                     0
+x1.xsel.xg.xbg.n0[3]               5.26911e-08
+x1.xsel.xg.xbg.xr0[4].dt                     0
+x1.xsel.xg.xbg.n0[2]               5.26893e-08
+x1.xsel.xg.xbg.xr0[3].dt                     0
+x1.xsel.xg.xbg.n0[1]               5.26878e-08
+x1.xsel.xg.xbg.xr0[2].dt                     0
+x1.xsel.xg.xbg.n0[0]               5.26869e-08
+x1.xsel.xg.xbg.xr0[1].dt                     0
+x1.xsel.xg.xbg.xr0[0].dt                     0
+x1.xsel.xg.xbg.n1a[9]              1.66302e-08
+x1.xsel.xg.xbg.xr1a[10].dt                   0
+x1.xsel.xg.xbg.n1a[8]              1.49668e-08
+x1.xsel.xg.xbg.xr1a[9].dt                    0
+x1.xsel.xg.xbg.n1a[7]              1.33035e-08
+x1.xsel.xg.xbg.xr1a[8].dt                    0
+x1.xsel.xg.xbg.n1a[6]              1.16403e-08
+x1.xsel.xg.xbg.xr1a[7].dt                    0
+x1.xsel.xg.xbg.n1a[5]              9.97719e-09
+x1.xsel.xg.xbg.xr1a[6].dt                    0
+x1.xsel.xg.xbg.n1a[4]              8.31419e-09
+x1.xsel.xg.xbg.xr1a[5].dt                    0
+x1.xsel.xg.xbg.n1a[3]              6.65126e-09
+x1.xsel.xg.xbg.xr1a[4].dt                    0
+x1.xsel.xg.xbg.n1a[2]               4.9884e-09
+x1.xsel.xg.xbg.xr1a[3].dt                    0
+x1.xsel.xg.xbg.n1a[1]              3.32557e-09
+x1.xsel.xg.xbg.xr1a[2].dt                    0
+x1.xsel.xg.xbg.n1a[0]              1.66278e-09
+x1.xsel.xg.xbg.xr1a[1].dt                    0
+x1.xsel.xg.xbg.xr1a[0].dt                    0
+x1.xsel.xg.xbg.net1                  0.0661602
+x1.xsel.xg.xbg.net2                  0.0661556
+x1.xsel.xg.xbg.net3                  0.0661556
+x1.xsel.xg.xbg.net4                  0.0661556
+x1.xsel.xg.xbg.net5                  0.0661556
+x1.xsel.xg.xbg.net6                  0.0661556
+x1.xsel.xg.xbg.net7                  0.0661556
+x1.xsel.xg.xbg.xrdum[1].dt                   0
+x1.xsel.xg.xbg.xrdum[0].dt                   0
+x1.xsel.xt.ni                         0.911567
+en#branch                             -3.3e-10
+ep#branch                             -3.3e-10
+vd#branch                                    0
+vterm#branch                       7.65506e-08
+vic#branch                           -8.25e-10
+vref#branch                          -8.25e-10
+vext#branch                       -1.00135e-05
+vs1#branch                                   0
+vs0#branch                                   0
+vdd#branch                        -0.000300692
+
+ Reference value :  2.00109e-06 Reference value :  2.16125e-06 Reference value :  2.34484e-06 Reference value :  2.50109e-06 Reference value :  2.65344e-06 Reference value :  2.80188e-06 Reference value :  2.96594e-06 Reference value :  3.12609e-06 Reference value :  3.27844e-06 Reference value :  3.42688e-06 Reference value :  3.56750e-06 Reference value :  3.68078e-06 Reference value :  3.91516e-06 Reference value :  4.19641e-06 Reference value :  4.46594e-06 Reference value :  4.89562e-06 Reference value :  5.22375e-06 Reference value :  5.47766e-06 Reference value :  5.74328e-06 Reference value :  5.96594e-06
+No. of Data Rows : 1025
+Note: Simulation executed from .control section 
