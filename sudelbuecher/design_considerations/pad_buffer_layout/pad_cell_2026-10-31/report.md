@@ -8,7 +8,9 @@ Claude Code cloud session, brief `sudelbuecher/cloud_sessions/C2_pad_cram_draft.
 name). Design branch `claude/c2-pad-layout` (from `toplevel` 8a72dd8), notes branch `claude/c2-pad-layout-sudel` (from
 `sudel_buecher` cce0e0c, a fast-forward of the branch's start 21d022e). Times are `TZ=Europe/Berlin date`.
 
-Status: phase 0 and phase 1 done (2026-10-31 16:36 CET). Agent K running since about 16:22.
+Status (2026-11-03 17:53 CET): phases 0–4 done. The drawn cell is in the macro, DRC clean, `make klayout-lvs` passes;
+`make magic-lvs` matches devices and nets and fails only on the `vss` pin (§4.3). Sanity simulation done (§4.4).
+Christoph's decisions: `decisions.md`.
 
 ## Phase 0: tools (16:19 CET)
 
@@ -202,12 +204,78 @@ Envelope (reasoning from 1.2 and rule ESD):
 - Routing: M1 / M2 under the rails; M3 only at y 119–126 and 134–140; core-side pins on M2 at the top. The core-side
   ports are now `vinp vinn vref iref en_3v3 en_3v3_b` (6 pins).
 
+## Phase 2 and 3: primitives, review, assembly (2026-10-31 – 2026-11-03)
+
+- First attempt (P, N on Sonnet, F on Opus) rejected by Christoph on 2026-10-31 (asymmetric dummies, necked gate-contact
+  poly, top-down floorplan); archived in `agents_c2/rejected_v1/`. Lead checks of that round: `lead_checks/{P,N,F_stage2}`.
+- Rebuild by P2 / N2 (Opus, high), checked by the lead (`lead_check.py`: rebuild XOR, DRC, LVS, device tables;
+  `sym_check.py`: mirror XOR of the device layers, necked poly) in `lead_checks/{P2,N2}`; Christoph's manual review in
+  `agents_c2/[NP]2/out/d2s_[np]2_cells_human_review.txt`.
+- F2 (Opus, high) built the floorplan bottom-up from the reviewed cells (stage A placement, Christoph's review, stage B
+  routing, stage B2 labels); lead checks in `lead_checks/F2_stage{A,B,B2}`: rebuild byte-identical, DRC with latch-up and
+  antenna clean, LVS match against `pad_candidate.cdl`, `row_check.py` 0 failures, `path_widths.py` no path narrower
+  than in phase 1, `circuit_vs_cdl.py` equal to the circuit apart from the dummies. F2's report:
+  `agents_c2/F2/report_stageB.md`.
+- Capacitors (agent K, stages 1–8, `agents_c2/K/out/report.md`): v8 adopted — CMA / CMB in today's polarity, each behind
+  its own 2 kΩ secondary stage (rppd 1 × 7.435 µm, dantenna 0.64 × 3.1, dpantenna 0.64 × 4.98).
+
+## Phase 4: integration, backannotation, verification (2026-11-03)
+
+### 4.1 Integration
+F2's pad candidate (8946d2a0c95e) replaced the macro's `layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds` (old cell
+in `layout/klayout/backups/`, gitignored, and in `macro_before/`). Top-level port texts by `add_top_labels.py` (texts
+only, geometry XOR 0): every port except `vss`, each on the text datatype 25 and the pin datatype 2 (§4.3). Current cell
+13e176ab106d, reproducible from F2's candidate with the script.
+
+### 4.2 Backannotation (agent BA, Christoph's option B)
+Sheet, symbol and source netlist of `sg13cmos5l_IOPadDiff2Single` follow the drawn cell: ports `iovdd iovss vdd vss pad
+vinp vinn vref iref en_3v3 en_3v3_b`; `en_ctrl_3v3` and `bias_gen_pd` next to the cell in `slot.sch`, the top sheet,
+`tb_pad_dc.spice` and the 8 CACE templates (yaml pins updated); v8 stages as sheet `d2s_sp2k`; `d2s_mpdda_pd` with the
+drawn finger counts and every dummy; `unit_r2` as 4 rhigh segments; DCN / DCP as the drawn primitive diodes (2 stripes
+each; IHP's library symbols have shorter stripes); the bias tree's two layout dummies in `bias_tree_pd` (1(a)).
+Lead fix afterwards: DN / DP as scalar instances (vector names broke the PDK `diode_drc` tcl, xschem Error 10).
+
+### 4.3 DRC and LVS (make targets, logs `logs/claude/c2-pad-layout/`)
+- `make klayout-drc` (DRC_LEVEL=macro): clean, 332 rule categories, 0 items; the maximal deck with latch-up (run
+  separately, `maximal-drc-latchup.out`, on the cell before the text change; geometry XOR 0 since): clean; `make magic-drc`: clean.
+- `make klayout-lvs`: **PASS** (strict port mode). Only remarks: "match with warning" on the interchangeable C1 / C2 units.
+- `make magic-lvs`: 76 = 76 devices, 36 = 36 nets, all pins equal except `vss` → "Top level cell failed pin matching".
+- vss / iovss (Christoph's 2(a)): the vss band's p+ tie (edge contract, as in IOPadAnalog) and the iovss ties share the
+  p-substrate. With `--disable_tap_extraction` (sak-lvs.sh) and in magic (every p+ tie on `$SUB`) they are one net.
+  Measured on scratch copies: a top `vss` text names that net `iovss,vss`, and KLayout's `flag_missing_ports` fails
+  against the schematic's `iovss` whatever the sheet does; without the text KLayout passes. The sheet cannot tie the two
+  ports for LVS: a SPICE subckt cannot join two ports, and xschem refuses to short two port nets (`lvs_ignore=short` →
+  Error 10, which also aborts the make target). So the sheet's tie `Rsub` (1 Ω, documented as the substrate) is in the
+  simulation netlist and left out of the LVS netlists (`lvs_ignore=open`). Magic keeps one name for the joined net, so its
+  schematic `vss` pin stays unmatched; no setting of the repo's flow changes that (netgen setup has no short element;
+  magic's `ext2spice short` is not set by sak-lvs.sh). Remaining choices: accept (recommended, KLayout is IHP's deck),
+  or 2(b) (tap extraction on and `ptap1` devices).
+- The datatype-2 port texts make magic see ports; before them netgen also failed on the bare `vdd` rail.
+
+### 4.4 Sanity simulation (`sanity_2026-11-03/README.md`)
+Loop gain on the backannotated sheet at pad 0.99 / 1.65 / 2.29 V (vref ± 0.65 V): 1 kΩ ‖ 100 pF PM 78.7 / 72.9 / 75.7°,
+GM ≥ 16.5 dB; unloaded ‖ 300 pF PM 44.3 / 42.7 / 40.0°, GM ≥ 17.3 dB — within 1.1° of K's v8 prediction. Steps to the
+swing ends: no overshoot at 100 pF, 10–14 % at 300 pF unloaded (K: 10–14 %). I_Q 308.4 µA (+2.2 % from SX / SY at ng 6).
+
+### 4.5 CACE
+Not rerun (Christoph: a short sanity check, not the full CACE program). The committed CACE results predate the layout
+and are stale; the templates and yaml are updated to the new ports. The swing-end loop condition is a proposal for an
+agent run: `agents_c2/CACE_offset/BRIEF.md`. To check there: the I_Q limits against 308.4 µA.
+
+### 4.6 ESD notes
+CMA / CMB gates sit behind IHP-style secondary stages (2 kΩ rppd + dantenna / dpantenna) instead of on the pad; the
+pad's primary diodes are drawn as 2 stripes of 1.26 µm (dantenna 67.6 µm, dpantenna 65.8 µm long), longer than IHP's
+library DCN / DCP stripes. The pad rules Pad.d1R / fR differ from IHP's own ring cells as in phase 1 (§1.5).
+
 ## Agents
 
 | role | model, effort | started | status |
 |---|---|---|---|
-| K (capacitors, ngspice) | Opus, medium | about 16:22 | running |
-| P, N (primitives) | Sonnet, medium | — | phase 2 |
-| F (floorplan, assembly) | Opus, high | — | phase 3 |
+| K (capacitors, ngspice) | Opus, medium | 2026-10-31 about 16:22 | done, stages 1–8 |
+| P, N (primitives) | Sonnet, medium | 2026-10-31 | rejected, archived in `rejected_v1/` |
+| F (floorplan, assembly) | Opus, high | 2026-10-31 | stopped with the rejection, archived |
+| P2, N2 (primitives, rebuild) | Opus, high | 2026-10-31 evening | done, reviewed by Christoph |
+| F2 (floorplan, assembly) | Opus, high | 2026-11-03 13:24 | done, stages A, B, B2 |
+| BA (backannotation) | Opus, high | 2026-11-03 about 16:15 | done |
 
 Briefs, messages, reports, `out/` and `work/` go to `sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents_c2/<role>/`.

@@ -29,16 +29,18 @@ sak-lvs.sh -d -k -w verification/lvs -s netlist/schematic/sg13cmos5l_IOPadDiff2S
 [INFO] Running LVS of </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds> vs </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/netlist/schematic/sg13cmos5l_IOPadDiff2Single_klayout.cdl>.
 [INFO] Run KLayout LVS...
 ---
-[INFO] KLayout LVS errors found! Please check </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/verification/lvs/sg13cmos5l_IOPadDiff2Single.klayout.lvs>!
+[INFO] KLayout LVS is OK, schematic/netlist and layout match!
 ---
-LVS ERRORS FOUND! Please check the report(s) above!
+CONGRATULATIONS! LVS is OK, schematic/netlist and layout match!
       .-"""""-.
     .'  _   _  '.
    /   (o) (o)   \
   |       <       |
-  |     _____     |
+  |    \_____/    |
    \             /
     '.         .'
       '-.....-'
 ---
+[DONE] Bye!
+mv verification/lvs/sg13cmos5l_IOPadDiff2Single.klayout.lvs/sg13cmos5l_IOPadDiff2Single_extracted.cir netlist/layout/sg13cmos5l_IOPadDiff2Single_klayout.cir
 make: Leaving directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single'
