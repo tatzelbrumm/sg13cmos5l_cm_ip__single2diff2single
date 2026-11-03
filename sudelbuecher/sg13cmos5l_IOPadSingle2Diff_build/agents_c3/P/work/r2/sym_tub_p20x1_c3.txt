@@ -1,0 +1,2 @@
+tub_p20x1_c3: Activ bbox (0,-0.73;3.06,10); axes x = 1.53, y = 4.635 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

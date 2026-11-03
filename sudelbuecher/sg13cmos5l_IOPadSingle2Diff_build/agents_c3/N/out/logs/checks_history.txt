@@ -1,0 +1,11 @@
+Check rounds (agent N, C3 2026-11-03, Europe/Berlin). Final logs in this directory are round 3, on out/s2d_n3_cells.gds.
+round 1 (about 20:55): DRC 0 in sinks, sinks_cmfb, cload, rhigh; casc_n 8 x M2.c1 (source levels ended 0.145 past
+  the middle Via1 of a 3-via tab instead of the outer one), bias_tree 2 x M2.c1 (gate pin stubs started at the Via1
+  center); pd_n 1 x LU.b (no tap, by design). LVS: 7 / 7 match.
+  sym_check: casc_n 4 narrow-poly hits (BNC's Activ + 0.25 zone cut 0.045 um slivers off the middle fills), pd_n and
+  cload X Cont 0.0064 um2 (a tie gate contact 5 nm off its mirror position), cload 3 and bias_tree 2 narrow-poly hits
+  (a neighbor's Activ + 0.25 zone left less than 0.30 um of a full-width fill); sinks X Cont 0.0768 (BN / T, PCell).
+round 2 (about 21:00): after the M2 end fixes, casc_n and bias_tree DRC 0, LVS match. After the sym_check fixes (fills
+  beside BNC 0.25 short, joined to BNC's gate only over its gate; tie contacts at 0.485 / 1.315; tie pair 0.13 right
+  and 0.18 lower in cload; bias_tree ring 0.13 out): sym_check 0 everywhere except the sinks' 0.0768.
+round 3 (21:05-21:10): the delivered build; all cells DRC 0 (pd_n: LU.b only), LVS 9 / 9 match, sym_check as round 2.

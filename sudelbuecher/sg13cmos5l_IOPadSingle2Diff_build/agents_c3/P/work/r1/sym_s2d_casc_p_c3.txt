@@ -1,0 +1,5 @@
+s2d_casc_p_c3: Activ bbox (1.41,0.62;51.61,12.19); axes x = 26.51, y = 6.405 um
+  X Cont         XOR    0.2688 um2  in (19.42,2.445;33.6,10.365)
+  N gate-contact poly narrower than 0.30 um at (2.26,6.505;2.44,6.505)
+  N gate-contact poly narrower than 0.30 um at (50.76,6.305;50.58,6.305)
+  summary: max mirror XOR 0.2688 um2, 2 narrow-poly hits

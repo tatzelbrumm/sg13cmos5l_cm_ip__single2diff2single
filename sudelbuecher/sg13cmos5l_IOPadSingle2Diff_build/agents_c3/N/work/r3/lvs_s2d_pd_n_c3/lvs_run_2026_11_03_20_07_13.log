@@ -1,0 +1,16 @@
+03-Nov-2026 20:07:13 | INFO    | Your Klayout version is: KLayout 0.30.12
+03-Nov-2026 20:07:13 | INFO    | Running SG13CMOS5L LVS checks on design /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/N/out/s2d_n3_cells.gds on cell s2d_pd_n_c3
+03-Nov-2026 20:07:16 | INFO    | ==============================================================================
+03-Nov-2026 20:07:16 | INFO    | Important Summary
+03-Nov-2026 20:07:16 | INFO    | +------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+03-Nov-2026 20:07:16 | INFO    | | Status           | PASS                                                                                                                                           |
+03-Nov-2026 20:07:16 | INFO    | | Mode             | COMPARE                                                                                                                                        |
+03-Nov-2026 20:07:16 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                                                                                                        |
+03-Nov-2026 20:07:16 | INFO    | | Layout           | s2d_n3_cells.gds                                                                                                                               |
+03-Nov-2026 20:07:16 | INFO    | | Top Cell         | s2d_pd_n_c3                                                                                                                                    |
+03-Nov-2026 20:07:16 | INFO    | | Results Dir      | /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/N/work/r3/lvs_s2d_pd_n_c3 |
+03-Nov-2026 20:07:16 | INFO    | | Warnings         | 0                                                                                                                                              |
+03-Nov-2026 20:07:16 | INFO    | | Errors           | 0                                                                                                                                              |
+03-Nov-2026 20:07:16 | INFO    | | Run Time (s)     | 3.27                                                                                                                                           |
+03-Nov-2026 20:07:16 | INFO    | +------------------+------------------------------------------------------------------------------------------------------------------------------------------------+
+03-Nov-2026 20:07:16 | INFO    | ==============================================================================

@@ -1,0 +1,17 @@
+round 1 (all cells):
+== tub_p20x1_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                         ;   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_pd_p_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                        ;   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== bias_tree_noab_p_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                                ;   summary: max mirror XOR 0.0384 um2, 0 narrow-poly hits
+== s2d_loads_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                         ;   summary: max mirror XOR 0.0000 um2, 2 narrow-poly hits
+== s2d_casc_p_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                          ;   summary: max mirror XOR 0.2688 um2, 2 narrow-poly hits
+== s2d_tails_c3: DRC exc 0; ; LVS ERROR : Netlists don't match;   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_inputs_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                          ;   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+
+round 2 (all cells, after the fixes):
+== s2d_tails_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                         ;   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_loads_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                         ;   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_casc_p_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                          ;   summary: max mirror XOR 0.2688 um2, 0 narrow-poly hits
+== tub_p20x1_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                         ;   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_pd_p_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                        ;   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== bias_tree_noab_p_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                                ;   summary: max mirror XOR 0.0384 um2, 0 narrow-poly hits
+== s2d_inputs_c3: DRC exc 0; No DRC violations detected; LVS PASS (netlists match).                                                                                                          ;   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

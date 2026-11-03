@@ -1,0 +1,10 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 03/11/2026 20:09
+
+.SUBCKT s2d_sinks_cmfb_c3_core vbn vss xc yc
+M$1 vss vbn vss vss sg13_hv_nmos L=6u W=8u AS=2.72p AD=2.72p PS=18.72u
++ PD=18.72u rfmode=0
+M$2 vss vbn xc vss sg13_hv_nmos L=6u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+M$3 vss vbn yc vss sg13_hv_nmos L=6u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+.ENDS s2d_sinks_cmfb_c3_core
