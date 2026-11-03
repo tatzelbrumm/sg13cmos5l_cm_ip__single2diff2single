@@ -1,0 +1,3 @@
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_dc.sch  (old 262 devices, new 309, reverted 262; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 4
+1 of 1 sheets differ after reverting the intended changes

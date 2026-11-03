@@ -1,0 +1,9 @@
+Using run time directory XSCHEM_SHAREDIR = /foss/tools/xschem/share/xschem
+Sourcing /foss/tools/xschem/share/xschem/xschemrc init file
+Sourcing schematic/xschem/xschemrc init file
+MODELS_NGSPICE: /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models
+MODELS_XYCE: /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/models
+CMA (sg13_hv_pmos): length is too big, l = 32.16, max l < 10.0u
+CMB (sg13_hv_pmos): length is too big, l = 32.16, max l < 10.0u
+
+make: *** [Makefile:290: klayout-lvs] Error 1

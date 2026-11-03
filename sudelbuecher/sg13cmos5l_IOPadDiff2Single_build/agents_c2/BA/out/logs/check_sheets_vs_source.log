@@ -1,0 +1,4 @@
+equivalent macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/unit_r2.sch vs .subckt unit_r2: sheet 8 devices, source 8; port order same; missing symbols 0
+equivalent macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd.sch vs .subckt d2s_mpdda_pd: sheet 77 devices, source 77; port order same; missing symbols 0
+equivalent macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_sp2k.sch vs .subckt d2s_sp2k: sheet 3 devices, source 3; port order same; missing symbols 0
+equivalent macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/sg13cmos5l_IOPadDiff2Single.sch vs .subckt sg13cmos5l_IOPadDiff2Single: sheet 108 devices, source 108; port order same; missing symbols 0

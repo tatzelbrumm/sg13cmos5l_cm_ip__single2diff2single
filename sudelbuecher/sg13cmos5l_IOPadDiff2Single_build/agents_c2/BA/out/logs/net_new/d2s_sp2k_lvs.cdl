@@ -1,0 +1,7 @@
+** sch_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_sp2k.sch
+.subckt d2s_sp2k core iovdd iovss pad
+*.PININFO core:B iovdd:B iovss:B pad:B
+RR0 pad core 1.992k $SUB=iovss $[rppd] w=1u l=7.435u b=0
+DD0 core iovdd dpantenna l=4.98u w=0.64u
+DD1 iovss core dantenna l=3.1u w=0.64u
+.ends

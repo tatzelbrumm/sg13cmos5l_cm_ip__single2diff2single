@@ -2,3 +2,6 @@ klayout-drc rc=0 84 s
 magic-drc rc=0 1 s
 DONE
 maximal-drc-latchup rc=0 21 s
+klayout-lvs rc=2 6 s
+magic-lvs rc=2 1 s
+LVSDONE

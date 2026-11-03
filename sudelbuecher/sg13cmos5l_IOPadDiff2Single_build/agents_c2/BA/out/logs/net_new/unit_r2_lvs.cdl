@@ -1,0 +1,12 @@
+** sch_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/unit_r2.sch
+.subckt unit_r2 x y gp gn vdd vss vbp
+*.PININFO x:O y:O gp:I gn:I vdd:B vss:B vbp:I
+MTa sa vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MTb sb vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2
+MMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2
+RR[3] sa n1 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+R[2] n1 n2 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+R[1] n2 n3 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+R[0] n3 sb 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+.ends

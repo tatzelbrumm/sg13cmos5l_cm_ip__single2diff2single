@@ -1,0 +1,24 @@
+## MOS (W sums, dummies apart): 53 keys, 0 differ
+## dummies (D = S): 11 keys, 0 differ
+## diodes: 6 keys, 6 differ
+  ('dantenna', ('iovss', 'pa')): layout 1.984  circuit 1
+  ('dantenna', ('iovss', 'pad')): layout 170.352  circuit 0
+  ('dantenna', ('iovss', 'pb')): layout 1.984  circuit 1
+  ('dpantenna', ('pa', 'iovdd')): layout 3.187  circuit 1
+  ('dpantenna', ('pad', 'iovdd')): layout 165.816  circuit 0
+  ('dpantenna', ('pb', 'iovdd')): layout 3.187  circuit 1
+## resistors (series-reduced lengths): 16 keys, 13 differ
+  ('rhigh', 0.5, ('n1', 'n3')): layout 0  circuit 101.2
+  ('rhigh', 0.5, ('n1', 'sa_A')): layout 0  circuit 12.65
+  ('rhigh', 0.5, ('n1', 'sa_B')): layout 0  circuit 12.65
+  ('rhigh', 0.5, ('n1', 'sa_C1')): layout 0  circuit 12.65
+  ('rhigh', 0.5, ('n1', 'sa_C2')): layout 0  circuit 12.65
+  ('rhigh', 0.5, ('n3', 'sb_A')): layout 0  circuit 12.65
+  ('rhigh', 0.5, ('n3', 'sb_B')): layout 0  circuit 12.65
+  ('rhigh', 0.5, ('n3', 'sb_C1')): layout 0  circuit 12.65
+  ('rhigh', 0.5, ('n3', 'sb_C2')): layout 0  circuit 12.65
+  ('rhigh', 0.5, ('sa_A', 'sb_A')): layout 50.6  circuit 0
+  ('rhigh', 0.5, ('sa_B', 'sb_B')): layout 50.6  circuit 0
+  ('rhigh', 0.5, ('sa_C1', 'sb_C1')): layout 50.6  circuit 0
+  ('rhigh', 0.5, ('sa_C2', 'sb_C2')): layout 50.6  circuit 0
+RESULT DIFFERENT

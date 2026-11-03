@@ -233,3 +233,7 @@ klayout-drc.err	claude/c2-pad-layout	2026-11-03 16:23	0	8ca5ad6	2026-11-03 16:26
 magic-drc.out	claude/c2-pad-layout	2026-11-03 16:25	1126	8ca5ad6	2026-11-03 16:26	make magic-drc SCRIPTS_DIR=../../scripts, macros/sg13cmos5l_IOPadDiff2Single, cloud session C2
 magic-drc.err	claude/c2-pad-layout	2026-11-03 16:25	0	8ca5ad6	2026-11-03 16:26	make magic-drc SCRIPTS_DIR=../../scripts, macros/sg13cmos5l_IOPadDiff2Single, cloud session C2
 maximal-drc-latchup.out	claude/c2-pad-layout	2026-11-03 16:26	8573	8ca5ad6	2026-11-03 16:26	klayout -b -r sg13cmos5l_maximal.drc -rd latchUpRules=true on the macro GDS, cloud session C2
+klayout-lvs.out	claude/c2-pad-layout	2026-11-03 16:50	2570	643cc25	2026-11-03 16:51	make klayout-lvs SCRIPTS_DIR=../../scripts, macros/sg13cmos5l_IOPadDiff2Single, after the backannotation and the top labels (cloud session C2)
+klayout-lvs.err	claude/c2-pad-layout	2026-11-03 16:50	737	643cc25	2026-11-03 16:51	make klayout-lvs SCRIPTS_DIR=../../scripts, macros/sg13cmos5l_IOPadDiff2Single, after the backannotation and the top labels (cloud session C2)
+magic-lvs.out	claude/c2-pad-layout	2026-11-03 16:50	2931	643cc25	2026-11-03 16:51	make magic-lvs SCRIPTS_DIR=../../scripts, macros/sg13cmos5l_IOPadDiff2Single, after the backannotation and the top labels (cloud session C2)
+magic-lvs.err	claude/c2-pad-layout	2026-11-03 16:50	735	643cc25	2026-11-03 16:51	make magic-lvs SCRIPTS_DIR=../../scripts, macros/sg13cmos5l_IOPadDiff2Single, after the backannotation and the top labels (cloud session C2)

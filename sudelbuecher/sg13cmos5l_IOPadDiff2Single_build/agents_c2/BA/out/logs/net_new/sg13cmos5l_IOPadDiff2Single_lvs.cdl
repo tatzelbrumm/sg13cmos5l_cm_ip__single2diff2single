@@ -1,0 +1,144 @@
+** sch_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/sg13cmos5l_IOPadDiff2Single.sch
+.subckt sg13cmos5l_IOPadDiff2Single iovdd iovss vdd vss pad vinp vinn vref iref en_3v3 en_3v3_b
+*.PININFO iovdd:B iovss:B vdd:B vss:B pad:B vinp:I vinn:I vref:I iref:B en_3v3:I en_3v3_b:I
+xt iovdd iovss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b bias_tree_pd
+xd iovdd iovss iovdd iovss vinp vinn vref pad a b dabp dabn vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
+xfp iovdd a pad dabp d2s_out_p
+xfn iovss b pad dabn d2s_out_n
+MCMA pa a pa pa sg13_hv_pmos w=7.96u l=32.16u ng=1
+XSPA pa iovdd iovss pad d2s_sp2k
+MCMB b pb b b sg13_hv_pmos w=7.96u l=32.16u ng=1
+XSPB pb iovdd iovss pad d2s_sp2k
+XDP pad iovdd iovss sg13cmos5l_DCPDiode
+XDN iovss pad iovdd sg13cmos5l_DCNDiode
+MMDBP iovdd vbp iovdd iovdd sg13_hv_pmos w=2u l=6u ng=1
+MMDBN ni ni ni iovss sg13_hv_nmos w=2.4u l=6u ng=1
+.ends
+
+* expanding   symbol:  bias_tree_pd.sym # of pins=11
+** sym_path: /home/user/c2/BA/work/macros/bias_tree_pd/schematic/xschem/bias_tree_pd.sym
+** sch_path: /home/user/c2/BA/work/macros/bias_tree_pd/schematic/xschem/bias_tree_pd.sch
+.subckt bias_tree_pd vdd vss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b
+*.PININFO vdd:B vss:B iref:B vbp:O vbn:O vbpc:O vbnc:O vabp:O vabn:O en_3v3:I en_3v3_b:I
+MNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+MBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+MNBPC vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+MBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MNBP vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+MNABP vabp ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+MPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+MBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1
+MPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MBN vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+MPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MTGP ni en_3v3_b iref vdd sg13_hv_pmos w=1u l=0.45u ng=1
+MTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
+MTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends
+
+
+* expanding   symbol:  d2s_mpdda_pd.sym # of pins=20
+** sym_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd.sym
+** sch_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd.sch
+.subckt d2s_mpdda_pd vdd vss vddo vsso vinp vinn vref vfb a b dabp dabn vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b
+*.PININFO vdd:B vss:B vddo:B vsso:B vinp:I vinn:I vref:I vfb:I vbp:I vbn:I vbpc:I vbnc:I vabp:I vabn:I en_3v3:I en_3v3_b:I a:O b:O
+*+ dabp:B dabn:B
+XA x y vinp vref vdd vss vbp unit_r2
+XB x y vref vinn vdd vss vbp unit_r2
+XC1 x y vref vfb vdd vss vbp unit_r2
+XC2 x y vref vfb vdd vss vbp unit_r2
+MFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1
+MCX l1 vbnc x vss sg13_hv_nmos w=30u l=3u ng=2
+MSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=6
+MPL pl l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4
+MPCL l2 vbpc pl vdd sg13_hv_pmos w=30u l=3u ng=2
+MFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+MPR pr l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4
+MPCR a vbpc pr vdd sg13_hv_pmos w=30u l=3u ng=2
+MABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+MABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
+MCY b vbnc y vss sg13_hv_nmos w=30u l=3u ng=2
+MSY y vbn vss vss sg13_hv_nmos w=36u l=6u ng=6
+MSABP vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+MSA a en_3v3 vddo vdd sg13_hv_pmos w=1u l=0.45u ng=1
+MSABN vabn en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+MSB b en_3v3_b vsso vss sg13_hv_nmos w=1u l=0.45u ng=1
+MRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+MRN2 vabn vabn dabn vss sg13_hv_nmos w=4.4u l=1u ng=1
+MMDT[3] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+MDT[2] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+MDT[1] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+MDT[0] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+MMDTL[2] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MDTL[1] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MDTL[0] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MMDL[3] vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+MDL[2] vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+MDL[1] vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+MDL[0] vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+MMDPC vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+MMDABP[1] vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+MDABP[0] vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+MMDABN[1] vss vss vss vss sg13_hv_nmos w=4.4u l=1u ng=1
+MDABN[0] vss vss vss vss sg13_hv_nmos w=4.4u l=1u ng=1
+MMDCN[3] vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1
+MDCN[2] vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1
+MDCN[1] vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1
+MDCN[0] vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1
+MMDSK[3] vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1
+MDSK[2] vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1
+MDSK[1] vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1
+MDSK[0] vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1
+MMDBNT vbn vbn vbn vss sg13_hv_nmos w=6u l=6u ng=1
+RRD[1] vss vss 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+RD[0] vss vss 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+.ends
+
+
+* expanding   symbol:  d2s_out_p.sym # of pins=4
+** sym_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_out_p.sym
+** sch_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_out_p.sch
+.subckt d2s_out_p vddo a vout dabp
+*.PININFO vddo:B a:I vout:B dabp:B
+MOP vout a vddo vddo sg13_hv_pmos w=546.12u l=0.6u ng=82
+MRP1 dabp dabp vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
+MRPD dabp vddo vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
+.ends
+
+
+* expanding   symbol:  d2s_out_n.sym # of pins=4
+** sym_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_out_n.sym
+** sch_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_out_n.sch
+.subckt d2s_out_n vsso b vout dabn
+*.PININFO vsso:B b:I vout:B dabn:B
+MON vout b vsso vsso sg13_hv_nmos w=299.2u l=1u ng=68
+MRN1 dabn dabn vsso vsso sg13_hv_nmos w=8.8u l=1u ng=2
+.ends
+
+
+* expanding   symbol:  d2s_sp2k.sym # of pins=4
+** sym_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_sp2k.sym
+** sch_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_sp2k.sch
+.subckt d2s_sp2k core iovdd iovss pad
+*.PININFO core:B iovdd:B iovss:B pad:B
+RR0 pad core 1.992k $SUB=iovss $[rppd] w=1u l=7.435u b=0
+DD0 core iovdd dpantenna l=4.98u w=0.64u
+DD1 iovss core dantenna l=3.1u w=0.64u
+.ends
+
+
+* expanding   symbol:  unit_r2.sym # of pins=7
+** sym_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/unit_r2.sym
+** sch_path: /home/user/c2/BA/work/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/unit_r2.sch
+.subckt unit_r2 x y gp gn vdd vss vbp
+*.PININFO x:O y:O gp:I gn:I vdd:B vss:B vbp:I
+MTa sa vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MTb sb vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+MMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2
+MMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2
+RR[3] sa n1 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+R[2] n1 n2 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+R[1] n2 n3 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+R[0] n3 sb 37.72k $SUB=vss $[rhigh] w=0.5u l=12.65u b=0
+.ends
+

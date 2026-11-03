@@ -1,0 +1,41 @@
+  equivalent macros/slot/schematic/xschem/slot.sch  (old 446 devices, new 511, reverted 446; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 10
+  equivalent schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch  (old 446 devices, new 511, reverted 446; missing symbols old 2 new 2)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 10
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_ac.sch  (old 278 devices, new 325, reverted 278; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_dc.sch  (old 262 devices, new 309, reverted 262; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_drive.sch  (old 256 devices, new 303, reverted 256; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_enable.sch  (old 252 devices, new 299, reverted 252; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_noise.sch  (old 253 devices, new 300, reverted 253; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_pd.sch  (old 246 devices, new 293, reverted 246; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_thd.sch  (old 255 devices, new 302, reverted 255; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_tran.sch  (old 262 devices, new 309, reverted 262; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, bias-tree dummy removed 2, d2s dummy removed 27, sp2k R0 shorted 2, sp2k diode removed 4, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd.sch  (old 38 devices, new 77, reverted 38; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, d2s dummy removed 27, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/unit_r2.sch  (old 5 devices, new 8, reverted 5; missing symbols old 0 new 0)
+      reverted: unit_r2 chain -> one R 1
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd_sel.sch  (old 178 devices, new 217, reverted 178; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, d2s dummy removed 27, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/d2s_mpdda_pd_sel_tb_loop.sch  (old 210 devices, new 249, reverted 210; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, d2s dummy removed 27, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_enable.sch  (old 90 devices, new 129, reverted 90; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, d2s dummy removed 27, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_leak.sch  (old 86 devices, new 125, reverted 86; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, d2s dummy removed 27, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_startup_oa.sch  (old 103 devices, new 142, reverted 103; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, d2s dummy removed 27, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_unpowered.sch  (old 95 devices, new 134, reverted 95; missing symbols old 0 new 0)
+      reverted: SA/SB bulk -> source 2, SX/SY ng 6 -> 4 2, d2s dummy removed 27, unit_r2 chain -> one R 4
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda.sch  (old 46 devices, new 64, reverted 46; missing symbols old 0 new 0)
+      reverted: unit_r2 chain -> one R 6
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/sg13cmos5l_IOPadSingle2Diff.sch  (old 226 devices, new 244, reverted 226; missing symbols old 0 new 0)
+      reverted: unit_r2 chain -> one R 6
+0 of 20 sheets differ after reverting the intended changes
