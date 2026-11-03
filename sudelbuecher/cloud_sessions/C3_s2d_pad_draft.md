@@ -37,10 +37,9 @@ in `sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/`; 
 
 ## Phase 0, lead: tools
 
-As C2 phase 0, plus C2's environment fix **before any DRC or LVS run**: the PDK checkout is sparse and leaves IHP's
-main DRC deck and 45 LVS decks as dangling links, and `run_drc.py` then prints "Passed" while every table crashes.
-`git -C /foss/pdks/IHP-Open-PDK sparse-checkout add /ihp-sg13g2/libs.tech/klayout/tech/`; then no dangling link
-under `ihp-sg13cmos5l/libs.tech/klayout`; grep every `run_drc.py` log for "exception".
+As C2 phase 0. The environment's setup script includes C2's PDK fix since 2026-11-03 (claude-cloud-config PR #2):
+`/foss/setup.log` must show `PDK_DANGLING_LINKS 1`. If it shows more, IHP's DRC and LVS decks are dangling links and
+`run_drc.py` prints "Passed" while every table crashes: stop and say so. Grep every `run_drc.py` log for "exception".
 
 ## Phase 1, lead: frame, partition, budget
 
@@ -99,7 +98,8 @@ lessons from routing reach C3.
 
 - Design branch `claude/c3-s2d-pad-layout` from `toplevel`, for `macros/sg13cmos5l_IOPadSingle2Diff/` only.
 - Notes branch `claude/c3-s2d-pad-layout-sudel` from `sudel_buecher`, as worktree `../sudel`.
-- Both created by Christoph before the start; the session pushes to them (fast-forward only). Never push `main`,
+- Both created 2026-11-03 from `toplevel` 8a72dd8 and `sudel_buecher` 659c173; the session pushes to them
+  (fast-forward only; `sudel_buecher` may have moved on, as in C2). Never push `main`,
   `toplevel` or `sudel_buecher`; no tags, no force pushes, no merges.
 - Notes: `sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_s2d/` (report, checks, decisions);
   agents `sudelbuecher/sg13cmos5l_IOPadSingle2Diff_build/agents_c3/<role>/` with brief, messages, report, `out/`,
