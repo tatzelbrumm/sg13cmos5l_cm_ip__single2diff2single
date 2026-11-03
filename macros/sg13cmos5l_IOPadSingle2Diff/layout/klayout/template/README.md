@@ -107,7 +107,7 @@ y 65–84.26 at each edge.
 - **Row `Filler1000 | IOPadAnalog | template | Filler200 | IOPadIOVdd | template | Filler1000`** (C2's
   `row_check.py`):
   - the edge intervals are IOPadAnalog's on every layer;
-  - 26 of 26 rails and bands are one net through the row;
+  - 25 of 25 rails and bands are one net through the row;
   - row DRC (maximal with latch-up; `run_drc.py` with LU.b): 0.
 - **Extraction** (IHP KLayout LVS, deep, `--disable_tap_extraction`, `lvs/template_extracted.cir`):
   - NMOS clamp W 88 / L 0.6, PMOS clamp W 266.4 / L 0.6;
