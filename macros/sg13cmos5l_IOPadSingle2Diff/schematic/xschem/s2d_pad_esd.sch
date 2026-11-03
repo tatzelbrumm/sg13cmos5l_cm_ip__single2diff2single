@@ -89,7 +89,7 @@ N 840 -130 840 -200 {lab=pad}
 N 840 -70 840 0 {lab=iovss}
 N 840 -100 920 -100 {lab=iovss}
 N 920 -100 920 0 {lab=iovss}
-T {s2d_pad_esd: the protection left standing in the s2d pad template (layout/klayout/template, version 3)} 0 -900 0 0 0.5 0.5 {}
+T {s2d_pad_esd: the protection left standing in the s2d pad template (layout/klayout/template, version 4)} 0 -900 0 0 0.5 0.5 {}
 T {Devices and values as drawn and as extracted with IHP's KLayout LVS (template/lvs/template_extracted.cir on the notes branch).} 0 -840 0 0 0.3 0.3 {}
 T {They are IHP's IOPadAnalog protection without its SecondaryProtection: DCNDiode, DCPDiode, Clamp_N20N0D, Clamp_P20N0D.} 0 -800 0 0 0.3 0.3 {}
 T {DN1/2, DP1/2: the primary diodes, 2 stripes of 1.26 x 27.78 um each (DCNDiode / DCPDiode). They carry the ESD current pad -> iovss and pad -> iovdd.} 0 -760 0 0 0.3 0.3 {}

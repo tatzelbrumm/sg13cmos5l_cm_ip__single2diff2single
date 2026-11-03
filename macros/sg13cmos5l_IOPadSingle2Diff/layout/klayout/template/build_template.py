@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 Christoph Maier
 # SPDX-License-Identifier: Apache-2.0
-"""Cleaned-out template of the sg13cmos5l_IOPadSingle2Diff pad cell (draft for review, 2026-11-03, version 3).
+"""Cleaned-out template of the sg13cmos5l_IOPadSingle2Diff pad cell (draft for review, 2026-11-03, version 4).
 
     PDKPATH=/foss/pdks/ihp-sg13cmos5l python3 build_template.py <C2 padctx dir> [out.gds]
 
@@ -12,24 +12,24 @@ Frame: IHP's IOPadAnalog, of which only these stay: the ring rails M3 / M4 / TM1
 y 5.38-61.62; their n+ taps redrawn), prBoundary. IHP's five protection instances go; the secondary protection is
 left out for now (Christoph, 2026-11-03).
 
-Protection from the SG13_cm_clamps PCells (scripts/pcells), all of it between the legs (y 5.38-61.44)
-(Christoph, 2026-11-03: diodes side by side closest to the pad, clamps side by side, no long wires to the core):
-  DN DCNDiode l 27.78u                        at (2.67, 7.66)       bottom row, left
-  DP DCPDiode l 27.78u                        at (43.70, 7.66)      bottom row, right
-  CN Clamp_N_M1 ng 20, l 0.6u, frame fit     at (1.20, 51.90) M0   top row, left  = IHP's Clamp_N20N0D array
-  CP Clamp_P_M1 ng 20, l 0.6u, frame fit     at (42.23, 61.26) M0  top row, right = IHP's Clamp_P20N0D array
+Protection from the SG13_cm_clamps PCells (scripts/pcells), y 5.38-38.84 between the legs (Christoph, 2026-11-03:
+diodes side by side closest to the pad, clamps side by side, no long wires to the core, no needless distance):
+  DN DCNDiode l 27.78u                        at (2.67, 7.66)    bottom row, left
+  DP DCPDiode l 27.78u                        at (43.70, 7.66)   bottom row, right
+  CN Clamp_N_M1 ng 20, l 0.6u, frame fit     at (1.20, 19.58)   on DN, rings abutting = IHP's Clamp_N20N0D array
+  CP Clamp_P_M1 ng 20, l 0.6u, frame fit     at (42.23, 19.58)  on DP, rings abutting = IHP's Clamp_P20N0D array
   RN rppd w 0.5u l 3.54u (CN gate -> iovss), RP rppd w 0.5u l 12.9u (CP gate -> iovdd): IHP's 0D gate ties, in the
   gap between the columns.
-The clamps are mirrored in y: their gate buses face the gap row, CP's iovdd ring sits just under the M3 iovdd rail.
-Wiring (cell esd_wiring, M2 with Via1 / Via2; nothing leaves the zone except the ties into the M3 iovdd rail at
-y 66-66.8 and the pad pin at its top edge):
+Wiring (cell esd_wiring, M2 with Via1 / Via2):
   - pad: one 0.62 um strap per clamp drain (10 per column, as IHP's 0.61 um), from the pad bar over the diode
-    stripes to the clamp drains; one right-column strap ends at y 61.6 as the core-side pad pin.
+    stripes to the clamp drains; one left-column strap ends 1.7 um above CN as the core-side pad pin.
   - iovss: Via1 / M2 / Via2 stubs into the M3 iovss rails (7-32.5, 34.5-60) from DN's anode frame, DP's guard
     ring, CN's inner ring, CP's outer ring and RN's far end.
-  - iovdd: 9 straps between the right column's pad straps plus one on DP's right side bar join DP's cathode frame
-    and CP's inner ring and run straight up into M3 iovdd (66-91.5); the n-side guards (DN's guard ring, CN's
-    outer ring) join the left leg in M1; each leg has a 6 um M2 tie into M3 iovdd at its top.
+  - iovdd: M3 / M4 / TM1 over the whole zone are iovss rails, so iovdd has to climb on M2 to the M3 iovdd rail
+    (66-91.5): 9 straps between the right column's pad straps plus one on DP's right side bar join DP's cathode
+    frame and CP's inner ring into a 2.2 um M2 bar just above CP; two risers at the column's edges (x 42.6-45.2,
+    75.5-78.4) take it up, so the band above the clamps stays free. The n-side guards (DN's guard ring, CN's outer
+    ring) join the left leg in M1; each leg has a 6 um M2 tie into M3 iovdd at its top.
 Edges: C2's edge_stubs above y 84 (the left iovdd n+ stub tied as the right one) and a p+ iovss stub at IHP's
 interval y 65-84.26 at each edge, so the cell keeps IOPadAnalog's edge contract.
 Rule values (sg13cmos5l_tech_default.json): Via1 / Via2 0.19 (V1_a, Vn_a), array pitch 0.50 >= 0.19 + V1_b1 / Vn_b1
@@ -132,16 +132,15 @@ for mx in (lambda x: x, lambda x: 80.0 - x):
             B((6, 0), xc - 0.08, 65.3 + 0.36 * k - 0.08, xc + 0.08, 65.3 + 0.36 * k + 0.08)
 
 # ---- protection devices ---------------------------------------------------------------------------------------------
-# bottom row (next to the pad exit): DN | DP; top row of the leg region: CN | CP, mirrored in y (M0) so that their
-# gate buses face the rppds in the gap and CP's iovdd ring faces the M3 iovdd rail (66) above
+# bottom row (next to the pad exit): DN | DP; directly on them CN | CP, rings abutting as in IHP's cells
 P = {}
 for key, name, lib, par, tr in [
         ('DN', 'DCNDiode', 'SG13_cm_clamps', {'l': '27.78u'}, db.DTrans(2.67, 7.66)),
         ('DP', 'DCPDiode', 'SG13_cm_clamps', {'l': '27.78u'}, db.DTrans(43.70, 7.66)),
-        ('CN', 'Clamp_N_M1', 'SG13_cm_clamps', {'ng': 20, 'l': '0.6u', 'frame': 'fit'}, db.DTrans(db.DTrans.M0, 1.20, 51.90)),
-        ('CP', 'Clamp_P_M1', 'SG13_cm_clamps', {'ng': 20, 'l': '0.6u', 'frame': 'fit'}, db.DTrans(db.DTrans.M0, 42.23, 61.26)),
-        ('RN', 'rppd', 'SG13_dev', {'w': '0.5u', 'l': '3.54u', 'Calculate': 'R'}, db.DTrans(38.80, 40.68)),
-        ('RP', 'rppd', 'SG13_dev', {'w': '0.5u', 'l': '12.9u', 'Calculate': 'R'}, db.DTrans(40.60, 31.31))]:
+        ('CN', 'Clamp_N_M1', 'SG13_cm_clamps', {'ng': 20, 'l': '0.6u', 'frame': 'fit'}, db.DTrans(1.20, 19.58)),
+        ('CP', 'Clamp_P_M1', 'SG13_cm_clamps', {'ng': 20, 'l': '0.6u', 'frame': 'fit'}, db.DTrans(42.23, 19.58)),
+        ('RN', 'rppd', 'SG13_dev', {'w': '0.5u', 'l': '3.54u', 'Calculate': 'R'}, db.DTrans(38.80, 23.16)),
+        ('RP', 'rppd', 'SG13_dev', {'w': '0.5u', 'l': '12.9u', 'Calculate': 'R'}, db.DTrans(40.60, 23.17))]:
     c = ly.create_cell(name, lib, par)
     if c is None:
         raise SystemExit(f'PCell {lib}.{name} not available')
@@ -197,42 +196,43 @@ def iovss_stub_v(x_m1, y0, y1):
 PITCH = 3.02
 DNx, DNy = P['DN']
 DPx, DPy = P['DP']
-CNx, CNt = P['CN']                                 # CN, CP: mirrored, the cell's y = 0 is at CNt / CPt
-CPx, CPt = P['CP']
+CNx, CNy = P['CN']
+CPx, CPy = P['CP']
 RNx, RNy = P['RN']
 RPx, RPy = P['RP']
 dl = [CNx + 4.10 + PITCH * k for k in range(10)]   # left drain columns (x0), 0.62 wide, over DN's stripes
 dr = [CPx + 4.10 + PITCH * k for k in range(10)]   # right drain columns, over DP's stripes
 gaps = lambda d: [(d[k] + 0.62 + 0.30, d[k + 1] - 0.30) for k in range(9)]
 mid = lambda d: [(a + b) / 2 for a, b in gaps(d)]
+YB = (39.40, 41.60)                                # iovdd bar above CP (2.2 um, IHP's iovdd width over DCP)
 
-# pad: straps from the pad bar over the diode stripes up to the clamp drains (cell y 2.75-7.15 / 2.86-16.4)
+# pad: straps from the pad bar over the diode stripes to the clamp drains (cell y 2.75-7.15 / 2.86-16.4)
 for x in dl:
-    B((10, 0), x, 2.80, x + 0.62, CNt - 2.55)
+    B((10, 0), x, 2.80, x + 0.62, CNy + 7.35)
     for ys in (2.25, 6.75):                                                # diode stripes, 1.26 tall
         column((19, 0), x + 0.31, DNy + ys + 0.38, DNy + ys + 0.88)
-    column((19, 0), x + 0.31, CNt - 6.95, CNt - 2.95)
+    column((19, 0), x + 0.31, CNy + 2.95, CNy + 6.95)
 for x in dr:
-    B((10, 0), x, 2.80, x + 0.62, CPt - 2.66)
+    B((10, 0), x, 2.80, x + 0.62, CPy + 16.60)
     for ys in (2.25, 6.75):
         column((19, 0), x + 0.31, DPy + ys + 0.38, DPy + ys + 0.88)
-    column((19, 0), x + 0.31, CPt - 16.15, CPt - 3.10)
-xpad = dr[5]                                                               # pad pin for the buffer, at the zone's top
-B((10, 0), xpad, CPt - 3.0, xpad + 0.62, 61.60)
-top.shapes(L(10, 2)).insert(um(xpad, 61.0, xpad + 0.62, 61.60))
-top.shapes(L(10, 25)).insert(db.DText('pad', db.DTrans(xpad + 0.31, 61.3)).to_itype(ly.dbu))
+    column((19, 0), x + 0.31, CPy + 3.10, CPy + 16.10)
+xpad = dl[5]                                                               # pad pin for the buffer, just above CN
+B((10, 0), xpad, CNy + 7.0, xpad + 0.62, CNy + 11.60)
+top.shapes(L(10, 2)).insert(um(xpad, CNy + 11.0, xpad + 0.62, CNy + 11.60))
+top.shapes(L(10, 25)).insert(db.DText('pad', db.DTrans(xpad + 0.31, CNy + 11.3)).to_itype(ly.dbu))
 
 # gate ties: M1 landings on the 0.16 um gate bus ends (cell y 7.37-7.53 / 16.73-16.89), M2 to the rppds in the gap
-B((8, 0), CNx + 32.10, CNt - 7.57, CNx + 32.56, CNt - 7.22)
-gyn = CNt - 7.40
+B((8, 0), CNx + 32.10, CNy + 7.22, CNx + 32.56, CNy + 7.57)
+gyn = CNy + 7.40
 via((19, 0), CNx + 32.33, gyn)
 B((10, 0), CNx + 32.18, gyn - 0.15, RNx + 0.40, gyn + 0.15)
 via((19, 0), RNx + 0.25, RNy + 3.82)                                       # RN top terminal
 for lay in ((19, 0), (29, 0)):                                             # RN bottom terminal -> M3 iovss
     via(lay, RNx + 0.25, RNy - 0.28)
 B((10, 0), RNx + 0.04, RNy - 0.49, RNx + 0.46, RNy - 0.07)
-B((8, 0), CPx + 3.18, CPt - 16.94, CPx + 3.60, CPt - 16.60)
-gyp = CPt - 16.77
+B((8, 0), CPx + 3.18, CPy + 16.60, CPx + 3.60, CPy + 16.94)
+gyp = CPy + 16.77
 via((19, 0), CPx + 3.39, gyp)
 B((10, 0), RPx + 0.10, gyp - 0.15, CPx + 3.54, gyp + 0.15)
 via((19, 0), RPx + 0.25, RPy + 13.18)                                      # RP top terminal
@@ -248,34 +248,37 @@ for yb_ in (0.63, 5.13, 9.63):                                             # DN 
         iovss_stub_h(x0, x1, DNy + yb_)
 iovss_stub_v(DPx - 1.49, DNy - 0.45, DNy + 9.25)                           # DP guard ring, left (RP line at 9.68)
 iovss_stub_v(DPx + 34.55, DNy - 0.45, DNy + 11.70)                         # right
-iovss_stub_h(CNx + 1.80, CNx + 34.20, CNt - 1.97)                          # CN inner ring, upper side -> M3 34.5-60
-for x0, x1 in [(CNx + 1.80, dl[0] - 0.30)] + gaps(dl):
-    iovss_stub_h(x0, x1, CNt - 7.93)                                       # lower side, between the pad straps
-iovss_stub_v(CNx + 1.97, CNt - 7.50, CNt - 2.40)                           # left side
-iovss_stub_v(CNx + 34.03, CNt - 7.00, CNt - 2.40)                          # right side (gate line below)
-iovss_stub_v(CPx + 0.17, CPt - 16.30, CPt - 1.20)                          # CP outer ring, left (gate line below)
-iovss_stub_v(CPx + 35.83, CPt - 18.90, CPt - 1.20)                         # right
+for x0, x1 in [(CNx + 1.80, dl[0] - 0.30)] + gaps(dl) + [(dl[9] + 0.92, CNx + 34.20)]:
+    iovss_stub_h(x0, x1, CNy + 1.97)                                       # CN inner ring, lower side
+for x0, x1 in [(CNx + 1.80, xpad - 0.30), (xpad + 0.92, CNx + 31.70)]:
+    iovss_stub_h(x0, x1, CNy + 7.93)                                       # upper side (gate line right of 33.4)
+iovss_stub_v(CNx + 1.97, CNy + 2.40, CNy + 7.50)                           # left side
+iovss_stub_v(CNx + 34.03, CNy + 2.40, CNy + 6.90)                          # right side (gate line above)
+iovss_stub_v(CPx + 0.17, CPy + 1.20, CPy + 16.30)                          # CP outer ring, left (gate line above)
+iovss_stub_v(CPx + 35.83, CPy + 1.20, CPy + 18.90)                         # right
 
 # iovdd: DP's cathode frame and CP's inner ring by 9 straps between the pad straps and one on DP's right side bar,
-# straight up into M3 iovdd (66-91.5)
+# into a 2.2 um M2 bar above CP; two risers at the column's edges take it into M3 iovdd (66-91.5)
 Y3 = 66.55
 for cx in mid(dr):
-    B((10, 0), cx - 0.30, DPy - 0.15, cx + 0.30, Y3 + 0.25)
+    B((10, 0), cx - 0.30, DPy - 0.15, cx + 0.30, YB[0] + 0.10)
     for yb_ in (0.63, 5.13, 9.63):
         for dy in (-0.25, 0.25):
             via((19, 0), cx, DPy + yb_ + dy)
-    via((19, 0), cx, CPt - 17.29)                                          # CP inner ring, lower side
-    via((19, 0), cx, CPt - 1.97)                                           # upper side
-    via((29, 0), cx, Y3)
+    via((19, 0), cx, CPy + 1.97)                                           # CP inner ring, lower side
+    via((19, 0), cx, CPy + 17.29)                                          # upper side
 x0 = DPx + 31.80                                                           # DP right side bar (cell x 31.8-33.06)
-B((10, 0), x0, DPy + 0.10, x0 + 1.26, Y3 + 0.25)
+B((10, 0), x0, DPy + 0.10, x0 + 1.26, YB[0] + 0.10)
 column((19, 0), x0 + 0.40, DPy + 0.35, DPy + 10.0)
 column((19, 0), x0 + 0.86, DPy + 0.35, DPy + 10.0)
-column((19, 0), CPx + 34.03, CPt - 17.00, CPt - 2.20)                      # CP inner ring right side (76.09-76.43)
-row((29, 0), Y3, x0 + 0.15, x0 + 1.11, p=0.45)
+column((19, 0), CPx + 34.03, CPy + 2.10, CPy + 17.20)                      # CP inner ring right side (76.09-76.43)
+B((10, 0), 42.60, YB[0], 78.40, YB[1])
+for r0, r1 in ((42.60, 45.20), (75.50, 78.40)):
+    B((10, 0), r0, YB[0], r1, Y3 + 0.25)
+    row((29, 0), Y3, r0 + 0.15, r1 - 0.15, p=0.45)
 # n-side guard (DN's guard ring, CN's outer ring) by M1 into the left leg; both legs by short M2 into M3 iovdd
 B((8, 0), 0.0, DNy - 1.66, DNx - 1.32, DNy + 11.92)
-B((8, 0), 0.0, CNt - 9.90, CNx + 0.34, CNt)
+B((8, 0), 0.0, CNy, CNx + 0.34, CNy + 9.90)
 for xl, xm, xv in ((0.0, 1.60, 1.27), (78.95, 80.0, 79.20)):
     B((8, 0), xl, 60.20, xm, 61.00)
     via((19, 0), xv, 60.60)
