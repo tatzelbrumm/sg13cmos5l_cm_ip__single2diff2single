@@ -298,6 +298,26 @@ keeping the wires that long, shorten them."
 - **Free region (estimate):** ≈ 10 600 µm² (version 3: 9000). At C2's density `xa` needs ≈ 10 100 µm², about
   0.95 × the region. That leaves no room for `xt`, and the latch-up spacing to the ESD zone is not counted.
 
+### Version 4, iovdd Via2 (Christoph, 2026-11-03 about 20:15 CET: "Yes, go ahead.")
+
+- **Checked first (L2N probes, M1–M3):** every long wire ends on its M3 rail. DP's cathode, CP's sources, the iovdd
+  bar and both legs are one net with the M3 iovdd rail; DN's anode, DP's guard ring, CN's sources and CP's outer
+  ring are one net with the M3 iovss rails.
+- **Via2 into the M3 rails** (`template/via2_rails.py`, `via2_rails.out`):
+
+  | rail | IOPadAnalog | version 4 before | now |
+  |---|---:|---:|---:|
+  | iovdd 66–91.5 | 495 | 14 | 151 |
+  | iovss 7–32.5 | 242 | 306 | 306 |
+  | iovss 34.5–60 | 0 | 9 | 9 |
+
+  IHP's 495 come from 11 straps × 45 Via2, because its Clamp_P sits under the iovdd rail. The risers now run 6 µm
+  under the rail with 13 × 5 + 13 × 6 Via2, and the leg ties have 4 each.
+- **Matching IHP's count** would need the risers under the whole rail (to y ≈ 91, about 50 rows × 11). Not done:
+  it costs M2 at two x positions in the buffer's region. Christoph's choice.
+- **Checks**, with the predecessors in `superseded_v4_one_via2_row/`: DRC alone and in the row 0, 26 / 26 nets,
+  `cmp_esd.py` 6 / 6.
+
 ## Notes folder
 
 | file | contents |
