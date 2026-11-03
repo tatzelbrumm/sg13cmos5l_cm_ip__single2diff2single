@@ -345,6 +345,18 @@ keeping the wires that long, shorten them."
 - The placement is a packer's, not a floorplan: the input tubs sit between the risers, away from their tails.
 - A real floorplan (C2's stage A) would group by signal flow and needs the compacted primitives of phase 2.
 
+## Phase 2: primitives (started 2026-11-03 20:33 CET)
+
+Christoph chose fit variant A, so the cell holds all of `xa`, the load capacitors and `xt` (decisions.md).
+
+| agent | model, effort | cells | brief |
+|---|---|---|---|
+| P | Opus, high | tub_p20x1 + s2d_inputs, s2d_tails, s2d_loads, s2d_casc_p, s2d_pd_p, bias_tree_noab_p | `agents_c3/P/BRIEF.md` |
+| N | Opus, high | sinks_6x6_s2d (N2's cell checked, changed only where rules require), s2d_sinks_cmfb, s2d_casc_n, s2d_pd_n, s2d_cload, s2d_rhigh, bias_tree_noab_n | `agents_c3/N/BRIEF.md` |
+
+The bias tree's cells are added to the brief's lists, because `xt` is in the cell. The lead checks each delivery with
+C2's `lead_check.py` and `sym_check.py` before F gets the cells.
+
 ## Notes folder
 
 | file | contents |
