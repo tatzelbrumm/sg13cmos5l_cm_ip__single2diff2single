@@ -42,3 +42,11 @@ Rebuild with `run_A.sh` byte-identical (cells and placement); `lead_check.py` on
 clean, LVS match, device sums equal (rhigh: series reduction); `sym_check.py`: 0 except sinks 0.0768 µm² (centre PCell, as N2)
 and the bias trees (bbox axis shifted by the moved switches; rows unchanged against P2 / N2 per F2's row-window XOR);
 run_drc.py on the whole placement clean, 0 exceptions; row check: all bands and rails pass, edges equal IOPadAnalog's.
+
+## about 14:25, from the lead (summary; Christoph's words verbatim in decisions.md)
+
+Stage A passed; stage B go with Christoph's review: v8 (today's polarity, each cap behind its own 2 kΩ stage, drop the
+"turned" change), short connections to the transistors including the stage-to-capacitor lines; TGP / TGN / TDN next to what
+they switch; SA / SABP without the NWell notch and without their separate well tap; d2s_sp2k_f2's structures explained, rings
+merged unless a rule needs them separate, then a proper iovss width; pd_n gates contacted in poly, substrate tap cleaned up;
+sinks' center contacts removed; floorplan adapted for compact connections; American English.
