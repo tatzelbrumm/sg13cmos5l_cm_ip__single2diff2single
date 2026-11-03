@@ -1,0 +1,8 @@
+d2s_inputs_c2 : looks workable
+bias_tree_p_c2 : looks workable if TGP is moved by F as pad layout requires
+d2s_ab_p_c2 : looks workable if F revises well tap
+d2s_casc_p_c2 : looks good as basis for F
+d2s_p2_cells_c2 : looks good as basis for F
+d2s_pd_p_c2 : looks workable for adaptation by F into pad layout context
+d2s_tails_c2 : looks good as basis for F
+
