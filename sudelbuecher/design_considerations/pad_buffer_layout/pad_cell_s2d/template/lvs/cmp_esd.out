@@ -1,0 +1,7 @@
+ok  ('dantenna', ('iovss', 'pad'), 'area') sch 70.0 lay 70.0
+ok  ('dpantenna', ('pad', 'iovdd'), 'area') sch 70.0 lay 70.0
+ok  ('rppd', ('gn', 'iovss'), 'iovss', 3.54) sch 1 lay 1
+ok  ('rppd', ('gp', 'iovdd'), 'iovss', 12.9) sch 1 lay 1
+ok  ('sg13_hv_nmos', ('iovss', 'pad'), 'gn', 'iovss', 88.0) sch 1 lay 1
+ok  ('sg13_hv_pmos', ('iovdd', 'pad'), 'gp', 'iovdd', 266.4) sch 1 lay 1
+exit 0

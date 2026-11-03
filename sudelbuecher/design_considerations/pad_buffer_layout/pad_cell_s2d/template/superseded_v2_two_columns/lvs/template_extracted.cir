@@ -1,0 +1,12 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 03/11/2026 18:39
+
+.SUBCKT sg13cmos5l_IOPadSingle2Diff iovdd iovss|vss pad
+R$1 \$I17 iovdd iovss|vss rppd w=0.5u l=12.9u ps=0u b=0 m=1
+R$2 iovss|vss \$I4 iovss|vss rppd w=0.5u l=3.54u ps=0u b=0 m=1
+D$3 pad iovdd dpantenna A=35.0028p P=58.08u m=2
+M$5 iovdd \$I17 pad iovdd sg13_hv_pmos L=0.6u W=266.4u AS=123.21p AD=123.21p
++ PS=316.72u PD=316.72u rfmode=0
+D$45 iovss|vss pad dantenna A=35.0028p P=58.08u m=2
+M$47 iovss|vss \$I4 pad iovss|vss sg13_hv_nmos L=0.6u W=88u AS=40.7p AD=40.7p
++ PS=110.9u PD=110.9u rfmode=0
+.ENDS sg13cmos5l_IOPadSingle2Diff

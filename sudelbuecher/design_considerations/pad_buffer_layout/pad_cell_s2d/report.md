@@ -250,6 +250,30 @@ eliminate the secondary protection structure."
     and the four iovdd M2 lines up to y 66.8.
   - The stop condition of phase 1 needs a fresh look on this frame before phase 2.
 
+### Version 3 and the protection schematic (Christoph, 2026-11-03 about 19:50 CET)
+
+"Diodes side by side closest to the pads. No long metal wires towards the core. Clamps side by side. make me a xschem
+schematic of the components you left standing so I get an idea what the resistors are all about."
+
+- **Layout** (design branch, `layout/klayout/template/README.md`):
+  - DN | DP side by side at the pad exit (y 5.38–20.20); CN | CP side by side at the top of the leg region
+    (y 41.4–61.44), mirrored in y so that the gate buses face the rppds in the gap.
+  - pad straps from the pad bar over the diode stripes to the clamp drains.
+  - iovdd: 9 + 1 straps from DP's frame through CP's inner ring straight up into M3 iovdd.
+  - Nothing goes towards the core except the iovdd ties up to y 66.8 and the pad pin at y 61.6.
+  - The four long iovdd lines through the core region of version 2 are gone, and so is its pad pin at y 40.
+- **Checks (`template/`)**, version 2's in `template/superseded_v2_two_columns/`:
+  - DRC alone: maximal with latch-up 0; `run_drc.py` 32 tables, 0, no exception.
+  - Row check: edges the same, 26 / 26 nets, row DRC 0.
+  - Extraction: the same devices as version 2.
+- **Schematic** `schematic/xschem/s2d_pad_esd.sch` / `.sym` (design branch). Its notes explain the diodes, the
+  clamps, the two rppd gate ties and the ptap1 "resistors" of IHP's spice. `template/lvs/cmp_esd.py`: the xschem
+  netlist equals the layout extraction in all 6 device classes (`cmp_esd.out`); a copy with one terminal moved fails.
+- **Free region (estimate):** the core side is now y ≈ 62–180, about 9000 µm². That is less than version 2's
+  10 600–11 000 µm², because the protection fills the leg region and the gap row y 20–41 holds only straps. It is
+  more than version 1's 7165 µm². At C2's density `xa` needs about 10 100 µm², so with version 3 it does not fit
+  without levers (§1.4), about 1.12 × the region.
+
 ## Notes folder
 
 | file | contents |

@@ -1,9 +1,9 @@
-# Logfile created on 2026-11-03 18:37:59 +0000 by logger.rb/v1.5.3
-2026-11-03 18:37:59 +0000: Memory Usage (425444K) : Starting running IHP-SG13CMOS5L Klayout DRC maximum runset on /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/layout/klayout/template/sg13cmos5l_IOPadSingle2Diff_template.gds
-2026-11-03 18:37:59 +0000: Memory Usage (425444K) : Ruby Version for klayout: 3.2.3
-2026-11-03 18:37:59 +0000: Memory Usage (426748K) : Loading database to memory is complete.
-2026-11-03 18:37:59 +0000: Memory Usage (426748K) : IHP-SG13CMOS5L Klayout DRC maximum runset output at: /home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_s2d/template/main_template/sg13cmos5l_IOPadSingle2Diff_template_sg13cmos5l_IOPadSingle2Diff_sg13cmos5l_maximal.lyrdb
-2026-11-03 18:37:59 +0000: Memory Usage (426748K) : Evaluate switches.
-2026-11-03 18:37:59 +0000: Memory Usage (426748K) : Klayout will use  thread(s)
-2026-11-03 18:37:59 +0000: Memory Usage (426748K) : deep mode is enabled for sg13cmos5l_maximal runset.
-2026-11-03 18:38:07 +0000: Memory Usage (456656K) : KLayout DRC run for maximum ruleSet completed in 8.1 seconds
+# Logfile created on 2026-11-03 18:58:18 +0000 by logger.rb/v1.5.3
+2026-11-03 18:58:18 +0000: Memory Usage (425468K) : Starting running IHP-SG13CMOS5L Klayout DRC maximum runset on /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/layout/klayout/template/sg13cmos5l_IOPadSingle2Diff_template.gds
+2026-11-03 18:58:18 +0000: Memory Usage (425468K) : Ruby Version for klayout: 3.2.3
+2026-11-03 18:58:18 +0000: Memory Usage (426772K) : Loading database to memory is complete.
+2026-11-03 18:58:18 +0000: Memory Usage (426772K) : IHP-SG13CMOS5L Klayout DRC maximum runset output at: /home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_s2d/template/main_template/sg13cmos5l_IOPadSingle2Diff_template_sg13cmos5l_IOPadSingle2Diff_sg13cmos5l_maximal.lyrdb
+2026-11-03 18:58:18 +0000: Memory Usage (426772K) : Evaluate switches.
+2026-11-03 18:58:18 +0000: Memory Usage (426772K) : Klayout will use  thread(s)
+2026-11-03 18:58:18 +0000: Memory Usage (426772K) : deep mode is enabled for sg13cmos5l_maximal runset.
+2026-11-03 18:58:26 +0000: Memory Usage (456680K) : KLayout DRC run for maximum ruleSet completed in 8.23 seconds

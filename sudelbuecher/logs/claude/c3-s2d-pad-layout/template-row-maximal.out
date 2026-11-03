@@ -1,10 +1,10 @@
-2026-11-03 18:38:41 +0000: Memory Usage (425408K) : Starting running IHP-SG13CMOS5L Klayout DRC maximum runset on /home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_s2d/template/row/row.gds
-2026-11-03 18:38:41 +0000: Memory Usage (425408K) : Ruby Version for klayout: 3.2.3
-2026-11-03 18:38:41 +0000: Memory Usage (428816K) : Loading database to memory is complete.
-2026-11-03 18:38:41 +0000: Memory Usage (428816K) : IHP-SG13CMOS5L Klayout DRC maximum runset output at: /home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_s2d/template/row/row_maximal.lyrdb
-2026-11-03 18:38:41 +0000: Memory Usage (428816K) : Evaluate switches.
-2026-11-03 18:38:41 +0000: Memory Usage (428816K) : Klayout will use 4 thread(s)
-2026-11-03 18:38:41 +0000: Memory Usage (428816K) : deep mode is enabled for sg13cmos5l_maximal runset.
+2026-11-03 18:58:54 +0000: Memory Usage (425500K) : Starting running IHP-SG13CMOS5L Klayout DRC maximum runset on /home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_s2d/template/row/row.gds
+2026-11-03 18:58:54 +0000: Memory Usage (425500K) : Ruby Version for klayout: 3.2.3
+2026-11-03 18:58:54 +0000: Memory Usage (428780K) : Loading database to memory is complete.
+2026-11-03 18:58:54 +0000: Memory Usage (428780K) : IHP-SG13CMOS5L Klayout DRC maximum runset output at: /home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_s2d/template/row/row_maximal.lyrdb
+2026-11-03 18:58:54 +0000: Memory Usage (428780K) : Evaluate switches.
+2026-11-03 18:58:54 +0000: Memory Usage (428780K) : Klayout will use 4 thread(s)
+2026-11-03 18:58:54 +0000: Memory Usage (428780K) : deep mode is enabled for sg13cmos5l_maximal runset.
 Rule NW.a: 0 error(s)
 Rule NW.c: 0 error(s)
 Rule NW.c1: 0 error(s)
@@ -292,4 +292,4 @@ Rule OffGrid.dfpad_sbump: 0 error(s)
 Rule OffGrid.PolyRes: 0 error(s)
 Rule OffGrid.LBE: 0 error(s)
 Number of DRC errors for maximum rule set: 0
-2026-11-03 18:38:58 +0000: Memory Usage (587756K) : KLayout DRC run for maximum ruleSet completed in 17.61 seconds
+2026-11-03 18:59:12 +0000: Memory Usage (581976K) : KLayout DRC run for maximum ruleSet completed in 17.11 seconds
