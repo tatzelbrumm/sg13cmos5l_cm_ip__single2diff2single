@@ -50,3 +50,17 @@ Stage A passed; stage B go with Christoph's review: v8 (today's polarity, each c
 they switch; SA / SABP without the NWell notch and without their separate well tap; d2s_sp2k_f2's structures explained, rings
 merged unless a rule needs them separate, then a proper iovss width; pd_n gates contacted in poly, substrate tap cleaned up;
 sinks' center contacts removed; floorplan adapted for compact connections; American English.
+
+## about 15:30, F2's stage B reply (summary)
+
+Routed pad candidate (`pad_candidate.gds` e39de93bf78a): DRC (incl. latch-up, antenna) clean, pad and block LVS match, row
+check and path widths pass, PEX 21 capacitor-only nodes; v8 wired; switches moved (tgsw cell, SA / SABP in ab_p, SB / SABN in
+ab_n); sp2k with one merged p+ ring and a 1.0 µm iovss link; sinks without center contacts. Open: stage lines ≈ 55 µm,
+shared ring leg, dummy convention, symbol ports. The harness refused `report.md`; its text is in the session (saved as
+`out/report.md` by the lead).
+
+## about 15:50, from the lead (summary; verbatim text in the session)
+
+Christoph's answers (keep lines, shared leg ok, keep dummies / abutment, wrapper for the ports by the lead); one fix:
+rename the block's vdd / vss / vddo / vsso labels on the iovdd / iovss nets, so that in the flat pad `vdd` / `vss` sit only
+on the 1.2 V rails; rerun DRC / LVS / row check; new sha256.
