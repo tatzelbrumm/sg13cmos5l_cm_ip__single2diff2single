@@ -87,3 +87,11 @@ together +26 % at mid-rail, −1 … −4 % elsewhere, +7 % average. 100 pF: wor
 
 Christoph's worry about the output swing; stage 8 (decks 15–17): large steps to both swing ends and end to end at 100 pF /
 300 pF, rail drive and recovery, THD at full swing, for v0 / v8 / v9; plots `steps_large.png`, `rail_recovery.png`.
+
+## 2026-11-03, K's stage 8 reply (summary)
+
+Decks 15–17, 18 runs: v8 = v0 in large steps (< 3 %), rail recovery and THD (−43.4 / −42.7 / −31.6 dB at 10 k / 100 k /
+1 MHz); v9 worse: THD −38.2 dB at 100 kHz and −26.2 dB at 1 MHz, steps toward mid-rail 35–40 % slower at 100 pF. All recover
+from the top rail within 0.8 µs; the stage-3 "second stable state" reread as a DC-op artefact. 300 pF unloaded rings in all
+variants (PM ≈ 40°). Recommendation: v8 (present polarity + symmetric 2 kΩ stages): the two present-polarity caps
+complement each other (total ±3 % over the swing), turned ±16 %.
