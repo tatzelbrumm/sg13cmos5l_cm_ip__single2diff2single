@@ -9,7 +9,7 @@ name). Design branch `claude/c2-pad-layout` (from `toplevel` 8a72dd8), notes bra
 `sudel_buecher` cce0e0c, a fast-forward of the branch's start 21d022e). Times are `TZ=Europe/Berlin date`.
 
 Status (2026-11-03 17:53 CET): phases 0–4 done. The drawn cell is in the macro, DRC clean, `make klayout-lvs` passes;
-`make magic-lvs` matches devices and nets and fails only on the `vss` pin (§4.3). Sanity simulation done (§4.4).
+`make magic-lvs` matches devices and nets and fails only on the `vss` pin, accepted (§4.3). Sanity simulation done (§4.4).
 Christoph's decisions: `decisions.md`.
 
 ## Phase 0: tools (16:19 CET)
@@ -248,8 +248,14 @@ Lead fix afterwards: DN / DP as scalar instances (vector names broke the PDK `di
   Error 10, which also aborts the make target). So the sheet's tie `Rsub` (1 Ω, documented as the substrate) is in the
   simulation netlist and left out of the LVS netlists (`lvs_ignore=open`). Magic keeps one name for the joined net, so its
   schematic `vss` pin stays unmatched; no setting of the repo's flow changes that (netgen setup has no short element;
-  magic's `ext2spice short` is not set by sak-lvs.sh). Remaining choices: accept (recommended, KLayout is IHP's deck),
-  or 2(b) (tap extraction on and `ptap1` devices).
+  magic's `ext2spice short` is not set by sak-lvs.sh). **Accepted by Christoph (2026-11-03)**; documented in the
+  macro README ("Layout and verification").
+- Chip harness `RTimothyEdwards/sg13cmos5l_ocd_chipalooza` (read at 81c45fc): its LVS is magic + netgen only. IHP's own
+  `IOPadAnalog` shows the same merge there (netgen: `iovss` disconnected in the layout, `vss` in the schematic), and the
+  padframe already fails pin matching on `vss1v2` / `vss3v3` (`validate/comp_sg13cmos5l_padframe.out`). Workaround
+  offered in the macro README (reasoning, not run): `flatten class` of this cell in both circuits, as the harness does
+  for `IOPadVdd` / `IOPadIOVdd` / `SecondaryProtection`, and the `_magic.spice` view (vss open), as the harness's
+  corrected `sg13cmos5l_io.spice` treats `IOPadAnalog`.
 - The datatype-2 port texts make magic see ports; before them netgen also failed on the bare `vdd` rail.
 
 ### 4.4 Sanity simulation (`sanity_2026-11-03/README.md`)
