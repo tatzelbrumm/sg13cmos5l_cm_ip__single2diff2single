@@ -1,0 +1,8 @@
+TGP looks out of place in a fully routed layout, so do TGN, TDN
+SA, SABP are on a notch in the nwell. Avoid the notch either by extending the nwell or moving SA, SABP. The separate well tap for SA, SABP looks like bullshit to me.
+What are the structures in d2s_sp2k_f2? Any reason to keep three separate guard rings? if there is good reason, why is the iovss connection that narrow?
+d2s_pd_n_fs : why not contact the gates with poly? I expect that F will clean up the shitty substrate tap.
+
+sinks: get rid of the center contacts. get rid of british english throughout. center, not centre, etc.
+
+F: adapt the floorplan for compact connection of the layout primitives, not the other way around.
