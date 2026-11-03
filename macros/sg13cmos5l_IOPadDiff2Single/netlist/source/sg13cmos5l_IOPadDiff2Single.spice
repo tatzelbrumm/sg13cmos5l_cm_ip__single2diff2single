@@ -7,7 +7,10 @@
 * cell connects to them). Core-side ports: vinp vinn vref (from the slot), iref (the selected reference current,
 * sourced into the cell, 5 uA), en_3v3 / en_3v3_b (3.3 V enable and its complement). vfb is tied to pad inside the
 * cell (Kelvin line from the pad junction).
-* DCN / DCP: IHP's primary diodes, as in sg13cmos5l_IOPadAnalog.
+* DCN / DCP: IHP's primary diodes as drawn here (2 stripes each, 1.26u wide, dantenna 67.6u / dpantenna 65.8u long;
+* IHP's library cells have 27.78u stripes).
+* vss joins iovss through the p-substrate (the vss band p+ tie and the iovss ties, Christoph 2026-11-03: 2(a)); Rsub
+* (1 Ohm) stands in for that path. The LVS netlists of the sheet leave Rsub out (lvs_ignore=open).
 * Output stage at this level since 2026-10-28: d2s_mpdda_pd drives the gates a / b; Xfp / Xfn are the clamp frames
 * with the class-AB replicas RP1 / RN1 (nets dabp / dabn, back to RP2 / RN2 in Xd); CMA / CMB are the Miller
 * capacitors, W x L as drawn in the layout (256 um2 each, as the former 16u x 16u).
@@ -42,7 +45,10 @@ XSPA pa iovdd iovss pad d2s_sp2k
 XSPB pb iovdd iovss pad d2s_sp2k
 XCMA pa a pa pa sg13_hv_pmos w=7.96u l=32.16u ng=1
 XCMB b pb b b sg13_hv_pmos w=7.96u l=32.16u ng=1
-XDN iovss pad iovdd sg13cmos5l_DCNDiode
-XDP pad iovdd iovss sg13cmos5l_DCPDiode
-* dummies of bias_tree_pd's layout rows (bias_tree_p_f2: 2u / 6u, gate vbp; bias_tree_n_f2: 2.4u / 6u, D = S = G = ni)
+XDN0 iovss pad dantenna w=1.26u l=67.6u
+XDN1 iovss pad dantenna w=1.26u l=67.6u
+XDP0 pad iovdd dpantenna w=1.26u l=65.8u
+XDP1 pad iovdd dpantenna w=1.26u l=65.8u
+Rsub vss iovss 1
+* (the dummies of bias_tree_pd's layout rows are devices of bias_tree_pd, bias_ref_pd.spice)
 .ends sg13cmos5l_IOPadDiff2Single
