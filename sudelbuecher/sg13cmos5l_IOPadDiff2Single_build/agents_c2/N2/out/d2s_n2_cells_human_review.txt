@@ -1,0 +1,7 @@
+d2s_rhigh_c2 : in the completed layout, the substrate tap should become a ring, if space allows
+sinks_6x6_c2 : why the metal1 poly contacts in the center? in the completed layout, the substrate tap should enclose the whole array, if space allows
+d2s_pd_n_c2 : VERY BAD as layout primitive: substrate tap too long, b, vabn metal1 stubs too long, vsso shouldn't be metal2 for the primitive. passable if F completely overworks this primitive.
+d2s_casc_n_c2 : looks decent, in context substrate tap should become a ring if space allows.
+d2s_ab_n_c2 : may already be integrated in F layout, F should overwork this primitive.
+d2s_n2_cells_c2 : TGN and TDN should be moved by F when assembling the entire circuit.
+
