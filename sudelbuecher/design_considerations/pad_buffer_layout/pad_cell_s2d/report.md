@@ -223,6 +223,33 @@ template for review."
 - **Free region** in the template: y 86.15–180, x ≈ 1.8–78.2, less SP and its tie lines. That is the region §1.3
   counted.
 
+### Version 2 (Christoph, 2026-11-03 19:35 CET)
+
+"With the help of clamp and diode pcells, the protection structures, narrow the clamp cells and rearrange them so that
+they fit entirely into the region adjacent to the narrow nwell paths at the botton (pad side) of the layout. For now,
+eliminate the secondary protection structure."
+
+- **What changed** (design branch, `layout/klayout/template/README.md`):
+  - IHP's five protection cells are gone, and SecondaryProtection is not replaced.
+  - CN / CP are `Clamp_N_M1` / `Clamp_P_M1` ng 20, l 0.6u, frame fit (36 µm wide instead of IHP's 80 µm frames);
+    DN / DP are `DCNDiode` / `DCPDiode` l 27.78u.
+  - They sit in two columns between the NWell legs, y 5.38–39.02: n-type left, p-type right, diode on clamp as in IHP.
+  - The 0D gate ties are SG13_dev rppd (3.54u / 12.9u).
+  - New M2 pad / iovss / iovdd wiring; a core-side `pad` pin at y 40; a p+ edge stub at y 65–84.26.
+- **Checks (`template/`)**, version 1's in `template/superseded_v1_ihp_protection/` (replaced by version 2):
+  - DRC alone: maximal with latch-up 0; `run_drc.py` 32 tables, 0, no exception.
+  - Row: edge intervals the same as IOPadAnalog's, 26 / 26 rails and bands one net, row DRC 0.
+  - Extraction (`template/lvs/template_extracted.cir`): IHP's protection values without SP (NMOS W 88, PMOS W 266.4,
+    dantenna / dpantenna 2 × 35.0 µm², rppd 3.54u / 12.9u).
+  - One difference to IHP: RP's bulk is the substrate, not iovdd.
+- **Consequence for §1.3 (estimate):**
+  - The free region grows from 7165 µm² to about 10 600–11 000 µm² (y ≈ 39–180, plus 30–39 above the N column).
+  - At C2's density, `xa` (10 100 µm²) would fit with about 5 % to spare. `xa` + `xt` (10 700 µm²) would be at the
+    limit.
+  - Not yet counted: latch-up spacing or an isolator between the ESD zone and the buffer (IOPadAnalog's p+ plate),
+    and the four iovdd M2 lines up to y 66.8.
+  - The stop condition of phase 1 needs a fresh look on this frame before phase 2.
+
 ## Notes folder
 
 | file | contents |

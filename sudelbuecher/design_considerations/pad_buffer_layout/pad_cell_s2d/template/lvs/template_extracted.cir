@@ -1,75 +1,12 @@
-* Extracted by KLayout with SG13CMOS5L LVS runset on : 03/11/2026 18:20
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 03/11/2026 18:39
 
-.SUBCKT sg13cmos5l_IOPadSingle2Diff iovdd iovdd$1 iovss|vss pad padres
-X$1 iovdd pad pad pad pad pad pad pad pad pad pad sg13cmos5l_Clamp_P20N0D
-X$2 iovdd pad pad sg13cmos5l_DCPDiode
-X$4 iovss|vss padres pad iovdd$1 sg13cmos5l_SecondaryProtection
-X$7 iovss|vss pad pad sg13cmos5l_DCNDiode
-X$8 iovss|vss pad pad pad pad pad pad pad pad pad pad sg13cmos5l_Clamp_N20N0D
+.SUBCKT sg13cmos5l_IOPadSingle2Diff iovdd iovss|vss pad
+R$1 \$I17 iovdd iovss|vss rppd w=0.5u l=12.9u ps=0u b=0 m=1
+R$2 iovss|vss \$I4 iovss|vss rppd w=0.5u l=3.54u ps=0u b=0 m=1
+D$3 pad iovdd dpantenna A=35.0028p P=58.08u m=2
+M$5 iovdd \$I17 pad iovdd sg13_hv_pmos L=0.6u W=266.4u AS=123.21p AD=123.21p
++ PS=316.72u PD=316.72u rfmode=0
+D$45 iovss|vss pad dantenna A=35.0028p P=58.08u m=2
+M$47 iovss|vss \$I4 pad iovss|vss sg13_hv_nmos L=0.6u W=88u AS=40.7p AD=40.7p
++ PS=110.9u PD=110.9u rfmode=0
 .ENDS sg13cmos5l_IOPadSingle2Diff
-
-.SUBCKT sg13cmos5l_Clamp_N20N0D iovss pad pad$1 pad$2 pad$3 pad$4 pad$5 pad$6
-+ pad$7 pad$8 pad$9
-M$1 iovss \$3 pad iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.664p AD=4.004p
-+ PS=15.32u PD=10.62u rfmode=0
-M$3 iovss \$3 pad$1 iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.004p AD=4.004p
-+ PS=10.62u PD=10.62u rfmode=0
-M$5 iovss \$3 pad$2 iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.004p AD=4.004p
-+ PS=10.62u PD=10.62u rfmode=0
-M$7 iovss \$3 pad$3 iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.004p AD=4.004p
-+ PS=10.62u PD=10.62u rfmode=0
-M$9 iovss \$3 pad$4 iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.004p AD=4.004p
-+ PS=10.62u PD=10.62u rfmode=0
-M$11 iovss \$3 pad$5 iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.004p AD=4.004p
-+ PS=10.62u PD=10.62u rfmode=0
-M$13 iovss \$3 pad$6 iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.004p AD=4.004p
-+ PS=10.62u PD=10.62u rfmode=0
-M$15 iovss \$3 pad$7 iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.004p AD=4.004p
-+ PS=10.62u PD=10.62u rfmode=0
-M$17 iovss \$3 pad$8 iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.004p AD=4.004p
-+ PS=10.62u PD=10.62u rfmode=0
-M$19 iovss \$3 pad$9 iovss sg13_hv_nmos L=0.6u W=8.8u AS=4.004p AD=4.664p
-+ PS=10.62u PD=15.32u rfmode=0
-R$21 iovss \$3 iovss rppd w=0.5u l=3.54u ps=0u b=0 m=1
-.ENDS sg13cmos5l_Clamp_N20N0D
-
-.SUBCKT sg13cmos5l_SecondaryProtection iovss core pad iovdd
-D$1 iovss core dantenna A=1.984p P=7.48u m=1
-D$2 core iovdd dpantenna A=3.1872p P=11.24u m=1
-R$3 pad core iovss rppd w=1u l=2u ps=0u b=0 m=1
-.ENDS sg13cmos5l_SecondaryProtection
-
-.SUBCKT sg13cmos5l_DCPDiode cathode anode anode$1
-D$1 anode$1 cathode dpantenna A=35.0028p P=58.08u m=1
-D$2 anode cathode dpantenna A=35.0028p P=58.08u m=1
-.ENDS sg13cmos5l_DCPDiode
-
-.SUBCKT sg13cmos5l_Clamp_P20N0D iovdd pad pad$1 pad$2 pad$3 pad$4 pad$5 pad$6
-+ pad$7 pad$8 pad$9
-M$1 iovdd \$5 pad iovdd sg13_hv_pmos L=0.6u W=26.64u AS=14.1192p AD=12.1212p
-+ PS=44.2u PD=30.28u rfmode=0
-M$3 iovdd \$5 pad$1 iovdd sg13_hv_pmos L=0.6u W=26.64u AS=12.1212p AD=12.1212p
-+ PS=30.28u PD=30.28u rfmode=0
-M$5 iovdd \$5 pad$2 iovdd sg13_hv_pmos L=0.6u W=26.64u AS=12.1212p AD=12.1212p
-+ PS=30.28u PD=30.28u rfmode=0
-M$7 iovdd \$5 pad$3 iovdd sg13_hv_pmos L=0.6u W=26.64u AS=12.1212p AD=12.1212p
-+ PS=30.28u PD=30.28u rfmode=0
-M$9 iovdd \$5 pad$4 iovdd sg13_hv_pmos L=0.6u W=26.64u AS=12.1212p AD=12.1212p
-+ PS=30.28u PD=30.28u rfmode=0
-M$11 iovdd \$5 pad$5 iovdd sg13_hv_pmos L=0.6u W=26.64u AS=12.1212p AD=12.1212p
-+ PS=30.28u PD=30.28u rfmode=0
-M$13 iovdd \$5 pad$6 iovdd sg13_hv_pmos L=0.6u W=26.64u AS=12.1212p AD=12.1212p
-+ PS=30.28u PD=30.28u rfmode=0
-M$15 iovdd \$5 pad$7 iovdd sg13_hv_pmos L=0.6u W=26.64u AS=12.1212p AD=12.1212p
-+ PS=30.28u PD=30.28u rfmode=0
-M$17 iovdd \$5 pad$8 iovdd sg13_hv_pmos L=0.6u W=26.64u AS=12.1212p AD=12.1212p
-+ PS=30.28u PD=30.28u rfmode=0
-M$19 iovdd \$5 pad$9 iovdd sg13_hv_pmos L=0.6u W=26.64u AS=12.1212p AD=14.1192p
-+ PS=30.28u PD=44.2u rfmode=0
-R$41 iovdd \$5 iovdd rppd w=0.5u l=12.9u ps=0u b=0 m=1
-.ENDS sg13cmos5l_Clamp_P20N0D
-
-.SUBCKT sg13cmos5l_DCNDiode anode cathode cathode$1
-D$1 anode cathode$1 dantenna A=35.0028p P=58.08u m=1
-D$2 anode cathode dantenna A=35.0028p P=58.08u m=1
-.ENDS sg13cmos5l_DCNDiode

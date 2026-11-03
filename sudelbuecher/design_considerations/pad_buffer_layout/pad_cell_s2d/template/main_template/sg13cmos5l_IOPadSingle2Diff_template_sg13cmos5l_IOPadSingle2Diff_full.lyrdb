@@ -8,6 +8,18 @@
  </tags>
  <categories>
   <category>
+   <name>Act.a</name>
+   <description>5.5. Act.a : Min. Activ width : 0.15 µm</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Act.b</name>
+   <description>5.5. Act.b : Min. Activ (drawing + filler) space or notch: 0.21 µm.</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
    <name>AFil.c1</name>
    <description>5.6. AFil.c1 Min. Activ:filler space to Activ is 0.42 um</description>
    <categories>
@@ -28,18 +40,6 @@
   <category>
    <name>AFil.j</name>
    <description>5.6. AFil.j Min. nSD:block and SalBlock enclosure of Activ:filler inside PWell:block is 0.25 um</description>
-   <categories>
-   </categories>
-  </category>
- <category>
-   <name>Act.a</name>
-   <description>5.5. Act.a : Min. Activ width : 0.15 µm</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Act.b</name>
-   <description>5.5. Act.b : Min. Activ (drawing + filler) space or notch: 0.21 µm.</description>
    <categories>
    </categories>
   </category>
@@ -146,18 +146,6 @@
    </categories>
   </category>
  <category>
-   <name>CntB.b1</name>
-   <description>5.15. CntB.b1 Min. ContBar space with common run &gt; 5.0 um is 0.36 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CntB.h1</name>
-   <description>5.15. CntB.h1 Min. Metal1 enclosure of ContBar is 0.05 um</description>
-   <categories>
-   </categories>
-  </category>
- <category>
    <name>Cnt.a</name>
    <description>5.14. Cnt.a : Min. and max. Cont width: 0.16 um</description>
    <categories>
@@ -218,14 +206,14 @@
    </categories>
   </category>
  <category>
-   <name>LU.b</name>
-   <description>7.2. LU.b : Max. space from any portion of N+Activ inside PWell to an pSD-PWell tie is 20.0 um</description>
+   <name>CntB.b1</name>
+   <description>5.15. CntB.b1 Min. ContBar space with common run &gt; 5.0 um is 0.36 um</description>
    <categories>
    </categories>
   </category>
- <category>
-   <name>pSD.c1</name>
-   <description>5.10. pSD.c1 Min. pSD enclosure of P+Activ in PWell is 0.03 um</description>
+  <category>
+   <name>CntB.h1</name>
+   <description>5.15. CntB.h1 Min. Metal1 enclosure of ContBar is 0.05 um</description>
    <categories>
    </categories>
   </category>
@@ -1520,6 +1508,18 @@
    </categories>
   </category>
  <category>
+   <name>LU.b</name>
+   <description>7.2. LU.b : Max. space from any portion of N+Activ inside PWell to an pSD-PWell tie is 20.0 um</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
+   <name>pSD.c1</name>
+   <description>5.10. pSD.c1 Min. pSD enclosure of P+Activ in PWell is 0.03 um</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
    <name>TM1.a</name>
    <description>5.22. TM1.a: Min. TopMetal1 width: 1.64 μm.</description>
    <categories>
@@ -1528,42 +1528,6 @@
   <category>
    <name>TM1.b</name>
    <description>5.22. TM1.b: Min. TopMetal1 (drawing + filler) space or notch: 1.64 μm.</description>
-   <categories>
-   </categories>
-  </category>
- <category>
-   <name>M1.a</name>
-   <description>5.16. M1.a: Min. Metal1 width: 0.16 μm.</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M1.b</name>
-   <description>5.16. M1.b: Min. Metal1 (drawing + filler) space or notch: 0.18 μm.</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M1.e</name>
-   <description>5.16. M1.e Min. space of Metal1 lines if, at least one line is wider than 0.3 µm and the parallel run is more than 1.0 µm is 0.22 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M1.f</name>
-   <description>5.16. M1.f Min. space of Metal1 lines if, at least one line is wider than 10.0 µm and the parallel run is more than 10.0 µm is 0.6 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M1.g</name>
-   <description>5.16. M1.g Min. 45-degree bent Metal1 width if the bent metal length is &gt; 0.5 µm is 0.2 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M1.i</name>
-   <description>5.16. M1.i Min. space of Metal1 lines of which at least one is bent by 45-degree is 0.22 um</description>
    <categories>
    </categories>
   </category>
@@ -1622,6 +1586,42 @@
    </categories>
   </category>
  <category>
+   <name>M1.a</name>
+   <description>5.16. M1.a: Min. Metal1 width: 0.16 μm.</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M1.b</name>
+   <description>5.16. M1.b: Min. Metal1 (drawing + filler) space or notch: 0.18 μm.</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M1.e</name>
+   <description>5.16. M1.e Min. space of Metal1 lines if, at least one line is wider than 0.3 µm and the parallel run is more than 1.0 µm is 0.22 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M1.f</name>
+   <description>5.16. M1.f Min. space of Metal1 lines if, at least one line is wider than 10.0 µm and the parallel run is more than 10.0 µm is 0.6 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M1.g</name>
+   <description>5.16. M1.g Min. 45-degree bent Metal1 width if the bent metal length is &gt; 0.5 µm is 0.2 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M1.i</name>
+   <description>5.16. M1.i Min. space of Metal1 lines of which at least one is bent by 45-degree is 0.22 um</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
    <name>Pas.a</name>
    <description>5.27. Pas.a:Min. Passiv width: 2.1 um</description>
    <categories>
@@ -1640,32 +1640,26 @@
    </categories>
   </category>
  <category>
-   <name>Slt.e1_M1</name>
-   <description>7.3. Slt.e1_M1 : No M1:slit required on MIM</description>
+   <name>TV1.a</name>
+   <description>5.21. TV1.a : Min. and max. TopVia1 width: 0.42 um</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>Slt.e1_M2</name>
-   <description>7.3. Slt.e1_M2 : No M2:slit required on MIM</description>
+   <name>TV1.b</name>
+   <description>5.21. TV1.b : Min. TopVia1 space: 0.42 um</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>Slt.e1_M3</name>
-   <description>7.3. Slt.e1_M3 : No M3:slit required on MIM</description>
+   <name>TV1.c</name>
+   <description>5.21. TV1.c : Min. Metal4 enclosure of TopVia1 is 0.1 um</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>Slt.e1_M4</name>
-   <description>7.3. Slt.e1_M4 : No M4:slit required on MIM</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Slt.e1_TM1</name>
-   <description>7.3. Slt.e1_TM1 : No TM1:slit required on MIM</description>
+   <name>TV1.d</name>
+   <description>5.21. TV1.d : Min. TopMetal1 enclosure of TopVia1 is 0.42 um</description>
    <categories>
    </categories>
   </category>
@@ -1778,74 +1772,32 @@
    </categories>
   </category>
  <category>
-   <name>TV1.a</name>
-   <description>5.21. TV1.a : Min. and max. TopVia1 width: 0.42 um</description>
+   <name>Slt.e1_M1</name>
+   <description>7.3. Slt.e1_M1 : No M1:slit required on MIM</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>TV1.b</name>
-   <description>5.21. TV1.b : Min. TopVia1 space: 0.42 um</description>
+   <name>Slt.e1_M2</name>
+   <description>7.3. Slt.e1_M2 : No M2:slit required on MIM</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>TV1.c</name>
-   <description>5.21. TV1.c : Min. Metal4 enclosure of TopVia1 is 0.1 um</description>
+   <name>Slt.e1_M3</name>
+   <description>7.3. Slt.e1_M3 : No M3:slit required on MIM</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>TV1.d</name>
-   <description>5.21. TV1.d : Min. TopMetal1 enclosure of TopVia1 is 0.42 um</description>
-   <categories>
-   </categories>
-  </category>
- <category>
-   <name>M1Fil.c</name>
-   <description>5.18. M1Fil.c : Min. Metal1:filler space to Metal1 is 0.42 um</description>
+   <name>Slt.e1_M4</name>
+   <description>7.3. Slt.e1_M4 : No M4:slit required on MIM</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>M1Fil.a2</name>
-   <description>5.18. M1Fil.a2 : Max. Metal1:filler width is 5.0 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M2Fil.c</name>
-   <description>5.18. M2Fil.c : Min. Metal2:filler space to Metal2 is 0.42 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M2Fil.a2</name>
-   <description>5.18. M2Fil.a2 : Max. Metal2:filler width is 5.0 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M3Fil.c</name>
-   <description>5.18. M3Fil.c : Min. Metal3:filler space to Metal3 is 0.42 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M3Fil.a2</name>
-   <description>5.18. M3Fil.a2 : Max. Metal3:filler width is 5.0 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M4Fil.c</name>
-   <description>5.18. M4Fil.c : Min. Metal4:filler space to Metal4 is 0.42 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>M4Fil.a2</name>
-   <description>5.18. M4Fil.a2 : Max. Metal4:filler width is 5.0 um</description>
+   <name>Slt.e1_TM1</name>
+   <description>7.3. Slt.e1_TM1 : No TM1:slit required on MIM</description>
    <categories>
    </categories>
   </category>
@@ -1910,20 +1862,50 @@
    </categories>
   </category>
  <category>
-   <name>V1.a</name>
-   <description>5.19. V1.a : Min. and max. Via1 width: 0.19 um</description>
+   <name>M1Fil.c</name>
+   <description>5.18. M1Fil.c : Min. Metal1:filler space to Metal1 is 0.42 um</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>V1.b</name>
-   <description>5.19. V1.b : Min. Via1 space: 0.22 um</description>
+   <name>M1Fil.a2</name>
+   <description>5.18. M1Fil.a2 : Max. Metal1:filler width is 5.0 um</description>
    <categories>
    </categories>
   </category>
   <category>
-   <name>V1.c</name>
-   <description>5.19.  V1.c Min. Metal1 enclosure of Via1 is 0.01 um</description>
+   <name>M2Fil.c</name>
+   <description>5.18. M2Fil.c : Min. Metal2:filler space to Metal2 is 0.42 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M2Fil.a2</name>
+   <description>5.18. M2Fil.a2 : Max. Metal2:filler width is 5.0 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M3Fil.c</name>
+   <description>5.18. M3Fil.c : Min. Metal3:filler space to Metal3 is 0.42 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M3Fil.a2</name>
+   <description>5.18. M3Fil.a2 : Max. Metal3:filler width is 5.0 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M4Fil.c</name>
+   <description>5.18. M4Fil.c : Min. Metal4:filler space to Metal4 is 0.42 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>M4Fil.a2</name>
+   <description>5.18. M4Fil.a2 : Max. Metal4:filler width is 5.0 um</description>
    <categories>
    </categories>
   </category>
@@ -1960,6 +1942,84 @@
   <category>
    <name>LBE.h</name>
    <description>9.1. LBE.h: No LBE ring allowed.</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
+   <name>V1.a</name>
+   <description>5.19. V1.a : Min. and max. Via1 width: 0.19 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>V1.b</name>
+   <description>5.19. V1.b : Min. Via1 space: 0.22 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>V1.c</name>
+   <description>5.19.  V1.c Min. Metal1 enclosure of Via1 is 0.01 um</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
+   <name>CMOS5L.FORB.Metal5</name>
+   <description>CMOS5L.FORB.Metal5 : 3.2. Metal5 layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>CMOS5L.FORB.Metal5.filler</name>
+   <description>CMOS5L.FORB.Metal5.filler : 3.2. Metal5.filler layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>CMOS5L.FORB.Via4</name>
+   <description>CMOS5L.FORB.Via4 : 3.2. Via4 layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>CMOS5L.FORB.TopMetal2</name>
+   <description>CMOS5L.FORB.TopMetal2 : 3.2. TopMetal2 layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>CMOS5L.FORB.TopMetal2.filler</name>
+   <description>CMOS5L.FORB.TopMetal2.filler : 3.2. TopMetal2.filler layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>CMOS5L.FORB.TopVia2</name>
+   <description>CMOS5L.FORB.TopVia2 : 3.2. TopVia2 layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>CMOS5L.FORB.TRANS</name>
+   <description>CMOS5L.FORB.TRANS : 3.2. TRANS layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>CMOS5L.FORB.nBuLay</name>
+   <description>CMOS5L.FORB.nBuLay : 3.2. nBuLay layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>CMOS5L.FORB.MIM</name>
+   <description>CMOS5L.FORB.MIM : 3.2. MIM layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>CMOS5L.FORB.Vmim</name>
+   <description>CMOS5L.FORB.Vmim : 3.2. Vmim layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
    <categories>
    </categories>
   </category>
@@ -2066,66 +2126,6 @@
    </categories>
   </category>
   <category>
-   <name>CMOS5L.FORB.Metal5</name>
-   <description>CMOS5L.FORB.Metal5 : 3.2. Metal5 layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CMOS5L.FORB.Metal5.filler</name>
-   <description>CMOS5L.FORB.Metal5.filler : 3.2. Metal5.filler layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CMOS5L.FORB.Via4</name>
-   <description>CMOS5L.FORB.Via4 : 3.2. Via4 layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CMOS5L.FORB.TopMetal2</name>
-   <description>CMOS5L.FORB.TopMetal2 : 3.2. TopMetal2 layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CMOS5L.FORB.TopMetal2.filler</name>
-   <description>CMOS5L.FORB.TopMetal2.filler : 3.2. TopMetal2.filler layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CMOS5L.FORB.TopVia2</name>
-   <description>CMOS5L.FORB.TopVia2 : 3.2. TopVia2 layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CMOS5L.FORB.TRANS</name>
-   <description>CMOS5L.FORB.TRANS : 3.2. TRANS layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CMOS5L.FORB.nBuLay</name>
-   <description>CMOS5L.FORB.nBuLay : 3.2. nBuLay layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CMOS5L.FORB.MIM</name>
-   <description>CMOS5L.FORB.MIM : 3.2. MIM layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>CMOS5L.FORB.Vmim</name>
-   <description>CMOS5L.FORB.Vmim : 3.2. Vmim layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
-   <categories>
-   </categories>
-  </category>
- <category>
    <name>CMOS5L.FORB.Metal5</name>
    <description>CMOS5L.FORB.Metal5 : 3.2. Metal5 layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
    <categories>
