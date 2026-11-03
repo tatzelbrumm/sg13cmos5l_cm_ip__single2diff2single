@@ -34,7 +34,7 @@ x1 vdd 0 vdd 0 vinp vinn vref vout vout ibias vdd s0 s1 0 fix_sel
 .control
 save v(vout)
 tran 2n 21u
-wrdata /home/user/c2/K/out/logs/step12_v6.dat v(vout)
+wrdata /home/user/c2/K/out/logs/step12_v9.dat v(vout)
 meas tran v0 find v(vout) at=0.99u
 meas tran v1 find v(vout) at=4.9u
 let dv = v1 - v0
@@ -55,7 +55,7 @@ let osr = vnmax - 1
 let osf = -vnmin
 let tr = tsr - 1.001u
 let tf = tsf - 5.001u
-echo v6 step1 $&v0 $&v1 $&sr $&sf $&osr $&osf $&tr $&tf >> /home/user/c2/K/out/logs/step12.dat
+echo v9 step1 $&v0 $&v1 $&sr $&sf $&osr $&osf $&tr $&tf >> /home/user/c2/K/out/logs/step12.dat
 meas tran v0 find v(vout) at=12.99u
 meas tran v1 find v(vout) at=16.9u
 let dv = v1 - v0
@@ -76,6 +76,6 @@ let osr = vnmax - 1
 let osf = -vnmin
 let tr = tsr - 13.001u
 let tf = tsf - 17.001u
-echo v6 step2 $&v0 $&v1 $&sr $&sf $&osr $&osf $&tr $&tf >> /home/user/c2/K/out/logs/step12.dat
+echo v9 step2 $&v0 $&v1 $&sr $&sf $&osr $&osf $&tr $&tf >> /home/user/c2/K/out/logs/step12.dat
 .endc
 .end

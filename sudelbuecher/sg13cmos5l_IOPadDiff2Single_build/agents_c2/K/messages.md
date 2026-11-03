@@ -75,3 +75,10 @@ zeros by vector fitting of T(jω) (≤ 0.06 dB at 103 of 108 points). The asymme
 Christoph's two decisions (symmetric 2 kΩ stages; polarity for maximal capacitance). Stage 7, deck 14: C along the swing
 for CMA turned and the total; loop (fc, PM, GM) for v9 = both turned + symmetric 2 kΩ against v0 and v8 at the 9 pad points,
 100 pF and 300 pF unloaded; one step for v9; plot `pm_fc_gm_v9.png`.
+
+## 2026-11-03, K's stage 7 reply (summary)
+
+v9 (both turned, symmetric 2 kΩ): each cap +26 % at mid-rail but 25 % lower than today beyond ≈ 0.4 V on one side; both
+together +26 % at mid-rail, −1 … −4 % elsewhere, +7 % average. 100 pF: worst PM 74.5° (v0 72.6, v8 73.2), worst GM 16.5 dB
+(16.8). 300 pF unloaded: worst PM 39.3° at pad 2.29 V (v0 39.7, v8 40.2), dip 42.3° at 1.12 V, 50.1° at mid-rail. Step at
+100 pF: no overshoot, mid-rail settling 0.44 vs 0.33 µs. Lead's check: no transient op / timestep failure in the v9 logs.

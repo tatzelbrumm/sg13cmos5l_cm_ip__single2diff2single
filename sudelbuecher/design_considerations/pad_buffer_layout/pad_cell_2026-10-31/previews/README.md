@@ -72,3 +72,4 @@ names an agent's own render.
 | `P2_d2s_tails_c2_row_end.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
 | `P2_tub_p20x1_c2.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
 | `P2_tub_p20x1_c2_gate.png` | P2 (Opus) rebuild, for Christoph's review; P2's own render |
+| `K_pm_fc_gm_v9.png` | K stage 7: PM / fc / GM over the swing, v0 / v8 / v9 (both turned + symmetric 2 kΩ), K's own plot |

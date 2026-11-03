@@ -44,6 +44,14 @@ caps = {
         "XKDP10 kcg vddo dpantenna w=0.64u l=4.98u",
         "XKEN10 vss kca dantenna w=0.64u l=3.1u",
         "XKEP10 kca vddo dpantenna w=0.64u l=4.98u"],
+ 'v9': ["XKCA11 net2 kca net2 net2 sg13_hv_pmos w=7.96u l=32.16u ng=1",
+        "XKRA11 vout kca vss rppd w=1u l=7.435u b=0",
+        "XKEN11 vss kca dantenna w=0.64u l=3.1u",
+        "XKEP11 kca vddo dpantenna w=0.64u l=4.98u",
+        "XKCB11 kcg net3 kcg kcg sg13_hv_pmos w=7.96u l=32.16u ng=1",
+        "XKRP11 vout kcg vss rppd w=1u l=7.435u b=0",
+        "XKDN11 vss kcg dantenna w=0.64u l=3.1u",
+        "XKDP11 kcg vddo dpantenna w=0.64u l=4.98u"],
  'v3': ["XKCA4 vout net2 vout vout sg13_hv_pmos w=7.96u l=32.16u ng=1",              # present CMA
         "XKCB4 vout net3 vout vout sg13_hv_pmos w=7.96u l=32.16u ng=1"],              # CMB turned: gate b, S/D/well pad
 }
@@ -52,6 +60,7 @@ out = ["* K: Miller-capacitor variants of the loop fixture d2s_mpdda_pd_sel (gen
        "* v2 S-Varicap Nx 8 + hv PMOS 7.96 x 9.65 (70/30 of the mid-rail C) each; v3 CMA present, CMB hv PMOS turned around;", "* v4 CMA present, CMB = S-Varicap Nx 9 (gate pad, well b) || S-Varicap Nx 5 turned (gate b, well pad), 80/20 of the mid-rail C",
        "* v5 / v6 CMA present, CMB present with IHP's secondary stage between pad and CMB's gate: rppd 1u x 2u (587 Ohm) / 1u x 7.435u (2 kOhm), dantenna and dpantenna at the gate",
        "* v7 / v8 symmetric: v5 / v6 plus the same rppd between the pad and CMA's S/D/well (node kca); v7d = v7 with a dummy dantenna + dpantenna at kca",
+       "* v9 both turned (CMA: gate on the pad side kca, S/D/NW on a; CMB: gate on b, S/D/NW on the pad side kcg), each behind rppd 1u x 7.435u (2 kOhm) with dantenna + dpantenna at kca / kcg",
        ".include /home/user/c2/K/out/decks/dut_fixture.spice"]
 for v, lines in caps.items():
     body = [l for l in src.splitlines() if not l.startswith(('XCMA','XCMB','**'))]
