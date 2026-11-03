@@ -1,0 +1,3 @@
+klayout-drc rc=2 0 s
+magic-drc rc=2 0 s
+DONE
