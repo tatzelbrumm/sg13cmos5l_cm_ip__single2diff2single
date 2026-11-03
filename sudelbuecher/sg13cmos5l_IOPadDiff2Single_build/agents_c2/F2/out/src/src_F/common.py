@@ -68,7 +68,7 @@ class Drawer:
 
     def _contacts(self, x0, y0, x1, y1, horizontal):
         p = RULES["Cnt_a"] + RULES["Cnt_b"] + 0.02            # 0.36 pitch (Cnt_b 0.18, + margin)
-        e = RULES["Cnt_c"] + RULES["Cnt_a"] / 2               # centre 0.15 from the Activ end
+        e = RULES["Cnt_c"] + RULES["Cnt_a"] / 2               # center 0.15 from the Activ end
         if horizontal:
             n = int((x1 - x0 - 2 * e) / p) + 1
             s = x0 + (x1 - x0 - (n - 1) * p) / 2

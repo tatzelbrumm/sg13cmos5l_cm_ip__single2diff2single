@@ -1,0 +1,15 @@
+d2s_sp2k_f2      0.000 um2
+d2s_sp2k_f2      0.000 um2
+d2s_loads_c2     0.000 um2
+d2s_ab_p_f2      0.000 um2
+d2s_ab_n_f2      0.000 um2
+d2s_casc_p_c2    0.000 um2
+d2s_inputs_c2    0.000 um2
+d2s_tails_c2     0.000 um2
+bias_tree_p_f2   0.000 um2
+d2s_casc_n_f2    0.000 um2
+d2s_rhigh_f2     0.000 um2
+sinks_6x6_f2     0.000 um2
+bias_tree_n_f2   0.000 um2
+d2s_tgsw_f2      0.000 um2
+total 0.000 um2 of router Metal1 / Metal2 over gates

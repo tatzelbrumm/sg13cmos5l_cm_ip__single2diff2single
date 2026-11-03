@@ -1,0 +1,9 @@
+rebuild exit 0
+pad_candidate.gds delivered e39de93bf78a rebuilt e39de93bf78a
+pad_candidate.cdl delivered b06a4f5ba6de rebuilt b06a4f5ba6de
+cells/d2s_block.gds delivered 2b7c2900fe59 rebuilt 2b7c2900fe59
+cells/d2s_block.cdl delivered 8caf04584601 rebuilt 8caf04584601
+sg13cmos5l_IOPadDiff2Single: 81.24 x 180.00 um | XOR empty | DRC clean | LVS match | W per (model, L) DIFFERENT
+d2s_block: 80.00 x 96.00 um | XOR empty | DRC {'M2.d'} | LVS match | W per (model, L) DIFFERENT
+rowcheck FAIL 0 DIFFERENT 0
+ALLDONE

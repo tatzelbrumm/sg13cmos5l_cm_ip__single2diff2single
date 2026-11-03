@@ -1,0 +1,3 @@
+d2s_ab_n_f2 | DRC Check Passed (exceptions 0) | LVS PASS (netlists match) | sym: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+d2s_ab_p_f2 | DRC Check Passed (exceptions 0) | LVS PASS (netlists match) | sym: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sinks_6x6_f2 | DRC Check Passed (exceptions 0) | LVS PASS (netlists match) | sym: max mirror XOR 0.0768 um2, 0 narrow-poly hits

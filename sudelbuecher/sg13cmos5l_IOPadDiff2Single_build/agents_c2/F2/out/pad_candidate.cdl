@@ -1,0 +1,217 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_p2_cells.cdl: reference netlists of d2s_p2_cells.gds, written by build_d2s_p2.py (C2, agent P2, 2026-10-31).
+* Devices as drawn, one line per finger, dummies included (D = S = vdd).
+
+.SUBCKT tub_p20x1_c2 d g s
+M0 d g s s sg13_hv_pmos w=20u l=1u ng=2 m=1
+.ENDS tub_p20x1_c2
+
+.SUBCKT d2s_inputs_c2 sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vdd vfb vinn vinp vref x y
+XDlo0 vdd vdd vdd tub_p20x1_c2
+XBb x vinn sb_B tub_p20x1_c2
+XC1a y vref sa_C1 tub_p20x1_c2
+XC2a y vref sa_C2 tub_p20x1_c2
+XAb x vref sb_A tub_p20x1_c2
+XDlo5 vdd vdd vdd tub_p20x1_c2
+XDup0 vdd vdd vdd tub_p20x1_c2
+XAa y vinp sa_A tub_p20x1_c2
+XC2b x vfb sb_C2 tub_p20x1_c2
+XC1b x vfb sb_C1 tub_p20x1_c2
+XBa y vref sa_B tub_p20x1_c2
+XDup5 vdd vdd vdd tub_p20x1_c2
+.ENDS d2s_inputs_c2
+
+.SUBCKT d2s_tails_c2 sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vbp vdd
+MDl0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTBb sb_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC1a sa_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC2a sa_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTAb sb_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MDl5 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTAa sa_A vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC2b sb_C2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTC1b sb_C1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTBa sa_B vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MDu5 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS d2s_tails_c2
+
+.SUBCKT d2s_loads_c2 l2 pl pr vdd
+MDl0 vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MR1l pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+ML2l pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+ML3l pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR4l pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDl5 vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MDu0 vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+ML1u pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR2u pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MR3u pr l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+ML4u pl l2 vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDu5 vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS d2s_loads_c2
+
+.SUBCKT d2s_casc_p_c2 a l2 pl pr vbpc vdd
+MPCRlo a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MDUM vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MPCLlo l2 vbpc pl vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MPCLup l2 vbpc pl vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MPCRup a vbpc pr vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+.ENDS d2s_casc_p_c2
+
+.SUBCKT d2s_ab_p_c2 a b dabp l1 l2 vabp vdd
+MD0 vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MD4 vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+.ENDS d2s_ab_p_c2
+
+.SUBCKT d2s_pd_p_c2 a en_3v3 vabp vdd vddo
+MSA a en_3v3 vddo vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MSABP vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_pd_p_c2
+
+.SUBCKT bias_tree_p_c2 en_3v3_b iref ni vabn vbn vbnc vbp vdd
+MPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MD vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS bias_tree_p_c2
+* F2 PMOS cells, stage B (build_f2b_p.py, C2 2026-11-03); one line per finger, dummies included.
+
+.SUBCKT d2s_ab_p_f2 a b dabp en_3v3 l1 l2 vabp vdd vddo
+MSABP vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MSA a en_3v3 vddo vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MD0 vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MD4 vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+.ENDS d2s_ab_p_f2
+
+.SUBCKT bias_tree_p_f2 vabn vbn vbnc vbp vdd
+MPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MD vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+.ENDS bias_tree_p_f2
+* F2 NMOS / R cells, stage B (build_f2b_n.py, C2 2026-11-03); one line per finger / segment, dummies included.
+
+.SUBCKT d2s_ab_n_f2 a b dabn en_3v3_b l1 l2 vabn vss vsso
+Mdummy_0 vss vss vss vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+MFNL_1 l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+MRN2_2 vabn vabn dabn vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+MABN_3 a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+Mdummy_4 vss vss vss vss sg13_hv_nmos w=4.4u l=1u ng=1 m=1
+MSABN_5 vabn en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MSB_6 b en_3v3_b vsso vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_ab_n_f2
+
+.SUBCKT bias_tree_n_f2 ni vabp vbp vbpc vss
+MNBPC_0 vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+MNBP_1 vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MNI_2 ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MNABP_3 vabp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_4 ni ni ni vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+.ENDS bias_tree_n_f2
+
+
+.SUBCKT d2s_rhigh_f2 sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vss
+RA_0 sa_A A_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RA_1 A_1 A_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RA_2 A_2 A_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RA_3 A_3 sb_A vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_0 sa_B B_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_1 B_1 B_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_2 B_2 B_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RB_3 B_3 sb_B vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_0 sa_C1 C1_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_1 C1_1 C1_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_2 C1_2 C1_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC1_3 C1_3 sb_C1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_0 sa_C2 C2_1 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_1 C2_1 C2_2 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_2 C2_2 C2_3 vss rhigh w=0.5u l=12.65u m=1 b=0
+RC2_3 C2_3 sb_C2 vss rhigh w=0.5u l=12.65u m=1 b=0
+Rdummy_0 vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+Rdummy_1 vss vss vss rhigh w=0.5u l=12.65u m=1 b=0
+.ENDS d2s_rhigh_f2
+
+.SUBCKT d2s_casc_n_f2 b l1 vbnc vss x y
+Mdummy_0 vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MCX_1 l1 vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCY_2 b vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Mdummy_3 vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+Mdummy_4 vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MCY_5 b vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCX_6 l1 vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Mdummy_7 vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MBNC_8 vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1
+.ENDS d2s_casc_n_f2
+
+.SUBCKT sinks_6x6_f2 vbn vss x y
+Mdummy_0 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MSX_1 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_2 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_3 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MBN_4 vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_5 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_6 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_7 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_8 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+Mdummy_9 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MSY_10 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_11 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_12 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MBNtwin_13 vbn vbn vbn vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_14 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSY_15 y vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSX_16 x vbn vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+Mdummy_17 vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+.ENDS sinks_6x6_f2
+* d2s_sp2k_f2 (build_f2_sp.py, F2, C2 2026-11-03): 2 kOhm secondary stage for CMA / CMB.
+.SUBCKT d2s_sp2k_f2 core iovdd iovss pad
+R0 pad core iovss rppd w=1u l=7.435u m=1 b=0
+D1 iovss core dantenna w=0.64u l=3.1u a=1.984p p=7.48u m=1
+D0 core iovdd dpantenna w=0.64u l=4.98u a=3.187p p=11.24u m=1
+.ENDS d2s_sp2k_f2
+
+* d2s_block (agent F2, C2 stage B): d2s_mpdda_pd + bias_tree_pd + the 2 kOhm stages of CMA / CMB
+.SUBCKT d2s_block iovdd iovss vinp vinn vref vfb a b dabp dabn iref en_3v3 en_3v3_b pa pb pad vsso
+XSPA pa iovdd iovss pad d2s_sp2k_f2
+XSPB pb iovdd iovss pad d2s_sp2k_f2
+XIN sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 iovdd vfb vinn vinp vref x y d2s_inputs_c2
+XTL sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 vbp iovdd d2s_tails_c2
+XRH sa_A sa_B sa_C1 sa_C2 sb_A sb_B sb_C1 sb_C2 iovss d2s_rhigh_f2
+XSK vbn iovss x y sinks_6x6_f2
+XCN b l1 vbnc iovss x y d2s_casc_n_f2
+XLD l2 pl pr iovdd d2s_loads_c2
+XCP a l2 pl pr vbpc iovdd d2s_casc_p_c2
+XABP a b dabp en_3v3 l1 l2 vabp iovdd iovdd d2s_ab_p_f2
+XABN a b dabn en_3v3_b l1 l2 vabn iovss vsso d2s_ab_n_f2
+XBP vabn vbn vbnc vbp iovdd bias_tree_p_f2
+XBN ni vabp vbp vbpc iovss bias_tree_n_f2
+MTGP ni en_3v3_b iref iovdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MTGN ni en_3v3 iref iovss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTDN ni en_3v3_b iovss iovss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS d2s_block
+
+* sg13cmos5l_IOPadDiff2Single as partitioned in C2 phase 1 (1.7), stage B of F2: d2s_block, the output stage of
+* d2s_out.spice (OP / RP1 / RPD in the P frame, ON / RN1 in the N frames), CMA / CMB behind their 2 kOhm stages,
+* DCN / DCP (as IHP's LVS extracts the DCNDiode / DCPDiode PCells, A and P as drawn by A1).
+.SUBCKT sg13cmos5l_IOPadDiff2Single iovdd iovss vdd vss pad vinp vinn vref iref en_3v3 en_3v3_b
+XBLK iovdd iovss vinp vinn vref pad a b dabp dabn iref en_3v3 en_3v3_b pa pb pad iovss d2s_block
+MOP pad a iovdd iovdd sg13_hv_pmos w=546.12u l=0.6u ng=82 m=1
+MRP1 dabp dabp iovdd iovdd sg13_hv_pmos w=13.32u l=0.6u ng=2 m=1
+MRPD dabp iovdd iovdd iovdd sg13_hv_pmos w=13.32u l=0.6u ng=2 m=1
+MON pad b iovss iovss sg13_hv_nmos w=299.2u l=1u ng=68 m=1
+MRN1 dabn dabn iovss iovss sg13_hv_nmos w=8.8u l=1u ng=2 m=1
+MCMA pa a pa pa sg13_hv_pmos w=7.96u l=32.16u ng=1 m=1
+MCMB b pb b b sg13_hv_pmos w=7.96u l=32.16u ng=1 m=1
+DDN iovss pad dantenna A=85.176p P=137.72u m=2
+DDP pad iovdd dpantenna A=82.908p P=134.12u m=2
+.ENDS sg13cmos5l_IOPadDiff2Single

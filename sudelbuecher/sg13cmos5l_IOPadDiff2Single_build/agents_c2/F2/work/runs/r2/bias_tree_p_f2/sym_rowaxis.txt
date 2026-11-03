@@ -1,8 +1,0 @@
-bias_tree_p_f2: Activ bbox (0.62,0.62;18.91,7.52); axes x = 9.095, y = 4.07 um
-  X Activ        XOR    2.2600 um2  in (-0.72,0.62;18.91,1.62)
-  X GatPoly      XOR    1.5660 um2  in (-0.38,0.06;18.57,1.8)
-  X ThickGateOx  XOR   21.8152 um2  in (-1.34,0;19.53,8.14)
-  X pSD          XOR    5.3640 um2  in (-0.9,0.22;19.09,2.02)
-  X NWell        XOR   21.8152 um2  in (-1.34,0;19.53,8.14)
-  X Cont         XOR    0.3584 um2  in (-0.65,0.28;18.84,1.55)
-  summary: max mirror XOR 21.8152 um2, 0 narrow-poly hits

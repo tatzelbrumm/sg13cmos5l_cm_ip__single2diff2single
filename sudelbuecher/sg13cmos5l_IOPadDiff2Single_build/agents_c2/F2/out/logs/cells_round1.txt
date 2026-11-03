@@ -1,0 +1,7 @@
+bias_tree_n_f2 | DRC Check Passed (exceptions 0) | LVS PASS (netlists match) | sym: max mirror XOR 0.0384 um2, 0 narrow-poly hits
+bias_tree_p_f2 | DRC Check Passed (exceptions 0) | LVS PASS (netlists match) | sym: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+d2s_ab_n_f2 | DRC Violated rules are : {'TGO.e'} (exceptions 0) | LVS PASS (netlists match) | sym: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+d2s_ab_p_f2 | DRC Check Passed (exceptions 0) | LVS FAIL                                                          | sym: max mirror XOR 8.7920 um2, 0 narrow-poly hits
+d2s_sp2k_f2 | DRC Check Passed (exceptions 0) | LVS PASS (netlists match) | sym: 
+d2s_tgsw_f2 | DRC Violated rules are : {'M1.d', 'LU.b', 'LU.a'} (exceptions 0) | LVS FAIL                                                          | sym: max mirror XOR 13.8408 um2, 0 narrow-poly hits
+sinks_6x6_f2 | DRC Violated rules are : {'Cnt.b'} (exceptions 0) | LVS PASS (netlists match) | sym: max mirror XOR 0.0768 um2, 0 narrow-poly hits

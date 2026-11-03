@@ -1,7 +1,0 @@
-* Extracted by KLayout with SG13CMOS5L LVS runset on : 03/11/2026 13:01
-
-.SUBCKT d2s_sp2k_f2 core iovdd iovss pad
-D$1 iovss core dantenna A=1.984p P=7.48u m=1
-D$2 core iovdd dpantenna A=3.1872p P=11.24u m=1
-R$3 pad core iovss rppd w=1u l=7.435u ps=0u b=0 m=1
-.ENDS d2s_sp2k_f2

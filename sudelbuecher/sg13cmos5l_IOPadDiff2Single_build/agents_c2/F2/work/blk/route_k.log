@@ -1,0 +1,45 @@
+placed 16 instances, 0 rails, 0 tap stripes: 80.000 x 96.000 um
+block d2s_block: 80.000 x 96.000 um = 7680.0 um2; gate 2025.9 um2 (26.4 %), MOS diffusion 2448.3 um2 (31.9 %)
+layers drawn in the top cell: 10/0 10/2 10/25 19/0 44/0 8/0; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  a          M1   7.25 um  M2  27.78 um  vias 5
+  b          M1  20.79 um  M2   8.34 um  vias 2
+  l1         M1  11.61 um  M2  14.31 um  vias 1
+  l2         M1  21.32 um  M2   6.94 um  vias 7
+  pl         M1   0.00 um  M2  12.69 um  vias 0
+  pr         M1   6.75 um  M2   9.45 um  vias 2
+  x          M1  16.98 um  M2  23.93 um  vias 4
+  y          M1  14.48 um  M2  39.51 um  vias 7
+  dabn       M1  24.61 um  M2   0.00 um  vias 1
+  vbp        M1  48.87 um  M2  30.30 um  vias 8
+  vbn        M1  37.84 um  M2  15.93 um  vias 3
+  vbpc       M1   5.40 um  M2  57.43 um  vias 5
+  vbnc       M1  38.34 um  M2  69.66 um  vias 5
+  vabp       M1  16.66 um  M2  68.55 um  vias 3
+  vabn       M1  21.16 um  M2  71.55 um  vias 2
+  iref       M1   9.45 um  M2  12.13 um  vias 1
+  en_3v3     M1  15.68 um  M2 162.27 um  vias 6
+  en_3v3_b   M1  20.23 um  M2 159.94 um  vias 4
+  vinp       M1   0.00 um  M2  48.81 um  vias 0
+  vinn       M1   1.89 um  M2  51.03 um  vias 2
+  vref       M1   5.08 um  M2  47.66 um  vias 6
+  vfb        M1  16.68 um  M2  41.85 um  vias 4
+  sa_C2      M1  52.44 um  M2 114.61 um  vias 4
+  sb_A       M1  38.51 um  M2  61.27 um  vias 4
+  sb_B       M1  71.49 um  M2  34.29 um  vias 7
+  sb_C1      M1  60.43 um  M2  37.53 um  vias 10
+  sb_C2      M1  38.34 um  M2   3.24 um  vias 2
+  iovdd_ld   M1   0.00 um  M2   0.21 um  vias 1
+  iovdd_ab   M1   0.00 um  M2   3.35 um  vias 1
+  iovdd_o    M1   0.42 um  M2   0.24 um  vias 1
+  iovdd_cp   M1   0.00 um  M2   2.21 um  vias 1
+  iovdd_up   M1  11.73 um  M2  16.27 um  vias 6
+  iovss_m    M1   6.71 um  M2  28.00 um  vias 9
+  iovss_sk   M1   1.08 um  M2   0.00 um  vias 1
+  iovss_o    M1   4.54 um  M2   9.38 um  vias 1
+  UNROUTED sa_C1: no path to 1 of 2 terminal groups
+  UNROUTED sa_B: no path to 2 of 2 terminal groups
+  UNROUTED sa_A: no path to 1 of 2 terminal groups
+  UNROUTED dabp: no path to 1 of 1 terminal groups
+failed: [('sa_C1', 'no path to 1 of 2 terminal groups'), ('sa_B', 'no path to 2 of 2 terminal groups'), ('sa_A', 'no path to 1 of 2 terminal groups'), ('dabp', 'no path to 1 of 1 terminal groups')] time 31 s
