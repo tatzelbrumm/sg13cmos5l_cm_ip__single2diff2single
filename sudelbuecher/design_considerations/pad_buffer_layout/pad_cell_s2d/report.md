@@ -354,6 +354,29 @@ Christoph chose fit variant A, so the cell holds all of `xa`, the load capacitor
 | P | Opus, high | tub_p20x1 + s2d_inputs, s2d_tails, s2d_loads, s2d_casc_p, s2d_pd_p, bias_tree_noab_p | `agents_c3/P/BRIEF.md` |
 | N | Opus, high | sinks_6x6_s2d (N2's cell checked, changed only where rules require), s2d_sinks_cmfb, s2d_casc_n, s2d_pd_n, s2d_cload, s2d_rhigh, bias_tree_noab_n | `agents_c3/N/BRIEF.md` |
 
+Results (P finished 21:10, N 21:13; reports `agents_c3/{P,N}/report.md`; lead checks `lead_checks/{P,N}/`, about 21:15–21:20):
+
+| cell | size µm | area / library | lead check |
+|---|---|---:|---|
+| tub_p20x1_c3 | 4.30 × 11.97 | 0.92 | rebuild identical, DRC clean, LVS match, = circuit, sym 0 |
+| s2d_inputs_c3 (12 tubs + 4 dummies) | 47.58 × 26.44 | 0.93 | the same (LVS deep) |
+| s2d_tails_c3 | 45.19 × 15.83 | 0.66 | the same |
+| s2d_loads_c3 | 43.19 × 12.32 | 0.74 | the same |
+| s2d_casc_p_c3 | 52.23 × 12.81 | 0.92 | the same; sym: Cont 0.27 µm² in the center device (PCell contact rounding) |
+| s2d_pd_p_c3 | 3.20 × 2.97 | 1.33 (own tie) | the same |
+| bias_tree_noab_p_c3 | 12.94 × 10.37 | 0.59 | the same; sym: Cont 0.04 µm² in the center device |
+| sinks_6x6_s2d_c3 (+ `_core`) | 16.51 × 51.00 | 0.87 | the same; sym: Cont 0.08 µm² on BN / twin (PCell, as N2 / F2) |
+| s2d_sinks_cmfb_c3 (+ `_core`) | 16.51 × 32.25 | 0.89 | the same, sym 0 |
+| s2d_casc_n_c3 | 72.74 × 14.37 | 1.03 (dummies, ring) | the same, sym 0 |
+| s2d_cload_c3 (with TPN / TNN inside) | 29.56 × 14.24 | 1.09 | the same, sym 0 (one row) |
+| s2d_pd_n_c3 (standalone, tapless) | 2.50 × 2.34 | 1.15 | DRC: LU.b only (no tap, by design; the pad uses the pair inside cload) |
+| s2d_rhigh_c3 | 19.24 × 20.09 | 0.96 | the same, sym 0 (LVS: 6 × 0.5/50.6) |
+| bias_tree_noab_n_c3 | 24.21 × 9.21 | 0.72 | the same, sym 0 |
+
+- **Sum of the cells (bounding boxes, cload with the pd pair):** 6769 µm², against 7689 µm² in fit A with the library cells (0.88).
+- **Agent F**, stage A (placement and compaction; then Christoph's review), started 21:21, Opus, effort high. Brief:
+  `agents_c3/F/BRIEF.md`.
+
 The bias tree's cells are added to the brief's lists, because `xt` is in the cell. The lead checks each delivery with
 C2's `lead_check.py` and `sym_check.py` before F gets the cells.
 
