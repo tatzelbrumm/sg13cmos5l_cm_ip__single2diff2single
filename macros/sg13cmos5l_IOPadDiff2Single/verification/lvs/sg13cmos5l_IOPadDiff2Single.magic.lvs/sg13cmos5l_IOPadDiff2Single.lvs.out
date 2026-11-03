@@ -89,12 +89,14 @@ Flattening unmatched subcell d2s_out_p in circuit sg13cmos5l_IOPadDiff2Single (1
 Flattening unmatched subcell d2s_out_n in circuit sg13cmos5l_IOPadDiff2Single (1)(1 instance)
 Flattening unmatched subcell d2s_sp2k in circuit sg13cmos5l_IOPadDiff2Single (1)(2 instances)
 
+Cell sg13cmos5l_IOPadDiff2Single (0) disconnected node: vdd
 Cell sg13cmos5l_IOPadDiff2Single (1) disconnected node: vdd
 Cell sg13cmos5l_IOPadDiff2Single (1) disconnected node: vss
 Class sg13cmos5l_IOPadDiff2Single (0):  Merged 205 parallel devices.
 Class sg13cmos5l_IOPadDiff2Single (0):  Merged 12 series devices.
 Class sg13cmos5l_IOPadDiff2Single (1):  Merged 22 parallel devices.
 Class sg13cmos5l_IOPadDiff2Single (1):  Merged 12 series devices.
+Cell sg13cmos5l_IOPadDiff2Single (0) disconnected node: vdd
 Cell sg13cmos5l_IOPadDiff2Single (1) disconnected node: vdd
 Cell sg13cmos5l_IOPadDiff2Single (1) disconnected node: vss
 Subcircuit summary:
@@ -137,7 +139,7 @@ dpantenna:160 vs. d2s_sp2k:SPA/dpantenna:D0:
 dpantenna:114 vs. d2s_sp2k:SPB/dpantenna:D0:
  w circuit1: 4.98e-06   circuit2: 6.4e-07   (delta=154%, cutoff=1%)
  l circuit1: 6.4e-07   circuit2: 4.98e-06   (delta=154%, cutoff=1%)
-dpantenna:21 vs. dpantenna:DP[1]:
+dpantenna:21 vs. dpantenna:DP0:
  w circuit1: 6.58e-05   circuit2: 1.26e-06   (delta=192%, cutoff=1%)
  l circuit1: 1.26e-06   circuit2: 6.58e-05   (delta=192%, cutoff=1%)
 rppd:74 vs. d2s_sp2k:SPA/rppd:R0:
@@ -148,7 +150,7 @@ rppd:9 vs. d2s_sp2k:SPB/rppd:R0:
 Property mm_ok in circuit2 has no matching property in circuit1
 rppd:9 vs. d2s_sp2k:SPB/rppd:R0:
 Property mm_ok in circuit2 has no matching property in circuit1
-dantenna:5 vs. dantenna:DN[1]:
+dantenna:5 vs. dantenna:DN0:
  w circuit1: 6.76e-05   circuit2: 1.26e-06   (delta=193%, cutoff=1%)
  l circuit1: 1.26e-06   circuit2: 6.76e-05   (delta=193%, cutoff=1%)
 sg13_hv_nmos:50 vs. bias_tree_pd:t/sg13_hv_nmos:NI:
@@ -259,14 +261,8 @@ sg13_hv_pmos:68 vs. bias_tree_pd:t/sg13_hv_pmos:MDBP:
 Property mm_ok in circuit2 has no matching property in circuit1
 sg13_hv_pmos:68 vs. bias_tree_pd:t/sg13_hv_pmos:MDBP:
 Property mm_ok in circuit2 has no matching property in circuit1
-  Parallelized instances disagree on pin connections.
-    Circuit1 instance sg13_hv_pmos:148 pin vinn connections are no connects (1)
-    Circuit2 instance d2s_mpdda_pd:d/unit_r2:B/sg13_hv_pmos:Mb pin vinn connections are tied together (0)
 sg13_hv_pmos:148 vs. d2s_mpdda_pd:d/unit_r2:B/sg13_hv_pmos:Mb:
 Property mm_ok in circuit2 has no matching property in circuit1
-  Parallelized instances disagree on pin connections.
-    Circuit1 instance sg13_hv_pmos:105 pin vinp connections are no connects (1)
-    Circuit2 instance d2s_mpdda_pd:d/unit_r2:A/sg13_hv_pmos:Ma pin vinp connections are tied together (0)
 sg13_hv_pmos:105 vs. d2s_mpdda_pd:d/unit_r2:A/sg13_hv_pmos:Ma:
 Property mm_ok in circuit2 has no matching property in circuit1
 sg13_hv_pmos:229 vs. d2s_mpdda_pd:d/unit_r2:C2/sg13_hv_pmos:Tb:
@@ -369,17 +365,17 @@ Property mm_ok in circuit2 has no matching property in circuit1
 Subcircuit pins:
 Circuit 1: sg13cmos5l_IOPadDiff2Single     |Circuit 2: sg13cmos5l_IOPadDiff2Single     
 -------------------------------------------|-------------------------------------------
+vinn                                       |vinn                                       
+vinp                                       |vinp                                       
+en_3v3                                     |en_3v3                                     
+iref                                       |iref                                       
+en_3v3_b                                   |en_3v3_b                                   
+vref                                       |vref                                       
+iovss                                      |iovss                                      
 pad                                        |pad                                        
-(no pin, node is iovdd)                    |iovdd                                      
-(no pin, node is iovss)                    |iovss                                      
-(no matching pin)                          |vdd                                        
+iovdd                                      |iovdd                                      
+vdd                                        |vdd                                        
 (no matching pin)                          |vss                                        
-(no pin, node is vinp)                     |vinp                                       
-(no pin, node is vinn)                     |vinn                                       
-(no pin, node is vref)                     |vref                                       
-(no pin, node is iref)                     |iref                                       
-(no pin, node is en_3v3)                   |en_3v3                                     
-(no pin, node is en_3v3_b)                 |en_3v3_b                                   
 ---------------------------------------------------------------------------------------
 Cell pin lists for sg13cmos5l_IOPadDiff2Single and sg13cmos5l_IOPadDiff2Single altered to match.
 Device classes sg13cmos5l_IOPadDiff2Single and sg13cmos5l_IOPadDiff2Single are equivalent.

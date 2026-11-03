@@ -9,10 +9,10 @@ MCMA pa a pa pa sg13_hv_pmos w=7.96u l=32.16u ng=1
 XSPA pa iovdd iovss pad d2s_sp2k
 MCMB b pb b b sg13_hv_pmos w=7.96u l=32.16u ng=1
 XSPB pb iovdd iovss pad d2s_sp2k
-DDP[1] pad iovdd dpantenna l=65.8u w=1.26u
-DP[0] pad iovdd dpantenna l=65.8u w=1.26u
-DDN[1] iovss pad dantenna l=67.6u w=1.26u
-DN[0] iovss pad dantenna l=67.6u w=1.26u
+DDP0 pad iovdd dpantenna l=65.8u w=1.26u
+DDP1 pad iovdd dpantenna l=65.8u w=1.26u
+DDN0 iovss pad dantenna l=67.6u w=1.26u
+DDN1 iovss pad dantenna l=67.6u w=1.26u
 .ends
 
 * expanding   symbol:  bias_tree_pd.sym # of pins=11

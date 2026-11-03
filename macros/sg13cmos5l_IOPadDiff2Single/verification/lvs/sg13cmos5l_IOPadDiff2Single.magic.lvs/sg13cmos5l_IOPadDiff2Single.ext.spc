@@ -1,6 +1,7 @@
 * NGSPICE file created from sg13cmos5l_IOPadDiff2Single.ext - technology: ihp-sg13cmos5l
 
-.subckt sg13cmos5l_IOPadDiff2Single pad
+.subckt sg13cmos5l_IOPadDiff2Single pad vinp vinn vref iref en_3v3_b en_3v3 iovdd
++ iovss vdd
 X0 iovdd d2s_block_0.bias_tree_n_f2_0.vbpc iovdd iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0.90339n ps=3.59803m w=1u l=4u
 X1 pad d2s_cma_0.a iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
 X2 pad Clamp_N_M1_wiring_0.b iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
