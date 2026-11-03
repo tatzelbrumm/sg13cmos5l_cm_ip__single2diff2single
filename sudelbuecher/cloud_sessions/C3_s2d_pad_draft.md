@@ -4,8 +4,7 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # C3 (draft): layout of the `sg13cmos5l_IOPadSingle2Diff` pad cell, bottom-up with agents
 
-**Status: draft for Christoph's review, 2026-11-03.** Open points are marked **[decide]**; they are collected at the
-end.
+**Status: final, 2026-11-03 18:40** ("(draft)" is only part of the name). Christoph's decisions of 18:34 are at the end.
 
 Claude Code cloud session, environment `sg13cmos5l` (setup script of `github.com/tatzelbrumm/claude-cloud-config`).
 The same method as C2 (`sudelbuecher/cloud_sessions/C2_pad_cram_draft.md`): compact primitives from agents, a
@@ -48,9 +47,12 @@ As C2 phase 0. The environment's setup script includes C2's PDK fix since 2026-1
    (DRC with latch-up on, one net per rail and band). Use C2's `phase1/` results; measure only what differs.
 2. **Partition** of `sg13cmos5l_IOPadSingle2Diff.sch`, as C2's: in the cell `xa` (`s2d_mpdda_pd`), `CP` `CN` `DN` `DP`
    `SP`; `xt` (`bias_tree_noab_pd`) if it fits; out to the slot `xg` (`bias_gen_pd`) and `xc` (`en_ctrl_3v3`).
-   **[decide]** whether the load capacitors (`s2d_cload`) stay in the cell (lever 3 of §4).
-   The cell's new ports and sheet as proposals; the slot sheet is not changed. The symbol problem of C2's
-   `HANDOFF.md` ("Known problem for the backannotation") applies here too: follow what Christoph decides for C2.
+   The load capacitors (`s2d_cload`) stay in the cell if they fit; if they clearly don't, they go out; while that is
+   unclear, they stay in (decision 2).
+   **Ports follow the layout** (decision 4, as C2's option B of 2026-11-03 16:10): the cell keeps its name and gets
+   the partitioned ports; its sheet, symbol, source netlist and CACE harnesses are backannotated. Read C2's
+   `decisions.md` of 2026-11-03 15:50–17:30 first (option B, the vss / iovss tie 2(a), the accepted magic vss pin
+   mismatch) and do the same here unless the s2d cell differs; say where it does.
 3. **Budget** of every block, compacted, against the free region. **Stop condition:** if `xa` doesn't fit even
    compacted, stop after phase 1 and report which levers of §4 would make it fit.
 4. `report.md`, commit, push.
@@ -64,7 +66,8 @@ Cells (from `pad_buffer_layout/klayout/pad_buffer_cells.{gds,cdl}`):
 
 Apply Christoph's review rules of C2 from the start, not after a rejection: symmetric rows along the line between
 the rows with symmetric dummies (never dummies on one side only); taps as rings where space allows; no well notches;
-the dummy-tie convention **[decide]** (C2 open decision 3). Reuse P2's / N2's code and C2's `sym_check.py`. The
+dummies: source and drain to the rails, the gate on the gate net by abutment where a dummy extends abutted gate
+   poly (decision 3). Reuse P2's / N2's code and C2's `sym_check.py`. The
 deliverables and the lead's checks as in C2 phase 2.
 
 ## Phase 3, agent F: floorplan and assembly
@@ -90,9 +93,9 @@ the final cell; the CACE note (14 groups in `sg13cmos5l_IOPadSingle2Diff.yaml` a
 
 ## Parallel with C2
 
-C3 changes none of C2's files and no shared macro (C2 rule 4). Shared cells (`tub_p20x1`, `sinks_6x6`) are copied
-under C3 names. **[decide]** start now, in parallel with C2's stage B, or after C2's routing is through, so that F's
-lessons from routing reach C3.
+C3 runs in parallel with C2 (decision 1; C2 is in its phase 4). It changes none of C2's files and no shared macro
+(C2 rule 4). Shared cells (`tub_p20x1`, `sinks_6x6`) are copied under C3 names. Before phase 3 and phase 4, fetch
+`origin/claude/c2-pad-layout-sudel` and read what C2 learned since (report, decisions); adopt what applies.
 
 ## Git, for this task only (Christoph's permission)
 
@@ -105,9 +108,10 @@ lessons from routing reach C3.
   agents `sudelbuecher/sg13cmos5l_IOPadSingle2Diff_build/agents_c3/<role>/` with brief, messages, report, `out/`,
   `work/`; logs `sudelbuecher/logs/claude/c3-s2d-pad-layout/`.
 
-## Open decisions, collected
+## Christoph's decisions, 2026-11-03 18:34 (verbatim)
 
-1. Start now in parallel with C2, or after C2's stage B.
-2. `s2d_cload` in the cell or outside.
-3. Dummy-tie convention (C2 open decision 3).
-4. The pad symbol / ports problem: as decided for C2.
+1. "In parallel, if c2 isn't finished."
+2. "If the load capacitors are within the pad layout, keep them there. If not, export. If it's not clear whether the
+   capacitors will fit, keep them in for now."
+3. "Dummy source and drain to the rails, gate net by abutment where dummies extend abutted gate poly."
+4. "new ports to follow layout."
