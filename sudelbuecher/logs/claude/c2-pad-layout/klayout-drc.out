@@ -5,5 +5,23 @@ sak-drc.sh -d -k -l macro -w verification/drc layout/klayout/sg13cmos5l_IOPadDif
 [INFO] flag -k is set.
 [INFO] flag -l is set to <macro>.
 [INFO] flag -w is set to <verification/drc>.
-[ERROR] Variable PDKPATH not set!
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using layout file <layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds>.
+[INFO] Running DRC of <layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds>.
+[INFO] Results are put into </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/verification/drc>.
+[INFO] Launching KLayout DRC...
+---
+[INFO] KLayout DRC is clean!
+---
+CONGRATULATIONS! No DRC errors in <sg13cmos5l_IOPadDiff2Single> found!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |    \_____/    |
+   \             /
+    '.         .'
+      '-.....-'
+---
+[DONE] Bye!
 make: Leaving directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single'

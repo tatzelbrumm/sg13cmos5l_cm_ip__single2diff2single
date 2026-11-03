@@ -228,3 +228,8 @@ phase1-row-maximal.out	claude/c2-pad-layout	2026-10-31 16:36	8503	8a72dd8	2026-1
 phase1-row-run_drc.out	claude/c2-pad-layout	2026-10-31 16:36	851405	8a72dd8	2026-10-31 15:16	run_drc.py --no_density --mp=4 on the same row, after the PDK sparse-checkout fix (cloud session C2, phase 1)
 phase1-row-negative-run_drc.out	claude/c2-pad-layout	2026-10-31 16:36	852301	8a72dd8	2026-10-31 15:16	run_drc.py --no_density --mp=4 on the row with two planted violations (cloud session C2, phase 1)
 phase1-row-negative-maximal.out	claude/c2-pad-layout	2026-10-31 16:36	8512	8a72dd8	2026-10-31 15:16	sg13cmos5l_maximal.drc on the row with two planted violations (cloud session C2, phase 1)
+klayout-drc.out	claude/c2-pad-layout	2026-11-03 16:25	1096	8ca5ad6	2026-11-03 16:26	make klayout-drc SCRIPTS_DIR=../../scripts (DRC_LEVEL=macro), macros/sg13cmos5l_IOPadDiff2Single, cloud session C2
+klayout-drc.err	claude/c2-pad-layout	2026-11-03 16:23	0	8ca5ad6	2026-11-03 16:26	make klayout-drc SCRIPTS_DIR=../../scripts (DRC_LEVEL=macro), macros/sg13cmos5l_IOPadDiff2Single, cloud session C2
+magic-drc.out	claude/c2-pad-layout	2026-11-03 16:25	1126	8ca5ad6	2026-11-03 16:26	make magic-drc SCRIPTS_DIR=../../scripts, macros/sg13cmos5l_IOPadDiff2Single, cloud session C2
+magic-drc.err	claude/c2-pad-layout	2026-11-03 16:25	0	8ca5ad6	2026-11-03 16:26	make magic-drc SCRIPTS_DIR=../../scripts, macros/sg13cmos5l_IOPadDiff2Single, cloud session C2
+maximal-drc-latchup.out	claude/c2-pad-layout	2026-11-03 16:26	8573	8ca5ad6	2026-11-03 16:26	klayout -b -r sg13cmos5l_maximal.drc -rd latchUpRules=true on the macro GDS, cloud session C2

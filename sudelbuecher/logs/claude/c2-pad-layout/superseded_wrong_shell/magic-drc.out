@@ -1,0 +1,9 @@
+make: Entering directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single'
+mkdir -p verification/drc
+sak-drc.sh -d -m -f "*" -w verification/drc layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds
+[INFO] DEBUG is enabled!
+[INFO] flag -m is set.
+[INFO] flag -f is set to <*>.
+[INFO] flag -w is set to <verification/drc>.
+[ERROR] Variable PDKPATH not set!
+make: Leaving directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single'

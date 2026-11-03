@@ -1,3 +1,4 @@
-klayout-drc rc=2 0 s
-magic-drc rc=2 0 s
+klayout-drc rc=0 84 s
+magic-drc rc=0 1 s
 DONE
+maximal-drc-latchup rc=0 21 s
