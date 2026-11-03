@@ -3,28 +3,50 @@
 * sg13cmos5l_IOPadDiff2Single: differential-in, single-ended-out buffered pad (class-AB, gain 1/2).
 * Custom padframe cell (case (a)): OP / ON are the pad's ESD clamp frames (d2s_out_p / d2s_out_n), on the
 * ring rails iovdd / iovss; the front end and the bias also run on iovdd / iovss (pad-ring taps).
-* Ring ports as IHP's IO cells: iovdd iovss vdd vss (vdd / vss = 1.2 V core ring, only for the
-* level shifters' input inverters). Core-side ports: vinp vinn vref (from the slot), ibias (harness
-* current through the slot), en_1v2 sel0_1v2 sel1_1v2 (1.2 V logic), vdd1v2_sense vdd3v3_sense
-* (the slot's gated supplies). vfb is tied to pad inside the cell (Kelvin, at the pad).
+* Ring ports as IHP's IO cells: iovdd iovss vdd vss (vdd / vss = 1.2 V core ring; since 2026-11-03 nothing inside the
+* cell connects to them). Core-side ports: vinp vinn vref (from the slot), iref (the selected reference current,
+* sourced into the cell, 5 uA), en_3v3 / en_3v3_b (3.3 V enable and its complement). vfb is tied to pad inside the
+* cell (Kelvin line from the pad junction).
 * DCN / DCP: IHP's primary diodes, as in sg13cmos5l_IOPadAnalog.
 * Output stage at this level since 2026-10-28: d2s_mpdda_pd drives the gates a / b; Xfp / Xfn are the clamp frames
 * with the class-AB replicas RP1 / RN1 (nets dabp / dabn, back to RP2 / RN2 in Xd); CMA / CMB are the Miller
 * capacitors, W x L as drawn in the layout (256 um2 each, as the former 16u x 16u).
+* Backannotated 2026-11-03 to the drawn cell (C2, layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds, reference
+* netlist pad_candidate.cdl):
+*   - partition as drawn: Xd + Xt in the cell; the enable control en_ctrl_3v3 (former Xc) and the reference
+*     selection bias_gen_pd (former Xg) sit next to the cell (slot, top level, CACE templates), wired as before;
+*   - CMA / CMB (v8 polarity, Christoph 2026-11-03): CMA gate a, S / D / well on pa; CMB gate on pb, S / D / well
+*     on b; pa and pb each behind an identical 2 kOhm secondary stage d2s_sp2k from the pad (XSPA, XSPB);
+*   - the two dummies of bias_tree_pd's layout rows (XMDBP, XMDBN) at this level (bias_tree_pd unchanged).
+*     XMDBN's net ni stands for bias_tree_pd's internal node ni, to which the layout ties it; ni is not a port
+*     of bias_tree_pd, so here it is a separate (floating) node.
 * Slot fallback (no padframe change): iovdd = vdd_3v3, iovss = vss_3v3, vdd = vdd_1v2, vss = vss_1v2,
 * pad = s7_an[1] (the harness IOPadAnalog pad).
-* Bias since 2026-10-28: Xg = bias_gen_pd selects the reference (iref, sourced), Xt = bias_tree_pd makes the six
-* bias lines from it; together the former Xb = bias_sel_pd, device for device (bias_sel_pd = bias_gen_pd + its tree).
-.subckt sg13cmos5l_IOPadDiff2Single iovdd iovss vdd vss pad vinp vinn vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
-Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
-Xg iovdd iovss ibias iref en_3v3 sel0_3v3 sel1_3v3 bias_gen_pd
+* Bias since 2026-10-28: Xt = bias_tree_pd makes the six bias lines from iref (bias_gen_pd, outside the cell
+* since 2026-11-03, selects the reference).
+
+* d2s_sp2k: 2 kOhm secondary protection stage in front of CMA / CMB (IHP's sg13cmos5l_SecondaryProtection with a
+* longer resistor; layout d2s_sp2k_f2): rppd 1u x 7.435u (1991.6 Ohm) pad -> core, dantenna 0.64u x 3.1u (anode
+* iovss), dpantenna 0.64u x 4.98u (cathode iovdd).
+.subckt d2s_sp2k core iovdd iovss pad
+XR0 pad core iovss rppd w=1u l=7.435u
+XD1 iovss core dantenna w=0.64u l=3.1u
+XD0 core iovdd dpantenna w=0.64u l=4.98u
+.ends d2s_sp2k
+
+.subckt sg13cmos5l_IOPadDiff2Single iovdd iovss vdd vss pad vinp vinn vref iref en_3v3 en_3v3_b
 Xt iovdd iovss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b bias_tree_pd
 Xd iovdd iovss iovdd iovss vinp vinn vref pad a b dabp dabn vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
 * output stage (d2s_out.spice): the clamp frames, and the Miller capacitors as drawn between the diodes
 Xfp iovdd a pad dabp d2s_out_p
 Xfn iovss b pad dabn d2s_out_n
-XCMA pad a pad pad sg13_hv_pmos w=7.96u l=32.16u ng=1
-XCMB b pad b b sg13_hv_pmos w=7.96u l=32.16u ng=1
+XSPA pa iovdd iovss pad d2s_sp2k
+XSPB pb iovdd iovss pad d2s_sp2k
+XCMA pa a pa pa sg13_hv_pmos w=7.96u l=32.16u ng=1
+XCMB b pb b b sg13_hv_pmos w=7.96u l=32.16u ng=1
 XDN iovss pad iovdd sg13cmos5l_DCNDiode
 XDP pad iovdd iovss sg13cmos5l_DCPDiode
+* dummies of bias_tree_pd's layout rows (bias_tree_p_f2: 2u / 6u, gate vbp; bias_tree_n_f2: 2.4u / 6u, D = S = G = ni)
+XMDBP iovdd vbp iovdd iovdd sg13_hv_pmos w=2u l=6u ng=1
+XMDBN ni ni ni iovss sg13_hv_nmos w=2.4u l=6u ng=1
 .ends sg13cmos5l_IOPadDiff2Single

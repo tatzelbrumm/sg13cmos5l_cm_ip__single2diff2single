@@ -8,6 +8,9 @@
 # d2s_out_p / d2s_out_n and CMA / CMB at pad level (gain 1/2, Miller compensated, OP / ON = the pad's ESD clamp frames), selectable bias bias_gen_pd + bias_tree_pd (one bias_sel_pd until 2026-10-28), fail-safe enable
 # en_ctrl_3v3, IHP primary diodes DCNDiode / DCPDiode. Everything on the ring rails iovdd / iovss;
 # the 1.2 V core ring vdd only feeds the level shifters' input inverters.
+# Since 2026-11-03 (backannotation to the drawn cell) en_ctrl_3v3 and bias_gen_pd are no longer inside the cell:
+# the templates place them next to it (xc, xg), wired as before, so the harness pins, sources and conditions below
+# (ibias, en, sel, vs12, vs33) drive them unchanged; the cell's own pins are listed under pins:.
 # vfb is tied to pad inside the cell, so the loop cannot be opened here: loop gain / phase margin are
 # characterized on the driver (results_improvements.txt: 78.9 dB, 1.37 MHz, 72.4 deg at tt), and this
 # file checks stability through the closed-loop peaking (ac) and the step overshoot (tran).
@@ -53,13 +56,13 @@ pins:
     type: ground
     direction: inout
   vdd:
-    description: 1.2 V core ring (level-shifter input inverters only)
+    description: 1.2 V core ring (not connected inside the cell; feeds the level shifters of en_ctrl_3v3 next to it)
     type: power
     direction: inout
     Vmin: 1.08
     Vmax: 1.32
   vss:
-    description: core ring ground
+    description: core ring ground (not connected inside the cell)
     type: ground
     direction: inout
   pad:
@@ -78,29 +81,17 @@ pins:
     description: Output reference voltage
     type: signal
     direction: input
-  ibias:
-    description: Harness bias current input (sourced into the cell, 5 uA nominal)
+  iref:
+    description: Reference current into the bias tree (sourced, 5 uA nominal; from bias_gen_pd next to the cell)
     type: signal
     direction: input
-  en_1v2:
-    description: Enable, 1.2 V logic, active high
+  en_3v3:
+    description: Enable, 3.3 V logic, active high (from en_ctrl_3v3 next to the cell)
     type: digital
     direction: input
-  sel0_1v2:
-    description: Bias select bit 0, 1.2 V logic
+  en_3v3_b:
+    description: Complement of en_3v3, 3.3 V logic (from en_ctrl_3v3 next to the cell)
     type: digital
-    direction: input
-  sel1_1v2:
-    description: Bias select bit 1, 1.2 V logic
-    type: digital
-    direction: input
-  vdd1v2_sense:
-    description: The slot's gated 1.2 V supply (presence sense)
-    type: signal
-    direction: input
-  vdd3v3_sense:
-    description: The slot's gated 3.3 V supply (presence sense)
-    type: signal
     direction: input
 
 default_conditions:

@@ -1,0 +1,146 @@
+
+Circuit 1 cell sg13_hv_pmos and Circuit 2 cell sg13_hv_pmos are black boxes.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_hv_pmos                    |Circuit 2: sg13_hv_pmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_hv_pmos and sg13_hv_pmos are equivalent.
+
+Circuit 1 cell rhigh and Circuit 2 cell rhigh are black boxes.
+Warning: Equate pins:  cell rhigh is a placeholder, treated as a black box.
+Warning: Equate pins:  cell rhigh is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: rhigh                           |Circuit 2: rhigh                           
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes rhigh and rhigh are equivalent.
+
+Circuit 1 cell sg13_hv_nmos and Circuit 2 cell sg13_hv_nmos are black boxes.
+Warning: Equate pins:  cell sg13_hv_nmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_hv_nmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_hv_nmos                    |Circuit 2: sg13_hv_nmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_hv_nmos and sg13_hv_nmos are equivalent.
+
+Circuit 1 cell rppd and Circuit 2 cell rppd are black boxes.
+Warning: Equate pins:  cell rppd is a placeholder, treated as a black box.
+Warning: Equate pins:  cell rppd is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: rppd                            |Circuit 2: rppd                            
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes rppd and rppd are equivalent.
+
+Circuit 1 cell dpantenna and Circuit 2 cell dpantenna are black boxes.
+Warning: Equate pins:  cell dpantenna is a placeholder, treated as a black box.
+Warning: Equate pins:  cell dpantenna is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: dpantenna                       |Circuit 2: dpantenna                       
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes dpantenna and dpantenna are equivalent.
+
+Circuit 1 cell dantenna and Circuit 2 cell dantenna are black boxes.
+Warning: Equate pins:  cell dantenna is a placeholder, treated as a black box.
+Warning: Equate pins:  cell dantenna is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: dantenna                        |Circuit 2: dantenna                        
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes dantenna and dantenna are equivalent.
+Flattening unmatched subcell bias_tree_pd in circuit sg13cmos5l_IOPadDiff2Single (1)(1 instance)
+Flattening unmatched subcell d2s_mpdda_pd in circuit sg13cmos5l_IOPadDiff2Single (1)(1 instance)
+Flattening unmatched subcell unit_r2 in circuit sg13cmos5l_IOPadDiff2Single (1)(4 instances)
+Flattening unmatched subcell d2s_out_p in circuit sg13cmos5l_IOPadDiff2Single (1)(1 instance)
+Flattening unmatched subcell d2s_out_n in circuit sg13cmos5l_IOPadDiff2Single (1)(1 instance)
+Flattening unmatched subcell d2s_sp2k in circuit sg13cmos5l_IOPadDiff2Single (1)(2 instances)
+
+Cell sg13cmos5l_IOPadDiff2Single (1) disconnected node: vdd
+Cell sg13cmos5l_IOPadDiff2Single (1) disconnected node: vss
+Class sg13cmos5l_IOPadDiff2Single (0):  Merged 205 parallel devices.
+Class sg13cmos5l_IOPadDiff2Single (0):  Merged 12 series devices.
+Class sg13cmos5l_IOPadDiff2Single (1):  Merged 22 parallel devices.
+Class sg13cmos5l_IOPadDiff2Single (1):  Merged 12 series devices.
+Cell sg13cmos5l_IOPadDiff2Single (1) disconnected node: vdd
+Cell sg13cmos5l_IOPadDiff2Single (1) disconnected node: vss
+Subcircuit summary:
+Circuit 1: sg13cmos5l_IOPadDiff2Single     |Circuit 2: sg13cmos5l_IOPadDiff2Single     
+-------------------------------------------|-------------------------------------------
+sg13_hv_pmos (154->40)                     |sg13_hv_pmos (51->40)                      
+sg13_hv_nmos (111->23)                     |sg13_hv_nmos (31->23)                      
+dantenna (4->3)                            |dantenna (4->3)                            
+rppd (2)                                   |rppd (2)                                   
+dpantenna (4->3)                           |dpantenna (4->3)                           
+rhigh (18->5)                              |rhigh (18->5)                              
+Number of devices: 76                      |Number of devices: 76                      
+Number of nets: 36 **Mismatch**            |Number of nets: 37 **Mismatch**            
+---------------------------------------------------------------------------------------
+NET mismatches: Class fragments follow (with fanout counts):
+Circuit 1: sg13cmos5l_IOPadDiff2Single     |Circuit 2: sg13cmos5l_IOPadDiff2Single     
+
+---------------------------------------------------------------------------------------
+Net: d2s_block_0.bias_tree_n_f2_0.ni       |Net: bias_tree_pd:t/ni                     
+  sg13_hv_pmos/(1|3) = 1                   |  sg13_hv_nmos/(1|3) = 3                   
+  sg13_hv_nmos/2 = 5                       |  sg13_hv_nmos/2 = 4                       
+  sg13_hv_nmos/(1|3) = 5                   |  sg13_hv_pmos/(1|3) = 1                   
+                                           |                                           
+(no matching net)                          |Net: ni                                    
+                                           |  sg13_hv_nmos/(1|3) = 2                   
+                                           |  sg13_hv_nmos/2 = 1                       
+---------------------------------------------------------------------------------------
+Netlists do not match.
+Port matching may fail to disambiguate symmetries.
+
+Subcircuit pins:
+Circuit 1: sg13cmos5l_IOPadDiff2Single     |Circuit 2: sg13cmos5l_IOPadDiff2Single     
+-------------------------------------------|-------------------------------------------
+pad                                        |pad                                        
+(no pin, node is iovdd)                    |iovdd                                      
+(no pin, node is iovss)                    |iovss                                      
+(no matching pin)                          |vdd                                        
+(no matching pin)                          |vss                                        
+(no pin, node is vinp)                     |vinp                                       
+(no pin, node is vinn)                     |vinn                                       
+(no pin, node is vref)                     |vref                                       
+(no pin, node is iref)                     |iref                                       
+(no pin, node is en_3v3)                   |en_3v3                                     
+(no pin, node is en_3v3_b)                 |en_3v3_b                                   
+---------------------------------------------------------------------------------------
+Cell pin lists for sg13cmos5l_IOPadDiff2Single and sg13cmos5l_IOPadDiff2Single altered to match.
+Device classes sg13cmos5l_IOPadDiff2Single and sg13cmos5l_IOPadDiff2Single are equivalent.
+
+Final result: Top level cell failed pin matching.

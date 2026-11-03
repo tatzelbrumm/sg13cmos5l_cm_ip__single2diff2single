@@ -36,7 +36,10 @@ Iext xg 0 5u
 XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
 XEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
 Rl pad vref 1k
-X1 iovdd 0 vdd 0 pad vinp vinn vref ibias en s0 s1 s12 s33 sg13cmos5l_IOPadDiff2Single
+* since 2026-11-03 en_ctrl_3v3 (Xc) and bias_gen_pd (Xg) sit next to the cell, wired as in the former pad
+Xc iovdd vdd 0 en s0 s1 s12 s33 en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
+Xg iovdd 0 ibias iref en_3v3 sel0_3v3 sel1_3v3 bias_gen_pd
+X1 iovdd 0 vdd 0 pad vinp vinn vref iref en_3v3 en_3v3_b sg13cmos5l_IOPadDiff2Single
 .control
 foreach c 0 1 2 3 4
   if $c = 1
@@ -55,7 +58,7 @@ foreach c 0 1 2 3 4
   op
   let iq = -i(vio)
   let ivbp = 0
-  print $c iq v(pad) v(x1.vbp) v(x1.vbn) v(x1.vabp) v(x1.vabn) v(x1.en_3v3) i(vext) -i(vcore)
+  print $c iq v(pad) v(x1.vbp) v(x1.vbn) v(x1.vabp) v(x1.vabn) v(en_3v3) i(vext) -i(vcore)
   destroy all
 end
 .endc

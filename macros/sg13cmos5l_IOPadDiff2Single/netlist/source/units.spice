@@ -12,10 +12,15 @@ XMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2
 XMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2
 .ends unit_r
 * unit_r2: unit_r at 2 x 5 uA (long-L tails), R = 150 kOhm: the unit of d2s_mpdda
+* Since 2026-11-03 (C2 backannotation) the resistor is drawn as in the layout (d2s_rhigh_f2): a chain of 4 rhigh
+* segments 0.5u x rl/4 (12.65u at rl = 50.6u), sa -> n1 -> n2 -> n3 -> sb, body vss (xschem: vector instance R[3:0]).
 .subckt unit_r2 x y gp gn vdd vss vbp rl=50.6u
 XTa sa vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
 XTb sb vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
-XR sa sb vss rhigh w=0.5u l={rl}
+XR[3] sa n1 vss rhigh w=0.5u l={rl/4}
+XR[2] n1 n2 vss rhigh w=0.5u l={rl/4}
+XR[1] n2 n3 vss rhigh w=0.5u l={rl/4}
+XR[0] n3 sb vss rhigh w=0.5u l={rl/4}
 XMa y gp sa sa sg13_hv_pmos w=20u l=1u ng=2
 XMb x gn sb sb sg13_hv_pmos w=20u l=1u ng=2
 .ends unit_r2
