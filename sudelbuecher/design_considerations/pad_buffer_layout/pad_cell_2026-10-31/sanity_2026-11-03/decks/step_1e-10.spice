@@ -1,0 +1,43 @@
+* sanity steps (closed loop: fb = pad) of the backannotated pad cell (sheet netlist), loop broken at Xd's vfb pin; CL 1e-10, RL 1k, vd 0
+.lib cornerMOShv.lib mos_tt
+.lib cornerMOSlv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.lib cornerPNP.lib typ
+.lib cornerDIO.lib dio_tt
+.include /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/netlist/source/hv_logic.spice
+.include /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/ls_up_1v2_3v3/netlist/source/ls_up_1v2_3v3.spice
+.include /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/netlist/source/en_ctrl_3v3.spice
+.include /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/bias_gen_pd/netlist/source/bias_gen_pd.spice
+.include ./others.spice
+.include ./pad_fb.spice
+Vio iovdd 0 3.3
+Vcore vdd 0 1.2
+Ven en 0 1.2
+Vs0 s0 0 0
+Vs1 s1 0 0
+Vsl s12 0 1.2
+Vsh s33 0 3.3
+Vref vref 0 1.65
+Vic vic 0 1.65
+Ep vinp vic dp 0 0.5
+En vinn vic dp 0 -0.5
+Vd dp 0 PWL(0 0 2u 0 2.01u 0.2 10u 0.2 10.01u 0 18u 0 18.01u -1.3 26u -1.3 26.01u 1.3 34u 1.3 34.01u 0 42u 0)
+Vext vext 0 3.3
+Iext xg 0 5u
+XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
+Xc iovdd vdd 0 en s0 s1 s12 s33 en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
+Xg iovdd 0 ibias iref en_3v3 sel0_3v3 sel1_3v3 bias_gen_pd
+X1 iovdd 0 vdd 0 pad vinp vinn vref iref en_3v3 en_3v3_b fb pad_fb
+RL pad vterm 1k
+Vterm vterm 0 1.65
+CL pad 0 1e-10
+Vfb pad fb 0
+.temp 27
+* default simulator options (K's gear/rshunt/gmin set, needed for the former S-varicaps, latches this op at pad 3.28 V)
+.control
+tran 2n 42u
+wrdata ./step_1e-10.dat v(pad) v(x1.a) v(x1.b)
+.endc
+.end

@@ -1,0 +1,794 @@
+* PEX produced on Tue Nov  3 14:14:19 UTC 2026 using /usr/local/bin/sak-pex.sh with m=2 and s=1
+* NGSPICE file created from sg13cmos5l_IOPadDiff2Single.ext - technology: ihp-sg13cmos5l
+
+.subckt sg13cmos5l_IOPadDiff2Single pad
+X0 DCNDiode_0.guard d2s_block_0.d2s_casc_p_c2_0.vbpc DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=0.34p pd=2.68u as=0.90322n ps=3.59606m w=1u l=4u
+X1 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X2 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X3 d2s_block_0.d2s_sp2k_f2_1.core d2s_cma_0.a d2s_block_0.d2s_sp2k_f2_1.core d2s_block_0.d2s_sp2k_f2_1.core sg13_hv_pmos ad=2.7064p pd=16.6u as=40.5004p ps=0.1292m w=7.96u l=32.16u
+X4 d2s_block_0.d2s_tgsw_f2_0.ni d2s_block_0.en_3v3_b d2s_block_0.iref DCNDiode_0.guard sg13_hv_pmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X5 Clamp_N_M1_1.iovss pad dantenna l=1.26u w=67.6u
+X6 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X7 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.68p pd=4.68u as=31.53795p ps=0.23787m w=2u l=6u
+X8 Clamp_N_M1_1.iovss d2s_block_0.en_3v3_b Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X9 d2s_block_0.d2s_sp2k_f2_0.core pad Clamp_N_M1_1.iovss rppd l=7.435u w=1u
+X10 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X11 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X12 Clamp_N_M1_1.iovss d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.d2s_inputs_c2_0.y Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X13 d2s_block_0.d2s_ab_p_f2_0.l1 d2s_block_0.d2s_ab_p_f2_0.vabp d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard sg13_hv_pmos ad=2.2644p pd=14u as=2.2644p ps=14u w=6.66u l=0.6u
+X14 d2s_block_0.d2s_ab_p_f2_0.l1 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_loads_c2_0.l2 Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.496p pd=9.48u as=1.496p ps=9.48u w=4.4u l=1u
+X15 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X16 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X17 d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sa_C2 d2s_block_0.d2s_inputs_c2_0.sa_C2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X18 Clamp_N_M1_1.iovss d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.d2s_inputs_c2_0.x Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X19 DCNDiode_0.guard d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_loads_c2_0.pr DCNDiode_0.guard sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X20 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X21 pad DCNDiode_0.guard dpantenna l=1.26u w=65.8u
+X22 Clamp_N_M1_1.iovss d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.bias_tree_p_f2_0.vbnc Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=8u
+X23 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=4.9284p pd=14.8u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X24 d2s_block_0.d2s_inputs_c2_0.x pad d2s_block_0.d2s_inputs_c2_0.sb_C2 d2s_block_0.d2s_inputs_c2_0.sb_C2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X25 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X26 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X27 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X28 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X29 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X30 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X31 d2s_block_0.d2s_loads_c2_0.pr d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_cma_0.a DCNDiode_0.guard sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X32 d2s_block_0.d2s_loads_c2_0.pl d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X33 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X34 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X35 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X36 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X37 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X38 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X39 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X40 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X41 DCNDiode_0.guard d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_loads_c2_0.pr DCNDiode_0.guard sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X42 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X43 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X44 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.bias_tree_p_f2_0.vabn DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X45 a_10598_32196# a_10462_29580# Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X46 DCNDiode_0.guard d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_casc_p_c2_0.vbpc DCNDiode_0.guard sg13_hv_pmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=4u
+X47 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X48 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X49 Clamp_N_M1_1.iovss d2s_block_0.d2s_tgsw_f2_0.ni d2s_block_0.d2s_tails_c2_0.vbp Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X50 Clamp_N_M1_1.iovss d2s_block_0.d2s_tgsw_f2_0.ni d2s_block_0.d2s_tgsw_f2_0.ni Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X51 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X52 Clamp_N_M1_wiring_0.b d2s_block_0.d2s_sp2k_f2_0.core Clamp_N_M1_wiring_0.b Clamp_N_M1_wiring_0.b sg13_hv_pmos ad=2.7064p pd=16.6u as=0.34844n ps=1.18076m w=7.96u l=32.16u
+X53 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X54 d2s_block_0.d2s_loads_c2_0.pl d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X55 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X56 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X57 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X58 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X59 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X60 Clamp_N_M1_1.iovss d2s_block_0.d2s_sp2k_f2_1.core dantenna l=3.1u w=0.64u
+X61 d2s_block_0.d2s_inputs_c2_0.sb_A d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X62 Clamp_N_M1_1.iovss d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.d2s_inputs_c2_0.y Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X63 d2s_block_0.d2s_inputs_c2_0.sa_B d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.d2s_inputs_c2_0.sa_B sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X64 d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sa_C1 d2s_block_0.d2s_inputs_c2_0.sa_C1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X65 d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X66 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X67 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X68 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X69 d2s_block_0.d2s_tgsw_f2_0.ni d2s_block_0.en_3v3 d2s_block_0.iref Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X70 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X71 DCNDiode_0.guard d2s_block_0.en_3v3 d2s_cma_0.a DCNDiode_0.guard sg13_hv_pmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X72 pad DCNDiode_0.guard dpantenna l=1.26u w=65.8u
+X73 d2s_block_0.d2s_tgsw_f2_0.ni d2s_block_0.en_3v3_b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X74 d2s_block_0.d2s_sp2k_f2_1.core pad Clamp_N_M1_1.iovss rppd l=7.435u w=1u
+X75 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X76 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X77 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X78 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X79 d2s_block_0.d2s_inputs_c2_0.sb_C1 pad d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sb_C1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X80 a_9510_32196# d2s_block_0.d2s_inputs_c2_0.sa_A Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X81 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X82 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=0 ps=0 w=5u l=6u
+X83 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X84 d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_loads_c2_0.pl DCNDiode_0.guard sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X85 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X86 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X87 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=2.2644p pd=14u as=0 ps=0 w=6.66u l=0.6u
+X88 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X89 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=2.068p ps=9.74u w=4.4u l=1u
+X90 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X91 Clamp_N_M1_1.iovss d2s_block_0.d2s_tgsw_f2_0.ni d2s_block_0.d2s_casc_p_c2_0.vbpc Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.816p pd=5.48u as=0.816p ps=5.48u w=2.4u l=6u
+X92 a_10734_32196# d2s_block_0.d2s_inputs_c2_0.sb_B Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X93 Clamp_P_M1_wiring_0.dabp d2s_block_0.d2s_ab_p_f2_0.vabp d2s_block_0.d2s_ab_p_f2_0.vabp DCNDiode_0.guard sg13_hv_pmos ad=2.2644p pd=14u as=2.2644p ps=14u w=6.66u l=0.6u
+X94 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X95 d2s_block_0.d2s_inputs_c2_0.sa_C1 d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X96 a_11006_32196# a_10054_29580# Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X97 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X98 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X99 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X100 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X101 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.bias_tree_p_f2_0.vbn DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X102 d2s_block_0.d2s_inputs_c2_0.sb_A d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sb_A sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X103 Clamp_N_M1_wiring_0.b d2s_block_0.bias_tree_p_f2_0.vabn d2s_cma_0.a Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.496p pd=9.48u as=1.496p ps=9.48u w=4.4u l=1u
+X104 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=3.256p pd=10.28u as=1.408p ps=5.04u w=4.4u l=1u
+X105 d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.d2s_inputs_c2_0.sa_A sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X106 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X107 d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X108 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X109 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=0 ps=0 w=6u l=6u
+X110 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X111 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X112 d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.bias_tree_p_f2_0.vbnc Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.68p pd=4.68u as=28.75885p ps=0.22478m w=2u l=3u
+X113 Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.496p pd=9.48u as=0.89267n ps=3.45402m w=4.4u l=1u
+X114 d2s_block_0.d2s_sp2k_f2_0.core DCNDiode_0.guard dpantenna l=0.64u w=4.98u
+X115 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X116 DCNDiode_0.guard Clamp_P_M1_wiring_0.dabp Clamp_P_M1_wiring_0.dabp DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X117 DCNDiode_0.guard d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X118 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X119 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X120 d2s_block_0.d2s_inputs_c2_0.sa_C2 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.d2s_inputs_c2_0.sa_C2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X121 d2s_block_0.d2s_inputs_c2_0.sa_C2 d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X122 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.d2s_inputs_c2_0.sa_A sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X123 Clamp_N_M1_wiring_0.b d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.d2s_inputs_c2_0.y Clamp_N_M1_1.iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X124 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X125 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X126 Clamp_N_M1_1.iovss d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.d2s_inputs_c2_0.x Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X127 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X128 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X129 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X130 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X131 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X132 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X133 a_10598_32196# d2s_block_0.d2s_inputs_c2_0.sb_A Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X134 DCNDiode_0.guard d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X135 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X136 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=3.1302p ps=14.26u w=6.66u l=0.6u
+X137 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=0 ps=0 w=5u l=6u
+X138 a_11006_32196# d2s_block_0.d2s_inputs_c2_0.sb_C2 Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X139 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X140 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X141 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X142 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X143 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X144 d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.bias_tree_p_f2_0.vbnc Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=3u
+X145 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X146 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X147 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X148 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.vinn d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.d2s_inputs_c2_0.sb_B sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X149 DCNDiode_0.guard d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_loads_c2_0.pl DCNDiode_0.guard sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X150 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X151 DCNDiode_0.guard Clamp_P_M1_wiring_0.dabp Clamp_P_M1_wiring_0.dabp DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X152 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X153 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sa_B DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X154 a_9918_32196# d2s_block_0.d2s_inputs_c2_0.sa_C2 Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X155 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.d2s_ab_p_f2_0.l1 Clamp_N_M1_1.iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X156 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X157 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X158 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X159 d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sa_B d2s_block_0.d2s_inputs_c2_0.sa_B sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X160 d2s_block_0.d2s_sp2k_f2_1.core DCNDiode_0.guard dpantenna l=0.64u w=4.98u
+X161 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X162 d2s_block_0.d2s_ab_p_f2_0.l1 d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.d2s_inputs_c2_0.x Clamp_N_M1_1.iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X163 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X164 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X165 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X166 d2s_block_0.d2s_loads_c2_0.pr d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X167 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X168 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=3.1302p ps=14.26u w=6.66u l=0.6u
+X169 Clamp_N_M1_wiring_0.dabn Clamp_N_M1_wiring_0.dabn Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X170 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X171 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X172 a_10734_32196# a_10326_29580# Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X173 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.vinn d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sb_B sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X174 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X175 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.bias_tree_p_f2_0.vbnc DCNDiode_0.guard sg13_hv_pmos ad=0.68p pd=4.68u as=0.68p ps=4.68u w=2u l=6u
+X176 a_9646_32196# a_10326_29580# Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X177 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X178 DCNDiode_0.guard d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_loads_c2_0.pl DCNDiode_0.guard sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X179 d2s_block_0.d2s_loads_c2_0.pl d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X180 Clamp_N_M1_1.iovss d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.d2s_inputs_c2_0.x Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X181 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X182 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=0 ps=0 w=5u l=6u
+X183 Clamp_N_M1_1.iovss d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X184 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.en_3v3_b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X185 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X186 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X187 d2s_block_0.d2s_tgsw_f2_0.ni d2s_block_0.d2s_tgsw_f2_0.ni d2s_block_0.d2s_tgsw_f2_0.ni Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.816p pd=5.48u as=8.86665p ps=64.93u w=2.4u l=6u
+X188 d2s_block_0.d2s_loads_c2_0.pr d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X189 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X190 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X191 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X192 d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.bias_tree_p_f2_0.vbnc Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X193 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X194 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sb_C2 DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X195 a_9646_32196# d2s_block_0.d2s_inputs_c2_0.sa_B Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X196 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X197 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X198 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X199 DCNDiode_0.guard d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X200 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X201 Clamp_P_M1_wiring_0.dabp DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X202 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X203 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sb_A d2s_block_0.d2s_inputs_c2_0.sb_A sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X204 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X205 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X206 d2s_block_0.d2s_inputs_c2_0.sb_C2 pad d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sb_C2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X207 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X208 Clamp_N_M1_1.iovss pad dantenna l=1.26u w=67.6u
+X209 Clamp_N_M1_1.iovss d2s_block_0.d2s_sp2k_f2_0.core dantenna l=3.1u w=0.64u
+X210 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X211 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X212 Clamp_N_M1_1.iovss d2s_block_0.d2s_tgsw_f2_0.ni d2s_block_0.d2s_ab_p_f2_0.vabp Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X213 a_10870_32196# a_10190_29580# Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X214 d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.bias_tree_p_f2_0.vbnc Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=3u
+X215 Clamp_N_M1_wiring_0.dabn d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.bias_tree_p_f2_0.vabn Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.496p pd=9.48u as=1.496p ps=9.48u w=4.4u l=1u
+X216 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X217 a_9510_32196# a_10462_29580# Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X218 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X219 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X220 a_9918_32196# a_10054_29580# Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X221 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X222 DCNDiode_0.guard d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X223 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X224 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X225 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=3.256p pd=10.28u as=1.408p ps=5.04u w=4.4u l=1u
+X226 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X227 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X228 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X229 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sb_C1 DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X230 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X231 d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X232 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X233 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X234 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=2.2644p pd=14u as=0 ps=0 w=6.66u l=0.6u
+X235 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X236 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X237 a_9782_32196# d2s_block_0.d2s_inputs_c2_0.sa_C1 Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X238 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X239 Clamp_P_M1_wiring_0.dabp DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X240 Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X241 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X242 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X243 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X244 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X245 d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.bias_tree_p_f2_0.vbnc Clamp_N_M1_1.iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=3u
+X246 Clamp_N_M1_1.iovss d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.d2s_inputs_c2_0.y Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X247 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X248 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X249 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X250 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X251 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X252 Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X253 d2s_cma_0.a d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_loads_c2_0.pr DCNDiode_0.guard sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X254 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X255 a_10870_32196# d2s_block_0.d2s_inputs_c2_0.sb_C1 Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X256 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X257 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X258 d2s_block_0.d2s_inputs_c2_0.x pad d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.d2s_inputs_c2_0.sb_C1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X259 d2s_block_0.d2s_inputs_c2_0.sa_C1 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.y d2s_block_0.d2s_inputs_c2_0.sa_C1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X260 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X261 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X262 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X263 a_9782_32196# a_10190_29580# Clamp_N_M1_1.iovss rhigh l=12.65u w=0.5u
+X264 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X265 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X266 d2s_block_0.d2s_ab_p_f2_0.vabp d2s_block_0.en_3v3 DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X267 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X268 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X269 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X270 DCNDiode_0.guard d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sa_A DCNDiode_0.guard sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X271 Clamp_N_M1_wiring_0.b d2s_block_0.d2s_ab_p_f2_0.vabp d2s_cma_0.a DCNDiode_0.guard sg13_hv_pmos ad=2.2644p pd=14u as=2.2644p ps=14u w=6.66u l=0.6u
+X272 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X273 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X274 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X275 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X276 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.dabn Clamp_N_M1_wiring_0.dabn Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X277 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=2.068p ps=9.74u w=4.4u l=1u
+X278 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X279 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X280 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X281 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+X282 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=4.9284p pd=14.8u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X283 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X284 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.bias_tree_p_f2_0.vbn Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X285 pad d2s_cma_0.a DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X286 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X287 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X288 Clamp_N_M1_1.iovss Clamp_N_M1_wiring_0.b pad Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=1u
+X289 DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard DCNDiode_0.guard sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X290 Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=1.496p pd=9.48u as=0 ps=0 w=4.4u l=1u
+X291 DCNDiode_0.guard d2s_cma_0.a pad DCNDiode_0.guard sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X292 pad Clamp_N_M1_wiring_0.b Clamp_N_M1_1.iovss Clamp_N_M1_1.iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=1u
+C0 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sa_C2 0.15284f
+C1 a_11278_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.08027f
+C2 a_10190_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02562f
+C3 d2s_block_0.d2s_loads_c2_0.pr d2s_block_0.en_3v3 0.053f
+C4 d2s_block_0.d2s_sp2k_f2_0.core d2s_cma_0.a 0.29723f
+C5 a_10054_29580# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.19805f
+C6 d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_loads_c2_0.pr 5.87224f
+C7 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.sa_C2 1.19632f
+C8 d2s_block_0.bias_tree_p_f2_0.vabn d2s_cma_0.a 1.23344f
+C9 d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.d2s_inputs_c2_0.sa_B 0.53748f
+C10 d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.sb_B 0.16088f
+C11 d2s_block_0.en_3v3 DCNDiode_0.guard 2.81634f
+C12 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.d2s_inputs_c2_0.y 0.65981f
+C13 pad d2s_cma_0.a 48.0497f
+C14 a_10462_29666# a_9510_32196# 0.02713f
+C15 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sa_A 0.38539f
+C16 d2s_block_0.d2s_loads_c2_0.l2 DCNDiode_0.guard 46.1063f
+C17 d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.d2s_inputs_c2_0.sb_A 0.08744f
+C18 TopLayersTo4_0.vdd a_9646_29666# 0.01326f
+C19 Clamp_N_M1_wiring_0.b d2s_block_0.bias_tree_p_f2_0.vbnc 6.8747f
+C20 d2s_block_0.en_3v3_b Clamp_N_M1_wiring_0.b 0.27368f
+C21 d2s_block_0.d2s_ab_p_f2_0.vabp d2s_block_0.bias_tree_p_f2_0.vbnc 0.08902f
+C22 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.sa_A 1.35342f
+C23 a_11686_29666# a_11550_29666# 0.63642f
+C24 d2s_block_0.en_3v3 d2s_block_0.d2s_inputs_c2_0.y 0.10044f
+C25 d2s_block_0.en_3v3_b d2s_block_0.d2s_ab_p_f2_0.vabp 2.43801f
+C26 d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.d2s_inputs_c2_0.sa_C2 0.37798f
+C27 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.d2s_inputs_c2_0.sa_C1 1.82827f
+C28 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_ab_p_f2_0.l1 0.35417f
+C29 TopLayersTo4_0.vdd a_10870_32196# 0.18821f
+C30 DCNDiode_0.guard Clamp_N_M1_wiring_0.dabn 6.23283f
+C31 a_11414_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02643f
+C32 a_11006_29666# a_11142_29666# 0.63642f
+C33 a_11278_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02617f
+C34 a_10734_29666# TopLayersTo4_0.vdd 0.01326f
+C35 Clamp_N_M1_wiring_0.b d2s_cma_0.a 6.19894f
+C36 TopLayersTo4_0.vdd d2s_block_0.d2s_ab_p_f2_0.l1 0.01417f
+C37 a_11006_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.02096f
+C38 d2s_block_0.d2s_sp2k_f2_1.core DCNDiode_0.guard 4.58005f
+C39 a_9918_29666# a_10054_29666# 0.63642f
+C40 TopLayersTo4_0.vdd a_9646_32196# 0.24577f
+C41 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_inputs_c2_0.sb_B 0.02634f
+C42 d2s_block_0.d2s_ab_p_f2_0.vabp d2s_cma_0.a 0.48345f
+C43 d2s_block_0.en_3v3 d2s_block_0.d2s_inputs_c2_0.sa_C1 0.02805f
+C44 Clamp_P_M1_wiring_0.dabp d2s_cma_0.a 0.65785f
+C45 a_10190_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.0209f
+C46 d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.d2s_inputs_c2_0.sa_A 0.12425f
+C47 pad d2s_block_0.d2s_inputs_c2_0.sb_B 0.12999f
+C48 TopLayersTo4_0.vdd a_9918_32196# 0.12039f
+C49 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_inputs_c2_0.sa_A 2.65469f
+C50 d2s_block_0.iref d2s_block_0.bias_tree_p_f2_0.vbnc 0.62803f
+C51 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.en_3v3 0.03051f
+C52 d2s_block_0.en_3v3_b d2s_block_0.iref 0.2334f
+C53 a_9918_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.04307f
+C54 a_10190_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.03807f
+C55 d2s_block_0.en_3v3_b d2s_block_0.d2s_inputs_c2_0.sb_A 0.03562f
+C56 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.en_3v3 7.08639f
+C57 d2s_block_0.d2s_loads_c2_0.pl d2s_block_0.d2s_casc_p_c2_0.vbpc 3.03177f
+C58 a_15058_18030# DCNDiode_0.guard 0.16199f
+C59 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sb_B 0.02766f
+C60 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.x 0.11748f
+C61 d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.bias_tree_p_f2_0.vabn 0.12742f
+C62 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.d2s_inputs_c2_0.sa_B 0.40287f
+C63 TopLayersTo4_0.vdd d2s_block_0.d2s_tgsw_f2_0.ni 5.13129f
+C64 a_11550_29666# a_10598_32196# 0.02713f
+C65 a_9510_32196# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.2134f
+C66 a_11278_29666# a_11142_29666# 0.63642f
+C67 a_11686_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.12446f
+C68 a_11006_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02581f
+C69 a_11414_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.02172f
+C70 a_10190_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02554f
+C71 d2s_block_0.bias_tree_p_f2_0.vabn Clamp_N_M1_wiring_0.dabn 0.24818f
+C72 d2s_block_0.en_3v3 d2s_block_0.d2s_inputs_c2_0.sa_B 0.07102f
+C73 a_11278_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.02119f
+C74 a_9782_29666# a_9782_32196# 0.02528f
+C75 pad Clamp_N_M1_wiring_0.dabn 2.20314f
+C76 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sb_C1 1.37515f
+C77 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.bias_tree_p_f2_0.vbnc 0.18379f
+C78 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sb_C2 0.06929f
+C79 d2s_block_0.en_3v3_b d2s_block_0.d2s_inputs_c2_0.sa_A 1.95261f
+C80 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_casc_p_c2_0.vbpc 0.3603f
+C81 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_tgsw_f2_0.ni 0.19109f
+C82 a_9918_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02554f
+C83 d2s_block_0.d2s_loads_c2_0.l2 Clamp_N_M1_wiring_0.b 0.51907f
+C84 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.sb_C1 0.06846f
+C85 d2s_block_0.d2s_ab_p_f2_0.vabp d2s_block_0.en_3v3 0.10858f
+C86 pad d2s_block_0.d2s_sp2k_f2_1.core 6.30962f
+C87 d2s_block_0.vinn d2s_block_0.d2s_tails_c2_0.vbp 0.01414f
+C88 d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_ab_p_f2_0.vabp 0.15403f
+C89 d2s_block_0.d2s_ab_p_f2_0.l1 d2s_block_0.bias_tree_p_f2_0.vbnc 6.93069f
+C90 Clamp_P_M1_wiring_0.dabp d2s_block_0.d2s_loads_c2_0.l2 0.08252f
+C91 TopLayersTo4_0.vdd d2s_block_0.d2s_casc_p_c2_0.vbpc 1.69733f
+C92 a_15058_18030# d2s_block_0.d2s_sp2k_f2_0.core 0.1618f
+C93 d2s_block_0.d2s_ab_p_f2_0.l1 d2s_block_0.en_3v3_b 0.08607f
+C94 a_9510_29666# a_9374_29666# 0.63642f
+C95 a_11686_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.08722f
+C96 a_9646_32196# a_9510_32196# 0.78325f
+C97 a_11414_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02622f
+C98 Clamp_N_M1_wiring_0.b Clamp_N_M1_wiring_0.dabn 0.61009f
+C99 a_9918_29666# a_9782_29666# 0.63642f
+C100 a_10734_32196# a_10870_32196# 0.55763f
+C101 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.d2s_inputs_c2_0.sb_A 0.29153f
+C102 a_11278_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02602f
+C103 d2s_block_0.d2s_tails_c2_0.vbp DCNDiode_0.guard 52.7113f
+C104 d2s_block_0.d2s_inputs_c2_0.sb_C2 DCNDiode_0.guard 0.20534f
+C105 d2s_block_0.d2s_loads_c2_0.pl d2s_cma_0.a 0.29106f
+C106 d2s_block_0.d2s_inputs_c2_0.sa_C1 a_10598_32196# 0.25657f
+C107 a_15058_18030# pad 0.0581f
+C108 a_10598_29666# a_10598_32196# 0.02713f
+C109 a_10734_32196# a_10734_29666# 0.02719f
+C110 Clamp_P_M1_wiring_0.dabp Clamp_N_M1_wiring_0.dabn 1.47782f
+C111 a_10870_32196# a_11278_29666# 0.02728f
+C112 Clamp_N_M1_wiring_0.b d2s_block_0.d2s_sp2k_f2_1.core 0.11039f
+C113 d2s_block_0.d2s_ab_p_f2_0.l1 d2s_cma_0.a 0.63269f
+C114 TopLayersTo4_0.vdd a_11006_29666# 0.01326f
+C115 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.d2s_inputs_c2_0.sa_C2 0.05842f
+C116 d2s_block_0.vinn DCNDiode_0.guard 0.99567f
+C117 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.bias_tree_p_f2_0.vbnc 2.96743f
+C118 d2s_block_0.iref d2s_block_0.en_3v3 0.18274f
+C119 TopLayersTo4_0.vdd a_10190_29666# 0.01326f
+C120 d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.d2s_tgsw_f2_0.ni 0.01276f
+C121 d2s_block_0.en_3v3 d2s_block_0.d2s_inputs_c2_0.sb_A 0.06958f
+C122 d2s_block_0.vinp d2s_block_0.d2s_tails_c2_0.vbp 0.27649f
+C123 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.y 0.12758f
+C124 d2s_block_0.d2s_loads_c2_0.pr DCNDiode_0.guard 15.2736f
+C125 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.en_3v3_b 0.3122f
+C126 d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.sb_C2 0.02931f
+C127 d2s_block_0.d2s_inputs_c2_0.sb_C2 d2s_block_0.d2s_inputs_c2_0.y 0.41969f
+C128 d2s_block_0.en_3v3_b d2s_block_0.d2s_tgsw_f2_0.ni 0.17146f
+C129 a_11006_32196# a_11142_29666# 0.02746f
+C130 TopLayersTo4_0.vdd d2s_block_0.bias_tree_p_f2_0.vbnc 1.30293f
+C131 a_10190_29580# d2s_block_0.d2s_inputs_c2_0.sb_A 0.12f
+C132 TopLayersTo4_0.vdd d2s_block_0.en_3v3_b 2.37519f
+C133 d2s_block_0.en_3v3 d2s_block_0.d2s_inputs_c2_0.sa_C2 0.02649f
+C134 TopLayersTo4_0.vdd a_9510_32196# 0.28348f
+C135 d2s_block_0.vinp d2s_block_0.vinn 3.6891f
+C136 d2s_block_0.vinn d2s_block_0.d2s_inputs_c2_0.y 0.0677f
+C137 a_9918_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.02089f
+C138 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.d2s_inputs_c2_0.sb_B 0.65554f
+C139 d2s_block_0.d2s_inputs_c2_0.x d2s_cma_0.a 0.17843f
+C140 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sa_C1 0.32945f
+C141 d2s_block_0.d2s_inputs_c2_0.sb_C2 d2s_block_0.d2s_inputs_c2_0.sa_C1 0.05069f
+C142 a_10326_29580# d2s_block_0.d2s_inputs_c2_0.sb_A 0.12247f
+C143 a_812_18030# d2s_block_0.d2s_sp2k_f2_1.core 0.16662f
+C144 a_9918_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.09558f
+C145 a_10734_32196# TopLayersTo4_0.vdd 0.24424f
+C146 d2s_block_0.vinp DCNDiode_0.guard 1.63269f
+C147 DCNDiode_0.guard d2s_block_0.d2s_inputs_c2_0.y 7.01492f
+C148 TopLayersTo4_0.vdd a_11414_29666# 0.01326f
+C149 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.d2s_tails_c2_0.vbp 1.03833f
+C150 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.en_3v3 0.03009f
+C151 d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.bias_tree_p_f2_0.vbnc 0.01051f
+C152 d2s_block_0.vinn d2s_block_0.d2s_inputs_c2_0.sa_C1 0.05874f
+C153 a_11550_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.10909f
+C154 TopLayersTo4_0.vdd a_11278_29666# 0.01326f
+C155 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_tails_c2_0.vbp 0.34217f
+C156 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_inputs_c2_0.sb_C2 0.07848f
+C157 a_9646_32196# a_9782_32196# 0.55763f
+C158 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.bias_tree_p_f2_0.vbnc 0.8832f
+C159 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.en_3v3_b 0.03653f
+C160 pad d2s_block_0.d2s_inputs_c2_0.sb_C2 2.64261f
+C161 d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_loads_c2_0.pl 2.4522f
+C162 d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.y 0.79983f
+C163 a_9918_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02554f
+C164 a_9918_32196# a_9782_32196# 0.33426f
+C165 DCNDiode_0.guard d2s_block_0.d2s_inputs_c2_0.sa_C1 0.46445f
+C166 d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_ab_p_f2_0.l1 1.302f
+C167 a_10870_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.05713f
+C168 pad d2s_block_0.vinn 0.25387f
+C169 d2s_block_0.vref d2s_block_0.d2s_tails_c2_0.vbp 0.05736f
+C170 a_11006_32196# a_10870_32196# 0.33426f
+C171 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sb_C2 0.01355f
+C172 d2s_block_0.d2s_sp2k_f2_0.core DCNDiode_0.guard 6.3276f
+C173 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sb_B 0.89815f
+C174 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sa_B 3.42705f
+C175 d2s_block_0.d2s_inputs_c2_0.sb_C2 d2s_block_0.d2s_inputs_c2_0.sa_B 0.49395f
+C176 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_cma_0.a 6.05503f
+C177 d2s_block_0.d2s_loads_c2_0.pl Clamp_N_M1_wiring_0.dabn 0.01701f
+C178 d2s_block_0.bias_tree_p_f2_0.vbn DCNDiode_0.guard 5.48568f
+C179 a_11686_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.03885f
+C180 d2s_block_0.bias_tree_p_f2_0.vabn DCNDiode_0.guard 2.61862f
+C181 d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.sa_C1 0.04414f
+C182 d2s_block_0.d2s_inputs_c2_0.sa_C1 d2s_block_0.d2s_inputs_c2_0.y 1.15973f
+C183 a_10054_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.0463f
+C184 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.sb_B 0.68425f
+C185 d2s_block_0.d2s_ab_p_f2_0.l1 Clamp_N_M1_wiring_0.dabn 0.04581f
+C186 d2s_block_0.vref d2s_block_0.vinn 10.376f
+C187 TopLayersTo4_0.vdd a_9782_32196# 0.18979f
+C188 d2s_block_0.vinn d2s_block_0.d2s_inputs_c2_0.sa_B 1.56499f
+C189 pad DCNDiode_0.guard 0.13676p
+C190 a_11550_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02676f
+C191 d2s_block_0.d2s_loads_c2_0.pl d2s_block_0.d2s_sp2k_f2_1.core 0.02353f
+C192 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.en_3v3 0.03463f
+C193 d2s_block_0.en_3v3 d2s_block_0.d2s_tgsw_f2_0.ni 0.48909f
+C194 a_9918_29666# a_9918_32196# 0.02659f
+C195 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.d2s_inputs_c2_0.y 9.05651f
+C196 d2s_block_0.en_3v3_b d2s_block_0.bias_tree_p_f2_0.vbnc 1.91598f
+C197 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_inputs_c2_0.y 1.11226f
+C198 a_10462_29580# a_10326_29580# 0.33426f
+C199 d2s_block_0.vref DCNDiode_0.guard 5.21351f
+C200 TopLayersTo4_0.vdd d2s_block_0.en_3v3 1.5359f
+C201 DCNDiode_0.guard d2s_block_0.d2s_inputs_c2_0.sa_B 1.44428f
+C202 a_10598_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.05147f
+C203 d2s_block_0.vinp pad 4.82325f
+C204 pad d2s_block_0.d2s_inputs_c2_0.y 0.07431f
+C205 d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.d2s_inputs_c2_0.sb_B 1.68485f
+C206 d2s_block_0.d2s_loads_c2_0.pr d2s_block_0.d2s_ab_p_f2_0.vabp 0.01103f
+C207 a_10870_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02579f
+C208 a_10190_29580# a_10054_29580# 0.78325f
+C209 Clamp_N_M1_wiring_0.b DCNDiode_0.guard 24.8762f
+C210 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_inputs_c2_0.sb_B 0.04569f
+C211 TopLayersTo4_0.vdd a_9918_29666# 0.01326f
+C212 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_inputs_c2_0.sa_C1 0.02369f
+C213 d2s_block_0.vref d2s_block_0.vinp 0.26377f
+C214 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.y 1.99913f
+C215 a_10326_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.04857f
+C216 a_11006_32196# TopLayersTo4_0.vdd 0.1189f
+C217 d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.sa_B 0.34983f
+C218 d2s_block_0.d2s_ab_p_f2_0.vabp DCNDiode_0.guard 4.62249f
+C219 d2s_block_0.d2s_inputs_c2_0.sa_B d2s_block_0.d2s_inputs_c2_0.y 0.96761f
+C220 a_10054_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02554f
+C221 d2s_block_0.d2s_sp2k_f2_0.core d2s_block_0.bias_tree_p_f2_0.vbn 0.0411f
+C222 Clamp_P_M1_wiring_0.dabp DCNDiode_0.guard 7.01569f
+C223 pad d2s_block_0.d2s_inputs_c2_0.sa_C1 0.03375f
+C224 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sb_A 0.27464f
+C225 d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.en_3v3 0.02358f
+C226 d2s_block_0.d2s_inputs_c2_0.sb_A d2s_block_0.d2s_inputs_c2_0.sb_C2 0.0884f
+C227 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.bias_tree_p_f2_0.vbn 0.03208f
+C228 Clamp_N_M1_wiring_0.b d2s_block_0.d2s_inputs_c2_0.y 0.38686f
+C229 a_11686_29666# TopLayersTo4_0.vdd 0.01125f
+C230 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.en_3v3 0.18975f
+C231 a_9510_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.06442f
+C232 d2s_block_0.d2s_sp2k_f2_0.core pad 7.04262f
+C233 a_10734_32196# a_11414_29666# 0.02719f
+C234 a_9374_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.11392f
+C235 d2s_block_0.d2s_ab_p_f2_0.vabp d2s_block_0.d2s_inputs_c2_0.y 0.85652f
+C236 d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_casc_p_c2_0.vbpc 2.02802f
+C237 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sa_C1 2.7226f
+C238 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sa_C2 1.06017f
+C239 d2s_block_0.vinn d2s_block_0.d2s_inputs_c2_0.sb_A 0.50732f
+C240 d2s_block_0.d2s_inputs_c2_0.sb_C2 d2s_block_0.d2s_inputs_c2_0.sa_C2 0.42223f
+C241 a_11550_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.02572f
+C242 d2s_block_0.d2s_inputs_c2_0.sa_B d2s_block_0.d2s_inputs_c2_0.sa_C1 2.65167f
+C243 a_10462_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.0498f
+C244 a_10598_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.0257f
+C245 a_11414_29666# a_11278_29666# 0.63642f
+C246 a_10598_29666# a_10462_29666# 0.63642f
+C247 a_10190_29666# a_9782_32196# 0.02728f
+C248 a_9510_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.07628f
+C249 a_812_18030# DCNDiode_0.guard 0.16369f
+C250 a_9374_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.06075f
+C251 d2s_block_0.vinn d2s_block_0.d2s_inputs_c2_0.sa_C2 0.06482f
+C252 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.bias_tree_p_f2_0.vbnc 0.04226f
+C253 d2s_block_0.iref DCNDiode_0.guard 0.09679f
+C254 d2s_block_0.d2s_inputs_c2_0.sb_A DCNDiode_0.guard 1.41094f
+C255 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_inputs_c2_0.sa_B 0.03126f
+C256 a_9782_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.05333f
+C257 a_10326_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02564f
+C258 a_9510_29666# a_9646_29666# 0.63642f
+C259 a_10326_29666# a_10462_29666# 0.63642f
+C260 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sa_A 0.72719f
+C261 d2s_block_0.d2s_sp2k_f2_0.core Clamp_N_M1_wiring_0.b 29.3564f
+C262 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.d2s_inputs_c2_0.sb_C2 0.31121f
+C263 a_10870_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.02093f
+C264 d2s_block_0.vref pad 0.21982f
+C265 pad d2s_block_0.d2s_inputs_c2_0.sa_B 0.08223f
+C266 d2s_block_0.bias_tree_p_f2_0.vabn Clamp_N_M1_wiring_0.b 0.37621f
+C267 a_9510_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.04853f
+C268 DCNDiode_0.guard d2s_block_0.d2s_inputs_c2_0.sa_C2 0.58376f
+C269 d2s_block_0.d2s_ab_p_f2_0.vabp d2s_block_0.bias_tree_p_f2_0.vbn 0.91228f
+C270 d2s_block_0.en_3v3 d2s_block_0.bias_tree_p_f2_0.vbnc 0.0526f
+C271 d2s_block_0.vinn d2s_block_0.d2s_inputs_c2_0.sa_A 0.01278f
+C272 d2s_block_0.en_3v3_b d2s_block_0.en_3v3 2.50451f
+C273 d2s_block_0.d2s_inputs_c2_0.sb_A d2s_block_0.d2s_inputs_c2_0.y 0.88041f
+C274 a_11006_32196# a_11006_29666# 0.02746f
+C275 a_11550_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02756f
+C276 a_10054_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.0209f
+C277 pad Clamp_N_M1_wiring_0.b 38.2776f
+C278 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_ab_p_f2_0.vabp 0.06902f
+C279 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sa_B 3.71203f
+C280 TopLayersTo4_0.vdd a_10598_32196# 0.28533f
+C281 a_10462_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02567f
+C282 a_11142_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.06943f
+C283 d2s_block_0.d2s_loads_c2_0.pr d2s_block_0.d2s_loads_c2_0.pl 10.0375f
+C284 d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.sa_C2 0.44236f
+C285 d2s_block_0.d2s_inputs_c2_0.sa_C2 d2s_block_0.d2s_inputs_c2_0.y 1.15827f
+C286 a_10054_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.05043f
+C287 d2s_block_0.d2s_inputs_c2_0.sa_A DCNDiode_0.guard 0.50966f
+C288 d2s_block_0.iref d2s_block_0.d2s_inputs_c2_0.sa_C1 0.56637f
+C289 d2s_block_0.en_3v3 d2s_cma_0.a 0.15748f
+C290 d2s_block_0.d2s_inputs_c2_0.sb_A d2s_block_0.d2s_inputs_c2_0.sa_C1 0.08197f
+C291 a_10598_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.02091f
+C292 a_10870_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02575f
+C293 d2s_block_0.d2s_loads_c2_0.pl DCNDiode_0.guard 18.4773f
+C294 d2s_block_0.d2s_loads_c2_0.l2 d2s_cma_0.a 1.21181f
+C295 a_9782_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02995f
+C296 a_10870_29666# a_10870_32196# 0.02728f
+C297 a_11686_29666# d2s_block_0.bias_tree_p_f2_0.vbnc 0.01886f
+C298 d2s_block_0.iref d2s_block_0.bias_tree_p_f2_0.vbn 3.68971f
+C299 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sb_C2 1.14735f
+C300 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_tgsw_f2_0.ni 0.9318f
+C301 d2s_block_0.d2s_ab_p_f2_0.l1 DCNDiode_0.guard 2.76358f
+C302 d2s_block_0.d2s_inputs_c2_0.sa_C2 d2s_block_0.d2s_inputs_c2_0.sa_C1 5.82694f
+C303 d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.sa_A 2.78986f
+C304 d2s_block_0.d2s_ab_p_f2_0.vabp Clamp_N_M1_wiring_0.b 0.55309f
+C305 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.d2s_inputs_c2_0.y 0.88021f
+C306 a_10598_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.01455f
+C307 a_10054_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02554f
+C308 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_inputs_c2_0.sb_A 1.3606f
+C309 a_10870_29666# a_10734_29666# 0.63642f
+C310 a_812_18030# pad 0.08402f
+C311 a_10326_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.0209f
+C312 Clamp_P_M1_wiring_0.dabp Clamp_N_M1_wiring_0.b 0.70395f
+C313 a_10054_29580# d2s_block_0.d2s_inputs_c2_0.sb_C2 0.20651f
+C314 Clamp_N_M1_wiring_0.dabn d2s_cma_0.a 1.29798f
+C315 TopLayersTo4_0.vdd d2s_block_0.d2s_tails_c2_0.vbp 6.72053f
+C316 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.sb_C2 0.06289f
+C317 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.vinn 0.72183f
+C318 Clamp_P_M1_wiring_0.dabp d2s_block_0.d2s_ab_p_f2_0.vabp 0.51419f
+C319 TopLayersTo4_0.vdd a_9510_29666# 0.01324f
+C320 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_loads_c2_0.pr 0.28845f
+C321 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_inputs_c2_0.sa_C2 0.03384f
+C322 a_11142_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02599f
+C323 d2s_block_0.d2s_ab_p_f2_0.l1 d2s_block_0.d2s_inputs_c2_0.y 0.06388f
+C324 a_10326_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.02731f
+C325 d2s_block_0.d2s_sp2k_f2_1.core d2s_cma_0.a 33.454f
+C326 TopLayersTo4_0.vdd a_9374_29666# 0.0101f
+C327 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.d2s_inputs_c2_0.sa_C1 3.52941f
+C328 TopLayersTo4_0.vdd d2s_block_0.vinn 1.07478f
+C329 TopLayersTo4_0.vdd a_11550_29666# 0.01316f
+C330 a_10598_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02567f
+C331 pad d2s_block_0.d2s_inputs_c2_0.sa_C2 0.24324f
+C332 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sb_A 2.69863f
+C333 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.en_3v3 0.26602f
+C334 d2s_block_0.iref d2s_block_0.d2s_inputs_c2_0.sa_B 0.01218f
+C335 d2s_block_0.d2s_inputs_c2_0.sb_A d2s_block_0.d2s_inputs_c2_0.sa_B 0.50587f
+C336 d2s_block_0.d2s_inputs_c2_0.x DCNDiode_0.guard 9.21635f
+C337 a_10462_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.0209f
+C338 d2s_block_0.d2s_tgsw_f2_0.ni DCNDiode_0.guard 0.16761f
+C339 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sb_C1 0.06802f
+C340 a_9918_32196# a_10054_29666# 0.02746f
+C341 d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.d2s_inputs_c2_0.sb_C2 2.42849f
+C342 a_10734_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.05379f
+C343 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sa_C2 2.74381f
+C344 a_10734_29666# a_10598_29666# 0.63642f
+C345 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_inputs_c2_0.sa_A 0.01616f
+C346 TopLayersTo4_0.vdd DCNDiode_0.guard 3.92124f
+C347 a_10326_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02563f
+C348 d2s_block_0.d2s_inputs_c2_0.sa_B d2s_block_0.d2s_inputs_c2_0.sa_C2 0.36493f
+C349 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_tails_c2_0.vbp 0.17603f
+C350 a_10462_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.01968f
+C351 d2s_block_0.d2s_ab_p_f2_0.vabp d2s_block_0.iref 0.04037f
+C352 a_9782_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.03869f
+C353 a_10870_29666# TopLayersTo4_0.vdd 0.01326f
+C354 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.vinp 0.09335f
+C355 a_9510_32196# a_10598_32196# 0.21179f
+C356 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.y 15.5054f
+C357 d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.en_3v3 0.13083f
+C358 a_9646_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.0458f
+C359 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.vinn 0.07539f
+C360 d2s_block_0.d2s_ab_p_f2_0.l1 d2s_block_0.bias_tree_p_f2_0.vabn 0.54756f
+C361 TopLayersTo4_0.vdd d2s_block_0.vinp 1.51695f
+C362 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.y 0.1342f
+C363 a_9782_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.08805f
+C364 TopLayersTo4_0.vdd a_10054_29666# 0.01326f
+C365 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sa_A 0.01979f
+C366 d2s_block_0.d2s_loads_c2_0.pr d2s_block_0.d2s_casc_p_c2_0.vbpc 2.97469f
+C367 a_10326_29666# a_9646_32196# 0.02719f
+C368 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.d2s_inputs_c2_0.sa_B 3.68181f
+C369 a_10734_32196# a_10598_32196# 0.78325f
+C370 a_10462_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02565f
+C371 d2s_block_0.d2s_inputs_c2_0.sb_C1 DCNDiode_0.guard 0.65295f
+C372 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sa_C1 0.11462f
+C373 a_9782_29666# a_9646_29666# 0.63642f
+C374 a_11142_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.02102f
+C375 d2s_block_0.d2s_loads_c2_0.l2 Clamp_N_M1_wiring_0.dabn 0.293f
+C376 d2s_block_0.d2s_casc_p_c2_0.vbpc DCNDiode_0.guard 29.365f
+C377 a_10734_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02574f
+C378 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.sa_C1 1.33982f
+C379 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.bias_tree_p_f2_0.vbn 9.06881f
+C380 a_9782_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02554f
+C381 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.d2s_tgsw_f2_0.ni 0.22347f
+C382 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.bias_tree_p_f2_0.vbnc 0.18971f
+C383 TopLayersTo4_0.vdd a_10598_29666# 0.01326f
+C384 d2s_block_0.d2s_loads_c2_0.pl Clamp_N_M1_wiring_0.b 0.12083f
+C385 d2s_block_0.vinp d2s_block_0.d2s_inputs_c2_0.sb_C1 0.10835f
+C386 d2s_block_0.en_3v3_b d2s_block_0.d2s_tails_c2_0.vbp 0.22896f
+C387 a_10190_29580# a_10326_29580# 0.55763f
+C388 d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.d2s_inputs_c2_0.y 0.22334f
+C389 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.bias_tree_p_f2_0.vabn 0.40487f
+C390 d2s_block_0.d2s_loads_c2_0.l2 d2s_block_0.d2s_sp2k_f2_1.core 0.01368f
+C391 d2s_block_0.d2s_ab_p_f2_0.l1 Clamp_N_M1_wiring_0.b 1.50473f
+C392 TopLayersTo4_0.vdd d2s_block_0.bias_tree_p_f2_0.vbn 2.69043f
+C393 d2s_block_0.vinp d2s_block_0.d2s_casc_p_c2_0.vbpc 0.1632f
+C394 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_inputs_c2_0.y 0.0449f
+C395 d2s_block_0.d2s_inputs_c2_0.x pad 1.42323f
+C396 a_9510_29666# a_9510_32196# 0.02513f
+C397 d2s_block_0.d2s_inputs_c2_0.sb_A d2s_block_0.d2s_inputs_c2_0.sa_C2 2.34132f
+C398 TopLayersTo4_0.vdd d2s_block_0.bias_tree_p_f2_0.vabn 0.85915f
+C399 TopLayersTo4_0.vdd a_10326_29666# 0.01326f
+C400 d2s_block_0.d2s_ab_p_f2_0.l1 d2s_block_0.d2s_ab_p_f2_0.vabp 0.66327f
+C401 Clamp_P_M1_wiring_0.dabp d2s_block_0.d2s_ab_p_f2_0.l1 0.05659f
+C402 a_10870_29666# a_11006_29666# 0.63642f
+C403 d2s_block_0.d2s_sp2k_f2_1.core Clamp_N_M1_wiring_0.dabn 0.08675f
+C404 TopLayersTo4_0.vdd pad 0.07781f
+C405 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.x 0.70504f
+C406 a_11142_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.02589f
+C407 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sa_B 0.45124f
+C408 a_9646_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.04834f
+C409 d2s_block_0.bias_tree_p_f2_0.vbnc DCNDiode_0.guard 2.98713f
+C410 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.d2s_inputs_c2_0.sa_C1 0.01421f
+C411 d2s_block_0.en_3v3_b DCNDiode_0.guard 2.15428f
+C412 d2s_block_0.iref d2s_block_0.d2s_inputs_c2_0.sa_A 0.35342f
+C413 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.d2s_inputs_c2_0.sb_A 1.09044f
+C414 d2s_block_0.vref TopLayersTo4_0.vdd 1.17351f
+C415 d2s_block_0.d2s_inputs_c2_0.x Clamp_N_M1_wiring_0.b 0.228f
+C416 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.sa_B 1.1146f
+C417 a_10190_29666# a_10054_29666# 0.63642f
+C418 a_11414_29666# a_11550_29666# 0.63642f
+C419 TopLayersTo4_0.vdd a_10462_29666# 0.01326f
+C420 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.d2s_inputs_c2_0.sb_C1 0.0192f
+C421 d2s_block_0.d2s_loads_c2_0.pr d2s_cma_0.a 0.26394f
+C422 a_9646_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.08161f
+C423 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_ab_p_f2_0.vabp 0.04677f
+C424 d2s_block_0.d2s_ab_p_f2_0.vabp d2s_block_0.d2s_tgsw_f2_0.ni 0.5769f
+C425 pad d2s_block_0.d2s_inputs_c2_0.sb_C1 2.77247f
+C426 d2s_block_0.d2s_casc_p_c2_0.vbpc d2s_block_0.bias_tree_p_f2_0.vabn 0.02228f
+C427 TopLayersTo4_0.vdd Clamp_N_M1_wiring_0.b 0.01417f
+C428 d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.d2s_inputs_c2_0.y 4.95458f
+C429 d2s_block_0.d2s_inputs_c2_0.sa_A d2s_block_0.d2s_inputs_c2_0.sa_C2 0.43152f
+C430 a_10734_29666# d2s_block_0.d2s_inputs_c2_0.sb_A 0.02092f
+C431 d2s_block_0.en_3v3_b d2s_block_0.d2s_inputs_c2_0.y 0.04389f
+C432 a_11006_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.06205f
+C433 DCNDiode_0.guard d2s_cma_0.a 0.12134p
+C434 pad d2s_block_0.d2s_casc_p_c2_0.vbpc 0.21837f
+C435 TopLayersTo4_0.vdd a_9782_29666# 0.01326f
+C436 TopLayersTo4_0.vdd d2s_block_0.d2s_ab_p_f2_0.vabp 0.98843f
+C437 a_10190_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.04764f
+C438 d2s_block_0.vref d2s_block_0.d2s_inputs_c2_0.sb_C1 0.10471f
+C439 a_9646_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.03415f
+C440 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.d2s_inputs_c2_0.sb_B 0.78571f
+C441 a_10734_29666# d2s_block_0.d2s_inputs_c2_0.sa_C2 0.01107f
+C442 d2s_block_0.d2s_inputs_c2_0.sb_C1 d2s_block_0.d2s_inputs_c2_0.sa_B 0.95076f
+C443 d2s_block_0.d2s_inputs_c2_0.sb_B d2s_block_0.d2s_inputs_c2_0.sb_C2 2.17378f
+C444 a_10462_29580# d2s_block_0.d2s_inputs_c2_0.sb_A 0.12128f
+C445 d2s_block_0.bias_tree_p_f2_0.vbnc d2s_block_0.d2s_inputs_c2_0.sa_C1 0.07393f
+C446 d2s_block_0.vref d2s_block_0.d2s_casc_p_c2_0.vbpc 1.40027f
+C447 d2s_cma_0.a d2s_block_0.d2s_inputs_c2_0.y 0.0238f
+C448 d2s_block_0.en_3v3_b d2s_block_0.d2s_inputs_c2_0.sa_C1 0.06251f
+C449 d2s_block_0.vinn d2s_block_0.d2s_inputs_c2_0.sb_B 2.74217f
+C450 a_10326_29666# a_10190_29666# 0.63642f
+C451 d2s_block_0.d2s_tails_c2_0.vbp d2s_block_0.en_3v3 0.53612f
+C452 d2s_block_0.bias_tree_p_f2_0.vbn d2s_block_0.bias_tree_p_f2_0.vbnc 0.07963f
+C453 d2s_block_0.iref d2s_block_0.d2s_tgsw_f2_0.ni 0.12f
+C454 d2s_block_0.d2s_inputs_c2_0.x d2s_block_0.d2s_inputs_c2_0.sb_A 0.83264f
+C455 d2s_block_0.en_3v3 d2s_block_0.d2s_inputs_c2_0.sb_C2 0.04642f
+C456 TopLayersTo4_0.vdd a_11142_29666# 0.01326f
+C457 a_9646_32196# a_9646_29666# 0.02519f
+C458 d2s_block_0.en_3v3_b d2s_block_0.bias_tree_p_f2_0.vbn 0.06112f
+C459 a_10734_29666# d2s_block_0.d2s_inputs_c2_0.sa_A 0.0257f
+C460 d2s_block_0.bias_tree_p_f2_0.vabn d2s_block_0.bias_tree_p_f2_0.vbnc 0.12941f
+C461 a_10054_29580# d2s_block_0.d2s_inputs_c2_0.sb_A 0.11879f
+C462 d2s_block_0.en_3v3_b d2s_block_0.bias_tree_p_f2_0.vabn 0.3605f
+C463 TopLayersTo4_0.vdd d2s_block_0.iref 1.28514f
+C464 TopLayersTo4_0.vdd d2s_block_0.d2s_inputs_c2_0.sb_A 0.71309f
+C465 a_11006_29666# d2s_block_0.d2s_inputs_c2_0.sa_B 0.02587f
+C466 a_11414_29666# d2s_block_0.d2s_inputs_c2_0.sa_C1 0.09431f
+C467 d2s_block_0.d2s_inputs_c2_0.sb_B DCNDiode_0.guard 0.77473f
+C468 d2s_block_0.d2s_loads_c2_0.pl Clamp_N_M1_1.iovss 1.53018f
+C469 d2s_block_0.d2s_loads_c2_0.pr Clamp_N_M1_1.iovss 4.83608f
+C470 d2s_block_0.d2s_ab_p_f2_0.l1 Clamp_N_M1_1.iovss 9.19851f
+C471 d2s_block_0.d2s_inputs_c2_0.x Clamp_N_M1_1.iovss 17.47804f
+C472 d2s_block_0.d2s_inputs_c2_0.y Clamp_N_M1_1.iovss 20.99538f
+C473 a_11006_32196# Clamp_N_M1_1.iovss 1.04635f
+C474 a_10870_32196# Clamp_N_M1_1.iovss 1.10798f
+C475 a_10734_32196# Clamp_N_M1_1.iovss 1.15911f
+C476 a_10598_32196# Clamp_N_M1_1.iovss 1.86471f
+C477 a_10462_29580# Clamp_N_M1_1.iovss 1.15143f
+C478 a_10326_29580# Clamp_N_M1_1.iovss 1.27676f
+C479 a_10190_29580# Clamp_N_M1_1.iovss 1.37915f
+C480 a_10054_29580# Clamp_N_M1_1.iovss 2.08947f
+C481 a_9918_32196# Clamp_N_M1_1.iovss 1.03909f
+C482 a_9782_32196# Clamp_N_M1_1.iovss 1.10561f
+C483 a_9646_32196# Clamp_N_M1_1.iovss 1.15979f
+C484 a_9510_32196# Clamp_N_M1_1.iovss 1.89441f
+C485 d2s_block_0.iref Clamp_N_M1_1.iovss 9.16121f
+C486 d2s_block_0.d2s_inputs_c2_0.sb_A Clamp_N_M1_1.iovss 10.75061f
+C487 d2s_block_0.d2s_inputs_c2_0.sa_C2 Clamp_N_M1_1.iovss 8.39815f
+C488 d2s_block_0.d2s_inputs_c2_0.sa_C1 Clamp_N_M1_1.iovss 5.31999f
+C489 d2s_block_0.d2s_inputs_c2_0.sb_B Clamp_N_M1_1.iovss 8.86021f
+C490 d2s_block_0.d2s_inputs_c2_0.sa_B Clamp_N_M1_1.iovss 9.05164f
+C491 d2s_block_0.d2s_inputs_c2_0.sb_C1 Clamp_N_M1_1.iovss 5.6f
+C492 d2s_block_0.d2s_inputs_c2_0.sb_C2 Clamp_N_M1_1.iovss 5.77716f
+C493 d2s_block_0.d2s_inputs_c2_0.sa_A Clamp_N_M1_1.iovss 7.31495f
+C494 TopLayersTo4_0.vdd Clamp_N_M1_1.iovss 0.20747p ; **FLOATING
+.ends
+

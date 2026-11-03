@@ -1,0 +1,10 @@
+1e-10 mid +0.1 V   1.650->1.750 V  SR 0.47 V/us  overshoot 0.00 %  ts1% 0.333 us  ringing extrema 0
+1e-10 back to mid  1.750->1.650 V  SR 0.47 V/us  overshoot 0.01 %  ts1% 0.333 us  ringing extrema 0
+1e-10 mid->bottom  1.650->0.991 V  SR 3.18 V/us  overshoot 0.00 %  ts1% 0.391 us  ringing extrema 0
+1e-10 bottom->top  0.991->2.292 V  SR 7.44 V/us  overshoot 0.00 %  ts1% 0.329 us  ringing extrema 0
+1e-10 top->mid     2.292->1.650 V  SR 3.17 V/us  overshoot 0.02 %  ts1% 0.317 us  ringing extrema 0
+3e-10 mid +0.1 V   1.650->1.750 V  SR 0.59 V/us  overshoot 25.34 %  ts1% 1.073 us  ringing extrema 4
+3e-10 back to mid  1.750->1.650 V  SR 0.59 V/us  overshoot 24.71 %  ts1% 1.071 us  ringing extrema 4
+3e-10 mid->bottom  1.650->0.990 V  SR 5.07 V/us  overshoot 10.29 %  ts1% 0.777 us  ringing extrema 3
+3e-10 bottom->top  0.990->2.292 V  SR 10.41 V/us  overshoot 12.66 %  ts1% 0.703 us  ringing extrema 4
+3e-10 top->mid     2.292->1.650 V  SR 4.75 V/us  overshoot 14.37 %  ts1% 0.761 us  ringing extrema 3

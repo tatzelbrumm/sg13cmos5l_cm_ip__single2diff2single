@@ -1,0 +1,2 @@
+bias_tree_p_f2: Activ bbox (0.62,0.62;17.57,7.52); axes x = 9.095, y = 4.07 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

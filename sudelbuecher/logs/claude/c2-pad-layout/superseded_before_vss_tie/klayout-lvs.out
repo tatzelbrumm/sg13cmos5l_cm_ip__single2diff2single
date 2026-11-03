@@ -1,0 +1,44 @@
+make: Entering directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single'
+make klayout-lvs-netlist CELL=sg13cmos5l_IOPadDiff2Single
+make[1]: Entering directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single'
+mkdir -p netlist/schematic
+xschem -s -r -x -q --rcfile schematic/xschem/xschemrc --command ' \
+	set spiceprefix 1; \
+	set lvs_netlist 1; \
+	set top_is_subckt 1; \
+	set lvs_ignore 1; \
+	set ev_precision 5; \
+	set netlist_dir netlist/schematic; \
+	xschem set netlist_name [file tail [file rootname [xschem get current_name]]]_klayout.cdl; \
+	xschem netlist \
+' schematic/xschem/sg13cmos5l_IOPadDiff2Single.sch
+
+make[1]: Leaving directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single'
+mkdir -p verification/lvs
+mkdir -p netlist/layout
+sak-lvs.sh -d -k -w verification/lvs -s netlist/schematic/sg13cmos5l_IOPadDiff2Single_klayout.cdl -l layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds -c sg13cmos5l_IOPadDiff2Single
+[INFO] DEBUG is enabled!
+[INFO] flag -k is set.
+[INFO] flag -w is set to <verification/lvs>.
+[INFO] flag -s is set to <netlist/schematic/sg13cmos5l_IOPadDiff2Single_klayout.cdl>.
+[INFO] flag -l is set to <layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds>.
+[INFO] flag -c is set to <sg13cmos5l_IOPadDiff2Single>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using SPICE/CDL netlist file </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/netlist/schematic/sg13cmos5l_IOPadDiff2Single_klayout.cdl>.
+[INFO] Using layout file </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds>.
+[INFO] Running LVS of </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds> vs </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/netlist/schematic/sg13cmos5l_IOPadDiff2Single_klayout.cdl>.
+[INFO] Run KLayout LVS...
+---
+[INFO] KLayout LVS errors found! Please check </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/verification/lvs/sg13cmos5l_IOPadDiff2Single.klayout.lvs>!
+---
+LVS ERRORS FOUND! Please check the report(s) above!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |     _____     |
+   \             /
+    '.         .'
+      '-.....-'
+---
+make: Leaving directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single'

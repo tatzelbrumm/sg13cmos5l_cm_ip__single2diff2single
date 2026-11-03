@@ -1,0 +1,8 @@
+d2s_tgsw_f2: Activ bbox (0,0;5.2,1.13); axes x = 2.6, y = 0.565 um
+  X Activ        XOR    0.6328 um2  in (1.96,0;3.24,1.13)
+  X GatPoly      XOR    0.8820 um2  in (-0.6,0.34;5.8,0.79)
+  X ThickGateOx  XOR    3.4700 um2  in (-0.62,-0.62;5.82,1.75)
+  X pSD          XOR    5.3640 um2  in (-0.4,-0.18;5.6,1.31)
+  X NWell        XOR   13.8408 um2  in (-1.3,-0.62;6.5,1.75)
+  X Cont         XOR    0.3456 um2  in (-0.43,0.07;5.63,1.06)
+  summary: max mirror XOR 13.8408 um2, 0 narrow-poly hits

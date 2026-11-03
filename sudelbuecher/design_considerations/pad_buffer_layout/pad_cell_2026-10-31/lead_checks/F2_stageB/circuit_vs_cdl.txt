@@ -1,0 +1,15 @@
+## MOS (W sums, dummies apart): 53 keys, 0 differ
+## dummies (D = S): 11 keys, 9 differ
+  ('sg13_hv_nmos', 1.0, ('iovss', 'iovss'), 'iovss', 'iovss'): layout 8.8  circuit 0
+  ('sg13_hv_nmos', 3.0, ('vbnc', 'vbnc'), 'vbnc', 'iovss'): layout 8  circuit 0
+  ('sg13_hv_nmos', 6.0, ('ni', 'ni'), 'ni', 'iovss'): layout 2.4  circuit 0
+  ('sg13_hv_nmos', 6.0, ('vbn', 'vbn'), 'vbn', 'iovss'): layout 14  circuit 0
+  ('sg13_hv_pmos', 0.6, ('iovdd', 'iovdd'), 'iovdd', 'iovdd'): layout 13.32  circuit 0
+  ('sg13_hv_pmos', 1.0, ('iovdd', 'iovdd'), 'iovdd', 'iovdd'): layout 80  circuit 0
+  ('sg13_hv_pmos', 4.0, ('iovdd', 'iovdd'), 'l2', 'iovdd'): layout 4  circuit 0
+  ('sg13_hv_pmos', 4.0, ('iovdd', 'iovdd'), 'vbpc', 'iovdd'): layout 1  circuit 0
+  ('sg13_hv_pmos', 6.0, ('iovdd', 'iovdd'), 'vbp', 'iovdd'): layout 17  circuit 0
+## diodes: 6 keys, 0 differ
+## resistors (series-reduced lengths): 7 keys, 1 differ
+  ('rhigh', 0.5, ('iovss', 'iovss')): layout 25.3  circuit 0
+RESULT DIFFERENT

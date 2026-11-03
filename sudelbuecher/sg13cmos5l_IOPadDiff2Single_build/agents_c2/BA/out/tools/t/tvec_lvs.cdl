@@ -1,0 +1,8 @@
+** sch_path: /home/user/c2/BA/out/tools/t/tvec.sch
+.subckt tvec vdd
+*.PININFO vdd:B
+MDT[3] d[3] g vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+DT[2] d[2] g vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+DT[1] d[1] g vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+DT[0] d[0] g vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+.ends

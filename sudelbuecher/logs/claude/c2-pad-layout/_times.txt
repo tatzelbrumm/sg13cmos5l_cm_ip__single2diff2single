@@ -1,0 +1,13 @@
+klayout-drc rc=0 84 s
+magic-drc rc=0 1 s
+DONE
+maximal-drc-latchup rc=0 21 s
+klayout-lvs rc=2 9 s
+magic-lvs rc=2 1 s
+LVSDONE
+klayout-lvs rc=0 6 s
+magic-lvs rc=2 1 s
+LVSDONE
+klayout-drc rc=0 7 s
+magic-drc rc=0 1 s
+DONE

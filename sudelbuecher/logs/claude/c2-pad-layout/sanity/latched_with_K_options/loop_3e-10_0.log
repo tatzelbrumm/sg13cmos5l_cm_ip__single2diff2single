@@ -1,0 +1,565 @@
+Note: Starting spice3 gmin stepping
+Warning: spice3 gmin stepping failed
+Note: Starting source stepping
+Warning: source stepping failed
+Note: Transient op started
+Error: Transient op failed, timestep too small
+
+
+Error: The operating point could not be simulated successfully.
+    Any of the following steps may fail.!
+
+
+Note: No compatibility mode selected!
+
+
+Circuit: * sanity loop gain of the backannotated pad cell (sheet netlist), loop broken at xd's vfb pin; cl 3e-10, rl 1g, vd 0
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+DC solution failed -
+
+Last Node Voltages
+------------------
+
+Node                                   Last Voltage        Previous Iter
+----                                   ------------        -------------
+iovdd                                           3.3                  3.3
+vdd                                             1.2                  1.2
+en                                              1.2                  1.2
+s0                                                0                    0
+s1                                                0                    0
+s12                                             1.2                  1.2
+s33                                             3.3                  3.3
+vref                                           1.65                 1.65
+vic                                            1.65                 1.65
+vinp                                           1.65                 1.65
+dp                                                0                    0
+vinn                                           1.65                 1.65
+vext                                            3.3                  3.3
+xg                                             -nan                 -nan
+ibias                                          -nan                 -nan
+xc.xle.inb                                     -nan                 -nan
+xc.xle.a                                       -nan                 -nan
+xc.xle.b                                       -nan                 -nan
+xc.en_ls                                       -nan                 -nan
+xc.xl0.inb                                     -nan                 -nan
+xc.xl0.a                                       -nan                 -nan
+xc.xl0.b                                       -nan                 -nan
+sel0_3v3                                       -nan                 -nan
+xc.xl1.inb                                     -nan                 -nan
+xc.xl1.a                                       -nan                 -nan
+xc.xl1.b                                       -nan                 -nan
+sel1_3v3                                       -nan                 -nan
+xc.en_ls_b                                     -nan                 -nan
+xc.pg1_b                                       -nan                 -nan
+xc.pg3_b                                       -nan                 -nan
+xc.xno.p1                                      -nan                 -nan
+xc.xno.p2                                      -nan                 -nan
+en_3v3                                         -nan                 -nan
+en_3v3_b                                       -nan                 -nan
+xg.en_oa_b                                     -nan                 -nan
+xg.xda.n1                                      -nan                 -nan
+xg.en_oa                                       -nan                 -nan
+xg.en_bg_b                                     -nan                 -nan
+xg.xdc.n1                                      -nan                 -nan
+xg.en_bg                                       -nan                 -nan
+xg.xde.p1                                      -nan                 -nan
+xg.s00                                         -nan                 -nan
+xg.en_ext_b                                    -nan                 -nan
+xg.xdf.n1                                      -nan                 -nan
+xg.en_ext                                      -nan                 -nan
+xg.xoa.vpg                                     -nan                 -nan
+xg.xoa.vpc                                     -nan                 -nan
+xg.xoa.c8                                      -nan                 -nan
+xg.xoa.vnc                                     -nan                 -nan
+xg.xoa.c2                                      -nan                 -nan
+xg.xoa.vbr                                     -nan                 -nan
+xg.xoa.co                                      -nan                 -nan
+iref                                           -nan                 -nan
+xg.xoa.d10                                     -nan                 -nan
+xg.xoa.vres                                    -nan                 -nan
+xg.xoa.ms1_1                                   -nan                 -nan
+xg.xoa.ms1_2                                   -nan                 -nan
+xg.xoa.ms1_3                                   -nan                 -nan
+xg.xoa.ms1_4                                   -nan                 -nan
+xg.xoa.ms1_5                                   -nan                 -nan
+xg.xoa.ms1_6                                   -nan                 -nan
+xg.xoa.ms1_7                                   -nan                 -nan
+xg.xoa.ks                                      -nan                 -nan
+xg.xbg.vpg                                     -nan                 -nan
+xg.xbg.vpc                                     -nan                 -nan
+xg.xbg.ca                                      -nan                 -nan
+xg.xbg.g                                       -nan                 -nan
+xg.xbg.co                                      -nan                 -nan
+xg.xbg.ea                                      -nan                 -nan
+xg.xbg.eb                                      -nan                 -nan
+xg.xbg.n1a[9]                                  -nan                 -nan
+xg.xbg.xr1a[10].dt                             -nan                 -nan
+xg.xbg.n1a[8]                                  -nan                 -nan
+xg.xbg.xr1a[9].dt                              -nan                 -nan
+xg.xbg.n1a[7]                                  -nan                 -nan
+xg.xbg.xr1a[8].dt                              -nan                 -nan
+xg.xbg.n1a[6]                                  -nan                 -nan
+xg.xbg.xr1a[7].dt                              -nan                 -nan
+xg.xbg.n1a[5]                                  -nan                 -nan
+xg.xbg.xr1a[6].dt                              -nan                 -nan
+xg.xbg.n1a[4]                                  -nan                 -nan
+xg.xbg.xr1a[5].dt                              -nan                 -nan
+xg.xbg.n1a[3]                                  -nan                 -nan
+xg.xbg.xr1a[4].dt                              -nan                 -nan
+xg.xbg.n1a[2]                                  -nan                 -nan
+xg.xbg.xr1a[3].dt                              -nan                 -nan
+xg.xbg.n1a[1]                                  -nan                 -nan
+xg.xbg.xr1a[2].dt                              -nan                 -nan
+xg.xbg.n1a[0]                                  -nan                 -nan
+xg.xbg.xr1a[1].dt                              -nan                 -nan
+xg.xbg.xr1a[0].dt                              -nan                 -nan
+xg.xbg.n0[16]                                  -nan                 -nan
+xg.xbg.xr0[17].dt                              -nan                 -nan
+xg.xbg.n0[15]                                  -nan                 -nan
+xg.xbg.xr0[16].dt                              -nan                 -nan
+xg.xbg.n0[14]                                  -nan                 -nan
+xg.xbg.xr0[15].dt                              -nan                 -nan
+xg.xbg.n0[13]                                  -nan                 -nan
+xg.xbg.xr0[14].dt                              -nan                 -nan
+xg.xbg.n0[12]                                  -nan                 -nan
+xg.xbg.xr0[13].dt                              -nan                 -nan
+xg.xbg.n0[11]                                  -nan                 -nan
+xg.xbg.xr0[12].dt                              -nan                 -nan
+xg.xbg.n0[10]                                  -nan                 -nan
+xg.xbg.xr0[11].dt                              -nan                 -nan
+xg.xbg.n0[9]                                   -nan                 -nan
+xg.xbg.xr0[10].dt                              -nan                 -nan
+xg.xbg.n0[8]                                   -nan                 -nan
+xg.xbg.xr0[9].dt                               -nan                 -nan
+xg.xbg.n0[7]                                   -nan                 -nan
+xg.xbg.xr0[8].dt                               -nan                 -nan
+xg.xbg.n0[6]                                   -nan                 -nan
+xg.xbg.xr0[7].dt                               -nan                 -nan
+xg.xbg.n0[5]                                   -nan                 -nan
+xg.xbg.xr0[6].dt                               -nan                 -nan
+xg.xbg.n0[4]                                   -nan                 -nan
+xg.xbg.xr0[5].dt                               -nan                 -nan
+xg.xbg.n0[3]                                   -nan                 -nan
+xg.xbg.xr0[4].dt                               -nan                 -nan
+xg.xbg.n0[2]                                   -nan                 -nan
+xg.xbg.xr0[3].dt                               -nan                 -nan
+xg.xbg.n0[1]                                   -nan                 -nan
+xg.xbg.xr0[2].dt                               -nan                 -nan
+xg.xbg.n0[0]                                   -nan                 -nan
+xg.xbg.xr0[1].dt                               -nan                 -nan
+xg.xbg.e2                                      -nan                 -nan
+xg.xbg.xr0[0].dt                               -nan                 -nan
+xg.xbg.n1b[8]                                  -nan                 -nan
+xg.xbg.xr1b[9].dt                              -nan                 -nan
+xg.xbg.n1b[7]                                  -nan                 -nan
+xg.xbg.xr1b[8].dt                              -nan                 -nan
+xg.xbg.n1b[6]                                  -nan                 -nan
+xg.xbg.xr1b[7].dt                              -nan                 -nan
+xg.xbg.n1b[5]                                  -nan                 -nan
+xg.xbg.xr1b[6].dt                              -nan                 -nan
+xg.xbg.n1b[4]                                  -nan                 -nan
+xg.xbg.xr1b[5].dt                              -nan                 -nan
+xg.xbg.n1b[3]                                  -nan                 -nan
+xg.xbg.xr1b[4].dt                              -nan                 -nan
+xg.xbg.n1b[2]                                  -nan                 -nan
+xg.xbg.xr1b[3].dt                              -nan                 -nan
+xg.xbg.n1b[1]                                  -nan                 -nan
+xg.xbg.xr1b[2].dt                              -nan                 -nan
+xg.xbg.n1b[0]                                  -nan                 -nan
+xg.xbg.xr1b[1].dt                              -nan                 -nan
+xg.xbg.xr1b[0].dt                              -nan                 -nan
+xg.xbg.ms1_1                                   -nan                 -nan
+xg.xbg.ms1_2                                   -nan                 -nan
+xg.xbg.ms1_3                                   -nan                 -nan
+xg.xbg.ms1_4                                   -nan                 -nan
+xg.xbg.ms1_5                                   -nan                 -nan
+xg.xbg.ms1_6                                   -nan                 -nan
+xg.xbg.ms1_7                                   -nan                 -nan
+xg.xbg.ks                                      -nan                 -nan
+xg.xbg.xrdum[1].dt                             -nan                 -nan
+xg.xbg.xrdum[0].dt                             -nan                 -nan
+x1.xt.ni                                       -nan                 -nan
+x1.vbpc                                        -nan                 -nan
+x1.vbp                                         -nan                 -nan
+x1.vabp                                        -nan                 -nan
+x1.vbnc                                        -nan                 -nan
+x1.vbn                                         -nan                 -nan
+x1.vabn                                        -nan                 -nan
+x1.xd.xa.sa                                    -nan                 -nan
+x1.xd.xa.sb                                    -nan                 -nan
+x1.xd.y                                        -nan                 -nan
+x1.xd.x                                        -nan                 -nan
+x1.xd.xa.n1                                    -nan                 -nan
+x1.xd.xa.xr[3].dt                              -nan                 -nan
+x1.xd.xa.n2                                    -nan                 -nan
+x1.xd.xa.xr[2].dt                              -nan                 -nan
+x1.xd.xa.n3                                    -nan                 -nan
+x1.xd.xa.xr[1].dt                              -nan                 -nan
+x1.xd.xa.xr[0].dt                              -nan                 -nan
+x1.xd.xb.sa                                    -nan                 -nan
+x1.xd.xb.sb                                    -nan                 -nan
+x1.xd.xb.n1                                    -nan                 -nan
+x1.xd.xb.xr[3].dt                              -nan                 -nan
+x1.xd.xb.n2                                    -nan                 -nan
+x1.xd.xb.xr[2].dt                              -nan                 -nan
+x1.xd.xb.n3                                    -nan                 -nan
+x1.xd.xb.xr[1].dt                              -nan                 -nan
+x1.xd.xb.xr[0].dt                              -nan                 -nan
+x1.xd.xc1.sa                                   -nan                 -nan
+x1.xd.xc1.sb                                   -nan                 -nan
+fb                                             -nan                 -nan
+x1.xd.xc1.n1                                   -nan                 -nan
+x1.xd.xc1.xr[3].dt                             -nan                 -nan
+x1.xd.xc1.n2                                   -nan                 -nan
+x1.xd.xc1.xr[2].dt                             -nan                 -nan
+x1.xd.xc1.n3                                   -nan                 -nan
+x1.xd.xc1.xr[1].dt                             -nan                 -nan
+x1.xd.xc1.xr[0].dt                             -nan                 -nan
+x1.xd.xc2.sa                                   -nan                 -nan
+x1.xd.xc2.sb                                   -nan                 -nan
+x1.xd.xc2.n1                                   -nan                 -nan
+x1.xd.xc2.xr[3].dt                             -nan                 -nan
+x1.xd.xc2.n2                                   -nan                 -nan
+x1.xd.xc2.xr[2].dt                             -nan                 -nan
+x1.xd.xc2.n3                                   -nan                 -nan
+x1.xd.xc2.xr[1].dt                             -nan                 -nan
+x1.xd.xc2.xr[0].dt                             -nan                 -nan
+x1.xd.l2                                       -nan                 -nan
+x1.xd.l1                                       -nan                 -nan
+x1.xd.pl                                       -nan                 -nan
+x1.xd.pr                                       -nan                 -nan
+x1.a                                           -nan                 -nan
+x1.b                                           -nan                 -nan
+x1.dabp                                        -nan                 -nan
+x1.dabn                                        -nan                 -nan
+x1.xd.xrd[1].dt                                -nan                 -nan
+x1.xd.xrd[0].dt                                -nan                 -nan
+pad                                            -nan                 -nan
+x1.pa                                          -nan                 -nan
+x1.xspa.xr0.dt                                 -nan                 -nan
+x1.pb                                          -nan                 -nan
+x1.xspb.xr0.dt                                 -nan                 -nan
+vterm                                          1.65                 1doAnalyses: OP:  Timestep too small; trouble with dparea-instance d.x1.xspa.xd0.d1
+
+
+op simulation(s) aborted
+Warning from checkvalid: vector pad is not available or has zero length.
+Error: RHS "v(pad)" invalid
+Warning from checkvalid: vector vio#branch is not available or has zero length.
+Error: RHS "-i(vio)" invalid
+Error: &vo: no such variable.
+Error: &iq: no such variable.
+Note: Starting spice3 gmin stepping
+Warning: spice3 gmin stepping failed
+Note: Starting source stepping
+Warning: source stepping failed
+Note: Transient op started
+Error: Transient op failed, timestep too small
+
+
+Error: The operating point could not be simulated successfully.
+    Any of the following steps may fail.!
+
+.65
+inj                                               0                    0
+lb#branch                                      -nan                 -nan
+en#branch                                      -nan                 -nan
+ep#branch                                      -nan                 -nan
+vinj#branch                                    -nan                 -nan
+vterm#branch                                   -nan                 -nan
+vext#branch                                    -nan                 -nan
+vd#branch                                         0                    0
+vic#branch                                     -nan                 -nan
+vref#branch                                    -nan                 -nan
+vsh#branch                                     -nan                 -nan
+vsl#branch                                     -nan                 -nan
+vs1#branch                                     -nan                 -nan
+vs0#branch                                     -nan                 -nan
+ven#branch                                     -nan                 -nan
+vcore#branch                                    nan                  nan
+vio#branch                                     -nan                 -nan
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+AC operating point failed -
+
+Last Node Voltages
+------------------
+
+Node                                   Last Voltage        Previous Iter
+----                                   ------------        -------------
+iovdd                                           3.3                  3.3
+vdd                                             1.2                  1.2
+en                                              1.2                  1.2
+s0                                                0                    0
+s1                                                0                    0
+s12                                             1.2                  1.2
+s33                                             3.3                  3.3
+vref                                           1.65                 1.65
+vic                                            1.65                 1.65
+vinp                                           1.65                 1.65
+dp                                                0                    0
+vinn                                           1.65                 1.65
+vext                                            3.3                  3.3
+xg                                             -nan                 -nan
+ibias                                          -nan                 -nan
+xc.xle.inb                                     -nan                 -nan
+xc.xle.a                                       -nan                 -nan
+xc.xle.b                                       -nan                 -nan
+xc.en_ls                                       -nan                 -nan
+xc.xl0.inb                                     -nan                 -nan
+xc.xl0.a                                       -nan                 -nan
+xc.xl0.b                                       -nan                 -nan
+sel0_3v3                                       -nan                 -nan
+xc.xl1.inb                                     -nan                 -nan
+xc.xl1.a                                       -nan                 -nan
+xc.xl1.b                                       -nan                 -nan
+sel1_3v3                                       -nan                 -nan
+xc.en_ls_b                                     -nan                 -nan
+xc.pg1_b                                       -nan                 -nan
+xc.pg3_b                                       -nan                 -nan
+xc.xno.p1                                      -nan                 -nan
+xc.xno.p2                                      -nan                 -nan
+en_3v3                                         -nan                 -nan
+en_3v3_b                                       -nan                 -nan
+xg.en_oa_b                                     -nan                 -nan
+xg.xda.n1                                      -nan                 -nan
+xg.en_oa                                       -nan                 -nan
+xg.en_bg_b                                     -nan                 -nan
+xg.xdc.n1                                      -nan                 -nan
+xg.en_bg                                       -nan                 -nan
+xg.xde.p1                                      -nan                 -nan
+xg.s00                                         -nan                 -nan
+xg.en_ext_b                                    -nan                 -nan
+xg.xdf.n1                                      -nan                 -nan
+xg.en_ext                                      -nan                 -nan
+xg.xoa.vpg                                     -nan                 -nan
+xg.xoa.vpc                                     -nan                 -nan
+xg.xoa.c8                                      -nan                 -nan
+xg.xoa.vnc                                     -nan                 -nan
+xg.xoa.c2                                      -nan                 -nan
+xg.xoa.vbr                                     -nan                 -nan
+xg.xoa.co                                      -nan                 -nan
+iref                                           -nan                 -nan
+xg.xoa.d10                                     -nan                 -nan
+xg.xoa.vres                                    -nan                 -nan
+xg.xoa.ms1_1                                   -nan                 -nan
+xg.xoa.ms1_2                                   -nan                 -nan
+xg.xoa.ms1_3                                   -nan                 -nan
+xg.xoa.ms1_4                                   -nan                 -nan
+xg.xoa.ms1_5                                   -nan                 -nan
+xg.xoa.ms1_6                                   -nan                 -nan
+xg.xoa.ms1_7                                   -nan                 -nan
+xg.xoa.ks                                      -nan                 -nan
+xg.xbg.vpg                                     -nan                 -nan
+xg.xbg.vpc                                     -nan                 -nan
+xg.xbg.ca                                      -nan                 -nan
+xg.xbg.g                                       -nan                 -nan
+xg.xbg.co                                      -nan                 -nan
+xg.xbg.ea                                      -nan                 -nan
+xg.xbg.eb                                      -nan                 -nan
+xg.xbg.n1a[9]                                  -nan                 -nan
+xg.xbg.xr1a[10].dt                             -nan                 -nan
+xg.xbg.n1a[8]                                  -nan                 -nan
+xg.xbg.xr1a[9].dt                              -nan                 -nan
+xg.xbg.n1a[7]                                  -nan                 -nan
+xg.xbg.xr1a[8].dt                              -nan                 -nan
+xg.xbg.n1a[6]                                  -nan                 -nan
+xg.xbg.xr1a[7].dt                              -nan                 -nan
+xg.xbg.n1a[5]                                  -nan                 -nan
+xg.xbg.xr1a[6].dt                              -nan                 -nan
+xg.xbg.n1a[4]                                  -nan                 -nan
+xg.xbg.xr1a[5].dt                              -nan                 -nan
+xg.xbg.n1a[3]                                  -nan                 -nan
+xg.xbg.xr1a[4].dt                              -nan                 -nan
+xg.xbg.n1a[2]                                  -nan                 -nan
+xg.xbg.xr1a[3].dt                              -nan                 -nan
+xg.xbg.n1a[1]                                  -nan                 -nan
+xg.xbg.xr1a[2].dt                              -nan                 -nan
+xg.xbg.n1a[0]                                  -nan                 -nan
+xg.xbg.xr1a[1].dt                              -nan                 -nan
+xg.xbg.xr1a[0].dt                              -nan                 -nan
+xg.xbg.n0[16]                                  -nan                 -nan
+xg.xbg.xr0[17].dt                              -nan                 -nan
+xg.xbg.n0[15]                                  -nan                 -nan
+xg.xbg.xr0[16].dt                              -nan                 -nan
+xg.xbg.n0[14]                                  -nan                 -nan
+xg.xbg.xr0[15].dt                              -nan                 -nan
+xg.xbg.n0[13]                                  -nan                 -nan
+xg.xbg.xr0[14].dt                              -nan                 -nan
+xg.xbg.n0[12]                                  -nan                 -nan
+xg.xbg.xr0[13].dt                              -nan                 -nan
+xg.xbg.n0[11]                                  -nan                 -nan
+xg.xbg.xr0[12].dt                              -nan                 -nan
+xg.xbg.n0[10]                                  -nan                 -nan
+xg.xbg.xr0[11].dt                              -nan                 -nan
+xg.xbg.n0[9]                                   -nan                 -nan
+xg.xbg.xr0[10].dt                              -nan                 -nan
+xg.xbg.n0[8]                                   -nan                 -nan
+xg.xbg.xr0[9].dt                               -nan                 -nan
+xg.xbg.n0[7]                                   -nan                 -nan
+xg.xbg.xr0[8].dt                               -nan                 -nan
+xg.xbg.n0[6]                                   -nan                 -nan
+xg.xbg.xr0[7].dt                               -nan                 -nan
+xg.xbg.n0[5]                                   -nan                 -nan
+xg.xbg.xr0[6].dt                               -nan                 -nan
+xg.xbg.n0[4]                                   -nan                 -nan
+xg.xbg.xr0[5].dt                               -nan                 -nan
+xg.xbg.n0[3]                                   -nan                 -nan
+xg.xbg.xr0[4].dt                               -nan                 -nan
+xg.xbg.n0[2]                                   -nan                 -nan
+xg.xbg.xr0[3].dt                               -nan                 -nan
+xg.xbg.n0[1]                                   -nan                 -nan
+xg.xbg.xr0[2].dt                               -nan                 -nan
+xg.xbg.n0[0]                                   -nan                 -nan
+xg.xbg.xr0[1].dt                               -nan                 -nan
+xg.xbg.e2                                      -nan                 -nan
+xg.xbg.xr0[0].dt                               -nan                 -nan
+xg.xbg.n1b[8]                                  -nan                 -nan
+xg.xbg.xr1b[9].dt                              -nan                 -nan
+xg.xbg.n1b[7]                                  -nan                 -nan
+xg.xbg.xr1b[8].dt                              -nan                 -nan
+xg.xbg.n1b[6]                                  -nan                 -nan
+xg.xbg.xr1b[7].dt                              -nan                 -nan
+xg.xbg.n1b[5]                                  -nan                 -nan
+xg.xbg.xr1b[6].dt                              -nan                 -nan
+xg.xbg.n1b[4]                                  -nan                 -nan
+xg.xbg.xr1b[5].dt                              -nan                 -nan
+xg.xbg.n1b[3]                                  -nan                 -nan
+xg.xbg.xr1b[4].dt                              -nan                 -nan
+xg.xbg.n1b[2]                                  -nan                 -nan
+xg.xbg.xr1b[3].dt                              -nan                 -nan
+xg.xbg.n1b[1]                                  -nan                 -nan
+xg.xbg.xr1b[2].dt                              -nan                 -nan
+xg.xbg.n1b[0]                                  -nan                 -nan
+xg.xbg.xr1b[1].dt                              -nan                 -nan
+xg.xbg.xr1b[0].dt                              -nan                 -nan
+xg.xbg.ms1_1                                   -nan                 -nan
+xg.xbg.ms1_2                                   -nan                 -nan
+xg.xbg.ms1_3                                   -nan                 -nan
+xg.xbg.ms1_4                                   -nan                 -nan
+xg.xbg.ms1_5                                   -nan                 -nan
+xg.xbg.ms1_6                                   -nan                 -nan
+xg.xbg.ms1_7                                   -nan                 -nan
+xg.xbg.ks                                      -nan                 -nan
+xg.xbg.xrdum[1].dt                             -nan                 -nan
+xg.xbg.xrdum[0].dt                             -nan                 -nan
+x1.xt.ni                                       -nan                 -nan
+x1.vbpc                                        -nan                 -nan
+x1.vbp                                         -nan                 -nan
+x1.vabp                                        -nan                 -nan
+x1.vbnc                                        -nan                 -nan
+x1.vbn                                         -nan                 -nan
+x1.vabn                                        -nan                 -nan
+x1.xd.xa.sa                                    -nan                 -nan
+x1.xd.xa.sb                                    -nan                 -nan
+x1.xd.y                                        -nan                 -nan
+x1.xd.x                                        -nan                 -nan
+x1.xd.xa.n1                                    -nan                 -nan
+x1.xd.xa.xr[3].dt                              -nan                 -nan
+x1.xd.xa.n2                                    -nan                 -nan
+x1.xd.xa.xr[2].dt                              -nan                 -nan
+x1.xd.xa.n3                                    -nan                 -nan
+x1.xd.xa.xr[1].dt                              -nan                 -nan
+x1.xd.xa.xr[0].dt                              -nan                 -nan
+x1.xd.xb.sa                                    -nan                 -nan
+x1.xd.xb.sb                                    -nan                 -nan
+x1.xd.xb.n1                                    -nan                 -nan
+x1.xd.xb.xr[3].dt                              -nan                 -nan
+x1.xd.xb.n2                                    -nan                 -nan
+x1.xd.xb.xr[2].dt                              -nan                 -nan
+x1.xd.xb.n3                                    -nan                 -nan
+x1.xd.xb.xr[1].dt                              -nan                 -nan
+x1.xd.xb.xr[0].dt                              -nan                 -nan
+x1.xd.xc1.sa                                   -nan                 -nan
+x1.xd.xc1.sb                                   -nan                 -nan
+fb                                             -nan                 -nan
+x1.xd.xc1.n1                                   -nan                 -nan
+x1.xd.xc1.xr[3].dt                             -nan                 -nan
+x1.xd.xc1.n2                                   -nan                 -nan
+x1.xd.xc1.xr[2].dt                             -nan                 -nan
+x1.xd.xc1.n3                                   -nan                 -nan
+x1.xd.xc1.xr[1].dt                             -nan                 -nan
+x1.xd.xc1.xr[0].dt                             -nan                 -nan
+x1.xd.xc2.sa                                   -nan                 -nan
+x1.xd.xc2.sb                                   -nan                 -nan
+x1.xd.xc2.n1                                   -nan                 -nan
+x1.xd.xc2.xr[3].dt                             -nan                 -nan
+x1.xd.xc2.n2                                   -nan                 -nan
+x1.xd.xc2.xr[2].dt                             -nan                 -nan
+x1.xd.xc2.n3                                   -nan                 -nan
+x1.xd.xc2.xr[1].dt                             -nan                 -nan
+x1.xd.xc2.xr[0].dt                             -nan                 -nan
+x1.xd.l2                                       -nan                 -nan
+x1.xd.doAnalyses: AC:  Timestep too small; frequency = 0: trouble with dparea-instance d.x1.xspa.xd0.d1
+
+
+ac simulation(s) aborted
+Warning from checkvalid: vector pad is not available or has zero length.
+Error: RHS "-v(pad)/v(fb)" invalid
+Warning from checkvalid: vector t is not available or has zero length.
+Error: RHS "vdb(t)" invalid
+Warning from checkvalid: vector t is not available or has zero length.
+Error: RHS "cph(t)*180/pi" invalid
+Error: measure limited to tran, dc, sp, or ac analysis
+ meas ac t0 find tdb at=10 failed!
+
+Error: measure limited to tran, dc, sp, or ac analysis
+ meas ac fc when tdb=0 fall=1 failed!
+
+Error: measure limited to tran, dc, sp, or ac analysis
+ meas ac phc find tph when tdb=0 fall=1 failed!
+
+Warning from checkvalid: vector phc is not available or has zero length.
+Error: RHS "180 + phc" invalid
+Error: measure limited to tran, dc, sp, or ac analysis
+ meas ac gmdb find tdb when tph=-1.800000e+02 cross=1 failed!
+
+Warning from checkvalid: vector gmdb is not available or has zero length.
+Error: RHS "-gmdb" invalid
+Error: &t0: no such variable.
+Error: &fc: no such variable.
+Error: &pm: no such variable.
+Error: &GM: no such variable.
+Error: incomplete or empty netlist
+       or no ".plot", ".print", or ".fourier" lines in batch mode;
+no simulations run!
+l1                                       -nan                 -nan
+x1.xd.pl                                       -nan                 -nan
+x1.xd.pr                                       -nan                 -nan
+x1.a                                           -nan                 -nan
+x1.b                                           -nan                 -nan
+x1.dabp                                        -nan                 -nan
+x1.dabn                                        -nan                 -nan
+x1.xd.xrd[1].dt                                -nan                 -nan
+x1.xd.xrd[0].dt                                -nan                 -nan
+pad                                            -nan                 -nan
+x1.pa                                          -nan                 -nan
+x1.xspa.xr0.dt                                 -nan                 -nan
+x1.pb                                          -nan                 -nan
+x1.xspb.xr0.dt                                 -nan                 -nan
+vterm                                          1.65                 1.65
+inj                                               0                    0
+lb#branch                                      -nan                 -nan
+en#branch                                      -nan                 -nan
+ep#branch                                      -nan                 -nan
+vinj#branch                                    -nan                 -nan
+vterm#branch                                   -nan                 -nan
+vext#branch                                    -nan                 -nan
+vd#branch                                         0                    0
+vic#branch                                     -nan                 -nan
+vref#branch                                    -nan                 -nan
+vsh#branch                                     -nan                 -nan
+vsl#branch                                     -nan                 -nan
+vs1#branch                                     -nan                 -nan
+vs0#branch                                     -nan                 -nan
+ven#branch                                     -nan                 -nan
+vcore#branch                                    nan                  nan
+vio#branch                                     -nan                 -nan
+

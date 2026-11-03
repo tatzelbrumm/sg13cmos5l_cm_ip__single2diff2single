@@ -1,0 +1,46 @@
+placed 16 instances, 0 rails, 0 tap stripes: 80.000 x 96.000 um
+block d2s_block: 80.000 x 96.000 um = 7680.0 um2; gate 2025.9 um2 (26.4 %), MOS diffusion 2448.3 um2 (31.9 %)
+layers drawn in the top cell: 10/0 10/2 10/25 19/0 44/0 8/0; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  a          M1   7.25 um  M2  33.52 um  vias 6
+  b          M1  20.79 um  M2   8.34 um  vias 2
+  l1         M1   9.99 um  M2  15.93 um  vias 3
+  l2         M1  18.14 um  M2  25.57 um  vias 8
+  pl         M1   0.00 um  M2  12.69 um  vias 0
+  pr         M1   1.69 um  M2   9.45 um  vias 2
+  x          M1  15.52 um  M2  13.12 um  vias 4
+  y          M1  28.50 um  M2  18.07 um  vias 9
+  dabp       M1  12.59 um  M2   0.00 um  vias 1
+  dabn       M1  23.53 um  M2   1.08 um  vias 3
+  vbp        M1   4.83 um  M2  16.29 um  vias 5
+  vbn        M1  37.43 um  M2  16.20 um  vias 2
+  vbpc       M1   3.79 um  M2  56.39 um  vias 2
+  vbnc       M1  19.97 um  M2  27.81 um  vias 2
+  vabp       M1  16.66 um  M2  68.55 um  vias 3
+  vabn       M1  21.16 um  M2  71.55 um  vias 2
+  iref       M1   7.32 um  M2  15.30 um  vias 1
+  en_3v3     M1  24.09 um  M2  81.12 um  vias 7
+  en_3v3_b   M1  15.12 um  M2  76.20 um  vias 4
+  vinp       M1   0.00 um  M2  48.81 um  vias 0
+  vinn       M1   1.89 um  M2  51.03 um  vias 2
+  vref       M1   5.08 um  M2  47.66 um  vias 6
+  vfb        M1  16.68 um  M2  41.85 um  vias 4
+  sa_A       M1  33.59 um  M2   6.38 um  vias 7
+  sa_B       M1  31.81 um  M2  48.10 um  vias 9
+  sa_C1      M1  60.85 um  M2  42.93 um  vias 6
+  sa_C2      M1  47.64 um  M2  48.13 um  vias 9
+  sb_A       M1  37.16 um  M2  46.96 um  vias 4
+  sb_B       M1  72.41 um  M2  28.52 um  vias 6
+  sb_C1      M1  28.13 um  M2   5.03 um  vias 3
+  sb_C2      M1  35.48 um  M2   3.41 um  vias 3
+  iovdd_ld   M1   0.00 um  M2   0.21 um  vias 1
+  iovdd_ab   M1   0.00 um  M2   3.35 um  vias 1
+  iovdd_o    M1   0.42 um  M2   0.24 um  vias 1
+  iovdd_cp   M1   0.00 um  M2   2.21 um  vias 1
+  iovdd_up   M1  11.73 um  M2  16.27 um  vias 6
+  iovss_m    M1  15.34 um  M2  22.01 um  vias 9
+  iovss_sk   M1   1.08 um  M2   0.00 um  vias 1
+  iovss_o    M1   4.54 um  M2   9.38 um  vias 1
+failed: [] time 29 s
+relabel_block: vdd 6, vddo 1, vss 6, vsso 1

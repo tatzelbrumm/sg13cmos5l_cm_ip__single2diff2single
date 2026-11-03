@@ -1,0 +1,10 @@
+devices: layout reference 128, circuit 108 (one line per finger / segment on the reference side)
+## MOS (W sums, dummies apart): 53 keys, 0 differ
+## dummies (D = S): 13 keys, 4 differ
+  ('sg13_hv_nmos', 6.0, ('ni', 'ni'), 'ni', 'iovss'): layout 2.4  circuit 0
+  ('sg13_hv_nmos', 6.0, ('ni', 'ni'), 'ni', 'ni'): layout 0  circuit 2.4
+  ('sg13_hv_pmos', 6.0, ('iovdd', 'iovdd'), 'vbp', 'iovdd'): layout 17  circuit 12
+  ('sg13_hv_pmos', 6.0, ('iovdd', 'iovdd'), 'vbpc', 'iovdd'): layout 0  circuit 5
+## diodes (area, um2): 6 keys, 0 differ
+## resistors (series-reduced lengths): 7 keys, 0 differ
+RESULT DIFFERENT

@@ -33,7 +33,7 @@ N2 = "/home/user/sudel/sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents_c2/
 src = open(N2).read()
 ns = {"__name__": "n2lib"}
 exec(compile(src[:src.index("\ncells = [")], N2, "exec"), ns)
-pya, ly, LI, g5, Cell, centred = ns["pya"], ns["ly"], ns["LI"], ns["g5"], ns["Cell"], ns["centred"]
+pya, ly, LI, g5, Cell, centered = ns["pya"], ns["ly"], ns["LI"], ns["g5"], ns["Cell"], ns["centred"]   # N2 spells it centred
 TIEW = ns["TIEW"]
 
 
@@ -55,12 +55,12 @@ def head(c, dv):
     """gate head as wide as the gate, 0.56 beyond the Activ, contacts 0.18 .. 0.34 above it (as P2's upright rows)"""
     g0, g1 = dv["g"]
     c.box("GatPoly", g0, dv["top"], g1, dv["top"] + 0.56)
-    for p in centred(g0 + 0.07, g1 - 0.07):
+    for p in centered(g0 + 0.07, g1 - 0.07):
         c.cont(p, dv["top"] + 0.18)
 
 
 def fill_v1(c, x0, y0, x1, y1):
-    """Via1 (V1_a 0.19, V1_b 0.22: pitch 0.41) centred in the zone"""
+    """Via1 (V1_a 0.19, V1_b 0.22: pitch 0.41) centered in the zone"""
     def pos(a, b):
         n = max(1, int((b - a - 0.19) / 0.41 + 1e-6) + 1)
         return [(a + b) / 2 - ((n - 1) * 0.41) / 2 + i * 0.41 for i in range(n)]

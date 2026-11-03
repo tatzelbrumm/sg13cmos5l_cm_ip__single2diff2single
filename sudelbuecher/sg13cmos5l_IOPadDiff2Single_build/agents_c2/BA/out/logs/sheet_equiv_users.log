@@ -1,0 +1,92 @@
+symbols whose pins changed (every sheet that places them must be re-wired):
+  sg13cmos5l_IOPadDiff2Single.sym: renamed/added/removed: en_1v2 en_3v3 en_3v3_b ibias iref sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
+    used in: macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_ac.sch, macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_dc.sch, macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_drive.sch, macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_enable.sch, macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_noise.sch, macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_pd.sch, macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_thd.sch, macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_tran.sch, macros/slot/schematic/xschem/slot.sch, schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch
+
+sheets:
+  DIFFERENT  macros/slot/schematic/xschem/slot.sch  (511 devices)
+      xd2s     sg13cmos5l_IOPadDiff2Single ibias0->d2s_iref, enable->d2s_en_3v3, dig_in[0]->d2s_en_3v3_b, dig_in[1]->sg13cmos5l_IOPadDiff2Single
+      xd2s_c   only in new
+      xd2s_g   only in new
+  DIFFERENT  schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch  (511 devices)  2 MISSING symbol(s)
+      xoutbuf  sg13cmos5l_IOPadDiff2Single net16->outbuf_iovdd, net17->outbuf_iovss, net18->outbuf_vdd, net19->net16, net20->net17, net21->net18, net22->net19, net23->net20, net24->outbuf_iref, net25->outbuf_en_3v3, net26->outbuf_en_3v3_b, net27->sg13cmos5l_IOPadDiff2Single
+      xoutbuf_c only in new
+      xoutbuf_g only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_ac.sch  (325 devices)
+      x1       sg13cmos5l_IOPadDiff2Single ibias->iref, en->en_3v3, s0->en_3v3_b, s1->sg13cmos5l_IOPadDiff2Single
+      xc       only in new
+      xg       only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_dc.sch  (309 devices)
+      x1       sg13cmos5l_IOPadDiff2Single ibias->iref, en->en_3v3, s0->en_3v3_b, s1->sg13cmos5l_IOPadDiff2Single
+      xc       only in new
+      xg       only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_drive.sch  (303 devices)
+      x1       sg13cmos5l_IOPadDiff2Single ibias->iref, en->en_3v3, s0->en_3v3_b, s1->sg13cmos5l_IOPadDiff2Single
+      xc       only in new
+      xg       only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_enable.sch  (299 devices)
+      x1       sg13cmos5l_IOPadDiff2Single ibias->iref, en->en_3v3, s0->en_3v3_b, s1->sg13cmos5l_IOPadDiff2Single
+      xc       only in new
+      xg       only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_noise.sch  (300 devices)
+      x1       sg13cmos5l_IOPadDiff2Single ibias->iref, en->en_3v3, s0->en_3v3_b, s1->sg13cmos5l_IOPadDiff2Single
+      xc       only in new
+      xg       only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_pd.sch  (293 devices)
+      let      v(en_3v3)        v(x1.en_3v3)->v(en_3v3)
+      x1       sg13cmos5l_IOPadDiff2Single ibias->iref, en->en_3v3, s0->en_3v3_b, s1->sg13cmos5l_IOPadDiff2Single
+      xc       only in new
+      xg       only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_thd.sch  (302 devices)
+      x1       sg13cmos5l_IOPadDiff2Single ibias->iref, en->en_3v3, s0->en_3v3_b, s1->sg13cmos5l_IOPadDiff2Single
+      xc       only in new
+      xg       only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/sg13cmos5l_IOPadDiff2Single_tb_tran.sch  (309 devices)
+      x1       sg13cmos5l_IOPadDiff2Single ibias->iref, en->en_3v3, s0->en_3v3_b, s1->sg13cmos5l_IOPadDiff2Single
+      xc       only in new
+      xg       only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd.sch  (77 devices)
+      XMDABN[0] only in new
+      XMDABN[1] only in new
+      XMDABP[0] only in new
+      XMDABP[1] only in new
+      XMDBNT   only in new
+      XMDCN[0] only in new
+      XMDCN[1] only in new
+      XMDCN[2] only in new
+      XMDCN[3] only in new
+      XMDL[0]  only in new
+      XMDL[1]  only in new
+      XMDL[2]  only in new
+      XMDL[3]  only in new
+      XMDPC    only in new
+      XMDSK[0] only in new
+      XMDSK[1] only in new
+      XMDSK[2] only in new
+      XMDSK[3] only in new
+      XMDTL[0] only in new
+      XMDTL[1] only in new
+      XMDTL[2] only in new
+      XMDT[0]  only in new
+      XMDT[1]  only in new
+      XMDT[2]  only in new
+      XMDT[3]  only in new
+      XRD[0]   only in new
+      XRD[1]   only in new
+      XSA      sg13_hv_pmos     vddo->vdd
+      XSB      sg13_hv_nmos     vsso->vss
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/unit_r2.sch  (8 devices)
+      XR       only in old
+      XR[0]    only in new
+      XR[1]    only in new
+      XR[2]    only in new
+      XR[3]    only in new
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd_sel.sch  (217 devices)
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/verification/cace/templates/d2s_mpdda_pd_sel_tb_loop.sch  (249 devices)
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_enable.sch  (129 devices)
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_leak.sch  (125 devices)
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_startup_oa.sch  (142 devices)
+  DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/testbenches/xschem/tb_pd_unpowered.sch  (134 devices)
+  DIFFERENT  macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda.sch  (64 devices)
+  DIFFERENT  macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/sg13cmos5l_IOPadSingle2Diff.sch  (244 devices)
+
+20 of 20 sheets differ

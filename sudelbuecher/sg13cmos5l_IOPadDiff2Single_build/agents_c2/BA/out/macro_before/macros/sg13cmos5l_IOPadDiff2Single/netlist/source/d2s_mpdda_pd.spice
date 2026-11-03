@@ -1,0 +1,46 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_mpdda_pd: d2s_mpdda (../../improvements/sim/d2s_mpdda.spice) with a digital enable, without its output stage:
+* since 2026-10-28 OP / ON (with the replicas RP1 / RN1 and the dummy RPD) are d2s_out_p / d2s_out_n (d2s_out.spice)
+* and the Miller capacitors CMA / CMB are devices of the pad's top cell (sg13cmos5l_IOPadDiff2Single.spice). This cell
+* drives the output gates a / b and holds RP2 / RN2, the upper halves of the class-AB diode stacks (sources dabp / dabn).
+* Ports as d2s_mpdda with vout replaced by a b dabp dabn (after vfb), plus en_3v3 and en_3v3_b at the end
+* (0 ... 3.3 V on vdd / vss; en_3v3 active high, en_3v3_b its complement, made by XIB in en_ctrl_3v3).
+* Disabled (en_3v3 = 0):
+*   - a, the gate of OP, is pulled to vddo and b, the gate of ON, to vsso: both output devices are
+*     off, with their gates tied to their sources as in a clamp (case (a): OP / ON are the pad's
+*     clamp frames).
+*   - vabp is pulled to vdd and vabn to vss. Otherwise ABP / ABN, which sit between a (now at
+*     vddo) and b (now at vsso), would conduct from one pull into the other.
+*   - The bias (bias_tree_pd) switches off the tails, sinks, mirror and cascodes, and the currents
+*     into the class-AB diode stacks RP1 + RP2 / RN1 + RN2.
+* Enabled (en_3v3 = vdd): the four switches are off; everything else is d2s_mpdda unchanged.
+* unit_r2 from units.spice, as for d2s_mpdda.
+.subckt d2s_mpdda_pd vdd vss vddo vsso vinp vinn vref vfb a b dabp dabn vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b lcas=3 rl=50.6u
+XA x y vinp vref vdd vss vbp unit_r2 rl={rl}
+XB x y vref vinn vdd vss vbp unit_r2 rl={rl}
+XC1 x y vref vfb vdd vss vbp unit_r2 rl={rl}
+XC2 x y vref vfb vdd vss vbp unit_r2 rl={rl}
+XSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=4
+XSY y vbn vss vss sg13_hv_nmos w=36u l=6u ng=4
+XCX l1 vbnc x vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+XCY b vbnc y vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+XPL pl l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4
+XPR pr l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4
+XPCL l2 vbpc pl vdd sg13_hv_pmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+XPCR a vbpc pr vdd sg13_hv_pmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+XFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XFNL l2 vabn l1 vss sg13_hv_nmos w=4.4u l=1u ng=1
+XABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
+* --- upper halves of the class-AB diode stacks (in bias_tree_pd until 2026-10-27): the tree sinks 5 uA from vabp
+*     and sources 5 uA into vabn. RP2 / RN2 are replicas of ABP / ABN; their sources dabp / dabn go to RP1 / RN1,
+*     the replicas of OP / ON in the clamp frames (d2s_out_p / d2s_out_n in d2s_out.spice, pad level).
+XRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XRN2 vabn vabn dabn vss sg13_hv_nmos w=4.4u l=1u ng=1
+* --- disable switches: output gates to their own rails, class-AB lines off
+XSA a en_3v3 vddo vddo sg13_hv_pmos w=1u l=0.45u ng=1
+XSB b en_3v3_b vsso vsso sg13_hv_nmos w=1u l=0.45u ng=1
+XSABP vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XSABN vabn en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends d2s_mpdda_pd

@@ -1,0 +1,2 @@
+DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd.sch vs .subckt d2s_mpdda_pd: sheet 77 devices, source 38; port order same; missing symbols 0
+DIFFERENT  macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem/d2s_mpdda_pd.sch vs .subckt d2s_mpdda_pd: sheet 77 devices, source 77; port order same; missing symbols 0

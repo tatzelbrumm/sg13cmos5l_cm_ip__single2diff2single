@@ -1,0 +1,11 @@
+rebuild exit 0
+pad_candidate.gds delivered 8946d2a0c95e rebuilt 8946d2a0c95e
+pad_candidate.cdl delivered b06a4f5ba6de rebuilt b06a4f5ba6de
+geometry XOR vs stage B (texts excluded by XOR of polygons): empty
+('vdd', 'Metal3ViasUp', 169) 1
+('vdd', 'TopLayersTo4', 148) 1
+('vss', 'Metal3ViasUp', 149) 1
+('vss', 'TopLayersTo4', 170) 1
+sg13cmos5l_IOPadDiff2Single: 81.24 x 180.00 um | XOR empty | DRC clean | LVS match | W per (model, L) DIFFERENT
+rowcheck FAIL 0 DIFFERENT 0
+ALLDONE

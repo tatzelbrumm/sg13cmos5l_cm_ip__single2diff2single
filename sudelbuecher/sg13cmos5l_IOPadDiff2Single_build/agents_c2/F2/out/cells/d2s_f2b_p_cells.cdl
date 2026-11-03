@@ -1,0 +1,20 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* F2 PMOS cells, stage B (build_f2b_p.py, C2 2026-11-03); one line per finger, dummies included.
+
+.SUBCKT d2s_ab_p_f2 a b dabp en_3v3 l1 l2 vabp vdd vddo
+MSABP vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MSA a en_3v3 vddo vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MD0 vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MFPL l1 vabp l2 vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MABP b vabp a vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+MD4 vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1 m=1
+.ENDS d2s_ab_p_f2
+
+.SUBCKT bias_tree_p_f2 vabn vbn vbnc vbp vdd
+MPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MD vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+.ENDS bias_tree_p_f2

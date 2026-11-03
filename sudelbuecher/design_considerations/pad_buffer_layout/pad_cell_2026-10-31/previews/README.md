@@ -90,3 +90,18 @@ names an agent's own render.
 | `F2_sinks_6x6_f2_end.png` | F2 stage A (placement, 2026-11-03), for Christoph's review; F2's own render |
 | `K_steps_large.png` | K stage 8: large steps to the swing ends, v0 / v8 / v9, K's own plot |
 | `K_rail_recovery.png` | K stage 8: rail drive and recovery, v0 / v8 / v9, K's own plot |
+| `F2_pad_bottom_row_joins.png` | F2 stage B (routed, 2026-11-03), F2's own render |
+| `F2_pad_candidate_full.png` | F2 stage B (routed, 2026-11-03), F2's own render |
+| `F2_pad_candidate_top.png` | F2 stage B (routed, 2026-11-03), F2's own render |
+| `F2_pad_cma_left_rewiring.png` | F2 stage B (routed, 2026-11-03), F2's own render |
+| `F2_pad_cmb_right_rewiring.png` | F2 stage B (routed, 2026-11-03), F2's own render |
+| `F2_pad_stage_feeds_left.png` | F2 stage B (routed, 2026-11-03), F2's own render |
+| `F2_pad_switches_bias.png` | F2 stage B (routed, 2026-11-03), F2's own render |
+| `F2B_cell_bias_tree_n_f2.png` | F2 stage B cell (2026-11-03), F2's own render |
+| `F2B_cell_bias_tree_p_f2.png` | F2 stage B cell (2026-11-03), F2's own render |
+| `F2B_cell_d2s_ab_n_f2.png` | F2 stage B cell (2026-11-03), F2's own render |
+| `F2B_cell_d2s_ab_p_f2.png` | F2 stage B cell (2026-11-03), F2's own render |
+| `F2B_cell_d2s_sp2k_f2.png` | F2 stage B cell (2026-11-03), F2's own render |
+| `F2B_cell_d2s_tgsw_f2.png` | F2 stage B cell (2026-11-03), F2's own render |
+| `F2B_cell_sinks_6x6_f2.png` | F2 stage B cell (2026-11-03), F2's own render |
+| `F2B_cell_sinks_6x6_f2_center.png` | F2 stage B cell (2026-11-03), F2's own render |

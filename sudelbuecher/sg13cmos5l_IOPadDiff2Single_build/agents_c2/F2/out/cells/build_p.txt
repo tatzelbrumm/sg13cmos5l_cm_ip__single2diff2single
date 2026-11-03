@@ -1,0 +1,30 @@
+Could not import tkinter. No callback support.
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+d2s_ab_p_f2        9.900 x  10.990 um
+    en_3v3    M1  (5.685, 9.930; 5.945, 10.280)
+    vabp      M2  (4.600, 10.590; 4.900, 10.990)
+    vddo      M1  (6.150, 10.590; 6.310, 10.990)
+    l1        M1  (3.670, 0.000; 3.830, 0.400)
+    l2        M1  (2.690, 0.000; 2.850, 0.400)
+    dabp      M1  (5.160, 0.000; 5.320, 0.400)
+    b         M1  (6.650, 0.000; 6.810, 0.400)
+    a         M1  (5.670, 0.000; 5.830, 0.400)
+    vdd       M1  (3.750, 8.080; 5.750, 8.380)
+bias_tree_p_f2    18.190 x   8.140 um
+    vbp       M1  (1.210, 7.740; 1.470, 8.140)
+    vbnc      M2  (2.165, 7.640; 3.275, 8.140)
+    vbn       M2  (5.915, 7.640; 7.025, 8.140)
+    vabn      M2  (11.165, 7.640; 12.275, 8.140)
+    vdd       M1  (0.620, 1.340; 0.920, 3.340)
