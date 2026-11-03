@@ -101,3 +101,6 @@
 
 [2026-10-31_opus_c2_pad_cell_layout.md](2026-10-31_opus_c2_pad_cell_layout.md)
 : Opus cloud session C2, 31 Oct – 3 Nov: the `sg13cmos5l_IOPadDiff2Single` pad cell laid out bottom-up by agents (K capacitors, P / N primitives — first round rejected and rebuilt as P2 / N2 —, F2 floorplan and assembly), integrated into the macro, backannotated (BA), DRC clean, KLayout LVS passing (magic's `vss` pin mismatch accepted), sanity simulation of the v8 capacitors; report in `design_considerations/pad_buffer_layout/pad_cell_2026-10-31/`.
+
+[2026-11-03_sonnet_slot7_level_shifters_and_transmission_gates.md](2026-11-03_sonnet_slot7_level_shifters_and_transmission_gates.md)
+: Slot 7 integration prep: surveyed the harness for vdd-to-vddh and vddh-to-vdd level shifters and analog-bus transmission gates, to be added as macros; log built from the displayed conversation (no raw transcript was available). Live/ongoing.
