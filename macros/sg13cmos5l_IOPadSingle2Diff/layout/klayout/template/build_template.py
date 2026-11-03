@@ -28,7 +28,8 @@ Wiring (cell esd_wiring, M2 with Via1 / Via2):
   - iovdd: M3 / M4 / TM1 over the whole zone are iovss rails, so iovdd has to climb on M2 to the M3 iovdd rail
     (66-91.5): 9 straps between the right column's pad straps plus one on DP's right side bar join DP's cathode
     frame and CP's inner ring into a 2.2 um M2 bar just above CP; two risers at the column's edges (x 42.6-45.2,
-    75.5-78.4) take it up, so the band above the clamps stays free. The n-side guards (DN's guard ring, CN's outer
+    75.5-78.4) take it up, so the band above the clamps stays free, and run 6 um under the rail with 13 x 5 and
+    13 x 6 Via2 (IOPadAnalog: 495 Via2 into the same rail, its Clamp_P sits under it). The n-side guards (DN's guard ring, CN's outer
     ring) join the left leg in M1; each leg has a 6 um M2 tie into M3 iovdd at its top.
 Edges: C2's edge_stubs above y 84 (the left iovdd n+ stub tied as the right one) and a p+ iovss stub at IHP's
 interval y 65-84.26 at each edge, so the cell keeps IOPadAnalog's edge contract.
@@ -259,7 +260,8 @@ iovss_stub_v(CPx + 35.83, CPy + 1.20, CPy + 18.90)                         # rig
 
 # iovdd: DP's cathode frame and CP's inner ring by 9 straps between the pad straps and one on DP's right side bar,
 # into a 2.2 um M2 bar above CP; two risers at the column's edges take it into M3 iovdd (66-91.5)
-Y3 = 66.55
+Y3 = 66.30                                                                # first Via2 row in M3 iovdd (66-91.5)
+Y3R = 72.30                                                               # risers' last row: 6 um under the rail
 for cx in mid(dr):
     B((10, 0), cx - 0.30, DPy - 0.15, cx + 0.30, YB[0] + 0.10)
     for yb_ in (0.63, 5.13, 9.63):
@@ -274,16 +276,17 @@ column((19, 0), x0 + 0.86, DPy + 0.35, DPy + 10.0)
 column((19, 0), CPx + 34.03, CPy + 2.10, CPy + 17.20)                      # CP inner ring right side (76.09-76.43)
 B((10, 0), 42.60, YB[0], 78.40, YB[1])
 for r0, r1 in ((42.60, 45.20), (75.50, 78.40)):
-    B((10, 0), r0, YB[0], r1, Y3 + 0.25)
-    row((29, 0), Y3, r0 + 0.15, r1 - 0.15, p=0.45)
+    B((10, 0), r0, YB[0], r1, Y3R + 0.25)
+    for xv in [r0 + 0.25 + 0.50 * k for k in range(int((r1 - r0 - 0.40) / 0.50) + 1)]:   # pitch 0.50 >= 0.19 + Vn_b1 0.29
+        column((29, 0), xv, Y3, Y3R)
 # n-side guard (DN's guard ring, CN's outer ring) by M1 into the left leg; both legs by short M2 into M3 iovdd
 B((8, 0), 0.0, DNy - 1.66, DNx - 1.32, DNy + 11.92)
 B((8, 0), 0.0, CNy, CNx + 0.34, CNy + 9.90)
 for xl, xm, xv in ((0.0, 1.60, 1.27), (78.95, 80.0, 79.20)):
     B((8, 0), xl, 60.20, xm, 61.00)
     via((19, 0), xv, 60.60)
-    B((10, 0), xv - 0.23, 60.30, xv + 0.23, Y3 + 0.25)
-    via((29, 0), xv, Y3)
+    B((10, 0), xv - 0.23, 60.30, xv + 0.23, Y3 + 1.75)
+    column((29, 0), xv, Y3, Y3 + 1.50)
 
 for c in [c for c in ly.top_cells() if c.name != TOP]:          # IOPadAnalog's protection cells, now unused
     ly.delete_cell_rec(c.cell_index())

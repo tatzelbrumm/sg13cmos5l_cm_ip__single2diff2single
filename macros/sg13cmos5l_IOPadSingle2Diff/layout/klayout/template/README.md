@@ -22,7 +22,7 @@ resistors. Its xschem netlist equals this layout's extraction device by device.
 
 | file | |
 |---|---|
-| `sg13cmos5l_IOPadSingle2Diff_template.gds` | the template (sha256 80b38a47cc65…); the PCell context is kept (libraries `SG13_cm_clamps`, `SG13_dev`) |
+| `sg13cmos5l_IOPadSingle2Diff_template.gds` | the template (sha256 bbe53a67c4fb…); the PCell context is kept (libraries `SG13_cm_clamps`, `SG13_dev`) |
 | `sg13cmos5l_IOPadSingle2Diff_template.png` | the whole cell, M3 / M4 / TM1 and their vias hidden |
 | `sg13cmos5l_IOPadSingle2Diff_template_esd.png` | the protection zone, y 0–70 |
 | `IOPadAnalog.png` | IHP's cell, for comparison |
@@ -60,6 +60,16 @@ Wiring (cell `esd_wiring`, M2 with Via1 / Via2):
     over DCP.
   - Two risers at the column's edges, x 42.6–45.2 and 75.5–78.4, take the bar up into M3 iovdd. The band above the
     clamps stays free between them.
+  - The risers run 6 µm under the rail (to y 72.55), with 13 rows of 5 and 6 Via2. The leg ties have 4 each.
+
+  | Via2 into the M3 rails | IOPadAnalog | this template |
+  |---|---:|---:|
+  | iovdd 66–91.5 | 495 (11 straps × 45: its Clamp_P sits under the rail) | 151 (143 on the risers, 4 + 4 on the legs; version 4 had 14) |
+  | iovss 7–32.5 | 242 | 306 |
+  | iovss 34.5–60 | 0 | 9 |
+
+  To reach IHP's iovdd count, the risers would have to run on to y ≈ 91 (about 50 rows × 11). That costs M2 at
+  their two x positions under the whole rail.
   - The n-side guards (DN's guard ring, CN's outer ring) join the left leg in M1. Each leg has a 6 µm M2 tie into
     M3 iovdd at its top.
 - **gate ties:** an M1 landing on each 0.16 µm gate-bus end, then M2 to the rppd. RN's far end goes by Via1 / Via2
