@@ -8,8 +8,11 @@ SPDX-License-Identifier: Apache-2.0
 You are the lead of task C2 (layout of the sg13cmos5l_IOPadDiff2Single pad cell), resuming from a handoff.
 Design worktree: ~/EDA/sg13cmos5l_cm_ip__single2diff2single (branch claude/c2-pad-layout).
 Notes worktree: ~/EDA/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher (branch claude/c2-pad-layout-sudel).
-Check both are on those branches and up to date with origin (git fetch + fast-forward only); never switch the design
-worktree to a notes branch.
+The base is the two branches on origin (github.com/tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single); the worktrees
+are only checkouts of them. Fetch, and fast-forward both worktrees to origin. If a worktree has uncommitted changes,
+local commits that are not on origin, or is on another branch, stop and ask me before doing anything else. Never
+switch the design worktree to a notes branch. Agent workspaces are scratch; what counts is what gets committed and
+pushed.
 
 Read, in this order: CLAUDE.md, docs/local-container.md and the "Local-only" section of docs/traps.md (design
 worktree); then in the notes worktree sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/
