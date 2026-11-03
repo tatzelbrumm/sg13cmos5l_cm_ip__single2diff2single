@@ -1,0 +1,24 @@
+  Activ        XOR 0.0000 um2
+  GatPoly      XOR 0.0000 um2
+  Cont         XOR 0.0000 um2
+  pSD          XOR 0.0000 um2
+  NWell        XOR 0.0000 um2
+  ThickGateOx  XOR 0.0000 um2
+  Metal1       XOR 0.1386 um2  in (-0.6,0.9;24.4,3.835)
+bias_tree_n_f2 vs bias_tree_n_c2 in (-0.6,-0.2;24.4,8): total 0.1386 um2
+  Activ        XOR 0.0000 um2
+  GatPoly      XOR 0.0000 um2
+  Cont         XOR 0.0000 um2
+  pSD          XOR 0.0596 um2  in (8.35,0.62;9.84,0.66)
+  NWell        XOR 0.0000 um2
+  ThickGateOx  XOR 0.0000 um2
+  Metal1       XOR 0.0000 um2
+bias_tree_p_f2 vs bias_tree_p_c2 in (0,0.62;17.6,8.14): total 0.0596 um2
+  Activ        XOR 0.0000 um2
+  GatPoly      XOR 0.0000 um2
+  Cont         XOR 0.0000 um2
+  pSD          XOR 0.0000 um2
+  NWell        XOR 0.0000 um2
+  ThickGateOx  XOR 0.0000 um2
+  Metal1       XOR 0.0000 um2
+d2s_ab_p_f2 vs d2s_ab_p_c2 in (1.13,0;8.37,8): total 0.0000 um2

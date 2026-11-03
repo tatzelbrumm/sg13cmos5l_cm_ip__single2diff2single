@@ -4,6 +4,7 @@
 * v4 CMA present, CMB = S-Varicap Nx 9 (gate pad, well b) || S-Varicap Nx 5 turned (gate b, well pad), 80/20 of the mid-rail C
 * v5 / v6 CMA present, CMB present with IHP's secondary stage between pad and CMB's gate: rppd 1u x 2u (587 Ohm) / 1u x 7.435u (2 kOhm), dantenna and dpantenna at the gate
 * v7 / v8 symmetric: v5 / v6 plus the same rppd between the pad and CMA's S/D/well (node kca); v7d = v7 with a dummy dantenna + dpantenna at kca
+* v9 both turned (CMA: gate on the pad side kca, S/D/NW on a; CMB: gate on b, S/D/NW on the pad side kcg), each behind rppd 1u x 7.435u (2 kOhm) with dantenna + dpantenna at kca / kcg
 .include /home/user/c2/K/out/decks/dut_fixture.spice
 .subckt fix_v0 vdd vss vddo vsso vinp vinn vref vout vfb ibias en_3v3 sel0_3v3 sel1_3v3 en_3v3_b
 *.PININFO vdd:B vss:B vddo:B vsso:B vinp:I vinn:I vref:I ibias:I en_3v3:I sel0_3v3:I sel1_3v3:I en_3v3_b:I vout:B vfb:I
@@ -127,6 +128,23 @@ XKDN10 vss kcg dantenna w=0.64u l=3.1u
 XKDP10 kcg vddo dpantenna w=0.64u l=4.98u
 XKEN10 vss kca dantenna w=0.64u l=3.1u
 XKEP10 kca vddo dpantenna w=0.64u l=4.98u
+.ends
+
+.subckt fix_v9 vdd vss vddo vsso vinp vinn vref vout vfb ibias en_3v3 sel0_3v3 sel1_3v3 en_3v3_b
+*.PININFO vdd:B vss:B vddo:B vsso:B vinp:I vinn:I vref:I ibias:I en_3v3:I sel0_3v3:I sel1_3v3:I en_3v3_b:I vout:B vfb:I
+xd vdd vss vddo vsso vinp vinn vref vfb net2 net3 net1 net4 vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b d2s_mpdda_pd
+xfp vddo net2 vout net1 d2s_out_p
+xfn vsso net3 vout net4 d2s_out_n
+xg vdd vss ibias iref en_3v3 sel0_3v3 sel1_3v3 bias_gen_pd
+xt vdd vss iref vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b bias_tree_pd
+XKCA11 net2 kca net2 net2 sg13_hv_pmos w=7.96u l=32.16u ng=1
+XKRA11 vout kca vss rppd w=1u l=7.435u b=0
+XKEN11 vss kca dantenna w=0.64u l=3.1u
+XKEP11 kca vddo dpantenna w=0.64u l=4.98u
+XKCB11 kcg net3 kcg kcg sg13_hv_pmos w=7.96u l=32.16u ng=1
+XKRP11 vout kcg vss rppd w=1u l=7.435u b=0
+XKDN11 vss kcg dantenna w=0.64u l=3.1u
+XKDP11 kcg vddo dpantenna w=0.64u l=4.98u
 .ends
 
 .subckt fix_v3 vdd vss vddo vsso vinp vinn vref vout vfb ibias en_3v3 sel0_3v3 sel1_3v3 en_3v3_b

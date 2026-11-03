@@ -69,3 +69,29 @@ zeros by vector fitting of T(jω) (≤ 0.06 dB at 103 of 108 points). The asymme
 ## 18:41, the lead's check
 
 108 deck-13 logs: no `Transient op started`, no `Timestep too small`; added devices XK….
+
+## about 13:45, from the lead (resume; summary — verbatim text in the session)
+
+Christoph's two decisions (symmetric 2 kΩ stages; polarity for maximal capacitance). Stage 7, deck 14: C along the swing
+for CMA turned and the total; loop (fc, PM, GM) for v9 = both turned + symmetric 2 kΩ against v0 and v8 at the 9 pad points,
+100 pF and 300 pF unloaded; one step for v9; plot `pm_fc_gm_v9.png`.
+
+## 2026-11-03, K's stage 7 reply (summary)
+
+v9 (both turned, symmetric 2 kΩ): each cap +26 % at mid-rail but 25 % lower than today beyond ≈ 0.4 V on one side; both
+together +26 % at mid-rail, −1 … −4 % elsewhere, +7 % average. 100 pF: worst PM 74.5° (v0 72.6, v8 73.2), worst GM 16.5 dB
+(16.8). 300 pF unloaded: worst PM 39.3° at pad 2.29 V (v0 39.7, v8 40.2), dip 42.3° at 1.12 V, 50.1° at mid-rail. Step at
+100 pF: no overshoot, mid-rail settling 0.44 vs 0.33 µs. Lead's check: no transient op / timestep failure in the v9 logs.
+
+## about 14:10, from the lead (resume; summary — verbatim text in the session)
+
+Christoph's worry about the output swing; stage 8 (decks 15–17): large steps to both swing ends and end to end at 100 pF /
+300 pF, rail drive and recovery, THD at full swing, for v0 / v8 / v9; plots `steps_large.png`, `rail_recovery.png`.
+
+## 2026-11-03, K's stage 8 reply (summary)
+
+Decks 15–17, 18 runs: v8 = v0 in large steps (< 3 %), rail recovery and THD (−43.4 / −42.7 / −31.6 dB at 10 k / 100 k /
+1 MHz); v9 worse: THD −38.2 dB at 100 kHz and −26.2 dB at 1 MHz, steps toward mid-rail 35–40 % slower at 100 pF. All recover
+from the top rail within 0.8 µs; the stage-3 "second stable state" reread as a DC-op artefact. 300 pF unloaded rings in all
+variants (PM ≈ 40°). Recommendation: v8 (present polarity + symmetric 2 kΩ stages): the two present-polarity caps
+complement each other (total ±3 % over the swing), turned ±16 %.

@@ -9,8 +9,8 @@ Christoph's rules: rows mirror-symmetric about the line dividing them; dummies a
 
 Checks (merged shapes, cell flattened):
   X  Activ, GatPoly, ThickGateOx, pSD, NWell, Cont XOR their mirror image about the vertical line x = <x_axis>
-     (default: the centre of the Activ bounding box). Catches one-sided dummies and lopsided rows.
-  Y  the same about the horizontal line y = <y_axis> (default: the centre of the Activ bounding box): the rows'
+     (default: the center of the Activ bounding box). Catches one-sided dummies and lopsided rows.
+  Y  the same about the horizontal line y = <y_axis> (default: the center of the Activ bounding box): the rows'
      mirror symmetry about the line dividing them. --no-y for one-row cells.
   N  necked poly links to gate contacts: GatPoly beyond the endcap zone (Activ grown by 0.25 µm, past Gat.c's
      endcap), in pieces that carry a Cont, narrower than 0.30 µm (= Cnt.a 0.16 + 2 × Cnt.d 0.07,

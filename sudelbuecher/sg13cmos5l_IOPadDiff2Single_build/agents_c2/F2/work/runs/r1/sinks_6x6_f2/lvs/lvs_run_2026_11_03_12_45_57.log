@@ -1,0 +1,16 @@
+03-Nov-2026 12:45:57 | INFO    | Your Klayout version is: KLayout 0.30.12
+03-Nov-2026 12:45:57 | INFO    | Running SG13CMOS5L LVS checks on design /home/user/c2/F2/work/cells/f2_n.gds on cell sinks_6x6_f2
+03-Nov-2026 12:46:00 | INFO    | ==============================================================================
+03-Nov-2026 12:46:00 | INFO    | Important Summary
+03-Nov-2026 12:46:00 | INFO    | +------------------+--------------------------------------------------------------+
+03-Nov-2026 12:46:00 | INFO    | | Status           | PASS                                                         |
+03-Nov-2026 12:46:00 | INFO    | | Mode             | COMPARE                                                      |
+03-Nov-2026 12:46:00 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+03-Nov-2026 12:46:00 | INFO    | | Layout           | f2_n.gds                                                     |
+03-Nov-2026 12:46:00 | INFO    | | Top Cell         | sinks_6x6_f2                                                 |
+03-Nov-2026 12:46:00 | INFO    | | Results Dir      | /home/user/c2/F2/work/runs/r1/sinks_6x6_f2/lvs               |
+03-Nov-2026 12:46:00 | INFO    | | Warnings         | 0                                                            |
+03-Nov-2026 12:46:00 | INFO    | | Errors           | 0                                                            |
+03-Nov-2026 12:46:00 | INFO    | | Run Time (s)     | 3.525                                                        |
+03-Nov-2026 12:46:00 | INFO    | +------------------+--------------------------------------------------------------+
+03-Nov-2026 12:46:00 | INFO    | ==============================================================================

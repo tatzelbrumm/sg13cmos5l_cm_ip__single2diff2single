@@ -534,3 +534,191 @@ Symmetry = |PM(+x) − PM(−x)| for mirrored vd (x = 0.35 / 0.7 / 1.05 V, and t
 - **Dummy junction capacitance at CMA** (v7d against v7): identical to 0.1° and 0.1 dB everywhere [sim]; the ≈ 5 fF of the
   diodes [est] is nothing next to ≈ 0.5–1.2 pF of CMA. Matching it is not needed.
 - Deck budget: deck 13 only (decks 14–15 unused); the `.pz` trial was deck 13 with an added `pz` line.
+
+## Stage 7 — both capacitors turned, symmetric 2 kΩ (decision of 2026-11-03)
+
+Christoph: "CMA and CMB, symmetric with 2kΩ stage, if it passes DRC, LvS, and verification" and "keep CMA and CMB polarity
+such that capacitance is maximal" → **v9**: CMA turned (gate on the pad side, S/D/NW on a), CMB turned (gate on b, S/D/NW
+on the pad side), each behind an identical secondary stage: rppd 1 × 7.435 µm (1992 Ω) from the pad, and at the node
+between rppd and capacitor (`kca`, `kcg`) a dantenna 0.64 × 3.1 µm to the substrate and a dpantenna 0.64 × 4.98 µm to iovdd
+(`XKCA11 … XKDP11` in `dut_variants.spice`).
+
+### 7.1 Capacitance along the linear swing: present vs turned [sim inputs: decks 1, 6; products est]
+
+hv PMOS 7.96 / 32.16 µm (256 µm²) at the V_GW of deck 6 (1 kΩ load); "turned" sees −V_GW. The 2 kΩ series R does not change
+C (stage 5: its pole is ≥ 67 MHz).
+
+| pad (V) | 0.94 | 1.00 | 1.30 | 1.65 | 2.00 | 2.29 | 3.28 (sat.) | min … max (linear) | mean (linear) |
+|---|---|---|---|---|---|---|---|---|---|
+| V_GW CMA = a − pad (V) | +1.74 | +1.68 | +1.37 | +0.98 | +0.53 | +0.17 | −2.90 | | |
+| CMA present (fF) | 1108 | 1098 | 1023 | 837 | 590 | 487 | 1142 | 484 … 1108 | 841 |
+| **CMA turned** (fF) | 1130 | 1129 | 1114 | **1059** | 437 | 432 | 1184 | 406 … 1130 | 899 |
+| V_GW CMB = pad − b (V) | +0.11 | +0.17 | +0.54 | +0.99 | +1.38 | +1.68 | +2.92 | | |
+| CMB present (fF) | 474 | 487 | 594 | 840 | 1025 | 1098 | 1185 | 472 … 1099 | 779 |
+| **CMB turned** (fF) | 441 | 432 | 444 | **1060** | 1114 | 1128 | 1142 | 407 … 1128 | 831 |
+| total present (fF) | 1581 | 1586 | 1617 | 1676 | 1615 | 1585 | 2327 | 1580 … 1676 | 1620 |
+| **total turned** (fF) | 1571 | 1561 | 1558 | **2119** | 1552 | 1561 | 2326 | 1525 … 2118 | 1730 |
+
+- **CMA's mirror claim (§3.2) confirmed:** CMA turned and CMB turned give the same numbers within 1 fF at mirrored points
+  (mid-rail 1059 / 1060 fF, minimum 406 / 407 fF).
+- **"Maximal capacitance" holds near mid-rail, not over the whole swing.** Turned, each capacitor sits in inversion at
+  mid-rail (V = −0.98 V): **+26 %** (1059 against 837 fF). But inversion needs V < −0.7 V, so each turned capacitor drops
+  into depletion 0.3–0.4 V away from mid-rail on one side (CMA above pad ≈ 1.85 V, CMB below ≈ 1.45 V) and is then 25 % below
+  the present orientation (CMA 437 vs 590 fF at 2.00 V, CMB 444 vs 594 fF at 1.30 V). The sum of both is +26 % at
+  mid-rail, −1 … −4 % elsewhere in the linear range, +7 % on average over it, and equal in saturation.
+
+### 7.2 Loop gain over the swing — v0, v8 (deck 13) against v9 (deck 14) [sim]
+
+Deck 14 `loop14_v9.spice` = deck 13 for v9 (same 9 points, both loads, nodesets from deck 13's v0 ops); the step reuses
+deck 12 (`step12_seriesR.spice`) with v9. Logs `out/logs/loop14_v9_v9_*` (18) and `step12_seriesR_v9_0.log`: no
+`Transient op started`, no `Timestep too small`, no "failed"; v9's op voltages at a / b equal v0's to < 1 mV.
+Plot `out/pm_fc_gm_v9.png`; data `out/logs/loop14.dat`.
+
+PM (°) / GM (dB):
+
+| pad (V) | 0.94 | 1.12 | 1.30 | 1.48 | 1.65 | 1.83 | 2.00 | 2.17 | 2.29 |
+|---|---|---|---|---|---|---|---|---|---|
+| 100 pF v0 | 79.0 / 22.5 | 76.8 / 22.8 | 74.9 / 23.3 | 73.2 / 23.7 | **72.6** / 23.1 | 72.7 / 21.4 | 73.9 / 19.7 | 75.1 / 18.1 | 75.4 / **16.8** |
+| 100 pF v8 | 79.8 / 22.8 | 77.6 / 23.3 | 75.6 / 24.1 | 73.9 / 24.5 | **73.2** / 23.9 | 73.4 / 22.0 | 74.6 / 20.0 | 75.9 / 18.3 | 76.2 / **16.8** |
+| 100 pF **v9** | 79.9 / 22.7 | 77.7 / 22.8 | 75.8 / 23.7 | 76.8 / 26.4 | 76.9 / 25.9 | 76.4 / 23.5 | **74.5** / 19.1 | 75.8 / 17.6 | 76.3 / **16.5** |
+| 300 pF v0 | 44.2 / 20.5 | 43.0 / 19.9 | 42.4 / 19.6 | 42.1 / 19.4 | 42.2 / 19.3 | 42.1 / 19.1 | 42.2 / 19.1 | 41.6 / 18.6 | **39.7** / **17.5** |
+| 300 pF v8 | 44.7 / 21.2 | 43.5 / 20.7 | 42.9 / 20.3 | 42.6 / 20.1 | 42.7 / 20.0 | 42.6 / 19.8 | 42.7 / 19.8 | 42.1 / 19.3 | **40.2** / **18.1** |
+| 300 pF **v9** | 44.0 / 21.1 | 42.3 / 20.5 | 43.5 / 20.7 | 49.1 / 22.0 | 50.1 / 22.2 | 48.9 / 21.7 | 43.0 / 19.7 | 40.9 / 18.9 | **39.3** / **17.9** |
+
+fc (MHz), 100 pF: v0 1.37 … 1.79, v9 **1.13** … 1.82 (lowest at mid-rail, where C is 26 % higher); 300 pF: v0 1.29 … 1.47,
+v9 1.22 … 1.50.
+
+Worst cases over the whole swing:
+
+| | worst PM 100 pF | worst GM 100 pF | worst PM 300 pF | worst GM 300 pF |
+|---|---|---|---|---|
+| v0 present | 72.6° (1.65 V) | 16.8 dB (2.29 V) | 39.7° (2.29 V) | 17.5 dB |
+| v8 present orientation + 2 kΩ | 73.2° (1.65 V) | 16.8 dB | **40.2°** (2.29 V) | **18.1 dB** |
+| **v9 both turned + 2 kΩ** | **74.5°** (2.00 V) | 16.5 dB | 39.3° (2.29 V) | 17.9 dB |
+
+### 7.3 Step response, 1 kΩ ∥ 100 pF (deck 12 with v9) [sim]
+
+| variant | step 1: pad 1.40 ↔ 1.90 V | step 2: pad 2.05 ↔ 2.29 V |
+|---|---|---|
+| v0 present | 2.44 / 2.46 V/µs, 0.00 %, ts 0.329 / 0.335 µs | 1.37 / 1.28 V/µs, 0.00 %, 0.316 / 0.329 µs |
+| v6 CMB 2 kΩ (stage 5) | 2.43 / 2.43, 0.00 %, 0.335 / 0.339 | 1.34 / 1.26, 0.00 %, 0.323 / 0.338 |
+| **v9** | **1.83 / 1.83**, 0.00 %, **0.438 / 0.444** | 1.36 / 1.31, 0.00 %, 0.320 / 0.327 |
+
+### 7.4 Reading
+
+- **At 100 pF, v9 is at least as good as v0 / v8** [sim]: its worst-case PM (74.5°) is 1.9° above v0 and 1.3° above v8, and
+  between pad 1.4 and 1.9 V it gains 3–4° (both capacitors in inversion, +26 % C, fc down to 1.13 MHz). GM is the exception:
+  0.3 dB lower at the top (16.5 against 16.8 dB), still 1.5 dB above the 15 dB proposal.
+- **At 300 pF unloaded, v9 is slightly worse at the edges** [sim]: worst PM 39.3° against 39.7° (v0) and 40.2° (v8), all at
+  pad 2.29 V and all at or below the 40° proposal; it also dips to 42.3° at 1.12 V and 40.9° at 2.17 V, where one of its
+  capacitors has fallen into depletion and is 25 % *below* the present orientation. In the middle it is much better
+  (50.1° against 42.2°). Worst GM 17.9 dB, between v0 and v8.
+- **Step response:** mid-rail steps are 25 % slower in slew and 33 % slower to settle (0.44 against 0.33 µs) because of the
+  26 % larger mid-rail C; no overshoot anywhere; the top-of-swing step is unchanged.
+- So v9 trades a 26 % larger capacitance (and better PM) around mid-rail against 25 % less capacitance 0.4 V from mid-rail,
+  where the turned capacitors leave inversion. The worst cases over the swing are within ±1° / ±0.6 dB of v0 and v8 —
+  smaller than corners would move them [est]. On loop grounds v9 is acceptable; v8 keeps the slightly better 300 pF worst
+  case and the faster step.
+- Layout / ESD side of v9 [est]: neither n-well sits directly on the pad any more (CMA's well on a, CMB's well behind the
+  2 kΩ at `kcg`), and both gates are behind the secondary stage (CMA's gate at `kca`, CMB's gate on b). The NW–substrate
+  junctions of the hv PMOS wells are not in the PSP model; CMA's (on a, next to OP's 546 µm gate) and CMB's (at `kcg`,
+  behind 2 kΩ) add a few hundred fF to those nodes, which this simulation does not contain. Open: DRC, LVS and the short
+  verification Christoph asked for.
+
+## Stage 8 — large-signal swing (requested 2026-11-03: "i am worried that the output swing gets deteriorated by loss of capacitance")
+
+### 8.1 Setup [sim]
+
+Variants v0 (present), v8 (present orientation + symmetric 2 kΩ stages, no diodes at CMA), v9 (both turned + symmetric
+2 kΩ stages with diodes, stage 7). Fixture `d2s_mpdda_pd_sel` closed (vfb = pad), sources as decks 8 / 12, tt, 27 °C.
+- **Deck 15** `step15_large.spice`: one PWL in vd, 0 → +1.3 → 0 → −1.3 → 0 → −1.3 → +1.3 → −1.3 V (pad 1.65 → 2.29 → 1.65 →
+  0.99 → 1.65 → 0.99 → 2.29 → 0.99 V), 8 µs per step, at 1 kΩ ∥ 100 pF and unloaded ∥ 300 pF.
+- **Deck 16** `rail16_recovery.spice`: vd 0 → +3.0 V (hold 10 µs, pad into the top rail) → 0 → −3.0 V (hold 10 µs) → 0, 1 kΩ ∥
+  100 pF; a and b recorded.
+- **Deck 17** `thd17_swing.spice`: the CACE `sg13cmos5l_IOPadDiff2Single_tb_thd.sch` measurement (harmonics 2–7, 6 periods,
+  first 2 discarded, 1024 points) with vd amplitude 1.3 V (pad 0.99 … 2.29 V, the linear swing) at 10 kHz, 100 kHz and 1 MHz.
+  The template itself uses 10 kHz and vd 0.5 / 1 / 1.5 V (committed: −73.2 / −57.8 / −38.9 dB).
+- Runs through `work/run15.sh`; evaluation `work/stage8.py` (results `out/logs/stage8_steps.txt`, `stage8_rail.txt`,
+  `thd17.dat`). Logs (18): no `Transient op started`, no `Timestep too small`; the only "failed" lines are v0's "spice3 gmin
+  stepping failed", each followed by "Source stepping completed" (valid op). Devices as in stages 5–7 (`XK…`).
+- Measures: slew rate 10–90 %; overshoot relative to the step; settling to 1 % of the step; "ringing" = number of extrema
+  of the error beyond ±0.2 % of the step after the first crossing of the final value.
+
+### 8.2 Large steps [sim]
+
+SR (V/µs) / overshoot (%) / ts 1 % (µs) / ringing extrema.
+
+**1 kΩ ∥ 100 pF**
+
+| step | v0 | v8 | v9 |
+|---|---|---|---|
+| mid → top (1.65 → 2.29) | 3.54 / 0.00 / 0.326 / 0 | 3.42 / 0.00 / 0.336 / 0 | 3.34 / 0.00 / 0.345 / 0 |
+| top → mid | 3.21 / 0.04 / 0.302 / 0 | 3.21 / 0.02 / 0.312 / 0 | 2.78 / 0.00 / **0.425** / 0 |
+| mid → bottom (1.65 → 0.99) | 3.20 / 0.00 / 0.381 / 0 | 3.20 / 0.00 / 0.386 / 0 | 3.04 / 0.00 / 0.395 / 0 |
+| bottom → mid | 3.20 / 0.03 / 0.308 / 0 | 3.10 / 0.01 / 0.316 / 0 | 2.78 / 0.00 / **0.432** / 0 |
+| bottom → top (0.99 → 2.29) | 7.59 / 0.00 / 0.322 / 0 | 7.37 / 0.00 / 0.330 / 0 | 6.59 / 0.00 / 0.349 / 0 |
+| top → bottom | 7.32 / 0.00 / 0.364 / 0 | 7.17 / 0.00 / 0.372 / 0 | 6.11 / 0.00 / 0.392 / 0 |
+
+**Unloaded ∥ 300 pF**
+
+| step | v0 | v8 | v9 |
+|---|---|---|---|
+| mid → top | 5.14 / 14.3 / 0.95 / 4 | 5.14 / 13.7 / 0.93 / 4 | 4.97 / 12.9 / 0.93 / 4 |
+| top → mid | 4.89 / 14.9 / 0.95 / 4 | 4.67 / 14.3 / 0.76 / 4 | 4.48 / **9.9** / 0.79 / 3 |
+| mid → bottom | 5.28 / 10.8 / 0.78 / 3 | 5.02 / 10.2 / 0.78 / 3 | 4.80 / 9.4 / 0.78 / 3 |
+| bottom → mid | 4.80 / **16.6** / 0.97 / 4 | 4.80 / 16.1 / 0.95 / 4 | 4.41 / 11.3 / 0.80 / 3 |
+| bottom → top | 11.0 / 12.7 / 0.70 / 4 | 10.6 / 12.1 / 0.69 / 4 | 9.7 / 9.7 / 0.69 / 4 |
+| top → bottom | 12.1 / 8.5 / 0.72 / 3 | 11.9 / 7.9 / 0.70 / 3 | 10.5 / 5.5 / 0.69 / 3 |
+
+Plot: `out/steps_large.png`. (At 300 pF unloaded the pad is not slew-limited in the same way: the 10–90 % times include the
+overshoot rise, so these SR values are higher than at 100 pF.)
+
+### 8.3 Rail drive and recovery, 1 kΩ ∥ 100 pF [sim]
+
+| event | v0 | v8 | v9 |
+|---|---|---|---|
+| vd → +3 V: pad 1.65 → **3.277 V** (a → 0.30 V, b → 0.27 V), 1 % settling | 3.99 µs | 4.00 µs | 3.91 µs |
+| vd → 0: recovery from the top rail to 1.650 V: delay (10 mV) / ts 1 % / overshoot | 0.17 µs / 0.71 µs / 0.03 % | 0.17 / 0.72 / 0.01 % | 0.17 / 0.79 / 0.00 % |
+| vd → −3 V: pad 1.65 → **0.700 V** (b → 0.875 V), ts 1 % | 0.53 µs | 0.54 µs | 0.56 µs |
+| vd → 0: recovery from the bottom to 1.650 V: ts 1 % / overshoot | 0.31 µs / 0.03 % | 0.32 / 0.01 % | 0.42 / 0.00 % |
+
+Plot: `out/rail_recovery.png`.
+- **The pad recovers from the top rail in every variant** (within 0.8 µs, no overshoot). The "second stable state" of §3.1
+  is a DC-solver artefact of the op (transient-op fallback), not a latch the circuit enters in a transient: with the input
+  returned to mid-rail the loop pulls the pad back at once [sim].
+- Going *into* the top rail takes ≈ 4 µs: a slews down from 2.59 V to 0.30 V over ≈ 8 µs, limited by the current into OP's
+  gate (546 µm of gate) — the same for all variants.
+- Bottom: with vd = −3 V this fixture's pad stops at 0.700 V (deck 6, the full pad netlist with its own enable logic and
+  bias, stopped at 0.90 V; README finding 6: 0.64–0.74 V). Not investigated further; the same for all variants.
+
+### 8.4 THD at the full linear swing, 1 kΩ ∥ 100 pF (pad 0.99 … 2.29 V) [sim]
+
+| fin | v0 | v8 | v9 |
+|---|---|---|---|
+| 10 kHz: THD / output amplitude | −43.4 dB / 0.650 V | −43.4 dB / 0.650 V | −43.3 dB / 0.650 V |
+| 100 kHz | −42.7 dB / 0.650 V | −42.7 dB / 0.650 V | **−38.2 dB** / 0.649 V |
+| 1 MHz (slew-limited: needs 4.1 V/µs) | −31.6 dB / 0.595 V | −31.6 dB / 0.593 V | **−26.2 dB** / 0.574 V |
+
+(The 10 kHz value, −43 dB, sits between the template's −57.8 dB at ±0.5 V and −38.9 dB at ±0.75 V of pad swing; the
+distortion at full swing is the front end's, at the ends of its common-mode range, and is the same for all three.)
+
+### 8.5 Reading
+
+- **v8 loses nothing against v0** [sim]: steps within 3 % in SR and settling, the same overshoot and ringing, the same
+  recovery, the same THD to 0.03 dB.
+- **v9 loses usable swing at frequency** [sim]: THD is 4.5 dB worse at 100 kHz and 5.4 dB worse at 1 MHz (and 3.5 % less
+  amplitude at 1 MHz), and its 100 pF steps back toward mid-rail settle 35–40 % slower (0.43 against 0.31 µs) with 13–17 %
+  less slew rate. At 300 pF unloaded it has *less* overshoot (5–13 % against 9–17 %) and one ringing cycle fewer — the
+  larger mid-rail C — but the same settling time.
+- Why [est, from stages 3 and 7]: in the present orientation the two capacitors complement each other — when CMA falls into
+  depletion, CMB is in accumulation and vice versa — so their **sum stays within 1580 … 1676 fF (±3 %)** over the swing.
+  Turned, both sit in inversion only near mid-rail; the sum swings 1525 … 2118 fF (±16 %), concentrated in the middle. A
+  compensation capacitance that changes with the output voltage modulates the loop bandwidth along a large sine, and that
+  shows up as distortion once the loop gain at the signal frequency is low (100 kHz and up).
+- **None of the variants rings, fails to settle or fails to recover at 100 pF**; at 300 pF unloaded all three ring with
+  3–4 extrema and 8–17 % overshoot, consistent with the ≈ 40° PM of stages 4–7 — a driver / load limit, not a capacitor one.
+- **Best polarity for the swing: the present one** (v0, or v8 with the symmetric 2 kΩ stages, which is indistinguishable from
+  v0 in every large-signal measure). This contradicts "keep polarity such that capacitance is maximal" if maximal is read
+  as maximal at mid-rail (v9): the present polarity keeps the *total* capacitance constant over the swing, which is what the
+  large-signal behaviour needs. Recommendation: **v8** (CMA and CMB as now, symmetric 2 kΩ secondary stages; diodes at CMB's
+  gate, optional dummies at CMA's plate, which stage 6 showed to be irrelevant).

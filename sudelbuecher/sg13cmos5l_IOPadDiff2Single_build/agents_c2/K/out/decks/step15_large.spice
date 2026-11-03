@@ -1,0 +1,40 @@
+* K deck 15: large closed-loop steps (fixture with vfb = vout) of a CMA / CMB variant (variant.inc), load $rload || $cload.
+* vd: 0 -> +1.3 (2 us) -> 0 (10 us) -> -1.3 (18 us) -> 0 (26 us) -> -1.3 (34 us) -> +1.3 (42 us) -> -1.3 (50 us), end 58 us;
+* pad mid 1.65 V, top 2.29 V, bottom 0.99 V. Evaluated by work/stage8.py from the waveform.
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.lib cornerCAP.lib cap_typ
+.lib cornerPNP.lib typ
+.lib cornerDIO.lib dio_tt
+.include /home/user/c2/K/out/decks/dut_variants.spice
+.include /home/user/c2/K/work/variant.inc
+.include /home/user/c2/K/work/nodeset.inc
+Vdd vdd 0 3.3
+Vs0 s0 0 0
+Vs1 s1 0 0
+Vext vext 0 3.3
+Iext xg 0 5e-06
+XKEd xg xg vext vext sg13_hv_pmos w=5u l=6u
+XKEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
+Vref vref 0 1.65
+Vic vic 0 1.65
+Ep vinp vic dp 0 0.5
+En vinn vic dp 0 -0.5
+RL vout vterm $rload
+Vterm vterm 0 1.65
+CL vout 0 $cload
+
+Vd dp 0 pwl(0u 0 2u 0 2.001u 1.3 10u 1.3 10.001u 0 18u 0 18.001u -1.3 26u -1.3 26.001u 0 34u 0 34.001u -1.3 42u -1.3 42.001u 1.3 50u 1.3 50.001u -1.3 58u -1.3)
+x1 vdd 0 vdd 0 vinp vinn vref vout vout ibias vdd s0 s1 0 fix_sel
+.temp 27
+* no klu: KLU + the mosvar OSDI (S-Varicap) aborts with 'doAnalyses: out of memory'; rshunt 10 GOhm on every node
+* and source stepping are needed for a valid op with S-Varicaps (else Transient op into a latched state, pad 3.28 V)
+.options method=gear reltol=1e-4 abstol=1e-12 gmin=1e-12
+.option warn=1 rshunt=1e10 itl1=500 gminsteps=50
+
+.control
+save v(vout)
+tran 5n 58u 0 5n
+wrdata /home/user/c2/K/out/logs/s15_$variant_$cload.dat v(vout)
+.endc
+.end
