@@ -13,8 +13,6 @@ DDP[1] pad iovdd dpantenna l=65.8u w=1.26u
 DP[0] pad iovdd dpantenna l=65.8u w=1.26u
 DDN[1] iovss pad dantenna l=67.6u w=1.26u
 DN[0] iovss pad dantenna l=67.6u w=1.26u
-MMDBP iovdd vbp iovdd iovdd sg13_hv_pmos w=2u l=6u ng=1
-MMDBN ni ni ni iovss sg13_hv_nmos w=2.4u l=6u ng=1
 .ends
 
 * expanding   symbol:  bias_tree_pd.sym # of pins=11
@@ -36,6 +34,8 @@ MPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
 MTGP ni en_3v3_b iref vdd sg13_hv_pmos w=1u l=0.45u ng=1
 MTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
 MTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+MMDBP vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+MMDBN ni ni ni vss sg13_hv_nmos w=2.4u l=6u ng=1
 .ends
 
 

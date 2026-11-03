@@ -17,9 +17,7 @@
 *     selection bias_gen_pd (former Xg) sit next to the cell (slot, top level, CACE templates), wired as before;
 *   - CMA / CMB (v8 polarity, Christoph 2026-11-03): CMA gate a, S / D / well on pa; CMB gate on pb, S / D / well
 *     on b; pa and pb each behind an identical 2 kOhm secondary stage d2s_sp2k from the pad (XSPA, XSPB);
-*   - the two dummies of bias_tree_pd's layout rows (XMDBP, XMDBN) at this level (bias_tree_pd unchanged).
-*     XMDBN's net ni stands for bias_tree_pd's internal node ni, to which the layout ties it; ni is not a port
-*     of bias_tree_pd, so here it is a separate (floating) node.
+*   - the two dummies of bias_tree_pd's layout rows (XMDBP, XMDBN) are devices of bias_tree_pd (bias_ref_pd.spice).
 * Slot fallback (no padframe change): iovdd = vdd_3v3, iovss = vss_3v3, vdd = vdd_1v2, vss = vss_1v2,
 * pad = s7_an[1] (the harness IOPadAnalog pad).
 * Bias since 2026-10-28: Xt = bias_tree_pd makes the six bias lines from iref (bias_gen_pd, outside the cell
@@ -47,6 +45,4 @@ XCMB b pb b b sg13_hv_pmos w=7.96u l=32.16u ng=1
 XDN iovss pad iovdd sg13cmos5l_DCNDiode
 XDP pad iovdd iovss sg13cmos5l_DCPDiode
 * dummies of bias_tree_pd's layout rows (bias_tree_p_f2: 2u / 6u, gate vbp; bias_tree_n_f2: 2.4u / 6u, D = S = G = ni)
-XMDBP iovdd vbp iovdd iovdd sg13_hv_pmos w=2u l=6u ng=1
-XMDBN ni ni ni iovss sg13_hv_nmos w=2.4u l=6u ng=1
 .ends sg13cmos5l_IOPadDiff2Single
