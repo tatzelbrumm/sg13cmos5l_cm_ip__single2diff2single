@@ -318,6 +318,33 @@ keeping the wires that long, shorten them."
 - **Checks**, with the predecessors in `superseded_v4_one_via2_row/`: DRC alone and in the row 0, 26 / 26 nets,
   `cmp_esd.py` 6 / 6.
 
+### Tentative fit of the s2d blocks into template version 4 (Christoph, 2026-11-03 about 20:25 CET)
+
+"No, tentatively fit the single2diff buffer circuit into the pad space. How much fits now?" (the risers stay at
+6 µm.)
+
+**Method** (`fit/fit_s2d.py`, results `fit/fit.md`, `fit/fit_A.gds` / `fit_B.gds` with renders):
+- placement only, no wiring;
+- the bounding boxes of the drawn s2d cells: library `pad_buffer_cells.gds`, plus N2's `sinks_6x6_s2d_c2`;
+- bottom-left fill into the free region of version 4, 10 638 µm² (protection kept 1.5 µm off, risers 0.5 µm);
+- 0 / 90° rotation, 64 block orders tried, the best one kept;
+- checked: no placed box touches a template shape or another box.
+
+| variant | boxes | gap | placed | left out | cells / free region |
+|---|---|---|---|---|---:|
+| A | drawn cells | 2 µm (library packing gap, no wiring room) | xa, cload, xt: all 15 blocks | none | 7689 µm², 72 % |
+| B | drawn cells | 4 µm (rough wiring allowance, reasoning) | xa complete, part of xt | cload, bias_tree_n | 6997 µm², 66 % |
+| C | C2-compacted estimates (budget.py) | 4 µm | all 15 | none | 7259 µm², 68 % |
+
+**Reading:**
+- `xa` itself fits in every variant.
+- The load capacitors and the bias tree fit only with 2 µm gaps or with C2-style compaction.
+- Against C2's routed density (0.68), the drawn cells need ≈ 11 300 µm² (1.06 × the region). The compacted
+  estimate needs ≈ 10 700 µm² (1.00 ×). It is at the limit, no longer clearly out as in phase 1 (1.41 × on IHP's
+  frame).
+- The placement is a packer's, not a floorplan: the input tubs sit between the risers, away from their tails.
+- A real floorplan (C2's stage A) would group by signal flow and needs the compacted primitives of phase 2.
+
 ## Notes folder
 
 | file | contents |
