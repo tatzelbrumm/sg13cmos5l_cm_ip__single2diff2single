@@ -268,20 +268,59 @@ Loop gain (fixture `d2s_mpdda_pd_sel`, loop opened at vfb):
 cloud with the IIC-OSIC-TOOLS 2026.09 pins (sudelbuecher/cloud_environment.md), CACE 2.13.0,
 schematic netlist. The plots are not shipped; `make sim-cace` regenerates them.
 
+## Layout and verification (cloud session C2, 2026-11-03)
+
+The layout is the drawn pad cell of session C2 (notes branch `claude/c2-pad-layout-sudel`,
+`sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/report.md`); the sheets, symbol and source
+netlists are backannotated to it.
+
+| check | result |
+|---|---|
+| `make klayout-drc`, `make magic-drc`, maximal deck with latch-up | clean |
+| `make klayout-lvs` (strict ports) | PASS |
+| `make magic-lvs` | 76 = 76 devices, 36 = 36 nets; fails only on the `vss` pin (accepted, see below) |
+| sanity simulation (loop at vref, vref ± 0.65 V; steps) | as predicted for the v8 capacitors |
+
+### `vss` and `iovss`: the accepted magic pin mismatch
+
+The vss band's p+ tie (edge contract, as in IHP's `IOPadAnalog`) and the iovss ties share the p-substrate. Magic puts
+every p+ tie on one substrate node, and KLayout does the same with `--disable_tap_extraction` (`sak-lvs.sh`), so `vss`
+and `iovss` are one net in the extracted layout. Physically they are joined through the substrate.
+
+- The sheet ties them with `Rsub` (1 Ω, simulation only; `lvs_ignore=open`). A SPICE subckt cannot join two ports, and
+  xschem refuses to short two port nets.
+- The layout's top cell has no `vss` text, so KLayout names the net `iovss` and passes. Port texts sit on both the text
+  (25) and the pin (2) datatype.
+- Magic keeps one name for the joined net, so netgen ends with "Top level cell failed pin matching" on `vss`. Accepted by
+  Christoph on 2026-11-03. Everything else matches.
+
+### Chip harness (`sg13cmos5l_ocd_chipalooza`): it uses magic + netgen
+
+The harness's LVS (`validate/run_lvs_padframe.sh`, `run_lvs_ocd_chipalooza.sh`) is magic + netgen only. The same merge
+already shows there for IHP's own `IOPadAnalog`: netgen reports `iovss` (layout) and `vss` (schematic) as disconnected
+nodes of that cell, and the padframe fails pin matching on `vss1v2` / `vss3v3` (`validate/comp_sg13cmos5l_padframe.out`,
+commit 81c45fc). This cell adds no new kind of mismatch. Workaround if the harness wants a clean comparison of this
+cell (reasoning, not run — the harness needs the cell in `config.txt` first):
+
+1. Flatten the cell in both circuits, as the harness does for `IOPadVdd`, `IOPadIOVdd` and `SecondaryProtection`, so
+   its devices are compared in the padframe and its pin list does not matter:
+
+   ```tcl
+   flatten class "$circuit1 sg13cmos5l_IOPadDiff2Single"
+   flatten class "$circuit2 sg13cmos5l_IOPadDiff2Single"
+   ```
+
+2. Give the harness `netlist/schematic/sg13cmos5l_IOPadDiff2Single_magic.spice` (Rsub left out, `vss` an open port), the
+   same convention as the harness's own corrected `netlist/schematic/sg13cmos5l_io.spice`, whose `IOPadAnalog` leaves
+   `vss` unconnected.
+
+The remaining `vss1v2` / `vss3v3` merge is a chip-level question for the harness (one substrate under every pad).
+
 ## Not done
 
-- Layout: `layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds` stands on the `SG13_cm_clamps` PCells since 2026-10-28
-  (open it with `klayout -e -rm scripts/pcells/load_clamp_pcells.py ...` to keep them live): `Clamp_P_M1` ng 43 / 0.6u and
-  2 x `Clamp_N_M1` ng 35 / 1u, all `wiring = external`, with their wiring cells (P roles `20:dummy 21:rep`, nets `a` /
-  `dabp`; upper N `16:rep 17:rep`, `b` / `dabn`; lower N no roles, `b`), `DCNDiode` 67.6u and `DCPDiode` 65.8u centred.
-  Devices: OP 546.12 / 0.6, RP1 and the dummy 13.32 / 0.6, ON 299.2 / 1, RN1 8.8 / 1. Since 2026-10-28 01:39 also the
-  Metal2 comb (option B: pad lines on the drains, straps with Via2 into their own rails, pad junction in the gap), the
-  gate-bus feeds (a / b joined above the P frame), dabp / dabn to pins at y 85–86, CMA / CMB (W 7.96 × L 32.16 µm,
-  between the diodes) and the narrowed band above DCNDiode. Checked with a flat extraction and a Python subset of the
-  deck (report: `_sudelbuecher/.../sg13cmos5l_IOPadDiff2Single_build/m2_option_b_2026-10-28/`); not with IHP's own
-  DRC / LVS. Open: RP2 / RN2 placement, the `guard` net tie, the joins boxing in dabp / dabn. Before-states:
-  `layout/klayout/backups/*_before_pcells_2026-10-28*`, `*_before_m2_2026-10-28*`.
-- LVS, PEX, post-layout CACE; ESD and latch-up simulation; the unpowered-pad case of
-  `testbenches/spice/tb_pd_unpowered.spice` is not in CACE.
+- Layout: the pre-C2 notes (PCells of 2026-10-28, option-B comb) are superseded by the drawn cell; see "Layout and
+  verification" above.
+- PEX and post-layout CACE (the committed CACE results predate the layout); ESD and latch-up simulation; the unpowered-pad
+  case of `testbenches/spice/tb_pd_unpowered.spice` is not in CACE.
 - The S2D counterpart `../sg13cmos5l_IOPadSingle2Diff` has its input buffer since 2026-10-25; it proposes vcm = 1.2 V for both
   buffers (`s2d_input_buffer.md` section IV), and this suite still runs at vref = vicm = 1.65 V.
