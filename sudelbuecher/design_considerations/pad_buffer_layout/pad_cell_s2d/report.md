@@ -15,7 +15,7 @@ are `TZ=Europe/Berlin date`.
 - at the density C2 achieved (0.68), it needs 1.41 times the region.
 
 §1.4 lists the levers of `layout_primitives.md` §4 that would make it fit. Choosing them is Christoph's decision. No
-agents were started, and the design branch is unchanged.
+agents were started. The design branch holds only the cleaned-out pad template (section after §1.4).
 
 C2 is finished (its notes branch ends at 2d0fb2d, "verbatim chat log of cloud session C2"), so C3 did not run in
 parallel with it (decision 1). C2's files and the shared macros are untouched.
@@ -199,6 +199,30 @@ Not on §4's list (reasoning):
   iovss plates, against the brief.
 - Moving SP out of the region's middle would gain little: it takes 111 µm² with its spacing.
 
+## After phase 1: cleaned-out pad template (Christoph's request, 2026-11-03 19:20 CET)
+
+"Look at the diff2single I/O pad and how the plates got cleaned out. Draft me a cleaned out single2diff I/O pad
+template for review."
+
+- **The template:** design branch, `macros/sg13cmos5l_IOPadSingle2Diff/layout/klayout/template/`: the GDS, the
+  generator `build_template.py`, renders before and after, and `README.md` with every change.
+- **How it is built:**
+  - It starts from IHP's IOPadAnalog: protection instances, the ESD zone y ≤ 84.44 and the ring rails unchanged.
+  - Above the Clamp_P frame, the p+ plate, the three bands, the pad fingers and the core-side pins are cleared.
+  - C2's `nw_isolator` and `edge_stubs` are reused from `agents_c2/F2/out/padctx/`, with two adaptations: one
+    isolator stack is left out next to SP's pad finger, and the left iovdd stub is tied.
+  - SecondaryProtection gets its own ties: pad finger, iovss stack, iovdd line, `padres` stub.
+- **Checks (`template/`):**
+  - DRC on the template alone (maximal deck with latch-up; `run_drc.py`, 32 tables, LU.b): 0;
+  - C2's row check: edge intervals the same as IOPadAnalog's on every layer, every rail and band one net through the
+    row, row DRC 0 (`template/row/`);
+  - the template's LVS extraction identical to IOPadAnalog's (`template/lvs/`).
+- **Found:** IHP's IOPadAnalog does not pass IHP's KLayout LVS against IHP's own spice, and the I/O CDL does not load
+  (`template/lvs/IOPadAnalog_vs_ihp_spice.out`, the template's README). That answers §1.2's open LVS question: phase 4
+  needs a reference netlist of its own for the protection cells.
+- **Free region** in the template: y 86.15–180, x ≈ 1.8–78.2, less SP and its tie lines. That is the region §1.3
+  counted.
+
 ## Notes folder
 
 | file | contents |
@@ -209,5 +233,6 @@ Not on §4's list (reasoning):
 | `phase1/edges.md`, `phase1/nets.md` | `row_check.py` on the IOPadAnalog row |
 | `phase1/row_maximal.lyrdb`, `phase1/main_row/` | DRC of the row (maximal with latch-up; `run_drc.py` tables) |
 | `phase1/budget.md` | `budget.py`'s output |
+| `template/` | checks of the cleaned-out template: DRC, `row/`, `lvs/` |
 
 Logs: `sudelbuecher/logs/claude/c3-s2d-pad-layout/` (+ rows in `sudelbuecher/MANIFEST.tsv`).
