@@ -1,0 +1,8 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* d2s_sp2k_f2 (build_f2_sp.py, F2, C2 2026-11-03): 2 kOhm secondary stage for CMA / CMB.
+.SUBCKT d2s_sp2k_f2 core iovdd iovss pad
+R0 pad core iovss rppd w=1u l=7.435u m=1 b=0
+D1 iovss core dantenna w=0.64u l=3.1u a=1.984p p=7.48u m=1
+D0 core iovdd dpantenna w=0.64u l=4.98u a=3.187p p=11.24u m=1
+.ENDS d2s_sp2k_f2

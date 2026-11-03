@@ -1,0 +1,7 @@
+sinks_6x6_f2: Activ bbox (-0.97,-0.51;50.17,15.46); axes x = 24.6, y = 7.475 um
+  X Cont         XOR    0.0768 um2  in (22.025,0.07;27.175,14.88)
+  N gate-contact poly narrower than 0.30 um at (-0.42,0.34;-0.42,6.34)
+  N gate-contact poly narrower than 0.30 um at (49.45,0.34;49.45,6.34)
+  N gate-contact poly narrower than 0.30 um at (-0.42,8.61;-0.42,14.61)
+  N gate-contact poly narrower than 0.30 um at (49.45,8.61;49.45,14.61)
+  summary: max mirror XOR 0.0768 um2, 4 narrow-poly hits

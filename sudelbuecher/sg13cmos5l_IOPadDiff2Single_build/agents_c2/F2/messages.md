@@ -27,3 +27,18 @@ in the placement picture, and the sheet change for the backannotation.
 Christoph: "keep CMA and CMB polarity such that capacitance is maximal." Both turned (CMA gate on the pad side behind its
 2 kΩ stage, S/D/NW on a; CMB gate on b, S/D/NW on the pad side behind its stage, CMB's well pad-driven with its own
 guard ring); still separate; K checks the loop in parallel; list the sheet change.
+
+## about 14:05, F2's stage A reply (summary)
+
+Placement in the pad top, unrouted: bottom row CMA stage | loads | ab_p (+pd_p) | ab_n | pd_n | CMB stage (mirrored); PMOS
+column left (casc_p, tails, inputs, bias_tree_p), NMOS / R right (casc_n R90 | sinks R90, rhigh, bias_tree_n). Cells 4931 of
+6789 µm², free 1858 µm². Reworked pd_n, ab_n (NMOS twins of pd_p / ab_p), TGN / TDN / TGP moved, ab_p well tap a U, rings
+around rhigh, casc_n, sinks; new `d2s_sp2k_f2` (2 kΩ stage). Turning CMA / CMB deferred to stage B. Answer on the sinks' centre
+contacts: they carry BN's diode and the twin's ties; removable. Note: `stage_A_note.md`.
+
+## the lead's check of stage A
+
+Rebuild with `run_A.sh` byte-identical (cells and placement); `lead_check.py` on the 9 reworked / new cells: XOR empty, DRC
+clean, LVS match, device sums equal (rhigh: series reduction); `sym_check.py`: 0 except sinks 0.0768 µm² (centre PCell, as N2)
+and the bias trees (bbox axis shifted by the moved switches; rows unchanged against P2 / N2 per F2's row-window XOR);
+run_drc.py on the whole placement clean, 0 exceptions; row check: all bands and rails pass, edges equal IOPadAnalog's.

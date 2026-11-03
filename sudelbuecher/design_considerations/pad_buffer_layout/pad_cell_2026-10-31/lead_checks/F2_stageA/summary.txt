@@ -1,0 +1,19 @@
+rebuild exit 0
+cells/d2s_f2_n_cells.gds delivered e0fca276df8b rebuilt e0fca276df8b
+cells/d2s_f2_p_cells.gds delivered fad347622143 rebuilt fad347622143
+cells/d2s_f2_sp_cells.gds delivered b031bba105c7 rebuilt b031bba105c7
+placement_A.gds delivered 25e8cb5d1527 rebuilt 25e8cb5d1527
+sinks_6x6_f2: 52.28 x 16.51 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_casc_n_f2: 40.70 x 12.41 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_rhigh_f2: 13.80 x 18.11 um | XOR empty | DRC clean | LVS match | W per (model, L) DIFFERENT
+bias_tree_n_f2: 28.27 x 8.85 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_ab_n_f2: 9.78 x 6.74 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_pd_n_f2: 3.04 x 2.56 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+bias_tree_p_f2: 19.53 x 8.14 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_ab_p_f2: 9.50 x 9.00 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+d2s_sp2k_f2: 7.86 x 14.71 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+0
+03-Nov-2026 13:12:13 | INFO    | KLayout DRC Check Passed: No DRC violations detected in the layout.
+0
+0
+ALLDONE
