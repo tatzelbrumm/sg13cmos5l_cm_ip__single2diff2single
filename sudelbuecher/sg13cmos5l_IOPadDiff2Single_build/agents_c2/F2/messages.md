@@ -21,3 +21,9 @@ reserve — CMB's gate and CMA's pad-side plate each fed from the pad through rp
 0.64 × 3.1 to the substrate and dpantenna 0.64 × 4.98 to iovdd at the capacitor-side node; identical (mirrored) stages,
 short wide pad feeds, ESD guard / ties, CMA / CMB still separate, the bias tree first; DRC incl. latch-up and antenna, LVS,
 in the placement picture, and the sheet change for the backannotation.
+
+## about 13:45, from the lead (summary; verbatim text in the session)
+
+Christoph: "keep CMA and CMB polarity such that capacitance is maximal." Both turned (CMA gate on the pad side behind its
+2 kΩ stage, S/D/NW on a; CMB gate on b, S/D/NW on the pad side behind its stage, CMB's well pad-driven with its own
+guard ring); still separate; K checks the loop in parallel; list the sheet change.

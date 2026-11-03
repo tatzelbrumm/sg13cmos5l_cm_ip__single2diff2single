@@ -69,3 +69,9 @@ zeros by vector fitting of T(jω) (≤ 0.06 dB at 103 of 108 points). The asymme
 ## 18:41, the lead's check
 
 108 deck-13 logs: no `Transient op started`, no `Timestep too small`; added devices XK….
+
+## about 13:45, from the lead (resume; summary — verbatim text in the session)
+
+Christoph's two decisions (symmetric 2 kΩ stages; polarity for maximal capacitance). Stage 7, deck 14: C along the swing
+for CMA turned and the total; loop (fc, PM, GM) for v9 = both turned + symmetric 2 kΩ against v0 and v8 at the 9 pad points,
+100 pF and 300 pF unloaded; one step for v9; plot `pm_fc_gm_v9.png`.
