@@ -82,3 +82,8 @@ v9 (both turned, symmetric 2 kΩ): each cap +26 % at mid-rail but 25 % lower tha
 together +26 % at mid-rail, −1 … −4 % elsewhere, +7 % average. 100 pF: worst PM 74.5° (v0 72.6, v8 73.2), worst GM 16.5 dB
 (16.8). 300 pF unloaded: worst PM 39.3° at pad 2.29 V (v0 39.7, v8 40.2), dip 42.3° at 1.12 V, 50.1° at mid-rail. Step at
 100 pF: no overshoot, mid-rail settling 0.44 vs 0.33 µs. Lead's check: no transient op / timestep failure in the v9 logs.
+
+## about 14:10, from the lead (resume; summary — verbatim text in the session)
+
+Christoph's worry about the output swing; stage 8 (decks 15–17): large steps to both swing ends and end to end at 100 pF /
+300 pF, rail drive and recovery, THD at full swing, for v0 / v8 / v9; plots `steps_large.png`, `rail_recovery.png`.
