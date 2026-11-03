@@ -228,3 +228,5 @@ phase1-row-maximal.out	claude/c2-pad-layout	2026-10-31 16:36	8503	8a72dd8	2026-1
 phase1-row-run_drc.out	claude/c2-pad-layout	2026-10-31 16:36	851405	8a72dd8	2026-10-31 15:16	run_drc.py --no_density --mp=4 on the same row, after the PDK sparse-checkout fix (cloud session C2, phase 1)
 phase1-row-negative-run_drc.out	claude/c2-pad-layout	2026-10-31 16:36	852301	8a72dd8	2026-10-31 15:16	run_drc.py --no_density --mp=4 on the row with two planted violations (cloud session C2, phase 1)
 phase1-row-negative-maximal.out	claude/c2-pad-layout	2026-10-31 16:36	8512	8a72dd8	2026-10-31 15:16	sg13cmos5l_maximal.drc on the row with two planted violations (cloud session C2, phase 1)
+phase1-row-maximal.out	claude/c3-s2d-pad-layout	2026-11-03 18:59	8547	8a72dd8	2026-11-03 19:03	klayout -b -r sg13cmos5l_maximal.drc -rd latchUpRules=true on the row Filler1000|IOPadAnalog|IOPadAnalog|Filler200|IOPadIOVdd|IOPadAnalog|Filler1000 (cloud session C3, phase 1)
+phase1-row-run_drc.out	claude/c3-s2d-pad-layout	2026-11-03 19:00	850612	8a72dd8	2026-11-03 19:03	run_drc.py --no_density --mp=4 on the same row (cloud session C3, phase 1)
