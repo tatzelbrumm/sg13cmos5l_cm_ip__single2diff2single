@@ -1,0 +1,12 @@
+** sch_path: /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_pad_esd.sch
+.subckt s2d_pad_esd iovdd iovss pad
+*.PININFO iovdd:B iovss:B pad:B
+XDP1 pad iovdd dpantenna l=27.78u w=1.26u
+XDN1 iovss pad dantenna l=27.78u w=1.26u
+XDP2 pad iovdd dpantenna l=27.78u w=1.26u
+XDN2 iovss pad dantenna l=27.78u w=1.26u
+XRP iovdd gp sub! rppd w=0.5u l=12.9u m=1 b=0 mm_ok=1
+XMCP pad gp iovdd iovdd sg13_hv_pmos w=266.4u l=0.6u ng=40 m=1 mm_ok=1
+XRN gn iovss sub! rppd w=0.5u l=3.54u m=1 b=0 mm_ok=1
+XMCN pad gn iovss iovss sg13_hv_nmos w=88u l=0.6u ng=20 m=1 mm_ok=1
+.ends

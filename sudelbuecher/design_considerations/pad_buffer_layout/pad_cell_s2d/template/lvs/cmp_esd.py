@@ -26,7 +26,14 @@ def parse(path, netmap):
             out[(mod, tuple(nets), 'area')] += round(a * int(kv.get('m', 1)), 1)
     return out
 sch = parse(sys.argv[1], {'sub!': 'iovss'})
-lay = parse(sys.argv[2], {'iovss|vss': 'iovss', r'\$I8': 'gp', r'\$I7': 'gn'})
+lm = {'iovss|vss': 'iovss'}                     # the layout's unnamed gate nets, named by the clamp they drive
+for l in open(sys.argv[2]).read().replace('\n+', ' ').splitlines():
+    f = l.split()
+    if f and f[0].startswith('M') and 'sg13_hv_pmos' in f:
+        lm[f[2]] = 'gp'
+    if f and f[0].startswith('M') and 'sg13_hv_nmos' in f:
+        lm[f[2]] = 'gn'
+lay = parse(sys.argv[2], lm)
 for k in sorted(set(sch) | set(lay), key=str):
     print('ok ' if sch[k] == lay[k] else 'DIFF', k, 'sch', sch[k], 'lay', lay[k])
 sys.exit(0 if sch == lay else 1)

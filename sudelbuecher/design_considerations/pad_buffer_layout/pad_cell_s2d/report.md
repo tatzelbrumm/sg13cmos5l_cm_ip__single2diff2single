@@ -274,6 +274,30 @@ schematic of the components you left standing so I get an idea what the resistor
   more than version 1's 7165 µm². At C2's density `xa` needs about 10 100 µm², so with version 3 it does not fit
   without levers (§1.4), about 1.12 × the region.
 
+### Version 4 (Christoph, 2026-11-03 about 20:05 CET)
+
+"Why is there so much distance between diodes and clamps in your latest ESD template? If there's no good reason for
+keeping the wires that long, shorten them."
+
+- **Why version 3 had the gap:** M3 / M4 / TM1 over the whole protection zone (y 7–60) are iovss rails, so iovdd
+  has to climb on M2 to the M3 iovdd rail at y 66. I had put the clamps at the top so that CP sat under that rail.
+  That does not justify the gap: DP's iovdd has to climb from the pad side anyway, and the gap only lengthened the
+  pad straps to the clamp drains.
+- **Version 4:**
+  - CN / CP sit directly on DN / DP, rings abutting as in IHP's cells. The zone is y 5.38–41.6.
+  - The pad straps are 24 / 33 µm long (version 3: 47 / 56).
+  - The iovdd straps end in a 2.2 µm M2 bar just above CP. Two risers at the column's edges (x 42.6–45.2,
+    75.5–78.4) take it into M3 iovdd, so the band above the clamps stays free.
+  - The pad pin is 1.7 µm above CN.
+- **Checks (`template/`)**, with version 3's in `template/superseded_v3_clamps_at_top/`:
+  - DRC alone: maximal with latch-up 0; `run_drc.py`, 32 tables, 0, no exception.
+  - Row: 26 / 26 nets, the edges the same, row DRC 0.
+  - Extraction: the same devices.
+  - `cmp_esd.py` (now naming the layout's gate nets by the clamp they drive): 6 / 6 equal against the unchanged
+    schematic. A copy with one terminal moved fails.
+- **Free region (estimate):** ≈ 10 600 µm² (version 3: 9000). At C2's density `xa` needs ≈ 10 100 µm², about
+  0.95 × the region. That leaves no room for `xt`, and the latch-up spacing to the ESD zone is not counted.
+
 ## Notes folder
 
 | file | contents |

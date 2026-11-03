@@ -8,6 +8,18 @@
  </tags>
  <categories>
   <category>
+   <name>Act.a</name>
+   <description>5.5. Act.a : Min. Activ width : 0.15 µm</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Act.b</name>
+   <description>5.5. Act.b : Min. Activ (drawing + filler) space or notch: 0.21 µm.</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
    <name>AFil.c1</name>
    <description>5.6. AFil.c1 Min. Activ:filler space to Activ is 0.42 um</description>
    <categories>
@@ -28,18 +40,6 @@
   <category>
    <name>AFil.j</name>
    <description>5.6. AFil.j Min. nSD:block and SalBlock enclosure of Activ:filler inside PWell:block is 0.25 um</description>
-   <categories>
-   </categories>
-  </category>
- <category>
-   <name>Act.a</name>
-   <description>5.5. Act.a : Min. Activ width : 0.15 µm</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Act.b</name>
-   <description>5.5. Act.b : Min. Activ (drawing + filler) space or notch: 0.21 µm.</description>
    <categories>
    </categories>
   </category>
@@ -86,6 +86,30 @@
    </categories>
   </category>
  <category>
+   <name>PWB.e</name>
+   <description>5.2. PWB.e Min. PWell:block space to (N+Activ not inside ThickGateOx) in PWell is 0.31 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>PWB.e1</name>
+   <description>5.2. PWB.e1 Min. PWell:block space to (N+Activ inside ThickGateOx) in PWell is 0.62 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>PWB.f</name>
+   <description>5.2. PWB.f Min. PWell:block space to (P+Activ not inside ThickGateOx) in PWell is 0.24 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>PWB.f1</name>
+   <description>5.2. PWB.f1 Min. PWell:block space to (P+Activ inside ThickGateOx) in PWell 0.62 um</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
    <name>Gat.a</name>
    <description>5.8. Gat.a : Min. GatPoly width: 0.13 µm</description>
    <categories>
@@ -122,26 +146,8 @@
    </categories>
   </category>
  <category>
-   <name>PWB.e</name>
-   <description>5.2. PWB.e Min. PWell:block space to (N+Activ not inside ThickGateOx) in PWell is 0.31 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>PWB.e1</name>
-   <description>5.2. PWB.e1 Min. PWell:block space to (N+Activ inside ThickGateOx) in PWell is 0.62 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>PWB.f</name>
-   <description>5.2. PWB.f Min. PWell:block space to (P+Activ not inside ThickGateOx) in PWell is 0.24 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>PWB.f1</name>
-   <description>5.2. PWB.f1 Min. PWell:block space to (P+Activ inside ThickGateOx) in PWell 0.62 um</description>
+   <name>TGO.f</name>
+   <description>5.7. TGO.f : Min. ThickGateOx width: 0.86 µm</description>
    <categories>
    </categories>
   </category>
@@ -154,12 +160,6 @@
   <category>
    <name>CntB.h1</name>
    <description>5.15. CntB.h1 Min. Metal1 enclosure of ContBar is 0.05 um</description>
-   <categories>
-   </categories>
-  </category>
- <category>
-   <name>TGO.f</name>
-   <description>5.7. TGO.f : Min. ThickGateOx width: 0.86 µm</description>
    <categories>
    </categories>
   </category>
@@ -556,6 +556,66 @@
   <category>
    <name>M4Fil.a2</name>
    <description>5.18. M4Fil.a2 : Max. Metal4:filler width is 5.0 um</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
+   <name>Seal.n</name>
+   <description>6.10. seal.n : Sealring must be enclosed by an unbroken Passiv ring</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Seal.b_metal1</name>
+   <description>6.10. Seal.b_metal1 : Min. Activ space to EdgeSeal-metal1 is 4.9 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Seal.b_metal2</name>
+   <description>6.10. Seal.b_metal2 : Min. Activ space to EdgeSeal-metal2 is 4.9 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Seal.b_metal3</name>
+   <description>6.10. Seal.b_metal3 : Min. Activ space to EdgeSeal-metal3 is 4.9 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Seal.b_metal4</name>
+   <description>6.10. Seal.b_metal4 : Min. Activ space to EdgeSeal-metal4 is 4.9 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Seal.b_topmetal1</name>
+   <description>6.10. Seal.b_topmetal1 : Min. Activ space to EdgeSeal-topmetal1 is 4.9 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Seal.b_activ</name>
+   <description>6.10. Seal.b_activ : Min. Activ space to EdgeSeal-activ is 4.9 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Seal.b_psd</name>
+   <description>6.10. Seal.b_psd : Min. Activ space to EdgeSeal-psd is 4.9 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Seal.k</name>
+   <description>6.10. Seal.k : Min. EdgeSeal 45-degree corner length is 21.0 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Seal.m</name>
+   <description>6.10. Seal.m : Only one sealring per chip allowed</description>
    <categories>
    </categories>
   </category>
@@ -1850,66 +1910,6 @@
    </categories>
   </category>
  <category>
-   <name>Seal.n</name>
-   <description>6.10. seal.n : Sealring must be enclosed by an unbroken Passiv ring</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Seal.b_metal1</name>
-   <description>6.10. Seal.b_metal1 : Min. Activ space to EdgeSeal-metal1 is 4.9 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Seal.b_metal2</name>
-   <description>6.10. Seal.b_metal2 : Min. Activ space to EdgeSeal-metal2 is 4.9 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Seal.b_metal3</name>
-   <description>6.10. Seal.b_metal3 : Min. Activ space to EdgeSeal-metal3 is 4.9 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Seal.b_metal4</name>
-   <description>6.10. Seal.b_metal4 : Min. Activ space to EdgeSeal-metal4 is 4.9 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Seal.b_topmetal1</name>
-   <description>6.10. Seal.b_topmetal1 : Min. Activ space to EdgeSeal-topmetal1 is 4.9 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Seal.b_activ</name>
-   <description>6.10. Seal.b_activ : Min. Activ space to EdgeSeal-activ is 4.9 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Seal.b_psd</name>
-   <description>6.10. Seal.b_psd : Min. Activ space to EdgeSeal-psd is 4.9 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Seal.k</name>
-   <description>6.10. Seal.k : Min. EdgeSeal 45-degree corner length is 21.0 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>Seal.m</name>
-   <description>6.10. Seal.m : Only one sealring per chip allowed</description>
-   <categories>
-   </categories>
-  </category>
- <category>
    <name>V1.a</name>
    <description>5.19. V1.a : Min. and max. Via1 width: 0.19 um</description>
    <categories>
@@ -1924,42 +1924,6 @@
   <category>
    <name>V1.c</name>
    <description>5.19.  V1.c Min. Metal1 enclosure of Via1 is 0.01 um</description>
-   <categories>
-   </categories>
-  </category>
- <category>
-   <name>V2.a</name>
-   <description>5.20. V2.a : Min. and max. Via2 width: 0.19 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>V2.b</name>
-   <description>5.20. V2.b : Min. Via2 space: 0.22 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>V2.c</name>
-   <description>5.20. V2.c : Min. Metal2 enclosure of Via2 is 0.005 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>V3.a</name>
-   <description>5.20. V3.a : Min. and max. Via3 width: 0.19 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>V3.b</name>
-   <description>5.20. V3.b : Min. Via3 space: 0.22 um</description>
-   <categories>
-   </categories>
-  </category>
-  <category>
-   <name>V3.c</name>
-   <description>5.20. V3.c : Min. Metal3 enclosure of Via3 is 0.005 um</description>
    <categories>
    </categories>
   </category>
@@ -2056,6 +2020,42 @@
   <category>
    <name>CMOS5L.FORB.Vmim</name>
    <description>CMOS5L.FORB.Vmim : 3.2. Vmim layer is prohibited in CMOS5L (M1-M4-TM1 stack).</description>
+   <categories>
+   </categories>
+  </category>
+ <category>
+   <name>V2.a</name>
+   <description>5.20. V2.a : Min. and max. Via2 width: 0.19 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>V2.b</name>
+   <description>5.20. V2.b : Min. Via2 space: 0.22 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>V2.c</name>
+   <description>5.20. V2.c : Min. Metal2 enclosure of Via2 is 0.005 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>V3.a</name>
+   <description>5.20. V3.a : Min. and max. Via3 width: 0.19 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>V3.b</name>
+   <description>5.20. V3.b : Min. Via3 space: 0.22 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>V3.c</name>
+   <description>5.20. V3.c : Min. Metal3 enclosure of Via3 is 0.005 um</description>
    <categories>
    </categories>
   </category>
