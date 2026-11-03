@@ -1,0 +1,14 @@
+label	cell	orientation	block	x0	y0	x1	y1	area_um2
+sinks	sinks_6x6_s2d_c3	R180	N	1.8	31.7	18.31	82.7	842.0
+casc_n	s2d_casc_n_c3	R270	N	22.6	32.7	36.97	105.44	1045.3
+casc_p	s2d_casc_p_c3	R270	P	45.5	45.6	58.31	97.83	669.1
+loads	s2d_loads_c3	R270	P	58.31	45.6	70.63	88.79	532.1
+tails_lo	s2d_tails_lo_f	M0	P	4.37	107.94	49.56	117.1	413.9
+inputs	s2d_inputs_c3	R0	P	4.3	120.1	51.88	146.54	1258.0
+tails_hi	s2d_tails_hi_f	R0	P	4.37	149.54	49.56	158.7	413.9
+rhigh	s2d_rhigh_c3	R90	R	55.5	126.0	75.59	145.24	386.5
+sinks_cmfb	s2d_sinks_cmfb_c3	R0	N	61.69	91.25	78.2	123.5	532.4
+tree_n	bias_tree_noab_n_c3	R0	N	53.9	150.0	78.11	159.215	223.1
+tree_p	bias_tree_noab_p_c3	R0	P	60.0	162.0	72.94	172.37	134.2
+cload	s2d_cload_c3	R0	N	2.3	160.2	31.86	174.44	420.9
+pd_p	s2d_pd_p_c3	R0	P	33.0	170.0	36.2	172.97	9.5

@@ -238,7 +238,7 @@ eliminate the secondary protection structure."
   - New M2 pad / iovss / iovdd wiring; a core-side `pad` pin at y 40; a p+ edge stub at y 65–84.26.
 - **Checks (`template/`)**, version 1's in `template/superseded_v1_ihp_protection/` (replaced by version 2):
   - DRC alone: maximal with latch-up 0; `run_drc.py` 32 tables, 0, no exception.
-  - Row: edge intervals the same as IOPadAnalog's, 26 / 26 rails and bands one net, row DRC 0.
+  - Row: edge intervals the same as IOPadAnalog's, 25 / 25 rails and bands one net, row DRC 0.
   - Extraction (`template/lvs/template_extracted.cir`): IHP's protection values without SP (NMOS W 88, PMOS W 266.4,
     dantenna / dpantenna 2 × 35.0 µm², rppd 3.54u / 12.9u).
   - One difference to IHP: RP's bulk is the substrate, not iovdd.
@@ -264,7 +264,7 @@ schematic of the components you left standing so I get an idea what the resistor
   - The four long iovdd lines through the core region of version 2 are gone, and so is its pad pin at y 40.
 - **Checks (`template/`)**, version 2's in `template/superseded_v2_two_columns/`:
   - DRC alone: maximal with latch-up 0; `run_drc.py` 32 tables, 0, no exception.
-  - Row check: edges the same, 26 / 26 nets, row DRC 0.
+  - Row check: edges the same, 25 / 25 nets, row DRC 0.
   - Extraction: the same devices as version 2.
 - **Schematic** `schematic/xschem/s2d_pad_esd.sch` / `.sym` (design branch). Its notes explain the diodes, the
   clamps, the two rppd gate ties and the ptap1 "resistors" of IHP's spice. `template/lvs/cmp_esd.py`: the xschem
@@ -291,7 +291,7 @@ keeping the wires that long, shorten them."
   - The pad pin is 1.7 µm above CN.
 - **Checks (`template/`)**, with version 3's in `template/superseded_v3_clamps_at_top/`:
   - DRC alone: maximal with latch-up 0; `run_drc.py`, 32 tables, 0, no exception.
-  - Row: 26 / 26 nets, the edges the same, row DRC 0.
+  - Row: 25 / 25 nets, the edges the same, row DRC 0.
   - Extraction: the same devices.
   - `cmp_esd.py` (now naming the layout's gate nets by the clamp they drive): 6 / 6 equal against the unchanged
     schematic. A copy with one terminal moved fails.
@@ -315,7 +315,7 @@ keeping the wires that long, shorten them."
   under the rail with 13 × 5 + 13 × 6 Via2, and the leg ties have 4 each.
 - **Matching IHP's count** would need the risers under the whole rail (to y ≈ 91, about 50 rows × 11). Not done:
   it costs M2 at two x positions in the buffer's region. Christoph's choice.
-- **Checks**, with the predecessors in `superseded_v4_one_via2_row/`: DRC alone and in the row 0, 26 / 26 nets,
+- **Checks**, with the predecessors in `superseded_v4_one_via2_row/`: DRC alone and in the row 0, 25 / 25 nets,
   `cmp_esd.py` 6 / 6.
 
 ### Tentative fit of the s2d blocks into template version 4 (Christoph, 2026-11-03 about 20:25 CET)
@@ -379,6 +379,36 @@ Results (P finished 21:10, N 21:13; reports `agents_c3/{P,N}/report.md`; lead ch
 
 The bias tree's cells are added to the brief's lists, because `xt` is in the cell. The lead checks each delivery with
 C2's `lead_check.py` and `sym_check.py` before F gets the cells.
+
+## Phase 3, stage A: placement and compaction by agent F (21:37–22:05 CET; lead check about 22:15)
+
+F's note: `agents_c3/F/report_stageA.md`. Messages: `agents_c3/F/messages.md`. Picture: `agents_c3/F/out/previews/placement_A.png`.
+
+- **Arrangement, bottom up from the drawn cells:**
+  - left pocket above CN: the NMOS fold (`sinks` | channel C1 over the pad pin | `casc_n`);
+  - right pocket above CP: `casc_p` and `loads`, abutted in one NWell;
+  - above the pockets, the input group `tails_lo` / `inputs` / `tails_hi`, with `rhigh` beside it and its pin bank
+    centered on the tubs;
+  - `sinks_cmfb` at the tubs' xc / yc corner;
+  - the bias tree beside / above `tails_hi`;
+  - `cload` and `pd_p` under the outputs.
+- **Area:** cells 6881 µm² placed (6769 as delivered, +112 for the tails split) in a block x 1.80–78.20, y 31.70–176.74.
+  - The free region is 10695 µm²; the cells cover 64 %.
+  - Of the 3814 µm² left, 2100 are reserved M1 / M2 channels C1–C9, sized as nets × 0.48 µm; 1714 are free.
+- **The one change to a primitive:** P's two-row `s2d_tails_c3` becomes `s2d_tails_hi_f` / `s2d_tails_lo_f`, one row
+  above and one below the tubs, so every tail drain faces its tub with short links of equal length. This is open for
+  Christoph against "no taps between rows" (F's messages, point 2). The fallback is P's cell above the tubs, with
+  half the links at about 45 µm.
+- **Isolator:** F reasons that none is needed, from the existing double rings (CN / DN; CP's p+ ring + the PMOS cells'
+  n+ rings), with latch-up DRC 0. Christoph's call; 2 µm of slack exists.
+- **Lead check** (`lead_checks/F_stageA/summary.txt`):
+  - rebuild byte-identical;
+  - the template part unchanged (XOR empty);
+  - all 13 cells placed once, no overlaps;
+  - IHP DRC 0 (maximal deck with latch-up; `run_drc.py`, 32 tables, no exceptions);
+  - row check 25 / 25 (the earlier "26 / 26" was the lead's miscount);
+  - the split tail rows: DRC / LVS / symmetry clean, together equal to the circuit.
+- **Stops here** for Christoph's review of the placement picture (the brief). Stage B (routing) after his go.
 
 ## Notes folder
 

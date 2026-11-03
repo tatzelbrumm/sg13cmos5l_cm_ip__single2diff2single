@@ -1,0 +1,9 @@
+cells:
+s2d_tails_hi_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+s2d_tails_lo_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+row_xor: 6 layer differences
+expected (the listed changes): GatPoly 2 x 0.35 x 0.34 = P's row-to-row poly bridge stubs at the row ends; Metal1 2 x 0.70 x 0.14 = P's vdd plate legs between gate column and ring; Via1 = the new vbp edge stubs (right end in both rows, left end in tails_hi: P had one stub, on the lower row). Activ and Cont: 0.
+removed 13 placed instances; template layers differing: 0
+placement run_drc.py: No DRC violations detected, tables 30, lines with 'exception': 0
+placement maximal (latchUpRules=true): Number of DRC errors for maximum rule set: 0, LU rules listed: 5
+row_check: bands / rails pass 25 of 25, edge layers DIFFERENT 0

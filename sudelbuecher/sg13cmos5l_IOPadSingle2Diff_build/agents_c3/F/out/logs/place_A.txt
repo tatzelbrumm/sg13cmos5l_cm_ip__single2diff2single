@@ -1,0 +1,14 @@
+sinks          sinks_6x6_s2d_c3       R180 N  x   1.800 ..  18.310  y  31.700 ..  82.700    842.0 um2
+casc_n         s2d_casc_n_c3          R270 N  x  22.600 ..  36.970  y  32.700 .. 105.440   1045.3 um2
+casc_p         s2d_casc_p_c3          R270 P  x  45.500 ..  58.310  y  45.600 ..  97.830    669.1 um2
+loads          s2d_loads_c3           R270 P  x  58.310 ..  70.630  y  45.600 ..  88.790    532.1 um2
+tails_lo       s2d_tails_lo_f         M0   P  x   4.370 ..  49.560  y 110.240 .. 119.400    413.9 um2
+inputs         s2d_inputs_c3          R0   P  x   4.300 ..  51.880  y 122.400 .. 148.840   1258.0 um2
+tails_hi       s2d_tails_hi_f         R0   P  x   4.370 ..  49.560  y 151.840 .. 161.000    413.9 um2
+rhigh          s2d_rhigh_c3           R90  R  x  55.500 ..  75.590  y 126.000 .. 145.240    386.5 um2
+sinks_cmfb     s2d_sinks_cmfb_c3      R0   N  x  61.690 ..  78.200  y  91.250 .. 123.500    532.4 um2
+tree_n         bias_tree_noab_n_c3    R0   N  x  53.900 ..  78.110  y 152.300 .. 161.515    223.1 um2
+tree_p         bias_tree_noab_p_c3    R0   P  x  60.000 ..  72.940  y 164.300 .. 174.670    134.2 um2
+cload          s2d_cload_c3           R0   N  x   2.300 ..  31.860  y 162.500 .. 176.740    420.9 um2
+pd_p           s2d_pd_p_c3            R0   P  x  33.000 ..  36.200  y 172.300 .. 175.270      9.5 um2
+placement problems: 0
