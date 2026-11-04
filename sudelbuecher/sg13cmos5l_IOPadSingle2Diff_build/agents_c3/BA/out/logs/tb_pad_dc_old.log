@@ -1,0 +1,99 @@
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+Note: No compatibility mode selected!
+
+
+Circuit: * tb_pad_dc: sg13cmos5l_iopadsingle2diff operating point per bias selection, harness ibias = 5 ua source
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+ Reference value :  0.00000e+00Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 1
+0 = 0.000000e+00
+iq = 1.155361e-04
+vd = 1.999048e-01
+vc = 1.037908e-02
+v(x1.vbp) = 1.972277e+00
+v(x1.vbn) = 9.136787e-01
+v(x1.vbpc) = 1.912911e+00
+v(x1.vbnc) = 1.208169e+00
+v(x1.en_3v3) = 3.300000e+00
+i(vext) -i(vcore) = -1.00092e-05
+i(vin) = -2.76340e-10
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+ Reference value :  0.00000e+00Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 1
+1 = 1.000000e+00
+iq = 1.233436e-04
+vd = 1.999050e-01
+vc = 1.036837e-02
+v(x1.vbp) = 1.973457e+00
+v(x1.vbn) = 9.130830e-01
+v(x1.vbpc) = 1.914203e+00
+v(x1.vbnc) = 1.207143e+00
+v(x1.en_3v3) = 3.300000e+00
+i(vext) -i(vcore) = -4.99986e-06
+i(vin) = -2.76340e-10
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+ Reference value :  0.00000e+00Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+
+No. of Data Rows : 1
+2 = 2.000000e+00
+iq = 1.247464e-04
+vd = 1.999053e-01
+vc = 1.034734e-02
+v(x1.vbp) = 1.975766e+00
+v(x1.vbn) = 9.119168e-01
+v(x1.vbpc) = 1.916730e+00
+v(x1.vbnc) = 1.205135e+00
+v(x1.en_3v3) = 3.300000e+00
+i(vext) -i(vcore) = -4.99986e-06
+i(vin) = -2.76340e-10
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+ Reference value :  0.00000e+00Note: Starting dynamic gmin stepping
+Warning: Dynamic gmin stepping failed
+Note: Starting true gmin stepping
+Note: True gmin stepping completed
+
+No. of Data Rows : 1
+3 = 3.000000e+00
+iq = 2.462757e-04
+vd = 1.998720e-01
+vc = 1.210118e-02
+v(x1.vbp) = 1.693994e+00
+v(x1.vbn) = 1.048673e+00
+v(x1.vbpc) = 1.607626e+00
+v(x1.vbnc) = 1.444348e+00
+v(x1.en_3v3) = 3.300000e+00
+i(vext) -i(vcore) = -4.99984e-06
+i(vin) = -2.76340e-10
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+ Reference value :  0.00000e+00
+No. of Data Rows : 1
+4 = 4.000000e+00
+iq = 3.220952e-10
+vd = 2.486342e-08
+vc = 7.217672e-09
+v(x1.vbp) = 3.040676e+00
+v(x1.vbn) = 1.962688e-01
+v(x1.vbpc) = 3.001925e+00
+v(x1.vbnc) = 2.643553e-01
+v(x1.en_3v3) = 1.888600e-08
+i(vext) -i(vcore) = -4.99986e-06
+i(vin) = -2.76340e-10
+Note: Simulation executed from .control section 

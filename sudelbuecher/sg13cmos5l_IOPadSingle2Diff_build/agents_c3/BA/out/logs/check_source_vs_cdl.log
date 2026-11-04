@@ -1,0 +1,8 @@
+devices: layout reference 151, circuit 120 (one line per finger / segment on the reference side)
+  (not compared: Rsub 1 iovss vss)
+## MOS (W sums, dummies apart): 56 keys, 0 differ
+## dummies (D = S): 9 keys, 0 differ
+## diodes (area, um2): 2 keys, 0 differ
+## fingers (finger width: count, per MOS key incl. dummies): 65 keys, 0 differ
+## resistors (series-reduced lengths): 9 keys, 0 differ
+RESULT circuit == layout reference, dummies included

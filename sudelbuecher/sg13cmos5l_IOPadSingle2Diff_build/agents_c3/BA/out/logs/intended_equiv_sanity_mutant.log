@@ -1,0 +1,5 @@
+  DIFFERENT  macros/slot/schematic/xschem/slot.sch  (old 514 devices, new 549, reverted 514; missing symbols old 0 new 0)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd.sch  (old 68 devices, new 97, reverted 68; missing symbols old 0 new 0)
+      reverted: s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25
+1 of 2 sheets differ after reverting the intended changes

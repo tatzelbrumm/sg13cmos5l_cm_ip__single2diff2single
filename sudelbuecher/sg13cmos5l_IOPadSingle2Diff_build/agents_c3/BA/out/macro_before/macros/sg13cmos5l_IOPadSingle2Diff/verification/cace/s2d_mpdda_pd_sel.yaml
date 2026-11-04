@@ -1,0 +1,227 @@
+# SPDX-FileCopyrightText: 2026 Christoph Maier
+# SPDX-License-Identifier: Apache-2.0
+#
+# CACE file of s2d_mpdda_pd_sel, the loop-gain fixture of sg13cmos5l_IOPadSingle2Diff (input buffer +
+# selectable bias, vfbp / vfbn as pins). The pad cell ties vfbp / vfbn to outp / outn, so its loops
+# cannot be opened. Loops broken at vfbp / vfbn: differential (injection +1 / -1) and common mode (+1 / +1).
+# Reference (sudelbuecher .../s2d_input_buffer/sim/results_s2d.txt section 5, ideal bias, vcm 1.65 V):
+# dm 67.6 dB / 1.50 MHz / 88.4 deg, cm 67.8 dB / 1.50 MHz / 78.6 deg at 0.5 pF.
+# LIMITS ARE PROPOSALS (s2d_input_buffer.md section VII). Run: cace s2d_mpdda_pd_sel.yaml -s schematic
+
+name:           s2d_mpdda_pd_sel
+description:    Loop-gain fixture of the IOPadSingle2Diff input buffer with its selectable bias
+PDK:            ihp-sg13cmos5l
+
+cace_format:    5.2
+
+authorship:
+  designer:         Christoph Maier
+  creation_date:    October 25, 2026
+  license:          Apache-2.0
+
+paths:
+  root:             ..
+  schematic:        ../schematic/xschem
+  netlist:          cace/netlist
+  documentation:    cace/_docs
+  runs:             cace/_runs
+
+pins:
+  vdd:
+    description: vdd rail (the pad's iovdd)
+    type: power
+    direction: inout
+  vss:
+    description: vss rail (the pad's iovss)
+    type: ground
+    direction: inout
+  vin:
+    description: buffer input (the pad's padres)
+    type: signal
+    direction: input
+  vref:
+    description: pad reference
+    type: signal
+    direction: input
+  vcm:
+    description: internal common mode
+    type: signal
+    direction: input
+  voutp:
+    description: output, positive
+    type: signal
+    direction: output
+  voutn:
+    description: output, negative
+    type: signal
+    direction: output
+  vfbp:
+    description: feedback / CMFB sense, tied to voutp in the pad
+    type: signal
+    direction: input
+  vfbn:
+    description: feedback / CMFB sense, tied to voutn in the pad
+    type: signal
+    direction: input
+  ibias:
+    description: harness bias current (sourced)
+    type: signal
+    direction: input
+  en_3v3:
+    description: en_3v3
+    type: signal
+    direction: input
+  sel0_3v3:
+    description: sel0_3v3
+    type: signal
+    direction: input
+  sel1_3v3:
+    description: sel1_3v3
+    type: signal
+    direction: input
+  en_3v3_b:
+    description: en_3v3_b (complement of en_3v3)
+    type: signal
+    direction: input
+
+default_conditions:
+  vdd:
+    description: Supply voltage
+    display: VDD
+    unit: V
+    typical: 3.3
+  vref:
+    description: Pad reference
+    display: Vref
+    unit: V
+    typical: 1.2
+  vcm:
+    description: Internal common mode
+    display: Vcm
+    unit: V
+    typical: 1.2
+  corner_mos:
+    description: Process corner MOSFET
+    display: Corner MOSFET
+    typical: tt
+  temp:
+    description: Ambient temperature
+    display: Temperature
+    unit: °C
+    typical: 27
+  sel:
+    description: Bias selection
+    display: Bias select
+    typical: 0
+  cload:
+    description: External load per output, to ground
+    display: Cload
+    unit: pF
+    typical: 0.5
+
+parameters:
+
+  #------------------------------------------------------------ loop gain
+  loop_params:
+    spec:
+      T0dm:
+        display: DC loop gain, differential
+        unit: dB
+        minimum:
+          value: 60
+        typical:
+          value: any
+        maximum:
+          value: any
+      fcdm:
+        display: Crossover, differential
+        unit: MHz
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      PMdm:
+        display: Phase margin, differential
+        unit: °
+        minimum:
+          value: 60
+        typical:
+          value: any
+        maximum:
+          value: any
+      GMdm:
+        display: Gain margin, differential
+        unit: dB
+        minimum:
+          value: 10
+        typical:
+          value: any
+        maximum:
+          value: any
+      T0cm:
+        display: DC loop gain, common mode
+        unit: dB
+        minimum:
+          value: 50
+        typical:
+          value: any
+        maximum:
+          value: any
+      fccm:
+        display: Crossover, common mode
+        unit: MHz
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      PMcm:
+        display: Phase margin, common mode
+        unit: °
+        minimum:
+          value: 55
+        typical:
+          value: any
+        maximum:
+          value: any
+      GMcm:
+        display: Gain margin, common mode
+        unit: dB
+        minimum:
+          value: 10
+        typical:
+          value: any
+        maximum:
+          value: any
+    tool:
+      ngspice:
+        template: s2d_mpdda_pd_sel_tb_loop.sch
+        format: ascii
+        suffix: .data
+        variables: [T0dm, fcdm, PMdm, GMdm, T0cm, fccm, PMcm, GMcm]
+    plot:
+      PMcm_vs_cload:
+        type: xyplot
+        xaxis: cload
+        yaxis: PMcm
+        limits: auto
+      fcdm_vs_cload:
+        type: xyplot
+        xaxis: cload
+        yaxis: fcdm
+        limits: auto
+      PMcm_vs_temp:
+        type: xyplot
+        xaxis: temp
+        yaxis: PMcm
+        limits: auto
+    conditions:
+      cload:
+        enumerate: [0.001, 0.5, 2, 10]
+      corner_mos:
+        enumerate: [ss, sf, tt, fs, ff]
+      temp:
+        enumerate: [-40, 27, 125]
