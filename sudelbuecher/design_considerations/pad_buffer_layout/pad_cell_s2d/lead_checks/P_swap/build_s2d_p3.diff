@@ -1,0 +1,4 @@
+498c498
+<     yb = {n: 10.30 + i * TP for i, n in enumerate(["vref", "vfbn", "vcm", "vdd", "vfbp", "vin"])}
+---
+>     yb = {n: 10.30 + i * TP for i, n in enumerate(["vref", "vfbn", "vcm", "vfbp", "vdd", "vin"])}   # C3 lead 2026-11-04: vfbp / vdd swapped (Christoph), vin next to vdd only

@@ -1,0 +1,14 @@
+Lead change and check of P's s2d_inputs_c3 (2026-11-04, about 20:00 CET; Christoph: "go ahead with the vin/vdd track swap").
+- build_s2d_p3.py: one line (build_s2d_p3.diff): the gate-band order, bottom to top, is vref vfbn vcm vfbp vdd vin
+  (before: vref vfbn vcm vdd vfbp vin). The gate tabs and Via1 follow the track positions.
+- XOR against P's s2d_p3_cells.gds, per cell: 0 for every cell except s2d_inputs_c3 (Metal1 gate tabs, Via1 only)
+- s2d_p3_cells.cdl byte-identical to P's
+- s2d_inputs_c3: run_drc.py "No DRC violations", 0 exceptions; maximal with latch-up 0; deep LVS PASS; sym_check
+  SYMMETRIC (mirror XOR 0, 0 narrow-poly hits)  (drc_ / lvs_ / sym_s2d_inputs_c3.txt)
+- magic C-coupled PEX (sak-pex.sh -m 2) of the cell alone, before / after:
+    vin - vfbp  5.65 -> 0.29 fF
+    vin - vdd   0.50 -> 5.86 fF
+    vfbp - vcm  0.19 -> 5.55 fF (vcm: gates only)
+    vdd - vcm   5.69 -> 0.35 fF
+  every other coupling of vin, vfbp, vdd unchanged
+- handed to F as inputs_B4/P (agents_c3/F/BRIEF_stageB4.md)

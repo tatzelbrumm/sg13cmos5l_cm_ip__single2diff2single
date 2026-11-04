@@ -1,0 +1,145 @@
+* PEX produced on Wed Nov  4 21:04:22 UTC 2026 using /usr/local/bin/sak-pex.sh with m=2 and s=1
+* NGSPICE file created from s2d_inputs_c3.ext - technology: ihp-sg13cmos5l
+
+.subckt s2d_inputs_c3 sb_A2 sa_F1 sa_F2 sb_A1 sb_M1 sa_M2 sa_A1 sb_F2 sb_F1 sa_A2
++ sa_M1 sb_M2 vref vfbn vcm vfbp vdd vin y x yc xc
+X0 xc vcm sb_M2 sb_M2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X1 sa_M2 vfbn yc sa_M2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X2 yc vfbn sa_M2 sa_M2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X3 yc vfbp sa_M1 sa_M1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X4 x vfbp sb_F1 sb_F1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X5 sb_F2 vcm x sb_F2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X6 vdd vdd vdd vdd sg13_hv_pmos ad=3.4p pd=20.68u as=47.54399p ps=0.3048m w=10u l=1u
+X7 y vin sa_A2 sa_A2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X8 sa_A1 vin y sa_A1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X9 sb_F1 vfbp x sb_F1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X10 sb_M1 vcm xc sb_M1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X11 y vfbn sa_F2 sa_F2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X12 vdd vdd vdd vdd sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X13 sa_F1 vcm y sa_F1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X14 xc vcm sb_M1 sb_M1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X15 y vcm sa_F1 sa_F1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X16 x vcm sb_F2 sb_F2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X17 sb_M2 vcm xc sb_M2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X18 sb_A1 vref x sb_A1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X19 vdd vdd vdd vdd sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X20 y vin sa_A1 sa_A1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X21 vdd vdd vdd vdd sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X22 sa_M1 vfbp yc sa_M1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X23 vdd vdd vdd vdd sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X24 vdd vdd vdd vdd sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X25 sb_A2 vref x sb_A2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X26 x vref sb_A1 sb_A1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X27 sa_F2 vfbn y sa_F2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X28 vdd vdd vdd vdd sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X29 x vref sb_A2 sb_A2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X30 vdd vdd vdd vdd sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X31 sa_A2 vin y sa_A2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+C0 x sa_F2 0.07665f
+C1 vcm sb_F2 2.7665f
+C2 yc vref 0.03751f
+C3 vfbn y 0.63502f
+C4 x vfbp 0.63315f
+C5 x sa_A2 0.19349f
+C6 vdd vfbp 5.6664f
+C7 y vcm 0.63563f
+C8 x sa_A1 0.30211f
+C9 vdd sa_A1 0.1466f
+C10 x vin 0.04987f
+C11 sa_M1 vfbp 2.76547f
+C12 y sb_A2 0.30288f
+C13 vdd vin 5.86019f
+C14 sb_M2 vdd 0.14609f
+C15 sa_M1 sa_A2 0.14088f
+C16 y sb_F2 0.07665f
+C17 sa_M1 vin 0.07327f
+C18 sb_F1 sb_F2 0.14088f
+C19 sa_M1 sb_M2 0.14088f
+C20 yc vfbp 0.63591f
+C21 vfbn vref 5.6439f
+C22 xc vdd 0.45932f
+C23 sb_M1 vref 0.07439f
+C24 y sb_F1 0.07665f
+C25 vcm vref 0.29133f
+C26 yc vin 0.03713f
+C27 sa_M1 xc 0.19349f
+C28 yc sb_M2 0.07789f
+C29 xc sa_M2 0.07712f
+C30 sb_A2 vref 2.83221f
+C31 vfbn sa_F2 2.7697f
+C32 yc xc 6.74405f
+C33 vfbn vfbp 0.07603f
+C34 y vref 0.05211f
+C35 vcm vfbp 5.54516f
+C36 sb_A1 x 1.02824f
+C37 vcm vin 0.28017f
+C38 x sa_F1 0.07665f
+C39 sb_M2 vcm 2.76526f
+C40 y sa_F2 1.19896f
+C41 vfbn xc 0.01316f
+C42 sb_F2 sa_A1 0.14088f
+C43 sb_M1 xc 1.02824f
+C44 xc vcm 1.25516f
+C45 y vfbp 0.01489f
+C46 sb_F2 vin 0.07327f
+C47 x vdd 0.45993f
+C48 y sa_A2 1.02824f
+C49 vfbp sb_F1 2.76547f
+C50 sa_A2 sb_F1 0.14088f
+C51 y sa_A1 1.05706f
+C52 y vin 1.29543f
+C53 sb_F1 vin 0.07336f
+C54 vdd sa_M2 0.14207f
+C55 sa_F2 vref 0.07434f
+C56 yc vdd 3.35257f
+C57 yc sa_M1 1.02824f
+C58 vref vin 0.09945f
+C59 yc sa_M2 1.19973f
+C60 sb_M1 sb_A1 0.14088f
+C61 vcm sa_F1 2.76691f
+C62 xc vref 0.03603f
+C63 sa_F1 sb_A2 0.14088f
+C64 vfbn x 0.01379f
+C65 vfbn vdd 0.24587f
+C66 x vcm 0.63415f
+C67 vdd vcm 0.34698f
+C68 y sb_A1 0.19349f
+C69 vfbp vin 0.29189f
+C70 x sb_A2 1.05629f
+C71 vfbn sa_M2 2.7697f
+C72 sa_A2 vin 2.83188f
+C73 vdd sb_A2 0.14241f
+C74 y sa_F1 1.19896f
+C75 sb_M1 sa_M2 0.14088f
+C76 sa_A1 vin 2.83188f
+C77 x sb_F2 1.19896f
+C78 sb_M2 vin 0.07142f
+C79 vfbn yc 0.63438f
+C80 xc vfbp 0.01237f
+C81 yc sb_M1 0.19349f
+C82 yc vcm 0.01484f
+C83 y x 9.6002f
+C84 x sb_F1 1.19896f
+C85 y vdd 3.35319f
+C86 xc vin 0.03565f
+C87 xc sb_M2 1.19896f
+C88 sb_A1 vref 2.83221f
+C89 sa_F1 vref 0.07439f
+C90 sb_A1 sa_F2 0.14088f
+C91 x vref 1.29471f
+C92 vfbn vcm 5.56257f
+C93 vdd vref 0.48912f
+C94 sa_F2 sa_F1 0.14088f
+C95 sb_M1 vcm 2.7655f
+C96 vref sa_M2 0.07255f
+C97 xc sub 2.93098f
+C98 yc sub 1.74514f
+C99 x sub 3.57677f
+C100 y sub 2.32629f
+C101 sa_M2 sub 0.34417f
+C102 sb_A1 sub 0.58048f
+C103 sb_M2 sub 0.6916f
+C104 sa_M1 sub 0.4167f
+C105 sa_A2 sub 0.58512f
+.ends
+
