@@ -248,6 +248,9 @@ The sheets, symbol and source netlists are backannotated to it (agent BA, as in 
   the rails meet anyway.
 - **Edge reserve** for guard, diffusion or well-tap structures at an abutment with IHP's IO cells: x 1.8–4.3 and
   75.7–78.2, above y 31.7. It holds no buffer device layers and no Metal1; Metal2 runs there.
+- **Input gate band.** The input group's six Metal2 gate tracks run in the order vref vfbn vcm vfbp vdd vin, bottom
+  to top. Christoph, 2026-11-04: vdd and vfbp were swapped so that vin's only neighbor is a supply. Magic C-coupled
+  PEX of the cell: pad – outp 5.73 → 0.37 fF; pad's total stays 81.9 fF, the rest now going to iovdd.
 - **The chip harness** sees the same `vss` merge as for the d2s pad. The workaround in that README applies with this
   cell's name.
 

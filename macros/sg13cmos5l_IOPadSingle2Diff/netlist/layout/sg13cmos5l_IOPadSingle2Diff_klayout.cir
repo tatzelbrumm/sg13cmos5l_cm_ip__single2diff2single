@@ -1,4 +1,4 @@
-* Extracted by KLayout with SG13CMOS5L LVS runset on : 04/11/2026 18:08
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 04/11/2026 21:17
 
 .SUBCKT sg13cmos5l_IOPadSingle2Diff en_3v3 en_3v3_b iovdd iovss iref outn outp
 + pad vcm vref
