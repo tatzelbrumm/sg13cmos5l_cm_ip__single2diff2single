@@ -222,9 +222,68 @@ Observations:
   0.7 µV.
 - **Bias select 11** (both cores, test mode): INL up to 6.8 mV, iovdd 214 … 320 µA.
 
+## Layout and verification (cloud session C3, 2026-11-04)
+
+The layout `layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds` is the drawn pad cell of session C3. Its notes are
+on the notes branch `claude/c3-s2d-pad-layout-sudel`, in
+`sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_s2d/report.md`. It consists of:
+
+- the cleaned-out template (version 4), with the protection from IHP's clamp / diode PCells;
+- the buffer and its bias tree, compacted and routed by agents P, N and F.
+
+The sheets, symbol and source netlists are backannotated to it (agent BA, as in the d2s pad).
+
+| check | result |
+|---|---|
+| `make klayout-drc`, `make magic-drc`, maximal deck with latch-up | clean |
+| abutment row Filler1000 \| IOPadAnalog \| pad \| Filler200 \| IOPadIOVdd \| pad \| Filler1000: `run_drc.py`, maximal with latch-up; bands and rails one net | clean; 25 / 25 |
+| `make klayout-lvs` (strict ports) | PASS |
+| `make magic-lvs` | 76 = 76 devices, 37 = 37 nets; fails only on the `vss` pin, the substrate merge of the d2s pad (`../sg13cmos5l_IOPadDiff2Single/README.md`, "`vss` and `iovss`") |
+| `testbenches/spice/tb_pad_dc.spice`, before / after the backannotation | I_Q and bias lines equal to 6 digits (sel 0..3: 115.5 / 123.3 / 124.7 / 246.3 µA); pad current −276 → −183 pA (no secondary diodes) |
+
+- **iovdd rail tie.** The two Metal3 iovdd rails (y 66–91.5 and 93.5–119) are joined inside the cell by one Metal2
+  strap with two Via2 pairs, at x 76.55–77.35 in the right edge reserve. It is its own cell `iovdd_rail_tie`,
+  outlined and labeled on TEXT.drawing 63/0. Christoph, 2026-11-04: "keep the strap for now, maybe annotate with
+  TEXT.drawing so it can be manually removed if necessary". To remove it, delete that one instance. In the IO ring
+  the rails meet anyway.
+- **Edge reserve** for guard, diffusion or well-tap structures at an abutment with IHP's IO cells: x 1.8–4.3 and
+  75.7–78.2, above y 31.7. It holds no buffer device layers and no Metal1; Metal2 runs there.
+- **The chip harness** sees the same `vss` merge as for the d2s pad. The workaround in that README applies with this
+  cell's name.
+
+### CACE: what is stale, and how to rerun it
+
+Not rerun in C3. The committed results (`verification/cace/results/`, run before the layout) predate three changes:
+- the new port partition (`en_ctrl_3v3` and `bias_gen_pd` moved next to the cell in the templates; same function);
+- the removal of the secondary protection (the 587 Ω rppd and its diodes; vin is now the pad);
+- the layout dummies.
+
+What each group should see (reasoning, except where marked [M]):
+
+| groups | expected change on the schematic |
+|---|---|
+| `dc`, `range`, `window`, `dc_sel`, `dc_sel3`, `dc_ibias` | none: the dummies carry no DC current, and the secondary protection carried none in operation (`tb_pad_dc` unchanged [M]) |
+| `ac`, `ac_mm`, `tran` | small: the 587 Ω series resistor and its diode capacitance leave the input; the dummies add gate capacitance to vbp, vbn, vbnc and vcmfb |
+| `noise` | slightly lower: the series rppd's thermal noise (about 3 nV/√Hz) is gone |
+| `pd` | the pad leakage changes: the secondary diodes are gone (−276 → −183 pA at 27 °C in `tb_pad_dc` [M]) |
+| `enable` | none expected |
+| `mm`, `mc` | as `dc`, plus the dummies (they have no mismatch effect) |
+| `s2d_mpdda_pd_sel.yaml` (`loop`) | only the dummies |
+
+**Rerunning:**
+- Schematic: `make sim-cace` (all 14 groups), or `make sim-cace CACE_GROUPS=<group>`.
+- Post-layout: add a `layout:` key to `paths:` in both yamls and pass `-s` explicitly. Without the key, CACE silently
+  falls back to the schematic.
+- Extraction mode: use `EXT_MODE=2` (C-coupled, reproducible). Full RC is not reproducible.
+- Mismatch Monte Carlo (`mm_params`) runs on `-s schematic` only: on an extracted netlist it is vacuous. Process MC
+  (`mc_params`, `tt_stat`) survives extraction.
+- PEX was not run for the macro in C3 (not asked for); the lead's magic C-coupled extractions for the routing
+  evaluation are on the notes branch.
+
 ## Not done
 
-- Layout, LVS, PEX, post-layout CACE; ESD and latch-up simulation; the unpowered pad.
+- PEX and post-layout CACE (the committed CACE results predate the layout; see "CACE" above); ESD and latch-up
+  simulation; the unpowered pad.
 - The open points of `FILL_IN.md`.
 - `testbenches/xschem/simulations/sg13cmos5l_IOPadSingle2Diff.spice` is the netlist generated on 2026-10-20
   (with the placeholder); it is regenerated when the top sheet is netlisted in xschem.
