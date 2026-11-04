@@ -1,0 +1,15 @@
+circuit bias_tree_noab_n_c3 <-> BIAS_TREE_NOAB_N_C3: match
+circuit bias_tree_noab_p_c3 <-> BIAS_TREE_NOAB_P_C3: match
+circuit s2d_casc_n_f <-> S2D_CASC_N_F: match
+circuit s2d_casc_p_f <-> S2D_CASC_P_F: match
+circuit s2d_cload_c3 <-> S2D_CLOAD_C3: match
+circuit s2d_inputs_c3 <-> S2D_INPUTS_C3: match
+circuit s2d_loads_f <-> S2D_LOADS_F: match
+circuit s2d_pd_p_c3 <-> S2D_PD_P_C3: match
+circuit s2d_rhigh_c3 <-> S2D_RHIGH_C3: match
+circuit s2d_sinks_cmfb_c3_core <-> S2D_SINKS_CMFB_C3_CORE: match
+circuit s2d_tails_hi_f <-> S2D_TAILS_HI_F: match
+circuit s2d_tails_lo_f <-> S2D_TAILS_LO_F: match
+circuit sg13cmos5l_IOPadSingle2Diff <-> SG13CMOS5L_IOPADSINGLE2DIFF: match
+circuit sinks_6x6_s2d_c3_core <-> SINKS_6X6_S2D_C3_CORE: match
+circuit tub_p20x1_c3 <-> TUB_P20X1_C3: match

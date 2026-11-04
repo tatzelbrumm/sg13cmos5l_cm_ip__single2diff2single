@@ -495,7 +495,7 @@ def inputs(tc):
     gate = {"A1a": "vin", "A2a": "vin", "A1b": "vref", "A2b": "vref", "F1a": "vcm", "F1b": "vfbp", "F2a": "vfbn",
             "F2b": "vcm", "M1a": "vfbp", "M1b": "vcm", "M2a": "vfbn", "M2b": "vcm"}
     # vias between the two rows' gate pads (10.19 ... 2 yc - 10.19); vcm reached by both rows' tabs
-    yb = {n: 10.30 + i * TP for i, n in enumerate(["vref", "vfbn", "vcm", "vdd", "vfbp", "vin"])}
+    yb = {n: 10.30 + i * TP for i, n in enumerate(["vref", "vfbn", "vcm", "vfbp", "vdd", "vin"])}   # C3 lead 2026-11-04: vfbp / vdd swapped (Christoph), vin next to vdd only
     yo = {"lo": {"y": -0.95, "x": -1.43}, "up": {"x": 2 * yc + 0.95, "y": 2 * yc + 1.43}}
     ye = (-1.70, 2 * yc + 1.70)
     x0, x1 = -0.91, 7 * P + 3.06 + 0.91

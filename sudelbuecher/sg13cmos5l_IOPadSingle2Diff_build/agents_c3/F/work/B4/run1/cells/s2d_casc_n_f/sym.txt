@@ -1,0 +1,2 @@
+s2d_casc_n_f: Activ bbox (-2.25,-1.94;69.95,11.89); axes x = 33.85, y = 4.975 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

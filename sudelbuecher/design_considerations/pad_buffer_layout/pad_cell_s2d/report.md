@@ -537,9 +537,28 @@ Not rerun. The macro README ("CACE: what is stale, and how to rerun it", design 
 the three changes should do: the partition, no secondary protection, the dummies. It also says how to rerun: the
 `layout:` key plus `-s` for post-layout, `EXT_MODE=2`, and mismatch MC on the schematic only.
 
+### 4.7 Input gate band: vfbp / vdd swapped (stage B4; Christoph, about 21:00 CET: "go ahead with the vin/vdd track swap")
+
+- **The change (the lead):** one line of P's `build_s2d_p3.py`; the band order is now vref vfbn vcm vfbp vdd vin
+  (`lead_checks/P_swap/`). Cell checks:
+  - XOR shows only `s2d_inputs_c3`'s Metal1 gate tabs and Via1;
+  - the CDL is identical;
+  - DRC 0 on both decks, deep LVS PASS, symmetric.
+  - Cell PEX: vin – vfbp 5.65 → 0.29 fF.
+- **Agent F** (`agents_c3/F/BRIEF_stageB4.md`) moved outp's one landing on the band to the new vfbp track. vdd needed
+  no change: it is joined inside the cell.
+- **Lead check** (`lead_checks/F_stageB4/summary.txt`):
+  - the rebuild is identical;
+  - the XOR against B3 is only the band;
+  - DRC 0 on the cell and on the row, both decks;
+  - row check 25 / 25, LVS match.
+  - Full-cell PEX: outp – pad 5.73 → 0.37 fF, with pad's total unchanged (81.85 fF).
+- **Make targets:** as §4.4.
+- Macro cell f4b0e0732082, design commit 2b8516a.
+
 ### 4.6 Open
 
-- Optional: P's input-band order (vin next to vfbp, 5.7 fF).
+- Done in §4.7: P's input-band order.
 - Optional: pair routing for the fold nodes.
 - PEX and post-layout CACE when Christoph asks.
 - The macro README's "Not done" list.

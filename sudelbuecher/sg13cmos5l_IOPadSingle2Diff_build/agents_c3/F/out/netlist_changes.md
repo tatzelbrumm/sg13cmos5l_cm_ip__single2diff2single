@@ -96,3 +96,9 @@ vbp is fed from the right; the tail rows lost their left vbp edge stubs (Metal2 
 Only net y's left detour changes: its Metal1 jumper next to the left edge stub becomes Metal2 in the edge reserve.
 No device and no net change; `pad_candidate.cdl` is byte-identical to stage B2 (sha256 ec55fc18348d) [M], LVS still
 matches and `logs/circuit_check.txt` is still EQUAL [M].
+
+## 7. Stage B4 (2026-11-04): no netlist change
+
+P's new `s2d_inputs_c3` swaps the vfbp and vdd gate-band tracks; its CDL is byte-identical, and so is
+`pad_candidate.cdl` (sha256 ec55fc18348d) [M]. outp's one landing on the band moved to the new vfbp track (Via1 + M2
+pad); vdd (iovdd at pad level) has no block wiring on its track. LVS matches and the circuit check is EQUAL [M].

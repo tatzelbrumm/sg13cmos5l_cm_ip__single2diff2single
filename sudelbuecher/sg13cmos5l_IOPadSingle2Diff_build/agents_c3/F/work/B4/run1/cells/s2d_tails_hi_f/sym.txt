@@ -1,0 +1,2 @@
+s2d_tails_hi_f: Activ bbox (0.62,0.62;44.57,8.54); axes x = 22.595, y = 4.58 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

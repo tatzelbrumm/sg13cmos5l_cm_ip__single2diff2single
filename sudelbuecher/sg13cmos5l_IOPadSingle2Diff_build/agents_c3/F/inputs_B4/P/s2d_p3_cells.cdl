@@ -1,0 +1,90 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* s2d_p3_cells.cdl: reference netlists of s2d_p3_cells.gds, written by build_s2d_p3.py (C3, agent P, 2026-11-03).
+* Devices as drawn, one line per finger, dummies included (D = S = vdd).
+
+.SUBCKT tub_p20x1_c3 d g s
+M0 d g s s sg13_hv_pmos w=20u l=1u ng=2 m=1
+.ENDS tub_p20x1_c3
+
+.SUBCKT s2d_inputs_c3 sa_A1 sa_A2 sa_F1 sa_F2 sa_M1 sa_M2 sb_A1 sb_A2 sb_F1 sb_F2 sb_M1 sb_M2 vcm vdd vfbn vfbp vin vref x xc y yc
+XDlo0 vdd vdd vdd tub_p20x1_c3
+XA2b x vref sb_A2 tub_p20x1_c3
+XF1a y vcm sa_F1 tub_p20x1_c3
+XF2a y vfbn sa_F2 tub_p20x1_c3
+XA1b x vref sb_A1 tub_p20x1_c3
+XM1b xc vcm sb_M1 tub_p20x1_c3
+XM2a yc vfbn sa_M2 tub_p20x1_c3
+XDlo7 vdd vdd vdd tub_p20x1_c3
+XDup0 vdd vdd vdd tub_p20x1_c3
+XA1a y vin sa_A1 tub_p20x1_c3
+XF2b x vcm sb_F2 tub_p20x1_c3
+XF1b x vfbp sb_F1 tub_p20x1_c3
+XA2a y vin sa_A2 tub_p20x1_c3
+XM1a yc vfbp sa_M1 tub_p20x1_c3
+XM2b xc vcm sb_M2 tub_p20x1_c3
+XDup7 vdd vdd vdd tub_p20x1_c3
+.ENDS s2d_inputs_c3
+
+.SUBCKT s2d_tails_c3 sa_A1 sa_A2 sa_F1 sa_F2 sa_M1 sa_M2 sb_A1 sb_A2 sb_F1 sb_F2 sb_M1 sb_M2 vbp vdd
+MDl0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTA2b sb_A2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTF1a sa_F1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTF2a sa_F2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTA1b sb_A1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTM1b sb_M1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTM2a sa_M2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MDl7 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTA1a sa_A1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTF2b sb_F2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTF1b sb_F1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTA2a sa_A2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTM1a sa_M1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTM2b sb_M2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MDu7 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS s2d_tails_c3
+
+.SUBCKT s2d_loads_c3 dd ln lp vcmfb vdd
+MXl0 vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MLP1l lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLN2l ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDD3l dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDD4l dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLN5l ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLP6l lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MXl7 vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MXu0 vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MLP1u lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLN2u ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDD3u dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDD4u dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLN5u ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLP6u lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MXu7 vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS s2d_loads_c3
+
+.SUBCKT s2d_casc_p_c3 dd ln lp vbpc vcmfb vdd voutn voutp
+MXl0 vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MLPCl voutp vbpc lp vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MLNCl voutn vbpc ln vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MDCl vcmfb vbpc dd vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MXl4 vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MLPCu voutp vbpc lp vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MLNCu voutn vbpc ln vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MDCu vcmfb vbpc dd vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MXu4 vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS s2d_casc_p_c3
+
+.SUBCKT s2d_pd_p_c3 en_3v3 vcm vdd voutn voutp
+MTPP voutp en_3v3 vcm vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MTNP voutn en_3v3 vcm vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS s2d_pd_p_c3
+
+.SUBCKT bias_tree_noab_p_c3 en_3v3_b iref ni vbn vbnc vbp vdd
+MPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MD vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS bias_tree_noab_p_c3

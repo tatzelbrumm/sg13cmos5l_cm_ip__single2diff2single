@@ -1,0 +1,49 @@
+mkdir -p verification/lvs
+mkdir -p netlist/layout
+make magic-lvs-netlist CELL=sg13cmos5l_IOPadSingle2Diff
+make[1]: Entering directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff'
+mkdir -p netlist/schematic
+xschem -s -r -x -q --rcfile schematic/xschem/xschemrc --command ' \
+	set spiceprefix 1; \
+	set lvs_netlist 0; \
+	set top_is_subckt 1; \
+	set lvs_ignore 1; \
+	set ev_precision 5; \
+	set netlist_dir netlist/schematic; \
+	xschem set netlist_name [file tail [file rootname [xschem get current_name]]]_magic.spice; \
+	xschem netlist \
+' schematic/xschem/sg13cmos5l_IOPadSingle2Diff.sch
+Using run time directory XSCHEM_SHAREDIR = /foss/tools/xschem/share/xschem
+Sourcing /foss/tools/xschem/share/xschem/xschemrc init file
+Sourcing schematic/xschem/xschemrc init file
+MODELS_NGSPICE: /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models
+MODELS_XYCE: /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/models
+
+make[1]: Leaving directory '/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff'
+sak-lvs.sh -d -w verification/lvs -s netlist/schematic/sg13cmos5l_IOPadSingle2Diff_magic.spice -l layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds -c sg13cmos5l_IOPadSingle2Diff
+[INFO] DEBUG is enabled!
+[INFO] flag -w is set to <verification/lvs>.
+[INFO] flag -s is set to <netlist/schematic/sg13cmos5l_IOPadSingle2Diff_magic.spice>.
+[INFO] flag -l is set to <layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds>.
+[INFO] flag -c is set to <sg13cmos5l_IOPadSingle2Diff>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using SPICE/CDL netlist file </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/netlist/schematic/sg13cmos5l_IOPadSingle2Diff_magic.spice>.
+[INFO] Using layout file </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds>.
+[INFO] Running LVS of </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds> vs </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/netlist/schematic/sg13cmos5l_IOPadSingle2Diff_magic.spice>.
+[INFO] Using SPICE/CDL netlist </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/netlist/schematic/sg13cmos5l_IOPadSingle2Diff_magic.spice>...
+[INFO] Extracting netlist from layout </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds>...
+[INFO] Run netgen...
+---
+[INFO] Magic+Netgen LVS errors found! Please check </home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/verification/lvs/sg13cmos5l_IOPadSingle2Diff.magic.lvs/sg13cmos5l_IOPadSingle2Diff.lvs.out>!
+---
+LVS ERRORS FOUND! Please check the report(s) above!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |     _____     |
+   \             /
+    '.         .'
+      '-.....-'
+---
+make: *** [Makefile:312: magic-lvs] Error 1

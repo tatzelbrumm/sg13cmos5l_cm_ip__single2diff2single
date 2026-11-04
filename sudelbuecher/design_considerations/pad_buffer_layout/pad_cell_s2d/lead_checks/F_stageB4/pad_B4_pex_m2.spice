@@ -1,0 +1,805 @@
+* PEX produced on Wed Nov  4 21:14:45 UTC 2026 using /usr/local/bin/sak-pex.sh with m=2 and s=1
+* NGSPICE file created from sg13cmos5l_IOPadSingle2Diff.ext - technology: ihp-sg13cmos5l
+
+.subckt sg13cmos5l_IOPadSingle2Diff vref outp outn vcm en_3v3 en_3v3_b iref pad vdd
++ iovss iovdd
+X0 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=0.65663n ps=2.66142m w=5u l=6u
+X1 iovss iovss iovss rhigh l=12.65u w=0.5u
+X2 s2d_block_0.s2d_loads_f_0.ln s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X3 s2d_block_0.s2d_loads_f_0.ln s2d_block_0.s2d_casc_p_f_0.vbpc outn iovdd sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X4 s2d_block_0.s2d_tails_hi_f_0.sa_A2 a_14374_25646# iovss rhigh l=12.65u w=0.5u
+X5 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X6 iovdd s2d_block_0.s2d_casc_n_f_0.vbnc s2d_block_0.s2d_casc_n_f_0.yc iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X7 Clamp_P_M1_0.gate iovdd iovss rppd l=12.9u w=0.5u
+X8 s2d_block_0.s2d_loads_f_0.ln s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X9 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.bias_tree_noab_n_c3_0.ni iovss iovss sg13_hv_nmos ad=0.816p pd=5.48u as=0.816p ps=5.48u w=2.4u l=6u
+X10 a_11758_27006# a_14374_25510# iovss rhigh l=12.65u w=0.5u
+X11 s2d_block_0.s2d_tails_lo_f_0.sa_F1 vcm s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_lo_f_0.sa_F1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X12 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0.75674n ps=2.78086m w=2u l=6u
+X13 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X14 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.xc iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X15 s2d_block_0.bias_tree_noab_n_c3_0.ni en_3v3_b iovss iovss sg13_hv_nmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X16 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X17 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=0 ps=0 w=6u l=6u
+X18 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_casc_n_f_0.vbnc outp iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X19 s2d_block_0.s2d_casc_n_f_0.x vref s2d_block_0.s2d_tails_lo_f_0.sb_A2 s2d_block_0.s2d_tails_lo_f_0.sb_A2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X20 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X21 s2d_block_0.s2d_tails_hi_f_0.sb_F1 outp s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_hi_f_0.sb_F1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X22 iovdd iovdd iovdd iovdd sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X23 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=0 ps=0 w=5u l=6u
+X24 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X25 s2d_block_0.s2d_tails_lo_f_0.sb_A2 a_14374_27278# iovss rhigh l=12.65u w=0.5u
+X26 iovdd s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_loads_f_0.dd iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X27 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=0.6u
+X28 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=2.068p ps=9.74u w=4.4u l=0.6u
+X29 iovdd s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_loads_f_0.lp iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X30 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=0.6u
+X31 vcm en_3v3_b outp iovss sg13_hv_nmos ad=0.19p pd=1.38u as=0.34p ps=2.68u w=1u l=0.45u
+X32 s2d_block_0.s2d_tails_lo_f_0.sa_F1 a_14374_25782# iovss rhigh l=12.65u w=0.5u
+X33 a_11758_27006# a_14374_27142# iovss rhigh l=12.65u w=0.5u
+X34 iovdd iovdd iovdd iovdd sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X35 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X36 s2d_block_0.s2d_loads_f_0.lp s2d_block_0.s2d_casc_p_f_0.vbpc outp iovdd sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X37 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.sa_M1 iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X38 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X39 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X40 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X41 iref en_3v3 s2d_block_0.bias_tree_noab_n_c3_0.ni iovss sg13_hv_nmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X42 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X43 pad iovdd dpantenna l=1.26u w=27.78u
+X44 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X45 s2d_block_0.s2d_casc_n_f_0.x vcm s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_hi_f_0.sb_F2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X46 s2d_block_0.s2d_tails_hi_f_0.sa_A1 a_14374_25510# iovss rhigh l=12.65u w=0.5u
+X47 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.y iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X48 s2d_block_0.s2d_tails_hi_f_0.sb_F1 a_14374_27414# iovss rhigh l=12.65u w=0.5u
+X49 s2d_block_0.s2d_tails_lo_f_0.sa_F2 outn s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_lo_f_0.sa_F2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X50 iovss s2d_block_0.bias_tree_noab_n_c3_0.ni iovss iovss sg13_hv_nmos ad=0.816p pd=5.48u as=0 ps=0 w=2.4u l=6u
+X51 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_casc_n_f_0.vbnc outn iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X52 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=0.6u
+X53 iovss s2d_block_0.s2d_casc_n_f_0.vbnc iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=3u
+X54 iovss pad dantenna l=1.26u w=27.78u
+X55 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=0.6u
+X56 vcm en_3v3 outp iovdd sg13_hv_pmos ad=0.19p pd=1.38u as=0.34p ps=2.68u w=1u l=0.45u
+X57 outn en_3v3 vcm iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0.19p ps=1.38u w=1u l=0.45u
+X58 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.sb_M2 iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X59 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.y iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X60 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X61 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.sb_F1 iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X62 iovdd s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_loads_f_0.lp iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X63 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X64 a_11758_26734# a_14374_25782# iovss rhigh l=12.65u w=0.5u
+X65 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X66 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X67 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X68 s2d_block_0.s2d_tails_hi_f_0.sb_M2 vcm s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_hi_f_0.sb_M2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X69 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X70 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=0.6u
+X71 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=0.6u
+X72 iovss iovss iovss rhigh l=12.65u w=0.5u
+X73 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_casc_n_f_0.vbnc iovdd iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X74 iovdd s2d_block_0.s2d_casc_p_f_0.vbpc iovdd iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X75 s2d_block_0.s2d_casc_n_f_0.yc outp s2d_block_0.s2d_tails_hi_f_0.sa_M1 s2d_block_0.s2d_tails_hi_f_0.sa_M1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X76 s2d_block_0.s2d_casc_n_f_0.y vcm s2d_block_0.s2d_tails_lo_f_0.sa_F1 s2d_block_0.s2d_tails_lo_f_0.sa_F1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X77 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.sa_A2 iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X78 s2d_block_0.s2d_tails_hi_f_0.sa_A2 pad s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_hi_f_0.sa_A2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X79 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.yc iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X80 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X81 s2d_block_0.s2d_tails_hi_f_0.sb_M2 a_14374_27822# iovss rhigh l=12.65u w=0.5u
+X82 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X83 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.y iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X84 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.sa_A1 iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X85 a_11758_26870# a_14374_25646# iovss rhigh l=12.65u w=0.5u
+X86 s2d_block_0.s2d_casc_n_f_0.vbnc s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=0.68p pd=4.68u as=0.68p ps=4.68u w=2u l=6u
+X87 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_14374_27550# iovss rhigh l=12.65u w=0.5u
+X88 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=0 ps=0 w=5u l=6u
+X89 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X90 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X91 a_11758_26598# a_14374_25918# iovss rhigh l=12.65u w=0.5u
+X92 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.x iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X93 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X94 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X95 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=0.6u
+X96 iovdd s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X97 pad iovdd dpantenna l=1.26u w=27.78u
+X98 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X99 iovdd s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_loads_f_0.ln iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X100 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=2.068p pd=9.74u as=2.596p ps=5.58u w=4.4u l=0.6u
+X101 s2d_block_0.s2d_loads_f_0.lp s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X102 iovdd s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_loads_f_0.ln iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X103 iovdd s2d_block_0.s2d_casc_p_f_0.vbpc iovdd iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X104 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=0.6u
+X105 s2d_block_0.s2d_tails_lo_f_0.sa_M2 outn s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_lo_f_0.sa_M2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X106 iovdd s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_casc_p_f_0.vbpc iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=4u
+X107 iovdd s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X108 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X109 iovss outp iovss iovss sg13_hv_nmos ad=4.08p pd=24.68u as=0 ps=0 w=12u l=12u
+X110 iovss outn iovss iovss sg13_hv_nmos ad=4.08p pd=24.68u as=0 ps=0 w=12u l=12u
+X111 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.sb_F2 iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X112 s2d_block_0.s2d_casc_n_f_0.x outp s2d_block_0.s2d_tails_hi_f_0.sb_F1 s2d_block_0.s2d_tails_hi_f_0.sb_F1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X113 s2d_block_0.s2d_casc_n_f_0.xc vcm s2d_block_0.s2d_tails_lo_f_0.sb_M1 s2d_block_0.s2d_tails_lo_f_0.sb_M1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X114 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X115 iovdd s2d_block_0.s2d_casc_p_f_0.vbpc iovdd iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X116 a_11758_26326# a_14374_26190# iovss rhigh l=12.65u w=0.5u
+X117 s2d_block_0.s2d_tails_lo_f_0.sb_A1 vref s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_lo_f_0.sb_A1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X118 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X119 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X120 s2d_block_0.s2d_tails_lo_f_0.sb_M1 a_14374_27686# iovss rhigh l=12.65u w=0.5u
+X121 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X122 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X123 s2d_block_0.s2d_tails_hi_f_0.sa_A1 pad s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_hi_f_0.sa_A1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X124 s2d_block_0.s2d_tails_lo_f_0.sb_M1 s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X125 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X126 iovdd iovdd iovdd iovdd sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X127 a_11758_26326# a_14374_27822# iovss rhigh l=12.65u w=0.5u
+X128 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X129 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=0.6u
+X130 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=0.6u
+X131 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X132 s2d_block_0.bias_tree_noab_n_c3_0.ni en_3v3_b iref iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=0.45u
+X133 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=3.1302p ps=14.26u w=6.66u l=0.6u
+X134 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=0.6u
+X135 a_11758_26462# a_14374_26054# iovss rhigh l=12.65u w=0.5u
+X136 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X137 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X138 iovdd iovdd iovdd iovdd sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X139 s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_loads_f_0.dd iovdd sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X140 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.vbp iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X141 s2d_block_0.bias_tree_noab_n_c3_0.ni s2d_block_0.bias_tree_noab_n_c3_0.ni iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X142 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X143 s2d_block_0.s2d_tails_lo_f_0.sa_M2 s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X144 outn s2d_block_0.s2d_casc_n_f_0.vbnc s2d_block_0.s2d_casc_n_f_0.y iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X145 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X146 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X147 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X148 s2d_block_0.s2d_casc_n_f_0.xc vcm s2d_block_0.s2d_tails_hi_f_0.sb_M2 s2d_block_0.s2d_tails_hi_f_0.sb_M2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X149 s2d_block_0.s2d_casc_n_f_0.y outn s2d_block_0.s2d_tails_lo_f_0.sa_F2 s2d_block_0.s2d_tails_lo_f_0.sa_F2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X150 s2d_block_0.s2d_tails_hi_f_0.sa_M1 outp s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_hi_f_0.sa_M1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X151 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X152 s2d_block_0.s2d_tails_lo_f_0.sa_F2 a_14374_25918# iovss rhigh l=12.65u w=0.5u
+X153 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X154 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X155 iovss s2d_block_0.s2d_casc_n_f_0.vbnc iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=3u
+X156 s2d_block_0.s2d_tails_lo_f_0.sa_F2 s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X157 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=0.6u
+X158 s2d_block_0.s2d_tails_lo_f_0.sb_A2 vref s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_lo_f_0.sb_A2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X159 pad Clamp_N_M1_0.gate iovss iovss sg13_hv_nmos ad=2.596p pd=5.58u as=1.408p ps=5.04u w=4.4u l=0.6u
+X160 a_11758_26462# a_14374_27686# iovss rhigh l=12.65u w=0.5u
+X161 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X162 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X163 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.bias_tree_noab_n_c3_0.ni iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X164 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=3.1302p ps=14.26u w=6.66u l=0.6u
+X165 iovdd iovdd iovdd iovdd sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X166 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.xc iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X167 Clamp_N_M1_0.gate iovss iovss rppd l=3.54u w=0.5u
+X168 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X169 iovss s2d_block_0.s2d_casc_n_f_0.vbnc iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=3u
+X170 iovdd iovdd iovdd iovdd sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X171 s2d_block_0.s2d_tails_lo_f_0.sb_A1 s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X172 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X173 a_11758_26734# a_14374_27414# iovss rhigh l=12.65u w=0.5u
+X174 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X175 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X176 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=3.1302p pd=14.26u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X177 outn s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_loads_f_0.ln iovdd sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X178 s2d_block_0.s2d_casc_n_f_0.y pad s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_hi_f_0.sa_A2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X179 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X180 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=0.6u
+X181 s2d_block_0.s2d_casc_n_f_0.yc outn s2d_block_0.s2d_tails_lo_f_0.sa_M2 s2d_block_0.s2d_tails_lo_f_0.sa_M2 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X182 s2d_block_0.s2d_tails_lo_f_0.sb_A2 s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X183 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.x iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X184 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=0.6u
+X185 s2d_block_0.s2d_loads_f_0.lp s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X186 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X187 s2d_block_0.s2d_tails_lo_f_0.sb_M1 vcm s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_lo_f_0.sb_M1 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X188 outp s2d_block_0.s2d_casc_n_f_0.vbnc s2d_block_0.s2d_casc_n_f_0.x iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X189 s2d_block_0.s2d_tails_hi_f_0.sa_M1 a_14374_26054# iovss rhigh l=12.65u w=0.5u
+X190 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=0.6u
+X191 iovss s2d_block_0.s2d_casc_n_f_0.vbnc iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=3u
+X192 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.x iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X193 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X194 iovdd s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X195 outn en_3v3_b vcm iovss sg13_hv_nmos ad=0.34p pd=2.68u as=0.19p ps=1.38u w=1u l=0.45u
+X196 s2d_block_0.s2d_tails_hi_f_0.sb_F2 vcm s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_hi_f_0.sb_F2 sg13_hv_pmos ad=3.4p pd=20.68u as=1.9p ps=10.38u w=10u l=1u
+X197 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X198 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X199 s2d_block_0.s2d_casc_n_f_0.y pad s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_hi_f_0.sa_A1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X200 s2d_block_0.s2d_tails_lo_f_0.sb_A1 a_14374_27142# iovss rhigh l=12.65u w=0.5u
+X201 iovdd s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_loads_f_0.dd iovdd sg13_hv_pmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=4u
+X202 iovdd iovdd iovdd iovdd sg13_hv_pmos ad=1.9p pd=10.38u as=0 ps=0 w=10u l=1u
+X203 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=2.1312p pd=7.3u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X204 iovdd s2d_block_0.s2d_loads_f_0.vcmfb iovdd iovdd sg13_hv_pmos ad=0.34p pd=2.68u as=0 ps=0 w=1u l=4u
+X205 a_11758_26598# a_14374_27550# iovss rhigh l=12.65u w=0.5u
+X206 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_casc_n_f_0.vbnc s2d_block_0.s2d_loads_f_0.vcmfb iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X207 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X208 s2d_block_0.s2d_tails_lo_f_0.sa_F1 s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=1.7p pd=10.68u as=1.7p ps=10.68u w=5u l=6u
+X209 iovdd Clamp_P_M1_0.gate pad iovdd sg13_hv_pmos ad=3.1302p pd=14.26u as=3.9294p ps=7.84u w=6.66u l=0.6u
+X210 outp s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_loads_f_0.lp iovdd sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X211 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp iovdd iovdd sg13_hv_pmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+X212 a_11758_26870# a_14374_27278# iovss rhigh l=12.65u w=0.5u
+X213 s2d_block_0.s2d_casc_n_f_0.vbnc s2d_block_0.s2d_casc_n_f_0.vbnc iovss iovss sg13_hv_nmos ad=0.34p pd=2.68u as=0.34p ps=2.68u w=1u l=8u
+X214 pad Clamp_P_M1_0.gate iovdd iovdd sg13_hv_pmos ad=3.9294p pd=7.84u as=2.1312p ps=7.3u w=6.66u l=0.6u
+X215 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.yc iovss sg13_hv_nmos ad=2.04p pd=12.68u as=2.04p ps=12.68u w=6u l=6u
+X216 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=0.6u
+X217 s2d_block_0.s2d_tails_lo_f_0.sa_M2 a_14374_26190# iovss rhigh l=12.65u w=0.5u
+X218 s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_casc_n_f_0.vbnc s2d_block_0.s2d_casc_n_f_0.xc iovss sg13_hv_nmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X219 iovss pad dantenna l=1.26u w=27.78u
+X220 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_loads_f_0.vcmfb iovdd sg13_hv_pmos ad=5.1p pd=30.68u as=5.1p ps=30.68u w=15u l=3u
+X221 iovdd iovdd iovdd iovdd sg13_hv_pmos ad=3.4p pd=20.68u as=0 ps=0 w=10u l=1u
+X222 s2d_block_0.s2d_casc_n_f_0.x vref s2d_block_0.s2d_tails_lo_f_0.sb_A1 s2d_block_0.s2d_tails_lo_f_0.sb_A1 sg13_hv_pmos ad=1.9p pd=10.38u as=3.4p ps=20.68u w=10u l=1u
+X223 iovss Clamp_N_M1_0.gate pad iovss sg13_hv_nmos ad=1.408p pd=5.04u as=2.596p ps=5.58u w=4.4u l=0.6u
+X224 iovss s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn iovss iovss sg13_hv_nmos ad=0.68p pd=4.68u as=0 ps=0 w=2u l=6u
+C0 vdd a_11844_27550# 0.01806f
+C1 s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_casc_n_f_0.xc 1.61182f
+C2 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.04313f
+C3 iovdd s2d_block_0.s2d_casc_n_f_0.y 15.5797f
+C4 s2d_block_0.s2d_tails_hi_f_0.sb_F1 s2d_block_0.s2d_tails_lo_f_0.sa_F2 3.20673f
+C5 iovdd iref 0.39141f
+C6 outp s2d_block_0.s2d_loads_f_0.dd 0.0242f
+C7 a_11844_25918# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.03426f
+C8 vdd vref 1.72018f
+C9 s2d_block_0.s2d_tails_lo_f_0.sb_A2 vref 2.89541f
+C10 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_hi_f_0.sb_F1 1.40651f
+C11 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_lo_f_0.sa_F2 1.20108f
+C12 s2d_block_0.s2d_tails_hi_f_0.sa_A2 a_11844_25918# 0.0208f
+C13 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_casc_p_f_0.vbpc 0.05993f
+C14 pad outp 0.37132f
+C15 s2d_block_0.s2d_loads_f_0.ln s2d_block_0.s2d_loads_f_0.vcmfb 1.8425f
+C16 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_casc_n_f_0.x 22.009f
+C17 iref en_3v3 0.26074f
+C18 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.31556f
+C19 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.04713f
+C20 a_11758_26326# s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.04825f
+C21 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.s2d_loads_f_0.lp 3.89965f
+C22 iovdd a_8120_4634# 0.08872f
+C23 a_11844_27278# a_14374_27278# 0.0271f
+C24 a_11844_27822# a_14374_27822# 0.02746f
+C25 a_11844_27142# a_14374_27142# 0.02707f
+C26 a_11844_27686# a_14374_27686# 0.02728f
+C27 a_11844_27414# a_14374_27414# 0.02713f
+C28 a_11844_27550# a_14374_27550# 0.02719f
+C29 a_14374_27686# a_11844_28094# 0.02728f
+C30 a_11844_28230# a_11844_28366# 0.63642f
+C31 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.03285f
+C32 vcm s2d_block_0.s2d_tails_hi_f_0.sb_M2 2.97323f
+C33 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.5387f
+C34 a_11844_26326# a_11758_26326# 0.01932f
+C35 outp s2d_block_0.s2d_tails_hi_f_0.sa_M1 3.63692f
+C36 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.26261f
+C37 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_27550# 0.0248f
+C38 a_14374_25646# a_14374_25782# 1.00966f
+C39 vdd s2d_block_0.s2d_casc_n_f_0.xc 0.02686f
+C40 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_27958# 0.04246f
+C41 outp en_3v3_b 1.72266f
+C42 s2d_block_0.s2d_tails_hi_f_0.sb_F1 s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.03169f
+C43 a_11844_25374# a_11844_25510# 0.63642f
+C44 s2d_block_0.s2d_tails_hi_f_0.sa_A2 outp 0.02196f
+C45 a_14374_26190# a_14374_26054# 0.33426f
+C46 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.s2d_casc_p_f_0.vbpc 1.62631f
+C47 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.50564f
+C48 s2d_block_0.s2d_tails_hi_f_0.sb_F2 vref 0.35903f
+C49 vcm vref 0.29438f
+C50 vdd a_11844_27006# 0.01077f
+C51 a_11758_26326# s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.05685f
+C52 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 11.4419f
+C53 s2d_block_0.s2d_tails_lo_f_0.sa_M2 vref 0.06384f
+C54 s2d_block_0.s2d_tails_hi_f_0.sa_A1 vdd 0.10518f
+C55 s2d_block_0.s2d_tails_hi_f_0.sa_A2 a_11844_25646# 0.08082f
+C56 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_lo_f_0.sb_A2 3.43851f
+C57 outp s2d_block_0.s2d_tails_hi_f_0.vbp 0.19183f
+C58 a_14374_27550# a_14374_27414# 0.78325f
+C59 a_14374_27278# a_11844_28502# 0.0271f
+C60 s2d_block_0.s2d_tails_lo_f_0.sb_A1 s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.36686f
+C61 s2d_block_0.s2d_tails_hi_f_0.sb_F1 vref 0.05463f
+C62 s2d_block_0.s2d_casc_n_f_0.y vref 1.67038f
+C63 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.80863f
+C64 vcm s2d_block_0.s2d_tails_lo_f_0.sb_M1 2.76648f
+C65 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.02579f
+C66 vdd s2d_block_0.bias_tree_noab_n_c3_0.ni 1.76708f
+C67 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_casc_n_f_0.xc 0.03286f
+C68 vcm s2d_block_0.s2d_casc_n_f_0.xc 1.31473f
+C69 a_11844_26190# a_11844_26326# 0.63642f
+C70 a_14374_25918# a_11844_26598# 0.02719f
+C71 s2d_block_0.s2d_tails_hi_f_0.sa_A1 a_11844_28638# 0.01046f
+C72 outp s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.15517f
+C73 s2d_block_0.s2d_tails_lo_f_0.sa_M2 s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.59445f
+C74 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_casc_p_f_0.vbpc 0.02597f
+C75 outn s2d_block_0.s2d_casc_n_f_0.yc 0.87595f
+C76 vdd a_11844_27414# 0.01616f
+C77 outn s2d_block_0.s2d_casc_n_f_0.vbnc 9.68851f
+C78 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_26326# 0.02158f
+C79 vdd a_11758_26326# 0.01425f
+C80 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_27006# 0.02253f
+C81 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.23201f
+C82 a_11844_28638# s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.02111f
+C83 iovdd s2d_block_0.s2d_casc_n_f_0.yc 10.8054f
+C84 iovdd Clamp_P_M1_0.gate 44.7526f
+C85 iovdd s2d_block_0.s2d_casc_n_f_0.vbnc 22.6805f
+C86 s2d_block_0.s2d_tails_hi_f_0.sb_F1 s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.07854f
+C87 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.02742f
+C88 a_14374_25918# a_14374_25782# 0.78325f
+C89 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_hi_f_0.sa_A1 0.41711f
+C90 s2d_block_0.s2d_tails_hi_f_0.sa_A1 vcm 0.02624f
+C91 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.01813f
+C92 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_casc_n_f_0.xc 7.99643f
+C93 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_casc_n_f_0.x 5.29006f
+C94 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.0325f
+C95 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_hi_f_0.vbp 3.8698f
+C96 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_casc_n_f_0.vbnc 2.98545f
+C97 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.05843f
+C98 a_11758_26462# s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.04781f
+C99 a_11844_25374# s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.03386f
+C100 a_14374_25510# a_14374_27142# 0.27561f
+C101 s2d_block_0.s2d_tails_lo_f_0.sa_M2 s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.16443f
+C102 a_11844_27006# a_11844_26870# 0.63642f
+C103 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.1176f
+C104 outn s2d_block_0.s2d_loads_f_0.dd 0.03137f
+C105 s2d_block_0.s2d_tails_lo_f_0.sb_A1 s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.52239f
+C106 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_casc_n_f_0.y 1.19158f
+C107 a_11844_27142# a_11758_27006# 0.01971f
+C108 iovdd s2d_block_0.s2d_loads_f_0.dd 10.6422f
+C109 a_11758_26870# a_11758_26734# 0.55763f
+C110 a_11844_26462# a_11844_26326# 0.63642f
+C111 outp s2d_block_0.s2d_loads_f_0.lp 0.34422f
+C112 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.01535f
+C113 s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_casc_n_f_0.y 0.21086f
+C114 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_27414# 0.02378f
+C115 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.19349f
+C116 pad outn 0.07331f
+C117 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn a_14374_25782# 0.01214f
+C118 pad iovdd 45.5897f
+C119 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.28733f
+C120 a_11758_26326# s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.26248f
+C121 a_11758_26462# s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.02995f
+C122 pad s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.01954f
+C123 s2d_block_0.s2d_tails_hi_f_0.sb_F2 vdd 0.10947f
+C124 vcm vdd 1.91855f
+C125 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 5.71059f
+C126 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.vbnc 7.23477f
+C127 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_lo_f_0.sb_A2 2.29219f
+C128 vcm s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.25963f
+C129 s2d_block_0.s2d_tails_hi_f_0.sa_A2 a_11844_25510# 0.01204f
+C130 iref s2d_block_0.bias_tree_noab_n_c3_0.ni 0.20242f
+C131 pad s2d_block_0.s2d_casc_n_f_0.x 0.07862f
+C132 a_8120_4634# s2d_block_0.s2d_loads_f_0.vcmfb 0.01054f
+C133 Clamp_N_M1_0.gate s2d_block_0.s2d_casc_n_f_0.vbnc 0.01177f
+C134 outn s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.0232f
+C135 outp s2d_block_0.s2d_casc_p_f_0.vbpc 1.4238f
+C136 a_14374_25510# a_14374_25646# 1.23642f
+C137 outn en_3v3_b 0.23705f
+C138 iovdd s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.68866f
+C139 s2d_block_0.s2d_tails_hi_f_0.sa_A2 outn 0.0227f
+C140 a_11844_25374# s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.01449f
+C141 iovdd en_3v3_b 0.41196f
+C142 vdd s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.10873f
+C143 s2d_block_0.s2d_casc_n_f_0.yc vref 0.03751f
+C144 s2d_block_0.s2d_tails_hi_f_0.sa_M1 s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.29686f
+C145 s2d_block_0.s2d_tails_hi_f_0.sb_F1 s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.58509f
+C146 s2d_block_0.s2d_tails_hi_f_0.sa_A2 iovdd 2.76796f
+C147 a_11844_27278# a_11844_27414# 0.63642f
+C148 a_11844_25374# s2d_block_0.s2d_casc_n_f_0.xc 0.01124f
+C149 a_11844_27550# a_11758_26598# 0.01938f
+C150 a_11758_26462# a_11758_26326# 1.23642f
+C151 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_26734# 0.02221f
+C152 vdd s2d_block_0.s2d_casc_n_f_0.y 0.06408f
+C153 s2d_block_0.s2d_loads_f_0.lp s2d_block_0.s2d_casc_p_f_0.vbpc 1.79896f
+C154 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.34721f
+C155 en_3v3_b en_3v3 0.28127f
+C156 iref vdd 1.71255f
+C157 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.02005f
+C158 a_14374_25918# a_14374_26054# 0.55763f
+C159 a_14374_25510# a_11844_25510# 0.02707f
+C160 s2d_block_0.s2d_tails_hi_f_0.sa_A1 a_11844_28502# 0.01046f
+C161 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_casc_n_f_0.x 0.19349f
+C162 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.01093f
+C163 outn s2d_block_0.s2d_tails_hi_f_0.vbp 0.35916f
+C164 vdd a_11844_27278# 0.01422f
+C165 a_11844_26054# a_11844_26190# 0.63642f
+C166 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_26190# 0.02158f
+C167 vdd a_11758_26462# 0.0103f
+C168 pad s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.06476f
+C169 iovdd s2d_block_0.s2d_tails_hi_f_0.vbp 67.0717f
+C170 s2d_block_0.s2d_tails_hi_f_0.sa_A1 a_11844_25374# 0.01837f
+C171 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_26054# 0.02158f
+C172 s2d_block_0.s2d_tails_hi_f_0.sb_F2 vcm 2.83453f
+C173 pad s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.07772f
+C174 a_11844_28638# s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.01626f
+C175 a_11844_26190# s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.0194f
+C176 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.22904f
+C177 pad Clamp_N_M1_0.gate 7.47057f
+C178 a_11844_26870# a_11844_26734# 0.63642f
+C179 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.35611f
+C180 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_casc_n_f_0.xc 12.1225f
+C181 en_3v3 s2d_block_0.s2d_tails_hi_f_0.vbp 0.03985f
+C182 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.36456f
+C183 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_casc_n_f_0.vbnc 5.59245f
+C184 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_hi_f_0.vbp 0.07574f
+C185 outn s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.02799f
+C186 a_11758_26598# s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.04807f
+C187 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_hi_f_0.sb_F1 6.07872f
+C188 a_11844_27686# a_11844_27822# 0.63642f
+C189 s2d_block_0.s2d_tails_hi_f_0.sa_M1 s2d_block_0.s2d_tails_hi_f_0.sb_M2 1.08556f
+C190 vcm s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.24994f
+C191 iovdd s2d_block_0.s2d_tails_lo_f_0.sa_F1 1.86555f
+C192 a_14374_27822# a_11844_27958# 0.02746f
+C193 pad vref 0.12553f
+C194 a_11844_28094# a_11844_28230# 0.63642f
+C195 a_11844_25646# a_14374_25646# 0.0271f
+C196 a_11844_25918# s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.01924f
+C197 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_casc_n_f_0.y 0.45356f
+C198 vcm s2d_block_0.s2d_casc_n_f_0.y 0.63563f
+C199 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_26870# 0.02235f
+C200 en_3v3_b s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.79062f
+C201 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.30715f
+C202 s2d_block_0.s2d_loads_f_0.ln s2d_block_0.s2d_casc_n_f_0.yc 0.8848f
+C203 s2d_block_0.s2d_tails_lo_f_0.sa_F1 s2d_block_0.s2d_tails_lo_f_0.sa_F2 1.9391f
+C204 s2d_block_0.s2d_tails_lo_f_0.sa_M2 s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.06369f
+C205 a_11844_27142# a_11844_27006# 0.63642f
+C206 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.17877f
+C207 s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_casc_n_f_0.yc 0.20847f
+C208 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_27278# 0.02318f
+C209 s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_casc_n_f_0.vbnc 4.60294f
+C210 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.03102f
+C211 a_11844_28502# s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.02094f
+C212 a_11844_25918# a_14374_25918# 0.02719f
+C213 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_26462# 0.02158f
+C214 outn outp 6.05194f
+C215 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.s2d_casc_n_f_0.xc 0.55573f
+C216 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.22739f
+C217 a_11844_25646# a_11844_25510# 0.63642f
+C218 a_11758_26598# s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.01794f
+C219 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_25782# 0.02158f
+C220 iovdd outp 12.3886f
+C221 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.57373f
+C222 pad s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.0582f
+C223 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_tails_hi_f_0.vbp 0.26763f
+C224 pad s2d_block_0.s2d_casc_n_f_0.xc 0.0794f
+C225 outp s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.01977f
+C226 outp en_3v3 0.10044f
+C227 outn s2d_block_0.s2d_loads_f_0.lp 0.10561f
+C228 outp s2d_block_0.s2d_casc_n_f_0.x 0.87989f
+C229 a_14374_27686# a_14374_27550# 0.55763f
+C230 a_14374_25510# s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.03952f
+C231 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.s2d_loads_f_0.ln 12.7936f
+C232 a_14374_27414# a_11844_28366# 0.02713f
+C233 a_11844_28502# a_11844_28638# 0.63642f
+C234 iovdd s2d_block_0.s2d_loads_f_0.lp 9.55312f
+C235 a_11844_25782# s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.0102f
+C236 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.s2d_loads_f_0.vcmfb 1.40683f
+C237 a_11844_26598# a_11844_26734# 0.63642f
+C238 s2d_block_0.s2d_tails_hi_f_0.sa_M1 s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.05443f
+C239 s2d_block_0.s2d_tails_hi_f_0.vbp vref 0.10217f
+C240 pad s2d_block_0.s2d_tails_hi_f_0.sa_A1 2.83511f
+C241 a_11844_26462# a_11758_26462# 0.01935f
+C242 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.21204f
+C243 vdd s2d_block_0.s2d_casc_n_f_0.yc 0.02686f
+C244 vdd s2d_block_0.s2d_casc_n_f_0.vbnc 1.187f
+C245 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.0238f
+C246 pad s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.02754f
+C247 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.04748f
+C248 a_14374_25782# a_11844_26734# 0.02713f
+C249 a_11844_26326# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.01916f
+C250 outn s2d_block_0.s2d_casc_p_f_0.vbpc 7.61108f
+C251 vdd a_11844_27142# 0.01241f
+C252 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_25374# 0.02389f
+C253 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_26598# 0.02196f
+C254 iovdd s2d_block_0.s2d_casc_p_f_0.vbpc 35.0861f
+C255 s2d_block_0.s2d_tails_lo_f_0.sa_F1 vref 0.06209f
+C256 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.17778f
+C257 a_11844_28502# s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.04221f
+C258 outp s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.84971f
+C259 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.26594f
+C260 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.02327f
+C261 outp s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.0236f
+C262 s2d_block_0.s2d_tails_hi_f_0.sa_M1 s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.02784f
+C263 a_14374_27278# a_14374_27142# 1.23642f
+C264 en_3v3 s2d_block_0.s2d_casc_p_f_0.vbpc 0.15115f
+C265 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_hi_f_0.sa_A1 5.41603f
+C266 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_hi_f_0.vbp 0.09249f
+C267 a_11844_25374# s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.01737f
+C268 a_11758_26734# s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.04819f
+C269 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.03116f
+C270 a_11844_27822# a_11844_27958# 0.63642f
+C271 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_casc_n_f_0.yc 0.45586f
+C272 s2d_block_0.s2d_loads_f_0.lp s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.25039f
+C273 vcm s2d_block_0.s2d_casc_n_f_0.yc 0.10607f
+C274 outp vref 0.3077f
+C275 pad vdd 0.09288f
+C276 pad s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.0387f
+C277 en_3v3_b s2d_block_0.bias_tree_noab_n_c3_0.ni 0.29376f
+C278 s2d_block_0.s2d_tails_lo_f_0.sa_F1 s2d_block_0.s2d_tails_lo_f_0.sb_M1 1.43359f
+C279 s2d_block_0.s2d_tails_hi_f_0.sa_A1 a_11844_28774# 0.01266f
+C280 a_14374_25510# a_11844_27006# 0.02707f
+C281 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_hi_f_0.vbp 0.29449f
+C282 a_11758_27006# a_11758_26870# 0.33426f
+C283 a_11844_26462# a_11844_26598# 0.63642f
+C284 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.04682f
+C285 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_27142# 0.02279f
+C286 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_lo_f_0.sa_M2 1.21104f
+C287 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.9893f
+C288 iovdd a_7760_4632# 0.04371f
+C289 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.08747f
+C290 a_11758_26734# s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.01181f
+C291 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.02427f
+C292 vdd s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.10508f
+C293 s2d_block_0.s2d_tails_hi_f_0.sa_M1 s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.23951f
+C294 a_14374_27142# s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.02814f
+C295 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_casc_n_f_0.y 1.84321f
+C296 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_casc_n_f_0.vbnc 2.09561f
+C297 s2d_block_0.bias_tree_noab_n_c3_0.ni s2d_block_0.s2d_tails_hi_f_0.vbp 0.46959f
+C298 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_p_f_0.vbpc 0.03673f
+C299 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.0456f
+C300 en_3v3_b vdd 2.65677f
+C301 outp s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.86918f
+C302 s2d_block_0.s2d_tails_hi_f_0.sa_A2 vdd 0.1052f
+C303 a_11844_25782# a_14374_25782# 0.02713f
+C304 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.08815f
+C305 s2d_block_0.s2d_tails_lo_f_0.sa_F1 s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.84022f
+C306 outp s2d_block_0.s2d_casc_n_f_0.xc 0.12002f
+C307 pad s2d_block_0.s2d_tails_hi_f_0.sb_F2 0.22487f
+C308 pad vcm 0.3255f
+C309 a_11844_27142# a_11844_27278# 0.63642f
+C310 a_11844_27414# a_11758_26734# 0.01944f
+C311 a_8120_4634# Clamp_P_M1_0.gate 0.03336f
+C312 a_11758_26598# a_11758_26462# 1.00966f
+C313 iovdd outn 17.1112f
+C314 a_11844_28638# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.02158f
+C315 vdd s2d_block_0.s2d_tails_hi_f_0.vbp 3.45659f
+C316 s2d_block_0.s2d_loads_f_0.lp s2d_block_0.s2d_casc_n_f_0.xc 0.26366f
+C317 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_28366# 0.01762f
+C318 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.35797f
+C319 outp s2d_block_0.s2d_loads_f_0.ln 0.02987f
+C320 pad s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.07823f
+C321 s2d_block_0.s2d_tails_hi_f_0.sa_A1 outp 0.01644f
+C322 outn s2d_block_0.s2d_tails_lo_f_0.sa_F2 2.79068f
+C323 a_11844_26326# a_14374_26190# 0.02746f
+C324 outp s2d_block_0.s2d_loads_f_0.vcmfb 10.7502f
+C325 outn en_3v3 2.58957f
+C326 a_11844_26190# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.03973f
+C327 iovdd s2d_block_0.s2d_tails_lo_f_0.sa_F2 5.2742f
+C328 outp s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.98539f
+C329 outn s2d_block_0.s2d_casc_n_f_0.x 0.03219f
+C330 a_11844_26054# a_14374_26054# 0.02728f
+C331 pad s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.25447f
+C332 iovdd en_3v3 0.36737f
+C333 a_11844_26054# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.09778f
+C334 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.02465f
+C335 vcm s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.14677f
+C336 iovdd s2d_block_0.s2d_casc_n_f_0.x 8.59882f
+C337 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn a_14374_25646# 0.01791f
+C338 s2d_block_0.s2d_loads_f_0.ln s2d_block_0.s2d_loads_f_0.lp 5.83659f
+C339 pad s2d_block_0.s2d_casc_n_f_0.y 1.37827f
+C340 s2d_block_0.s2d_tails_hi_f_0.sa_A1 a_11844_25646# 0.01445f
+C341 vcm en_3v3_b 0.50727f
+C342 a_11844_28366# s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.12708f
+C343 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.15244f
+C344 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_hi_f_0.sa_A2 0.02442f
+C345 a_7760_4632# Clamp_N_M1_0.gate 0.02705f
+C346 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.01817f
+C347 s2d_block_0.s2d_tails_hi_f_0.sa_A2 vcm 0.02476f
+C348 s2d_block_0.s2d_tails_lo_f_0.sa_F1 s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.25628f
+C349 s2d_block_0.s2d_loads_f_0.lp s2d_block_0.s2d_loads_f_0.vcmfb 2.06469f
+C350 s2d_block_0.s2d_tails_hi_f_0.sa_M1 s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.33016f
+C351 a_11844_28774# a_11844_28638# 0.63642f
+C352 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_casc_p_f_0.vbpc 0.11566f
+C353 a_11758_26870# s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.0482f
+C354 s2d_block_0.s2d_tails_hi_f_0.sa_M1 s2d_block_0.s2d_tails_hi_f_0.sb_F1 1.21732f
+C355 a_11758_26734# a_11844_26734# 0.01944f
+C356 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.03149f
+C357 a_11844_27550# a_11844_27686# 0.63642f
+C358 a_11844_27822# a_11758_26326# 0.01932f
+C359 a_11844_27958# a_11844_28094# 0.63642f
+C360 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.28064f
+C361 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_hi_f_0.vbp 0.75445f
+C362 vcm s2d_block_0.s2d_tails_hi_f_0.vbp 0.77904f
+C363 s2d_block_0.s2d_loads_f_0.ln s2d_block_0.s2d_casc_p_f_0.vbpc 1.72075f
+C364 outn s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.0267f
+C365 iref en_3v3_b 1.56328f
+C366 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_casc_p_f_0.vbpc 0.02514f
+C367 a_11844_26598# a_11758_26598# 0.01938f
+C368 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_casc_n_f_0.y 1.08046f
+C369 a_11844_26462# a_14374_26054# 0.02728f
+C370 outp vdd 4.60703f
+C371 outn s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.0235f
+C372 vdd a_11844_27822# 0.02082f
+C373 outp s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.86322f
+C374 iovdd s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.96539f
+C375 s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_casc_p_f_0.vbpc 2.11215f
+C376 a_11844_26462# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.01273f
+C377 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.4559f
+C378 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.02425f
+C379 iovdd s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 14.9428f
+C380 iovdd Clamp_N_M1_0.gate 0.31292f
+C381 a_11844_25918# a_11844_26054# 0.63642f
+C382 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_25918# 0.02158f
+C383 a_11844_25782# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.01333f
+C384 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.2455f
+C385 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_tails_lo_f_0.sa_F2 3.85824f
+C386 vcm s2d_block_0.s2d_tails_lo_f_0.sa_F1 2.76655f
+C387 a_14374_27278# s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.01757f
+C388 s2d_block_0.bias_tree_noab_n_c3_0.ni s2d_block_0.s2d_casc_p_f_0.vbpc 0.54432f
+C389 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_casc_n_f_0.vbnc 1.55613f
+C390 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_hi_f_0.vbp 0.07156f
+C391 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.x 11.6306f
+C392 outn vref 5.68618f
+C393 s2d_block_0.s2d_tails_hi_f_0.sa_A2 a_11844_25782# 0.03941f
+C394 iref s2d_block_0.s2d_tails_hi_f_0.vbp 0.12001f
+C395 iovdd vref 0.92461f
+C396 a_11844_28094# s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.02626f
+C397 s2d_block_0.s2d_tails_lo_f_0.sa_F1 s2d_block_0.s2d_tails_lo_f_0.sa_M2 1.4446f
+C398 a_14374_27822# a_14374_27686# 0.33426f
+C399 a_14374_27550# a_11844_28230# 0.02719f
+C400 a_11844_25918# s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.0102f
+C401 a_11844_28366# a_11844_28502# 0.63642f
+C402 s2d_block_0.s2d_tails_lo_f_0.sa_F2 vref 0.07479f
+C403 s2d_block_0.s2d_tails_lo_f_0.sa_F1 s2d_block_0.s2d_tails_hi_f_0.sb_F1 1.04342f
+C404 s2d_block_0.s2d_casc_n_f_0.x vref 1.49531f
+C405 s2d_block_0.s2d_casc_n_f_0.y s2d_block_0.s2d_tails_lo_f_0.sa_F1 1.19633f
+C406 s2d_block_0.s2d_tails_hi_f_0.sb_F2 outp 0.06799f
+C407 a_11844_28502# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.02158f
+C408 vcm outp 9.47391f
+C409 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_27822# 0.03091f
+C410 vdd s2d_block_0.s2d_casc_p_f_0.vbpc 0.38387f
+C411 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_28230# 0.14087f
+C412 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.04675f
+C413 outn s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.03057f
+C414 a_11844_26190# a_14374_26190# 0.02746f
+C415 s2d_block_0.s2d_loads_f_0.dd s2d_block_0.s2d_casc_n_f_0.yc 1.54595f
+C416 a_11844_26598# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.01029f
+C417 iovdd s2d_block_0.s2d_tails_lo_f_0.sb_M1 1.22552f
+C418 outp s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.54122f
+C419 outn s2d_block_0.s2d_casc_n_f_0.xc 0.33309f
+C420 iovdd s2d_block_0.s2d_casc_n_f_0.xc 11.114f
+C421 a_11844_25918# a_11844_25782# 0.63642f
+C422 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_25646# 0.02158f
+C423 s2d_block_0.s2d_tails_hi_f_0.sa_A1 a_11844_25510# 0.0665f
+C424 s2d_block_0.s2d_tails_lo_f_0.sb_M1 s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.05732f
+C425 outp s2d_block_0.s2d_tails_hi_f_0.sb_F1 2.87685f
+C426 pad Clamp_P_M1_0.gate 19.5174f
+C427 pad s2d_block_0.s2d_casc_n_f_0.yc 0.06508f
+C428 a_11844_25782# s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.01924f
+C429 Clamp_N_M1_0.gate s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.02015f
+C430 a_11844_28230# s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.03104f
+C431 a_11844_27958# s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.01935f
+C432 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.01761f
+C433 outp s2d_block_0.s2d_casc_n_f_0.y 0.03405f
+C434 a_14374_27414# a_14374_27278# 1.00966f
+C435 a_14374_27142# a_11844_28638# 0.02707f
+C436 outn s2d_block_0.s2d_loads_f_0.ln 0.36237f
+C437 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_casc_n_f_0.x 0.32431f
+C438 s2d_block_0.s2d_tails_hi_f_0.sa_A1 outn 0.02153f
+C439 iovdd s2d_block_0.s2d_loads_f_0.ln 9.1759f
+C440 a_11758_27006# s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.04688f
+C441 a_11844_25646# s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.01133f
+C442 outn s2d_block_0.s2d_loads_f_0.vcmfb 4.45704f
+C443 s2d_block_0.s2d_tails_hi_f_0.sa_A1 iovdd 1.52034f
+C444 outn s2d_block_0.s2d_tails_lo_f_0.sb_A1 0.03508f
+C445 iovdd s2d_block_0.s2d_loads_f_0.vcmfb 46.5827f
+C446 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_hi_f_0.sa_M1 1.0972f
+C447 iovdd s2d_block_0.s2d_tails_lo_f_0.sb_A1 4.00867f
+C448 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.04602f
+C449 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_casc_p_f_0.vbpc 0.02698f
+C450 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_casc_n_f_0.x 0.30215f
+C451 s2d_block_0.s2d_tails_lo_f_0.sb_A1 s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.21993f
+C452 a_11844_27006# a_11758_27006# 0.01971f
+C453 outn s2d_block_0.bias_tree_noab_n_c3_0.ni 0.0188f
+C454 vdd a_11844_27686# 0.0197f
+C455 s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.s2d_casc_n_f_0.x 0.25703f
+C456 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_lo_f_0.sb_A1 1.08045f
+C457 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_lo_f_0.sa_M2 0.02058f
+C458 iovdd s2d_block_0.bias_tree_noab_n_c3_0.ni 0.15021f
+C459 s2d_block_0.s2d_tails_lo_f_0.sb_M1 s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.34748f
+C460 a_11844_25646# a_11844_25782# 0.63642f
+C461 s2d_block_0.s2d_casc_p_f_0.vbpc s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.11357f
+C462 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.15983f
+C463 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_hi_f_0.sb_M2 1.1962f
+C464 en_3v3 s2d_block_0.bias_tree_noab_n_c3_0.ni 0.06138f
+C465 a_14374_27414# s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.0119f
+C466 s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn s2d_block_0.s2d_casc_n_f_0.xc 5.64586f
+C467 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_hi_f_0.vbp 0.07996f
+C468 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_casc_n_f_0.vbnc 0.11962f
+C469 iref s2d_block_0.s2d_casc_p_f_0.vbpc 0.23455f
+C470 Clamp_N_M1_0.gate s2d_block_0.s2d_casc_n_f_0.xc 0.01061f
+C471 outn vdd 4.12076f
+C472 outn s2d_block_0.s2d_tails_lo_f_0.sb_A2 0.04441f
+C473 a_11758_26870# a_11844_26870# 0.01953f
+C474 iovdd vdd 5.97164f
+C475 iovdd s2d_block_0.s2d_tails_lo_f_0.sb_A2 1.27584f
+C476 s2d_block_0.s2d_tails_lo_f_0.sb_M1 vref 0.07439f
+C477 pad s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.07327f
+C478 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.13856f
+C479 s2d_block_0.s2d_loads_f_0.ln s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.01344f
+C480 s2d_block_0.s2d_casc_n_f_0.xc vref 0.03603f
+C481 a_11844_27278# a_11758_26870# 0.01953f
+C482 a_11758_26734# a_11758_26598# 0.78325f
+C483 s2d_block_0.s2d_tails_lo_f_0.sb_A2 s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.0615f
+C484 s2d_block_0.s2d_tails_lo_f_0.sb_A1 s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.08784f
+C485 s2d_block_0.s2d_casc_n_f_0.yc s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.02338f
+C486 pad s2d_block_0.s2d_tails_hi_f_0.sa_A2 2.83313f
+C487 s2d_block_0.s2d_loads_f_0.vcmfb s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.04166f
+C488 en_3v3 vdd 1.37224f
+C489 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_27686# 0.02672f
+C490 vdd s2d_block_0.s2d_casc_n_f_0.x 0.04852f
+C491 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_28094# 0.07914f
+C492 s2d_block_0.s2d_casc_n_f_0.x s2d_block_0.s2d_tails_lo_f_0.sb_A2 1.26802f
+C493 s2d_block_0.s2d_tails_hi_f_0.sb_F2 a_11844_25510# 0.02158f
+C494 s2d_block_0.s2d_tails_hi_f_0.sa_A1 vref 0.01051f
+C495 s2d_block_0.bias_tree_noab_n_c3_0.ni s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 0.01864f
+C496 a_14374_25646# a_11844_26870# 0.0271f
+C497 s2d_block_0.s2d_tails_lo_f_0.sb_A1 vref 2.83346f
+C498 pad s2d_block_0.s2d_tails_hi_f_0.vbp 0.03551f
+C499 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_hi_f_0.sa_M1 2.31964f
+C500 a_11758_26326# s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.26248f
+C501 s2d_block_0.s2d_casc_n_f_0.xc s2d_block_0.s2d_tails_lo_f_0.sb_M1 1.17345f
+C502 outp s2d_block_0.s2d_casc_n_f_0.yc 0.85572f
+C503 s2d_block_0.s2d_tails_hi_f_0.sb_F2 outn 0.1826f
+C504 vcm outn 6.98968f
+C505 outp s2d_block_0.s2d_casc_n_f_0.vbnc 9.68843f
+C506 s2d_block_0.s2d_tails_hi_f_0.sb_F2 iovdd 7.01741f
+C507 a_11844_25510# s2d_block_0.s2d_tails_hi_f_0.sb_F1 0.01318f
+C508 iovdd vcm 2.7753f
+C509 outn s2d_block_0.s2d_tails_lo_f_0.sa_M2 3.08404f
+C510 a_11844_27414# a_11844_27550# 0.63642f
+C511 vdd s2d_block_0.s2d_tails_hi_f_0.sb_M2 0.09122f
+C512 a_11844_27686# a_11758_26462# 0.01935f
+C513 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_tails_lo_f_0.sa_F2 1.64077f
+C514 s2d_block_0.s2d_tails_lo_f_0.sb_A2 s2d_block_0.s2d_tails_hi_f_0.sb_M2 1.43713f
+C515 a_8120_4634# a_7760_4632# 0.05849f
+C516 iovdd s2d_block_0.s2d_tails_lo_f_0.sa_M2 1.97442f
+C517 a_11844_28774# s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.0238f
+C518 s2d_block_0.s2d_tails_hi_f_0.vbp s2d_block_0.s2d_tails_hi_f_0.sa_M1 0.41199f
+C519 vdd s2d_block_0.sinks_6x6_s2d_c3_core_0.vbn 1.34414f
+C520 s2d_block_0.s2d_loads_f_0.lp s2d_block_0.s2d_casc_n_f_0.yc 0.21417f
+C521 pad s2d_block_0.s2d_tails_lo_f_0.sa_F1 0.06589f
+C522 s2d_block_0.s2d_tails_hi_f_0.sa_A1 s2d_block_0.s2d_tails_lo_f_0.sb_M1 1.47019f
+C523 vcm en_3v3 0.11407f
+C524 s2d_block_0.s2d_tails_hi_f_0.sb_F2 s2d_block_0.s2d_casc_n_f_0.x 4.74734f
+C525 vcm s2d_block_0.s2d_casc_n_f_0.x 0.63386f
+C526 outn s2d_block_0.s2d_tails_hi_f_0.sb_F1 2.08525f
+C527 s2d_block_0.s2d_loads_f_0.ln s2d_block_0.s2d_casc_n_f_0.xc 0.17914f
+C528 en_3v3_b s2d_block_0.s2d_tails_hi_f_0.vbp 0.22518f
+C529 s2d_block_0.s2d_tails_lo_f_0.sa_M2 s2d_block_0.s2d_tails_lo_f_0.sa_F2 0.93094f
+C530 iovdd s2d_block_0.s2d_tails_hi_f_0.sb_F1 3.46185f
+C531 s2d_block_0.s2d_tails_lo_f_0.sb_A1 s2d_block_0.s2d_tails_lo_f_0.sb_M1 0.45675f
+C532 s2d_block_0.s2d_tails_hi_f_0.sa_A2 s2d_block_0.s2d_tails_hi_f_0.vbp 0.27394f
+C533 outn s2d_block_0.s2d_casc_n_f_0.y 0.87704f
+C534 iref iovss 2.67053f
+C535 vdd iovss 0.20836p
+C536 s2d_block_0.s2d_loads_f_0.dd iovss 3.19021f
+C537 s2d_block_0.s2d_loads_f_0.ln iovss 9.89804f
+C538 s2d_block_0.s2d_loads_f_0.lp iovss 6.22746f
+C539 a_14374_26190# iovss 1.16641f
+C540 a_14374_26054# iovss 1.29287f
+C541 a_14374_25918# iovss 1.39935f
+C542 a_14374_25782# iovss 1.46247f
+C543 a_14374_25646# iovss 1.47687f
+C544 a_14374_25510# iovss 2.66141f
+C545 a_11758_27006# iovss 1.03056f
+C546 a_11758_26870# iovss 1.10629f
+C547 a_11758_26734# iovss 1.21292f
+C548 a_11758_26598# iovss 1.3156f
+C549 a_11758_26462# iovss 1.38801f
+C550 a_11758_26326# iovss 2.409f
+C551 a_14374_27822# iovss 1.06639f
+C552 a_14374_27686# iovss 1.18649f
+C553 a_14374_27550# iovss 1.26601f
+C554 a_14374_27414# iovss 1.34504f
+C555 a_14374_27278# iovss 1.42889f
+C556 a_14374_27142# iovss 2.67699f
+C557 s2d_block_0.s2d_casc_n_f_0.xc iovss 83.8826f
+C558 s2d_block_0.s2d_casc_n_f_0.yc iovss 47.58514f
+C559 s2d_block_0.s2d_casc_n_f_0.x iovss 32.88367f
+C560 s2d_block_0.s2d_casc_n_f_0.y iovss 39.41771f
+C561 s2d_block_0.s2d_tails_lo_f_0.sa_M2 iovss 2.67627f
+C562 s2d_block_0.s2d_tails_lo_f_0.sb_M1 iovss 3.81297f
+C563 s2d_block_0.s2d_tails_lo_f_0.sb_A1 iovss 3.85353f
+C564 s2d_block_0.s2d_tails_lo_f_0.sa_F2 iovss 19.38396f
+C565 s2d_block_0.s2d_tails_lo_f_0.sa_F1 iovss 6.60435f
+C566 s2d_block_0.s2d_tails_lo_f_0.sb_A2 iovss 9.08991f
+C567 s2d_block_0.s2d_tails_hi_f_0.sb_M2 iovss 4.72933f
+C568 s2d_block_0.s2d_tails_hi_f_0.sa_M1 iovss 7.29322f
+C569 s2d_block_0.s2d_tails_hi_f_0.sa_A2 iovss 4.56941f
+C570 s2d_block_0.s2d_tails_hi_f_0.sb_F1 iovss 24.34209f
+C571 s2d_block_0.s2d_tails_hi_f_0.sb_F2 iovss 8.68036f
+C572 s2d_block_0.s2d_tails_hi_f_0.sa_A1 iovss 5.54355f
+.ends
+
