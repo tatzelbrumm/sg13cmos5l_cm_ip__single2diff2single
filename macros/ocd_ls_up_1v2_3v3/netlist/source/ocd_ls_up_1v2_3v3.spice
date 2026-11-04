@@ -1,0 +1,15 @@
+** sch_path: xschem/ocd_ls_up_1v2_3v3.sch
+** 1.2 V -> 3.3 V level shifter, non-inverting, built from the sg13cmos5l_ocd_chipalooza switch driver:
+** the two-inverter input stage of analog_switch_small (sg13cmos5l_inv_4 on the 1.2 V rail) feeding sw_lvl_shift.
+** Needs, at simulation time: sw_lvl_shift (../../ocd_analog_switches/netlist/source/ocd_analog_switches.spice)
+** and the sg13cmos5l_stdcells spice (sg13cmos5l_inv_4).
+.subckt ocd_ls_up_1v2_3v3 vss vddl vddh out in
+*.iopin vss
+*.iopin vddl
+*.iopin vddh
+*.opin out
+*.ipin in
+x2 inb in vddl vss sg13cmos5l_inv_4
+x3 inbb inb vddl vss sg13cmos5l_inv_4
+x1 inbb inb out outn vddh vss sw_lvl_shift
+.ends

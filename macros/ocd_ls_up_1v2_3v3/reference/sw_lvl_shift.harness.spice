@@ -1,0 +1,11 @@
+.subckt sw_lvl_shift in_p in_n out outn avdd avss
+*.PININFO in_n:I in_p:I out:O outn:O
+XM1 net1 in_p avss avss sg13_hv_nmos w=2u l=0.5u ng=1 m=1 mm_ok=1
+XM2 net1 S1_N avdd avdd sg13_hv_pmos w=0.5u l=0.5u ng=1 m=1 mm_ok=1
+XM3 S1_N in_n avss avss sg13_hv_nmos w=2u l=0.5u ng=1 m=1 mm_ok=1
+XM4 S1_N net1 avdd avdd sg13_hv_pmos w=0.5u l=0.5u ng=1 m=1 mm_ok=1
+XM5 outn S1_N avdd avdd sg13_hv_pmos w=2u l=0.5u ng=1 m=2 mm_ok=1
+XM6 outn S1_N avss avss sg13_hv_nmos w=1u l=0.5u ng=1 m=2 mm_ok=1
+XM7 out outn avdd avdd sg13_hv_pmos w=2u l=0.5u ng=1 m=2 mm_ok=1
+XM8 out outn avss avss sg13_hv_nmos w=1u l=0.5u ng=1 m=2 mm_ok=1
+.ends

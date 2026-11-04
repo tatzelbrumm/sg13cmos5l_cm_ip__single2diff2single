@@ -1,0 +1,11 @@
+** sch_path: xschem/ocd_ls_dn_3v3_1v2.sch
+** 3.3 V -> 1.2 V level shifter, INVERTING: the harness cell hv_inv_1 (sg13cmos5l_ocd_ip__biasgen) with its supply
+** on the 1.2 V rail.  Devices and sizes are those of hv_inv_1 (reference/hv_inv_1.harness.spice).
+.subckt ocd_ls_dn_3v3_1v2 vss vddl out in
+*.iopin vss
+*.iopin vddl
+*.opin out
+*.ipin in
+XMP1 out in vddl vddl sg13_hv_pmos w=2.0u l=0.4u ng=1 m=1 mm_ok=1
+XMN1 out in vss vss sg13_hv_nmos w=1.0u l=0.45u ng=1 m=1 mm_ok=1
+.ends

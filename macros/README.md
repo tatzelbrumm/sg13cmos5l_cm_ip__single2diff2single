@@ -40,10 +40,16 @@ slot  (slot7_wrapper-compatible; fallback wiring of both pads)
 | `bias_in_pd`, `_out_pd`, `_oa_pd`, `_bg_pd` | the four reference circuits on their own (flat, with the tree), with power-down; class-AB stacks as CACE fixtures since 2026-10-27 | sheets (from `power_down/xschem`) + CACE |
 | `en_ctrl_3v3` | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`, level-shifted select bits | sheets + CACE |
 | `ls_up_1v2_3v3`, `ls_dn_3v3_1v2` | level shifters (from `ls_pair`) | sheets + CACE |
+| `ocd_ls_up_1v2_3v3`, `ocd_ls_dn_3v3_1v2` | level shifters taken from the chipalooza harness, port-compatible with the two above: up = harness `sw_lvl_shift` behind its two-inverter input stage, down = harness `hv_inv_1` on the 1.2 V rail (the harness has no dedicated down-shifter). Sizes differ from `ls_up_1v2_3v3` / `ls_dn_3v3_1v2` | 2026-11-03: sheets + source, text-checked; CACE suite and testbenches derived from the `ls_*` ones, **not run**; no layout |
+| `ocd_analog_switches` | the harness's analog switches / transmission gates `analog_switch_small`, `analog_switch_med`, `analog_pswitch_small`, `xgate` (+ `sw_lvl_shift`, `gate_drive_med`): byte-identical copies of the harness sheets, for gating internal analog nodes and the `analog_bus` pins of slot 7 | 2026-11-03: copies + source netlist, text-checked against the harness; **KLayout layouts** (`layout/klayout/*.klay.gds`, from the harness's Magic layouts, device-checked); not simulated, no CACE, no KLayout DRC/LVS yet |
 | `hv_logic` | 3.3 V gates inv / nand2 / nor2 / nor3 | sheets |
 | `IOPad` | IHP IO GDS copies, Christoph's clamp / diode sheets, and symbols of IHP IO sub-cells | unchanged + 5 new symbols |
 | `OgueyAebischerBias` | the unsized sky130 port (2026-09) | superseded by `bias_oa_pd` |
 | `inverter`, `counter` | template examples | still to be torn out (CLAUDE.md §7) |
+
+**Slot-7 gating and level shifting (prepared 2026-11-03, not yet wired into `slot.sch`):** `ocd_analog_switches` (enable = 1.2 V `dig_in` bit, switch levels 3.3 V),
+`ocd_ls_up_1v2_3v3` / `ocd_ls_dn_3v3_1v2` for control and status signals between the 1.2 V and 3.3 V domains. Check of the copies, source netlists and sheets:
+`python3 -I scripts/check_ocd_macros.py <path to sg13cmos5l_ocd_chipalooza>` (text only; neither xschem nor a simulator has run on these macros). Its layout checks need the python module `klayout`; `python3 -I` ignores a `pip install --user` copy, so drop `-I` then. New `Makefile.new` files as above.
 
 Sources of the consolidated pieces (originals unchanged, in the `_sudelbuecher` worktree):
 `sudelbuecher/design_considerations/class_ab_pad_driver/{improvements,power_down}`,
