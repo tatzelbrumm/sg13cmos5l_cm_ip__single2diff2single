@@ -63,3 +63,26 @@ C {devices/lab_pin.sym} 1660 170 0 0 {name=l_xoutbuf_g_sel1_3v3 sig_type=std_log
 C {devices/lab_pin.sym} 1840 140 0 1 {name=l_xoutbuf_g_iref sig_type=std_logic lab=outbuf_iref}
 T {xoutbuf_c (en_ctrl_3v3) and xoutbuf_g (bias_gen_pd): outside the pad cell since 2026-11-03 (backannotation to the drawn cell),} 980 -10 0 0 0.25 0.25 {}
 T {wired as in the former pad sheet; the sources that drove the old pad pins now drive them.} 980 12 0 0 0.25 0.25 {}
+C {devices/lab_pin.sym} 220 -440 0 1 {name=l_inbuf_iovdd sig_type=std_logic lab=inbuf_iovdd}
+C {devices/lab_pin.sym} 300 -440 0 1 {name=l_inbuf_vdd sig_type=std_logic lab=inbuf_vdd}
+C {devices/lab_pin.sym} 220 -80 0 1 {name=l_inbuf_iovss sig_type=std_logic lab=inbuf_iovss}
+C {devices/lab_pin.sym} 40 -300 0 0 {name=l_inbuf_iref sig_type=std_logic lab=inbuf_iref}
+C {devices/lab_pin.sym} 40 -260 0 0 {name=l_inbuf_en sig_type=std_logic lab=inbuf_en_3v3}
+C {devices/lab_pin.sym} 40 -240 0 0 {name=l_inbuf_enb sig_type=std_logic lab=inbuf_en_3v3_b}
+C {en_ctrl_3v3.sym} 1100 440 0 0 {name=xinbuf_c}
+C {devices/lab_pin.sym} 1040 360 0 0 {name=l_xinbuf_c_vddh sig_type=std_logic lab=inbuf_iovdd}
+C {devices/lab_pin.sym} 1060 360 0 1 {name=l_xinbuf_c_vddl sig_type=std_logic lab=inbuf_vdd}
+C {devices/lab_pin.sym} 1040 520 0 1 {name=l_xinbuf_c_vss sig_type=std_logic lab=inbuf_iovss}
+C {devices/lab_pin.sym} 1200 400 0 1 {name=l_xinbuf_c_en_3v3 sig_type=std_logic lab=inbuf_en_3v3}
+C {devices/lab_pin.sym} 1200 420 0 1 {name=l_xinbuf_c_en_3v3_b sig_type=std_logic lab=inbuf_en_3v3_b}
+C {devices/lab_pin.sym} 1200 440 0 1 {name=l_xinbuf_c_sel0_3v3 sig_type=std_logic lab=inbuf_sel0_3v3}
+C {devices/lab_pin.sym} 1200 460 0 1 {name=l_xinbuf_c_sel1_3v3 sig_type=std_logic lab=inbuf_sel1_3v3}
+C {bias_gen_pd.sym} 1750 440 0 0 {name=xinbuf_g}
+C {devices/lab_pin.sym} 1750 360 0 1 {name=l_xinbuf_g_vdd sig_type=std_logic lab=inbuf_iovdd}
+C {devices/lab_pin.sym} 1750 520 0 1 {name=l_xinbuf_g_vss sig_type=std_logic lab=inbuf_iovss}
+C {devices/lab_pin.sym} 1660 430 0 0 {name=l_xinbuf_g_en_3v3 sig_type=std_logic lab=inbuf_en_3v3}
+C {devices/lab_pin.sym} 1660 450 0 0 {name=l_xinbuf_g_sel0_3v3 sig_type=std_logic lab=inbuf_sel0_3v3}
+C {devices/lab_pin.sym} 1660 470 0 0 {name=l_xinbuf_g_sel1_3v3 sig_type=std_logic lab=inbuf_sel1_3v3}
+C {devices/lab_pin.sym} 1840 440 0 1 {name=l_xinbuf_g_iref sig_type=std_logic lab=inbuf_iref}
+T {xinbuf_c (en_ctrl_3v3) and xinbuf_g (bias_gen_pd): outside the pad cell since 2026-11-04 (backannotation to the drawn cell),} 980 280 0 0 0.25 0.25 {}
+T {wired as in the former pad sheet; the sources that drove the old pad pins now drive them.} 980 302 0 0 0.25 0.25 {}

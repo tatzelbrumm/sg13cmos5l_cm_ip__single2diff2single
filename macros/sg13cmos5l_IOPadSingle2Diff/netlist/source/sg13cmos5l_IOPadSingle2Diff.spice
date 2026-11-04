@@ -6,21 +6,43 @@
 * sudelbuecher/design_considerations/s2d_input_buffer (s2d_input_buffer.md), the mirror image of
 * d2s_mpdda, built from the same unit_r2 (../../../sg13cmos5l_IOPadDiff2Single/netlist/source/units.spice).
 * vfbp / vfbn are tied to outp / outn here (at the buffer). vref and vcm drive gates only.
-* Same ring / control infrastructure as sg13cmos5l_IOPadDiff2Single (en_ctrl_3v3). The buffer uses four of the
-* six bias lines (vbp vbn vbpc vbnc, same diodes at the same currents as the driver), so its tree is
-* bias_tree_noab_pd, bias_tree_pd without the class-AB branches (2026-10-27). Since 2026-10-28 the reference
-* selector Xg = bias_gen_pd and the tree Xt are separate instances (before: one Xb = bias_sel_noab_pd, the same devices).
-* Input protection as IHP's sg13cmos5l_IOPadAnalog: primary diodes, gate-tied clamp frames, and the
-* secondary protection (rppd series resistor + diodes) between pad and the buffer input padres.
-.subckt sg13cmos5l_IOPadSingle2Diff iovdd iovss vdd vss pad outp outn vcm vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense
-Xc iovdd vdd iovss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
-Xg iovdd iovss ibias iref en_3v3 sel0_3v3 sel1_3v3 bias_gen_pd
+* Custom padframe cell on the ring rails iovdd / iovss. Ring ports as IHP's IO cells: iovdd iovss vdd vss (vdd / vss =
+* 1.2 V core ring; nothing inside the cell connects to vdd). Core-side ports: outp outn (to the slot), vcm vref (gates
+* only), iref (the selected reference current, sourced into the cell, 5 uA), en_3v3 / en_3v3_b (3.3 V enable and its
+* complement). The buffer uses four of the six bias lines (vbp vbn vbpc vbnc, same diodes at the same currents as the
+* driver), so its tree is bias_tree_noab_pd, bias_tree_pd without the class-AB branches (2026-10-27).
+* Backannotated 2026-11-04 to the drawn cell (C3, layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds, reference
+* netlist pad_candidate.cdl):
+*   - partition as drawn (as sg13cmos5l_IOPadDiff2Single, C2): Xa + Xt + Xp in the cell; the enable control
+*     en_ctrl_3v3 (former Xc) and the reference selection bias_gen_pd (former Xg) sit next to the cell (slot, top
+*     level, CACE templates), wired as before;
+*   - no secondary protection (the former XSP, IHP's SecondaryProtection, and its node padres are gone): the buffer's
+*     vin is the pad;
+*   - primary protection as drawn (Xp = s2d_pad_esd, the template's devices, replacing IHP's library cells XCP / XCN /
+*     XDN / XDP): clamps MCP / MCN with their rppd gate ties RP / RN (bodies on iovss, the substrate), two dpantenna
+*     (pad -> iovdd) and two dantenna (iovss -> pad) stripes 1.26u x 27.78u;
+*   - the layout dummies are devices of s2d_mpdda_pd / s2d_mpdda (s2d_pd.spice, s2d_mpdda.spice) and of
+*     bias_tree_noab_pd (bias_tree_noab_pd.spice).
+* vss joins iovss through the p-substrate (as the d2s pad, Christoph 2026-11-03: 2(a)); Rsub (1 Ohm) stands in for that
+* path. The LVS netlists of the sheet leave Rsub out (lvs_ignore=open).
+
+* s2d_pad_esd: the protection as drawn in the s2d pad template (version 4; schematic/xschem/s2d_pad_esd.sch, equal to
+* the template's extraction). RP / RN hold the clamp gates at their source rails ("0D" tie-off of IHP's clamps).
+.subckt s2d_pad_esd iovdd iovss pad
+XDP1 pad iovdd dpantenna w=1.26u l=27.78u
+XDN1 iovss pad dantenna w=1.26u l=27.78u
+XDP2 pad iovdd dpantenna w=1.26u l=27.78u
+XDN2 iovss pad dantenna w=1.26u l=27.78u
+XRP iovdd gp iovss rppd w=0.5u l=12.9u b=0 m=1
+XMCP pad gp iovdd iovdd sg13_hv_pmos w=266.4u l=0.6u ng=40 m=1
+XRN gn iovss iovss rppd w=0.5u l=3.54u b=0 m=1
+XMCN pad gn iovss iovss sg13_hv_nmos w=88u l=0.6u ng=20 m=1
+.ends s2d_pad_esd
+
+.subckt sg13cmos5l_IOPadSingle2Diff iovdd iovss vdd vss pad outp outn vcm vref iref en_3v3 en_3v3_b
 Xt iovdd iovss iref vbp vbn vbpc vbnc en_3v3 en_3v3_b bias_tree_noab_pd
-Xa iovdd iovss padres vref vcm outp outn outp outn vbp vbn vbpc vbnc en_3v3 en_3v3_b s2d_mpdda_pd
-* input protection, as in sg13cmos5l_IOPadAnalog (iovdd iovss pad padres vdd vss)
-XCP iovdd iovss pad sg13cmos5l_Clamp_P20N0D
-XCN iovss pad sg13cmos5l_Clamp_N20N0D
-XDN iovss pad iovdd sg13cmos5l_DCNDiode
-XDP pad iovdd iovss sg13cmos5l_DCPDiode
-XSP padres iovss pad iovdd sg13cmos5l_SecondaryProtection
+Xa iovdd iovss pad vref vcm outp outn outp outn vbp vbn vbpc vbnc en_3v3 en_3v3_b s2d_mpdda_pd
+* primary protection as drawn
+Xp iovdd iovss pad s2d_pad_esd
+Rsub iovss vss 1
 .ends sg13cmos5l_IOPadSingle2Diff

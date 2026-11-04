@@ -5,89 +5,16 @@ V {}
 S {}
 F {}
 E {}
-T {sg13cmos5l_IOPadSingle2Diff: single-ended pad in, differential out, outp - vcm = vcm - outn = pad - vref} 0 -1020 0 0 0.5 0.5 {}
-T {Same ring / control / bias infrastructure as sg13cmos5l_IOPadDiff2Single. Input protection as IHP's sg13cmos5l_IOPadAnalog (clamps gate-tied, primary diodes,} 0 -970 0 0 0.3 0.3 {}
-T {secondary protection with its 587 Ohm rppd between pad and padres). xa = s2d_mpdda_pd, the matched-pair DDA input buffer (gain 2, vfbp / vfbn tied to outp / outn).} 0 -940 0 0 0.3 0.3 {}
-T {[C] enable / bias select} 220 -350 0 0 0.3 0.3 {}
-T {[B] bias} 620 -410 0 0 0.3 0.3 {}
-T {[A] input buffer s2d_mpdda_pd} 1270 -640 0 0 0.3 0.3 {}
-T {[P] input protection (IHP IO cells)} 1090 -780 0 0 0.3 0.3 {}
-N 1240 -100 1400 -100 {lab=iovss}
-N 1460 -360 1460 -320 {lab=vbp}
-N 1480 -360 1480 -300 {lab=vbpc}
-N 1520 -360 1520 -240 {lab=vbnc}
-N 1540 -360 1540 -220 {lab=vbn}
-N 1040 -100 1080 -100 {lab=iovss}
-N 140 -100 360 -100 {lab=iovss}
-N 360 -100 1040 -100 {lab=iovss}
-N 140 -200 320 -200 {lab=vdd1v2_sense}
-N 140 -180 320 -180 {lab=vdd3v3_sense}
-N 140 -220 320 -220 {lab=sel1_1v2}
-N 140 -240 320 -240 {lab=sel0_1v2}
-N 140 -260 320 -260 {lab=en_1v2}
-N 360 -140 360 -100 {lab=iovss}
-N 1400 -360 1400 -100 {lab=iovss}
-N 540 -280 540 -260 {lab=en_3v3}
-N 1620 -500 1640 -500 {lab=outp}
-N 1640 -500 1660 -500 {lab=outp}
-N 1640 -520 1640 -500 {lab=outp}
-N 1620 -520 1640 -520 {lab=outp}
-N 1620 -460 1640 -460 {lab=outn}
-N 1640 -460 1660 -460 {lab=outn}
-N 1620 -440 1640 -440 {lab=outn}
-N 540 -420 540 -280 {lab=en_3v3}
-N 520 -200 620 -200 {lab=sel1_3v3}
-N 1180 -320 1460 -320 {lab=vbp}
-N 1180 -300 1480 -300 {lab=vbpc}
-N 1080 -100 1240 -100 {lab=iovss}
-N 1300 -700 1320 -700 {lab=padres}
-N 1320 -500 1340 -500 {lab=padres}
-N 1240 -560 1240 -100 {lab=iovss}
-N 1320 -700 1320 -500 {lab=padres}
-N 620 -560 1240 -560 {lab=iovss}
-N 1240 -660 1240 -560 {lab=iovss}
-N 620 -720 620 -560 {lab=iovss}
-N 220 -740 220 -560 {lab=iovss}
-N 300 -580 300 -560 {lab=iovss}
-N 220 -560 300 -560 {lab=iovss}
-N 240 -640 260 -640 {lab=pad}
-N 240 -700 240 -640 {lab=pad}
-N 540 -700 1180 -700 {lab=pad}
-N 180 -780 180 -700 {lab=pad}
-N 180 -700 240 -700 {lab=pad}
-N 540 -760 560 -760 {lab=pad}
-N 540 -760 540 -700 {lab=pad}
-N 540 -700 540 -660 {lab=pad}
-N 540 -660 560 -660 {lab=pad}
-N 240 -700 540 -700 {lab=pad}
-N 300 -560 620 -560 {lab=iovss}
-N 140 -700 180 -700 {lab=pad}
-N 1420 -900 1420 -600 {lab=iovdd}
-N 1100 -900 1420 -900 {lab=iovdd}
-N 140 -880 380 -880 {lab=vdd}
-N 380 -880 380 -300 {lab=vdd}
-N 360 -900 360 -300 {lab=iovdd}
-N 300 -900 360 -900 {lab=iovdd}
-N 620 -900 1060 -900 {lab=iovdd}
-N 1060 -900 1100 -900 {lab=iovdd}
-N 220 -900 220 -840 {lab=iovdd}
-N 140 -900 220 -900 {lab=iovdd}
-N 300 -900 300 -680 {lab=iovdd}
-N 220 -900 300 -900 {lab=iovdd}
-N 620 -900 620 -840 {lab=iovdd}
-N 360 -900 620 -900 {lab=iovdd}
-N 560 -260 560 -240 {lab=en_3v3_b}
-N 560 -400 560 -260 {lab=en_3v3_b}
-N 560 -400 1340 -400 {lab=en_3v3_b}
-N 540 -420 1340 -420 {lab=en_3v3}
-N 520 -260 540 -260 {lab=en_3v3}
-N 520 -240 560 -240 {lab=en_3v3_b}
-N 520 -220 600 -220 {lab=sel0_3v3}
-N 1180 -240 1520 -240 {lab=vbnc}
-N 1180 -220 1540 -220 {lab=vbn}
-N 1640 -460 1640 -440 {lab=outn}
-N 140 -540 1340 -540 {lab=vcm}
-N 140 -460 1340 -460 {lab=vref}
+T {sg13cmos5l_IOPadSingle2Diff: single-ended pad in, differential out, outp - vcm = vcm - outn = pad - vref} 0 -1080 0 0 0.5 0.5 {}
+T {Custom padframe cell. Everything runs on the ring rails iovdd / iovss; the 1.2 V core ring vdd is not connected inside the cell; vss joins iovss through the p-substrate (Rsub).} 0 -1030 0 0 0.3 0.3 {}
+T {xa = s2d_mpdda_pd, the matched-pair DDA input buffer (gain 2, vfbp / vfbn tied to outp / outn); xt = bias_tree_noab_pd. Netlist reference: ../../netlist/source/sg13cmos5l_IOPadSingle2Diff.spice} 0 -1000 0 0 0.3 0.3 {}
+T {Backannotated 2026-11-04 to the drawn cell (C3, layout/klayout, reference netlist pad_candidate.cdl): the cell holds xa + xt + xp as drawn; en_ctrl_3v3 (en_3v3, en_3v3_b)} 0 -970 0 0 0.3 0.3 {}
+T {and bias_gen_pd (iref) sit next to it (slot, top level, CACE templates). No secondary protection: the buffer's vin is the pad. Primary protection xp = s2d_pad_esd, as drawn.} 0 -940 0 0 0.3 0.3 {}
+T {[P] primary protection as drawn} 580 -880 0 0 0.3 0.3 {layer=10}
+T {xp = s2d_pad_esd: clamps MCP / MCN with their rppd gate ties RP / RN (bodies on iovss),} 200 -660 0 0 0.2 0.2 {}
+T {diodes DP1 / DP2 (pad -> iovdd), DN1 / DN2 (iovss -> pad), 1.26u x 27.78u each} 200 -640 0 0 0.2 0.2 {}
+T {[B] bias} 960 -400 0 0 0.3 0.3 {layer=10}
+T {[A] input buffer s2d_mpdda_pd} 1270 -640 0 0 0.3 0.3 {layer=10}
 C {devices/iopin.sym} 140 -900 0 1 {name=p1 lab=iovdd}
 C {devices/iopin.sym} 140 -100 0 1 {name=p2 lab=iovss}
 C {devices/iopin.sym} 140 -880 0 1 {name=p3 lab=vdd}
@@ -97,72 +24,68 @@ C {devices/opin.sym} 1660 -500 0 0 {name=p6 lab=outp}
 C {devices/opin.sym} 1660 -460 0 0 {name=p7 lab=outn}
 C {devices/ipin.sym} 140 -540 0 0 {name=p8 lab=vcm}
 C {devices/ipin.sym} 140 -460 0 0 {name=p9 lab=vref}
-C {devices/ipin.sym} 140 -320 0 0 {name=p10 lab=ibias}
-C {devices/ipin.sym} 140 -260 0 0 {name=p11 lab=en_1v2}
-C {devices/ipin.sym} 140 -240 0 0 {name=p12 lab=sel0_1v2}
-C {devices/ipin.sym} 140 -220 0 0 {name=p13 lab=sel1_1v2}
-C {devices/ipin.sym} 140 -200 0 0 {name=p14 lab=vdd1v2_sense}
-C {devices/ipin.sym} 140 -180 0 0 {name=p15 lab=vdd3v3_sense}
-C {en_ctrl_3v3.sym} 420 -220 0 0 {name=xc}
-C {devices/lab_pin.sym} 360 -300 0 0 {name=l0 sig_type=std_logic lab=iovdd}
-C {devices/lab_pin.sym} 380 -300 0 1 {name=l1 sig_type=std_logic lab=vdd}
-C {devices/lab_pin.sym} 1400 -100 0 1 {name=l2 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 320 -260 0 0 {name=l3 sig_type=std_logic lab=en_1v2}
-C {devices/lab_pin.sym} 320 -240 0 0 {name=l4 sig_type=std_logic lab=sel0_1v2}
-C {devices/lab_pin.sym} 320 -220 0 0 {name=l5 sig_type=std_logic lab=sel1_1v2}
-C {devices/lab_pin.sym} 320 -200 0 0 {name=l6 sig_type=std_logic lab=vdd1v2_sense}
-C {devices/lab_pin.sym} 320 -180 0 0 {name=l7 sig_type=std_logic lab=vdd3v3_sense}
-C {devices/lab_wire.sym} 520 -220 0 1 {name=l9 sig_type=std_logic lab=sel0_3v3}
-C {devices/lab_wire.sym} 520 -200 0 1 {name=l10 sig_type=std_logic lab=sel1_3v3}
-C {s2d_mpdda_pd.sym} 1480 -480 0 0 {name=xa}
-C {devices/lab_pin.sym} 1420 -600 0 0 {name=l25 sig_type=std_logic lab=iovdd}
-C {devices/lab_pin.sym} 1400 -360 0 0 {name=l26 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 1320 -500 0 0 {name=l27 sig_type=std_logic lab=padres}
-C {devices/lab_pin.sym} 1620 -520 0 1 {name=l30 sig_type=std_logic lab=outp}
-C {devices/lab_pin.sym} 1620 -440 0 1 {name=l31 sig_type=std_logic lab=outn}
-C {devices/lab_pin.sym} 540 -420 0 0 {name=l38 sig_type=std_logic lab=en_3v3}
-C {sg13cmos5l_Clamp_P20N0D.sym} 620 -780 0 0 {name=CP}
-C {devices/lab_pin.sym} 620 -840 0 0 {name=l39 sig_type=std_logic lab=iovdd}
-C {devices/lab_pin.sym} 620 -720 0 0 {name=l40 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 560 -760 0 0 {name=l41 sig_type=std_logic lab=pad}
-C {sg13cmos5l_Clamp_N20N0D.sym} 620 -630 0 0 {name=CN}
-C {devices/lab_pin.sym} 620 -580 0 0 {name=l42 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 560 -660 0 0 {name=l43 sig_type=std_logic lab=pad}
-C {sg13cmos5l_DCNDiode.sym} 300 -640 0 0 {name=DN}
-C {devices/lab_pin.sym} 300 -580 0 0 {name=l44 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 260 -640 0 0 {name=l45 sig_type=std_logic lab=pad}
-C {devices/lab_pin.sym} 300 -680 0 0 {name=l46 sig_type=std_logic lab=iovdd}
-C {sg13cmos5l_DCPDiode.sym} 220 -780 0 0 {name=DP}
-C {devices/lab_pin.sym} 180 -780 0 0 {name=l47 sig_type=std_logic lab=pad}
-C {devices/lab_pin.sym} 220 -840 0 0 {name=l48 sig_type=std_logic lab=iovdd}
-C {devices/lab_pin.sym} 220 -740 0 0 {name=l49 sig_type=std_logic lab=iovss}
-C {sg13cmos5l_SecondaryProtection.sym} 1240 -700 0 0 {name=SP}
-C {devices/lab_pin.sym} 1300 -700 0 1 {name=l50 sig_type=std_logic lab=padres}
-C {devices/lab_pin.sym} 1240 -660 0 0 {name=l51 sig_type=std_logic lab=iovss}
-C {devices/lab_pin.sym} 1180 -700 0 0 {name=l52 sig_type=std_logic lab=pad}
-C {devices/lab_pin.sym} 1240 -740 0 0 {name=l53 sig_type=std_logic lab=iovdd}
+C {devices/iopin.sym} 140 -320 0 1 {name=p10 lab=iref}
+C {devices/ipin.sym} 140 -420 0 0 {name=p11 lab=en_3v3}
+C {devices/ipin.sym} 140 -400 0 0 {name=p12 lab=en_3v3_b}
+T {vdd: n.c.} 180 -875 0 0 0.2 0.2 {}
 C {devices/title.sym} 160 -40 0 0 {name=l_title author="Christoph Maier"}
-C {devices/lab_wire.sym} 520 -240 0 1 {name=l60 sig_type=std_logic lab=en_3v3_b}
-C {devices/lab_pin.sym} 1460 -320 0 1 {name=l54 sig_type=std_logic lab=vbp}
-C {devices/lab_pin.sym} 1540 -220 0 1 {name=l55 sig_type=std_logic lab=vbn}
-C {devices/lab_pin.sym} 1480 -300 0 1 {name=l56 sig_type=std_logic lab=vbpc}
-C {devices/lab_pin.sym} 1520 -240 0 1 {name=l57 sig_type=std_logic lab=vbnc}
-C {devices/lab_wire.sym} 520 -260 0 1 {name=l8 sig_type=std_logic lab=en_3v3}
-C {bias_gen_pd.sym} 740 -290 0 0 {name=xg}
-C {bias_tree_noab_pd.sym} 1080 -270 0 0 {name=xt}
-N 140 -320 650 -320 {lab=ibias}
-N 540 -300 650 -300 {lab=en_3v3}
-N 600 -280 600 -220 {lab=sel0_3v3}
-N 600 -280 650 -280 {lab=sel0_3v3}
-N 620 -260 620 -200 {lab=sel1_3v3}
-N 620 -260 650 -260 {lab=sel1_3v3}
-N 830 -290 850 -290 {lab=iref}
-N 850 -320 850 -290 {lab=iref}
-N 850 -320 980 -320 {lab=iref}
-C {devices/lab_wire.sym} 850 -320 0 1 {name=l_iref sig_type=std_logic lab=iref}
+N 140 -900 1040 -900 {lab=iovdd}
+N 1040 -900 1420 -900 {lab=iovdd}
+N 1420 -900 1420 -600 {lab=iovdd}
+N 1040 -900 1040 -360 {lab=iovdd}
+N 140 -100 1020 -100 {lab=iovss}
+N 1020 -100 1400 -100 {lab=iovss}
+N 1400 -360 1400 -100 {lab=iovss}
+N 1020 -180 1020 -100 {lab=iovss}
+N 140 -700 1320 -700 {lab=pad}
+N 1320 -700 1320 -500 {lab=pad}
+N 1320 -500 1340 -500 {lab=pad}
+C {devices/lab_wire.sym} 1240 -700 0 0 {name=l_pad sig_type=std_logic lab=pad}
+N 140 -540 1340 -540 {lab=vcm}
+N 140 -460 1340 -460 {lab=vref}
+N 140 -420 1340 -420 {lab=en_3v3}
+N 140 -400 1340 -400 {lab=en_3v3_b}
+N 140 -320 980 -320 {lab=iref}
 C {devices/lab_pin.sym} 980 -300 0 0 {name=l_xt_en sig_type=std_logic lab=en_3v3}
 C {devices/lab_pin.sym} 980 -280 0 0 {name=l_xt_enb sig_type=std_logic lab=en_3v3_b}
-N 1040 -900 1040 -360 {lab=iovdd}
-N 1020 -180 1020 -100 {lab=iovss}
-C {devices/lab_pin.sym} 740 -370 0 1 {name=l_xg_vdd sig_type=std_logic lab=iovdd}
-C {devices/lab_pin.sym} 740 -210 0 1 {name=l_xg_vss sig_type=std_logic lab=iovss}
+C {bias_tree_noab_pd.sym} 1080 -270 0 0 {name=xt}
+C {s2d_mpdda_pd.sym} 1480 -480 0 0 {name=xa}
+N 1460 -360 1460 -320 {lab=vbp}
+N 1180 -320 1460 -320 {lab=vbp}
+C {devices/lab_pin.sym} 1460 -320 0 1 {name=l54 sig_type=std_logic lab=vbp}
+N 1480 -360 1480 -300 {lab=vbpc}
+N 1180 -300 1480 -300 {lab=vbpc}
+C {devices/lab_pin.sym} 1480 -300 0 1 {name=l56 sig_type=std_logic lab=vbpc}
+N 1520 -360 1520 -240 {lab=vbnc}
+N 1180 -240 1520 -240 {lab=vbnc}
+C {devices/lab_pin.sym} 1520 -240 0 1 {name=l57 sig_type=std_logic lab=vbnc}
+N 1540 -360 1540 -220 {lab=vbn}
+N 1180 -220 1540 -220 {lab=vbn}
+C {devices/lab_pin.sym} 1540 -220 0 1 {name=l55 sig_type=std_logic lab=vbn}
+N 1620 -500 1640 -500 {lab=outp}
+N 1640 -500 1660 -500 {lab=outp}
+N 1640 -520 1640 -500 {lab=outp}
+N 1620 -520 1640 -520 {lab=outp}
+N 1620 -460 1640 -460 {lab=outn}
+N 1640 -460 1660 -460 {lab=outn}
+N 1620 -440 1640 -440 {lab=outn}
+N 1640 -460 1640 -440 {lab=outn}
+C {s2d_pad_esd.sym} 640 -780 0 0 {name=xp}
+N 560 -820 560 -900 {lab=iovdd}
+N 560 -740 520 -740 {lab=iovss}
+C {devices/lab_pin.sym} 520 -740 0 0 {name=l_xp_vss sig_type=std_logic lab=iovss}
+N 720 -780 760 -780 {lab=pad}
+N 760 -780 760 -700 {lab=pad}
+N 140 -120 300 -120 {lab=vss}
+C {devices/res.sym} 330 -120 1 0 {name=Rsub
+value=1
+footprint=1206
+device=resistor
+lvs_ignore=open
+m=1}
+C {devices/lab_pin.sym} 360 -120 0 1 {name=l_rsub sig_type=std_logic lab=iovss}
+T {Rsub: vss and iovss share the p-substrate (as sg13cmos5l_IOPadDiff2Single,
+Christoph 2026-11-03: 2(a)). The layout has no top vss text, so LVS
+(--disable_tap_extraction) and magic see one net. Simulation: 1 Ohm, a stand-in
+for the substrate path. LVS netlists (lvs_ignore=1): left out (open). A SPICE subckt
+cannot join two ports, and xschem refuses to short two port nets (Error 10).} 420 -230 0 0 0.2 0.2 {}

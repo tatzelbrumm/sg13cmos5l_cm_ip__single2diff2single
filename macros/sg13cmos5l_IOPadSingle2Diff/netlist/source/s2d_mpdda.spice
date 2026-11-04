@@ -23,6 +23,9 @@
 *     no class-AB lines. One bias set serves both pad buffers; see s2d_bias.spice.
 * Pins: vfbp / vfbn are the feedback and CMFB sense gates; tie them to voutp / voutn. They are
 * separate pins only so that the loops can be broken in simulation (as vfb in d2s_mpdda).
+* Backannotated 2026-11-04 to the drawn pad cell (C3, pad_candidate.cdl): the finger counts and widths were already as
+* drawn (SX / SY 6 x 6u, SXC / SYC 4 x 6u, LP / LN / D 4 x 6u, the cascodes 2 x 15u); the drawn devices are separate ng=1
+* PCells, which LVS sums. Added: the four load dummies XMDL (end of the cell).
 .subckt s2d_mpdda vdd vss vin vref vcm voutp voutn vfbp vfbn vbp vbn vbpc vbnc lcas=3 rl=50.6u wcl=12u
 * --- signal DDA
 XA1 x y vin vref vdd vss vbp unit_r2 rl={rl}
@@ -57,4 +60,10 @@ XDC vcmfb vbpc dd vdd sg13_hv_pmos w={10e-6*lcas} l={1e-6*lcas} ng=2
 *     60 deg; with these the cell is stable with no external load (unit gates of the next stage only).
 XCLP vss voutp vss vss sg13_hv_nmos w={wcl} l={wcl} ng=1
 XCLN vss voutn vss vss sg13_hv_nmos w={wcl} l={wcl} ng=1
+* --- layout dummies of the loads (s2d_loads_f, C3 backannotation 2026-11-04): D = S = B = vdd, gate vcmfb by poly
+*     abutment. They sit here because vcmfb is internal; every other dummy of the s2d cells is in s2d_mpdda_pd (s2d_pd.spice).
+XMDL[3] vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XMDL[2] vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XMDL[1] vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XMDL[0] vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1
 .ends s2d_mpdda

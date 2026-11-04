@@ -119,3 +119,127 @@ mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X}
 C {devices/title.sym} 160 -40 0 0 {name=l_title author="Christoph Maier"}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1360 -620 0 0 {name=MDT[3:0]
+l=1u
+w=20u
+ng=2
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X}
+N 1380 -650 1400 -650 {lab=vdd}
+N 1380 -620 1400 -620 {lab=vdd}
+N 1380 -590 1400 -590 {lab=vdd}
+N 1400 -590 1400 -680 {lab=vdd}
+C {devices/lab_pin.sym} 1400 -680 0 1 {name=ldm0_r sig_type=std_logic lab=vdd}
+N 1340 -620 1300 -620 {lab=vdd}
+C {devices/lab_pin.sym} 1300 -620 0 0 {name=ldm0_g sig_type=std_logic lab=vdd}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1360 -480 0 0 {name=MDTL[2:0]
+l=6u
+w=5u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X}
+N 1380 -510 1400 -510 {lab=vdd}
+N 1380 -480 1400 -480 {lab=vdd}
+N 1380 -450 1400 -450 {lab=vdd}
+N 1400 -450 1400 -540 {lab=vdd}
+C {devices/lab_pin.sym} 1400 -540 0 1 {name=ldm1_r sig_type=std_logic lab=vdd}
+N 1340 -480 1300 -480 {lab=vbp}
+C {devices/lab_pin.sym} 1300 -480 0 0 {name=ldm1_g sig_type=std_logic lab=vbp}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1360 -340 0 0 {name=MDPC[2:0]
+l=4u
+w=1u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X}
+N 1380 -370 1400 -370 {lab=vdd}
+N 1380 -340 1400 -340 {lab=vdd}
+N 1380 -310 1400 -310 {lab=vdd}
+N 1400 -310 1400 -400 {lab=vdd}
+C {devices/lab_pin.sym} 1400 -400 0 1 {name=ldm2_r sig_type=std_logic lab=vdd}
+N 1340 -340 1300 -340 {lab=vbpc}
+C {devices/lab_pin.sym} 1300 -340 0 0 {name=ldm2_g sig_type=std_logic lab=vbpc}
+C {sg13cmos5l_pr/rhigh.sym} 1360 -200 0 0 {name=RD[1:0]
+w=0.5u
+l=12.65u
+model=rhigh
+body=vss
+spiceprefix=X
+b=0
+m=1
+mm_ok=1}
+N 1360 -230 1360 -250 {lab=vss}
+C {devices/lab_pin.sym} 1360 -250 0 1 {name=ldm_r0 sig_type=std_logic lab=vss}
+N 1360 -170 1360 -150 {lab=vss}
+C {devices/lab_pin.sym} 1360 -150 0 1 {name=ldm_r1 sig_type=std_logic lab=vss}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 1680 -620 0 0 {name=MDSK[3:0]
+l=6u
+w=2u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X}
+N 1700 -650 1720 -650 {lab=vss}
+N 1700 -620 1720 -620 {lab=vss}
+N 1700 -590 1720 -590 {lab=vss}
+N 1720 -650 1720 -560 {lab=vss}
+C {devices/lab_pin.sym} 1720 -560 0 1 {name=ldm3_r sig_type=std_logic lab=vss}
+N 1660 -620 1620 -620 {lab=vbn}
+C {devices/lab_pin.sym} 1620 -620 0 0 {name=ldm3_g sig_type=std_logic lab=vbn}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 1680 -480 0 0 {name=MDBNT
+l=6u
+w=6u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X}
+N 1700 -510 1720 -510 {lab=vss}
+N 1700 -480 1720 -480 {lab=vss}
+N 1700 -450 1720 -450 {lab=vss}
+N 1720 -510 1720 -420 {lab=vss}
+C {devices/lab_pin.sym} 1720 -420 0 1 {name=ldm4_r sig_type=std_logic lab=vss}
+N 1660 -480 1620 -480 {lab=vbn}
+C {devices/lab_pin.sym} 1620 -480 0 0 {name=ldm4_g sig_type=std_logic lab=vbn}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 1680 -340 0 0 {name=MDSC[3:0]
+l=6u
+w=2u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X}
+N 1700 -370 1720 -370 {lab=vss}
+N 1700 -340 1720 -340 {lab=vss}
+N 1700 -310 1720 -310 {lab=vss}
+N 1720 -370 1720 -280 {lab=vss}
+C {devices/lab_pin.sym} 1720 -280 0 1 {name=ldm5_r sig_type=std_logic lab=vss}
+N 1660 -340 1620 -340 {lab=vbn}
+C {devices/lab_pin.sym} 1620 -340 0 0 {name=ldm5_g sig_type=std_logic lab=vbn}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 1680 -200 0 0 {name=MDCN[3:0]
+l=3u
+w=2u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X}
+N 1700 -230 1720 -230 {lab=vss}
+N 1700 -200 1720 -200 {lab=vss}
+N 1700 -170 1720 -170 {lab=vss}
+N 1720 -230 1720 -140 {lab=vss}
+C {devices/lab_pin.sym} 1720 -140 0 1 {name=ldm6_r sig_type=std_logic lab=vss}
+N 1660 -200 1620 -200 {lab=vbnc}
+C {devices/lab_pin.sym} 1620 -200 0 0 {name=ldm6_g sig_type=std_logic lab=vbnc}
+P 10 5 1260 -720 1840 -720 1840 -110 1260 -110 1260 -720 {dash=6}
+T {[DM]} 1265 -745 0 0 0.35 0.35 {layer=10}
+T {[DM] dummies of the s2d layout cells, as drawn (pad_candidate.cdl, C3 2026-11-04); every one a device, D = S on the rail} 1260 -880 0 0 0.25 0.25 {layer=10}
+T {PMOS (D = S = B = vdd): MDT inputs (4 tubs 20u / 1u ng 2, gate vdd), MDTL tails (gate vbp), MDPC casc_p (gate vbpc); loads MDL: in s2d_mpdda (gate vcmfb)} 1260 -856 0 0 0.25 0.25 {layer=10}
+T {NMOS (D = S = B = vss): MDSK sinks + MDBNT the twin of BN, MDSC sinks_cmfb (gate vbn), MDCN casc_n (gate vbnc); RD: the 2 dummy rhigh strips (vss)} 1260 -832 0 0 0.25 0.25 {layer=10}
+T {BP / BN / BPC / BNC are drawn in the s2d cells but stay in bias_tree_noab_pd (same flat netlist).} 1260 -808 0 0 0.25 0.25 {layer=10}

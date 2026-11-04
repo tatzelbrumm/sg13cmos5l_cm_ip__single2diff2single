@@ -39,7 +39,11 @@ XEd xg xg vext vext sg13_hv_pmos w=5u l=6u
 XEm ibias xg vext vext sg13_hv_pmos w=5u l=6u
 Cp outp 0 0.5p
 Cn outn 0 0.5p
-X1 iovdd 0 vdd 0 pad outp outn vcm vref ibias en s0 s1 s12 s33 sg13cmos5l_IOPadSingle2Diff
+* since 2026-11-04 (backannotation to the drawn cell) en_ctrl_3v3 and bias_gen_pd sit next to the pad, wired as in
+* the former pad sheet (Xc: vddh = iovdd, vddl = vdd, vss = iovss; Xg: vdd = iovdd, vss = iovss)
+Xc iovdd vdd 0 en s0 s1 s12 s33 en_3v3 sel0_3v3 sel1_3v3 en_3v3_b en_ctrl_3v3
+Xg iovdd 0 ibias iref en_3v3 sel0_3v3 sel1_3v3 bias_gen_pd
+X1 iovdd 0 vdd 0 pad outp outn vcm vref iref en_3v3 en_3v3_b sg13cmos5l_IOPadSingle2Diff
 .control
 foreach c 0 1 2 3 4
   if $c = 1
@@ -59,7 +63,7 @@ foreach c 0 1 2 3 4
   let iq = -i(vio)
   let vd = v(outp) - v(outn)
   let vc = (v(outp) + v(outn))/2 - v(vcm)
-  print $c iq vd vc v(x1.vbp) v(x1.vbn) v(x1.vbpc) v(x1.vbnc) v(x1.en_3v3) i(vext) -i(vcore) i(vin)
+  print $c iq vd vc v(x1.vbp) v(x1.vbn) v(x1.vbpc) v(x1.vbnc) v(en_3v3) i(vext) -i(vcore) i(vin)
   destroy all
 end
 .endc

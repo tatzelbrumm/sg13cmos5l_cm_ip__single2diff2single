@@ -36,7 +36,7 @@ pins:
     type: ground
     direction: inout
   vin:
-    description: buffer input (the pad's padres)
+    description: buffer input (the pad's pad; no secondary protection since 2026-11-04)
     type: signal
     direction: input
   vref:

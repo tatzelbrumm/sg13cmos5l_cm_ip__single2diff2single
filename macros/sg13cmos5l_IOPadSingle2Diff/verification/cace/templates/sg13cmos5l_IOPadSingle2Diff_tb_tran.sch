@@ -7,7 +7,7 @@ F {}
 E {}
 T {CACE template: step response, u = -vstep/2 -> +vstep/2 at 1 us} 0 -600 0 0 0.6 0.6 {}
 T {sg13cmos5l_IOPadSingle2Diff: outp - outn = 2 (pad - vref), CM = vcm.  Sources and analysis are in the code blocks.} 0 -560 0 0 0.3 0.3 {}
-T {Through rsrc and the pad cell (primary diodes, clamps, 587 Ohm secondary protection).} 0 -530 0 0 0.3 0.3 {}
+T {Through rsrc and the pad cell (primary diodes, clamps as drawn; no secondary protection since 2026-11-04).} 0 -530 0 0 0.3 0.3 {}
 T {run directory: CACE\{simpath\}} 0 -480 0 0 0.25 0.25 {}
 C {sg13cmos5l_IOPadSingle2Diff.sym} 1200 0 0 0 {name=x1}
 C {devices/lab_pin.sym} 1160 -180 0 1 {name=lp0 sig_type=std_logic lab=iovdd}
@@ -19,12 +19,6 @@ C {devices/lab_pin.sym} 1420 -40 0 1 {name=lp5 sig_type=std_logic lab=outp}
 C {devices/lab_pin.sym} 1420 0 0 1 {name=lp6 sig_type=std_logic lab=outn}
 C {devices/lab_pin.sym} 1420 40 0 1 {name=lp7 sig_type=std_logic lab=vcm}
 C {devices/lab_pin.sym} 980 -80 0 0 {name=lp8 sig_type=std_logic lab=vref}
-C {devices/lab_pin.sym} 980 -40 0 0 {name=lp9 sig_type=std_logic lab=ibias}
-C {devices/lab_pin.sym} 980 0 0 0 {name=lp10 sig_type=std_logic lab=en}
-C {devices/lab_pin.sym} 980 20 0 0 {name=lp11 sig_type=std_logic lab=s0}
-C {devices/lab_pin.sym} 980 40 0 0 {name=lp12 sig_type=std_logic lab=s1}
-C {devices/lab_pin.sym} 980 80 0 0 {name=lp13 sig_type=std_logic lab=s12}
-C {devices/lab_pin.sym} 980 100 0 0 {name=lp14 sig_type=std_logic lab=s33}
 C {devices/code_shown.sym} 0 -460 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
 value="
@@ -91,3 +85,29 @@ meas tran Vcm_dev max avc from=1u to=4.9u
 echo $&t_rise $&t_settle $&Overshoot $&Vcm_dev > CACE\{filename\}_CACE\{N\}.data
 .endc
 "}
+C {devices/lab_pin.sym} 980 -40 0 0 {name=l_iref sig_type=std_logic lab=iref}
+C {devices/lab_pin.sym} 980 0 0 0 {name=l_en sig_type=std_logic lab=en_3v3}
+C {devices/lab_pin.sym} 980 20 0 0 {name=l_enb sig_type=std_logic lab=en_3v3_b}
+C {en_ctrl_3v3.sym} 900 420 0 0 {name=xc}
+C {devices/lab_pin.sym} 840 340 0 0 {name=l_xc_vddh sig_type=std_logic lab=iovdd}
+C {devices/lab_pin.sym} 860 340 0 1 {name=l_xc_vddl sig_type=std_logic lab=vcore}
+C {devices/lab_pin.sym} 840 500 0 1 {name=l_xc_vss sig_type=std_logic lab=0}
+C {devices/lab_pin.sym} 800 380 0 0 {name=l_xc_en_1v2 sig_type=std_logic lab=en}
+C {devices/lab_pin.sym} 800 400 0 0 {name=l_xc_sel0_1v2 sig_type=std_logic lab=s0}
+C {devices/lab_pin.sym} 800 420 0 0 {name=l_xc_sel1_1v2 sig_type=std_logic lab=s1}
+C {devices/lab_pin.sym} 800 440 0 0 {name=l_xc_vdd1v2_sense sig_type=std_logic lab=s12}
+C {devices/lab_pin.sym} 800 460 0 0 {name=l_xc_vdd3v3_sense sig_type=std_logic lab=s33}
+C {devices/lab_pin.sym} 1000 380 0 1 {name=l_xc_en_3v3 sig_type=std_logic lab=en_3v3}
+C {devices/lab_pin.sym} 1000 400 0 1 {name=l_xc_en_3v3_b sig_type=std_logic lab=en_3v3_b}
+C {devices/lab_pin.sym} 1000 420 0 1 {name=l_xc_sel0_3v3 sig_type=std_logic lab=sel0_3v3}
+C {devices/lab_pin.sym} 1000 440 0 1 {name=l_xc_sel1_3v3 sig_type=std_logic lab=sel1_3v3}
+C {bias_gen_pd.sym} 1300 420 0 0 {name=xg}
+C {devices/lab_pin.sym} 1300 340 0 1 {name=l_xg_vdd sig_type=std_logic lab=iovdd}
+C {devices/lab_pin.sym} 1300 500 0 1 {name=l_xg_vss sig_type=std_logic lab=0}
+C {devices/lab_pin.sym} 1210 390 0 0 {name=l_xg_ibias sig_type=std_logic lab=ibias}
+C {devices/lab_pin.sym} 1210 410 0 0 {name=l_xg_en_3v3 sig_type=std_logic lab=en_3v3}
+C {devices/lab_pin.sym} 1210 430 0 0 {name=l_xg_sel0_3v3 sig_type=std_logic lab=sel0_3v3}
+C {devices/lab_pin.sym} 1210 450 0 0 {name=l_xg_sel1_3v3 sig_type=std_logic lab=sel1_3v3}
+C {devices/lab_pin.sym} 1390 420 0 1 {name=l_xg_iref sig_type=std_logic lab=iref}
+T {xc (en_ctrl_3v3) and xg (bias_gen_pd): outside the pad cell since 2026-11-04 (backannotation to the drawn cell),} 780 260 0 0 0.25 0.25 {}
+T {wired as in the former pad sheet; the sources that drove the old pad pins now drive them.} 780 282 0 0 0.25 0.25 {}

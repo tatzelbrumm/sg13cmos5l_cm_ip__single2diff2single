@@ -7,8 +7,9 @@
 # Single-ended pad in, differential out: outp - outn = 2 (pad - vref), (outp + outn)/2 = vcm.
 # Input buffer s2d_mpdda_pd (the matched-pair DDA of sudelbuecher/design_considerations/s2d_input_buffer,
 # s2d_input_buffer.md), selectable bias bias_gen_pd + bias_tree_noab_pd (until 2026-10-28 one bias_sel_noab_pd,
-# before 2026-10-27 bias_sel_pd), fail-safe enable en_ctrl_3v3, IHP input
-# protection as in sg13cmos5l_IOPadAnalog (primary diodes, gate-tied clamps, 587 Ohm secondary protection).
+# before 2026-10-27 bias_sel_pd), fail-safe enable en_ctrl_3v3 (bias_gen_pd and en_ctrl_3v3 outside the cell since
+# 2026-11-04, placed next to it in the templates), input protection as drawn (s2d_pad_esd: primary diodes, gate-tied
+# clamps; until 2026-11-04 IHP's IOPadAnalog cells with the 587 Ohm secondary protection, now none).
 # Everything on the ring rails iovdd / iovss; the 1.2 V core ring vdd only feeds the level shifters.
 # vfbp / vfbn are tied to outp / outn inside the cell: the loop gain is characterized on the fixture
 # s2d_mpdda_pd_sel (s2d_mpdda_pd_sel.yaml).
@@ -46,8 +47,11 @@ paths:
   runs:             cace/_runs
 
 pins:
+  # Ports of the drawn cell (backannotation C3, 2026-11-04). en_ctrl_3v3 and bias_gen_pd now sit next to the pad in
+  # every template (xc, xg), wired as in the former pad sheet; the template sources that drove the old pins ibias,
+  # en_1v2, sel0_1v2, sel1_1v2, vdd1v2_sense, vdd3v3_sense drive them.
   iovdd:
-    description: IO ring supply
+    description: IO ring supply (buffer, bias tree, protection)
     type: power
     direction: inout
     Vmin: 3.0
@@ -57,15 +61,15 @@ pins:
     type: ground
     direction: inout
   vdd:
-    description: 1.2 V core ring (level-shifter inputs)
+    description: 1.2 V core ring (not connected inside the cell; feeds the level shifters of en_ctrl_3v3 next to it)
     type: power
     direction: inout
   vss:
-    description: core ring ground
+    description: core ring ground (joined to iovss only through the p-substrate, Rsub)
     type: ground
     direction: inout
   pad:
-    description: Pad (input); the buffer sees it at padres, behind the 587 Ohm secondary protection
+    description: Pad (input); the buffer's vin, directly (no secondary protection), primary protection as drawn
     type: signal
     direction: inout
   outp:
@@ -84,29 +88,17 @@ pins:
     description: Pad reference; gate only
     type: signal
     direction: input
-  ibias:
-    description: Harness bias current (sourced into the cell)
+  iref:
+    description: Reference current into the bias tree (sourced, 5 uA nominal; from bias_gen_pd next to the cell)
     type: signal
     direction: input
-  en_1v2:
-    description: Enable, 1.2 V logic
+  en_3v3:
+    description: Enable, 3.3 V logic, active high (from en_ctrl_3v3 next to the cell)
     type: digital
     direction: input
-  sel0_1v2:
-    description: Bias select bit 0
+  en_3v3_b:
+    description: Complement of en_3v3, 3.3 V logic (from en_ctrl_3v3 next to the cell)
     type: digital
-    direction: input
-  sel1_1v2:
-    description: Bias select bit 1
-    type: digital
-    direction: input
-  vdd1v2_sense:
-    description: Slot 1.2 V supply (presence sense)
-    type: signal
-    direction: input
-  vdd3v3_sense:
-    description: Slot 3.3 V supply (presence sense)
-    type: signal
     direction: input
 
 default_conditions:
@@ -756,7 +748,7 @@ parameters:
         enumerate: [ss, tt, ff]
       temp:
         enumerate: [-40, 27, 125]
-  #------------------------------------------------------------ noise, referred to u (includes rsrc and the 587 Ohm rppd)
+  #------------------------------------------------------------ noise, referred to u (includes rsrc; no secondary rppd since 2026-11-04)
   noise_params:
     spec:
       En_1k:

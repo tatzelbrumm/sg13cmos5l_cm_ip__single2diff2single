@@ -19,6 +19,10 @@
 * s2d_bias_out_pd, s2d_bias_in_pd and inv_3v3_s2d stay as in the design for the decks in
 * ../../testbenches/spice (the pad's bias is bias_sel_pd). Original:
 * sudelbuecher/design_considerations/s2d_input_buffer/sim/s2d_pd.spice.
+* Backannotated 2026-11-04 to the drawn pad cell (C3, pad_candidate.cdl): every dummy of the s2d layout cells is a device
+* (end of s2d_mpdda_pd; the load dummies, gate vcmfb, in s2d_mpdda). TPP / TNP are drawn as one ng=2 PCell sharing the
+* vcm stripe (LVS: two 1u / 0.45u devices, as here); TPN / TNN sit in s2d_cload_c3. The four bias diodes BP / BN / BPC /
+* BNC are drawn in the s2d cells but stay in bias_tree_noab_pd's bias_diodes (the flat netlist is the same either way).
 
 .subckt inv_3v3_s2d vdd vss en_3v3 en_3v3_b
 XIP en_3v3_b en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
@@ -32,6 +36,41 @@ XTPN voutp en_3v3_b vcm vss sg13_hv_nmos w=1u l=0.45u ng=1
 XTPP voutp en_3v3 vcm vdd sg13_hv_pmos w=1u l=0.45u ng=1
 XTNN voutn en_3v3_b vcm vss sg13_hv_nmos w=1u l=0.45u ng=1
 XTNP voutn en_3v3 vcm vdd sg13_hv_pmos w=1u l=0.45u ng=1
+* --- dummies of the s2d layout cells as drawn (C3 backannotation 2026-11-04, pad_candidate.cdl): D = S on the rail,
+*     gates as drawn (by poly abutment where a dummy extends a row of signal gates). The load dummies XMDL (gate vcmfb,
+*     internal to s2d_mpdda) are in s2d_mpdda.spice.
+* s2d_inputs_c3: 4 tub dummies (tub_p20x1_c3, 2 x 10u / 1u, own well), all on vdd
+XMDT[3] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+XMDT[2] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+XMDT[1] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+XMDT[0] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+* s2d_tails_hi_f / s2d_tails_lo_f: 3 row-end dummies, gate vbp
+XMDTL[2] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XMDTL[1] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XMDTL[0] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+* s2d_casc_p_f: 3 dummies, gate vbpc
+XMDPC[2] vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XMDPC[1] vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XMDPC[0] vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+* sinks_6x6_s2d_c3: 4 x 2u / 6u and the twin of BN (6u / 6u), gate vbn
+XMDSK[3] vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1
+XMDSK[2] vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1
+XMDSK[1] vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1
+XMDSK[0] vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1
+XMDBNT vss vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+* s2d_sinks_cmfb_c3: 4 x 2u / 6u, gate vbn
+XMDSC[3] vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1
+XMDSC[2] vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1
+XMDSC[1] vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1
+XMDSC[0] vss vbn vss vss sg13_hv_nmos w=2u l=6u ng=1
+* s2d_casc_n_f: 4 x 2u / 3u, gate vbnc
+XMDCN[3] vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1
+XMDCN[2] vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1
+XMDCN[1] vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1
+XMDCN[0] vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1
+* s2d_rhigh_c3: 2 dummy strips, both ends and body on vss
+XRD[1] vss vss vss rhigh w=0.5u l=12.65u
+XRD[0] vss vss vss rhigh w=0.5u l=12.65u
 .ends s2d_mpdda_pd
 
 * --- tree fed by an external NMOS sink (from bias_fanout_n): iref cut, PI side pulled to vdd

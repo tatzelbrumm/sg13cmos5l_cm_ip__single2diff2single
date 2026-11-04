@@ -429,3 +429,21 @@ C {devices/lab_pin.sym} 1960 -420 0 0 {name=l70 sig_type=std_logic lab=vbnc}
 C {devices/lab_pin.sym} 1960 -160 0 0 {name=l71 sig_type=std_logic lab=vbn}
 C {devices/lab_pin.sym} 2360 -340 0 1 {name=l1 sig_type=std_logic lab=x}
 C {devices/lab_pin.sym} 2540 -320 0 1 {name=l2 sig_type=std_logic lab=y}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2720 -1000 0 0 {name=MDL[3:0]
+l=4u
+w=1u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X}
+N 2740 -1030 2760 -1030 {lab=vdd}
+N 2740 -1000 2760 -1000 {lab=vdd}
+N 2740 -970 2760 -970 {lab=vdd}
+N 2760 -970 2760 -1060 {lab=vdd}
+C {devices/lab_pin.sym} 2760 -1060 0 1 {name=ldm0_r sig_type=std_logic lab=vdd}
+N 2700 -1000 2660 -1000 {lab=vcmfb}
+C {devices/lab_pin.sym} 2660 -1000 0 0 {name=ldm0_g sig_type=std_logic lab=vcmfb}
+T {[DM] load dummies as drawn (s2d_loads_f, C3 2026-11-04):} 2620 -930 0 0 0.25 0.25 {layer=10}
+T {MDL 4 x 1u / 4u, D = S = B = vdd, G = vcmfb} 2620 -906 0 0 0.25 0.25 {layer=10}
+T {(vcmfb is internal; the other dummies: s2d_mpdda_pd)} 2620 -882 0 0 0.25 0.25 {layer=10}

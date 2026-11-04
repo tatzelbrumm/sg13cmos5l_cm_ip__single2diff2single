@@ -47,7 +47,7 @@ C {sg13cmos5l_pr/rppd.sym} 640 -330 0 0 {name=RP
 w=0.5u
 l=12.9u
 model=rppd
-body=sub!
+body=iovss
 spiceprefix=X
 b=0
 m=1}
@@ -70,7 +70,7 @@ C {sg13cmos5l_pr/rppd.sym} 640 -70 0 0 {name=RN
 w=0.5u
 l=3.54u
 model=rppd
-body=sub!
+body=iovss
 spiceprefix=X
 b=0
 m=1}
@@ -98,5 +98,6 @@ T {RN (1959 Ohm), RP (6768 Ohm): the "0D" gate tie-off of IHP's Clamp_N20N0D / C
 T {at the clamp's own source rail, so the clamp is off in operation and the pad sees only drain junctions. Reasoning, not documented by IHP: the tie goes} 0 -640 0 0 0.3 0.3 {}
 T {through a resistor and not a wire so that a fast ESD edge, coupled through the gate-drain capacitance, lifts the gate for about R x C_gate and turns the} 0 -600 0 0 0.3 0.3 {}
 T {clamp on (gate-coupled triggering), and the gate oxide does not sit directly on a rail node during a CDM event.} 0 -560 0 0 0.3 0.3 {}
-T {Difference to IHP: RP lies on the substrate here (body sub!); in IHP's cell its body is iovdd. Not drawn: the ptap1 "resistors" XR1 of IHP's spice} 0 -520 0 0 0.3 0.3 {}
+T {Difference to IHP: RP lies on the substrate here (body iovss, the p-substrate as LVS extracts it); in IHP's cell its body is iovdd. Not drawn: the ptap1 "resistors" XR1 of IHP's spice} 0 -520 0 0 0.3 0.3 {}
 T {(iovss - sub!, about 10 Ohm) are the substrate taps of the guard rings, extracted as devices, not resistors anyone drew.} 0 -480 0 0 0.3 0.3 {}
+T {Since 2026-11-04 (C3 backannotation) the pad sheet sg13cmos5l_IOPadSingle2Diff instantiates this cell as xp, as the primary protection as drawn; no secondary protection.} 0 -440 0 0 0.3 0.3 {}

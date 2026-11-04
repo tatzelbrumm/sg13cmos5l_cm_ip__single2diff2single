@@ -41,11 +41,11 @@ list are done; how the scaffold was adapted where it conflicted with the design 
 6. **CMFB dump branch, built-in output capacitors** (open points 7, 8 of the design note).
 7. **Sheets**: `s2d_mpdda_pd.sch` and `s2d_mpdda_pd_sel.sch` are generator-placed (2026-10-25) and may
    want tidying; `s2d_core_ideal.{sch,sym}` (the old placeholder) are no longer used.
-8. **Unpowered pad**: the secondary diodes clamp padres to iovdd, which the slot cannot switch; not
+8. **Unpowered pad**: the primary diodes (DP1 / DP2) clamp the pad to iovdd, which the slot cannot switch; not
    simulated.
 9. **Fallback wiring**: in `../slot` the S2D input sits behind the harness IOPadAnalog's own
    protection (`s7_an_0_esd`), so this cell's protection is redundant there; decide whether the
-   fallback gets a variant without `CP CN DN DP SP`.
+   fallback gets a variant without `xp` (`s2d_pad_esd`; until 2026-11-04 IHP's `CP CN DN DP SP`).
 10. **Layout**: none yet. As a custom padframe cell it must abut the IHP IO cells (ring rails, cell
     height, pitch); see `../slot/README.md`, "Priority: custom padframe cells". Six units must match
     (common centroid, same surround), as for the driver.

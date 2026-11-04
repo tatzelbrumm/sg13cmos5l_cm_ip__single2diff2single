@@ -35,12 +35,6 @@ C {devices/lab_pin.sym} 920 -40 0 1 {name=l5 sig_type=std_logic lab=vdiffp}
 C {devices/lab_pin.sym} 920 0 0 1 {name=l6 sig_type=std_logic lab=vdiffn}
 C {devices/lab_pin.sym} 920 40 0 1 {name=l7 sig_type=std_logic lab=vbias}
 C {devices/lab_pin.sym} 480 -80 0 0 {name=l8 sig_type=std_logic lab=vbias}
-C {devices/lab_pin.sym} 480 -40 0 0 {name=l9 sig_type=std_logic lab=ibias1}
-C {devices/lab_pin.sym} 480 0 0 0 {name=l10 sig_type=std_logic lab=enable}
-C {devices/lab_pin.sym} 480 20 0 0 {name=l11 sig_type=std_logic lab=dig_in[2]}
-C {devices/lab_pin.sym} 480 40 0 0 {name=l12 sig_type=std_logic lab=dig_in[3]}
-C {devices/lab_pin.sym} 480 80 0 0 {name=l13 sig_type=std_logic lab=vdd_1v2}
-C {devices/lab_pin.sym} 480 100 0 0 {name=l14 sig_type=std_logic lab=vdd_3v3}
 C {sg13cmos5l_IOPadDiff2Single.sym} 1400 0 0 0 {name=xd2s}
 C {devices/lab_pin.sym} 1360 -180 0 1 {name=l15 sig_type=std_logic lab=vdd_3v3}
 C {devices/lab_pin.sym} 1360 180 0 1 {name=l16 sig_type=std_logic lab=vss_3v3}
@@ -76,3 +70,29 @@ C {devices/lab_pin.sym} 1810 450 0 0 {name=l_xd2s_g_sel1_3v3 sig_type=std_logic 
 C {devices/lab_pin.sym} 1990 420 0 1 {name=l_xd2s_g_iref sig_type=std_logic lab=d2s_iref}
 T {xd2s_c (en_ctrl_3v3) and xd2s_g (bias_gen_pd): outside the pad cell since 2026-11-03 (backannotation to the drawn cell),} 1180 230 0 0 0.25 0.25 {}
 T {wired as in the former pad sheet; the sources that drove the old pad pins now drive them.} 1180 252 0 0 0.25 0.25 {}
+C {devices/lab_pin.sym} 480 -40 0 0 {name=l_s2d_iref sig_type=std_logic lab=s2d_iref}
+C {devices/lab_pin.sym} 480 0 0 0 {name=l_s2d_en sig_type=std_logic lab=s2d_en_3v3}
+C {devices/lab_pin.sym} 480 20 0 0 {name=l_s2d_enb sig_type=std_logic lab=s2d_en_3v3_b}
+C {en_ctrl_3v3.sym} 300 560 0 0 {name=xs2d_c}
+C {devices/lab_pin.sym} 240 480 0 0 {name=l_xs2d_c_vddh sig_type=std_logic lab=vdd_3v3}
+C {devices/lab_pin.sym} 260 480 0 1 {name=l_xs2d_c_vddl sig_type=std_logic lab=vdd_1v2}
+C {devices/lab_pin.sym} 240 640 0 1 {name=l_xs2d_c_vss sig_type=std_logic lab=vss_3v3}
+C {devices/lab_pin.sym} 200 520 0 0 {name=l_xs2d_c_en_1v2 sig_type=std_logic lab=enable}
+C {devices/lab_pin.sym} 200 540 0 0 {name=l_xs2d_c_sel0_1v2 sig_type=std_logic lab=dig_in[2]}
+C {devices/lab_pin.sym} 200 560 0 0 {name=l_xs2d_c_sel1_1v2 sig_type=std_logic lab=dig_in[3]}
+C {devices/lab_pin.sym} 200 580 0 0 {name=l_xs2d_c_vdd1v2_sense sig_type=std_logic lab=vdd_1v2}
+C {devices/lab_pin.sym} 200 600 0 0 {name=l_xs2d_c_vdd3v3_sense sig_type=std_logic lab=vdd_3v3}
+C {devices/lab_pin.sym} 400 520 0 1 {name=l_xs2d_c_en_3v3 sig_type=std_logic lab=s2d_en_3v3}
+C {devices/lab_pin.sym} 400 540 0 1 {name=l_xs2d_c_en_3v3_b sig_type=std_logic lab=s2d_en_3v3_b}
+C {devices/lab_pin.sym} 400 560 0 1 {name=l_xs2d_c_sel0_3v3 sig_type=std_logic lab=s2d_sel0_3v3}
+C {devices/lab_pin.sym} 400 580 0 1 {name=l_xs2d_c_sel1_3v3 sig_type=std_logic lab=s2d_sel1_3v3}
+C {bias_gen_pd.sym} 900 560 0 0 {name=xs2d_g}
+C {devices/lab_pin.sym} 900 480 0 1 {name=l_xs2d_g_vdd sig_type=std_logic lab=vdd_3v3}
+C {devices/lab_pin.sym} 900 640 0 1 {name=l_xs2d_g_vss sig_type=std_logic lab=vss_3v3}
+C {devices/lab_pin.sym} 810 530 0 0 {name=l_xs2d_g_ibias sig_type=std_logic lab=ibias1}
+C {devices/lab_pin.sym} 810 550 0 0 {name=l_xs2d_g_en_3v3 sig_type=std_logic lab=s2d_en_3v3}
+C {devices/lab_pin.sym} 810 570 0 0 {name=l_xs2d_g_sel0_3v3 sig_type=std_logic lab=s2d_sel0_3v3}
+C {devices/lab_pin.sym} 810 590 0 0 {name=l_xs2d_g_sel1_3v3 sig_type=std_logic lab=s2d_sel1_3v3}
+C {devices/lab_pin.sym} 990 560 0 1 {name=l_xs2d_g_iref sig_type=std_logic lab=s2d_iref}
+T {xs2d_c (en_ctrl_3v3) and xs2d_g (bias_gen_pd): outside the pad cell since 2026-11-04 (backannotation to the drawn cell),} 180 410 0 0 0.25 0.25 {}
+T {wired as in the former pad sheet; the sources that drove the old pad pins now drive them.} 180 432 0 0 0.25 0.25 {}

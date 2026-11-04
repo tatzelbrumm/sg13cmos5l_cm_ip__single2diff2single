@@ -15,11 +15,12 @@ unit `unit_r2`. Open points are in [`FILL_IN.md`](FILL_IN.md).
 
 | instance | cell (macro) | function |
 |---|---|---|
-| `xc` | `en_ctrl_3v3` (`../en_ctrl_3v3`) | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` for `xt` and `xa` |
-| `xg` | `bias_gen_pd` (`../bias_gen_pd`) | the reference current `iref` (sourced), selected by `sel1 sel0` |
+| (`xc`) | `en_ctrl_3v3` (`../en_ctrl_3v3`) | **outside the cell since 2026-11-04** (next to it in the slot, the top level and the CACE templates): `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`; level-shifted `sel*`; `en_3v3_b` for `xt` and `xa` |
+| (`xg`) | `bias_gen_pd` (`../bias_gen_pd`) | **outside the cell since 2026-11-04**: the reference current `iref` (sourced), selected by `sel1 sel0` |
 | `xt` | `bias_tree_noab_pd` (`../bias_tree_noab_pd`) | four bias lines vbp vbn vbpc vbnc from one mirror tree fed by `iref`. `xg` + `xt` replace `xb` = `bias_sel_noab_pd` (2026-10-27 to 2026-10-28; before that `bias_sel_pd`, whose class-AB legs stayed unused here), device for device |
 | `xa` | `s2d_mpdda_pd` (here) | `s2d_mpdda` + four output-to-vcm ties; `vfbp` / `vfbn` tied to `outp` / `outn` on the top sheet |
-| `CP`, `CN`, `DN`, `DP`, `SP` | IHP IO sub-cells | input protection exactly as `sg13cmos5l_IOPadAnalog`: gate-tied clamps, primary diodes, secondary protection (587 Ω rppd) from `pad` to `padres` |
+| `xp` | `s2d_pad_esd` (here) | primary protection as drawn (since 2026-11-04; before: IHP's `CP CN DN DP SP` as in `sg13cmos5l_IOPadAnalog`): gate-tied clamps MCP / MCN with rppd ties RP / RN (bodies on iovss), diodes DP1 / DP2, DN1 / DN2. No secondary protection: the buffer's `vin` is `pad` |
+| `Rsub` | 1 Ω, `lvs_ignore=open` | vss – iovss, the shared p-substrate (as the d2s pad) |
 
 `s2d_mpdda` (four signal units A1 = A2 on (vin, vref), F1 on (vcm, vfbp), F2 on (vfbn, vcm); one
 folded cascode with the outputs as the only high-impedance nodes; two more units as the CMFB into a
@@ -31,9 +32,10 @@ Sheets in `schematic/xschem/`:
 
 | file | contents |
 |---|---|
-| `sg13cmos5l_IOPadSingle2Diff.{sch,sym}` | top sheet; symbol and port order unchanged since 2026-10-20 |
-| `s2d_mpdda.{sch,sym}` | Christoph's sheet of 2026-10-23 from `s2d_input_buffer/xschem` (only the netlist-path text changed) |
-| `s2d_mpdda_pd.{sch,sym}` | wrapper: `s2d_mpdda` + TPN / TPP, TNN / TNP (1 / 0.45 µm hv TGs, outputs to vcm while disabled) |
+| `sg13cmos5l_IOPadSingle2Diff.{sch,sym}` | top sheet; ports changed 2026-11-04 to those of the drawn cell (see Ports) |
+| `s2d_mpdda.{sch,sym}` | Christoph's sheet of 2026-10-23 from `s2d_input_buffer/xschem` (changed: the netlist-path text, and on 2026-11-04 the four load dummies `MDL`, gate vcmfb) |
+| `s2d_mpdda_pd.{sch,sym}` | wrapper: `s2d_mpdda` + TPN / TPP, TNN / TNP (1 / 0.45 µm hv TGs, outputs to vcm while disabled), and the layout dummies `[DM]` |
+| `s2d_pad_esd.{sch,sym}` | the primary protection as drawn (`xp`) |
 | `s2d_mpdda_pd_sel.{sch,sym}` | CACE-only fixture: `s2d_mpdda_pd` + `bias_gen_pd` + `bias_tree_noab_pd` (until 2026-10-28 `bias_sel_noab_pd`), `vfbp` / `vfbn` as pins (loop gain) |
 | `s2d_core_ideal.{sch,sym}` | the 2026-10-20 placeholder (two E sources), no longer used |
 | `xschemrc` | PDK + this folder + the sub-macros; `sg13cmos5l_IOPadDiff2Single` added for `unit_r2` |
@@ -47,7 +49,7 @@ Source netlists in `netlist/source/`:
 | file | contents |
 |---|---|
 | `sg13cmos5l_IOPadSingle2Diff.spice` | the top cell (instance lines identical to the sheet's xschem netlist) |
-| `s2d_mpdda.spice`, `s2d_bias.spice` | copied unchanged from `s2d_input_buffer/sim` (`s2d_bias.spice`: `s2d_bias_lp` fixture, `s2d_bias_in` / `_out` trees, `bias_fanout_n` / `_p`) |
+| `s2d_mpdda.spice`, `s2d_bias.spice` | copied from `s2d_input_buffer/sim`, `s2d_mpdda.spice` with the load dummies added 2026-11-04 (`s2d_bias.spice`: `s2d_bias_lp` fixture, `s2d_bias_in` / `_out` trees, `bias_fanout_n` / `_p`) |
 | `s2d_pd.spice` | `s2d_input_buffer/sim/s2d_pd.spice` with `en_3v3_b` as a port of `s2d_mpdda_pd` (its inverter `Xi` removed); `s2d_bias_out_pd`, `s2d_bias_in_pd`, `inv_3v3_s2d` kept for the decks |
 
 Decks in `testbenches/spice/`: the eight of `s2d_input_buffer/sim/tb` (`tb_s2d_{op,dc,loop,step,noise,loopback,pd_leak,pd_enable}`,
@@ -58,15 +60,17 @@ includes rewritten; the two `pd` decks make `en_3v3_b` with the design's inverte
 
 | port | dir | |
 |---|---|---|
-| iovdd, iovss | ring | buffer, bias, control and protection |
-| vdd, vss | ring | 1.2 V core ring: only the input inverters of the three `ls_up_1v2_3v3` |
-| pad | inout | bond pad; the buffer input is `padres`, behind the secondary protection |
+| iovdd, iovss | ring | buffer, bias tree and protection |
+| vdd, vss | ring | 1.2 V core ring: not connected inside the cell (vss joins iovss only through the substrate, `Rsub`); vdd feeds the level shifters of `en_ctrl_3v3` next to the cell |
+| pad | inout | bond pad; the buffer input directly (no secondary protection) |
 | outp, outn | out | differential output to the next internal stage |
 | vcm | in | internal common mode (gates of the feedback and CMFB units only) |
 | vref | in | pad reference (gates of the input units only) |
-| ibias | in | harness `ibias0` / `ibias1`: a **sourced** current (iDAC, 250 nA steps, code 20 = 5 µA) |
-| en_1v2, sel0_1v2, sel1_1v2 | in | 1.2 V logic: harness `enable` and two `dig_in` bits |
-| vdd1v2_sense, vdd3v3_sense | in | the slot's gated supplies, only sensed |
+| iref | in | the selected reference current, **sourced** into the cell (5 µA), from `bias_gen_pd` next to the cell |
+| en_3v3, en_3v3_b | in | 3.3 V enable and its complement, from `en_ctrl_3v3` next to the cell |
+
+Until 2026-11-04 the ports were `… vref ibias en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense`, with
+`en_ctrl_3v3` and `bias_gen_pd` inside; the users now place them next to the pad, wired as before.
 
 Bias selection and power down as in `../sg13cmos5l_IOPadDiff2Single/README.md`. Disabled, the bias tree
 is off (every tail, sink, cascode and the CMFB diode with it), and `outp`, `outn` are tied to `vcm`.
