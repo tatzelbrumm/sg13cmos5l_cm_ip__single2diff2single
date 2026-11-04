@@ -1,4 +1,4 @@
-* Extracted by KLayout with SG13CMOS5L LVS runset on : 04/11/2026 16:50
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 04/11/2026 18:02
 
 .SUBCKT sg13cmos5l_IOPadSingle2Diff en_3v3 en_3v3_b iovdd iovss iref outn outp
 + pad vcm vref
@@ -6,13 +6,13 @@ X$11 iovss outp outn vcm en_3v3_b s2d_cload_c3
 X$12 en_3v3 iovdd vcm outp outn s2d_pd_p_c3
 X$13 iref en_3v3_b \$I35 iovdd \$I32 \$I13 \$I23 bias_tree_noab_p_c3
 X$15 iovss en_3v3 \$I35 en_3v3_b iref \$I17 \$I32 bias_tree_noab_n_c3
-X$16 \$I20 \$I29 \$I27 \$I24 \$I25 \$I28 \$I14 \$I26 \$I11 \$I19 iovdd outn
+X$16 \$I20 \$I29 \$I25 \$I24 \$I26 \$I28 \$I14 \$I27 \$I11 \$I19 iovdd outn
 + vref vcm outp pad \$I33 \$I21 \$I22 \$I34 \$I30 \$I31 s2d_inputs_c3
 X$17 iovss \$I23 \$I14 \$I19 s2d_sinks_cmfb_c3_core
 X$18 iovss \$I23 \$I20 \$I11 sinks_6x6_s2d_c3_core
-X$19 iovss \$I33 \$I34 \$I27 \$I24 \$I30 \$I26 \$I31 \$I28 \$I21 \$I22 \$I29
-+ \$I25 s2d_rhigh_c3
-X$20 iovdd \$I24 \$I32 \$I29 \$I27 \$I25 \$I28 \$I26 s2d_tails_lo_f
+X$19 iovss \$I33 \$I34 \$I25 \$I24 \$I30 \$I27 \$I31 \$I28 \$I21 \$I22 \$I29
++ \$I26 s2d_rhigh_c3
+X$20 iovdd \$I24 \$I32 \$I29 \$I25 \$I26 \$I28 \$I27 s2d_tails_lo_f
 X$21 iovdd \$I33 \$I21 \$I22 \$I31 \$I32 \$I34 \$I30 s2d_tails_hi_f
 X$22 iovss outn \$I12 \$I20 outp \$I13 \$I11 iovdd \$I14 \$I19 s2d_casc_n_f
 X$23 \$I16 iovdd outp \$I18 outn \$I15 \$I12 \$I17 s2d_casc_p_f

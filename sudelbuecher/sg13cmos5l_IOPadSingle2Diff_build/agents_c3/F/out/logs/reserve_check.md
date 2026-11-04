@@ -1,6 +1,6 @@
 | layer | in the reserve (um2) |
 |---|---:|
-| left Metal2 (allowed) | 41.71 |
+| left Metal2 (allowed) | 49.84 |
 | left Via1 (allowed) | 0.00 |
 | left Via2 (allowed) | 0.00 |
 | left Metal3 (allowed) | 0.00 |

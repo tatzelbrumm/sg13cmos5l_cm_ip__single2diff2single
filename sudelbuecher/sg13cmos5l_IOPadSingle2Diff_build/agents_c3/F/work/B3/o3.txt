@@ -1,0 +1,4 @@
+failed: [('y', 'no path to 1 of 2 terminal groups')] time 22 s
+fix_block: 0 Metal2 neck fill(s)
+fix_block: trimmed 0.0000 um2 of router Metal2 in the band gaps (0 pieces)
+DONE

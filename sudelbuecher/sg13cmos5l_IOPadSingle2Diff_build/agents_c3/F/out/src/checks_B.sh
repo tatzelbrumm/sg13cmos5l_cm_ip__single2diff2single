@@ -21,6 +21,11 @@ python3 -B "$S/reserve_check.py" "$O/pad_candidate.gds" > "$L/reserve_check.md"
 python3 -B "$S/tpl_xor.py" "$I/template/sg13cmos5l_IOPadSingle2Diff_template.gds" "$O/pad_candidate.gds" > "$L/template_unchanged_B.txt"
 mkdir -p "$W/row"; python3 -B "$I/row_check.py" "$O/pad_candidate.gds" sg13cmos5l_IOPadSingle2Diff "$W/row" > "$W/row/stdout.txt" 2>&1
 cp "$W/row/edges.md" "$L/row_check_B_edges.md"; cp "$W/row/nets.md" "$L/row_check_B_nets.md"
+# stage B3: DRC of the abutted row (row_check.py's row.gds, top cell row): run_drc.py and the maximal deck with latch-up
+T=/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech
+python3 $T/drc/run_drc.py --path="$W/row/row.gds" --topcell=row --no_density --mp=4 --run_dir="$W/rowdrc" > "$L/row_run_drc.log" 2>&1
+klayout -b -r $T/drc/rule_decks/sg13cmos5l_maximal.drc -rd input="$W/row/row.gds" -rd topcell=row \
+    -rd report="$W/row_maximal.lyrdb" -rd latchUpRules=true -rd thr=4 > "$L/row_maximal_lu.log" 2>&1
 # PEX (magic, C-coupled, EXT mode 2 as C2 F2): nodes that only capacitors touch
 mkdir -p "$W/pex"; cp "$O/pad_candidate.gds" "$W/pex/sg13cmos5l_IOPadSingle2Diff.gds"
 ( cd "$W/pex" && PDK=ihp-sg13cmos5l sak-pex.sh -m 2 -w "$W/pex" sg13cmos5l_IOPadSingle2Diff.gds > pex.log 2>&1 )
@@ -35,7 +40,9 @@ $R "$O/previews/pad_candidate_top.png" 0 144 80 181 "top band: core-side pins, c
 { echo "changed cells:"; cat "$O/cells/logs/summary_B.txt"; cat "$O/cells/logs/xor_vs_primitives.txt"
   cat "$L/pad_checks.txt"; tail -1 "$L/circuit_check.txt"; tail -1 "$L/reserve_check.md"; tail -1 "$L/template_unchanged_B.txt"
   echo "row_check: bands / rails pass $(grep -c '| pass' "$L/row_check_B_nets.md") of $(($(grep -c '^| ' "$L/row_check_B_nets.md") - 1)), edge layers DIFFERENT $(grep -c DIFFERENT "$L/row_check_B_edges.md")"
-  echo "PEX: $(head -1 "$L/pex_capacitor_only_nodes.txt")"; } > "$L/summary_B.txt"
+  echo "PEX: $(head -1 "$L/pex_capacitor_only_nodes.txt")"
+  echo "row DRC run_drc.py: $(grep -oE 'No DRC violations detected|Violated rules are : .*' "$L/row_run_drc.log"), 'exception' lines $(grep -c exception "$L/row_run_drc.log")"
+  echo "row DRC maximal + latch-up: $(grep -oE 'Number of DRC errors for maximum rule set: [0-9]+' "$L/row_maximal_lu.log")"; } > "$L/summary_B.txt"
 cat "$L/summary_B.txt"
 # stage B2: lengths and parallel runs of the long nets (before = out/stageB_v1, if present), the long-net picture
 NM="python3 -B $S/net_metrics.py"; N="pad vbp vbnc vbn outp outn"

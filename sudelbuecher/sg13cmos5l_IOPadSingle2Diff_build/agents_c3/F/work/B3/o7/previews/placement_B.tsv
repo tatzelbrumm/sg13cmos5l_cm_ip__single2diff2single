@@ -1,0 +1,14 @@
+instance	cell	orientation	x0	y0	x1	y1
+sinks	sinks_6x6_s2d_c3_core	R270	4.3	32.7	20.81	83.7
+cascn	s2d_casc_n_f	R270	22.62	32.7	36.99	105.44
+cascp	s2d_casc_p_f	R270	45.5	45.6	58.31	99.43
+loads	s2d_loads_f	R270	58.31	45.6	70.63	90.39
+tlo	s2d_tails_lo_f	M0	4.37	110.24	49.56	119.4
+inputs	s2d_inputs_c3	R0	4.3	122.4	51.88	148.84
+thi	s2d_tails_hi_f	R0	4.37	151.84	49.56	161.0
+rhigh	s2d_rhigh_c3	R90	55.5	126.0	75.59	145.24
+sinkc	s2d_sinks_cmfb_c3_core	R90	59.19	91.25	75.7	123.5
+treen	bias_tree_noab_n_c3	R0	51.49	152.3	75.7	161.515
+treep	bias_tree_noab_p_c3	R0	60.0	164.3	72.94	174.67
+cload	s2d_cload_c3	R0	4.3	162.5	33.86	176.74
+pdp	s2d_pd_p_c3	R0	35.0	172.3	38.2	175.27

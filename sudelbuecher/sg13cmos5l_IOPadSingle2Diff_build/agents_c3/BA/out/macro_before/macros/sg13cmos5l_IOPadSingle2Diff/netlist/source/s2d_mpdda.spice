@@ -1,0 +1,60 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* s2d_mpdda: single-ended pad input -> fully differential internal signal. The mirror image of
+* d2s_mpdda (../../class_ab_pad_driver/improvements/sim/d2s_mpdda.spice), built from the same unit
+* unit_r2 (units.spice there): split-tail hv-PMOS pair, rhigh between the sources, x += f(gp - gn).
+*  1. Signal DDA, four identical units:
+*       A1 = A2 (vin, vref),  F1 (vcm, vfbp),  F2 (vfbn, vcm)
+*     balance 2 f(vin - vref) = f(vfbp - vcm) + f(vcm - vfbn); with vfbp = vcm + u, vfbn = vcm - u
+*     this gives u = vin - vref for any matched odd monotonic f:
+*       voutp - voutn = 2 (vin - vref),   (voutp + voutn)/2 = vcm.
+*     Gain set by how the matched units are connected (each input unit sees the whole input, each
+*     feedback unit half the differential output), not by R or gm. vref (pad reference) and vcm
+*     (internal common mode) are separate gate-only inputs.
+*  2. Single stage, folded cascode, load compensated: voutp / voutn are the only high-impedance
+*     nodes; the load compensates the loop. Two built-in MOS capacitors (XCLP, XCLN) set the
+*     minimum; gates of the next stage and routing add to them.
+*  3. CMFB: two more identical units, M1 (vfbp, vcm) and M2 (vfbn, vcm), summed with the same
+*     polarity: xc += f(vfbp - vcm) + f(vfbn - vcm), linear in the output common mode, second
+*     order in the differential signal. xc is folded into a cascoded PMOS diode (vcmfb) that the
+*     two PMOS loads mirror 1 : 1. yc is folded the same way into vdd, so both CMFB fold nodes
+*     sit at the same voltage.
+*  4. Bias lines as d2s_mpdda: vbp (unit tails), vbn (fold sinks), vbpc, vbnc (cascodes);
+*     no class-AB lines. One bias set serves both pad buffers; see s2d_bias.spice.
+* Pins: vfbp / vfbn are the feedback and CMFB sense gates; tie them to voutp / voutn. They are
+* separate pins only so that the loops can be broken in simulation (as vfb in d2s_mpdda).
+.subckt s2d_mpdda vdd vss vin vref vcm voutp voutn vfbp vfbn vbp vbn vbpc vbnc lcas=3 rl=50.6u wcl=12u
+* --- signal DDA
+XA1 x y vin vref vdd vss vbp unit_r2 rl={rl}
+XA2 x y vin vref vdd vss vbp unit_r2 rl={rl}
+XF1 x y vcm vfbp vdd vss vbp unit_r2 rl={rl}
+XF2 x y vfbn vcm vdd vss vbp unit_r2 rl={rl}
+* --- folded cascode (30 uA sinks: 4 x 5 uA from the units + 10 uA branch). The sinks are
+*     6 fingers of the bias diode BN (6/6 at 5 uA), the CMFB sinks below 4 of them, so the
+*     current ratio is a finger count (d2s_mpdda's 36/6 uses 4 fingers of 9 um).
+XSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=6
+XSY y vbn vss vss sg13_hv_nmos w=36u l=6u ng=6
+XCX voutp vbnc x vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+XCY voutn vbnc y vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+* --- PMOS loads (10 uA), cascoded, gates on vcmfb; same devices as d2s_mpdda's mirror PL / PR
+XLP lp vcmfb vdd vdd sg13_hv_pmos w=24u l=4u ng=4
+XLN ln vcmfb vdd vdd sg13_hv_pmos w=24u l=4u ng=4
+XLPC voutp vbpc lp vdd sg13_hv_pmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+XLNC voutn vbpc ln vdd sg13_hv_pmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+* --- CMFB: two units, same polarity (20 uA sinks: 2 x 5 uA from the units + 10 uA branch)
+XM1 xc yc vfbp vcm vdd vss vbp unit_r2 rl={rl}
+XM2 xc yc vfbn vcm vdd vss vbp unit_r2 rl={rl}
+XSXC xc vbn vss vss sg13_hv_nmos w=24u l=6u ng=4
+XSYC yc vbn vss vss sg13_hv_nmos w=24u l=6u ng=4
+XCXC vcmfb vbnc xc vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+XCYC vdd vbnc yc vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+* CMFB diode: replica of a load with its cascode, low-voltage cascode connection (gate at the
+* cascode's drain, as PL / PCL in d2s_mpdda)
+XD dd vcmfb vdd vdd sg13_hv_pmos w=24u l=4u ng=4
+XDC vcmfb vbpc dd vdd sg13_hv_pmos w={10e-6*lcas} l={1e-6*lcas} ng=2
+* --- built-in load: hv NMOS inversion capacitors, gate on the output, S/D/B on vss. 12 x 12 um is
+*     about 0.53 pF at 0.7 V and 0.62 pF at 1.7 V. The CM loop needs about 0.5 pF per output for
+*     60 deg; with these the cell is stable with no external load (unit gates of the next stage only).
+XCLP vss voutp vss vss sg13_hv_nmos w={wcl} l={wcl} ng=1
+XCLN vss voutn vss vss sg13_hv_nmos w={wcl} l={wcl} ng=1
+.ends s2d_mpdda

@@ -1,0 +1,33 @@
+### mutant m1: < MDCN[2] vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1 > MDCN[2] vss vbn vss vss sg13_hv_nmos w=2u l=3u ng=1 
+devices: layout reference 151, circuit 119 (one line per finger / segment on the reference side)
+## MOS (W sums, dummies apart): 56 keys, 0 differ
+## dummies (D = S): 10 keys, 2 differ
+  ('sg13_hv_nmos', 3.0, ('iovss', 'iovss'), 'vbn', 'iovss'): layout 0  circuit 2
+  ('sg13_hv_nmos', 3.0, ('iovss', 'iovss'), 'vbnc', 'iovss'): layout 8  circuit 6
+## diodes (area, um2): 2 keys, 0 differ
+## fingers (finger width: count, per MOS key incl. dummies): 66 keys, 2 differ
+  ('sg13_hv_nmos', 3.0, ('iovss', 'iovss'), 'vbn', 'iovss'): layout {}  circuit {2.0: 1}
+  ('sg13_hv_nmos', 3.0, ('iovss', 'iovss'), 'vbnc', 'iovss'): layout {2.0: 4}  circuit {2.0: 3}
+## resistors (series-reduced lengths): 9 keys, 0 differ
+RESULT DIFFERENT
+exit 1
+### mutant m2: < MSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=6 > MSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=4 
+devices: layout reference 151, circuit 119 (one line per finger / segment on the reference side)
+## MOS (W sums, dummies apart): 56 keys, 0 differ
+## dummies (D = S): 9 keys, 0 differ
+## diodes (area, um2): 2 keys, 0 differ
+## fingers (finger width: count, per MOS key incl. dummies): 65 keys, 1 differ
+  ('sg13_hv_nmos', 6.0, ('iovss', 'x'), 'vbn', 'iovss'): layout {6.0: 6}  circuit {9.0: 4}
+## resistors (series-reduced lengths): 9 keys, 0 differ
+RESULT DIFFERENT
+exit 1
+### mutant m3: < DDN2 iovss pad dantenna l=27.78u w=1.26u 
+devices: layout reference 151, circuit 118 (one line per finger / segment on the reference side)
+## MOS (W sums, dummies apart): 56 keys, 0 differ
+## dummies (D = S): 9 keys, 0 differ
+## diodes (area, um2): 2 keys, 1 differ
+  ('dantenna', ('iovss', 'pad')): layout 70.0056  circuit 35.0028
+## fingers (finger width: count, per MOS key incl. dummies): 65 keys, 0 differ
+## resistors (series-reduced lengths): 9 keys, 0 differ
+RESULT DIFFERENT
+exit 1

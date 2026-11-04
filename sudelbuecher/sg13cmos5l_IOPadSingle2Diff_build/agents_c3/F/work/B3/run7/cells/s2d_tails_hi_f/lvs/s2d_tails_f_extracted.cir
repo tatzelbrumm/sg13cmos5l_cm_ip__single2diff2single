@@ -1,0 +1,20 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 04/11/2026 18:02
+
+.SUBCKT s2d_tails_hi_f sa_A1 sa_A2 sa_M1 sb_F1 sb_F2 sb_M2 vbp vdd
+M$1 vbp vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u
++ rfmode=0
+M$2 sa_A1 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$3 sb_F2 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$4 sb_F1 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$5 sa_A2 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$6 sa_M1 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$7 sb_M2 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$8 vdd vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u
++ rfmode=0
+.ENDS s2d_tails_hi_f

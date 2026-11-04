@@ -1,0 +1,3 @@
+run_drc.py: No DRC violations detected, tables 30, 'exception' lines 0
+maximal + latch-up: Number of DRC errors for maximum rule set: 0, LU rules listed 5
+LVS (deep, --disable_tap_extraction): Netlists match

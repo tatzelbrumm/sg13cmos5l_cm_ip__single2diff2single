@@ -1,4 +1,4 @@
-/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/F/work/B2/runs/final/pex/sg13cmos5l_IOPadSingle2Diff.pex.spice -> /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/F/work/B2/runs/final/pex/tied.spice: 28 capacitor-only nodes tied to iovss through 1e12 Ohm
+/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/F/work/B3/run7/pex/sg13cmos5l_IOPadSingle2Diff.pex.spice -> /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/F/work/B3/run7/pex/tied.spice: 28 capacitor-only nodes tied to iovss through 1e12 Ohm
 Rtie0 a_11844_25374# iovss 1e12
 Rtie1 a_11844_25510# iovss 1e12
 Rtie2 a_11844_25646# iovss 1e12

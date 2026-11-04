@@ -1,0 +1,4 @@
+python3 scripts/check_boundary.py layout/gds/sg13cmos5l_cm_ip__single2diff2single.gds sg13cmos5l_cm_ip__single2diff2single
+[INFO] Checking the PR boundary of sg13cmos5l_cm_ip__single2diff2single in layout/gds/sg13cmos5l_cm_ip__single2diff2single.gds ...
+[INFO] 1 shape(s) on layer 189/4, 200.000 um x 200.000 um.
+[INFO] PR boundary check passed.

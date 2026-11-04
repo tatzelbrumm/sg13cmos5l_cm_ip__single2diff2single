@@ -1,0 +1,68 @@
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/sg13cmos5l_IOPadSingle2Diff.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff/sg13cmos5l_IOPadSingle2Diff.spice, 0 missing symbol line(s)
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/sg13cmos5l_IOPadSingle2Diff.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff/sg13cmos5l_IOPadSingle2Diff_lvs.cdl, 0 missing symbol line(s)
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_mpdda_pd/s2d_mpdda_pd.spice, 0 missing symbol line(s)
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_mpdda_pd/s2d_mpdda_pd_lvs.cdl, 0 missing symbol line(s)
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_mpdda/s2d_mpdda.spice, 0 missing symbol line(s)
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_mpdda/s2d_mpdda_lvs.cdl, 0 missing symbol line(s)
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_pad_esd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_pad_esd/s2d_pad_esd.spice, 0 missing symbol line(s)
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_pad_esd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_pad_esd/s2d_pad_esd_lvs.cdl, 0 missing symbol line(s)
+xschem exit 0 macros/bias_tree_noab_pd/schematic/xschem/bias_tree_noab_pd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/bias_tree_noab_pd/bias_tree_noab_pd.spice, 0 missing symbol line(s)
+xschem exit 0 macros/bias_tree_noab_pd/schematic/xschem/bias_tree_noab_pd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/bias_tree_noab_pd/bias_tree_noab_pd_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_ac.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_ac/sg13cmos5l_IOPadSingle2Diff_tb_ac.spice, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_ac.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_ac/sg13cmos5l_IOPadSingle2Diff_tb_ac_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_dc/sg13cmos5l_IOPadSingle2Diff_tb_dc.spice, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_dc.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_dc/sg13cmos5l_IOPadSingle2Diff_tb_dc_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_enable.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_enable/sg13cmos5l_IOPadSingle2Diff_tb_enable.spice, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_enable.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_enable/sg13cmos5l_IOPadSingle2Diff_tb_enable_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_noise.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_noise/sg13cmos5l_IOPadSingle2Diff_tb_noise.spice, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_noise.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_noise/sg13cmos5l_IOPadSingle2Diff_tb_noise_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_pd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_pd/sg13cmos5l_IOPadSingle2Diff_tb_pd.spice, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_pd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_pd/sg13cmos5l_IOPadSingle2Diff_tb_pd_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_range.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_range/sg13cmos5l_IOPadSingle2Diff_tb_range.spice, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_range.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_range/sg13cmos5l_IOPadSingle2Diff_tb_range_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_tran.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_tran/sg13cmos5l_IOPadSingle2Diff_tb_tran.spice, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_tran.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_IOPadSingle2Diff_tb_tran/sg13cmos5l_IOPadSingle2Diff_tb_tran_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 macros/slot/schematic/xschem/slot.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/slot/slot.spice, 0 missing symbol line(s)
+xschem exit 10 macros/slot/schematic/xschem/slot.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/slot/slot_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_cm_ip__single2diff2single/sg13cmos5l_cm_ip__single2diff2single.spice, 2 missing symbol line(s)
+xschem exit 10 schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/sg13cmos5l_cm_ip__single2diff2single/sg13cmos5l_cm_ip__single2diff2single_lvs.cdl, 2 missing symbol line(s)
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd_sel.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_mpdda_pd_sel/s2d_mpdda_pd_sel.spice, 0 missing symbol line(s)
+xschem exit 0 macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd_sel.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_mpdda_pd_sel/s2d_mpdda_pd_sel_lvs.cdl, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/s2d_mpdda_pd_sel_tb_loop.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_mpdda_pd_sel_tb_loop/s2d_mpdda_pd_sel_tb_loop.spice, 0 missing symbol line(s)
+xschem exit 10 macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/s2d_mpdda_pd_sel_tb_loop.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/s2d_mpdda_pd_sel_tb_loop/s2d_mpdda_pd_sel_tb_loop_lvs.cdl, 0 missing symbol line(s)
+xschem exit 0 macros/bias_sel_noab_pd/schematic/xschem/bias_sel_noab_pd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/bias_sel_noab_pd/bias_sel_noab_pd.spice, 0 missing symbol line(s)
+xschem exit 0 macros/bias_sel_noab_pd/schematic/xschem/bias_sel_noab_pd.sch
+netlist /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_all/bias_sel_noab_pd/bias_sel_noab_pd_lvs.cdl, 0 missing symbol line(s)

@@ -1,0 +1,33 @@
+  equivalent macros/slot/schematic/xschem/slot.sch  (old 514 devices, new 549, reverted 514; missing symbols old 0 new 0)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch  (old 514 devices, new 549, reverted 514; missing symbols old 2 new 2)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_ac.sch  (old 314 devices, new 349, reverted 314; missing symbols old 0 new 0)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_dc.sch  (old 278 devices, new 313, reverted 278; missing symbols old 0 new 0)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_enable.sch  (old 276 devices, new 311, reverted 276; missing symbols old 0 new 0)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_noise.sch  (old 274 devices, new 309, reverted 274; missing symbols old 0 new 0)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_pd.sch  (old 270 devices, new 305, reverted 270; missing symbols old 0 new 0)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_range.sch  (old 279 devices, new 314, reverted 279; missing symbols old 0 new 0)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_tran.sch  (old 282 devices, new 317, reverted 282; missing symbols old 0 new 0)
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd_sel.sch  (old 199 devices, new 230, reverted 199; missing symbols old 0 new 0)
+      reverted: s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/s2d_mpdda_pd_sel_tb_loop.sch  (old 253 devices, new 284, reverted 253; missing symbols old 0 new 0)
+      reverted: s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, tree dummy removed 2
+  DIFFERENT  macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/sg13cmos5l_IOPadSingle2Diff.sch  (old 244 devices, new 120, reverted 85; missing symbols old 0 new 0)  ports old ['iovdd', 'iovss', 'vdd', 'vss', 'pad', 'outp', 'outn', 'vcm', 'vref', 'ibias', 'en_1v2', 'sel0_1v2', 'sel1_1v2', 'vdd1v2_sense'] new ['iovdd', 'iovss', 'vdd', 'vss', 'pad', 'outp', 'outn', 'vcm', 'vref', 'iref', 'en_3v3', 'en_3v3_b']
+      reverted: IHP cell put back 5, Rsub removed 1, s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25, s2d_pad_esd device removed 8, tree dummy removed 2
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd.sch  (old 68 devices, new 97, reverted 68; missing symbols old 0 new 0)
+      reverted: s2d_mpdda load dummy removed 4, s2d_mpdda_pd dummy removed 25
+  equivalent macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda.sch  (old 64 devices, new 68, reverted 64; missing symbols old 0 new 0)
+      reverted: s2d_mpdda load dummy removed 4
+  equivalent macros/bias_tree_noab_pd/schematic/xschem/bias_tree_noab_pd.sch  (old 12 devices, new 14, reverted 12; missing symbols old 0 new 0)
+      reverted: tree dummy removed 2
+  equivalent macros/bias_sel_noab_pd/schematic/xschem/bias_sel_noab_pd.sch  (old 131 devices, new 133, reverted 131; missing symbols old 0 new 0)
+      reverted: tree dummy removed 2
+1 of 16 sheets differ after reverting the intended changes

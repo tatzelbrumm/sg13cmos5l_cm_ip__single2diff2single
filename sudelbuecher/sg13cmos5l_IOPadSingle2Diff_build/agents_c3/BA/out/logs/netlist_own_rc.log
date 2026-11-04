@@ -1,0 +1,17 @@
+macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/sg13cmos5l_IOPadSingle2Diff.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_pad_esd.sch: netlist written, 0 missing
+macros/bias_tree_noab_pd/schematic/xschem/bias_tree_noab_pd.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_ac.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_dc.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_enable.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_noise.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_pd.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_range.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_tran.sch: netlist written, 0 missing
+macros/slot/schematic/xschem/slot.sch: netlist written, 0 missing
+schematic/xschem/sg13cmos5l_cm_ip__single2diff2single.sch: NO NETLIST
+macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/s2d_mpdda_pd_sel_tb_loop.sch: netlist written, 0 missing
+macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/s2d_mpdda_pd_sel.sch: netlist written, 0 missing
+old top, own rc: ls: cannot access '/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/BA/out/net_own/old/old_top.spice': No such file or directory

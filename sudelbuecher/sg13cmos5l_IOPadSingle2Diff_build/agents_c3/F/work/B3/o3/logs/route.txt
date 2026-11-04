@@ -1,0 +1,22 @@
+fixed_f: y router wiring removed, 42.38 um2
+placed 16 instances, 0 rails, 0 tap stripes: 80.000 x 154.000 um
+block s2d_block: 80.000 x 154.000 um = 12320.0 um2; gate 3115.9 um2 (25.3 %), MOS diffusion 3681.9 um2 (29.9 %)
+layers drawn in the top cell: ; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  UNROUTED y: no path to 1 of 2 terminal groups
+round 0: failed ['y']
+round 1: failed ['y']
+round 2: failed ['y']
+round 3: failed ['y']
+round 4: failed ['y']
+round 5: failed ['y']
+round 6: failed ['y']
+round 7: failed ['y']
+ROUTE_ORDER used: ['y']
+failed: [('y', 'no path to 1 of 2 terminal groups')] time 22 s
+  y group 22: ['sinks.y'], 617 access nodes, reach >4000
+  y group 27: ['cascn.y'], 684 access nodes, reach >4000
+  y group 72: ['inputs.y'], 349 access nodes, reach >4000
+fix_block: 0 Metal2 neck fill(s)
+fix_block: trimmed 0.0000 um2 of router Metal2 in the band gaps (0 pieces)

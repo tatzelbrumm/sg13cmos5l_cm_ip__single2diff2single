@@ -466,6 +466,84 @@ F's report: `agents_c3/F/report_stageB2.md`. Brief: `agents_c3/F/BRIEF_stageB2.m
   - Verdict: F's routing already does what a priority scheme would mainly buy. A stage B3 would only pay for the
     fold pairs.
 
+## Phase 4: integration, backannotation, verification (2026-11-04, from about 18:20 CET)
+
+Christoph (about 18:20 CET): "the pad layout is good _enough_ to proceed to phase 4. Have at it." He had left the scope
+("wherever you consider 'here'") to the lead. Option (a): `claude/c3-s2d-pad-layout` was fast-forwarded to `toplevel`
+1aed2cb, so it holds C2's finished d2s pad. The s2d macro, its users `slot.sch` / the top sheet, and the
+`bias_tree_noab_pd` macro (its two layout dummies) changed.
+
+### 4.1 Integration (`phase4/integrate_gds.py`)
+
+- F's candidate becomes `macros/sg13cmos5l_IOPadSingle2Diff/layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds`.
+- The iovdd rail tie moves out of `pwr_f` into the cell `iovdd_rail_tie`, at the same coordinates, with an outline and
+  a note on TEXT.drawing 63/0. Christoph: "keep the strap ... annotate with TEXT.drawing".
+- Every port text is copied to the pin datatype 2 (as C2, so magic sees ports); there is no `vss` text.
+- XOR of every drawing layer against the candidate is 0, and the output is byte-reproducible.
+
+### 4.2 The abutted row found one M1.f (stage B3)
+
+- `run_drc.py` on the row (Filler1000 | IOPadAnalog | pad | Filler200 | IOPadIOVdd | pad | Filler1000) gave 1 × M1.f.
+  - A router Metal1 jumper of net y ran 0.27 µm beside the template's left edge-stub Metal1 for 22.7 µm.
+  - Abutted, the stub merges with IOPadAnalog's / the filler's Metal1 into a line wider than 10 µm, so the 0.6 µm
+    spacing applies.
+  - Neither the cell's own DRC nor `row_check.py`'s nets see it. Stage A / B / B2 had not run DRC on the row, only the
+    template had.
+- Agent F (brief `agents_c3/F/BRIEF_stageB3.md`) put that detour on Metal2 at x 1.81–2.07, in the reserve, where Metal2
+  is allowed. A reroute with the keep-out left nets unrouted, so F hand-patched it (`src/patch_y.py`).
+  - y is 143.8 µm instead of 145.9 µm.
+  - The CDL is unchanged.
+  - F's checks now include the row DRC.
+- Lead check (`lead_checks/F_stageB3/summary.txt`):
+  - the rebuild is identical;
+  - the XOR is only the detour;
+  - DRC is 0 on the cell and on the row, on both decks;
+  - row check 25 / 25;
+  - LVS matches.
+- Macro cell 599ff3f18a08 (design commit bba4aba).
+
+### 4.3 Backannotation (agent BA, brief `agents_c3/BA/BRIEF.md`, note `agents_c3/BA/out/ba_note.md`)
+
+As C2's BA.
+- **Pad ports:** `iovdd iovss vdd vss pad outp outn vcm vref iref en_3v3 en_3v3_b`. `en_ctrl_3v3` and `bias_gen_pd`
+  move next to the cell in `slot.sch` (`xs2d_c` / `xs2d_g`), the top sheet (`xinbuf_c` / `xinbuf_g`), `tb_pad_dc`
+  and the 7 CACE templates; the yaml pins are updated.
+- **Protection:** no secondary protection, and `padres` is gone. `xp` = `s2d_pad_esd`, the drawn protection, with
+  rppd bodies on iovss.
+- **Rsub:** 1 Ω vss – iovss (`lvs_ignore=open`), as d2s.
+- **Dummies:**
+  - the s2d dummies in a `[DM]` block of `s2d_mpdda_pd`;
+  - the four load dummies (gate vcmfb, internal to that sheet) in Christoph's `s2d_mpdda.sch`;
+  - MDBP / MDBN in `bias_tree_noab_pd`.
+  - The bias diodes stay in `bias_diodes`, as C2 left them. `unit_r2` (C2's 4-segment form) already matched.
+- **Checks** [M]:
+  - the sheet's LVS CDL and the sources equal `pad_candidate.cdl` device for device;
+  - the users are equivalent to before, minus the intended changes;
+  - `tb_pad_dc`: I_Q and bias lines are equal to 6 digits, and the pad current is −276 → −183 pA without the
+    secondary diodes.
+- Design commit 668cf59.
+
+### 4.4 Macro DRC / LVS (make targets, `SCRIPTS_DIR=../../scripts`; logs `p4b3-make-*.out`)
+
+- `make klayout-drc` (macro) and `make magic-drc`: clean.
+- `make klayout-lvs`: PASS.
+- `make magic-lvs`: 76 = 76 devices, 37 = 37 nets. It fails only on the `vss` pin, the d2s substrate merge that
+  Christoph accepted on 2026-11-03.
+- `make check-boundary`: passes.
+
+### 4.5 CACE note
+
+Not rerun. The macro README ("CACE: what is stale, and how to rerun it", design commit 275e9da) lists, per group, what
+the three changes should do: the partition, no secondary protection, the dummies. It also says how to rerun: the
+`layout:` key plus `-s` for post-layout, `EXT_MODE=2`, and mismatch MC on the schematic only.
+
+### 4.6 Open
+
+- Optional: P's input-band order (vin next to vfbp, 5.7 fF).
+- Optional: pair routing for the fold nodes.
+- PEX and post-layout CACE when Christoph asks.
+- The macro README's "Not done" list.
+
 ## Notes folder
 
 | file | contents |
@@ -477,5 +555,7 @@ F's report: `agents_c3/F/report_stageB2.md`. Brief: `agents_c3/F/BRIEF_stageB2.m
 | `phase1/row_maximal.lyrdb`, `phase1/main_row/` | DRC of the row (maximal with latch-up; `run_drc.py` tables) |
 | `phase1/budget.md` | `budget.py`'s output |
 | `template/` | checks of the cleaned-out template: DRC, `row/`, `lvs/` |
+| `phase4/` | `integrate_gds.py` (candidate → macro cell), `probe_net.py`, `row_B2/` (the row with the M1.f) |
+| `lead_checks/` | the lead's checks per agent and stage (`P/`, `N/`, `F_stageA/`, `F_stageB/`, `F_stageB2/`, `F_stageB3/`) |
 
 Logs: `sudelbuecher/logs/claude/c3-s2d-pad-layout/` (+ rows in `sudelbuecher/MANIFEST.tsv`).
