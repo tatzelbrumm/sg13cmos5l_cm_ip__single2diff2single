@@ -16,13 +16,18 @@
 *     into the class-AB diode stacks RP1 + RP2 / RN1 + RN2.
 * Enabled (en_3v3 = vdd): the four switches are off; everything else is d2s_mpdda unchanged.
 * unit_r2 from units.spice, as for d2s_mpdda.
+* Backannotated 2026-11-03 from the drawn pad cell (C2, pad_candidate.cdl): SX / SY ng 6 (6 fingers 6u / 6u each),
+* PL / PR 4 fingers, PCL / PCR / CX / CY 2 fingers (as before); SA's bulk vdd, SB's bulk vss (decided 2026-10-31; in
+* the pad vdd = vddo = iovdd, vss = vsso = iovss); every dummy of the d2s layout cells as a device (end of the cell).
+* The four bias diodes BP / BN / BPC / BNC are drawn in the d2s cells (tails, sinks, casc_p, casc_n) but stay in
+* bias_tree_pd here (the flat netlist is the same either way).
 .subckt d2s_mpdda_pd vdd vss vddo vsso vinp vinn vref vfb a b dabp dabn vbp vbn vbpc vbnc vabp vabn en_3v3 en_3v3_b lcas=3 rl=50.6u
 XA x y vinp vref vdd vss vbp unit_r2 rl={rl}
 XB x y vref vinn vdd vss vbp unit_r2 rl={rl}
 XC1 x y vref vfb vdd vss vbp unit_r2 rl={rl}
 XC2 x y vref vfb vdd vss vbp unit_r2 rl={rl}
-XSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=4
-XSY y vbn vss vss sg13_hv_nmos w=36u l=6u ng=4
+XSX x vbn vss vss sg13_hv_nmos w=36u l=6u ng=6
+XSY y vbn vss vss sg13_hv_nmos w=36u l=6u ng=6
 XCX l1 vbnc x vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
 XCY b vbnc y vss sg13_hv_nmos w={10e-6*lcas} l={1e-6*lcas} ng=2
 XPL pl l2 vdd vdd sg13_hv_pmos w=24u l=4u ng=4
@@ -39,8 +44,45 @@ XABN a vabn b vss sg13_hv_nmos w=4.4u l=1u ng=1
 XRP2 vabp vabp dabp vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
 XRN2 vabn vabn dabn vss sg13_hv_nmos w=4.4u l=1u ng=1
 * --- disable switches: output gates to their own rails, class-AB lines off
-XSA a en_3v3 vddo vddo sg13_hv_pmos w=1u l=0.45u ng=1
-XSB b en_3v3_b vsso vsso sg13_hv_nmos w=1u l=0.45u ng=1
+XSA a en_3v3 vddo vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XSB b en_3v3_b vsso vss sg13_hv_nmos w=1u l=0.45u ng=1
 XSABP vabp en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
 XSABN vabn en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+* --- dummies as drawn (D = S; gates as drawn, by poly abutment where tied to a signal gate)
+* d2s_inputs: 4 tub dummies (tub_p20x1_c2, 2 x 10u / 1u, own well), all vdd
+XMDT[3] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+XMDT[2] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+XMDT[1] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+XMDT[0] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2
+* d2s_tails: 3 x 5u / 6u, gate vbp
+XMDTL[2] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XMDTL[1] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XMDTL[0] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+* d2s_loads: 4 x 1u / 4u, gate l2
+XMDL[3] vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XMDL[2] vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XMDL[1] vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+XMDL[0] vdd l2 vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+* d2s_casc_p: 1 x 1u / 4u, gate vbpc
+XMDPC vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+* d2s_ab_p: 2 x 6.66u / 0.6u, all vdd
+XMDABP[1] vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+XMDABP[0] vdd vdd vdd vdd sg13_hv_pmos w=6.66u l=0.6u ng=1
+* d2s_ab_n: 2 x 4.4u / 1u, all vss
+XMDABN[1] vss vss vss vss sg13_hv_nmos w=4.4u l=1u ng=1
+XMDABN[0] vss vss vss vss sg13_hv_nmos w=4.4u l=1u ng=1
+* d2s_casc_n: 4 x 2u / 3u, D = S = G = vbnc
+XMDCN[3] vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1
+XMDCN[2] vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1
+XMDCN[1] vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1
+XMDCN[0] vbnc vbnc vbnc vss sg13_hv_nmos w=2u l=3u ng=1
+* sinks_6x6: 4 x 2u / 6u and the twin of BN (6u / 6u), D = S = G = vbn
+XMDSK[3] vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1
+XMDSK[2] vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1
+XMDSK[1] vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1
+XMDSK[0] vbn vbn vbn vss sg13_hv_nmos w=2u l=6u ng=1
+XMDBNT vbn vbn vbn vss sg13_hv_nmos w=6u l=6u ng=1
+* d2s_rhigh: 2 dummy strips, both ends vss
+XRD[1] vss vss vss rhigh w=0.5u l=12.65u
+XRD[0] vss vss vss rhigh w=0.5u l=12.65u
 .ends d2s_mpdda_pd

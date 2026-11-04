@@ -271,3 +271,38 @@ spiceprefix=X}
 C {devices/lab_wire.sym} 220 -360 0 0 {name=l9 sig_type=std_logic lab=ni}
 C {devices/ipin.sym} 100 -540 0 0 {name=p13 lab=en_3v3_b}
 C {devices/title.sym} 160 -40 0 0 {name=l0 author="Christoph Maier"}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 440 400 0 0 {name=MDBP
+l=6u
+w=2u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X}
+N 460 370 480 370 {lab=vdd}
+N 460 400 480 400 {lab=vdd}
+N 460 430 480 430 {lab=vdd}
+N 480 430 480 340 {lab=vdd}
+C {devices/lab_pin.sym} 480 340 0 1 {name=ldm90_r sig_type=std_logic lab=vdd}
+N 420 400 380 400 {lab=vbp}
+C {devices/lab_pin.sym} 380 400 0 0 {name=ldm90_g sig_type=std_logic lab=vbp}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 680 400 0 0 {name=MDBN
+l=6u
+w=2.4u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X}
+N 660 400 640 400 {lab=ni}
+N 700 370 700 350 {lab=ni}
+N 700 350 640 350 {lab=ni}
+N 700 430 700 450 {lab=ni}
+N 700 450 640 450 {lab=ni}
+N 640 350 640 450 {lab=ni}
+N 640 350 600 350 {lab=ni}
+C {devices/lab_pin.sym} 600 350 0 0 {name=ldm91_g sig_type=std_logic lab=ni}
+N 700 400 720 400 {lab=vss}
+N 720 400 720 470 {lab=vss}
+C {devices/lab_pin.sym} 720 470 0 1 {name=ldm91_b sig_type=std_logic lab=vss}
+T {[DT] layout dummies of the tree rows (C2 backannotation): MDBP 2u/6u D = S = B = vdd, G = vbp; MDBN 2.4u/6u D = S = G = ni, B = vss} 300 260 0 0 0.25 0.25 {layer=10}

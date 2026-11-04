@@ -1,0 +1,26 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+}
+V {}
+S {}
+F {}
+E {}
+P 4 5 -60 -60 60 -60 60 60 -60 60 -60 -60 {}
+T {@symname} 5 62 0 0 0.25 0.25 {}
+T {@name} 5 -85 0 0 0.25 0.25 {}
+T {2 kOhm} -25 -10 0 0 0.2 0.2 {}
+L 4 60 0 80 0 {}
+B 5 77.5 -2.5 82.5 2.5 {name=core dir=inout}
+T {core} 55 -6 0 1 0.2 0.2 {}
+L 4 0 -80 0 -60 {}
+B 5 -2.5 -82.5 2.5 -77.5 {name=iovdd dir=inout}
+T {iovdd} -15 -55 0 0 0.2 0.2 {}
+L 4 0 60 0 80 {}
+B 5 -2.5 77.5 2.5 82.5 {name=iovss dir=inout}
+T {iovss} -15 40 0 0 0.2 0.2 {}
+L 4 -80 0 -60 0 {}
+B 5 -82.5 -2.5 -77.5 2.5 {name=pad dir=inout}
+T {pad} -55 -6 0 0 0.2 0.2 {}

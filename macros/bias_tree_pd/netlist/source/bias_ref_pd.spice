@@ -42,6 +42,9 @@ XPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
 XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
 XPABN vabn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
 Xd vdd vss vbp vbn vbpc vbnc bias_diodes
+* layout dummies of the tree rows (C2 backannotation, 2026-11-03)
+XMDBP vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+XMDBN ni ni ni vss sg13_hv_nmos w=2.4u l=6u ng=1
 .ends bias_tree_pd
 
 * --- 1: I_ref into iref (external PMOS source)

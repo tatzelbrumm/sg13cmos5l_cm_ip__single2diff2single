@@ -4,8 +4,9 @@
 * d2s_out_p: the P frame (Clamp_P_M1 ng 43, l 0.6u): OP 82 fingers, RP1 (replica of OP, diode on dabp), RPD (RP1's
 *            drain partner, gate on vddo, off).
 * d2s_out_n: the two N frames (2 x Clamp_N_M1 ng 35, l 1u): ON 68 fingers, RN1 (replica of ON, diode on dabn).
-* The Miller capacitors CMA (gate a; S, D, well on the pad) and CMB (gate on the pad; S, D, well on b) are devices of
-* the pad's top cell. d2s_mpdda_pd drives a / b and holds RP2 / RN2 (the upper halves of the class-AB diode stacks).
+* The Miller capacitors CMA (gate a; S, D, well on pa) and CMB (gate on pb; S, D, well on b) are devices of the pad's
+* top cell; pa and pb reach the pad through the 2 kOhm stages d2s_sp2k (since 2026-11-03). d2s_mpdda_pd drives a / b
+* and holds RP2 / RN2 (the upper halves of the class-AB diode stacks).
 .subckt d2s_out_p vddo a vout dabp
 XOP vout a vddo vddo sg13_hv_pmos w=546.12u l=0.6u ng=82
 XRP1 dabp dabp vddo vddo sg13_hv_pmos w=13.32u l=0.6u ng=2
