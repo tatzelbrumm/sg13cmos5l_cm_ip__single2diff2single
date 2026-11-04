@@ -1,0 +1,47 @@
+placed 15 instances, 0 rails, 0 tap stripes: 80.000 x 154.000 um
+block s2d_block: 80.000 x 154.000 um = 12320.0 um2; gate 3115.9 um2 (25.3 %), MOS diffusion 3681.9 um2 (29.9 %)
+layers drawn in the top cell: 10/0 10/2 10/25 19/0 8/0; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  sa_A1      M1  41.77 um  M2  27.00 um  vias 4
+  sa_A2      M1  32.77 um  M2  22.41 um  vias 3
+  sa_F1      M1  38.61 um  M2   8.00 um  vias 4
+  sa_F2      M1  44.50 um  M2  36.72 um  vias 4
+  sa_M1      M1  28.61 um  M2  21.03 um  vias 3
+  sa_M2      M1  13.23 um  M2  15.03 um  vias 5
+  sb_A1      M1  23.76 um  M2  22.95 um  vias 1
+  sb_A2      M1  45.24 um  M2  23.27 um  vias 2
+  sb_F1      M1  77.08 um  M2  22.64 um  vias 8
+  sb_F2      M1  85.25 um  M2  57.05 um  vias 9
+  sb_M1      M1  26.45 um  M2  20.77 um  vias 5
+  sb_M2      M1  16.64 um  M2  11.61 um  vias 7
+  x          M1  19.98 um  M2  40.36 um  vias 3
+  y          M1  19.48 um  M2  43.70 um  vias 4
+  xc         M1  44.82 um  M2  22.59 um  vias 5
+  yc         M1  27.23 um  M2  39.62 um  vias 6
+  outp       M1  66.12 um  M2  66.16 um  vias 16
+  outn       M1  64.81 um  M2  74.86 um  vias 15
+  vcmfb      M1  22.93 um  M2  15.99 um  vias 4
+  lp         M1   0.00 um  M2  18.55 um  vias 1
+  ln         M1   6.75 um  M2  11.34 um  vias 2
+  dd         M1   6.42 um  M2   8.64 um  vias 2
+  vbp        M1  35.66 um  M2 224.38 um  vias 5
+  vbn        M1  56.95 um  M2 112.36 um  vias 8
+  vbpc       M1   3.24 um  M2  68.04 um  vias 3
+  vbnc       M1  82.50 um  M2 150.35 um  vias 4
+  ni         M1   0.00 um  M2   4.26 um  vias 1
+  iref       M1  12.42 um  M2  18.09 um  vias 1
+  en_3v3     M1  14.51 um  M2  23.12 um  vias 2
+  en_3v3_b   M1  57.20 um  M2  26.59 um  vias 4
+  vcm        M1  31.39 um  M2  49.20 um  vias 9
+  vref       M1  44.28 um  M2  41.93 um  vias 4
+  pad        M1  17.82 um  M2 107.70 um  vias 2
+  iovdd_t    M1   7.84 um  M2   7.02 um  vias 5
+  iovdd_op   M1  12.42 um  M2  16.98 um  vias 2
+  iovdd_tp   M1  26.32 um  M2  49.83 um  vias 1
+  iovss_sk   M1   0.74 um  M2   0.00 um  vias 1
+  iovss_cn   M1   2.70 um  M2   0.00 um  vias 1
+  iovss_m    M1  18.55 um  M2  12.20 um  vias 7
+round 0: failed []
+ROUTE_ORDER used: ['x', 'y', 'en_3v3', 'pad', 'dd', 'ln', 'lp', 'vcmfb', 'outp', 'outn', 'sb_A1', 'sb_A2', 'sb_M1', 'sa_A1', 'sa_A2', 'sa_M1', 'sa_F1', 'sa_F2', 'sa_M2', 'sb_F1', 'sb_F2', 'sb_M2', 'vcm', 'en_3v3_b', 'iovdd_tp', 'vref', 'vbpc', 'vbn', 'vbnc', 'xc', 'yc']
+failed: [] time 61 s

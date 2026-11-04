@@ -1,0 +1,1 @@
+sg13cmos5l_IOPadSingle2Diff.pex.spice -> tied.spice: 28 capacitor-only nodes tied to iovss through 1e12 Ohm

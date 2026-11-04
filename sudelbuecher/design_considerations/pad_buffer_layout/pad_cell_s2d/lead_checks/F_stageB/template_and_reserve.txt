@@ -1,0 +1,8 @@
+instances not in the template: [('s2d_block', 'r0 *1 0,26')]
+  template part differs on (10, 2): 1.056 µm², bbox (11.73,179.48;53.6,180)
+  texts (10, 25): added [('en_3v3', 36.6, 179.74), ('en_3v3_b', 47.79, 179.74), ('iref', 53.45, 179.74), ('outn', 23.91, 179.74), ('outp', 17.55, 179.74), ('vcm', 29.96, 179.74), ('vref', 11.88, 179.74)], removed []
+  texts (30, 25): added [], removed [('vss', 42.06, 152.87)]
+  texts (50, 25): added [], removed [('vss', 41.0, 172.84)]
+  reserve: block shapes on (10, 0): 124.301 µm²
+  reserve: block shapes on (29, 0): 0.217 µm²
+  reserve: block shapes on (30, 0): 1.440 µm²

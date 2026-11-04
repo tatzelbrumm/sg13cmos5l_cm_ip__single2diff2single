@@ -1,0 +1,35 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* s2d_loads_f / s2d_casc_p_f: P's netlists, renamed (build_f_pins.py, C3 stage B)
+.SUBCKT s2d_loads_f dd ln lp vcmfb vdd
+MXl0 vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MLP1l lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLN2l ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDD3l dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDD4l dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLN5l ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLP6l lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MXl7 vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MXu0 vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MLP1u lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLN2u ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDD3u dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MDD4u dd vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLN5u ln vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MLP6u lp vcmfb vdd vdd sg13_hv_pmos w=6u l=4u ng=1 m=1
+MXu7 vdd vcmfb vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS s2d_loads_f
+
+.SUBCKT s2d_casc_p_f dd ln lp vbpc vcmfb vdd voutn voutp
+MXl0 vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MLPCl voutp vbpc lp vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MLNCl voutn vbpc ln vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MDCl vcmfb vbpc dd vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MXl4 vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MLPCu voutp vbpc lp vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MLNCu voutn vbpc ln vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MDCu vcmfb vbpc dd vdd sg13_hv_pmos w=15u l=3u ng=1 m=1
+MXu4 vdd vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS s2d_casc_p_f
+

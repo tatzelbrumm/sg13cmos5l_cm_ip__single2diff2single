@@ -1,0 +1,20 @@
+Lead check of agent F's stage B (2026-11-04, about 13:15 CET), pad_candidate.gds 390fc43bf2ac, pad_candidate.cdl ec55fc18348d:
+- rebuild with F's src/run_B.sh in a fresh directory (stage A's tails from F's out): pad_candidate.gds / .cdl and all
+  changed cells byte-identical
+- IHP DRC on the pad: sg13cmos5l_maximal.drc -rd latchUpRules=true 0 errors; run_drc.py --no_density "No DRC
+  violations", 32 table logs, 0 exceptions (logs/claude/c3-s2d-pad-layout/padB-*.out)
+- IHP LVS --run_mode=deep --disable_tap_extraction against pad_candidate.cdl: "Netlists match" (PASS), strict ports
+  (IGNORE_TOP_PORTS_MISMATCH unset). The layout extracts 10 ports: vdd / vss have no device (vss merges with iovss
+  through the substrate, as in C2 and IHP's IOPadAnalog)
+- pad_cdl_check.py (../pad_cdl_check.py, pad_cdl_check.txt): every instance port of the pad subckt on the circuit net
+  of its name (aliases vdd/vss -> iovdd/iovss, vin -> pad, vfbp/voutp -> outp, vfbn/voutn -> outn); all 13 blocks
+  once; every cell body text-identical to the CDLs the lead checked (P, N, F's tails / casc_n_f / pins_f); a copy with
+  vbn / vbnc swapped at tree_p fails, as it should. Protection lines as s2d_pad_esd.sch
+- F's new cells s2d_casc_n_f, s2d_loads_f, s2d_casc_p_f (changed_cells.txt): rebuild identical, DRC clean, LVS match,
+  equal to the circuit (circuit_check.py), sym 0 / 0 / 0.2688 µm² (P's Cont residual)
+- template_and_reserve.txt: the template part differs only by the 7 core-pin boxes on 10/2 and texts on 10/25 at
+  y 180, and the two removed vss texts (30/25, 50/25); the edge reserve x 1.8-4.3 / 75.7-78.2 (y >= 31.7) holds no
+  block shape on a device layer or M1; block metal there: M2 124.3 µm², Via2 0.22, M3 1.44 (the iovdd_tp tap)
+- row_check.py: 25 of 25, 0 edge layers DIFFERENT (row/)
+- F read the C2 router generator.py from the notes checkout outside its workspace (read only, messages.md 6); nothing
+  was written outside the workspace

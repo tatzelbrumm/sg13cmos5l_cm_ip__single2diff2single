@@ -5,7 +5,7 @@
 # (--disable_tap_extraction), sym_check.py.   sh check_cells.sh <gds> <cdl> <run_dir> <cell>[:no-y] ...
 G=$1; C=$2; R=$3; shift 3
 T=/foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech
-S=$(cd "$(dirname "$0")/../../inputs" && pwd)/sym_check.py
+S=${SYMCHECK:-$(cd "$(dirname "$0")/../../inputs" && pwd)/sym_check.py}
 mkdir -p "$R"
 for spec in "$@"; do
   cell=${spec%%:*}; opt=""

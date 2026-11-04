@@ -410,6 +410,37 @@ F's note: `agents_c3/F/report_stageA.md`. Messages: `agents_c3/F/messages.md`. P
   - the split tail rows: DRC / LVS / symmetry clean, together equal to the circuit.
 - **Stops here** for Christoph's review of the placement picture (the brief). Stage B (routing) after his go.
 
+## Phase 3, stage B: routing and the pad candidate by agent F (2026-11-04, 13:08–14:10 CET; lead check about 13:15)
+
+F's report: `agents_c3/F/report_stageB.md`; messages: `agents_c3/F/messages.md`; pictures:
+`agents_c3/F/out/previews/pad_candidate*.png`.
+
+- **Edge reserve** (Christoph, 2026-11-04): kept in full. x 1.8–4.3 and 75.7–78.2, above y 31.7, hold no buffer device
+  layer and no M1; only vertical M2 and the iovdd_tp tap (M2 / Via2 / M3) run there.
+  - For it, sinks, cload and pd_p moved by 2.0–2.5 µm inward; sinks_cmfb and tree_n by 2.4–2.5 µm.
+- **New cell copies.** Three M2-only copies with pin exits the router can reach: `s2d_casc_n_f`, `s2d_loads_f`,
+  `s2d_casc_p_f`. Device layers are unchanged.
+- **Routing.** C2's grid router routes 39 nets: M1 1177 µm, M2 1542 µm, 173 vias, no metal over gates. F drew:
+  - the 12 equal tail-to-tub links;
+  - one tap per supply group (the tail and sink source buses one each);
+  - four NWell bridges to the dummy tubs;
+  - one M2 / Via2 strap joining the cell's two M3 iovdd rails.
+- **Lead check** (`lead_checks/F_stageB/summary.txt`), all passed:
+  - rebuild byte-identical;
+  - DRC 0: maximal with latch-up; run_drc.py, 32 tables, no exceptions;
+  - deep LVS match, strict ports;
+  - the pad CDL's top level equal to the circuit (`pad_cdl_check.py`), the cell bodies identical to the checked ones;
+  - the three new cells clean and equal to the circuit;
+  - template part unchanged except the 7 core pins and the 2 removed vss texts;
+  - reserve clean;
+  - row check 25 / 25.
+- **Open for Christoph:**
+  - the iovdd rail tie: keep it, or move the front-end taps to the lower rail;
+  - vbp's 224 µm of M2;
+  - vin's ≈ 125 µm along the output trunk (≈ 10 fF, F's estimate);
+  - the R feeders' horizontal parts differ per unit.
+- **Next: phase 4** (integration into the macro, backannotation, macro DRC / LVS, CACE note).
+
 ## Notes folder
 
 | file | contents |

@@ -1,0 +1,18 @@
+04-Nov-2026 12:52:25 | INFO    | Your Klayout version is: KLayout 0.30.12
+04-Nov-2026 12:52:25 | INFO    | Running SG13CMOS5L LVS checks on design /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/F/work/B/o1/pad_candidate.gds on cell sg13cmos5l_IOPadSingle2Diff
+04-Nov-2026 12:52:34 | INFO    | ==============================================================================
+04-Nov-2026 12:52:34 | INFO    | Important Summary
+04-Nov-2026 12:52:34 | INFO    | +------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
+04-Nov-2026 12:52:34 | INFO    | | Status           | FAIL                                                                                                                                      |
+04-Nov-2026 12:52:34 | INFO    | | Mode             | COMPARE                                                                                                                                   |
+04-Nov-2026 12:52:34 | INFO    | | Outcome          | Comparison mode: FAIL (netlists do not match).                                                                                            |
+04-Nov-2026 12:52:34 | INFO    | | Layout           | pad_candidate.gds                                                                                                                         |
+04-Nov-2026 12:52:34 | INFO    | | Top Cell         | sg13cmos5l_IOPadSingle2Diff                                                                                                               |
+04-Nov-2026 12:52:34 | INFO    | | Results Dir      | /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/F/work/B/runs/o1/lvs |
+04-Nov-2026 12:52:34 | INFO    | | Warnings         | 0                                                                                                                                         |
+04-Nov-2026 12:52:34 | INFO    | | Errors           | 1                                                                                                                                         |
+04-Nov-2026 12:52:34 | INFO    | | Run Time (s)     | 8.692                                                                                                                                     |
+04-Nov-2026 12:52:34 | INFO    | +------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
+04-Nov-2026 12:52:34 | ERROR   | Key errors:
+04-Nov-2026 12:52:34 | ERROR   |   - 2026-11-04 12:52:33 +0000: Memory Usage (452960K) : ERROR : Netlists don't match
+04-Nov-2026 12:52:34 | INFO    | ==============================================================================

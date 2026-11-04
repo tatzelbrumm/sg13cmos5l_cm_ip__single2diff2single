@@ -24,4 +24,21 @@ for l, d in sorted(infos):
     if not x.is_empty():
         diff += 1
         print('layer %d/%d differs: %s' % (l, d, x.bbox().to_dtype(0.001)))
-print('removed %d placed instances; template layers differing: %d' % (len(mine), diff))
+# texts of the top cell (port labels): which were removed / added
+def texts(c, ly):
+    out = set()
+    for li in ly.layer_indexes():
+        inf = ly.get_info(li)
+        for sh in c.shapes(li).each():
+            if sh.is_text():
+                out.add((inf.layer, inf.datatype, sh.text_string, round(sh.dtext.x, 3), round(sh.dtext.y, 3)))
+    return out
+ta, tb = texts(a.cell(TOP), a), texts(bt, b)
+for t in sorted(ta - tb):
+    print('top text removed: %d/%d %s at (%.3f, %.3f)' % t)
+for t in sorted(tb - ta):
+    print('top text added:   %d/%d %s at (%.3f, %.3f)' % t)
+drawing = sum(1 for l, d in infos if d == 0 and not (db.Region(a.cell(TOP).begin_shapes_rec(a.layer(l, d))) ^
+                                                     db.Region(bt.begin_shapes_rec(b.layer(l, d)))).is_empty())
+print('removed %d placed instances; template layers differing: %d (drawing layers, datatype 0: %d)' % (len(mine), diff,
+                                                                                                    drawing))

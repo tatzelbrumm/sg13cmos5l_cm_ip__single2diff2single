@@ -1,0 +1,12 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 04/11/2026 13:03
+
+.SUBCKT s2d_loads_f dd ln lp vcmfb vdd
+M$1 vdd vcmfb vdd vdd sg13_hv_pmos L=4u W=4u AS=1.36p AD=1.36p PS=10.72u
++ PD=10.72u rfmode=0
+M$2 vdd vcmfb lp vdd sg13_hv_pmos L=4u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+M$3 vdd vcmfb ln vdd sg13_hv_pmos L=4u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+M$4 vdd vcmfb dd vdd sg13_hv_pmos L=4u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+.ENDS s2d_loads_f

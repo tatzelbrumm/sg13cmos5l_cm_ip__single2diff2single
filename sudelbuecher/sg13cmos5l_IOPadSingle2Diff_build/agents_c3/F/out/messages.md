@@ -31,3 +31,21 @@ Points where the brief was unclear or left a choice. I decided each one myself a
    - DRC is clean with both [M].
 5. **The fit used the C2 library cells** (`sinks_6x6_s2d_c2` and others). I placed P's and N's c3 cells, as the
    brief says.
+
+# Stage B (2026-11-04, 13:08–14:10 CET)
+
+6. **The router is read from outside `$WS`.** C2 F2's `route_block.py` uses the grid router `generator.py`, which is
+   not in `inputs/`. I read it (read only) from the notes checkout
+   (`/home/user/sudel/sudelbuecher/design_considerations/pad_buffer_layout/oa_core_pd_v2_2026-10-28/v2/generator.py`,
+   sha256 cea21b865695) and copied it unchanged into `src/`. I wrote nothing outside `$WS`. The process adapter is
+   C2 F2's `ihp_sg13cmos5l_f2.py`, unchanged, as `src/ihp_sg13cmos5l.py`.
+7. **iovdd rail tie.** In this cell the two Metal3 iovdd rails (66–91.5 and 93.5–119) are not connected; IHP's cells
+   rely on the IO ring. The front end taps the upper rail, the output stage and the protection the lower one, and
+   deep LVS then found two iovdd nets [M]. I added one Metal2 / Via2 strap in the right edge reserve that joins
+   them. This is Metal2 / Via2 / Metal3 only, which the reserve allows, and no template shape changes. If Christoph
+   prefers, the front-end taps can move to the lower rail instead.
+8. **LVS hierarchy.** `s2d_block` has no subckt in `pad_candidate.cdl`; its cells sit directly in the pad subckt.
+   Inside the block, the supply groups meet only on the template's Metal3 rails, so a block subckt with one
+   iovdd / iovss pin cannot match. The comparison flattens the layout's `s2d_block` [M: match].
+9. **The harness refused `report_stageB.md`** ("subagents should return findings as text"). Its full text is in my
+   final reply, for the lead to save.
