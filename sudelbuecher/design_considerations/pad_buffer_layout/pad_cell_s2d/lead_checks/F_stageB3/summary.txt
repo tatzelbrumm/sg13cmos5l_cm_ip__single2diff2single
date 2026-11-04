@@ -1,0 +1,11 @@
+Lead check of agent F's stage B3 (2026-11-04, about 19:10 CET), pad_candidate.gds 9d83b857999a, pad_candidate.cdl ec55fc18348d (unchanged since stage B):
+- rebuild with F's src/run_B3.sh <inputs> out/stageB2_v1 <fresh dir>: pad_candidate.gds / .cdl, cells/s2d_block.gds byte-identical
+- XOR against B2 (2a98f7e9596a): only Metal1 / Via1 / Metal2 inside x 0.66-2.07, y 117.92-149.46 (net y's detour, now Metal2
+  at x 1.81-2.07 in the left reserve, where Metal2 is allowed)
+- integrated by phase4/integrate_gds.py: 599ff3f18a08 (iovdd_rail_tie on 63/0, port texts on datatype 2; XOR 0 apart from 63/0)
+- IHP DRC on the cell: run_drc.py --no_density "No DRC violations", 0 exceptions; maximal with latch-up 0
+- IHP DRC on the abutment row (row_check.py's row.gds): run_drc.py "No DRC violations" (B2: 1 x M1.f), maximal with latch-up 0
+- row_check.py: 25 / 25, 0 edges DIFFERENT
+- LVS deep --disable_tap_extraction vs pad_candidate.cdl: match
+- macro make targets (SCRIPTS_DIR=../../scripts) on the backannotated sheets: klayout-drc clean, magic-drc clean,
+  klayout-lvs PASS, magic-lvs 76 = 76 devices, 37 = 37 nets, fails only on the vss pin (substrate merge, as d2s)

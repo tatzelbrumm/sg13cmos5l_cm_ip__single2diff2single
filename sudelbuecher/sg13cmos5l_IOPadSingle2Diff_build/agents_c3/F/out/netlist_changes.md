@@ -90,3 +90,9 @@ The rerouting changes no device and no net. The pad line now runs up the middle 
 the shields add only metal: Metal1 / Metal2 / Metal3 on iovss, tied by one Via2 to the iovss rail at the pad end.
 vbp is fed from the right; the tail rows lost their left vbp edge stubs (Metal2 / Via1 only).
 `logs/circuit_check.txt` is still EQUAL and LVS still matches [M].
+
+## 6. Stage B3 (2026-11-04): no netlist change
+
+Only net y's left detour changes: its Metal1 jumper next to the left edge stub becomes Metal2 in the edge reserve.
+No device and no net change; `pad_candidate.cdl` is byte-identical to stage B2 (sha256 ec55fc18348d) [M], LVS still
+matches and `logs/circuit_check.txt` is still EQUAL [M].

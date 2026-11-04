@@ -1,0 +1,4 @@
+failed: [('sa_F2', 'no path to 1 of 1 terminal groups'), ('sb_F1', 'no path to 1 of 1 terminal groups'), ('sb_F2', 'no path to 1 of 1 terminal groups'), ('x', 'no path to 1 of 2 terminal groups')] time 48 s
+fix_block: 0 Metal2 neck fill(s)
+fix_block: trimmed 0.0000 um2 of router Metal2 in the band gaps (0 pieces)
+DONE

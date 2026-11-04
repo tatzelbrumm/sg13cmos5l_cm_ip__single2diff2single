@@ -1,0 +1,3 @@
+patch_y: removed y M1 jumper + 2 Via1 + upper M2 detour; inserted M2 x 1.81..2.07 (block y 91.92..123.46)
+fix_block: 0 Metal2 neck fill(s)
+fix_block: trimmed 0.0000 um2 of router Metal2 in the band gaps (0 pieces)

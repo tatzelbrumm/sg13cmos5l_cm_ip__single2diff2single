@@ -1,0 +1,32 @@
+Could not import tkinter. No callback support.
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+s2d_tails_hi_f    45.190 x   9.160 um
+    sa_A1  M2  (8.915, 0.000; 10.025, 0.300)
+    sb_F2  M2  (14.165, 0.000; 15.275, 0.300)
+    sb_F1  M2  (19.415, 0.000; 20.525, 0.300)
+    sa_A2  M2  (24.665, 0.000; 25.775, 0.300)
+    sa_M1  M2  (29.915, 0.000; 31.025, 0.300)
+    sb_M2  M2  (35.165, 0.000; 36.275, 0.300)
+    vbp    M2  (44.690, 4.320; 45.190, 4.620)
+    vdd    M1  (0.620, 1.630; 0.920, 3.630)
+s2d_tails_lo_f    45.190 x   9.160 um
+    sb_A2  M2  (8.915, 0.000; 10.025, 0.300)
+    sa_F1  M2  (14.165, 0.000; 15.275, 0.300)
+    sa_F2  M2  (19.415, 0.000; 20.525, 0.300)
+    sb_A1  M2  (24.665, 0.000; 25.775, 0.300)
+    sb_M1  M2  (29.915, 0.000; 31.025, 0.300)
+    sa_M2  M2  (35.165, 0.000; 36.275, 0.300)
+    vbp    M2  (44.690, 4.320; 45.190, 4.620)
+    vdd    M1  (0.620, 1.630; 0.920, 3.630)

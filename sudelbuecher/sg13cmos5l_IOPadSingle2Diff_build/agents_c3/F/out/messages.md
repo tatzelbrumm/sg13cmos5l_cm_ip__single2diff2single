@@ -61,3 +61,11 @@ Points where the brief was unclear or left a choice. I decided each one myself a
     nets unroutable [M], so I did not use them. Every net that sits within 1 µm of that leg sits behind a shield.
 13. **The tail rows lost their left vbp stubs** (stage-A cells changed: no vbp metal on the left). The stage-A /
     stage-B versions are in `stageB_v1/cells/`.
+
+# Stage B3 (2026-11-04)
+
+14. **Hand edit instead of a reroute.** With Metal1 kept out of x < 1.8 (stub clearance) and the reserve, the router
+    could not place y again: an incremental reroute of y alone, and with up to 17 more nets ripped around it, left
+    1 to 7 nets unrouted every time [M]. A full reroute would also have moved nets the brief keeps. So I redrew only
+    y's left detour by hand (`src/patch_y.py`, applied to stage B2's routed block); every other shape is stage B2's
+    [M: XOR differs only on Metal1 / Via1 / Metal2 inside x 0.66–2.07, y 117.92–149.46].

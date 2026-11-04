@@ -1,0 +1,31 @@
+fixed_f: y,x,sa_a1,sa_a2,sa_f1,sa_f2,sa_m1,sa_m2,sb_a1,sb_a2,sb_f1,sb_f2,sb_m1,sb_m2,vref,vcm,outp,outn router wiring removed, 445.19 um2
+placed 16 instances, 0 rails, 0 tap stripes: 80.000 x 154.000 um
+block s2d_block: 80.000 x 154.000 um = 12320.0 um2; gate 3115.9 um2 (25.3 %), MOS diffusion 3681.9 um2 (29.9 %)
+layers drawn in the top cell: 10/0 10/2 10/25 19/0 8/0; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  y          M1  18.91 um  M2  41.58 um  vias 3
+  x          M1  19.41 um  M2  69.12 um  vias 4
+  sb_A1      M1  25.48 um  M2  24.30 um  vias 2
+  sb_A2      M1  44.28 um  M2  25.38 um  vias 2
+  sb_M1      M1  22.95 um  M2  24.00 um  vias 4
+  sa_A1      M1  48.52 um  M2  22.66 um  vias 3
+  sa_A2      M1  33.86 um  M2  22.41 um  vias 3
+  sa_M1      M1  29.69 um  M2  21.03 um  vias 3
+  sb_M2      M1  16.64 um  M2   5.13 um  vias 3
+  sa_F1      M1  36.18 um  M2  13.23 um  vias 6
+  sa_F2      M1  42.66 um  M2  47.25 um  vias 5
+  sa_M2      M1  11.25 um  M2  17.28 um  vias 4
+  sb_F1      M1  71.95 um  M2  30.92 um  vias 10
+  sb_F2      M1  65.53 um  M2  92.31 um  vias 7
+  vref       M1   8.78 um  M2  44.28 um  vias 4
+  UNROUTED vcm: no path to 4 of 4 terminal groups
+  UNROUTED outp: no path to 5 of 6 terminal groups
+  UNROUTED outn: no path to 5 of 6 terminal groups
+round 0: failed ['vcm', 'outp', 'outn']
+round 1: failed ['sa_A1', 'sa_A2', 'sa_M1', 'sa_F1', 'sa_F2', 'sb_F1', 'sb_F2']
+round 2: failed ['outn', 'sb_A1', 'sb_A2', 'sb_M1', 'sa_M2']
+round 3: failed ['outp', 'y', 'x']
+round 4: failed ['sa_A2', 'sa_M1', 'sa_F1', 'sa_F2', 'sb_F1', 'sb_F2', 'vcm']
+round 5: failed ['outn', 'sb_A1', 'sb_A2', 'sb_M1', 'sa_M2', 'sa_A1']
+round 6: failed ['outp', 'y', 'x']

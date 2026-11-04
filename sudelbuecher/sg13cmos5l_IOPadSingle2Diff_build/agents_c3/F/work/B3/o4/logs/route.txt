@@ -1,0 +1,32 @@
+fixed_f: y,x,sa_f2,sb_f1,sb_f2 router wiring removed, 181.29 um2
+placed 16 instances, 0 rails, 0 tap stripes: 80.000 x 154.000 um
+block s2d_block: 80.000 x 154.000 um = 12320.0 um2; gate 3115.9 um2 (25.3 %), MOS diffusion 3681.9 um2 (29.9 %)
+layers drawn in the top cell: 10/0 19/0 8/0; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  y          M1  18.91 um  M2  41.58 um  vias 3
+  UNROUTED x: no path to 1 of 2 terminal groups
+  UNROUTED sa_F2: no path to 1 of 1 terminal groups
+  UNROUTED sb_F1: no path to 1 of 1 terminal groups
+  UNROUTED sb_F2: no path to 1 of 1 terminal groups
+round 0: failed ['x', 'sa_F2', 'sb_F1', 'sb_F2']
+round 1: failed ['sa_F2', 'sb_F1', 'sb_F2']
+round 2: failed ['y']
+round 3: failed ['sa_F2', 'sb_F1', 'sb_F2', 'x']
+round 4: failed ['y']
+round 5: failed ['sa_F2', 'sb_F1', 'sb_F2', 'x']
+round 6: failed ['y']
+round 7: failed ['sa_F2', 'sb_F1', 'sb_F2', 'x']
+ROUTE_ORDER used: ['sa_F2', 'sb_F1', 'sb_F2', 'x', 'y']
+failed: [('sa_F2', 'no path to 1 of 1 terminal groups'), ('sb_F1', 'no path to 1 of 1 terminal groups'), ('sb_F2', 'no path to 1 of 1 terminal groups'), ('x', 'no path to 1 of 2 terminal groups')] time 48 s
+  sa_F2 group 56: ['inputs.sa_F2', 'pwr.sa_F2', 'tlo.sa_F2'], 231 access nodes, reach >4000
+  sa_F2 group 91: ['rhigh.sa_F2'], 51 access nodes, reach >4000
+  sb_F1 group 79: ['inputs.sb_F1', 'pwr.sb_F1', 'thi.sb_F1'], 217 access nodes, reach >4000
+  sb_F1 group 90: ['rhigh.sb_F1'], 46 access nodes, reach >4000
+  sb_F2 group 78: ['inputs.sb_F2', 'pwr.sb_F2', 'thi.sb_F2'], 157 access nodes, reach >4000
+  sb_F2 group 92: ['rhigh.sb_F2'], 55 access nodes, reach >4000
+  x group 20: ['sinks.x'], 627 access nodes, reach >4000
+  x group 26: ['cascn.x'], 599 access nodes, reach >4000
+  x group 73: ['inputs.x'], 502 access nodes, reach >4000
+fix_block: 0 Metal2 neck fill(s)
+fix_block: trimmed 0.0000 um2 of router Metal2 in the band gaps (0 pieces)

@@ -1,0 +1,13 @@
+failed: [('sa_A1', 'no path to 1 of 1 terminal groups'), ('sa_A2', 'no path to 1 of 1 terminal groups'), ('sa_M1', 'no path to 1 of 1 terminal groups'), ('sa_F1', 'no path to 1 of 1 terminal groups')] time 443 s
+fix_block: 0 Metal2 neck fill(s)
+fix_block: trimmed 0.0000 um2 of router Metal2 in the band gaps (0 pieces)
+round 0: failed ['y']
+round 1: failed ['sa_F2', 'sb_F1', 'sb_F2', 'x']
+round 2: failed ['sb_M1', 'sa_A1', 'sa_A2', 'sa_M1', 'sa_F1']
+round 3: failed ['outp', 'sb_A1', 'sb_A2']
+round 4: failed ['vcm', 'outn']
+round 5: failed ['sa_M2', 'vbnc', 'iovdd_tp']
+round 6: failed ['sa_F2', 'sb_F1', 'sb_F2', 'sb_M2', 'vbp']
+round 7: failed ['sa_A1', 'sa_A2', 'sa_M1', 'sa_F1']
+ROUTE_ORDER used: ['sa_A1', 'sa_A2', 'sa_M1', 'sa_F1', 'sa_F2', 'sb_F1', 'sb_F2', 'sb_M2', 'vbp', 'sa_M2', 'vbnc', 'iovdd_tp', 'vcm', 'outn', 'outp', 'sb_A1', 'sb_A2', 'sb_M1', 'x', 'y', 'en_3v3_b', 'vref', 'vbpc', 'vbn', 'yc', 'en_3v3', 'dd', 'ln', 'lp', 'vcmfb', 'xc']
+DONE
