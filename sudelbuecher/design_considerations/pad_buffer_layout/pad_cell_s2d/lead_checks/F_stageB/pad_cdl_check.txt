@@ -1,0 +1,15 @@
+instances: {'sinks_6x6_s2d_c3_core': 1, 's2d_casc_n_f': 1, 's2d_casc_p_f': 1, 's2d_loads_f': 1, 's2d_tails_lo_f': 1, 's2d_inputs_c3': 1, 's2d_tails_hi_f': 1, 's2d_rhigh_c3': 1, 's2d_sinks_cmfb_c3_core': 1, 'bias_tree_noab_n_c3': 1, 'bias_tree_noab_p_c3': 1, 's2d_cload_c3': 1, 's2d_pd_p_c3': 1}
+  sinks_6x6_s2d_c3_core: body identical to the checked CDL
+  s2d_casc_n_f: body identical to the checked CDL
+  s2d_casc_p_f: body identical to the checked CDL
+  s2d_loads_f: body identical to the checked CDL
+  s2d_tails_lo_f: body identical to the checked CDL
+  s2d_inputs_c3: body identical to the checked CDL
+  s2d_tails_hi_f: body identical to the checked CDL
+  s2d_rhigh_c3: body identical to the checked CDL
+  s2d_sinks_cmfb_c3_core: body identical to the checked CDL
+  bias_tree_noab_n_c3: body identical to the checked CDL
+  bias_tree_noab_p_c3: body identical to the checked CDL
+  s2d_cload_c3: body identical to the checked CDL
+  s2d_pd_p_c3: body identical to the checked CDL
+top-level connectivity: equal to the circuit

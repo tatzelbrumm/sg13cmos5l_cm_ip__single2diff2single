@@ -1,0 +1,9 @@
+s2d_casc_n_f: 72.74 x 14.37 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_loads_f: 44.79 x 12.32 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_casc_p_f: 53.83 x 12.81 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+  summary: max mirror XOR 0.2688 um2, 0 narrow-poly hits
+s2d_casc_n_c3: equal to the circuit; dummies {('sg13_hv_nmos', 3.0): 4}
+s2d_loads_c3: equal to the circuit; dummies {('sg13_hv_pmos', 4.0): 4}
+s2d_casc_p_c3: equal to the circuit; dummies {('sg13_hv_pmos', 4.0): 3}
