@@ -1,0 +1,25 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* reference netlists of F's split tails rows (build_f_tails.py, C3, 2026-11-03); dummies D = S = vdd
+
+.SUBCKT s2d_tails_hi_f sa_A1 sa_A2 sa_M1 sb_F1 sb_F2 sb_M2 vbp vdd
+MBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTA1a sa_A1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTF2b sb_F2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTF1b sb_F1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTA2a sa_A2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTM1a sa_M1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTM2b sb_M2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MD7 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS s2d_tails_hi_f
+
+.SUBCKT s2d_tails_lo_f sa_F1 sa_F2 sa_M2 sb_A1 sb_A2 sb_M1 vbp vdd
+MD0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTA2b sb_A2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTF1a sa_F1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTF2a sa_F2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTA1b sb_A1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTM1b sb_M1 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTM2a sa_M2 vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MD7 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS s2d_tails_lo_f

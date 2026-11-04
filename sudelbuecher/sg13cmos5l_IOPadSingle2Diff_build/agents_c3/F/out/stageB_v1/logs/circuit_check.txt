@@ -1,0 +1,9 @@
+dummy   ('rhigh', ('iovss',), 0.5, 12.65)                                      layout 2
+dummy   ('sg13_hv_nmos', ('iovss', 'iovss'), 'ni', 'iovss', 6.0)               layout 2.4
+dummy   ('sg13_hv_nmos', ('iovss', 'iovss'), 'vbn', 'iovss', 6.0)              layout 22.0
+dummy   ('sg13_hv_nmos', ('iovss', 'iovss'), 'vbnc', 'iovss', 3.0)             layout 8.0
+dummy   ('sg13_hv_pmos', ('iovdd', 'iovdd'), 'iovdd', 'iovdd', 1.0)            layout 80.0
+dummy   ('sg13_hv_pmos', ('iovdd', 'iovdd'), 'vbp', 'iovdd', 6.0)              layout 17.0
+dummy   ('sg13_hv_pmos', ('iovdd', 'iovdd'), 'vbpc', 'iovdd', 4.0)             layout 3.0
+dummy   ('sg13_hv_pmos', ('iovdd', 'iovdd'), 'vcmfb', 'iovdd', 4.0)            layout 4.0
+circuit check: 76 layout signatures, 68 circuit signatures: EQUAL apart from the dummies

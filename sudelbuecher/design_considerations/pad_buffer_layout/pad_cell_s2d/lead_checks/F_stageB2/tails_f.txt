@@ -1,0 +1,4 @@
+s2d_tails_hi_f: 45.19 x 9.16 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_tails_lo_f: 45.19 x 9.16 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

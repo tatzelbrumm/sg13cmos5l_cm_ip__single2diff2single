@@ -24,6 +24,26 @@ r = db.Region(top.shapes(M2))
 cut = r & gaps
 top.shapes(M2).clear()
 top.shapes(M2).insert((r - gaps).merged())
+# stage B2: a router landing that meets F's drawn wiring (pwr_f) at a corner can leave a neck below Mn_a 0.20 (measured:
+# M2.a 0.16 at one link). Each such neck gets a fill box (the neck's box grown to 0.20 across), kept only where it
+# stays Mn_b 0.21 from every other polygon of Metal2.
+MW, MS = int(round(0.20 / ly.dbu)), int(round(0.21 / ly.dbu))
+allm2 = db.Region(top.begin_shapes_rec(M2)).merged()
+add = db.Region()
+for ep in allm2.width_check(MW).each():
+    b = ep.bbox()
+    if b.width() < b.height():
+        g = (MW - b.width() + 1) // 2
+        nb = db.Box(b.left - g, b.bottom, b.right + g, b.top)
+    else:
+        g = (MW - b.height() + 1) // 2
+        nb = db.Box(b.left, b.bottom - g, b.right, b.top + g)
+    own = allm2.interacting(db.Region(nb))
+    if (db.Region(nb).sized(MS) & (allm2 - own)).is_empty():
+        add.insert(nb)
+if not add.is_empty():
+    top.shapes(M2).insert(add.merged())
+print('fix_block: %d Metal2 neck fill(s)' % add.count())
 opt = db.SaveLayoutOptions()
 opt.gds2_write_timestamps = False
 ly.write(sys.argv[1], opt)

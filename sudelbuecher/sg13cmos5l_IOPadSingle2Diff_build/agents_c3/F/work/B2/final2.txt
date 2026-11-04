@@ -1,0 +1,21 @@
+failed: [] time 55 s
+fix_block: 1 Metal2 neck fill(s)
+fix_block: trimmed 0.0087 um2 of router Metal2 in the band gaps (2 pieces)
+changed cells:
+s2d_loads_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+s2d_casc_p_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.2688 um2, 0 narrow-poly hits
+s2d_casc_n_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+s2d_tails_hi_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+s2d_tails_lo_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+s2d_loads_f vs s2d_loads_c3: 10/0 1.2000 um2
+s2d_casc_p_f vs s2d_casc_p_c3: 10/0 2.4000 um2
+s2d_casc_n_f vs s2d_casc_n_c3: 10/0 6.7947 um2, 10/2 0.2900 um2
+run_drc.py: No DRC violations detected, tables 30, 'exception' lines 0
+maximal + latch-up: Number of DRC errors for maximum rule set: 0, LU rules listed 5
+LVS (deep, --disable_tap_extraction): Netlists match
+circuit check: 76 layout signatures, 68 circuit signatures: EQUAL apart from the dummies
+buffer device layers / Metal1 inside the reserve: 0.0000 um2 -> reserve kept everywhere
+removed 1 placed instances; template layers differing: 1 (drawing layers, datatype 0: 0)
+row_check: bands / rails pass 25 of 25, edge layers DIFFERENT 0
+PEX: /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/F/work/B2/runs/final/pex/sg13cmos5l_IOPadSingle2Diff.pex.spice -> /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/9625f5bb-27cd-530e-a9cf-d1aa15a8223d/scratchpad/agents/F/work/B2/runs/final/pex/tied.spice: 28 capacitor-only nodes tied to iovss through 1e12 Ohm
+DONE

@@ -69,7 +69,7 @@ FLOORPLAN = '\n'.join(lines) + '\n'
 UNITS = ('A1', 'A2', 'F1', 'F2', 'M1', 'M2')
 SIGNAL = ['s%s_%s' % (h, u) for h in 'ab' for u in UNITS] + \
     ['x', 'y', 'xc', 'yc', 'outp', 'outn', 'vcmfb', 'lp', 'ln', 'dd', 'vbp', 'vbn', 'vbpc', 'vbnc', 'ni', 'iref',
-     'en_3v3', 'en_3v3_b', 'vcm', 'vref', 'pad']
+     'en_3v3', 'en_3v3_b', 'vcm', 'vref']      # pad: drawn by F (make_pwr.py, stage B2), not routed
 POWER = [IOVDD_T, IOVDD_OP, IOVDD_TP, IOVSS_SK, IOVSS_CN, IOVSS_M]
 NETS = SIGNAL + POWER
 # core-side pins on Metal2 at the top edge (y 180), each over the cells it serves
@@ -96,13 +96,21 @@ def _keepouts():
         for b in seen[cell]:
             out.append(dict(metal=('M1', 'M2'), inst=inst, box=(b.left, b.bottom, b.right, b.top), nets=[]))
     out += [('M1', (r[0], r[1] - Y0, r[2], r[3] - Y0)) for r in RESERVE]   # top coordinates after the move
+    # stage B2: no vbp on the left (Christoph: "the u shape on the left side seems avoidable"): the tail rows' left
+    # ends (their left vbp stubs and gate columns) are closed to every router net; vbp reaches them from the right
+    for x0, y0, x1, y1 in ((4.30, 110.24, 7.20, 119.40), (4.30, 151.84, 7.20, 161.00)):
+        out += [(m, (x0, y0 - Y0, x1, y1 - Y0)) for m in ('M1', 'M2')]
+    # stage B2: no router Metal1 directly under the pad line's C3a leg and its two shields (drawn in pwr_f; a first
+    # run put vbn there, 30 um under the pad); nobody has to cross that leg. (Keep-outs in the tub well gap as well
+    # left 7 nets unroutable: not used.)
+    for m, (x0, y0, x1, y1) in (('M1', (22.73, 106.95, 49.70, 108.75)),):
+        out.append((m, (x0, y0 - Y0, x1, y1 - Y0)))
     return out
 
 
 ROUTER = dict(pitch=0.27, width=0.29, margin=0.12, keepout=_keepouts())
 MERGE_WELLS = True
-# found by route_block.py's reorder rounds (round 1 routes everything)
-ROUTE_ORDER = ['x', 'y', 'en_3v3', 'pad', 'dd', 'ln', 'lp', 'vcmfb', 'outp', 'outn',
-               'sb_A1', 'sb_A2', 'sb_M1', 'sa_A1', 'sa_A2', 'sa_M1',      # the R feeders that pass the other bank
-               'sa_F1', 'sa_F2', 'sa_M2', 'sb_F1', 'sb_F2', 'sb_M2',
-               'vcm', 'en_3v3_b', 'iovdd_tp', 'vref', 'vbpc', 'vbn', 'vbnc', 'xc', 'yc']
+# stage B2 (pad drawn by F): found by route_block.py's reorder rounds (round 6 of the run with vbp, vbnc first)
+ROUTE_ORDER = ['en_3v3_b', 'vref', 'vbpc', 'vcm', 'vbn', 'outp', 'outn', 'sb_A1', 'sb_A2', 'sb_M1', 'sa_A1', 'sa_A2',
+               'sa_M1', 'sb_M2', 'sa_F1', 'sa_F2', 'sa_M2', 'sb_F1', 'sb_F2', 'yc', 'vbp', 'vbnc', 'x', 'y', 'en_3v3',
+               'dd', 'ln', 'lp', 'vcmfb', 'iovdd_tp', 'xc']    # found by route_block.py's reorder rounds

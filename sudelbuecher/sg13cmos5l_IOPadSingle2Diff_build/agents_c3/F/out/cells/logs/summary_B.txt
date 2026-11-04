@@ -1,3 +1,5 @@
 s2d_loads_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
 s2d_casc_p_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.2688 um2, 0 narrow-poly hits
 s2d_casc_n_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+s2d_tails_hi_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+s2d_tails_lo_f | DRC: No DRC violations detected (exception lines 0) | maximal errors: 0 (LU rules run: 5) | LVS: Netlists match |   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

@@ -1,0 +1,14 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 04/11/2026 16:48
+
+.SUBCKT s2d_casc_p_f dd ln lp vbpc vcmfb vdd voutn voutp
+M$1 vdd vbpc vdd vdd sg13_hv_pmos L=4u W=3u AS=1.02p AD=1.02p PS=8.04u PD=8.04u
++ rfmode=0
+M$3 lp vbpc voutp vdd sg13_hv_pmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+M$4 ln vbpc voutn vdd sg13_hv_pmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+M$5 dd vbpc vcmfb vdd sg13_hv_pmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+M$6 vbpc vbpc vdd vdd sg13_hv_pmos L=4u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+.ENDS s2d_casc_p_f

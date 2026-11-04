@@ -1,0 +1,14 @@
+Lead check of agent F's stage B2 (2026-11-04, about 18:00 CET), pad_candidate.gds 2a98f7e9596a, pad_candidate.cdl ec55fc18348d (unchanged since stage B):
+- rebuild with F's src/run_B.sh in a fresh directory: pad_candidate.gds / .cdl, s2d_tails_f, s2d_block, pwr_f byte-identical
+- IHP DRC: maximal with latch-up 0 errors; run_drc.py --no_density "No DRC violations", 32 tables, 0 exceptions
+  (logs/claude/c3-s2d-pad-layout/padB2-*.out)
+- LVS deep --disable_tap_extraction vs pad_candidate.cdl: PASS, strict ports (padB2-lvs.out)
+- pad_cdl_check.py: top-level connectivity equal to the circuit, cell bodies identical to the checked CDLs (the CDL is
+  byte-identical to stage B's)
+- F's tail rows without the left vbp stubs (tails_f.txt): rebuild identical, DRC clean, LVS match, sym 0 / 0 necks
+- template_reserve_m3.txt: template part differs only by the 10/2 core-pin boxes (as stage B); edge reserve 0 µm² of
+  block device layers / M1; block M3: 9 tap pads inside their rails, and the 3 free M3 lines in the rail gap 119-126
+  (pad + 2 shields), >= 1.15 µm from the rails (Christoph's "well clear": >= 0.5)
+- row_check.py 25 / 25, 0 edges DIFFERENT (row/)
+- net_coupling.md: magic C-coupled PEX (sak-pex.sh -m 2) of stage B and B2, per net, pairs and couplings; the lead's
+  net-priority evaluation (net_priority.md)

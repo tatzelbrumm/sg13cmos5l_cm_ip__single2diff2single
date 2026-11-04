@@ -8,7 +8,9 @@ L=$O/logs; mkdir -p "$L" "$O/cells/logs" "$O/previews"
 # changed cells: DRC, maximal + LU, LVS, sym_check; XOR against the primitives they come from
 sh "$S/check_cells.sh" "$O/cells/s2d_pins_f.gds" "$O/cells/s2d_pins_f.cdl" "$W/cells" s2d_loads_f s2d_casc_p_f > "$O/cells/logs/summary_B.txt"
 sh "$S/check_cells.sh" "$O/cells/s2d_casc_n_f.gds" "$O/cells/s2d_casc_n_f.cdl" "$W/cells" s2d_casc_n_f >> "$O/cells/logs/summary_B.txt"
-for c in s2d_loads_f s2d_casc_p_f s2d_casc_n_f; do
+sh "$S/check_cells.sh" "$O/cells/s2d_tails_f.gds" "$O/cells/s2d_tails_f.cdl" "$W/cells" s2d_tails_hi_f:no-y s2d_tails_lo_f:no-y >> "$O/cells/logs/summary_B.txt"
+python3 -B "$S/row_xor.py" "$I/P/s2d_p3_cells.gds" "$O/cells/s2d_tails_f.gds" > "$O/cells/logs/row_xor_vs_P.txt"
+for c in s2d_loads_f s2d_casc_p_f s2d_casc_n_f s2d_tails_hi_f s2d_tails_lo_f; do
   mkdir -p "$O/cells/logs/$c"; cp "$W/cells/$c/drc.log" "$W/cells/$c/maximal.log" "$W/cells/$c/lvs.log" "$W/cells/$c/sym.txt" "$O/cells/logs/$c/"
 done
 python3 -B "$S/xor_cells.py" "$I/P/s2d_p3_cells.gds" "$I/N/s2d_n3_cells.gds" "$O/cells/s2d_pins_f.gds" "$O/cells/s2d_casc_n_f.gds" > "$O/cells/logs/xor_vs_primitives.txt"
@@ -35,3 +37,13 @@ $R "$O/previews/pad_candidate_top.png" 0 144 80 181 "top band: core-side pins, c
   echo "row_check: bands / rails pass $(grep -c '| pass' "$L/row_check_B_nets.md") of $(($(grep -c '^| ' "$L/row_check_B_nets.md") - 1)), edge layers DIFFERENT $(grep -c DIFFERENT "$L/row_check_B_edges.md")"
   echo "PEX: $(head -1 "$L/pex_capacitor_only_nodes.txt")"; } > "$L/summary_B.txt"
 cat "$L/summary_B.txt"
+# stage B2: lengths and parallel runs of the long nets (before = out/stageB_v1, if present), the long-net picture
+NM="python3 -B $S/net_metrics.py"; N="pad vbp vbnc vbn outp outn"
+{ echo "## after (this pad candidate)"; $NM "$L/pad_candidate.lvsdb" "$O/pad_candidate.gds" $N
+  $NM "$L/pad_candidate.lvsdb" "$O/pad_candidate.gds" pad --d=0.69 | sed -n '/longest/,$p'
+  if [ -f "$O/stageB_v1/logs/pad_candidate.lvsdb" ]; then
+    echo; echo "## before (stageB_v1)"; $NM "$O/stageB_v1/logs/pad_candidate.lvsdb" "$O/stageB_v1/pad_candidate.gds" $N
+    $NM "$O/stageB_v1/logs/pad_candidate.lvsdb" "$O/stageB_v1/pad_candidate.gds" pad --d=0.69 | sed -n '/longest/,$p'; fi
+} > "$L/long_nets_B2.md" 2>&1
+python3 -B "$S/render_nets.py" "$L/pad_candidate.lvsdb" "$O/pad_candidate.gds" "$O/previews/long_nets_B2.png" \
+    'pad:#1f4fff' 'vbp:#e01010' 'vbnc:#10a010' --shield '#ff9f1f'

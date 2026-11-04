@@ -1,0 +1,70 @@
+placed 15 instances, 0 rails, 0 tap stripes: 80.000 x 154.000 um
+block s2d_block: 80.000 x 154.000 um = 12320.0 um2; gate 3115.9 um2 (25.3 %), MOS diffusion 3681.9 um2 (29.9 %)
+layers drawn in the top cell: 10/0 10/2 10/25 19/0 8/0; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  sa_A1      M1  62.98 um  M2  41.51 um  vias 5
+  sa_M2      M1  13.41 um  M2  14.04 um  vias 5
+  sb_A1      M1  26.46 um  M2  22.14 um  vias 3
+  sb_A2      M1  49.14 um  M2  19.71 um  vias 3
+  sb_M1      M1  19.07 um  M2  24.65 um  vias 3
+  sb_M2      M1  15.55 um  M2   5.13 um  vias 3
+  x          M1  19.98 um  M2  41.55 um  vias 3
+  y          M1  19.48 um  M2  44.79 um  vias 4
+  xc         M1  46.73 um  M2  63.38 um  vias 5
+  yc         M1  44.30 um  M2  10.65 um  vias 6
+  outp       M1  86.03 um  M2  71.01 um  vias 15
+  outn       M1  71.00 um  M2  93.77 um  vias 11
+  vcmfb      M1  31.40 um  M2  19.44 um  vias 8
+  lp         M1   0.00 um  M2  18.55 um  vias 1
+  ln         M1   7.29 um  M2  11.07 um  vias 2
+  dd         M1   7.24 um  M2   7.56 um  vias 3
+  vbp        M1  20.03 um  M2  55.77 um  vias 6
+  vbn        M1  55.29 um  M2  94.15 um  vias 6
+  vbpc       M1   3.24 um  M2  68.85 um  vias 3
+  vbnc       M1  47.41 um  M2  60.75 um  vias 10
+  ni         M1   0.00 um  M2   4.26 um  vias 1
+  iref       M1  12.42 um  M2  18.09 um  vias 1
+  en_3v3     M1  15.12 um  M2  23.12 um  vias 2
+  en_3v3_b   M1 124.11 um  M2 262.49 um  vias 11
+  vcm        M1  39.69 um  M2  46.33 um  vias 7
+  vref       M1   0.00 um  M2  48.33 um  vias 0
+  iovdd_t    M1   6.23 um  M2   7.02 um  vias 5
+  iovdd_op   M1  12.42 um  M2  16.98 um  vias 2
+  iovdd_tp   M1  25.11 um  M2  63.45 um  vias 1
+  iovss_sk   M1   0.74 um  M2   0.00 um  vias 1
+  iovss_cn   M1   2.70 um  M2   0.00 um  vias 1
+  iovss_m    M1  20.52 um  M2  12.20 um  vias 7
+  UNROUTED sa_A2: no path to 1 of 1 terminal groups
+  UNROUTED sa_M1: no path to 1 of 1 terminal groups
+  UNROUTED sa_F1: no path to 1 of 1 terminal groups
+  UNROUTED sa_F2: no path to 1 of 1 terminal groups
+  UNROUTED sb_F1: no path to 1 of 1 terminal groups
+  UNROUTED sb_F2: no path to 1 of 1 terminal groups
+round 0: failed ['sa_A2', 'sa_M1', 'sa_F1', 'sa_F2', 'sb_F1', 'sb_F2']
+round 1: failed ['sb_A1', 'sb_A2', 'sb_M1', 'sa_A1', 'sa_M2', 'vbp', 'vbnc', 'en_3v3_b', 'iovdd_tp']
+round 2: failed ['vbn', 'outp', 'outn', 'sb_M2']
+round 3: failed ['sa_A2', 'sa_M1', 'sa_F1', 'sa_F2', 'sb_F1', 'sb_F2', 'vcm']
+round 4: failed ['sb_A1', 'sb_A2', 'sb_M1', 'sa_A1', 'sa_M2', 'vref', 'x', 'y']
+round 5: failed ['sb_F1', 'sb_F2', 'vcm', 'outp', 'outn']
+round 6: failed ['sa_A1', 'sa_A2', 'sa_M1', 'sa_F1', 'sa_F2']
+round 7: failed ['sb_A1', 'sb_A2', 'sb_M1', 'sa_M2', 'vref', 'x', 'y']
+ROUTE_ORDER used: ['sb_A1', 'sb_A2', 'sb_M1', 'sa_M2', 'vref', 'x', 'y', 'sa_A1', 'sa_A2', 'sa_M1', 'sa_F1', 'sa_F2', 'sb_F1', 'sb_F2', 'vcm', 'outp', 'outn', 'vbn', 'sb_M2', 'vbp', 'vbnc', 'en_3v3_b', 'iovdd_tp', 'vbpc', 'yc', 'en_3v3', 'dd', 'ln', 'lp', 'vcmfb', 'xc']
+failed: [('sb_A1', 'no path to 1 of 1 terminal groups'), ('sb_A2', 'no path to 1 of 1 terminal groups'), ('sb_M1', 'no path to 1 of 1 terminal groups'), ('sa_M2', 'no path to 1 of 1 terminal groups'), ('vref', 'no path to 1 of 1 terminal groups'), ('x', 'no path to 1 of 2 terminal groups'), ('y', 'no path to 1 of 2 terminal groups')] time 461 s
+  sb_A1 group 57: ['inputs.sb_A1', 'pwr.sb_A1', 'tlo.sb_A1'], 391 access nodes, reach >4000
+  sb_A1 group 86: ['rhigh.sb_A1'], 50 access nodes, reach >4000
+  sb_A2 group 54: ['inputs.sb_A2', 'pwr.sb_A2', 'tlo.sb_A2'], 347 access nodes, reach >4000
+  sb_A2 group 88: ['rhigh.sb_A2'], 62 access nodes, reach >4000
+  sb_M1 group 58: ['inputs.sb_M1', 'pwr.sb_M1', 'tlo.sb_M1'], 259 access nodes, reach >4000
+  sb_M1 group 94: ['rhigh.sb_M1'], 52 access nodes, reach >4000
+  sa_M2 group 59: ['inputs.sa_M2', 'pwr.sa_M2', 'tlo.sa_M2'], 233 access nodes, reach >4000
+  sa_M2 group 95: ['rhigh.sa_M2'], 66 access nodes, reach >4000
+  vref group 66: ['inputs.vref'], 189 access nodes, reach >4000
+  x group 20: ['sinks.x'], 741 access nodes, reach >4000
+  x group 26: ['cascn.x'], 649 access nodes, reach >4000
+  x group 73: ['inputs.x'], 592 access nodes, reach >4000
+  y group 22: ['sinks.y'], 724 access nodes, reach >4000
+  y group 27: ['cascn.y'], 863 access nodes, reach >4000
+  y group 72: ['inputs.y'], 576 access nodes, reach >4000
+fix_block: 0 Metal2 neck fill(s)
+fix_block: trimmed 0.0000 um2 of router Metal2 in the band gaps (0 pieces)

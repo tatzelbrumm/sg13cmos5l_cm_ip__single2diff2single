@@ -1,0 +1,48 @@
+placed 15 instances, 0 rails, 0 tap stripes: 80.000 x 154.000 um
+block s2d_block: 80.000 x 154.000 um = 12320.0 um2; gate 3115.9 um2 (25.3 %), MOS diffusion 3681.9 um2 (29.9 %)
+layers drawn in the top cell: 10/0 10/2 10/25 19/0 8/0; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  sa_A1      M1  47.45 um  M2  23.75 um  vias 3
+  sa_A2      M1  32.35 um  M2  23.49 um  vias 3
+  sa_F1      M1  32.67 um  M2  15.66 um  vias 6
+  sa_F2      M1  74.48 um  M2  29.36 um  vias 6
+  sa_M1      M1  24.03 um  M2  21.84 um  vias 4
+  sa_M2      M1  13.59 um  M2  16.02 um  vias 4
+  sb_A1      M1  25.06 um  M2  24.84 um  vias 2
+  sb_A2      M1  50.37 um  M2  17.01 um  vias 5
+  sb_F1      M1  85.17 um  M2  56.88 um  vias 8
+  sb_F2      M1  79.99 um  M2  70.48 um  vias 12
+  sb_M1      M1  15.55 um  M2  30.32 um  vias 3
+  sb_M2      M1  13.76 um  M2  14.48 um  vias 7
+  x          M1  19.98 um  M2  43.70 um  vias 3
+  y          M1  42.95 um  M2  77.34 um  vias 6
+  xc         M1  48.44 um  M2  66.08 um  vias 3
+  yc         M1  44.30 um  M2  11.80 um  vias 7
+  outp       M1  84.42 um  M2  71.55 um  vias 15
+  outn       M1  60.65 um  M2  93.77 um  vias 11
+  vcmfb      M1  41.15 um  M2  13.23 um  vias 8
+  lp         M1   0.00 um  M2  34.83 um  vias 0
+  ln         M1   0.54 um  M2  33.21 um  vias 2
+  dd         M1   6.42 um  M2   8.91 um  vias 2
+  vbp        M1  20.74 um  M2  55.23 um  vias 8
+  vbn        M1  55.29 um  M2  94.15 um  vias 6
+  vbpc       M1   3.24 um  M2  68.85 um  vias 3
+  vbnc       M1  58.98 um  M2 104.24 um  vias 6
+  ni         M1   0.00 um  M2   4.26 um  vias 1
+  iref       M1  12.42 um  M2  18.09 um  vias 1
+  en_3v3     M1  14.58 um  M2  23.12 um  vias 2
+  en_3v3_b   M1 125.06 um  M2 262.35 um  vias 13
+  vcm        M1  32.56 um  M2  47.68 um  vias 8
+  vref       M1   0.00 um  M2  48.33 um  vias 0
+  iovdd_t    M1   7.79 um  M2  18.63 um  vias 6
+  iovdd_op   M1  12.42 um  M2  16.98 um  vias 2
+  iovdd_tp   M1  25.11 um  M2  64.53 um  vias 1
+  iovss_sk   M1   0.74 um  M2   0.00 um  vias 1
+  iovss_cn   M1   2.70 um  M2   0.00 um  vias 1
+  iovss_m    M1  19.84 um  M2  10.62 um  vias 5
+round 0: failed []
+ROUTE_ORDER used: ['vref', 'vbpc', 'vcm', 'vbn', 'outp', 'outn', 'sb_A1', 'sb_A2', 'sb_M1', 'sa_A1', 'sa_A2', 'sa_M1', 'sb_M2', 'sa_F1', 'sa_F2', 'sa_M2', 'sb_F1', 'sb_F2', 'yc', 'vbp', 'vbnc', 'x', 'y', 'en_3v3', 'dd', 'ln', 'lp', 'vcmfb', 'en_3v3_b', 'iovdd_tp', 'xc']
+failed: [] time 55 s
+fix_block: 1 Metal2 neck fill(s)
+fix_block: trimmed 0.0087 um2 of router Metal2 in the band gaps (2 pieces)
