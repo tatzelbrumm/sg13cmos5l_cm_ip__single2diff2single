@@ -1,0 +1,12 @@
+Lead check of agent F's stage A (2026-11-03, about 22:15 CET), placement_A.gds a0f8621602a5:
+- rebuild with F's src/run_A.sh into a fresh directory: placement_A.gds and cells/s2d_tails_f.gds byte-identical
+- placement_checks.txt: the template part (top-level shapes + template instances) XOR the input template: empty on all
+  layers; 13 expected cells placed once each, none missing or extra (s2d_pd_n_c3 not placed: its pair is inside
+  s2d_cload_c3); no bounding-box overlaps; no placed cell overlaps a template shape (closest 0.11-0.3 µm to edge-stub /
+  riser / leg-tie metal; DRC clean)
+- IHP DRC on placement_A.gds: sg13cmos5l_maximal.drc -rd latchUpRules=true 0 errors; run_drc.py --no_density "No DRC
+  violations", 32 table logs, 0 exceptions (logs/claude/c3-s2d-pad-layout/placementA-*.out)
+- row_check.py: 25 of 25 bands / rails pass, 0 edge layers DIFFERENT (row/). The earlier "26 / 26" was the lead's
+  miscount (grep also matched the table's description line); the template has 25 / 25 too.
+- F's changed cells s2d_tails_hi_f / s2d_tails_lo_f (tails_f.txt): rebuild identical, DRC clean, LVS match, sym_check
+  0 / 0 necks; together equal to the circuit's 12 tails 5/6 + BP, 3 dummies (as P's cell)

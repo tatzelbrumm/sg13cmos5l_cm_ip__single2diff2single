@@ -1,0 +1,16 @@
+tub_p20x1_c3: 4.30 x 11.97 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_tails_c3: 45.19 x 15.83 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_loads_c3: 43.19 x 12.32 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_casc_p_c3: 52.23 x 12.81 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_pd_p_c3: 3.20 x 2.97 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+bias_tree_noab_p_c3: 12.94 x 10.37 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_inputs_c3: 47.58 x 26.44 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+
+Lead check of agent P's delivery (2026-11-03, about 21:15 CET), gds b456862ae015, cdl 9f6b6c30f339:
+- rebuild with P's build_s2d_p3.py in a fresh directory: byte-identical gds (b456862ae015); XOR per cell empty (above)
+- C2's lead_check.py per cell: IHP run_drc.py --no_density (incl. latchup LU.b + maximal) clean, 0 table exceptions;
+  IHP LVS --disable_tap_extraction (inputs with --run_mode=deep) match; W per (model, L) equal to P's CDL
+- sym_check.py (sym.txt): 0 everywhere except Cont in the single center device of casc_p (LNC) and bias_tree (PBN),
+  0.2688 / 0.0384 µm²: the PCell's contact rounding, as P reports
+- circuit_check.py (circuit_check.txt): the non-dummy devices of every cell equal the s2d circuit (s2d_mpdda,
+  s2d_mpdda_pd, bias_tree_noab_pd, bias_diodes); a copy with one tub gate moved from vin to vref fails, as it should

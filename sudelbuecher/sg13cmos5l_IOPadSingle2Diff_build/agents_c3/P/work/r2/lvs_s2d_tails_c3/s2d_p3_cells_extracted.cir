@@ -1,0 +1,33 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 03/11/2026 20:03
+
+.SUBCKT s2d_tails_c3 sa_A1 sa_A2 sa_F1 sa_F2 sa_M1 sa_M2 sb_A1 sb_A2 sb_F1
++ sb_F2 sb_M1 sb_M2 vbp vdd
+M$1 vdd vbp vdd vdd sg13_hv_pmos L=6u W=15u AS=5.1p AD=5.1p PS=32.04u PD=32.04u
++ rfmode=0
+M$2 sb_A2 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$3 sa_F1 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$4 sa_F2 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$5 sb_A1 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$6 sb_M1 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$7 sa_M2 vbp vdd vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$9 vdd vbp vbp vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u PD=10.68u
++ rfmode=0
+M$10 vdd vbp sa_A1 vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$11 vdd vbp sb_F2 vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$12 vdd vbp sb_F1 vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$13 vdd vbp sa_A2 vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$14 vdd vbp sa_M1 vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$15 vdd vbp sb_M2 vdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+.ENDS s2d_tails_c3

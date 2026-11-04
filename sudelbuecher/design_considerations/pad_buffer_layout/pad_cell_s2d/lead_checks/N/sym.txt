@@ -1,0 +1,33 @@
+== sinks_6x6_s2d_c3
+sinks_6x6_s2d_c3: Activ bbox (-15.46,-1.23;0.51,49.23); axes x = -7.475, y = 24 um
+  Y Cont         XOR    0.0768 um2  in (-14.88,21.425;-0.07,26.575)
+  summary: max mirror XOR 0.0768 um2, 0 narrow-poly hits
+== sinks_6x6_s2d_c3_core
+sinks_6x6_s2d_c3_core: Activ bbox (-1.23,-0.51;49.23,15.46); axes x = 24, y = 7.475 um
+  X Cont         XOR    0.0768 um2  in (21.425,0.07;26.575,14.88)
+  summary: max mirror XOR 0.0768 um2, 0 narrow-poly hits
+== s2d_sinks_cmfb_c3
+s2d_sinks_cmfb_c3: Activ bbox (-15.46,-1.23;0.51,30.48); axes x = -7.475, y = 14.625 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_sinks_cmfb_c3_core
+s2d_sinks_cmfb_c3_core: Activ bbox (-1.23,-0.51;30.48,15.46); axes x = 14.625, y = 7.475 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_casc_n_c3
+s2d_casc_n_c3: Activ bbox (-2.25,-1.94;69.95,11.89); axes x = 33.85, y = 4.975 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_cload_c3
+  Y GatPoly      XOR    3.4560 um2  in (13.14,0.04;14.42,12.64)
+  Y Cont         XOR    0.5632 um2  in (12.87,0.25;14.69,12.43)
+  summary: max mirror XOR 3.9200 um2, 0 narrow-poly hits
+== s2d_rhigh_c3
+s2d_rhigh_c3: Activ bbox (-0.84,-3.69;18.34,16.34); axes x = 8.75, y = 6.325 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_pd_n_c3 (--no-y)
+s2d_pd_n_c3: Activ bbox (0,0;1.96,1); axes x = 0.98, y = 0.5 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== bias_tree_noab_n_c3 (--no-y)
+bias_tree_noab_n_c3: Activ bbox (-3.06,-0.51;20.61,8.165); axes x = 8.775, y = 3.827 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== s2d_cload_c3 (--no-y: one row, CLP | pd pair | CLN)
+s2d_cload_c3: Activ bbox (-0.73,-0.51;28.29,13.19); axes x = 13.78, y = 6.34 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

@@ -1,0 +1,6 @@
+s2d_inputs_c3: equal to the circuit; dummies {('sg13_hv_pmos', 1.0): 4}
+s2d_tails_c3: equal to the circuit; dummies {('sg13_hv_pmos', 6.0): 3}
+s2d_loads_c3: equal to the circuit; dummies {('sg13_hv_pmos', 4.0): 4}
+s2d_casc_p_c3: equal to the circuit; dummies {('sg13_hv_pmos', 4.0): 3}
+s2d_pd_p_c3: equal to the circuit; dummies {}
+bias_tree_noab_p_c3: equal to the circuit; dummies {('sg13_hv_pmos', 6.0): 1}

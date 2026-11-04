@@ -1,0 +1,2 @@
+s2d_inputs_c3: Activ bbox (0.91,0.97;46.67,25.47); axes x = 23.79, y = 13.22 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

@@ -1,0 +1,25 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 03/11/2026 20:02
+
+.SUBCKT s2d_inputs_c3 sa_A1 sa_A2 sa_F1 sa_F2 sa_M1 sa_M2 sb_A1 sb_A2 sb_F1
++ sb_F2 sb_M1 sb_M2 vcm vdd vfbn vfbp vin vref x xc y yc
+X$1 vdd vdd vdd tub_p20x1_c3
+X$2 vdd vdd vdd tub_p20x1_c3
+X$3 vcm sb_M2 xc tub_p20x1_c3
+X$4 vfbp sa_M1 yc tub_p20x1_c3
+X$5 vin sa_A2 y tub_p20x1_c3
+X$6 vfbp sb_F1 x tub_p20x1_c3
+X$7 vcm sb_F2 x tub_p20x1_c3
+X$8 vin sa_A1 y tub_p20x1_c3
+X$9 vdd vdd vdd tub_p20x1_c3
+X$10 vdd vdd vdd tub_p20x1_c3
+X$11 vfbn sa_M2 yc tub_p20x1_c3
+X$12 vcm sb_M1 xc tub_p20x1_c3
+X$13 vref sb_A1 x tub_p20x1_c3
+X$14 vfbn sa_F2 y tub_p20x1_c3
+X$15 vcm sa_F1 y tub_p20x1_c3
+X$16 vref sb_A2 x tub_p20x1_c3
+.ENDS s2d_inputs_c3
+
+.SUBCKT tub_p20x1_c3 g s d
+M$1 s g d s sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u PD=31.06u rfmode=0
+.ENDS tub_p20x1_c3

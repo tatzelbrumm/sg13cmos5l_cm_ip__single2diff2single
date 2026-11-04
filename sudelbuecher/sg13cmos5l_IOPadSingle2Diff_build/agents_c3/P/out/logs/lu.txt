@@ -1,0 +1,7 @@
+tub_p20x1_c3     farthest P+Activ to an N+ tie: 10.45 um (LU.a 20)
+s2d_inputs_c3    farthest P+Activ to an N+ tie: 10.45 um (LU.a 20)
+s2d_tails_c3     farthest P+Activ to an N+ tie: 6.89 um (LU.a 20)
+s2d_loads_c3     farthest P+Activ to an N+ tie: 4.90 um (LU.a 20)
+s2d_casc_p_c3    farthest P+Activ to an N+ tie: 5.14 um (LU.a 20)
+s2d_pd_p_c3      farthest P+Activ to an N+ tie: 1.45 um (LU.a 20)
+bias_tree_noab_p_c3 farthest P+Activ to an N+ tie: 3.55 um (LU.a 20)

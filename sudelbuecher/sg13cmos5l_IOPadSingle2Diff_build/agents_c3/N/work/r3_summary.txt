@@ -1,0 +1,19 @@
+DRC (IHP run_drc.py --no_density --mp=4) and LVS (run_lvs.py --disable_tap_extraction) on out/s2d_n3_cells.gds, Tue Nov  3 21:05:38 CET 2026
+== sinks_6x6_s2d_c3 DRC: violations 0, files mentioning exception 0  
+== sinks_6x6_s2d_c3 LVS: Netlists match 
+== s2d_sinks_cmfb_c3 DRC: violations 0, files mentioning exception 0  
+== s2d_sinks_cmfb_c3 LVS: Netlists match 
+== s2d_casc_n_c3 DRC: violations 0, files mentioning exception 0  
+== s2d_casc_n_c3 LVS: Netlists match 
+== s2d_pd_n_c3 DRC: violations 1, files mentioning exception 0  
+== s2d_pd_n_c3 LVS: Netlists match 
+== s2d_cload_c3 DRC: violations 0, files mentioning exception 0  
+== s2d_cload_c3 LVS: Netlists match 
+== s2d_rhigh_c3 DRC: violations 0, files mentioning exception 0  
+== s2d_rhigh_c3 LVS: Netlists match 
+== bias_tree_noab_n_c3 DRC: violations 0, files mentioning exception 0  
+== bias_tree_noab_n_c3 LVS: Netlists match 
+== sinks_6x6_s2d_c3_core DRC: violations 0, files mentioning exception 0  
+== sinks_6x6_s2d_c3_core LVS: Netlists match 
+== s2d_sinks_cmfb_c3_core DRC: violations 0, files mentioning exception 0  
+== s2d_sinks_cmfb_c3_core LVS: Netlists match 

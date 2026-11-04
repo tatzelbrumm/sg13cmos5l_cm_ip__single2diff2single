@@ -1,0 +1,20 @@
+sinks_6x6_s2d_c3: 16.51 x 51.00 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+sinks_6x6_s2d_c3_core: 51.00 x 16.51 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_sinks_cmfb_c3: 16.51 x 32.25 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_sinks_cmfb_c3_core: 32.25 x 16.51 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_casc_n_c3: 72.74 x 14.37 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_pd_n_c3: 2.50 x 2.34 um | XOR empty | DRC {'LU.b'} | LVS match | W per (model, L) equal
+s2d_cload_c3: 29.56 x 14.24 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+s2d_rhigh_c3: 19.24 x 20.09 um | XOR empty | DRC clean | LVS match | W per (model, L) DIFFERENT
+bias_tree_noab_n_c3: 24.21 x 9.21 um | XOR empty | DRC clean | LVS match | W per (model, L) equal
+
+Lead check of agent N's delivery (2026-11-03, about 21:20 CET), gds b453eae3baab, cdl cdd70f9234cb:
+- rebuild with N's build_s2d_n3.py in a fresh directory: byte-identical gds; XOR per cell empty (above)
+- C2's lead_check.py: IHP DRC clean in 8 of 9 cells, 0 table exceptions; s2d_pd_n_c3: LU.b only (tapless by design,
+  N's messages.md 1; in the pad the pair sits inside s2d_cload_c3, whose ring is its tap: cload DRC clean)
+- LVS match in 9 / 9. "W per (model, L) DIFFERENT" for s2d_rhigh_c3 is the table's artifact: LVS reduces each
+  4 x 0.5/12.65 chain to one 0.5/50.6 (6 resistors sa_U - sb_U, extracted netlist), the reference lists the segments
+- circuit_check.py (../circuit_check.py, N/circuit_check.txt): every cell equal to the s2d circuit (rhigh from the
+  extraction); a copy with CLP's gate moved to voutn fails, as it should
+- sym_check.py (sym.txt): 0 everywhere except the sinks' Cont 0.0768 µm² on BN / T (on the axis; the PCell's own
+  asymmetry, as N2 / F2); cload is one row (CLP | pd pair | CLN): --no-y gives 0
