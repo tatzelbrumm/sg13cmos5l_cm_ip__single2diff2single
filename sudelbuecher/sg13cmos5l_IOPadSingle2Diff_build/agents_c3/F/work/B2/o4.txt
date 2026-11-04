@@ -1,0 +1,7 @@
+failed: [] time 105 s
+fix_block: 1 Metal2 neck fill(s)
+fix_block: trimmed 0.0087 um2 of router Metal2 in the band gaps (2 pieces)
+round 0: failed ['en_3v3_b']
+round 1: failed []
+ROUTE_ORDER used: ['en_3v3_b', 'vref', 'vbpc', 'vcm', 'vbn', 'outp', 'outn', 'sb_A1', 'sb_A2', 'sb_M1', 'sa_A1', 'sa_A2', 'sa_M1', 'sb_M2', 'sa_F1', 'sa_F2', 'sa_M2', 'sb_F1', 'sb_F2', 'yc', 'vbp', 'vbnc', 'x', 'y', 'en_3v3', 'dd', 'ln', 'lp', 'vcmfb', 'iovdd_tp', 'xc']
+failed: [] time 105 s

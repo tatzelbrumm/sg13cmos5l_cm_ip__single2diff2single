@@ -441,6 +441,31 @@ F's report: `agents_c3/F/report_stageB.md`; messages: `agents_c3/F/messages.md`;
   - the R feeders' horizontal parts differ per unit.
 - **Next: phase 4** (integration into the macro, backannotation, macro DRC / LVS, CACE note).
 
+## Phase 3, stage B2: pad, vbp and vbnc rerouted (2026-11-04, 16:52–17:55 CET; lead check about 18:00)
+
+F's report: `agents_c3/F/report_stageB2.md`. Brief: `agents_c3/F/BRIEF_stageB2.md` (Christoph's words).
+
+- **pad** runs up the center with iovss shields, tied at one end, and one M3 leg in the rail gap 119–126 (≥ 1.15 µm
+  from the rails).
+- **vbp** comes from the right only: 79 µm instead of 271 µm.
+- **vbnc** is never parallel to pad; it is 208 µm long (was 235).
+- **Lead check** (`lead_checks/F_stageB2/summary.txt`), all passed:
+  - rebuild byte-identical;
+  - DRC 0: maximal with latch-up, and run_drc.py;
+  - deep LVS PASS, with the CDL unchanged;
+  - pad_cdl_check equal;
+  - the tail rows clean;
+  - template part only the core pins, reserve clean, the M3 gap lines well clear;
+  - row check 25 / 25.
+- **Net-priority evaluation** (`lead_checks/F_stageB2/net_priority.md`, from magic C-coupled PEX of B and B2):
+  - pad's total C 96 → 82 fF, and pad – vbnc 12.4 → 0 fF.
+  - pad – outp 5.7 fF remains. It comes from the track order of P's input cell (vin next to vfbp); a primitive
+    matter, cheap to fix if wanted.
+  - x / y imbalance 3 → 15 fF, a high-frequency detail; xc / yc need not match.
+  - Enables ≤ 2.6 fF to any sensitive net.
+  - Verdict: F's routing already does what a priority scheme would mainly buy. A stage B3 would only pay for the
+    fold pairs.
+
 ## Notes folder
 
 | file | contents |

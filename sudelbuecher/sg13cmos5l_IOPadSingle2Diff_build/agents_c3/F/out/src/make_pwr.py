@@ -21,7 +21,7 @@ import klayout.db as db
 ly = db.Layout()
 ly.dbu = 0.001
 c = ly.create_cell('pwr_f')
-L = {k: ly.layer(*v) for k, v in {'M1': (8, 0), 'M1txt': (8, 25), 'V1': (19, 0), 'M2': (10, 0), 'M2pin': (10, 2), 'M2txt': (10, 25), 'V2': (29, 0), 'M3': (30, 0),
+L = {k: ly.layer(*v) for k, v in {'M1': (8, 0), 'M1txt': (8, 25), 'M3txt': (30, 25), 'V1': (19, 0), 'M2': (10, 0), 'M2pin': (10, 2), 'M2txt': (10, 25), 'V2': (29, 0), 'M3': (30, 0),
                                   'NW': (31, 0)}.items()}
 
 
@@ -32,7 +32,8 @@ def box(k, x0, y0, x1, y1):
 TAPS = [('iovss_sk', 12.50, 32.15),    # sinks' ring (sink source bus), under iovss 7..32.5
         ('iovss_cn', 39.60, 50.00),    # casc_n's ring, channel C9, under iovss 34.5..60
         ('iovdd_op', 72.95, 70.00),    # casc_p, loads, CYC drains; right pocket strip, under iovdd 66..91.5
-        ('iovdd_t', 51.50, 112.00),    # both tail rows (tail source bus) + the inputs' dummy tubs, under iovdd 93.5..119
+        ('iovdd_t', 54.30, 112.00),    # both tail rows (tail source bus) + the inputs' dummy tubs, under iovdd 93.5..119
+                                       # (stage B2: moved from x 51.50, out of the pad corridor)
         ('iovss_m', 65.50, 126.50),    # sinks_cmfb, rhigh, tree_n, cload; on rhigh's ring, under iovss 126..134
         ('iovdd_tp', 76.95, 117.50)]   # tree_p, pd_p; in the right edge reserve (Metal2 / Via2 / Metal3 only)
 for n, x, y in TAPS:
@@ -73,6 +74,56 @@ for k in range(6):
         box('M2pin', xt - 0.20, yp0, xt + 0.20, yp1)
         c.shapes(L['M2txt']).insert(db.DText(net, xt, round((yp0 + yp1) / 2, 3)))
         c.shapes(L['M1txt']).insert(db.DText(net, xi, (pin_edge + y_far) / 2))
+# ---- stage B2 (Christoph, 2026-11-04): the pad net up the middle of the cell, with a shield on each side --------------
+# Path (centre line): the template's pad pin (M2 x 20.40..21.02, top 31.18) -> M2 up channel C1 between sinks and casc_n
+# (x 21.715) -> M2 right in the gap C3a under tails_lo (y 107.85) -> M2 up beside tails_lo's right end (x 50.85) ->
+# Via2 -> M3 left in the rail gap 119..126 (y 121.00; every M3 shape >= 0.5 from the rails at 119 and 126, Christoph's
+# "well clear") -> Via2 + Via1 -> M1 up the 1.80 um well gap between tub columns 6 and 7 (x 46.39) -> Via1 onto the
+# inputs' vin track (M2, y 136.80). The tails rows block every straighter path (their gates fill them; the M3 above
+# them is the iovdd rail).
+# Shields: 0.30 wide, 0.40 from the pad line on both sides, on iovss (the substrate and the protection's ground, the
+# pad signal's own reference). Both shields meet at the pad end (an M1 bridge under the pad's M2) and are tied there
+# to the M3 iovss rail 7..32.5 by one Via2: one end only, so no supply current flows in them (no loop, no drop
+# along the pad line).
+W, D = 0.30, 0.70                              # line width, centre spacing pad - shield
+h = W / 2
+
+
+def hseg(k, y, x0, x1):
+    box(k, min(x0, x1) - h, y - h, max(x0, x1) + h, y + h)
+
+
+def vseg(k, x, y0, y1):
+    box(k, x - h, min(y0, y1) - h, x + h, max(y0, y1) + h)
+
+
+def via(k, x, y):
+    box(k, x - 0.095, y - 0.095, x + 0.095, y + 0.095)
+
+
+def path(segs):
+    for k, a, b in segs:
+        (hseg if a[1] == b[1] else vseg)(k, *((a[1], a[0], b[0]) if a[1] == b[1] else (a[0], a[1], b[1])))
+
+
+XC, YH, XV, YM, XG, YV = 21.715, 107.85, 50.85, 121.00, 46.39, 136.80
+box('M2', 20.40, 30.88, XC + h, 31.48)                                    # onto the pad pin's top
+for off in (0.0, -D, D):                                                  # pad, left shield, right shield
+    xc, yh, xv, ym, xg = XC + off, YH - off, XV + off, YM + off, XG + off   # left of travel: -x, +y, -x, -y, -x
+    ys = 31.18 if off == 0 else (32.05 if off < 0 else 31.70)
+    path([('M2', (xc, ys), (xc, yh)), ('M2', (xc, yh), (xv, yh)), ('M2', (xv, yh), (xv, ym)),
+          ('M3', (xv, ym), (xg, ym)), ('M1', (xg, ym), (xg, YV + (0.0 if off == 0 else -0.2)))])
+    via('V2', xv, ym)                                                     # M2 -> M3
+    via('V2', xg, ym)                                                     # M3 -> M2 landing -> M1
+    ext = 0.20 if off >= 0 else -0.20                                     # M2 landing 0.30 x 0.50 (Mn_d 0.144),
+    box('M2', xg - h, min(ym - h, ym - h + ext), xg + h, max(ym + h, ym + h + ext))   # away from its neighbours
+    via('V1', xg, ym)
+via('V1', XG, YV)                                                         # onto the vin track
+for xs in (XC - D, XC + D):                                               # shield bridge under the pad, M1
+    via('V1', xs, 32.05)
+box('M1', XC - D - h, 32.05 - h, XC + D + h, 32.05 + h)
+box('M3', XC + D - 0.20, 31.50, XC + D + 0.20, 31.90)                     # shield tie: Via2 into iovss 7..32.5
+via('V2', XC + D, 31.70)
 opt = db.SaveLayoutOptions()
 opt.gds2_write_timestamps = False
 ly.write(sys.argv[1], opt)

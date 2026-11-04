@@ -1,0 +1,18 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* s2d_casc_n_f: N's s2d_casc_n_c3 netlist, renamed (build_f_casc_n.py, C3 stage B)
+.SUBCKT s2d_casc_n_f vbnc vcmfb vdd voutn voutp vss x xc y yc
+Mdummy_0 vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MCXC_1 vcmfb vbnc xc vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCX_2 voutp vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCY_3 voutn vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCYC_4 vdd vbnc yc vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Mdummy_5 vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+Mdummy_6 vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MCYC_7 vdd vbnc yc vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCY_8 voutn vbnc y vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCX_9 voutp vbnc x vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCXC_10 vcmfb vbnc xc vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+Mdummy_11 vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MBNC_12 vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1
+.ENDS s2d_casc_n_f

@@ -1,0 +1,203 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 04/11/2026 16:32
+
+.SUBCKT sg13cmos5l_IOPadSingle2Diff en_3v3 en_3v3_b iovdd iovss iref outn outp
++ pad vcm vref
+X$11 iovss outp outn vcm en_3v3_b s2d_cload_c3
+X$12 en_3v3 iovdd vcm outp outn s2d_pd_p_c3
+X$13 iref en_3v3_b \$I35 iovdd \$I32 \$I13 \$I23 bias_tree_noab_p_c3
+X$15 iovss en_3v3 \$I35 en_3v3_b iref \$I17 \$I32 bias_tree_noab_n_c3
+X$16 \$I20 \$I29 \$I27 \$I24 \$I25 \$I28 \$I14 \$I26 \$I11 \$I19 iovdd outn
++ vref vcm outp pad \$I33 \$I21 \$I22 \$I34 \$I30 \$I31 s2d_inputs_c3
+X$17 iovss \$I23 \$I14 \$I19 s2d_sinks_cmfb_c3_core
+X$18 iovss \$I23 \$I20 \$I11 sinks_6x6_s2d_c3_core
+X$19 iovss \$I33 \$I34 \$I27 \$I24 \$I30 \$I26 \$I31 \$I28 \$I21 \$I22 \$I29
++ \$I25 s2d_rhigh_c3
+X$20 iovdd \$I29 \$I24 \$I32 \$I27 \$I25 \$I28 \$I26 s2d_tails_lo_f
+X$21 iovdd \$I32 \$I33 \$I21 \$I22 \$I34 \$I30 \$I31 s2d_tails_hi_f
+X$22 iovss outn \$I12 \$I20 outp \$I13 \$I11 iovdd \$I14 \$I19 s2d_casc_n_f
+X$23 \$I16 iovdd outp \$I18 outn \$I15 \$I12 \$I17 s2d_casc_p_f
+X$24 iovdd \$I18 \$I15 \$I16 \$I12 s2d_loads_f
+R$1 iovdd \$I9 iovss rppd w=0.5u l=12.9u ps=0u b=0 m=1
+R$2 iovss \$I8 iovss rppd w=0.5u l=3.54u ps=0u b=0 m=1
+M$3 iovdd \$I9 pad iovdd sg13_hv_pmos L=0.6u W=266.4u AS=123.21p AD=123.21p
++ PS=316.72u PD=316.72u rfmode=0
+M$43 iovss \$I8 pad iovss sg13_hv_nmos L=0.6u W=88u AS=40.7p AD=40.7p PS=110.9u
++ PD=110.9u rfmode=0
+D$63 pad iovdd dpantenna A=35.0028p P=58.08u m=2
+D$65 iovss pad dantenna A=35.0028p P=58.08u m=2
+.ENDS sg13cmos5l_IOPadSingle2Diff
+
+.SUBCKT s2d_loads_f iovdd lp ln dd vcmfb
+M$1 iovdd vcmfb dd iovdd sg13_hv_pmos L=4u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+M$2 iovdd vcmfb ln iovdd sg13_hv_pmos L=4u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+M$3 iovdd vcmfb lp iovdd sg13_hv_pmos L=4u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+M$13 iovdd vcmfb iovdd iovdd sg13_hv_pmos L=4u W=4u AS=1.36p AD=1.36p PS=10.72u
++ PD=10.72u rfmode=0
+.ENDS s2d_loads_f
+
+.SUBCKT s2d_casc_p_f dd iovdd voutp lp voutn ln vcmfb vbpc
+M$1 iovdd vbpc vbpc iovdd sg13_hv_pmos L=4u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$2 iovdd vbpc iovdd iovdd sg13_hv_pmos L=4u W=3u AS=1.02p AD=1.02p PS=8.04u
++ PD=8.04u rfmode=0
+M$5 ln vbpc voutn iovdd sg13_hv_pmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+M$6 lp vbpc voutp iovdd sg13_hv_pmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+M$7 dd vbpc vcmfb iovdd sg13_hv_pmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+.ENDS s2d_casc_p_f
+
+.SUBCKT s2d_casc_n_f iovss voutn vcmfb x voutp vbnc y iovdd xc yc
+M$1 iovss vbnc iovss iovss sg13_hv_nmos L=3u W=8u AS=2.72p AD=2.72p PS=18.72u
++ PD=18.72u rfmode=0
+M$5 voutp vbnc x iovss sg13_hv_nmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+M$6 xc vbnc vcmfb iovss sg13_hv_nmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+M$8 iovdd vbnc yc iovss sg13_hv_nmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+M$9 voutn vbnc y iovss sg13_hv_nmos L=3u W=30u AS=10.2p AD=10.2p PS=61.36u
++ PD=61.36u rfmode=0
+M$13 vbnc vbnc iovss iovss sg13_hv_nmos L=8u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+.ENDS s2d_casc_n_f
+
+.SUBCKT s2d_tails_hi_f iovdd vbp sa_A1 sb_F2 sb_F1 sa_A2 sa_M1 sb_M2
+M$1 iovdd vbp vbp iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$2 iovdd vbp iovdd iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$3 iovdd vbp sb_M2 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$4 iovdd vbp sa_M1 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$5 iovdd vbp sa_A2 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$6 iovdd vbp sb_F1 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$7 iovdd vbp sb_F2 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$8 iovdd vbp sa_A1 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+.ENDS s2d_tails_hi_f
+
+.SUBCKT s2d_tails_lo_f iovdd sb_A2 sa_F2 vbp sa_F1 sb_A1 sb_M1 sa_M2
+M$1 iovdd vbp iovdd iovdd sg13_hv_pmos L=6u W=10u AS=3.4p AD=3.4p PS=21.36u
++ PD=21.36u rfmode=0
+M$3 iovdd vbp sa_M2 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$4 iovdd vbp sb_M1 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$5 iovdd vbp sb_A1 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$6 iovdd vbp sa_F2 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$7 iovdd vbp sa_F1 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$8 iovdd vbp sb_A2 iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+.ENDS s2d_tails_lo_f
+
+.SUBCKT s2d_cload_c3 iovss voutp voutn vcm en_3v3_b
+M$1 voutp en_3v3_b vcm iovss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.19p
++ PS=2.68u PD=1.38u rfmode=0
+M$2 vcm en_3v3_b voutn iovss sg13_hv_nmos L=0.45u W=1u AS=0.19p AD=0.34p
++ PS=1.38u PD=2.68u rfmode=0
+M$3 iovss voutp iovss iovss sg13_hv_nmos L=12u W=12u AS=4.08p AD=4.08p
++ PS=24.68u PD=24.68u rfmode=0
+M$4 iovss voutn iovss iovss sg13_hv_nmos L=12u W=12u AS=4.08p AD=4.08p
++ PS=24.68u PD=24.68u rfmode=0
+.ENDS s2d_cload_c3
+
+.SUBCKT s2d_rhigh_c3 iovss sa_A1 sa_A2 sa_F1 sa_F2 sa_M1 sa_M2 sb_M2 sb_M1
++ sb_F2 sb_F1 sb_A2 sb_A1
+R$1 iovss iovss iovss rhigh w=0.5u l=12.65u ps=0u b=0 m=2
+R$15 sa_A1 sb_A1 iovss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$16 sa_A2 sb_A2 iovss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$17 sa_F1 sb_F1 iovss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$18 sa_F2 sb_F2 iovss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$19 sa_M1 sb_M1 iovss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+R$20 sa_M2 sb_M2 iovss rhigh w=0.5u l=50.6u ps=0u b=0 m=1
+.ENDS s2d_rhigh_c3
+
+.SUBCKT bias_tree_noab_n_c3 iovss en_3v3 ni en_3v3_b iref vbpc vbp
+M$1 iovss en_3v3_b ni iovss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$2 ni en_3v3 iref iovss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$3 vbpc ni iovss iovss sg13_hv_nmos L=6u W=2.4u AS=0.816p AD=0.816p PS=5.48u
++ PD=5.48u rfmode=0
+M$4 iovss ni iovss iovss sg13_hv_nmos L=6u W=2.4u AS=0.816p AD=0.816p PS=5.48u
++ PD=5.48u rfmode=0
+M$5 vbp ni iovss iovss sg13_hv_nmos L=6u W=6u AS=2.04p AD=2.04p PS=12.68u
++ PD=12.68u rfmode=0
+M$6 ni ni iovss iovss sg13_hv_nmos L=6u W=6u AS=2.04p AD=2.04p PS=12.68u
++ PD=12.68u rfmode=0
+.ENDS bias_tree_noab_n_c3
+
+.SUBCKT sinks_6x6_s2d_c3_core iovss vbn x y
+M$1 iovss vbn iovss iovss sg13_hv_nmos L=6u W=14u AS=4.76p AD=4.76p PS=31.4u
++ PD=31.4u rfmode=0
+M$5 iovss vbn x iovss sg13_hv_nmos L=6u W=36u AS=12.24p AD=12.24p PS=76.08u
++ PD=76.08u rfmode=0
+M$6 iovss vbn y iovss sg13_hv_nmos L=6u W=36u AS=12.24p AD=12.24p PS=76.08u
++ PD=76.08u rfmode=0
+M$16 vbn vbn iovss iovss sg13_hv_nmos L=6u W=6u AS=2.04p AD=2.04p PS=12.68u
++ PD=12.68u rfmode=0
+.ENDS sinks_6x6_s2d_c3_core
+
+.SUBCKT s2d_sinks_cmfb_c3_core iovss vbn xc yc
+M$1 iovss vbn iovss iovss sg13_hv_nmos L=6u W=8u AS=2.72p AD=2.72p PS=18.72u
++ PD=18.72u rfmode=0
+M$5 iovss vbn yc iovss sg13_hv_nmos L=6u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+M$6 iovss vbn xc iovss sg13_hv_nmos L=6u W=24u AS=8.16p AD=8.16p PS=50.72u
++ PD=50.72u rfmode=0
+.ENDS s2d_sinks_cmfb_c3_core
+
+.SUBCKT bias_tree_noab_p_c3 iref en_3v3_b ni iovdd vbp vbnc vbn
+M$1 iref en_3v3_b ni iovdd sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$2 iovdd vbp vbnc iovdd sg13_hv_pmos L=6u W=2u AS=0.68p AD=0.68p PS=4.68u
++ PD=4.68u rfmode=0
+M$3 iovdd vbp iovdd iovdd sg13_hv_pmos L=6u W=2u AS=0.68p AD=0.68p PS=4.68u
++ PD=4.68u rfmode=0
+M$4 iovdd vbp vbn iovdd sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+.ENDS bias_tree_noab_p_c3
+
+.SUBCKT s2d_pd_p_c3 en_3v3 iovdd vcm voutp voutn
+M$1 voutp en_3v3 vcm iovdd sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$2 vcm en_3v3 voutn iovdd sg13_hv_pmos L=0.45u W=1u AS=0.19p AD=0.34p PS=1.38u
++ PD=2.68u rfmode=0
+.ENDS s2d_pd_p_c3
+
+.SUBCKT s2d_inputs_c3 x sb_A2 sa_F1 sa_F2 sb_A1 sb_M1 xc sa_M2 y yc iovdd vfbn
++ vref vcm vfbp vin sa_A1 sb_F2 sb_F1 sa_A2 sa_M1 sb_M2
+X$1 iovdd iovdd iovdd tub_p20x1_c3
+X$2 iovdd iovdd iovdd tub_p20x1_c3
+X$3 vcm sb_M2 xc tub_p20x1_c3
+X$4 vfbp sa_M1 yc tub_p20x1_c3
+X$5 vin sa_A2 y tub_p20x1_c3
+X$6 vfbp sb_F1 x tub_p20x1_c3
+X$7 vcm sb_F2 x tub_p20x1_c3
+X$8 vin sa_A1 y tub_p20x1_c3
+X$9 iovdd iovdd iovdd tub_p20x1_c3
+X$10 iovdd iovdd iovdd tub_p20x1_c3
+X$11 vfbn sa_M2 yc tub_p20x1_c3
+X$12 vcm sb_M1 xc tub_p20x1_c3
+X$13 vref sb_A1 x tub_p20x1_c3
+X$14 vfbn sa_F2 y tub_p20x1_c3
+X$15 vcm sa_F1 y tub_p20x1_c3
+X$16 vref sb_A2 x tub_p20x1_c3
+.ENDS s2d_inputs_c3
+
+.SUBCKT tub_p20x1_c3 \$1 \$2 \$5
+M$1 \$2 \$1 \$5 \$2 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u PD=31.06u
++ rfmode=0
+.ENDS tub_p20x1_c3

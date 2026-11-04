@@ -2,11 +2,11 @@ s2d_tails_lo_f  Activ    XOR 0.0000 um2
 s2d_tails_lo_f  GatPoly  XOR 0.2380 um2 (1120,7470;44070,7810)
 s2d_tails_lo_f  Cont     XOR 0.0000 um2 
 s2d_tails_lo_f  Metal1   XOR 0.1960 um2 (1020,7670;44170,7810)
-s2d_tails_lo_f  Via1     XOR 0.0361 um2 (43755,4375;43945,4565)
+s2d_tails_lo_f  Via1     XOR 0.0722 um2 (1245,4375;43945,4565)
 s2d_tails_hi_f  Activ    XOR 0.0000 um2 
 s2d_tails_hi_f  GatPoly  XOR 0.2380 um2 (1120,7470;44070,7810)
 s2d_tails_hi_f  Cont     XOR 0.0000 um2 
 s2d_tails_hi_f  Metal1   XOR 0.1960 um2 (1020,7670;44170,7810)
-s2d_tails_hi_f  Via1     XOR 0.0722 um2 (1245,4375;43945,4565)
+s2d_tails_hi_f  Via1     XOR 0.0361 um2 (43755,4375;43945,4565)
 row_xor: 6 layer differences
 expected (the listed changes): GatPoly 2 x 0.35 x 0.34 = P's row-to-row poly bridge stubs at the row ends; Metal1 2 x 0.70 x 0.14 = P's vdd plate legs between gate column and ring; Via1 = the new vbp edge stubs (right end in both rows, left end in tails_hi: P had one stub, on the lower row). Activ and Cont: 0.

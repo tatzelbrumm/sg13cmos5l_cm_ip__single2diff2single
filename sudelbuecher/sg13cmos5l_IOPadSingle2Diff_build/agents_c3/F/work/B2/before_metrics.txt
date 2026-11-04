@@ -1,0 +1,18 @@
+| net | M1 um | M2 um | M3 um |
+|---|---:|---:|---:|
+| pad | 18.1 | 108.1 | 0.0 |
+| vbp | 36.7 | 233.8 | 0.0 |
+| vbnc | 83.1 | 151.5 | 0.0 |
+| vbn | 57.8 | 113.5 | 0.0 |
+| outp | 68.2 | 69.0 | 0.0 |
+| outn | 66.7 | 78.3 | 0.0 |
+
+longest parallel run beside the pad net (same / adjacent metal, <= 1.0 um), top 8:
+  vbnc                           106.9 um
+  iovss                          25.5 um
+  iovdd                          25.5 um
+  vbp                            20.2 um
+  y                              18.4 um
+  x                              17.2 um
+  pad                            1.4 um
+  outp                           1.3 um

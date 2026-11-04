@@ -7,7 +7,7 @@ set -e
 S=$(cd "$(dirname "$0")" && pwd); I=$(cd "$1" && pwd); A=$(cd "$2" && pwd); mkdir -p "$3"; O=$(cd "$3" && pwd)
 export PDK_ROOT=${PDK_ROOT:-/foss/pdks} PDK=ihp-sg13cmos5l PDKPATH=/foss/pdks/ihp-sg13cmos5l FCELLS="$O/cells" FINPUTS="$I"
 mkdir -p "$O/cells" "$O/logs"
-[ "$A" = "$O" ] || cp "$A/cells/s2d_tails_f.gds" "$A/cells/s2d_tails_f.cdl" "$O/cells/"
+python3 -B "$S/build_f_tails.py" "$O/cells/s2d_tails_f.gds" "$O/cells/s2d_tails_f.cdl" > "$O/logs/build_tails_f_B2.txt" 2>&1   # stage B2: rebuilt (right vbp stub only)
 python3 -B "$S/build_f_casc_n.py" "$I/N/s2d_n3_cells.gds" "$I/N/s2d_n3_cells.cdl" "$O/cells/s2d_casc_n_f.gds" "$O/cells/s2d_casc_n_f.cdl" > "$O/logs/build_cells.txt"
 python3 -B "$S/build_f_pins.py" "$I/P/s2d_p3_cells.gds" "$I/P/s2d_p3_cells.cdl" "$O/cells/s2d_pins_f.gds" "$O/cells/s2d_pins_f.cdl" >> "$O/logs/build_cells.txt"
 python3 -B "$S/strip_tub_labels.py" "$I/P/s2d_p3_cells.gds" "$O/cells/p3_router.gds"

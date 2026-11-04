@@ -13,8 +13,8 @@ Each row is built exactly as in P's tails() (same PCells, positions, gate column
 in P's lower-row frame (sources at y = 0, drains at the bottom). Changes against s2d_tails_c3:
   - one row per cell; the shared vdd plate between the rows becomes the row's own source plate, joined directly to
     the ring's top strip, which sits 0.43 above the source Activ (pSD_i1 0.40 + pSD_d1 0.03, as P's tub tie);
-  - the poly bridge between the two rows' gate tabs goes (one row); each cell gets its own vbp edge stubs, at both
-    row ends (P's cell had one, at the left);
+  - the poly bridge between the two rows' gate tabs goes (one row); each cell gets its own vbp edge stub, at the
+    right row end (P's cell had one, at the left; stage A had both ends, stage B2 drops the left one);
   - closed N+ ring and one NWell per cell (NW_c1 / NW_e1 0.62, as P).
 The two cells are mirror images of each other in the device layers (BP is the same 5/6 device as D).
 """
@@ -56,8 +56,9 @@ def tails_row(name, names):
         P.fill(c, "Via1", cx - 0.505, -6.62, cx + 0.505, -6.43)
         P.box(c, "M2", cx - 0.555, -6.38, cx + 0.555, b.bottom)
         P.pin(c, "M2", net, cx - 0.555, b.bottom, cx + 0.555, b.bottom + 0.30)
-    P.edge_stub(c, gl, gl.center().y, b.left, "vbp")
-    P.edge_stub(c, gr, gr.center().y, b.right, "vbp")      # also at the right end (the bias tree sits there)
+    # vbp leaves at the right row end only (stage B2, Christoph: no vbp on the left; the bias tree sits on the right).
+    # P's cell had its stub at the left end.
+    P.edge_stub(c, gr, gr.center().y, b.right, "vbp")
     P.pin(c, "M1", "vdd", x0 - P.RG - 0.30, -h + 0.5, x0 - P.RG, -h + 2.5)
     P.well(c, b)
     nets = sorted({("sa_" if n[-1] == "a" else "sb_") + n[:-1] for n in names if n not in ("D", "BP")})

@@ -49,3 +49,15 @@ Points where the brief was unclear or left a choice. I decided each one myself a
    iovdd / iovss pin cannot match. The comparison flattens the layout's `s2d_block` [M: match].
 9. **The harness refused `report_stageB.md`** ("subagents should return findings as text"). Its full text is in my
    final reply, for the lead to save.
+
+# Stage B2 (2026-11-04, 16:52–17:55 CET)
+
+10. **Shields.** Christoph's later word: "the shield lines around the pin line are optional". I had already drawn
+    them. Every net still routes, and so does the order that routed everything with them, so they cost no other
+    route. I kept them.
+11. **vbnc.** Routing vbnc first (to shorten it) left 4 nets unroutable after 8 rounds [M]. It stays at 208 µm, on a
+    different path from stage B. No part of it lies within 1 µm of the pad line [M], which was Christoph's condition.
+12. **Keep-outs in the tubs' well gap.** Keep-outs there (to keep other nets 1 µm off the pad's Metal1 leg) left 7
+    nets unroutable [M], so I did not use them. Every net that sits within 1 µm of that leg sits behind a shield.
+13. **The tail rows lost their left vbp stubs** (stage-A cells changed: no vbp metal on the left). The stage-A /
+    stage-B versions are in `stageB_v1/cells/`.
