@@ -9,27 +9,27 @@
 | Input offset (systematic) | ngspice              | Vos_in               |           -1 mV |          ​ |         0 mV |          ​ |         1 mV |          ​ |   Skip 🟧    |
 | Integral nonlinearity | ngspice              | INL                  |             any |          ​ |          any |          ​ |         2 mV |          ​ |   Skip 🟧    |
 | Output common-mode error | ngspice              | Vcm_err              |          -30 mV |          ​ |          any |          ​ |        30 mV |          ​ |   Skip 🟧    |
-| IO ring current      | ngspice              | Iio                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| IO ring current      | ngspice              | Iio                  |             any |          ​ |          any |          ​ |       135 uA |          ​ |   Skip 🟧    |
 | Gain vs vref and vcm | ngspice              | Gain                 |             any |          ​ |            2 |          ​ |          any |          ​ |   Skip 🟧    |
 | Integral nonlinearity vs vref and vcm | ngspice              | INL                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Output common-mode error vs vref and vcm | ngspice              | Vcm_err              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Input range, low end | ngspice              | Vin_min              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Input range, high end | ngspice              | Vin_max              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| Input range, low end | ngspice              | Vin_min              |             any |          ​ |          any |          ​ |        0.1 V |          ​ |   Skip 🟧    |
+| Input range, high end | ngspice              | Vin_max              |           1.0 V |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Gain vs bias select  | ngspice              | Gain                 |            1.99 |          ​ |            2 |          ​ |         2.01 |          ​ |   Skip 🟧    |
 | Input offset (systematic) vs bias select | ngspice              | Vos_in               |           -1 mV |          ​ |         0 mV |          ​ |         1 mV |          ​ |   Skip 🟧    |
 | Integral nonlinearity vs bias select | ngspice              | INL                  |             any |          ​ |          any |          ​ |         2 mV |          ​ |   Skip 🟧    |
 | Output common-mode error vs bias select | ngspice              | Vcm_err              |          -30 mV |          ​ |          any |          ​ |        30 mV |          ​ |   Skip 🟧    |
-| IO ring current vs bias select | ngspice              | Iio                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| IO ring current vs bias select | ngspice              | Iio                  |             any |          ​ |          any |          ​ |       220 uA |          ​ |   Skip 🟧    |
 | Gain, sel 11         | ngspice              | Gain                 |             any |          ​ |            2 |          ​ |          any |          ​ |   Skip 🟧    |
 | Input offset (systematic), sel 11 | ngspice              | Vos_in               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Integral nonlinearity, sel 11 | ngspice              | INL                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Output common-mode error, sel 11 | ngspice              | Vcm_err              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | IO ring current, sel 11 | ngspice              | Iio                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Gain vs ibias        | ngspice              | Gain                 |            1.99 |    1.99872 |            2 |    1.99896 |         2.01 |    1.99925 |   Pass ✅    |
+| Gain vs ibias        | ngspice              | Gain                 |            1.99 |    1.99871 |            2 |    1.99896 |         2.01 |    1.99924 |   Pass ✅    |
 | Input offset (systematic) vs ibias | ngspice              | Vos_in               |           -1 mV |  -0.000 mV |         0 mV |  -0.000 mV |         1 mV |  -0.000 mV |   Pass ✅    |
-| Integral nonlinearity vs ibias | ngspice              | INL                  |             any |   0.041 mV |          any |   0.150 mV |          any |   0.350 mV |   Pass ✅    |
-| Output common-mode error vs ibias | ngspice              | Vcm_err              |          -30 mV |   8.625 mV |          any |  10.436 mV |        30 mV |  11.619 mV |   Pass ✅    |
-| IO ring current vs ibias | ngspice              | Iio                  |             any |  75.788 uA |          any | 125.645 uA |          any | 175.576 uA |   Pass ✅    |
+| Integral nonlinearity vs ibias | ngspice              | INL                  |             any |   0.036 mV |          any |   0.152 mV |          any |   0.352 mV |   Pass ✅    |
+| Output common-mode error vs ibias | ngspice              | Vcm_err              |          -30 mV |   8.667 mV |          any |  10.491 mV |        30 mV |  11.682 mV |   Pass ✅    |
+| IO ring current vs ibias | ngspice              | Iio                  |             any |  69.711 uA |          any | 115.536 uA |          any | 161.433 uA |   Pass ✅    |
 | Closed-loop gain at 1 kHz | ngspice              | Acl_dB               |             any |          ​ |      6.02 dB |          ​ |          any |          ​ |   Skip 🟧    |
 | Closed-loop -3 dB bandwidth | ngspice              | f3dB                 |           1 MHz |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Output common-mode response to iovdd at 1 kHz | ngspice              | CMvdd_1k             |             any |          ​ |          any |          ​ |       -30 dB |          ​ |   Skip 🟧    |
@@ -45,13 +45,13 @@
 | Input noise density at 1 kHz | ngspice              | En_1k                |             any |          ​ |          any |          ​ | 1000 nV/rtHz |          ​ |   Skip 🟧    |
 | Input noise density at 100 kHz | ngspice              | En_100k              |             any |          ​ |          any |          ​ |  250 nV/rtHz |          ​ |   Skip 🟧    |
 | Differential output noise, 10 Hz - 10 MHz | ngspice              | Vn_out               |             any |          ​ |          any |          ​ |      1000 uV |          ​ |   Skip 🟧    |
-| IO ring current, off | ngspice              | Iio_pd               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Core ring current, off | ngspice              | Icore_pd             |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Pad input leakage, off | ngspice              | Ipad_pd              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Internal enable      | ngspice              | Ven3                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Differential output, off | ngspice              | Vod_pd               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Output common mode, off | ngspice              | Voc_pd               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Enable time          | ngspice              | t_on                 |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
+| IO ring current, off | ngspice              | Iio_pd               |             any |          ​ |          any |          ​ |      1000 nA |          ​ |   Skip 🟧    |
+| Core ring current, off | ngspice              | Icore_pd             |             any |          ​ |          any |          ​ |       100 nA |          ​ |   Skip 🟧    |
+| Pad input leakage, off | ngspice              | Ipad_pd              |         -100 nA |          ​ |          any |          ​ |       100 nA |          ​ |   Skip 🟧    |
+| Internal enable      | ngspice              | Ven3                 |             any |          ​ |          any |          ​ |        0.1 V |          ​ |   Skip 🟧    |
+| Differential output, off | ngspice              | Vod_pd               |           -1 mV |          ​ |          any |          ​ |         1 mV |          ​ |   Skip 🟧    |
+| Output common mode, off | ngspice              | Voc_pd               |           -1 mV |          ​ |          any |          ​ |         1 mV |          ​ |   Skip 🟧    |
+| Enable time          | ngspice              | t_on                 |             any |          ​ |          any |          ​ |         3 us |          ​ |   Skip 🟧    |
 | Output CM glitch, high | ngspice              | Vc_max               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Output CM glitch, low | ngspice              | Vc_min               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Differential output at the end | ngspice              | Vd_end               |             any |          ​ |        0.5 V |          ​ |          any |          ​ |   Skip 🟧    |
