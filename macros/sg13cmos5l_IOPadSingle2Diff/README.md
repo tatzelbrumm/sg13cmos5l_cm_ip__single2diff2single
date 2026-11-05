@@ -254,39 +254,56 @@ The sheets, symbol and source netlists are backannotated to it (agent BA, as in 
 - **The chip harness** sees the same `vss` merge as for the d2s pad. The workaround in that README applies with this
   cell's name.
 
-### CACE: what is stale, and how to rerun it
+### CACE: schematic and post-layout (2026-11-05)
 
-Not rerun in C3. The committed results (`verification/cace/results/`, run before the layout) predate three changes:
-- the new port partition (`en_ctrl_3v3` and `bias_gen_pd` moved next to the cell in the templates; same function);
-- the removal of the secondary protection (the 587 Ω rppd and its diodes; vin is now the pad);
-- the layout dummies.
+Both sources, 11 groups each (`dc`, `range`, `window`, `dc_sel`, `dc_sel3`, `dc_ibias`, `ac`, `tran`, `noise`, `pd`,
+`enable`). The post-layout netlist is the magic C-coupled extraction (`make magic-pex EXT_MODE=2`).
+- **Results:** `verification/cace/results/sg13cmos5l_IOPadSingle2Diff/` (schematic) and `…/sg13cmos5l_IOPadSingle2Diff_pex/`
+  (extracted). Every spec is met on both: 414 of 414 runs each; `make spec-table [CACE_SOURCE=pex]`.
+- **Comparison** per condition (notes branch, `pad_cell_s2d/phase5/compare_schematic_pex.md`): every DC quantity
+  (gain, INL, CM error, Iio, input window) and the noise densities agree within 0.5 %; the systematic offset stays
+  below 1 µV on both. The extraction's
+  capacitance shows only in the dynamic quantities:
 
-What each group should see (reasoning, except where marked [M]):
+| quantity (worst case) | schematic | extracted | limit |
+|---|---:|---:|---:|
+| closed-loop −3 dB bandwidth | 1.35 MHz | 1.24 MHz | ≥ 1 MHz |
+| settling time to 1 % | 546 ns | 596 ns | ≤ 1000 ns |
+| rise time 10–90 % | 104 … 259 ns | 121 … 283 ns | report |
+| enable time | 1.43 µs | 1.52 µs | ≤ 3 µs |
+| differential output noise, 10 Hz – 10 MHz | 441 µV | 423 µV | ≤ 1000 µV |
+| IO ring current | 116.9 µA | 116.9 µA | ≤ 135 µA |
 
-| groups | expected change on the schematic |
-|---|---|
-| `dc`, `range`, `window`, `dc_sel`, `dc_sel3`, `dc_ibias` | none: the dummies carry no DC current, and the secondary protection carried none in operation (`tb_pad_dc` unchanged [M]) |
-| `ac`, `ac_mm`, `tran` | small: the 587 Ω series resistor and its diode capacitance leave the input; the dummies add gate capacitance to vbp, vbn, vbnc and vcmfb |
-| `noise` | slightly lower: the series rppd's thermal noise (about 3 nV/√Hz) is gone |
-| `pd` | the pad leakage changes: the secondary diodes are gone (−276 → −183 pA at 27 °C in `tb_pad_dc` [M]) |
-| `enable` | none expected |
-| `mm`, `mc` | as `dc`, plus the dummies (they have no mismatch effect) |
-| `s2d_mpdda_pd_sel.yaml` (`loop`) | only the dummies |
+- **CMRR without mismatch** (the `ac` template's report-only CMRR_1k): 136 … 144 dB on the schematic (perfect
+  symmetry, numerical floor), 110 … 113 dB extracted. That is the systematic rejection the layout's asymmetry
+  leaves (for example the fold nodes x / y differ by about 15 fF), before any device mismatch.
+- **Against the pre-layout run (2026-10-25):**
+  - Iio is about 10 µA lower in every DC group. That comes from `bias_tree_noab_pd` (2026-10-28, without the
+    class-AB legs), not from C3.
+  - The pad leakage when off changes by up to 39 %, a few nA: no secondary diodes.
+  - Everything else is within 1 %.
+- **Not run:**
+  - mismatch (`mm`, `ac_mm`), on either source: on an extracted netlist it is vacuous, and on the schematic it has
+    not been run since the layout;
+  - process MC (`mc`), never run;
+  - the loop fixture (`s2d_mpdda_pd_sel.yaml`).
 
-**Rerunning:**
-- Schematic: `make sim-cace` (all 14 groups), or `make sim-cace CACE_GROUPS=<group>`.
-- Post-layout: add a `layout:` key to `paths:` in both yamls and pass `-s` explicitly. Without the key, CACE silently
-  falls back to the schematic.
-- Extraction mode: use `EXT_MODE=2` (C-coupled, reproducible). Full RC is not reproducible.
-- Mismatch Monte Carlo (`mm_params`) runs on `-s schematic` only: on an extracted netlist it is vacuous. Process MC
-  (`mc_params`, `tt_stat`) survives extraction.
-- PEX was not run for the macro in C3 (not asked for); the lead's magic C-coupled extractions for the routing
-  evaluation are on the notes branch.
+**Running:**
+- `make sim-cace` for the schematic, `make magic-pex EXT_MODE=2` then `make sim-cace CACE_SOURCE=pex` for the extracted
+  netlist; `CACE_GROUPS=<groups>` for a subset.
+- The extraction lacks the vss port (vss joins iovss through the substrate). `scripts/pex_add_port.py` adds it, tied
+  to iovss by 1 Ω as the sheet's Rsub.
+- CACE netlists the testbenches with the PDK xschemrc only. `sim-cace` therefore exports the other macros' symbol
+  folders as `XSCHEM_USER_LIBRARY_PATH`, so that `en_ctrl_3v3` / `bias_gen_pd` next to the pad are found. Without it
+  every testbench lost both blocks.
+- The templates use ngspice's default sparse solver since 2026-11-05. With `klu`, the op failed in 7 schematic
+  `dc_params` runs at −40 °C (in unit_r2's 4-segment rhigh chain) and in one extracted `dc_ibias` run, even after
+  gmin and source stepping and the transient op.
+- Full-RC extraction is not reproducible; keep `EXT_MODE=2`.
 
 ## Not done
 
-- PEX and post-layout CACE (the committed CACE results predate the layout; see "CACE" above); ESD and latch-up
-  simulation; the unpowered pad.
+- Mismatch and process Monte Carlo after the layout (see "CACE" above); ESD and latch-up simulation; the unpowered pad.
 - The open points of `FILL_IN.md`.
 - `testbenches/xschem/simulations/sg13cmos5l_IOPadSingle2Diff.spice` is the netlist generated on 2026-10-20
   (with the placeholder); it is regenerated when the top sheet is netlisted in xschem.
