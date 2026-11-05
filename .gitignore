@@ -23,3 +23,13 @@ sim_build/
 /macros/counter/flow/final
 /macros/counter/fpga/*/build/
 save_from_claudes_fuckup
+# sim-cace CACE_SOURCE=pex run folders and the library-path file of sim-cace (macros/sg13cmos5l_IOPadSingle2Diff, C3)
+/macros/*/verification/cace/_runs_pex
+/macros/*/verification/cace/_docs_pex
+/macros/*/verification/cace/netlist_pex
+/macros/*/verification/cace/layout_pex
+/macros/*/verification/cace/templates_pex
+/macros/*/verification/cace/_*_pex.yaml
+/macros/*/verification/cace/.xschem_library_path*
+# the s2d pad's CACE plots are not shipped (macro README, "Results"); make sim-cace regenerates them
+/macros/sg13cmos5l_IOPadSingle2Diff/verification/cace/results/**/*.png

@@ -3,6 +3,7 @@
 #
 # sg13cmos5l_IOPadSingle2Diff: derived 2026-10-20 from macros/inverter/Makefile. Changed: TOP, sim-cace (loop over CACE_GROUPS,
 # results/<TOP>/ with CSV), spec-table, sim-all = sim-cace, and clean keeps verification/cace/results.
+# 2026-11-05 (C3): magic-pex adds the substrate-joined vss port (pex_add_port.py); sim-cace CACE_SOURCE=pex.
 
 MAKEFILE_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
@@ -125,24 +126,65 @@ CACE_GROUPS ?= dc_params range_params window_params dc_sel_params dc_sel3_params
 CACE_JOBS   ?= 1
 CACE_SCRIPTS := $(MAKEFILE_DIR)/../../scripts/cace
 
-# Per group: run CACE on the schematic netlist, keep plots, the CACE summary and a CSV of all runs under
-# results/$(TOP)/, then drop the run folder. A group that misses a spec makes make fail at the END.
+# CACE netlist source (C3, 2026-11-05): schematic (default), or pex = the magic C-coupled extraction of the layout
+# (make magic-pex EXT_MODE=2 first: netlist/pex/$(TOP)_magic_pex_2.spice, vss tied to iovss by 1 Ohm as the sheet's
+# Rsub). pex runs a copy of the yaml with its own runs / netlist / docs folders and a layout path, so that a schematic
+# and a pex run can go side by side; CACE takes the prepared netlist cace/netlist_pex/pex/$(TOP).spice as up to date
+# (newer than the layout, layout_pex/$(TOP).gds -> the .klay.gds), the capacitor-only nodes tied to iovss by 1 TOhm
+# (pex_for_sim.py). The pex runs use a copy of the templates without ngspice's klu solver (templates_pex/): with klu,
+# the op of dc_ibias (ss, 4 uA) found no solution on the extracted netlist (gmin, source stepping and the transient op
+# all failed), with the default sparse solver it converges directly. Results go to results/$(TOP)_pex/. The mismatch
+# groups are left out for pex: on an extracted netlist they are vacuous (no mm_ok).
+# Override with: make sim-cace CACE_SOURCE=pex [CACE_GROUPS=<groups>]
+CACE_SOURCE ?= schematic
+_PEX        := $(filter pex,$(CACE_SOURCE))
+CACE_RES    := results/$(TOP)$(if $(_PEX),_pex)
+CACE_YAML   := $(if $(_PEX),_$(TOP)_pex.yaml,$(TOP).yaml)
+CACE_RUNS   := _runs$(if $(_PEX),_pex)
+CACE_NET    := netlist$(if $(_PEX),_pex)
+CACE_DOCS   := _docs$(if $(_PEX),_pex)
+CACE_RUN_GROUPS := $(if $(_PEX),$(filter-out ac_mm_params mm_params,$(CACE_GROUPS)),$(CACE_GROUPS))
+PEX_NET     := ../../$(NET_PEX_DIR)/$(TOP)_magic_pex_2.spice
+
+# CACE netlists each testbench with the PDK xschemrc only, so the symbols of other macros that a template places next
+# to the DUT (en_ctrl_3v3, bias_gen_pd since the C3 backannotation) are not found. The PDK xschemrc appends
+# $XSCHEM_USER_LIBRARY_PATH: sim-cace exports there the other macros' entries of this macro's xschemrc (not this macro's
+# own folders, so that the testbenches keep CACE's primitive copy of the DUT symbol). XLP_FILE holds them meanwhile.
+XLP_FILE    := .xschem_library_path$(if $(_PEX),_pex)
+
+# Per group: run CACE on the schematic (or pex) netlist, keep plots, the CACE summary and a CSV of all runs under
+# results/$(TOP)/ (results/$(TOP)_pex/), then drop the run folder. A group that misses a spec makes make fail at the END.
 # (Scheme of chipalooza2/levelshifters/ls_pair/cace.mk.)
-sim-cace: ## Run CACE (-s schematic) and collect plots, summaries and CSV in verification/cace/results/<TOP>/
-	cd $(CACE_DIR) && mkdir -p results/$(TOP) && status=0 ; \
-	for g in $(CACE_GROUPS); do \
-	  rm -rf _runs/RUN_* ; \
-	  cace $(TOP).yaml -s schematic -p $$g -j $(CACE_JOBS) --no-progress-bar || status=1 ; \
-	  cp _runs/RUN_*/parameters/$$g/*.png results/$(TOP)/ 2>/dev/null ; \
-	  cp _runs/RUN_*/summary.md results/$(TOP)/summary_$$g.md ; \
-	  python3 $(CACE_SCRIPTS)/cace_to_csv.py $(TOP).yaml $$g _runs/RUN_* results/$(TOP)/$$g.csv || status=1 ; \
-	  rm -rf _runs/RUN_* ; \
+sim-cace: ## Run CACE and collect plots, summaries and CSV in verification/cace/results/<TOP>[_pex]/ (usage: make sim-cace [CACE_SOURCE=<schematic|pex>] [CACE_GROUPS=<groups>])
+	cd $(CACE_DIR) && mkdir -p $(CACE_RES) && status=0 && \
+	xschem -x -q -r --rcfile $(MAKEFILE_DIR)/$(XSCHEM_SCH_DIR)/xschemrc \
+	  --command "set fp [open $(XLP_FILE) w]; puts \$$fp \$$XSCHEM_LIBRARY_PATH; close \$$fp" > /dev/null 2>&1 ; \
+	export XSCHEM_USER_LIBRARY_PATH=$$(tr ':' '\n' < $(XLP_FILE) | grep '/macros/' | grep -v '^$(MAKEFILE_DIR)/' | paste -sd: -) ; \
+	test -n "$$XSCHEM_USER_LIBRARY_PATH" || { echo "ERROR: no macro library path from $(XSCHEM_SCH_DIR)/xschemrc" ; exit 1 ; } ; \
+	echo "XSCHEM_USER_LIBRARY_PATH=$$XSCHEM_USER_LIBRARY_PATH" ; \
+	if [ -n "$(_PEX)" ]; then \
+	  test -f $(PEX_NET) || { echo "ERROR: $(PEX_NET) missing: run make magic-pex EXT_MODE=2 first" ; exit 1 ; } ; \
+	  sed -e 's|^  runs:.*|  runs:             cace/$(CACE_RUNS)\n  templates:        cace/templates_pex|' -e 's|^  documentation:.*|  documentation:    cace/$(CACE_DOCS)|' \
+	      -e 's|^  netlist:.*|  netlist:          cace/$(CACE_NET)\n  layout:           cace/layout_pex|' $(TOP).yaml > $(CACE_YAML) && \
+	  mkdir -p templates_pex && cp templates/*.sch templates/xschemrc templates_pex/ && \
+	  sed -i 's/^\(\.options* .*\)\bklu \(.*\)$$/\1\2/' templates_pex/*.sch && \
+	  mkdir -p layout_pex $(CACE_NET)/pex && ln -sf ../../../$(LAY_DIR)/klayout/$(TOP).klay.gds layout_pex/$(TOP).gds && \
+	  python3 $(CACE_SCRIPTS)/pex_for_sim.py $(PEX_NET) $(CACE_NET)/pex/$(TOP).spice --tie iovss 1e12 && \
+	  sed -i 's/\b$(TOP)_pex\b/$(TOP)/g' $(CACE_NET)/pex/$(TOP).spice ; \
+	fi && \
+	for g in $(CACE_RUN_GROUPS); do \
+	  rm -rf $(CACE_RUNS)/RUN_* ; \
+	  cace $(CACE_YAML) -s $(CACE_SOURCE) -p $$g -j $(CACE_JOBS) --no-progress-bar || status=1 ; \
+	  cp $(CACE_RUNS)/RUN_*/parameters/$$g/*.png $(CACE_RES)/ 2>/dev/null ; \
+	  cp $(CACE_RUNS)/RUN_*/summary.md $(CACE_RES)/summary_$$g.md ; \
+	  python3 $(CACE_SCRIPTS)/cace_to_csv.py $(TOP).yaml $$g $(CACE_RUNS)/RUN_* $(CACE_RES)/$$g.csv || status=1 ; \
+	  rm -rf $(CACE_RUNS)/RUN_* ; \
 	done ; \
-	rm -rf _runs _docs netlist ; exit $$status
+	rm -rf $(CACE_RUNS) $(CACE_DOCS) $(CACE_NET) $(XLP_FILE) $(if $(_PEX),$(CACE_YAML) layout_pex templates_pex) ; exit $$status
 .PHONY: sim-cace
 
-spec-table: ## Print limit and worst case per quantity, from the yaml and results/<TOP>/*.csv
-	cd $(CACE_DIR) && python3 $(CACE_SCRIPTS)/spec_table.py $(TOP).yaml results/$(TOP)
+spec-table: ## Print limit and worst case per quantity, from the yaml and results/<TOP>[_pex]/*.csv (usage: make spec-table [CACE_SOURCE=pex])
+	cd $(CACE_DIR) && python3 $(CACE_SCRIPTS)/spec_table.py $(TOP).yaml $(CACE_RES)
 .PHONY: spec-table
 
 sim-all: ## Simulate the macro
@@ -369,6 +411,7 @@ magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make 
 	sak-pex.sh -d -m $(EXT_MODE) -n $(CELL)_pex -t $(THRESHOLD) -r $(MINRES) -y $(MINDELAY) -w $(NET_PEX_DIR) $(LAY_DIR)/$(_LAY_SUBDIR)/$(CELL).$(_GDS_EXT)
 	mv $(NET_PEX_DIR)/$(CELL).pex.spice $(NET_PEX_DIR)/$(CELL)_magic_pex_$(EXT_MODE).spice
 	rm -f $(NET_PEX_DIR)/pex_$(CELL).tcl
+	$(if $(filter $(TOP),$(CELL)),python3 $(SCRIPTS_DIR)/pex_add_port.py $(NET_PEX_DIR)/$(CELL)_magic_pex_$(EXT_MODE).spice $(CELL)_pex vss iovss 1)
 	@if [ -f $(XSCHEM_SCH_DIR)/$(CELL)_pex.sym ]; then \
 		echo "Reordering pins in $(CELL)_magic_pex_$(EXT_MODE).spice to match $(CELL)_pex.sym..."; \
 		sak-pin-reorder.py $(XSCHEM_SCH_DIR)/$(CELL)_pex.sym $(NET_PEX_DIR)/$(CELL)_magic_pex_$(EXT_MODE).spice --format spice; \
