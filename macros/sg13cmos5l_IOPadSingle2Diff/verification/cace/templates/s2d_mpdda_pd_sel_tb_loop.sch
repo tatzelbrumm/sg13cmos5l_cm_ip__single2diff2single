@@ -58,7 +58,7 @@ C {devices/code_shown.sym} 1700 -460 0 0 {name=NGSPICE simulator=ngspice only_to
 value="
 .include CACE\{DUT_path\}
 .temp CACE\{temp\}
-.options savecurrents klu method=gear reltol=1e-4 abstol=1e-15 gmin=1e-15 SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
+.options savecurrents method=gear reltol=1e-4 abstol=1e-15 gmin=1e-15 SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 .option warn=1
 .control
 save v(voutp) v(voutn) v(fbp) v(fbn)

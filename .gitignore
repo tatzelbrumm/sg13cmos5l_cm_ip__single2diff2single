@@ -28,7 +28,6 @@ save_from_claudes_fuckup
 /macros/*/verification/cace/_docs_pex
 /macros/*/verification/cace/netlist_pex
 /macros/*/verification/cace/layout_pex
-/macros/*/verification/cace/templates_pex
 /macros/*/verification/cace/_*_pex.yaml
 /macros/*/verification/cace/.xschem_library_path*
 # the s2d pad's CACE plots are not shipped (macro README, "Results"); make sim-cace regenerates them

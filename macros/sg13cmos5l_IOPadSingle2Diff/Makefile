@@ -131,10 +131,10 @@ CACE_SCRIPTS := $(MAKEFILE_DIR)/../../scripts/cace
 # Rsub). pex runs a copy of the yaml with its own runs / netlist / docs folders and a layout path, so that a schematic
 # and a pex run can go side by side; CACE takes the prepared netlist cace/netlist_pex/pex/$(TOP).spice as up to date
 # (newer than the layout, layout_pex/$(TOP).gds -> the .klay.gds), the capacitor-only nodes tied to iovss by 1 TOhm
-# (pex_for_sim.py). The pex runs use a copy of the templates without ngspice's klu solver (templates_pex/): with klu,
-# the op of dc_ibias (ss, 4 uA) found no solution on the extracted netlist (gmin, source stepping and the transient op
-# all failed), with the default sparse solver it converges directly. Results go to results/$(TOP)_pex/. The mismatch
-# groups are left out for pex: on an extracted netlist they are vacuous (no mm_ok).
+# (pex_for_sim.py). Results go to results/$(TOP)_pex/. The mismatch groups are left out for pex: on an extracted
+# netlist they are vacuous (no mm_ok). The templates use ngspice's default sparse solver since 2026-11-05: with klu
+# the op failed on both sources (schematic: dc_params at -40 C, in unit_r2's 4-segment rhigh chain; pex: dc_ibias at
+# ss, 4 uA), gmin and source stepping and the transient op included; the sparse solver converges on all of them.
 # Override with: make sim-cace CACE_SOURCE=pex [CACE_GROUPS=<groups>]
 CACE_SOURCE ?= schematic
 _PEX        := $(filter pex,$(CACE_SOURCE))
@@ -164,10 +164,8 @@ sim-cace: ## Run CACE and collect plots, summaries and CSV in verification/cace/
 	echo "XSCHEM_USER_LIBRARY_PATH=$$XSCHEM_USER_LIBRARY_PATH" ; \
 	if [ -n "$(_PEX)" ]; then \
 	  test -f $(PEX_NET) || { echo "ERROR: $(PEX_NET) missing: run make magic-pex EXT_MODE=2 first" ; exit 1 ; } ; \
-	  sed -e 's|^  runs:.*|  runs:             cace/$(CACE_RUNS)\n  templates:        cace/templates_pex|' -e 's|^  documentation:.*|  documentation:    cace/$(CACE_DOCS)|' \
+	  sed -e 's|^  runs:.*|  runs:             cace/$(CACE_RUNS)|' -e 's|^  documentation:.*|  documentation:    cace/$(CACE_DOCS)|' \
 	      -e 's|^  netlist:.*|  netlist:          cace/$(CACE_NET)\n  layout:           cace/layout_pex|' $(TOP).yaml > $(CACE_YAML) && \
-	  mkdir -p templates_pex && cp templates/*.sch templates/xschemrc templates_pex/ && \
-	  sed -i 's/^\(\.options* .*\)\bklu \(.*\)$$/\1\2/' templates_pex/*.sch && \
 	  mkdir -p layout_pex $(CACE_NET)/pex && ln -sf ../../../$(LAY_DIR)/klayout/$(TOP).klay.gds layout_pex/$(TOP).gds && \
 	  python3 $(CACE_SCRIPTS)/pex_for_sim.py $(PEX_NET) $(CACE_NET)/pex/$(TOP).spice --tie iovss 1e12 && \
 	  sed -i 's/\b$(TOP)_pex\b/$(TOP)/g' $(CACE_NET)/pex/$(TOP).spice ; \
@@ -180,7 +178,7 @@ sim-cace: ## Run CACE and collect plots, summaries and CSV in verification/cace/
 	  python3 $(CACE_SCRIPTS)/cace_to_csv.py $(TOP).yaml $$g $(CACE_RUNS)/RUN_* $(CACE_RES)/$$g.csv || status=1 ; \
 	  rm -rf $(CACE_RUNS)/RUN_* ; \
 	done ; \
-	rm -rf $(CACE_RUNS) $(CACE_DOCS) $(CACE_NET) $(XLP_FILE) $(if $(_PEX),$(CACE_YAML) layout_pex templates_pex) ; exit $$status
+	rm -rf $(CACE_RUNS) $(CACE_DOCS) $(CACE_NET) $(XLP_FILE) $(if $(_PEX),$(CACE_YAML) layout_pex) ; exit $$status
 .PHONY: sim-cace
 
 spec-table: ## Print limit and worst case per quantity, from the yaml and results/<TOP>[_pex]/*.csv (usage: make spec-table [CACE_SOURCE=pex])
