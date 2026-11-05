@@ -98,3 +98,6 @@
 
 [2026-10-30_opus_c1_core_pex_bias_verification.md](2026-10-30_opus_c1_core_pex_bias_verification.md)
 : Opus cloud session, 30–31 Oct: C1 brief carried out (bg_core_pd DRC, LVS and PEX; both cores' extractions as switchable views in the bias_sel_pd CACE suite, new psrr, start-up and worst-case mismatch groups), with the convergence fixes the extracted netlists needed.
+
+[2026-11-03_opus_c3_s2d_pad_layout.md](2026-11-03_opus_c3_s2d_pad_layout.md)
+: Cloud session C3: the s2d pad cell `sg13cmos5l_IOPadSingle2Diff` from a cleaned-out template through agents P / N / F / BA to a backannotated, DRC / LVS-clean macro, then magic PEX and post-layout CACE.
