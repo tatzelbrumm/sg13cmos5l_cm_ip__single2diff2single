@@ -45,9 +45,9 @@
 | Input noise density at 1 kHz | ngspice              | En_1k                |             any |          ​ |          any |          ​ | 1000 nV/rtHz |          ​ |   Skip 🟧    |
 | Input noise density at 100 kHz | ngspice              | En_100k              |             any |          ​ |          any |          ​ |  250 nV/rtHz |          ​ |   Skip 🟧    |
 | Differential output noise, 10 Hz - 10 MHz | ngspice              | Vn_out               |             any |          ​ |          any |          ​ |      1000 uV |          ​ |   Skip 🟧    |
-| IO ring current, off | ngspice              | Iio_pd               |             any |   0.053 nA |          any | 233.986 nA |      1000 nA | 597.105 nA |   Pass ✅    |
+| IO ring current, off | ngspice              | Iio_pd               |             any |   0.059 nA |          any | 233.906 nA |      1000 nA | 597.111 nA |   Pass ✅    |
 | Core ring current, off | ngspice              | Icore_pd             |             any |  -0.000 nA |          any |   0.119 nA |       100 nA |   4.831 nA |   Pass ✅    |
-| Pad input leakage, off | ngspice              | Ipad_pd              |         -100 nA |  -7.640 nA |          any |   0.163 nA |       100 nA |   8.416 nA |   Pass ✅    |
+| Pad input leakage, off | ngspice              | Ipad_pd              |         -100 nA |  -7.640 nA |          any |   0.098 nA |       100 nA |   5.876 nA |   Pass ✅    |
 | Internal enable      | ngspice              | Ven3                 |             any |    0.000 V |          any |    0.000 V |        0.1 V |    0.000 V |   Pass ✅    |
 | Differential output, off | ngspice              | Vod_pd               |           -1 mV |  -0.001 mV |          any |  -0.000 mV |         1 mV |   0.000 mV |   Pass ✅    |
 | Output common mode, off | ngspice              | Voc_pd               |           -1 mV |  -0.000 mV |          any |   0.000 mV |         1 mV |   0.000 mV |   Pass ✅    |
