@@ -5,11 +5,11 @@
 
 |      Parameter       |         Tool         |     Result      | Min Limit  |  Min Value   | Typ Target |  Typ Value   | Max Limit  |  Max Value   |  Status  |
 | :------------------- | :------------------- | :-------------- | ---------: | -----------: | ---------: | -----------: | ---------: | -----------: | :------: |
-| Gain                 | ngspice              | Gain                 |            1.99 |    1.99849 |            2 |    1.99898 |         2.01 |    1.99931 |   Pass ✅    |
-| Input offset (systematic) | ngspice              | Vos_in               |           -1 mV |  -0.000 mV |         0 mV |  -0.000 mV |         1 mV |   0.000 mV |   Pass ✅    |
-| Integral nonlinearity | ngspice              | INL                  |             any |   0.086 mV |          any |   0.161 mV |         2 mV |   1.060 mV |   Pass ✅    |
-| Output common-mode error | ngspice              | Vcm_err              |          -30 mV |   4.974 mV |          any |  10.436 mV |        30 mV |  17.968 mV |   Pass ✅    |
-| IO ring current      | ngspice              | Iio                  |             any | 124.694 uA |          any | 125.645 uA |       135 uA | 127.024 uA |   Pass ✅    |
+| Gain                 | ngspice              | Gain                 |            1.99 |          ​ |            2 |          ​ |         2.01 |          ​ |   Error ❗   |
+| Input offset (systematic) | ngspice              | Vos_in               |           -1 mV |          ​ |         0 mV |          ​ |         1 mV |          ​ |   Error ❗   |
+| Integral nonlinearity | ngspice              | INL                  |             any |          ​ |          any |          ​ |         2 mV |          ​ |   Error ❗   |
+| Output common-mode error | ngspice              | Vcm_err              |          -30 mV |          ​ |          any |          ​ |        30 mV |          ​ |   Error ❗   |
+| IO ring current      | ngspice              | Iio                  |             any |          ​ |          any |          ​ |       135 uA |          ​ |   Error ❗   |
 | Gain vs vref and vcm | ngspice              | Gain                 |             any |          ​ |            2 |          ​ |          any |          ​ |   Skip 🟧    |
 | Integral nonlinearity vs vref and vcm | ngspice              | INL                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Output common-mode error vs vref and vcm | ngspice              | Vcm_err              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
