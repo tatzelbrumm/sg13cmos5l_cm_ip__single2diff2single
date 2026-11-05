@@ -404,3 +404,5 @@ The sub-macros have no such target: the box is only needed by the cell the chip 
 Copyright 2026 Tim Edwards and Simon Dorrer.
 
 Licensed under the **Solderpad Hardware License v2.1** (`Apache-2.0 WITH SHL-2.1`), see [`LICENSE`](LICENSE). Source files carry an `SPDX-FileCopyrightText` header; layout data, netlists, renders and generated reports cannot carry one and are covered by this notice.
+
+**Branch `harness-test`:** `final/gds/slot_7.gds` is a plumbing demo for the harness custom-pad test, not a design; see `macros/slot/harness_test/README.md` and `docs/harness_test.md`.
