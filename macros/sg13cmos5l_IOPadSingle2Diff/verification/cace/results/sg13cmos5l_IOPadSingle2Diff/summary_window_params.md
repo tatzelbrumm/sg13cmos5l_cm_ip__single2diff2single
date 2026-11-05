@@ -14,7 +14,7 @@
 | Integral nonlinearity vs vref and vcm | ngspice              | INL                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Output common-mode error vs vref and vcm | ngspice              | Vcm_err              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Input range, low end | ngspice              | Vin_min              |             any |    0.000 V |          any |    0.000 V |        0.1 V |    0.087 V |   Pass ✅    |
-| Input range, high end | ngspice              | Vin_max              |           1.0 V |    1.059 V |          any |    1.195 V |          any |    1.300 V |   Pass ✅    |
+| Input range, high end | ngspice              | Vin_max              |           1.0 V |    1.057 V |          any |    1.194 V |          any |    1.299 V |   Pass ✅    |
 | Gain vs bias select  | ngspice              | Gain                 |            1.99 |          ​ |            2 |          ​ |         2.01 |          ​ |   Skip 🟧    |
 | Input offset (systematic) vs bias select | ngspice              | Vos_in               |           -1 mV |          ​ |         0 mV |          ​ |         1 mV |          ​ |   Skip 🟧    |
 | Integral nonlinearity vs bias select | ngspice              | INL                  |             any |          ​ |          any |          ​ |         2 mV |          ​ |   Skip 🟧    |
