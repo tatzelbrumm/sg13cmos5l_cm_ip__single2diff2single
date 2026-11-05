@@ -25,11 +25,11 @@
 | Integral nonlinearity, sel 11 | ngspice              | INL                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Output common-mode error, sel 11 | ngspice              | Vcm_err              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | IO ring current, sel 11 | ngspice              | Iio                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Gain vs ibias        | ngspice              | Gain                 |            1.99 |          ​ |            2 |          ​ |         2.01 |          ​ |   Error ❗   |
-| Input offset (systematic) vs ibias | ngspice              | Vos_in               |           -1 mV |          ​ |         0 mV |          ​ |         1 mV |          ​ |   Error ❗   |
-| Integral nonlinearity vs ibias | ngspice              | INL                  |             any |          ​ |          any |          ​ |          any |          ​ |   Error ❗   |
-| Output common-mode error vs ibias | ngspice              | Vcm_err              |          -30 mV |          ​ |          any |          ​ |        30 mV |          ​ |   Error ❗   |
-| IO ring current vs ibias | ngspice              | Iio                  |             any |          ​ |          any |          ​ |          any |          ​ |   Error ❗   |
+| Gain vs ibias        | ngspice              | Gain                 |            1.99 |    1.99871 |            2 |    1.99896 |         2.01 |    1.99924 |   Pass ✅    |
+| Input offset (systematic) vs ibias | ngspice              | Vos_in               |           -1 mV |  -0.000 mV |         0 mV |  -0.000 mV |         1 mV |  -0.000 mV |   Pass ✅    |
+| Integral nonlinearity vs ibias | ngspice              | INL                  |             any |   0.036 mV |          any |   0.152 mV |          any |   0.352 mV |   Pass ✅    |
+| Output common-mode error vs ibias | ngspice              | Vcm_err              |          -30 mV |   8.667 mV |          any |  10.491 mV |        30 mV |  11.682 mV |   Pass ✅    |
+| IO ring current vs ibias | ngspice              | Iio                  |             any |  69.711 uA |          any | 115.536 uA |          any | 161.433 uA |   Pass ✅    |
 | Closed-loop gain at 1 kHz | ngspice              | Acl_dB               |             any |          ​ |      6.02 dB |          ​ |          any |          ​ |   Skip 🟧    |
 | Closed-loop -3 dB bandwidth | ngspice              | f3dB                 |           1 MHz |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Output common-mode response to iovdd at 1 kHz | ngspice              | CMvdd_1k             |             any |          ​ |          any |          ​ |       -30 dB |          ​ |   Skip 🟧    |
