@@ -51,11 +51,11 @@
 | Internal enable      | ngspice              | Ven3                 |             any |          ​ |          any |          ​ |        0.1 V |          ​ |   Skip 🟧    |
 | Differential output, off | ngspice              | Vod_pd               |           -1 mV |          ​ |          any |          ​ |         1 mV |          ​ |   Skip 🟧    |
 | Output common mode, off | ngspice              | Voc_pd               |           -1 mV |          ​ |          any |          ​ |         1 mV |          ​ |   Skip 🟧    |
-| Enable time          | ngspice              | t_on                 |             any |   1.265 us |          any |   1.299 us |         3 us |   1.305 us |   Pass ✅    |
-| Output CM glitch, high | ngspice              | Vc_max               |             any |    0.210 V |          any |    0.234 V |          any |    0.270 V |   Pass ✅    |
-| Output CM glitch, low | ngspice              | Vc_min               |             any |   -0.017 V |          any |   -0.004 V |          any |   -0.003 V |   Pass ✅    |
+| Enable time          | ngspice              | t_on                 |             any |   1.359 us |          any |   1.401 us |         3 us |   1.430 us |   Pass ✅    |
+| Output CM glitch, high | ngspice              | Vc_max               |             any |    0.211 V |          any |    0.235 V |          any |    0.270 V |   Pass ✅    |
+| Output CM glitch, low | ngspice              | Vc_min               |             any |   -0.011 V |          any |   -0.004 V |          any |   -0.003 V |   Pass ✅    |
 | Differential output at the end | ngspice              | Vd_end               |             any |    0.500 V |        0.5 V |    0.500 V |          any |    0.500 V |   Pass ✅    |
-| IO ring current, enabled | ngspice              | Iio_on               |             any | 125.272 uA |          any | 125.645 uA |          any | 126.249 uA |   Pass ✅    |
+| IO ring current, enabled | ngspice              | Iio_on               |             any | 115.179 uA |          any | 115.536 uA |          any | 116.115 uA |   Pass ✅    |
 | Input offset - Mismatch | ngspice              | Vos_in               |          -20 mV |          ​ |          any |          ​ |        20 mV |          ​ |   Skip 🟧    |
 | Gain - Mismatch      | ngspice              | Gain                 |            1.93 |          ​ |          any |          ​ |         2.07 |          ​ |   Skip 🟧    |
 | Output common-mode error - Mismatch | ngspice              | Vcm_err              |          -60 mV |          ​ |          any |          ​ |        60 mV |          ​ |   Skip 🟧    |
