@@ -25,6 +25,7 @@ sim_build/
 save_from_claudes_fuckup
 # sim-cace CACE_SOURCE=pex run folders and the library-path file of sim-cace (macros/sg13cmos5l_IOPadSingle2Diff, C3)
 /macros/*/verification/cace/_runs_pex
+/macros/*/verification/cace/_docs
 /macros/*/verification/cace/_docs_pex
 /macros/*/verification/cace/netlist_pex
 /macros/*/verification/cace/layout_pex
