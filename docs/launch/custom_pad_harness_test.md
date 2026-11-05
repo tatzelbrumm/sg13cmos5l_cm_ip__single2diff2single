@@ -4,15 +4,13 @@ Prepared 2026-11-05. NOT LAUNCHED. Nothing below has been run.
 
 ## Before you launch (you, about 5 minutes)
 
-1. **Pad GDS must be on GitHub.** The cloud agent cannot see your disk. Run these three commands
-   (the repo is the slot repo; the branch is whichever you want the agent to read, the commands push `main`):
-
-   ```sh
-   cd ~/EDA/sg13cmos5l_cm_ip__single2diff2single
-   git add macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds macros/sg13cmos5l_IOPadSingle2Diff/layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds macros/slot/layout/klayout/slot.klay.gds
-   git commit -m "pad GDS and slot frame for harness test" && git push origin main
-   ```
-   (If you work on another branch, push that one and write its name into the prompt where it says `main`.)
+1. **Pad GDS must be on GitHub: it already is (checked 2026-11-05 18:5x, no git run on your computer).**
+   Your local checkout is on branch `toplevel`, and `origin/toplevel` (commit 7e7cde1, 2026-11-05 18:51)
+   holds the two pad GDS and `slot.klay.gds` byte-identical to your local files (git blob hashes d09ed05,
+   c871a04, 1b327c3 match). `origin/main` does NOT have them: it is still at 60f270a from 2026-09-30.
+   So the agent must read the slot repo branch `toplevel`, and the three commands I gave earlier
+   (which pushed `main`) are NOT needed and must not be used. Nothing to do here, except: if you commit
+   or push anything else to `toplevel` before launching, that is fine, the agent takes the tip.
 
 2. **Cloud environment.** claude.ai/code, "Edit cloud environment":
    Setup script = `setup-cloud.sh` from tatzelbrumm/claude-cloud-config.
@@ -43,8 +41,10 @@ and leave a reproducible record. Everything you do goes on sandbox branches of t
    tape-out-ready design). Create branch `custom-pad-test` from the fork's `main`. Push ONLY that branch.
    Never push to `main` or any other existing branch. Never push, open a PR, issue or comment to
    `RTimothyEdwards/*`. Do not add an upstream remote with push URL. No force-push.
-2. Slot repo: `tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single`. Read from `main`. The only thing you
-   may push there is a new branch `harness-test`. Never switch a checkout to the orphan branch
+2. Slot repo: `tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single`. Read from branch `toplevel`, NOT from
+   `main` (`main` is stale and lacks the pad GDS; the pad GDS and `slot.klay.gds` are on `toplevel`).
+   Create `harness-test` from the tip of `toplevel` and record its commit hash in the findings. The only
+   thing you may push there is that new branch `harness-test`. Never push to `toplevel`. Never switch a checkout to the orphan branch
    `sudel_buecher` (it empties the working tree). Its `CLAUDE.md` applies; its Makefile targets
    need `export PDK_ROOT=/foss/pdks; source .designinit`.
 3. Additive changes only to the harness: prefer new files and new branches inside existing scripts over
