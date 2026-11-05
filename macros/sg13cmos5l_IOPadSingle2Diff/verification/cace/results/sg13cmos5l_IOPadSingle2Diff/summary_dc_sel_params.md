@@ -15,11 +15,11 @@
 | Output common-mode error vs vref and vcm | ngspice              | Vcm_err              |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Input range, low end | ngspice              | Vin_min              |             any |          ​ |          any |          ​ |        0.1 V |          ​ |   Skip 🟧    |
 | Input range, high end | ngspice              | Vin_max              |           1.0 V |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
-| Gain vs bias select  | ngspice              | Gain                 |            1.99 |    1.99882 |            2 |    1.99898 |         2.01 |    1.99917 |   Pass ✅    |
-| Input offset (systematic) vs bias select | ngspice              | Vos_in               |           -1 mV |  -0.000 mV |         0 mV |  -0.000 mV |         1 mV |   0.000 mV |   Pass ✅    |
-| Integral nonlinearity vs bias select | ngspice              | INL                  |             any |   0.042 mV |          any |   0.155 mV |         2 mV |   0.436 mV |   Pass ✅    |
-| Output common-mode error vs bias select | ngspice              | Vcm_err              |          -30 mV |   6.350 mV |          any |  10.430 mV |        30 mV |  14.069 mV |   Pass ✅    |
-| IO ring current vs bias select | ngspice              | Iio                  |             any |  82.394 uA |          any | 133.444 uA |       220 uA | 187.856 uA |   Pass ✅    |
+| Gain vs bias select  | ngspice              | Gain                 |            1.99 |    1.99881 |            2 |    1.99897 |         2.01 |    1.99917 |   Pass ✅    |
+| Input offset (systematic) vs bias select | ngspice              | Vos_in               |           -1 mV |  -0.000 mV |         0 mV |  -0.000 mV |         1 mV |   0.001 mV |   Pass ✅    |
+| Integral nonlinearity vs bias select | ngspice              | INL                  |             any |   0.043 mV |          any |   0.154 mV |         2 mV |   0.438 mV |   Pass ✅    |
+| Output common-mode error vs bias select | ngspice              | Vcm_err              |          -30 mV |   6.367 mV |          any |  10.467 mV |        30 mV |  14.147 mV |   Pass ✅    |
+| IO ring current vs bias select | ngspice              | Iio                  |             any |  76.023 uA |          any | 122.266 uA |       220 uA | 173.602 uA |   Pass ✅    |
 | Gain, sel 11         | ngspice              | Gain                 |             any |          ​ |            2 |          ​ |          any |          ​ |   Skip 🟧    |
 | Input offset (systematic), sel 11 | ngspice              | Vos_in               |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
 | Integral nonlinearity, sel 11 | ngspice              | INL                  |             any |          ​ |          any |          ​ |          any |          ​ |   Skip 🟧    |
