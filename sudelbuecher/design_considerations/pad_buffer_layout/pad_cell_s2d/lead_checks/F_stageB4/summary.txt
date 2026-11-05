@@ -1,0 +1,13 @@
+Lead check of agent F's stage B4 (2026-11-04, about 22:15 CET), pad_candidate.gds 3bfd2c0726f6, pad_candidate.cdl ec55fc18348d (unchanged):
+- rebuild with F's src/run_B4.sh <inputs with P = inputs_B4/P> out/stageB3_v1 <fresh dir>: pad_candidate.gds / .cdl,
+  cells/s2d_block.gds byte-identical; inputs_B4/P/s2d_p3_cells.gds = the lead's P_swap cells
+- XOR against B3 (9d83b857999a): only Metal1 / Via1 inside x 5.83-50.36, y 135.70-136.42 (the gate band)
+- s2d_inputs_c3 inside the pad vs the lead's P_swap cell: drawing layers XOR 0 (only the Metal1 pin boxes 8/2 differ,
+  which F's flow strips, as before)
+- integrated by phase4/integrate_gds.py: f4b0e0732082 (XOR 0 apart from 63/0)
+- IHP DRC on the cell and on the abutment row: run_drc.py "No DRC violations", 0 exceptions; maximal with latch-up 0
+- row_check.py 25 / 25, 0 edges DIFFERENT; deep LVS vs pad_candidate.cdl: match
+- magic C-coupled PEX (sak-pex.sh -m 2) of the macro cell, net_coupling.py against B2 (net_coupling_B2_B4.md):
+  outp - pad 5.729 -> 0.371 fF; pad total 81.85 fF in both (the coupling moved to iovdd)
+- macro make targets: klayout-drc clean, magic-drc clean, klayout-lvs PASS, magic-lvs 76 = 76 devices, 37 = 37 nets,
+  only the vss pin

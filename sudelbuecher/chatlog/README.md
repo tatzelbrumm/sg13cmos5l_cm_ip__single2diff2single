@@ -104,3 +104,6 @@
 
 [2026-11-03_sonnet_slot7_level_shifters_and_transmission_gates.md](2026-11-03_sonnet_slot7_level_shifters_and_transmission_gates.md)
 : Slot 7 integration prep: surveyed the harness for vdd-to-vddh and vddh-to-vdd level shifters and analog-bus transmission gates, to be added as macros; then added the macros `ocd_analog_switches`, `ocd_ls_up_1v2_3v3` and `ocd_ls_dn_3v3_1v2` (sources, CACE suites, KLayout versions of six harness switch layouts converted from Magic; nothing simulated, DRC/LVS not run). Log built from the displayed conversation (no raw transcript was available); the assistant side of the macro work (Turn 5 continued to Turn 8) was lost in a context compaction and is marked as gaps, with the compaction summary appended unchanged; continued 4 Nov with the failed bridge connection and this append. Live/ongoing.
+
+[2026-11-03_opus_c3_s2d_pad_layout.md](2026-11-03_opus_c3_s2d_pad_layout.md)
+: Cloud session C3: the s2d pad cell `sg13cmos5l_IOPadSingle2Diff` from a cleaned-out template through agents P / N / F / BA to a backannotated, DRC / LVS-clean macro, then magic PEX and post-layout CACE.

@@ -1,0 +1,3 @@
+s2d_casc_p_f: Activ bbox (1.41,0.62;51.61,12.19); axes x = 26.51, y = 6.405 um
+  X Cont         XOR    0.2688 um2  in (19.42,2.445;33.6,10.365)
+  summary: max mirror XOR 0.2688 um2, 0 narrow-poly hits

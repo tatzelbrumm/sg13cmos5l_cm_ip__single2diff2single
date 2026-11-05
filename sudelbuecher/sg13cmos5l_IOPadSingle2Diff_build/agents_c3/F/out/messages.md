@@ -69,3 +69,13 @@ Points where the brief was unclear or left a choice. I decided each one myself a
     1 to 7 nets unrouted every time [M]. A full reroute would also have moved nets the brief keeps. So I redrew only
     y's left detour by hand (`src/patch_y.py`, applied to stage B2's routed block); every other shape is stage B2's
     [M: XOR differs only on Metal1 / Via1 / Metal2 inside x 0.66–2.07, y 117.92–149.46].
+
+# Stage B4 (2026-11-04)
+
+15. **vdd needed no reconnection.** No block wiring lands on the inputs' vdd track: the vdd track is joined inside
+    the cell to the tub-end M1 (x 5.28–8.20 / 47.98–50.90), and the block reaches iovdd there [M: the only Via1s on
+    that track in B3 were the cell's own]. So only outp's landing moved (Via1 + M2 pad at x 41.16–41.45, on its
+    existing M1 riser).
+16. **Inputs for B4.** `work/B4/inputs` is `inputs/` with `P` pointing to `inputs_B4/P` (symlinks, in `$WS`).
+    `src/p3lib.py` is now `inputs_B4/P/build_s2d_p3.py`. It builds the tail rows, and the rebuilt `s2d_tails_f.gds`
+    is byte-identical to B3 [M].

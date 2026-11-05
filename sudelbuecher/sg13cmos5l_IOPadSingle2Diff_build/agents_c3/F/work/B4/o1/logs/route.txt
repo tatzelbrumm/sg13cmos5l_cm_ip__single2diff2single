@@ -1,0 +1,4 @@
+patch_b4: s2d_inputs_c3 layers differing: ['19/0', '8/0']
+patch_b4: outp landing (Via1 + M2) moved from block y 110.19..110.45 to 109.71..109.97 at x 41.16..41.45
+fix_block: 0 Metal2 neck fill(s)
+fix_block: trimmed 0.0000 um2 of router Metal2 in the band gaps (0 pieces)

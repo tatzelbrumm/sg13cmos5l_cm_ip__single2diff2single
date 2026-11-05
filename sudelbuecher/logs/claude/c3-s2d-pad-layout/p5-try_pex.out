@@ -1,0 +1,1510 @@
+cd verification/cace && mkdir -p results/sg13cmos5l_IOPadSingle2Diff_pex && status=0 && \
+xschem -x -q -r --rcfile /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/schematic/xschem/xschemrc \
+  --command "set fp [open .xschem_library_path_pex w]; puts \$fp \$XSCHEM_LIBRARY_PATH; close \$fp" > /dev/null 2>&1 ; \
+export XSCHEM_USER_LIBRARY_PATH=$(tr ':' '\n' < .xschem_library_path_pex | grep '/macros/' | grep -v '^/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/' | paste -sd: -) ; \
+test -n "$XSCHEM_USER_LIBRARY_PATH" || { echo "ERROR: no macro library path from schematic/xschem/xschemrc" ; exit 1 ; } ; \
+echo "XSCHEM_USER_LIBRARY_PATH=$XSCHEM_USER_LIBRARY_PATH" ; \
+if [ -n "pex" ]; then \
+  test -f ../../netlist/pex/sg13cmos5l_IOPadSingle2Diff_magic_pex_2.spice || { echo "ERROR: ../../netlist/pex/sg13cmos5l_IOPadSingle2Diff_magic_pex_2.spice missing: run make magic-pex EXT_MODE=2 first" ; exit 1 ; } ; \
+  sed -e 's|^  runs:.*|  runs:             cace/_runs_pex|' -e 's|^  documentation:.*|  documentation:    cace/_docs_pex|' \
+      -e 's|^  netlist:.*|  netlist:          cace/netlist_pex\n  layout:           cace/layout_pex|' sg13cmos5l_IOPadSingle2Diff.yaml > _sg13cmos5l_IOPadSingle2Diff_pex.yaml && \
+  mkdir -p layout_pex netlist_pex/pex && ln -sf ../../../layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds layout_pex/sg13cmos5l_IOPadSingle2Diff.gds && \
+  python3 /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/../../scripts/cace/pex_for_sim.py ../../netlist/pex/sg13cmos5l_IOPadSingle2Diff_magic_pex_2.spice netlist_pex/pex/sg13cmos5l_IOPadSingle2Diff.spice --tie iovss 1e12 && \
+  sed -i 's/\bsg13cmos5l_IOPadSingle2Diff_pex\b/sg13cmos5l_IOPadSingle2Diff/g' netlist_pex/pex/sg13cmos5l_IOPadSingle2Diff.spice ; \
+fi && \
+for g in dc_ibias_params; do \
+  rm -rf _runs_pex/RUN_* ; \
+  cace _sg13cmos5l_IOPadSingle2Diff_pex.yaml -s pex -p $g -j 1 --no-progress-bar || status=1 ; \
+  cp _runs_pex/RUN_*/parameters/$g/*.png results/sg13cmos5l_IOPadSingle2Diff_pex/ 2>/dev/null ; \
+  cp _runs_pex/RUN_*/summary.md results/sg13cmos5l_IOPadSingle2Diff_pex/summary_$g.md ; \
+  python3 /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadSingle2Diff/../../scripts/cace/cace_to_csv.py sg13cmos5l_IOPadSingle2Diff.yaml $g _runs_pex/RUN_* results/sg13cmos5l_IOPadSingle2Diff_pex/$g.csv || status=1 ; \
+  rm -rf _runs_pex/RUN_* ; \
+done ; \
+rm -rf _runs_pex _docs_pex netlist_pex .xschem_library_path_pex _sg13cmos5l_IOPadSingle2Diff_pex.yaml layout_pex ; exit $status
+XSCHEM_USER_LIBRARY_PATH=/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/sg13cmos5l_IOPadDiff2Single/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/bias_sel_pd/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/bias_gen_pd/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/ls_up_1v2_3v3/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/IOPad/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/oa_core_pd/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/bg_core_pd/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/bias_tree_pd/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/bias_tree_noab_pd/schematic/xschem:/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/bias_sel_noab_pd/schematic/xschem
+../../netlist/pex/sg13cmos5l_IOPadSingle2Diff_magic_pex_2.spice -> netlist_pex/pex/sg13cmos5l_IOPadSingle2Diff.spice: 28 capacitor-only nodes tied to iovss through 1e12 Ohm
+[01:09:54] INFO     Maximum number of jobs is 1.        parameter_manager.py:105
+[01:09:54] INFO     Working directory set to '..'       parameter_manager.py:153
+                    ('/home/user/sg13cmos5l_cm_ip__sing                         
+                    le2diff2single/macros/sg13cmos5l_IO                         
+                    PadSingle2Diff').                                           
+[01:09:54] INFO     Starting a new run with tag         parameter_manager.py:624
+                    'RUN_2026-11-05_01-09-54'.                                  
+[01:09:54] INFO     PDK root is '/foss/pdks'.           parameter_manager.py:637
+[01:09:54] INFO     Running parameters: dc_ibias_params          cace_cli.py:327
+[01:09:54] INFO     Generating simulation netlist from    cace_regenerate.py:562
+                    schematic…                                                  
+[01:09:55] INFO     Skipping extraction of pex netlist.   cace_regenerate.py:408
+                    Up to date.                                                 
+[01:09:55] INFO     Extracting layout netlist from        cace_regenerate.py:326
+                    layout…                                                     
+─────────────────────────── Started dc_ibias_params ────────────────────────────
+[01:09:56] INFO     Parameter dc_ibias_params:          parameter_ngspice.py:211
+                    Generating simulation files…                                
+[01:09:56] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:56] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:56] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:56] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:56] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:56] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:56] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_00/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:56] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:56] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:56] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:56] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:56] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:56] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:56] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:56] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:56] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:56] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:56] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_00/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:56] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:56] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:56] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:56] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:56] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:56] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:56] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_01/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:56] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:56] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:56] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:56] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:56] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:56] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:56] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:56] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:56] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:56] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:56] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_01/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:56] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:56] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:56] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:56] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:56] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:56] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:56] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_02/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:56] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:56] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:56] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:56] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:56] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:56] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:56] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:56] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:56] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:56] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:56] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:56] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:56] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_02/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:57] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:57] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:57] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:57] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_03/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:57] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:57] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:57] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_03/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:57] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:57] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:57] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:57] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_04/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:57] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:57] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:57] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_04/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:57] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:57] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:57] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:57] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_05/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:57] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:57] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:57] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_05/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:57] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:57] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:57] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:57] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_06/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:57] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:57] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:57] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_06/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:57] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:57] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:57] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:57] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_07/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:57] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:57] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:57] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_07/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:57] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:57] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:57] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:57] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_08/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:57] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:57] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:57] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_08/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:57] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:57] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:57] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:57] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:57] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_09/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:57] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:57] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:57] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:57] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:57] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:57] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:57] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:57] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:57] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_09/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:58] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:58] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:58] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:58] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_10/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:58] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:58] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:58] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_10/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:58] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:58] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:58] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:58] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_11/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:58] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:58] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:58] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_11/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:58] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:58] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:58] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:58] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_12/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:58] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:58] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:58] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_12/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:58] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:58] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:58] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:58] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_13/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:58] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:58] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:58] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_13/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Subprocess exited with error code 10        parameter.py:431
+[01:09:58] ERROR    Error output generated by subprocess:       parameter.py:435
+[01:09:58] ERROR    Using run time directory XSCHEM_SHAREDIR =  parameter.py:437
+                    /foss/tools/xschem/share/xschem                             
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/tools/xschem/share/xschem/xschemrc                    
+                    init file                                                   
+[01:09:58] ERROR    Sourcing                                    parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xschem/                 
+                    xschemrc init file                                          
+[01:09:58] ERROR    MODELS_NGSPICE:                             parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice                 
+                    /models                                                     
+[01:09:58] ERROR    MODELS_XYCE:                                parameter.py:437
+                    /foss/pdks/ihp-sg13cmos5l/libs.tech/xyce/mo                 
+                    dels                                                        
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_14/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] ERROR    Warning: open net: pad                      parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s12                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s33                   parameter.py:437
+[01:09:58] ERROR    Error: undriven node: en                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vref                  parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s0                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: s1                    parameter.py:437
+[01:09:58] ERROR    Error: undriven node: vcm                   parameter.py:437
+[01:09:58] ERROR    Warning: open net: outn                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: outp                     parameter.py:437
+[01:09:58] ERROR    Warning: open net: ibias                    parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/en_ctrl_3v3.sch                                    
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bias_gen_pd/schemati                 
+                    c/xschem/bias_gen_pd.sch                                    
+[01:09:58] ERROR    Warning: shorted output node: iref          parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/ls_up_1v2_3v3/schema                 
+                    tic/xschem/ls_up_1v2_3v3.sch                                
+[01:09:58] ERROR    Warning: shorted output node: in            parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/inv_hv.sch                                            
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/en_ctrl_3v3/schemati                 
+                    c/xschem/pg_det.sch                                         
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor3_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nand2_hv.sch                                          
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/hv_logic/schematic/x                 
+                    schem/nor2_hv.sch                                           
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/oa_core_pd/schematic                 
+                    /xschem/oa_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/bg_core_pd/schematic                 
+                    /xschem/bg_core_pd.sch                                      
+[01:09:58] ERROR    Warning: shorted output node: en_3v3_b      parameter.py:437
+[01:09:58] ERROR    -----------/home/user/sg13cmos5l_cm_ip__sin parameter.py:437
+                    gle2diff2single/macros/sg13cmos5l_IOPadSing                 
+                    le2Diff/verification/cace/_runs_pex/RUN_202                 
+                    6-11-05_01-09-54/parameters/dc_ibias_params                 
+                    /run_14/sg13cmos5l_IOPadSingle2Diff_tb_dc.s                 
+                    ch                                                          
+[01:09:58] INFO     Parameter dc_ibias_params: Running  parameter_ngspice.py:564
+                    simulations…                                                
+[01:11:15] ERROR    Subprocess exited with error code  parameter_ngspice.py:1145
+                    1                                                           
+[01:11:15] ERROR    Error output generated by          parameter_ngspice.py:1149
+                    subprocess:                                                 
+[01:11:15] ERROR    Warning: singular matrix:  check   parameter_ngspice.py:1151
+                    node x1.a_14374_27822#                                      
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning: singular matrix:  check   parameter_ngspice.py:1151
+                    node x1.a_14374_27822#                                      
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Note: Starting dynamic gmin        parameter_ngspice.py:1151
+                    stepping                                                    
+[01:11:15] ERROR    Warning: Dynamic gmin stepping     parameter_ngspice.py:1151
+                    failed                                                      
+[01:11:15] ERROR    Note: Starting true gmin stepping  parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning: True gmin stepping failed parameter_ngspice.py:1151
+[01:11:15] ERROR    Note: Starting source stepping     parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning: source stepping failed    parameter_ngspice.py:1151
+[01:11:15] ERROR    Note: Transient op started         parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning: singular matrix:  check   parameter_ngspice.py:1151
+                    node n.x1.x32.nr1#i1                                        
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning: singular matrix:  check   parameter_ngspice.py:1151
+                    node n.x1.x32.nr1#i1                                        
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning: singular matrix:  check   parameter_ngspice.py:1151
+                    node n.x1.x32.nr1#i1                                        
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning: singular matrix:  check   parameter_ngspice.py:1151
+                    node n.x1.x32.nr1#i1                                        
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: Transient op failed,        parameter_ngspice.py:1151
+                    timestep too small                                          
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: The operating point could   parameter_ngspice.py:1151
+                    not be simulated successfully.                              
+[01:11:15] ERROR        Any of the following steps may parameter_ngspice.py:1151
+                    fail.!                                                      
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    doAnalyses: DC:  Timestep too      parameter_ngspice.py:1151
+                    small;  vu = -0.5: trouble with                             
+                    dparea-instance d.x1.x43.d1                                 
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    dc simulation(s) aborted           parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning from checkvalid: vector    parameter_ngspice.py:1151
+                    outp is not available or has zero                           
+                    length.                                                     
+[01:11:15] ERROR    Error: RHS "v(outp) - v(outn)"     parameter_ngspice.py:1151
+                    invalid                                                     
+[01:11:15] ERROR    Warning from checkvalid: vector    parameter_ngspice.py:1151
+                    outp is not available or has zero                           
+                    length.                                                     
+[01:11:15] ERROR    Error: RHS "(v(outp) + v(outn))/2  parameter_ngspice.py:1151
+                    - v(vcm)" invalid                                           
+[01:11:15] ERROR    Error: no such vector as vd.       parameter_ngspice.py:1151
+[01:11:15] ERROR     meas dc vdp find vd at=0.1        parameter_ngspice.py:1151
+                    failed!                                                     
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: no such vector as vd.       parameter_ngspice.py:1151
+[01:11:15] ERROR     meas dc vdm find vd               parameter_ngspice.py:1151
+                    at=-1.000000e-01 failed!                                    
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: no such vector as vd.       parameter_ngspice.py:1151
+[01:11:15] ERROR     meas dc vd0 find vd at=0 failed!  parameter_ngspice.py:1151
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: no such vector as vc.       parameter_ngspice.py:1151
+[01:11:15] ERROR     meas dc vc0 find vc at=0 failed!  parameter_ngspice.py:1151
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning from checkvalid: vector    parameter_ngspice.py:1151
+                    vdp is not available or has zero                            
+                    length.                                                     
+[01:11:15] ERROR    Error: RHS "(vdp - vdm)/0.2"       parameter_ngspice.py:1151
+                    invalid                                                     
+[01:11:15] ERROR    Warning from checkvalid: vector    parameter_ngspice.py:1151
+                    vd0 is not available or has zero                            
+                    length.                                                     
+[01:11:15] ERROR    Error: RHS "vd0/gain" invalid      parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning from checkvalid: vector    parameter_ngspice.py:1151
+                    vc0 is not available or has zero                            
+                    length.                                                     
+[01:11:15] ERROR    Error: RHS "vc0" invalid           parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning from checkvalid: vector vd parameter_ngspice.py:1151
+                    is not available or has zero                                
+                    length.                                                     
+[01:11:15] ERROR    Error: RHS "abs(vd - vd0 -         parameter_ngspice.py:1151
+                    gain*v(u))/gain" invalid                                    
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: measure  inl  max(TRIG) :   parameter_ngspice.py:1151
+                    no such vector as 'dev'                                     
+[01:11:15] ERROR     meas dc inl max dev failed!       parameter_ngspice.py:1151
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Warning from checkvalid: vector    parameter_ngspice.py:1151
+                    vio#branch is not available or has                          
+                    zero length.                                                
+[01:11:15] ERROR    Error: RHS "-i(vio)" invalid       parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: no such vector as iio.      parameter_ngspice.py:1151
+[01:11:15] ERROR     meas dc iio find iio at=0 failed! parameter_ngspice.py:1151
+[01:11:15] ERROR                                       parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: &gain: no such variable.    parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: &Vos_in: no such variable.  parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: &inl: no such variable.     parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: &Vcm_err: no such variable. parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: &iio: no such variable.     parameter_ngspice.py:1151
+[01:11:15] ERROR    Error: incomplete or empty netlist parameter_ngspice.py:1151
+[01:11:15] ERROR           or no ".plot", ".print", or parameter_ngspice.py:1151
+                    ".fourier" lines in batch mode;                             
+[01:11:15] ERROR    no simulations run!                parameter_ngspice.py:1151
+───────────────────── Completed dc_ibias_params: Error ❗ ──────────────────────
+[01:11:20] INFO     Done with CACE simulations and evaluations   cace_cli.py:371
+                    in 0:01:25.                                                 
+                  CACE Summary for sg13cmos5l_IOPadSingle2Diff                  
+
+netlist source: pex                                                             
+
+                                                                                
+                            Min     Min     Typ     Typ     Max    Max          
+ Param…  Tool    Result   Limit   Value  Target   Value   Limit  Value  Status  
+ ────────────────────────────────────────────────────────────────────────────── 
+ Gain    ngspi…  Gain      1.99        ​       2        ​    2.01       ​  Skip 🟧 
+ Input   ngspi…  Vos_in   -1 mV        ​    0 mV        ​    1 mV       ​  Skip 🟧 
+ offset                                                                         
+ (syst…                                                                         
+ Integ…  ngspi…  INL        any        ​     any        ​    2 mV       ​  Skip 🟧 
+ nonli…                                                                         
+ Output  ngspi…  Vcm_e…  -30 mV        ​     any        ​   30 mV       ​  Skip 🟧 
+ commo…                                                                         
+ error                                                                          
+ IO      ngspi…  Iio        any        ​     any        ​  135 uA       ​  Skip 🟧 
+ ring                                                                           
+ curre…                                                                         
+ Gain    ngspi…  Gain       any        ​       2        ​     any       ​  Skip 🟧 
+ vs                                                                             
+ vref                                                                           
+ and                                                                            
+ vcm                                                                            
+ Integ…  ngspi…  INL        any        ​     any        ​     any       ​  Skip 🟧 
+ nonli…                                                                         
+ vs                                                                             
+ vref                                                                           
+ and                                                                            
+ vcm                                                                            
+ Output  ngspi…  Vcm_e…     any        ​     any        ​     any       ​  Skip 🟧 
+ commo…                                                                         
+ error                                                                          
+ vs                                                                             
+ vref                                                                           
+ and                                                                            
+ vcm                                                                            
+ Input   ngspi…  Vin_m…     any        ​     any        ​   0.1 V       ​  Skip 🟧 
+ range,                                                                         
+ low                                                                            
+ end                                                                            
+ Input   ngspi…  Vin_m…   1.0 V        ​     any        ​     any       ​  Skip 🟧 
+ range,                                                                         
+ high                                                                           
+ end                                                                            
+ Gain    ngspi…  Gain      1.99        ​       2        ​    2.01       ​  Skip 🟧 
+ vs                                                                             
+ bias                                                                           
+ select                                                                         
+ Input   ngspi…  Vos_in   -1 mV        ​    0 mV        ​    1 mV       ​  Skip 🟧 
+ offset                                                                         
+ (syst…                                                                         
+ vs                                                                             
+ bias                                                                           
+ select                                                                         
+ Integ…  ngspi…  INL        any        ​     any        ​    2 mV       ​  Skip 🟧 
+ nonli…                                                                         
+ vs                                                                             
+ bias                                                                           
+ select                                                                         
+ Output  ngspi…  Vcm_e…  -30 mV        ​     any        ​   30 mV       ​  Skip 🟧 
+ commo…                                                                         
+ error                                                                          
+ vs                                                                             
+ bias                                                                           
+ select                                                                         
+ IO      ngspi…  Iio        any        ​     any        ​  220 uA       ​  Skip 🟧 
+ ring                                                                           
+ curre…                                                                         
+ vs                                                                             
+ bias                                                                           
+ select                                                                         
+ Gain,   ngspi…  Gain       any        ​       2        ​     any       ​  Skip 🟧 
+ sel 11                                                                         
+ Input   ngspi…  Vos_in     any        ​     any        ​     any       ​  Skip 🟧 
+ offset                                                                         
+ (syst…                                                                         
+ sel 11                                                                         
+ Integ…  ngspi…  INL        any        ​     any        ​     any       ​  Skip 🟧 
+ nonli…                                                                         
+ sel 11                                                                         
+ Output  ngspi…  Vcm_e…     any        ​     any        ​     any       ​  Skip 🟧 
+ commo…                                                                         
+ error,                                                                         
+ sel 11                                                                         
+ IO      ngspi…  Iio        any        ​     any        ​     any       ​  Skip 🟧 
+ ring                                                                           
+ curre…                                                                         
+ sel 11                                                                         
+ Gain    ngspi…  Gain      1.99        ​       2        ​    2.01       ​   Error  
+ vs                                                                       ❗    
+ ibias                                                                          
+ Input   ngspi…  Vos_in   -1 mV        ​    0 mV        ​    1 mV       ​   Error  
+ offset                                                                   ❗    
+ (syst…                                                                         
+ vs                                                                             
+ ibias                                                                          
+ Integ…  ngspi…  INL        any        ​     any        ​     any       ​   Error  
+ nonli…                                                                   ❗    
+ vs                                                                             
+ ibias                                                                          
+ Output  ngspi…  Vcm_e…  -30 mV        ​     any        ​   30 mV       ​   Error  
+ commo…                                                                   ❗    
+ error                                                                          
+ vs                                                                             
+ ibias                                                                          
+ IO      ngspi…  Iio        any        ​     any        ​     any       ​   Error  
+ ring                                                                     ❗    
+ curre…                                                                         
+ vs                                                                             
+ ibias                                                                          
+ Close…  ngspi…  Acl_dB     any        ​    6.02        ​     any       ​  Skip 🟧 
+ gain                                        dB                                 
+ at 1                                                                           
+ kHz                                                                            
+ Close…  ngspi…  f3dB     1 MHz        ​     any        ​     any       ​  Skip 🟧 
+ -3 dB                                                                          
+ bandw…                                                                         
+ Output  ngspi…  CMvdd…     any        ​     any        ​  -30 dB       ​  Skip 🟧 
+ commo…                                                                         
+ respo…                                                                         
+ to                                                                             
+ iovdd                                                                          
+ at 1                                                                           
+ kHz                                                                            
+ PSRR    ngspi…  PSRRp…   60 dB        ​     any        ​     any       ​  Skip 🟧 
+ iovdd                                                                          
+ at 1                                                                           
+ kHz                                                                            
+ (inpu…                                                                         
+ misma…                                                                         
+ PSRR    ngspi…  PSRRp…     any        ​     any        ​     any       ​  Skip 🟧 
+ iovdd                                                                          
+ at 100                                                                         
+ kHz                                                                            
+ (inpu…                                                                         
+ misma…                                                                         
+ PSRR    ngspi…  PSRRn…   60 dB        ​     any        ​     any       ​  Skip 🟧 
+ iovss                                                                          
+ at 1                                                                           
+ kHz                                                                            
+ (inpu…                                                                         
+ misma…                                                                         
+ PSRR    ngspi…  PSRRn…     any        ​     any        ​     any       ​  Skip 🟧 
+ iovss                                                                          
+ at 100                                                                         
+ kHz                                                                            
+ (inpu…                                                                         
+ misma…                                                                         
+ CMRR    ngspi…  CMRR_…   70 dB        ​     any        ​     any       ​  Skip 🟧 
+ at 1                                                                           
+ kHz                                                                            
+ (pad                                                                           
+ and                                                                            
+ vref                                                                           
+ toget…                                                                         
+ misma…                                                                         
+ Rise    ngspi…  t_rise     any        ​     any        ​     any       ​  Skip 🟧 
+ time                                                                           
+ 10-90                                                                          
+ %                                                                              
+ Settl…  ngspi…  t_set…     any        ​     any        ​    1000       ​  Skip 🟧 
+ time                                                        ns                 
+ to 1 %                                                                         
+ Overs…  ngspi…  Overs…     any        ​     any        ​     5 %       ​  Skip 🟧 
+ Large…  ngspi…  Vcm_d…     any        ​     any        ​   50 mV       ​  Skip 🟧 
+ output                                                                         
+ commo…                                                                         
+ devia…                                                                         
+ during                                                                         
+ the                                                                            
+ step                                                                           
+ Input   ngspi…  En_1k      any        ​     any        ​    1000       ​  Skip 🟧 
+ noise                                                   nV/rt…                 
+ densi…                                                                         
+ at 1                                                                           
+ kHz                                                                            
+ Input   ngspi…  En_10…     any        ​     any        ​     250       ​  Skip 🟧 
+ noise                                                   nV/rt…                 
+ densi…                                                                         
+ at 100                                                                         
+ kHz                                                                            
+ Diffe…  ngspi…  Vn_out     any        ​     any        ​    1000       ​  Skip 🟧 
+ output                                                      uV                 
+ noise,                                                                         
+ 10 Hz                                                                          
+ - 10                                                                           
+ MHz                                                                            
+ IO      ngspi…  Iio_pd     any        ​     any        ​    1000       ​  Skip 🟧 
+ ring                                                        nA                 
+ curre…                                                                         
+ off                                                                            
+ Core    ngspi…  Icore…     any        ​     any        ​  100 nA       ​  Skip 🟧 
+ ring                                                                           
+ curre…                                                                         
+ off                                                                            
+ Pad     ngspi…  Ipad_…    -100        ​     any        ​  100 nA       ​  Skip 🟧 
+ input                       nA                                                 
+ leaka…                                                                         
+ off                                                                            
+ Inter…  ngspi…  Ven3       any        ​     any        ​   0.1 V       ​  Skip 🟧 
+ enable                                                                         
+ Diffe…  ngspi…  Vod_pd   -1 mV        ​     any        ​    1 mV       ​  Skip 🟧 
+ outpu…                                                                         
+ off                                                                            
+ Output  ngspi…  Voc_pd   -1 mV        ​     any        ​    1 mV       ​  Skip 🟧 
+ common                                                                         
+ mode,                                                                          
+ off                                                                            
+ Enable  ngspi…  t_on       any        ​     any        ​    3 us       ​  Skip 🟧 
+ time                                                                           
+ Output  ngspi…  Vc_max     any        ​     any        ​     any       ​  Skip 🟧 
+ CM                                                                             
+ glitc…                                                                         
+ high                                                                           
+ Output  ngspi…  Vc_min     any        ​     any        ​     any       ​  Skip 🟧 
+ CM                                                                             
+ glitc…                                                                         
+ low                                                                            
+ Diffe…  ngspi…  Vd_end     any        ​   0.5 V        ​     any       ​  Skip 🟧 
+ output                                                                         
+ at the                                                                         
+ end                                                                            
+ IO      ngspi…  Iio_on     any        ​     any        ​     any       ​  Skip 🟧 
+ ring                                                                           
+ curre…                                                                         
+ enabl…                                                                         
+ Input   ngspi…  Vos_in  -20 mV        ​     any        ​   20 mV       ​  Skip 🟧 
+ offset                                                                         
+ -                                                                              
+ Misma…                                                                         
+ Gain -  ngspi…  Gain      1.93        ​     any        ​    2.07       ​  Skip 🟧 
+ Misma…                                                                         
+ Output  ngspi…  Vcm_e…  -60 mV        ​     any        ​   60 mV       ​  Skip 🟧 
+ commo…                                                                         
+ error                                                                          
+ -                                                                              
+ Misma…                                                                         
+ Input   ngspi…  Vos_in   -5 mV        ​     any        ​    5 mV       ​  Skip 🟧 
+ offset                                                                         
+ -                                                                              
+ Proce…                                                                         
+ MC                                                                             
+ Gain -  ngspi…  Gain      1.99        ​     any        ​    2.01       ​  Skip 🟧 
+ Proce…                                                                         
+ MC                                                                             
+ Output  ngspi…  Vcm_e…  -30 mV        ​     any        ​   30 mV       ​  Skip 🟧 
+ commo…                                                                         
+ error                                                                          
+ -                                                                              
+ Proce…                                                                         
+ MC                                                                             
+                                                                                
+[01:11:20] INFO     CACE failed, skipping documentation          cace_cli.py:404
+                    generation.                                                 
+dc_ibias_params: 14 of 15 runs -> results/sg13cmos5l_IOPadSingle2Diff_pex/dc_ibias_params.csv
+make: *** [Makefile:156: sim-cace] Error 1
