@@ -1,0 +1,70 @@
+Warning: singular matrix:  check node x1.a_14374_27822#
+
+Warning: singular matrix:  check node x1.a_14374_27822#
+
+Note: Starting dynamic gmin stepping
+Warning: Dynamic gmin stepping failed
+Note: Starting true gmin stepping
+Warning: True gmin stepping failed
+Note: Starting source stepping
+Warning: source stepping failed
+Note: Transient op started
+Warning: singular matrix:  check node n.x1.x32.nr1#i1
+
+Warning: singular matrix:  check node n.x1.x32.nr1#i1
+
+Warning: singular matrix:  check node n.x1.x32.nr1#i1
+
+Warning: singular matrix:  check node n.x1.x32.nr1#i1
+
+Error: Transient op failed, timestep too small
+
+
+Error: The operating point could not be simulated successfully.
+    Any of the following steps may fail.!
+
+doAnalyses: DC:  Timestep too small;  vu = -0.5: trouble with dparea-instance d.x1.x43.d1
+
+
+dc simulation(s) aborted
+Warning from checkvalid: vector outp is not available or has zero length.
+Error: RHS "v(outp) - v(outn)" invalid
+Warning from checkvalid: vector outp is not available or has zero length.
+Error: RHS "(v(outp) + v(outn))/2 - v(vcm)" invalid
+Error: no such vector as vd.
+ meas dc vdp find vd at=0.1 failed!
+
+Error: no such vector as vd.
+ meas dc vdm find vd at=-1.000000e-01 failed!
+
+Error: no such vector as vd.
+ meas dc vd0 find vd at=0 failed!
+
+Error: no such vector as vc.
+ meas dc vc0 find vc at=0 failed!
+
+Warning from checkvalid: vector vdp is not available or has zero length.
+Error: RHS "(vdp - vdm)/0.2" invalid
+Warning from checkvalid: vector vd0 is not available or has zero length.
+Error: RHS "vd0/gain" invalid
+Warning from checkvalid: vector vc0 is not available or has zero length.
+Error: RHS "vc0" invalid
+Warning from checkvalid: vector vd is not available or has zero length.
+Error: RHS "abs(vd - vd0 - gain*v(u))/gain" invalid
+
+Error: measure  inl  max(TRIG) : no such vector as 'dev'
+ meas dc inl max dev failed!
+
+Warning from checkvalid: vector vio#branch is not available or has zero length.
+Error: RHS "-i(vio)" invalid
+Error: no such vector as iio.
+ meas dc iio find iio at=0 failed!
+
+Error: &gain: no such variable.
+Error: &Vos_in: no such variable.
+Error: &inl: no such variable.
+Error: &Vcm_err: no such variable.
+Error: &iio: no such variable.
+Error: incomplete or empty netlist
+       or no ".plot", ".print", or ".fourier" lines in batch mode;
+no simulations run!

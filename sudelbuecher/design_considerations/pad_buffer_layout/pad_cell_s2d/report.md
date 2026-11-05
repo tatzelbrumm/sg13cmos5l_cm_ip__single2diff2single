@@ -563,6 +563,57 @@ the three changes should do: the partition, no secondary protection, the dummies
 - PEX and post-layout CACE when Christoph asks.
 - The macro README's "Not done" list.
 
+## Phase 5: extraction and post-layout CACE (2026-11-05, from about 00:53 UTC)
+
+Christoph: "extraction plus post-layout CACE please, then C3 chatlog." Design commits 49bd7dc … c913388; logs
+`p5-*.out`; this folder's `phase5/`.
+
+### 5.1 Extraction
+
+`make magic-pex EXT_MODE=2` (C-coupled, reproducible) gives `netlist/pex/sg13cmos5l_IOPadSingle2Diff_magic_pex_2.spice`:
+225 device fingers and 573 capacitors.
+- The pin reorder against the `_pex` symbol first stopped at 11 of 12 pins. vss joins iovss through the substrate,
+  and the cell has no vss text, so magic gives the subckt no vss port.
+- New `scripts/pex_add_port.py` adds vss, tied to iovss by 1 Ω, as the sheet's Rsub. `check_pex_ports`: all ports
+  connected.
+
+### 5.2 Post-layout CACE (`make sim-cace CACE_SOURCE=pex`)
+
+- **The route:** CACE's own `-s pex` on that netlist. CACE takes `netlist_pex/pex/<TOP>.spice` as up to date when it
+  is newer than `layout_pex/<TOP>.gds`, a link to the `.klay.gds`.
+  - The yaml copy has its own runs, netlist and docs folders, so a schematic run can go side by side.
+  - The capacitor-only nodes are tied with C1's `pex_for_sim.py`.
+  - The mismatch groups are left out: on an extracted netlist they are vacuous.
+- **Found on the way, both sources** [M]:
+  - CACE netlists the testbenches with the PDK xschemrc only. `en_ctrl_3v3` and `bias_gen_pd`, which sit next to
+    the pad in the templates since the backannotation, were not found ("Symbol not found", 90 per group), and the
+    testbenches lost them.
+    - `sim-cace` now exports the other macros' symbol folders as `XSCHEM_USER_LIBRARY_PATH`, which the PDK xschemrc
+      appends.
+    - C2's d2s templates have the same structure and were not rerun under CACE after C2's backannotation; they very
+      likely need the same.
+  - ngspice's `klu` lost the operating point:
+    - in one extracted `dc_ibias` run (ss, 4 µA);
+    - in 7 schematic `dc_params` runs at −40 °C, singular in unit_r2's 4-segment rhigh chain.
+    - gmin stepping, source stepping and the transient op failed every time. The default sparse solver converges
+      on all of them (`phase5/klu_failure/`), so the templates no longer use `klu`.
+- **Results** [M], 11 groups, 414 of 414 runs on each source, every spec met:
+  - `phase5/spec_table_schematic.md`, `spec_table_pex.md`, `compare_schematic_pex.md`;
+  - `compare_prelayout_schematic.md`, against the run of 2026-10-25.
+  - DC and the noise densities agree within 0.5 %.
+  - Bandwidth 1.35 → 1.24 MHz, settling 546 → 596 ns, enable 1.43 → 1.52 µs, output noise 441 → 423 µV.
+  - CMRR without mismatch 136–144 → 110–113 dB. That is the layout's own asymmetry, for example the fold-node
+    imbalance of stage B2.
+- **Against the pre-layout run:**
+  - Iio is about 10 µA lower. That comes from `bias_tree_noab_pd` (2026-10-28), which the old results predate.
+  - The pad leakage when off changes by a few nA: no secondary diodes.
+
+### 5.3 Not done
+
+- mismatch (`mm`, `ac_mm`) on the schematic;
+- process MC (`mc`), never run;
+- the loop fixture.
+
 ## Notes folder
 
 | file | contents |
@@ -574,6 +625,7 @@ the three changes should do: the partition, no secondary protection, the dummies
 | `phase1/row_maximal.lyrdb`, `phase1/main_row/` | DRC of the row (maximal with latch-up; `run_drc.py` tables) |
 | `phase1/budget.md` | `budget.py`'s output |
 | `template/` | checks of the cleaned-out template: DRC, `row/`, `lvs/` |
+| `phase5/` | `cace_compare.py`, the spec tables and comparisons of §5, `klu_failure/` |
 | `phase4/` | `integrate_gds.py` (candidate → macro cell), `probe_net.py`, `row_B2/` (the row with the M1.f) |
 | `lead_checks/` | the lead's checks per agent and stage (`P/`, `N/`, `F_stageA/`, `F_stageB/`, `F_stageB2/`, `F_stageB3/`) |
 

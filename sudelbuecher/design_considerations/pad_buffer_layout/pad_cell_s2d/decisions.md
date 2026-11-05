@@ -17,7 +17,8 @@ SPDX-License-Identifier: Apache-2.0
 | 2026-11-04 (during stage B2) | "the shield lines around the pin line are optional." | Relayed to F: the pad net up the center stays required; shields only where they fit without costing other routes, reported either way. |
 | 2026-11-04 about 18:20 | "the pad layout is good _enough_ to proceed to phase 4. Have at it." | Phase 4 with the lead's scope (a): design branch fast-forwarded to `toplevel`; the s2d macro, its users (slot, top sheet, CACE templates, tb_pad_dc) and `bias_tree_noab_pd` (two dummies) backannotated by agent BA; the abutted-row M1.f fixed by F (stage B3). Report §4. |
 | 2026-11-04 about 21:00 | "go ahead with the vin/vdd track swap" | P's gate band reordered by the lead (vref vfbn vcm vfbp vdd vin; vin's only neighbor is vdd); F stage B4 fits it into the routed block. pad – outp 5.73 → 0.37 fF. Report §4.7. |
+| 2026-11-05 about 01:53 | "extraction plus post-layout CACE please, then C3 chatlog." | Magic C-coupled PEX of the macro cell (`make magic-pex EXT_MODE=2`), post-layout CACE (`make sim-cace CACE_SOURCE=pex`) and a schematic rerun, 11 deterministic groups each; then the verbatim chat log of C3. Report §5. |
 
 Open for Christoph, all optional:
 - pair routing for the fold nodes;
-- PEX and post-layout CACE (macro README, "CACE").
+- mismatch and process Monte Carlo after the layout (macro README, "CACE").
