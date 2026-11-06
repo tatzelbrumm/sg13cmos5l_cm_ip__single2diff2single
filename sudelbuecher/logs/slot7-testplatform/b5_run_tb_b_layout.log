@@ -1,0 +1,32 @@
+ref tt 27 nom oa vbp=1.9733 vbn=0.9131 vbpc=1.9138 vbnc=1.2070 off=2.76
+ref tt 27 nom bg vbp=1.9756 vbn=0.9119 vbpc=1.9164 vbnc=1.2050 off=2.76
+ref tt 27 nom ib0 vbp=1.9728 vbn=0.9133 vbpc=1.9132 vbnc=1.2074 off=2.76
+ref tt 125 nom oa vbp=1.8416 vbn=0.9370 vbpc=1.7452 vbnc=1.3361 off=2.94
+ref tt 125 nom bg vbp=1.9764 vbn=0.8694 vbpc=1.8936 vbnc=1.2165 off=2.94
+ref tt 125 nom ib0 vbp=1.9667 vbn=0.8743 vbpc=1.8830 vbnc=1.2251 off=2.94
+ref ff 27 nom oa vbp=2.0155 vbn=0.8689 vbpc=1.9561 vbnc=1.1627 off=2.81
+ref ff 27 nom bg vbp=1.9520 vbn=0.9002 vbpc=1.8867 vbnc=1.2168 off=2.81
+ref ff 27 nom ib0 vbp=2.0365 vbn=0.8584 vbpc=1.9791 vbnc=1.1446 off=2.81
+ref ff 125 nom oa vbp=1.8826 vbn=0.8930 vbpc=1.7865 vbnc=1.2906 off=2.99
+ref ff 125 nom bg vbp=1.9341 vbn=0.8676 vbpc=1.8432 vbnc=1.2457 off=2.99
+ref ff 125 nom ib0 vbp=2.0315 vbn=0.8189 vbpc=1.9504 vbnc=1.1600 off=2.99
+wrote /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/testbenches/ngspice/results_b_layout/ref.csv
+ib1 tt 27 nom [5.000006e-06, 1.936811e-12]
+ib1 tt 125 nom [5.000931e-06, 1.440149e-11]
+ib1 ff 27 nom [5.000006e-06, 3.041463e-12]
+ib1 ff 125 nom [5.000933e-06, 2.197957e-11]
+wrote /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/testbenches/ngspice/results_b_layout/ib1.csv
+failsafe tt 27 nom vdd1v2_off 0.0145807 1.936811e-12
+failsafe tt 27 nom vdd1v2_off_1uA 0.0145807 1.936811e-12
+failsafe tt 27 nom enable_low 0.0145807 1.936811e-12
+failsafe tt 125 nom vdd1v2_off 0.09561495 1.440149e-11
+failsafe tt 125 nom vdd1v2_off_1uA 0.09561494 1.440149e-11
+failsafe tt 125 nom enable_low 0.09561495 1.440149e-11
+failsafe ff 27 nom vdd1v2_off 0.03377198 3.041463e-12
+failsafe ff 27 nom vdd1v2_off_1uA 0.03377198 3.041463e-12
+failsafe ff 27 nom enable_low 0.03377198 3.041463e-12
+failsafe ff 125 nom vdd1v2_off 0.1617739 2.197957e-11
+failsafe ff 125 nom vdd1v2_off_1uA 0.1617739 2.197957e-11
+failsafe ff 125 nom enable_low 0.1617739 2.197957e-11
+wrote /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/testbenches/ngspice/results_b_layout/failsafe.csv
+retried (rshunt 1e14; :gear = also method=gear reltol=1e-3): 0 []

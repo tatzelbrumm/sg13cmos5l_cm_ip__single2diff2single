@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # Chat log: slot 7 as a stand-alone test platform for the bias references (cloud session, 2026-11-06)
 
-Exported at 2026-11-06T14:42:20Z from this session's own transcript (`~/.claude/projects/-home-user/8e15a971-5e3a-5218-b4ab-7a66883211f3.jsonl`)
+Re-exported (stage B) at 2026-11-06T19:08:44Z; first exported at 2026-11-06T14:42:20Z from this session's own transcript (`~/.claude/projects/-home-user/8e15a971-5e3a-5218-b4ab-7a66883211f3.jsonl`)
 with `docs/slot7_testplatform/tools/export_chatlog.py` of branch `claude/c5-slot7-testplatform`: user messages, the
 assistant's visible messages, one bracketed line per tool call. Reasoning, system and harness text (reminders, task
 notifications) and tool output are left out. `claude` stands for the model name. The final report was written after
@@ -619,4 +619,709 @@ The supply dependence of OA is 0.11 %, not < 0.1 %, and the 2.5 V compliance val
 Running the export on this session's transcript. The final report to you will come after the export, so the log ends before it; I'll say so in a note in the log.
 
 *[tool call: Bash — Export visible conversation to the chat log]*
+
+**Assistant:** (2026-11-06T14:42:24.045Z)
+
+The export ran: 615 lines, 1 user message (the launch message), 203 tool-call lines, no secret-like strings. Checking that the whole session is in it, from the start to the last steps.
+
+*[tool call: Bash — Verify chat log covers the whole session]*
+
+**Assistant:** (2026-11-06T14:42:33.639Z)
+
+46 assistant blocks seem few for this session, and two phrases I know I wrote are missing. Checking where the transcript has gaps.
+
+*[tool call: Bash — Inspect transcript coverage of assistant messages]*
+
+*[tool call: Bash — Search transcript for missing visible texts]*
+
+*[tool call: Bash — Locate the entry types holding missing texts]*
+
+*[tool call: Bash — Inspect where visible text is stored in the entry]*
+
+*[tool call: Bash — Note transcript gap, add README entry, commit notes branch]*
+
+**Assistant:** (2026-11-06T14:43:19.107Z)
+
+Notes branch pushed (`dd4976e`). Last, the records entry in the design repo's RUNLOG.
+
+*[tool call: Bash — Final RUNLOG entry, commit, check all branches synced]*
+
+*[tool call: TaskUpdate]*
+
+**Assistant:** (2026-11-06T14:43:49.636Z)
+
+## Final report: slot 7 test platform for the bias references
+
+Stage A is finished and pushed, from schematic through to the harness flow. Stage B (bias trees, a voltage mux onto `analog_bus2`, the harness `ibias` as a third reference) was not started.
+
+### What is on the slot
+- **The two references:** `oa_core_pd` (Oguey–Aebischer) and `bg_core_pd` (Banba bandgap). I used the cores rather than the full references because only the cores have checked layouts.
+- **Output path:** each core sources about 5 µA through a small hv transmission gate (`xgate`) onto its own bus line: OA on `analog_bus0`, BG on `analog_bus1`. An SMU on chip pin `analog[0]` / `analog[1]` measures them.
+- **New enable cell `tp_en_ctrl`** (43 hv devices). Each of its four enables is `dig_in[k]` AND `enable` AND the slot's `vdd_1v2` being present, made with a weak PMOS pull-up against an NMOS stack (no latch).
+- **Pin map:** `dig_in[0]` turns on OA, `dig_in[1]` BG, `dig_in[2]` connects OA to `analog_bus0`, `dig_in[3]` connects BG to `analog_bus1`.
+- **Read-back:** `dig_out[3:0]` report the four enables (SPI register 0x38). `dig_out[11:4]` are held low.
+- **Pads:** the dedicated pads are not used. The 13 custom-pad pins and their stubs are the same shapes as in the current delivery. The platform stays at x < 143 µm.
+- **Measurement procedure:** in `docs/slot7_testplatform/PLAN.md`. One trap: the reset value of the `dig_in` route registers connects every bit to pad io[0], so all 24 routes must be written to 0xD first.
+
+### A design change made during the run
+The first version used the harness switch `analog_switch_small`. Simulation showed that with the slot's `vdd_1v2` gated off, the harness charges that rail through the switch's antenna diode, and at ff/fs and 125 °C both cores turned on. I replaced it with `xgate`, driven by two more fail-safe channels of `tp_en_ctrl`. All other choices are recorded in the plan and design notes.
+
+### Check results
+- **Simulation** (5 corners × −40/27/125 °C × three supply levels):
+  - all 495 static points give the right enable and read-back levels, including `vdd_1v2` gated off with 1 µA forced into it;
+  - I_OA is 3.04–7.05 µA and I_BG is 3.83–6.37 µA;
+  - turn-on takes 0.38–0.93 µs and turn-off about 70–100 ns;
+  - with everything off, the bus current is at most 2.2 nA.
+- **Layout netlist:** the netlist extracted from the layout gives the same currents to four digits (tt/ff, 27/125 °C).
+- **DRC** (PDK KLayout deck): 0 violations for `tp_en_ctrl`, for `slot_7.gds`, and for a variant with foundry pads instead of the custom ones.
+- **LVS** (magic + netgen):
+  - `tp_en_ctrl` matches;
+  - `slot_7` reports "Netlists match uniquely" (104 devices, 72 nets), with three expected port errors: the existing stub joins `outp`–`vinp` and `outn`–`vinn`, and the frame's right-edge `vss_1v2` strip, which is not connected inside the slot (as before);
+  - property errors are only on the simulation-only parameter `mm_ok`.
+- **Schematics:** the xschem netlist equals the source netlist device by device.
+- **Harness** (all exit 0):
+  - `make projects-clean`, `make projects`, `make projects-gds` and `make gds-prefill` for slot 7;
+  - the slot in the assembled chip GDS is geometrically identical to the delivered file;
+  - a new net check of the assembled chip finds all 36 used and 27 unused slot pins OK.
+
+### Branches
+| repository | branch | last commit |
+|---|---|---|
+| `sg13cmos5l_cm_ip__single2diff2single` (design) | `claude/c5-slot7-testplatform` | b0ba80a |
+| same repository (notes and logs) | `claude/c5-slot7-testplatform-sudel` | dd4976e |
+| `sg13cmos5l_cm_slot7` (delivery) | `claude/c5-testplatform` | f2c8501 |
+| `sg13cmos5l_ocd_chipalooza` (harness fork) | `claude/c5-testplatform-test` | 9981b94 |
+
+Nothing went to `main` or any other branch; merging is your call.
+
+### Open points
+- **Back-feeding with `vdd_3v3` off:** if the bus still has a voltage on it, up to 87 nA flows into the slot. The procedure handles it (open the bus switches and set the SMU to 0 V before gating `vdd_3v3` off); an NMOS-only switch would avoid it entirely.
+- **Schematics:** they are drafts, with one labelled stub per terminal. They are verified but not tidy.
+- **Not run:** slot-level parasitic extraction, chip-level DRC and chip-level LVS.
+- **Chat log:** the export ran, but this session's transcript file is missing some of my visible messages, so the log has gaps. I recorded the gap rather than filling it from memory; every step and number from those messages is in the run log.
+- **For Tim:** sub-cells carry the prefix `slot7_`, and the global `sub!` label from the PDK cell is removed. Ports, `.lib` and `.vh` are unchanged. The right-edge `vss_1v2` strip is still not connected inside the slot.
+
+The one-page summary is `docs/slot7_testplatform/SUMMARY.md`; every command and number is in `docs/slot7_testplatform/RUNLOG.md`.
+
+**User:** (2026-11-06T14:44:29.796Z)
+
+still busy with something?
+
+**Assistant:** (2026-11-06T14:44:31.390Z)
+
+No. All four branches are pushed and in sync with their remotes, and no background job is still running. The final report above is the end of the run.
+
+**User:** (2026-11-06T14:45:11.883Z)
+
+ok can you tell me which git submodule[s] is[are] Belal El Shennawy's?
+
+*[tool call: Bash — Find slot sources and any mention of Belal El Shennawy]*
+
+**Assistant:** (2026-11-06T14:45:20.231Z)
+
+None of the submodules are his right now. On the harness fork branch `claude/c5-testplatform-test`, the four submodules are Tim's three IP blocks (`RTimothyEdwards/sg13cmos5l_ocd_ip__analog_switches`, `__biasgen`, `__por`) and slot 7 (`tatzelbrumm/sg13cmos5l_cm_slot7`).
+
+His repository is listed in `config.txt` as the source for **slot 2**:
+
+```
+s2_source:	https://github.com/Belal-Elshinnawey/sg13cmos5l_slot2_backup
+```
+
+It is only a candidate submodule for now, because `s2_version` is still `-`. It would become `dependencies/slot_2` once a branch and commit are set for slot 2 and `make projects SLOTS=2` is run. An earlier harness run log describes it as the working example Tim put in slot 2 "to get a valid layout in place".
+
+I matched him by the GitHub account `Belal-Elshinnawey` (spelled differently from "El Shennawy"); no other source in `config.txt` resembles his name.
+
+**User:** (2026-11-06T15:30:26.213Z)
+
+ok that was the repo I was looking for.
+
+**Assistant:** (2026-11-06T15:30:38.697Z)
+
+Good. `Belal-Elshinnawey/sg13cmos5l_slot2_backup` is the slot 2 source in `config.txt`, with no version set, so it isn't cloned in this container.
+
+**User:** (2026-11-06T15:41:26.955Z)
+
+were there open questions or are all the results delivered? Where would the gds and the schematic be?
+
+**Assistant:** (2026-11-06T15:41:40.332Z)
+
+All results are delivered and pushed. I never had to ask you anything, because the task file said to decide, write it down and carry on. What remains are open points, not questions.
+
+**GDS**
+- Delivered: `final/gds/slot_7.gds` on `tatzelbrumm/sg13cmos5l_cm_slot7`, branch `claude/c5-testplatform`. It is the same file as `macros/slot7_testplatform/final/gds/slot_7.gds` in the design repo, branch `claude/c5-slot7-testplatform`. The `.lef`, `.lib` and `.vh` sit next to it under `final/`.
+- The enable cell on its own: `macros/slot7_testplatform/layout/gds/tp_en_ctrl.gds` (design repo).
+- The variant with foundry pads instead of the custom ones: `sudelbuecher/design_considerations/slot7_testplatform/slot_7_foundry_pads.gds` on the notes branch `claude/c5-slot7-testplatform-sudel`.
+
+**Schematic** (design repo, branch `claude/c5-slot7-testplatform`)
+- `macros/slot7_testplatform/schematic/xschem/slot7_testplatform.sch` / `.sym` is the top cell (both cores, `tp_en_ctrl`, two `xgate` switches).
+- `macros/slot7_testplatform/schematic/xschem/tp_en_ctrl.sch` / `.sym` is the enable cell, at transistor level.
+- These sheets are drafts: every terminal has a short wire and a net label rather than drawn wiring. They are checked to netlist the same as the source netlist, `macros/slot7_testplatform/netlist/source/slot7_testplatform.spice`.
+
+**Open points**
+- Stage B was not started: the bias trees, a mux of their bias voltages onto `analog_bus2`, and the harness `ibias` as a third reference.
+- Back-feeding: with `vdd_3v3` gated off and a voltage still on the bus, up to 87 nA flows into the slot. The measurement procedure avoids it; changing the switch would remove it.
+- The draft sheets could be redrawn by hand if you want readable schematics.
+- Not run: parasitic extraction of the slot, and chip-level DRC and LVS.
+- The chat log has gaps, because the session transcript is missing some of my messages.
+
+The details are in `docs/slot7_testplatform/SUMMARY.md` in the design repo.
+
+**User:** (2026-11-06T15:47:32.951Z)
+
+ok fetching --all into my local repositories. How, again, go I create tracking local branches from remote branches I just fetched, without changing branch?
+
+**Assistant:** (2026-11-06T15:47:41.255Z)
+
+Use `git branch` with the remote branch as the start point. It creates the local branch with upstream tracking set, and it does not switch branches.
+
+Design repo:
+
+```bash
+git branch --track claude/c5-slot7-testplatform origin/claude/c5-slot7-testplatform
+```
+
+```bash
+git branch --track claude/c5-slot7-testplatform-sudel origin/claude/c5-slot7-testplatform-sudel
+```
+
+Delivery repo (`sg13cmos5l_cm_slot7`):
+
+```bash
+git branch --track claude/c5-testplatform origin/claude/c5-testplatform
+```
+
+Harness fork (`sg13cmos5l_ocd_chipalooza`):
+
+```bash
+git branch --track claude/c5-testplatform-test origin/claude/c5-testplatform-test
+```
+
+To confirm the tracking, `git branch -vv` lists each local branch with its upstream in brackets.
+
+The `-sudel` branch belongs to the orphan `sudel_buecher` line, so don't check it out in your main checkout: that empties the working tree. To work on it, either check it out inside your existing `_sudelbuecher` worktree, or add a worktree for it:
+
+```bash
+git worktree add ../sg13cmos5l_cm_ip__single2diff2single_c5sudel claude/c5-slot7-testplatform-sudel
+```
+
+**User:** (2026-11-06T16:03:40.717Z)
+
+merge harness-test to toplevel, then merge claude/c4-replica-bias and claude/c5-slot7-testplatform also onto toplevel?
+
+**Assistant:** (2026-11-06T16:03:58.146Z)
+
+Before merging, I'll fetch and check how the branches relate. I'll also check whether `claude/c4-replica-bias` exists: at the start of this session only `claude/c4-replica-bias-sudel` was on the remote.
+
+*[tool call: Bash — Fetch and check branch relations to toplevel]*
+
+*[tool call: Bash — Compare files changed by the three branches]*
+
+*[tool call: Bash — Merge harness-test, c4 and c5 into local toplevel]*
+
+*[tool call: Bash — Run make check-boundary on merged toplevel]*
+
+*[tool call: Bash — Push toplevel and return to the work branch]*
+
+**Assistant:** (2026-11-06T16:05:40.100Z)
+
+All three branches are merged into `toplevel` in the design repo, and `toplevel` is pushed: `cf88683` → `68727a71`.
+
+1. **`harness-test`** was a fast-forward. It was 11 commits ahead of `toplevel` and `toplevel` had nothing it lacked, so no merge commit was needed.
+2. **`claude/c4-replica-bias`** went in as merge commit `bad8aa05`. Its one commit is the replica-bias Phase 1 survey under `docs/replica_bias/`.
+3. **`claude/c5-slot7-testplatform`** went in as merge commit `68727a71`: the test platform macro and its docs.
+
+There were no conflicts, since the three branches change separate sets of files. `make check-boundary` passes on the merged `toplevel`.
+
+The source branches are left as they were, and so are the two `-sudel` notes branches, which nobody asked to merge.
+
+To update your local copy:
+
+```bash
+git fetch origin
+```
+
+```bash
+git checkout toplevel && git merge --ff-only origin/toplevel
+```
+
+**User:** (2026-11-06T16:11:42.144Z)
+
+are all the ...__single2diff2single repositories and _sudelbuecher merged, pulled, and pushed back?
+
+**Assistant:** (2026-11-06T16:11:48.250Z)
+
+Checking the actual state of both checkouts against the remote, including whether the two `-sudel` notes branches are in `sudel_buecher`.
+
+*[tool call: Bash — Check sync and merge state of design repo and sudel worktree]*
+
+*[tool call: Bash — Show sudel_buecher commits beyond the c5 notes branch]*
+
+**Assistant:** (2026-11-06T16:12:10.034Z)
+
+Yes. Everything is merged and pushed, and nothing is left uncommitted or unpushed in this container.
+
+**Design repo `sg13cmos5l_cm_ip__single2diff2single`**
+- `toplevel` is at `68727a71` locally and on GitHub, and contains `harness-test`, `claude/c4-replica-bias` and `claude/c5-slot7-testplatform`.
+- `claude/c5-slot7-testplatform` (`b0ba80a6`) matches the remote. The working tree is clean.
+
+**Notes worktree `_sudelbuecher`**
+- `origin/sudel_buecher` already contains both notes branches:
+  - `claude/c4-replica-bias-sudel`, via `2bc4b163`;
+  - `claude/c5-slot7-testplatform-sudel`, via your merge commit `71e2efe0` (Christoph Maier, 16:56 +0100). I didn't make that merge.
+- The worktree here is still on `claude/c5-slot7-testplatform-sudel` (`dd4976ed`), which matches its remote; the working tree is clean. It is two commits behind `sudel_buecher`, because it is the source branch, not `sudel_buecher` itself. There is no local `sudel_buecher` branch in this container, and none is needed, since nothing local remains to push.
+
+On your machine, pull `sudel_buecher` in your `_sudelbuecher` worktree, and `toplevel` in the main checkout.
+
+**User:** (2026-11-06T16:13:34.778Z)
+
+Yes, done. Now let's get the other repos pulled and organized, then I can let other cloud tasks continue.
+
+**Assistant:** (2026-11-06T16:13:42.583Z)
+
+First the current state of the two other repos (delivery and harness fork) on GitHub, so it is clear what "organized" would involve.
+
+*[tool call: Bash — Fetch and report delivery and harness repo states]*
+
+*[tool call: Bash — Inspect the other cloud branches in both repos]*
+
+**Assistant:** (2026-11-06T16:14:15.168Z)
+
+The state, and one decision for you.
+
+| repo | branch | relative to | state |
+|---|---|---|---|
+| delivery `sg13cmos5l_cm_slot7` | `claude/c5-testplatform` (mine) | `main` | 1 commit ahead: new `slot_7.gds`/`.lef`, README |
+| | `claude/c6-pads-layout` (another cloud task) | `main` | 1 commit ahead: moves the pad cells to `pads/<cell>/` (13:59Z) |
+| | `claude/bold-mccarthy-l669bm` | `main` | identical to `main` (leftover session branch) |
+| harness fork | `claude/c5-testplatform-test` (mine) | `custom-pad-test` | 1 commit ahead |
+| | `claude/c6-submodule-pads` (another cloud task) | `custom-pad-test` | 4 ahead, 26 behind: started from an older base (14:15Z) |
+| | `claude/bold-mccarthy-l669bm` | `custom-pad-test` | identical to `custom-pad-test` (leftover) |
+
+Both my branches can go in as fast-forwards. Both the c5 and c6 branches edit the delivery README, so merging both into `main` may need a small hand merge there. Both repos are clean and match their remotes in this container.
+
+**QUESTION:** what should I do?
+1. Fast-forward only my branches: `claude/c5-testplatform` → delivery `main`, `claude/c5-testplatform-test` → harness `custom-pad-test`. Leave the c6 branches to their own task.
+2. As 1, and also merge the c6 branches (only if the c6 task has finished).
+3. Nothing yet; you merge.
+
+Also: should I delete the two leftover `claude/bold-mccarthy-l669bm` branches on GitHub (yes/no)?
+
+**User:** (2026-11-06T16:29:09.651Z)
+
+check if the slot7 merge resolution looks sane or whether I resolved the conflict in the wrong direction.
+
+**Assistant:** (2026-11-06T16:29:14.639Z)
+
+You resolved the conflict yourself, so I'll fetch the delivery repo and look at the new merge on `main`: its parents, and how the conflicted files came out.
+
+*[tool call: Bash — Fetch delivery repo and show the merge on main]*
+
+*[tool call: Bash — Check merge result against both parents]*
+
+*[tool call: Bash — Show README differences against the c6 parent]*
+
+*[tool call: Bash — Compare provenance table rows in c5, c6 and merge]*
+
+**Assistant:** (2026-11-06T16:30:24.470Z)
+
+Mostly sane, with one hunk resolved in the wrong direction.
+
+**Correct in `00512e1`**
+- `final/gds/slot_7.gds` and `final/lef/slot_7.lef` are the new test-platform files (sha256 `d0cdc81d…` / `431c564a…`).
+- The pad files are at the new `pads/<cell>/` paths, identical to c6's.
+- All of c6's README path changes (`final/pads/…` → `pads/…`) are in.
+- All of my README prose is in: the test-platform description, the `P` commit line, the bias-core sentence, the checks section.
+
+**Wrong: the provenance table took c6's side completely.** c6 had the old slot rows, so the README now lists the **old** `slot_7.gds`/`slot_7.lef`:
+
+```
+| `final/gds/slot_7.gds` | H | `final/gds/slot_7.gds` | `5624ae45…` |   <- stand-in, no longer in the repo
+| `final/lef/slot_7.lef` | H | `final/lef/slot_7.lef` | `9fd8d5b1…` |
+```
+
+Those hashes no longer match the files. The rows that belong there come from my side; keep c6's `pads/…` rows below them:
+
+```
+| `final/gds/slot_7.gds` | P | `macros/slot7_testplatform/final/gds/slot_7.gds` | `d0cdc81dd0855cc3dc56aeb77543e1eeabfc9a755943d35efbcdfb136a5d8ca6` |
+| `final/lef/slot_7.lef` | P | `macros/slot7_testplatform/final/lef/slot_7.lef` | `431c564ab63a16bae7f0f3f2f7934fe4da4cd7a605c47e4a94749c5691c8838b` |
+| `final/lib/slot_7.lib` | H (= P) | `final/lib/slot_7.lib` | `6137d6230046318850c9f1fba2d8e79322ce28d9e18f0e2e64385099c419bd56` |
+| `final/vh/slot_7.vh` | H (= P) | `final/vh/slot_7.vh` | `1ba0f560eb7b9e23258d2f371b1e8ab0936b4103aeb7ccaece69990c75086976` |
+```
+
+Only the README is affected; no file content was resolved the wrong way. The fix is these four rows (lines 32–35 of the README).
+
+**QUESTION:** should I push that four-row fix as a commit directly to delivery `main`, or put it on a branch for you to merge?
+
+**User:** (2026-11-06T16:31:42.881Z)
+
+ok fix directly to delivery main, git keeps track of things and correct errors. You c5 or c6?
+
+**Assistant:** (2026-11-06T16:31:47.096Z)
+
+I'm c5: the session that made `claude/c5-testplatform`. c6 is the separate pad-layout task that moved the pads to `pads/<cell>/`.
+
+Applying the fix on delivery `main`:
+
+*[tool call: Bash — Fix README provenance rows on delivery main and push]*
+
+**Assistant:** (2026-11-06T16:32:18.522Z)
+
+The README fix is on delivery `main` as commit `39d170f`, pushed on top of your merge `00512e1`. The provenance rows for `slot_7.gds`, `.lef`, `.lib` and `.vh` were changed. Before committing I checked that each listed hash matches the file on `main`. Nothing else in the README changed.
+
+The harness fork is untouched: `claude/c5-testplatform-test` is still 1 commit ahead of `custom-pad-test`, and that merge is open. Its `s7_version` points at delivery commit `f2c8501`. That commit has the same slot files as `main` but the old `final/pads/` layout. So if the harness is to read the pads from `pads/<cell>/`, `s7_version` has to move to `main` at `39d170f`, and whatever c6 changed in the harness has to come along with it.
+
+**User:** (2026-11-06T16:45:58.323Z)
+
+ok if _slot7 is in decent shape, let's move on to the harness.
+
+**Assistant:** (2026-11-06T16:46:09.842Z)
+
+The delivery repo is in decent shape. Now the harness fork: fetch, and see where `custom-pad-test`, `main`, my `claude/c5-testplatform-test` and c6's `claude/c6-submodule-pads` stand, and what c6 changed there.
+
+*[tool call: Bash — Inspect harness branches and the c6 changes]*
+
+*[tool call: Bash — Show c6 harness config changes and TIM_STEPS]*
+
+**Assistant:** (2026-11-06T16:46:54.113Z)
+
+The picture of the harness:
+
+- **`claude/c6-submodule-pads`** (c6 session) is the clean line for Tim. It starts at `main`, leaves `config.txt` for Tim to edit, and `TIM_STEPS.md` describes his manual steps. Slot 7 and the pads come only from the delivery repo's `main` (`pads/<cell>/`). Its step 0, merging `claude/c6-pads-layout` into delivery `main`, is now done: delivery `main` at `39d170f` has the c6 pads and my test-platform `slot_7.gds`. c6's dry run used the delivery repo before my slot went in, so that dry run should be repeated with `39d170f`.
+- **`custom-pad-test`** is the experimental record line (padframe flow, generated views, run logs). My `claude/c5-testplatform-test` is a fast-forward of it by 1 commit: my harness run and the new net-check tool.
+- **`main`** = your merge of Tim's upstream; neither line belongs there before Tim has seen it.
+
+My proposal:
+1. Fast-forward `custom-pad-test` to `claude/c5-testplatform-test`.
+2. Leave `claude/c6-submodule-pads` to the c6 session. When it continues, tell it that delivery `main` is now `39d170f` and that the dry run should be repeated with that hash. I could also do that rerun here, but it would be on c6's branch.
+3. Leave the harness `main` alone.
+
+**QUESTION:**
+- Do 1 now (yes/no)?
+- 2: should the c6 session do the rerun (my default), or should I do it here, on a new branch from `claude/c6-submodule-pads`?
+- Should I delete the two leftover `claude/bold-mccarthy-l669bm` branches, one in each repo and identical to `main`/`custom-pad-test` (yes/no)?
+
+**User:** (2026-11-06T16:46:54.970Z)
+
+what do we mean by "harness"? An implicit assumption may have snuck in.
+
+**Assistant:** (2026-11-06T16:47:06.621Z)
+
+Yes, two in fact.
+
+1. **Fork versus upstream.** By "the harness" I have meant the repository `tatzelbrumm/sg13cmos5l_ocd_chipalooza`, which is **your fork**. Tim's harness is upstream at `RTimothyEdwards/sg13cmos5l_ocd_chipalooza`. Everything I did ("harness flow", "harness verification", "harness `main`") happened in the fork only. Nothing has gone upstream; your fork's `main` is your merge of Tim's `main` from 5 Nov. So "Tim's harness accepts slot 7" is not shown yet. What is shown is that the fork, with the custom-pad changes, builds and checks slot 7. Whether a branch like `claude/c6-submodule-pads` becomes a pull request to Tim, or Tim makes the changes himself following `TIM_STEPS.md`, is your decision.
+
+2. **Same word for something else.** I also used "harness" for Claude Code's own runtime: "harness notifications" in the chat-log export script and its header mean the task and tool notices of this session, not the chip. That is a plain name clash in the records.
+
+My last proposal therefore concerns branches of the fork only: fast-forward the fork's `custom-pad-test`, leave `claude/c6-submodule-pads` to the c6 session, and leave the fork's `main` alone. Tim's repository is untouched in every case.
+
+Should I rename the Claude Code meaning in the records, e.g. to "session notifications" in `export_chatlog.py`, its chat-log header and the run log? It is a one-line edit in each.
+
+**User:** (2026-11-06T17:00:28.401Z)
+
+no don't make changes with lots of side effects due to an ambiguity. That adds ambiguities with the factorial of the number of such changes.
+I did git merge tatzelfork/claude/c5-testplatform-test from custom-pad-test and git an uncommitted change I don't understand because I don't quite understand submodules.
+
+**Assistant:** (2026-11-06T17:00:41.930Z)
+
+Understood. I won't make changes like that on the strength of an ambiguity.
+
+That uncommitted change is not an edit of yours. It's a difference between what the superproject records and what is checked out in the submodule:
+
+- Your merge (a fast-forward) moved the **recorded** commit for `dependencies/slot_7`, the gitlink, from `40ba9b0` to `f2c8501`, my test-platform slot.
+- `git merge` does not touch the submodule's own checkout, which is still at `40ba9b0`.
+- `git status`/gitk report that mismatch as a change: "Submodule dependencies/slot_7 f2c8501..40ba9b0 (rewind)". Read it as: recorded `f2c8501`, checked out `40ba9b0`.
+
+Don't commit it. Committing would move the recorded slot 7 back to the old stand-in. Instead, bring the checkout to the recorded commit, in the harness fork's root:
+
+```bash
+git submodule update dependencies/slot_7
+```
+
+If git says the commit is not found, fetch it first (`f2c8501` is on the delivery repo's `main`) and repeat the update:
+
+```bash
+git -C dependencies/slot_7 fetch origin
+```
+
+Then check:
+
+```bash
+git submodule status dependencies/slot_7
+```
+
+That line should start with a space, not `+`, and show `f2c8501…`. `git status` should be clean.
+
+Your local `custom-pad-test` is now at `9981b94`, and gitk shows `tatzelfork/custom-pad-test` still at the old commit, so to put the fast-forward on GitHub:
+
+```bash
+git push tatzelfork custom-pad-test
+```
+
+**User:** (2026-11-06T17:01:44.617Z)
+
+implicit assumption: "the" harness fork’s root
+
+**Assistant:** (2026-11-06T17:01:50.615Z)
+
+Right. I meant the top directory of the clone where you ran the merge and opened gitk; its title bar shows `sg13cmos5l_ocd_chipalooza`. Its path on your machine (for example `~/EDA/sg13cmos5l_ocd_chipalooza`) is unknown to me. It is not inside `dependencies/slot_7`, which is the submodule's own repository.
+
+To get there from anywhere inside that clone:
+
+```bash
+cd "$(git rev-parse --show-toplevel)"
+```
+
+If you are inside `dependencies/slot_7`, that command lands in the submodule's top instead. From there, go up one level to the clone's top:
+
+```bash
+cd "$(git rev-parse --show-superproject-working-tree)"
+```
+
+Then run the commands from my previous message, starting with `git submodule update dependencies/slot_7`.
+
+**User:** (2026-11-06T17:03:57.426Z)
+
+I'm in ~/EDA/sg13cmos5l_ocd_chipalooza.
+
+**Assistant:** (2026-11-06T17:04:00.405Z)
+
+Then run, in `~/EDA/sg13cmos5l_ocd_chipalooza`:
+
+```bash
+git submodule update dependencies/slot_7
+```
+
+If it reports that `f2c8501` is not found, fetch it from the delivery repo and repeat the update:
+
+```bash
+git -C dependencies/slot_7 fetch origin
+```
+
+To check, the line from this command should start with a space (not `+`) and show `f2c8501`; `git status` should then be clean:
+
+```bash
+git submodule status dependencies/slot_7
+```
+
+Then push your fast-forwarded `custom-pad-test` to the fork:
+
+```bash
+git push tatzelfork custom-pad-test
+```
+
+**User:** (2026-11-06T17:07:33.385Z)
+
+did git push --all. Looking good?
+
+**Assistant:** (2026-11-06T17:07:35.879Z)
+
+I'll check the fork on GitHub. `git push --all` pushes every local branch, so I'm looking at all of them, not only `custom-pad-test`.
+
+*[tool call: Bash — Check fork branches after git push --all]*
+
+**Assistant:** (2026-11-06T17:07:50.250Z)
+
+Yes, it looks good. On GitHub:
+
+- **`custom-pad-test`** is at `9981b94`, the same commit as `claude/c5-testplatform-test`, so the fast-forward is pushed.
+- It records slot 7 consistently in all three places:
+  - submodule `dependencies/slot_7` at `f2c8501`;
+  - `.gitmodules` with branch `claude/c5-testplatform`;
+  - `config.txt` with `s7_version` = `claude/c5-testplatform f2c8501…`, and the two custom pads set for `s7_an[0]`/`s7_an[1]`.
+- **`main`** is unchanged at `e0445b6`, your merge from Tim, so `--all` did not move it.
+- The other branches (`claude/c6-submodule-pads`, `delivery-test`, `gzippedgds`, `sudel_buecher`, `tatzelbranch`, `ruth`, `version_hell`) are as before. The leftover `claude/bold-mccarthy-l669bm` is no longer on the fork.
+
+`custom-pad-test` names slot 7 by the branch `claude/c5-testplatform` of the delivery repo. Commit `f2c8501` is also on the delivery `main`, so nothing depends on that branch staying. Only if it is ever deleted would `s7_version` need a different branch name.
+
+**User:** (2026-11-06T17:08:49.789Z)
+
+is the c6 task "Harness test replica bias task"?
+
+**Assistant:** (2026-11-06T17:08:52.314Z)
+
+I'll check the session list for that title rather than guess.
+
+*[tool call: mcp__claude-code-remote__list_sessions]*
+
+**Assistant:** (2026-11-06T17:09:01.783Z)
+
+No. "Harness test replica bias task" is the **c4** session: the replica-bias task (`claude/c4-replica-bias`, `docs/replica_bias/`). Its list entry shows it is blocked, waiting for your answers to three Phase 2 questions: the S2D `vref`, how `vcm` tracks, and the scope. It also notes that the harness repo is not attached to that session.
+
+The **c6** branches (`claude/c6-pads-layout` in the delivery repo, `claude/c6-submodule-pads` in the fork) most likely come from the session titled **"Custom pad harness test task"**. Its last summary mentions the executable bit on `scripts/custom_io_verilog.py`, which is exactly c6's commit "custom_io_verilog.py: executable", and it was last active at 14:15Z, the time of c6's last commit. The list shows titles and summaries, not branch names, so that is an inference.
+
+For reference, this session (c5) is titled "SG13CMOS5L repository access setup".
+
+**User:** (2026-11-06T18:08:18.849Z)
+
+I got completely lost organizing all the repository branches.
+Did you stop this task incomplete because of open questions? Task B or some such?
+
+**Assistant:** (2026-11-06T18:08:32.117Z)
+
+No open question stopped this task. Stage A is complete and delivered. Stage B I never started: the task file says "finish A before starting B" and "B (if time)", and after A plus the records I wrote the final report and stopped. That was my decision; nothing was blocking B. It consists of the bias trees behind the cores, a mux of their bias voltages onto `analog_bus2`, and the harness `ibias0`/`ibias1` as a third reference. I can start it whenever you want.
+
+The open question you may be thinking of belongs to the **c4** session ("Harness test replica bias task"). It is waiting for your answers on the S2D `vref`, how `vcm` tracks, and its scope.
+
+Where the c5 work stands now, to help with the branch tangle:
+
+| repository | branch | state |
+|---|---|---|
+| design `…__single2diff2single` | `claude/c5-slot7-testplatform` | merged into `toplevel` (`68727a71`) |
+| design, notes | `claude/c5-slot7-testplatform-sudel` | merged into `sudel_buecher` (your `71e2efe0`) |
+| delivery `sg13cmos5l_cm_slot7` | `claude/c5-testplatform` | in `main`; `main` = `39d170f` (c5 slot plus c6 pads, README fixed) |
+| fork `sg13cmos5l_ocd_chipalooza` | `claude/c5-testplatform-test` | `custom-pad-test` fast-forwarded to it (`9981b94`) |
+
+So every c5 branch has landed in its target, and the four c5 branches could be deleted without losing anything.
+
+Still open from the other sessions:
+- c6: `claude/c6-submodule-pads` in the fork is not merged. Its dry run predates the current delivery `main`.
+- c4: the replica-bias session, waiting for your three answers.
+
+**User:** (2026-11-06T18:45:51.451Z)
+
+go ahead with stage B.
+I think threre's a xschem drawing skill somewhere hidden in the single2diff2single branches. You might want to spawn an agent to apply this skill to the schematics you produced so far — in such manner as to not interfere with my attempts to edit them manually.
+
+**Assistant:** (2026-11-06T18:46:00.369Z)
+
+Starting stage B. First, two pieces of groundwork:
+
+- **The xschem drawing skill:** I'll look for it across the design repo's branches.
+- **Branches:** my c5 branches are now contained in `toplevel` (design) and `main` (delivery). Stage B continues on the same branch names after fast-forwarding them to those targets, so nothing already merged is stacked twice.
+
+*[tool call: Bash — Search all design branches for an xschem skill]*
+
+*[tool call: Bash — Compare the repo's xschem skill with the installed one]*
+
+*[tool call: Bash — Look for bias tree netlist and existing tree layouts]*
+
+*[tool call: Bash — Create worktree and branch for the schematic agent]*
+
+*[tool call: Agent — Redraw slot7 sheets in finished xschem style]*
+
+*[tool call: TaskCreate — tree + ref select (OA/BG/ibias0) + vbias mux to bus2 + ibias1 to bus3; tp_en_ctrl_b; sims; layout; DRC/LVS; delivery branch; harness run; logs + PROGRESS for Tim]*
+
+*[tool call: Bash — Add PROGRESS.md on delivery main; reset work branch]*
+
+*[tool call: Bash — Fix upstream of the delivery work branch]*
+
+**Assistant:** (2026-11-06T18:48:53.277Z)
+
+Now the stage-B netlist. Reading the tree's `bias_diodes` subcircuit: its four diodes set the voltages that the mux will put on `analog_bus2`.
+
+*[tool call: Bash — Read bias_diodes and the tree README]*
+
+*[tool call: Write — /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/netlist/source/slot7_stage_b.spice]*
+
+*[tool call: Write — /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/testbenches/ngspice/run_tb_b.py]*
+
+**Assistant:** (2026-11-06T18:50:42.255Z)
+
+A smoke test at `tt`, 27 °C, nominal supply first.
+
+*[tool call: Bash — Smoke-test stage-B testbenches at tt 27C]*
+
+*[tool call: Bash — Probe ibias0 path at the operating point]*
+
+*[tool call: Bash — Fix harness bias source model, rerun smoke test]*
+
+*[tool call: Bash — Run full stage-B PVT simulations]*
+
+*[tool call: TaskUpdate]*
+
+*[tool call: Write — /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/layout/scripts/routed_cell.py]*
+
+*[tool call: Bash — Generate tp_en_ctrl_b and tree layouts, run DRC]*
+
+*[tool call: Bash — Show the three M1.b violations]*
+
+*[tool call: Bash — Fix tie overlap, DRC and LVS both stage-B cells]*
+
+*[tool call: Bash — Locate insertion points in make_slot_7.py]*
+
+*[tool call: Read — /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/layout/scripts/make_slot_7.py]*
+
+**Assistant:** (2026-11-06T18:56:43.958Z)
+
+Writing the stage-B block of `make_slot_7.py`. Stage A's code stays as it is; the block runs only with `--stage-b`, after A's routing and before the cell renaming.
+
+*[tool call: Edit — /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/layout/scripts/make_slot_7.py]*
+
+*[tool call: Edit — /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/layout/scripts/make_slot_7.py]*
+
+*[tool call: Bash — Create and push stage-A marker tags in all repos]*
+
+**Assistant:** (2026-11-06T18:57:34.377Z)
+
+The tags exist locally, but GitHub refused all three tag pushes ("the remote end hung up"), while branch pushes work. Before choosing another kind of marker I'll check the proxy's notes on why.
+
+*[tool call: Bash — Check proxy docs and status about tag pushes]*
+
+*[tool call: Bash — Push stage-A marker branches in all repos]*
+
+*[tool call: Bash — Build stage-B slot_7.gds and run DRC]*
+
+*[tool call: Bash — Write stage-B LVS reference and run LVS of slot_7]*
+
+*[tool call: Bash — Check stage-B simulation progress]*
+
+*[tool call: Bash — Build stage-B views and verify against the checked GDS]*
+
+*[tool call: Bash — Compare stage-B LEF pins with stage A]*
+
+*[tool call: Bash — Store extraction and simulate stage B on the layout netlist]*
+
+*[tool call: Bash — Regression: stage-A tests on the stage-B layout netlist]*
+
+**Assistant:** (2026-11-06T19:02:26.680Z)
+
+Stage A is unchanged on the stage-B layout: the same currents to four digits, 0 logic failures. The full stage-B PVT run has also finished with exit 0. Summarising it:
+
+*[tool call: Bash — Summarize stage-B PVT results]*
+
+*[tool call: Bash — Commit and push the stage-B checkpoint]*
+
+**Assistant:** (2026-11-06T19:02:57.641Z)
+
+Design checkpoint `efb80141` is pushed. Next the delivery work branch `claude/c5-testplatform` (not `main`): the new `slot_7.gds`/`.lef`, README provenance rows and description, and a progress entry.
+
+*[tool call: Bash — Copy stage-B views into delivery branch, update README]*
+
+**Assistant:** (2026-11-06T19:03:10.726Z)
+
+The README now names the design commit by its short hash; provenance rows elsewhere use full hashes, so I'll put the full one in, add the progress entry, then commit and push the work branch.
+
+*[tool call: Bash — Add progress entry, commit and push delivery branch]*
+
+*[tool call: Bash — Check where setup_custom_io.sh reads the pad cells]*
+
+*[tool call: Bash — Harness flow for slot 7 stage B in the fork]*
+
+*[tool call: Bash — Extend the net-check tool with a stage-B mode]*
+
+**Assistant:** (2026-11-06T19:03:58.944Z)
+
+While the harness flow runs, the records. PLAN.md gets section 9 (stage B: pin map and measurement procedure), and RUNLOG.md the stage-B entries so far.
+
+*[tool call: Bash — Add stage-B plan section and run log entries]*
+
+*[tool call: Bash — Wait for the harness flow to finish]*
+
+*[tool call: Bash — XOR slot_7 in prefill and run stage-B net check]*
+
+*[tool call: Bash — Commit and push the stage-B harness run]*
+
+**Assistant:** (2026-11-06T19:07:57.597Z)
+
+Fork branch pushed (`c40c99b`). Now the design records: the harness entry in RUNLOG, a stage-B section in SUMMARY.md, and the macro README.
+
+*[tool call: Bash — Update design records for stage B and push]*
+
+**Assistant:** (2026-11-06T19:08:17.051Z)
+
+Design records are pushed (`a506bc9c`). Next, the progress entry for Tim on the delivery branch, then the notes branch: logs and chat log.
+
+*[tool call: Bash — Add harness result to PROGRESS on delivery branch]*
+
+*[tool call: Bash — Update notes branch: logs, design notes, chat log]*
 

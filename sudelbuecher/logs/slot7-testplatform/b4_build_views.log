@@ -1,0 +1,119 @@
+Could not import tkinter. No callback support.
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+wrote macros/slot7_testplatform/final/gds/slot_7.gds; instances bbox (7.4,2.05;280.81,198.61); tp_en_ctrl top edge 70.86
+
+Magic 8.3 revision 685 - Compiled on Fri Oct 30 17:15:33 UTC 2026.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+WARNING: RLIMIT_NOFILE is above 1024 and Tcl_Version<9 this may cause runtime issues [rlim_cur=20000]
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology ihp-sg13cmos5l ...
+2 Magic internal units = 1 Lambda
+Input style sg13cmos5l(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    pblock pbase sealcont difffill sealvia1 sealvia2 sealvia3 sealvia4 seal glass thruvia inductor 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading ihp-sg13cmos5l Device Generator Menu ...
+Using technology "ihp-sg13cmos5l", version 1.0.0
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "slot7_ptap1_2".
+Reading "slot7_nmosHV_14".
+Reading "slot7_nmosHV_13".
+Reading "slot7_nmosHV_12".
+Reading "slot7_ntap1_3".
+Reading "slot7_pmosHV_4".
+Reading "slot7_pmosHV_3".
+Reading "slot7_pmosHV_2".
+Reading "slot7_ptap1_1".
+Reading "slot7_ntap1_2".
+Reading "slot7_pmosHV_7_1".
+Reading "slot7_pmosHV_13_1".
+Reading "slot7_pmosHV_w0p3_l1".
+Reading "slot7_pmosHV_14".
+Reading "slot7_nmosHV_5_1".
+Reading "slot7_nmosHV_9_1".
+Reading "slot7_nmosHV_w2_l1_1".
+Reading "slot7_nmosHV_7_1".
+Reading "slot7_nmosHV_11".
+Reading "slot7_nmosHV_10".
+Reading "slot7_rhigh_1".
+Reading "slot7_pnpMPA".
+Reading "slot7_pmosHV_7".
+Reading "slot7_pmosHV_13".
+Reading "slot7_pmosHV_w0p3_l8".
+Reading "slot7_pmosHV_9".
+Reading "slot7_nmosHV_8".
+Reading "slot7_nmosHV_5".
+Reading "slot7_nmosHV_9".
+Reading "slot7_nmosHV_w2_l1".
+Reading "slot7_nmosHV_7".
+Reading "slot7_pmosHV_12".
+Reading "slot7_pmosHV_11".
+Reading "slot7_pmosHV_10".
+Reading "slot7_ptap1".
+Reading "slot7_nmosHV_3".
+Reading "slot7_nmosHV_2".
+Reading "slot7_nmosHV_1".
+Reading "slot7_nmosHV".
+Reading "slot7_ntap1_1".
+Reading "slot7_ntap1".
+Reading "slot7_pmosHV_1".
+Reading "slot7_pmosHV".
+Reading "slot7_tree_row_n".
+Reading "slot7_tree_row_p".
+Reading "slot7_tpb_row_n".
+Reading "slot7_tpb_row_p2".
+Reading "slot7_tpb_row_p1".
+Reading "slot7_tpb_row_p0".
+Reading "slot7_sg13_hv_nmos_MRZNPN".
+Reading "slot7_sg13_hv_pmos_XLVYT6".
+Reading "slot7_via_Y6ZG8N".
+Reading "slot7_bg_svpg".
+Reading "slot7_bg_ms1".
+Reading "slot7_bg_pmir_pcas_c".
+Reading "slot7_bg_n4".
+Reading "slot7_bg_res_c".
+Reading "slot7_bg_pnp_c".
+Reading "slot7_oa_svpg".
+Reading "slot7_oa_ms1".
+Reading "slot7_oa_pmir_c".
+Reading "slot7_oa_mcs_c".
+Reading "slot7_oa_n10".
+Reading "slot7_oa_pcas_c".
+Reading "slot7_tp_row_n".
+Reading "slot7_tp_row_pr".
+Reading "slot7_tp_row_pb".
+Reading "slot7_tp_row_pa".
+Reading "slot7_bias_tree_noab_pd".
+Reading "slot7_tp_en_ctrl_b".
+Reading "slot7_xgate".
+CIF file read warning: CIF style sg13cmos5l(): units rescaled by factor of 5 / 1
+Reading "slot7_bg_core_pd".
+Reading "slot7_oa_core_pd".
+Reading "slot7_tp_en_ctrl".
+Reading "slot_7".
+Generating LEF output final/lef/slot_7.lef for cell slot_7:
+Diagnostic:  Write LEF header for cell slot_7
+Diagnostic:  Writing LEF output for cell slot_7
+Diagnostic:  Scale value is 0.005000
+final/lef/slot_7.lef: 64 PIN blocks -> 63 pins
+Done!

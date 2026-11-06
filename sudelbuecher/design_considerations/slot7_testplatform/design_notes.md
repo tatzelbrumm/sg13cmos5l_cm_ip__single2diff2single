@@ -68,3 +68,27 @@ with the voltage, so a stronger pull-down buys little).
 - Sheets are drafts (one labelled stub per terminal), checked by netlisting; tidy by hand if wanted.
 - No PEX of the slot (the cores' PEX is in their macros); the extracted (device-only) netlist was simulated at tt / 27 C.
 - Stage B (trees, voltage mux, harness ibias as third reference) not started.
+
+## Stage B (2026-11-06, evening)
+
+Decisions:
+1. **The S2D pad's tree** (`bias_tree_noab_pd`, four lines, no class-AB legs) rather than `bias_tree_pd`: it is the
+   chain the pad actually uses, so measuring it on silicon characterizes the pad's bias, and it is smaller.
+2. **One tree, three selectable references** (OA, BG, harness `ibias0`) by transmission gates into `iref`, rather than
+   one tree per reference: the comparison is then made through one and the same mirror, so the tree's own mismatch
+   cancels in the comparison. The cores keep their stage-A bus switches, so a core can be measured directly or into
+   the tree (not both at once: the current would split).
+3. **Bias voltages onto `analog_bus2`** through four xgates (a voltmeter on `analog[2]`); the tree's outputs are diode
+   nodes (low impedance), so nA of switch / bus leakage moves them by < 1 mV.
+4. **`ibias1` straight onto `analog_bus3`**: measures the harness current through slot 7's own path (pin, xgate, bus,
+   harness bus switch) for comparison with the diagnostic path of project 0.
+5. **New cells only** (`tp_en_ctrl_b`, the tree layout, a new top `slot7_testplatform_ab`): stage A's cells, sheets and
+   pins stay as delivered, and the user's hand edits of the stage-A sheets are not touched.
+6. **No read-back for stage B**: all 12 `dig_out` are stage A's.
+
+Simulation note: the first harness-source model clamped the `ibias` pins 0.6 V above the 3.3 V rail; that fed current
+through switches that were off (xgate PMOS junction). The harness source is a PMOS source on the same rail; the model now
+clamps below the rail and leaves the pin floating where the harness switch would be open.
+
+Layout: `routed_cell.py` = the tp_en_ctrl router generalized; one fix (tie Metal1 extension must overlap the ptap's own
+Metal1). `slot_7.gds` with stage B was DRC clean on the first build and LVS clean on the first run.
