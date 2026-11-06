@@ -98,8 +98,10 @@ schematic + simulation and a floorplan sketch (where each block sits: in the pad
   the export is refused, record that and continue; do not work around it. Add a one-line entry to
   `sudelbuecher/chatlog/README.md`. Use `claude` in place of a model name in file names and pushed files.
 
-Messages to the user: when the user is talking with you interactively (questions, answers, the stop after a phase),
-keep them short, one point at a time. The final report and everything written to files are for reconstruction after
-the fact: complete and verbatim, no length limit.
+Messages to the user have two purposes. While you work, your visible messages are the session's log: the chat log is
+exported from them, so say what you do, why, and what came out, completely enough to reconstruct the run afterwards,
+with no length limit. When you ask the user a concrete question (for example the stop after the survey), make that
+message short: the question, the options, what you need; nothing else. Mark it so it stands out, starting with
+**QUESTION:**. The final report and everything written to files are complete, with no length limit.
 
 Final report to the user (after the last phase): targets, blocks, current versus a divider, status, branch names, open points.
