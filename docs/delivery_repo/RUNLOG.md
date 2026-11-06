@@ -170,3 +170,59 @@ Session ran in a Claude Code cloud container, 2026-11-06 (UTC). Entries are gene
   Assumption: the deck reads `$threads` (not `thr`), so `-rd threads=4` was passed; `feol=True beol=True` are not deck variables (FEOL/BEOL are on unless `no_feol`/`no_beol`), passed only to mirror the harness-fork command.
 - 2.5 fresh `git clone` of DELIVERY_REPO: `.git` 732K, working tree 3.3M, one branch `main` (`logs/p2_5_du.log`).
 
+### 2026-11-06T02:53:27Z — Phase 3.1 branch + config.txt
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`; `git checkout -b delivery-test origin/custom-pad-test` (79302da), exit 0.
+- `sed -i` on `config.txt`: `s7_source:\thttps://github.com/tatzelbrumm/sg13cmos5l_cm_slot7`, `s7_version:\tmain\t\tc5d50034d83d075ad8f719f4982167d4d3f15ba1` (tab-separated as the other lines). exit 0.
+- dependencies/slot_7 was not initialised in this clone (gitlink 4611357 in the index, empty directory).
+
+### 2026-11-06T02:53:35Z — Phase 3.2 make projects-clean SLOTS=7 (PATH shim first)
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `make projects-clean SLOTS=7 `
+- exit: 0
+- log: `logs/p3_2a_projects_clean.log`
+
+### 2026-11-06T02:53:41Z — Phase 3.2 make projects SLOTS=7
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `make projects SLOTS=7 `
+- exit: 0
+- log: `logs/p3_2b_projects.log`
+
+### 2026-11-06T02:53:51Z — Phase 3.2 make projects-gds SLOTS=7
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `make projects-gds SLOTS=7 `
+- exit: 0
+- log: `logs/p3_2c_projects_gds.log`
+
+### 2026-11-06T02:53:56Z — Phase 3.2 size of submodule git dir
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `du -sh .git/modules/dependencies/slot_7 `
+- exit: 0
+- log: `logs/p3_2d_du_module.log`
+
+### 2026-11-06T02:54:03Z — Phase 3.3 byte-compare pad GDS
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `bash /home/user/work/check3_pads.sh `
+- exit: 0
+- log: `logs/p3_3_cmp_pads.log`
+
+### 2026-11-06T02:54:18Z — Phase 3 commit on harness fork delivery-test
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `git commit -q -m $'delivery-test: slot 7 from the delivery repository tatzelbrumm/sg13cmos5l_cm_slot7\n\nconfig.txt s7_source/s7_version -> sg13cmos5l_cm_slot7 main c5d5003;\nmake projects-clean SLOTS=7 && make projects SLOTS=7 regenerated .gitmodules\nand the dependencies/slot_7 gitlink. make projects-gds SLOTS=7 places slot_7\nat 1379.95 2170.05 (scripts/user_projects.tcl unchanged). Records in\ntatzelbrumm/sg13cmos5l_cm_ip__single2diff2single, branch harness-test,\ndocs/delivery_repo/.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01XU3KH77upRZxPAr9FvWL5j' `
+- exit: 0
+
+### 2026-11-06T02:54:18Z — push delivery-test to harness fork
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `git push -u origin delivery-test `
+- exit: 0
+- log: `logs/p3_push.log`
+
+### Phase 3 results
+- Batch magic: not invoked by these targets (get_projects.sh / get_project_gds.sh call git and magic for the wrapper placements); the PATH shim
+  `/home/user/sg13cmos5l_ocd_chipalooza/docs/custom_pads/tools/shim` was first on PATH for all three make runs anyway.
+- `make projects-clean SLOTS=7`: removed slot_7 from .gitmodules and the index; `.git/modules/dependencies/slot_7` did not exist before (submodule never initialised in this clone).
+- `make projects SLOTS=7`: cloned https://github.com/tatzelbrumm/sg13cmos5l_cm_slot7 at c5d50034 (frozen). `.gitmodules`: url sg13cmos5l_cm_slot7, branch main.
+- `make projects-gds SLOTS=7`: `slot_7: dependencies/slot_7/final/gds/slot_7.gds  place at 1379.95 2170.05`; `scripts/user_projects.tcl` byte-identical to custom-pad-test (no diff).
+- `du -sh .git/modules/dependencies/slot_7` = 736K (custom-pad-test RUNLOG: 160 MB with the design repository).
+- Pad GDS byte-compare dependencies/slot_7/final/pads/*.gds vs magic/custom_io/gds/*.gds: both IDENTICAL (`logs/p3_3_cmp_pads.log`).
+- Harness fork commit 93e459d on new branch `delivery-test` (config.txt, .gitmodules, dependencies/slot_7 gitlink), pushed.
+
