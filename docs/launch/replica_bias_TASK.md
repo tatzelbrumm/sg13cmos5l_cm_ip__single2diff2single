@@ -39,20 +39,34 @@ Use only primitives that already exist in this repository: the device instances 
    user questions during the run: take the most reasonable reading, write it down, continue. Commit and push after
    each phase.
 
-## Phase 1: targets (evidence first)
+## Phase 1: survey (read only; no new simulation runs)
 
-Establish the target value and tolerance of each voltage from the pads' own data, not from guesses:
-- Read `macros/sg13cmos5l_IOPadSingle2Diff/README.md` (input window: unit gates <= about iovdd - 1.3 V; vref and vcm
-  default 1.2 V; with vref = 0.5 V the pad range is 0 ... 1 V) and `macros/sg13cmos5l_IOPadDiff2Single/README.md`
-  (suite at vref = vicm = 1.65 V; headroom limits at iovdd = 3.0 V; the proposal vcm = 1.2 V for both buffers),
-  their CACE yaml and results, and the design notes they cite on `sudel_buecher`.
-- Simulate (ngspice / CACE, schematic) the range and linearity of each pad versus vref / vcm at iovdd 3.0, 3.3, 3.6 V,
-  tt and the corners, -40 / 27 / 125 C, and find the optimum and the acceptable band. Write a short table.
-- Decide which device's window each target follows (the replica) and state the tracking argument.
-STOP and record if the data say a fixed (non-tracking) voltage is as good as a replica: then the task becomes a
-low-current fixed reference built from the same primitives, and you say so.
+Find out, from what already exists, where the bias voltages should sit, and what the existing evidence covers:
+- Where `vref` / `vcm` (S2D) and `vref` (D2S; and whatever else depends on its input common mode) should sit, and
+  with what tolerance, according to the existing simulation and characterization runs. Starting points:
+  `macros/sg13cmos5l_IOPadSingle2Diff/README.md` (input window: unit gates <= about iovdd - 1.3 V; vref and vcm default
+  1.2 V; with vref = 0.5 V the pad range is 0 ... 1 V), `macros/sg13cmos5l_IOPadDiff2Single/README.md` (suite at
+  vref = vicm = 1.65 V; headroom limits at iovdd = 3.0 V; the proposal vcm = 1.2 V for both buffers), every CACE yaml
+  and result under `macros/*/verification/cace/` that involves the pads or their drivers, the testbench decks and
+  results under `macros/*/testbenches/` and `macros/*/verification/`, and the design notes they cite on `sudel_buecher`
+  (`sudelbuecher/design_considerations/`, read through the worktree).
+- What these runs cover, as a table per run (file, date / commit, schematic or extracted, what is swept: vref / vcm
+  values, iovdd, corners, temperature, load, mismatch MC; which quantities: range, linearity / INL, gain, loop
+  stability, settling, current, power-down), and which results are stale (taken before a later design change that
+  the READMEs mention, e.g. capacitor sizes, enable complement, output-stage move).
+- Which device's operating window sets each optimum (the candidate replica), and what the runs say about how that
+  window moves with process, temperature and iovdd.
+- The gaps: target values or ranges that no run covers, conditions missing (corners, temperatures, iovdd 3.0 / 3.6 V,
+  extracted views), stale results that matter, and contradictions between sources (e.g. 1.2 V versus 1.65 V).
 
-## Phase 2: design and simulate
+Write it into `docs/replica_bias/SURVEY.md` on your branch (with the run table and the gap list), commit and push.
+
+**Then STOP and ask the user.** Present the proposed targets with their evidence, the gap list and, for each gap, the
+simulation or characterization run you would do to close it (what, which bench, rough run time). Run nothing new
+until the user has answered; take the user's answer as the scope of the next steps. (This overrides hard rule 5 for
+this one point: here you do ask.)
+
+## Phase 2: design and simulate (after the user's answer to Phase 1)
 
 For each needed voltage (at most three blocks; share one where targets coincide):
 - Schematic (xschem `.sch`/`.sym`) with power-down (`en_3v3` / `en_3v3_b`, as in `oa_core_pd`): disabled, no current,
@@ -83,4 +97,5 @@ schematic + simulation and a floorplan sketch (where each block sits: in the pad
   the export is refused, record that and continue; do not work around it. Add a one-line entry to
   `sudelbuecher/chatlog/README.md`. Use `claude` in place of a model name in file names and pushed files.
 
-Final chat message to the user: five lines or fewer: targets, blocks, current versus a divider, status, branch names.
+Final chat message to the user (after the last phase, not after the survey): five lines or fewer: targets, blocks,
+current versus a divider, status, branch names.
