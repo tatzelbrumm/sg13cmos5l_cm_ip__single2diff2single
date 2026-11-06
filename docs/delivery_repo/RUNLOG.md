@@ -121,3 +121,52 @@ Session ran in a Claude Code cloud container, 2026-11-06 (UTC). Entries are gene
 - `git checkout --orphan main` in `/home/user/sg13cmos5l_cm_slot7`, `git add -A`. Delivery commit c5d5003.
 - push log: `fatal: expected 'acknowledgments', received 'packfile'` / `push negotiation failed; proceeding anyway` — the push itself succeeded (`* [new branch] main -> main`), harmless proxy negotiation message.
 
+### 2026-11-06T02:51:42Z — Phase 2.1 sha256 compare
+- cwd: `/home/user/sg13cmos5l_cm_slot7`
+- command: `bash /home/user/work/check1_sha.sh `
+- exit: 0
+- log: `logs/p2_1_sha256.log`
+
+### 2026-11-06T02:52:01Z — Phase 2.2+2.3 KLayout geometry, pin texts, subckt pins
+- cwd: `/home/user/sg13cmos5l_cm_slot7`
+- command: `python3 /home/user/work/check2_geom.py `
+- exit: 1
+- log: `logs/p2_2_geometry_try1_FAIL.log` (check too strict: also demanded the designed Metal4 50/25 stub labels to lie in the Metal3 pin rectangle; see next entry)
+
+### 2026-11-06T02:52:21Z — Phase 2.2+2.3 retry with refined pin-text check
+- cwd: `/home/user/sg13cmos5l_cm_slot7`
+- command: `python3 /home/user/work/check2_geom.py `
+- exit: 0
+- log: `logs/p2_2_geometry.log`
+
+### 2026-11-06T02:52:36Z — Phase 2.4 KLayout DRC of slot_7.gds (PDK deck, feol+beol, deep)
+- cwd: `/home/user/work/drc`
+- command: `klayout -b -zz -r /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc -rd input=/home/user/sg13cmos5l_cm_slot7/final/gds/slot_7.gds -rd report=/home/user/work/drc/slot_7.lyrdb -rd feol=True -rd beol=True -rd run_mode=deep -rd threads=4 -rd topcell=slot_7 `
+- exit: 0
+- log: `logs/p2_4_drc_slot7.log`
+
+### 2026-11-06T02:52:53Z — Phase 2.5 fresh clone of delivery repo
+- cwd: `/home/user/work`
+- command: `git clone https://github.com/tatzelbrumm/sg13cmos5l_cm_slot7 /home/user/work/fresh `
+- exit: 0
+- log: `logs/p2_5_clone.log`
+
+### 2026-11-06T02:52:54Z — Phase 2.5 size of .git
+- cwd: `/home/user/work/fresh`
+- command: `du -sh .git `
+- exit: 0
+- log: `logs/p2_5_du.log`
+
+### Phase 2 results
+- 2.1 sha256: 9/9 OK (`logs/p2_1_sha256.log`; script `/home/user/work/check1_sha.sh`, copied as `logs/check1_sha.sh`).
+- 2.2 geometry: slot_7.gds one top cell `slot_7`, bbox 0,0;537.15,273; both pad GDS one top cell named like the file, bbox -0.62,0;80.62,180;
+  all 13 pad pins of pads.txt as top-cell texts on 10/25 (S2D y 179.74, D2S y 179.715), x monotonic in pads.txt order;
+  13 distinct `s7_an_*` names in slot_7.gds = slot7_pins.md, each with exactly one Metal3 text 30/25 inside its pin rectangle and Metal3 30/0 covering it.
+  Nine names also carry a Metal4 50/25 label at x 530..533 (the stand-in stub landing pads described in `macros/slot/harness_test/README.md`); info only.
+  First try failed only because the check demanded every same-name text inside the Metal3 rectangle (kept: `logs/p2_2_geometry_try1_FAIL.log`).
+  Script `/home/user/work/check2_geom.py` (copied as `logs/check2_geom.py`).
+- 2.3 `.subckt` pins = pads.txt pins + iovdd iovss vdd vss pad for both cells: OK (same log).
+- 2.4 DRC slot_7.gds: 0 items, FEOL+BEOL+deep, 333 rules executed, 1.6 s (`logs/p2_4_drc_slot7.log`, `logs/p2_4_drc_slot7.lyrdb`).
+  Assumption: the deck reads `$threads` (not `thr`), so `-rd threads=4` was passed; `feol=True beol=True` are not deck variables (FEOL/BEOL are on unless `no_feol`/`no_beol`), passed only to mirror the harness-fork command.
+- 2.5 fresh `git clone` of DELIVERY_REPO: `.git` 732K, working tree 3.3M, one branch `main` (`logs/p2_5_du.log`).
+
