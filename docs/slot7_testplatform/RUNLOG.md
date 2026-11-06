@@ -226,3 +226,25 @@ Scratch work directory of the container: `/home/user/work` (not committed; logs 
   y 2446.6); clip 1100.. brought in the control block, which reuses the names dig_in[k], enable, `out` on its side ->
   labels are now judged only inside slot 7's box; vss_1v2: the frame's Metal2 strip (vss1v2) is a separate piece inside
   the clip, accepted as documented; the slot's own vss_1v2 reaches the control block's ground (DVSS, vssd).
+
+## Records
+
+### 2026-11-06T14:42Z — notes branch `claude/c5-slot7-testplatform-sudel`
+- `sudelbuecher/design_considerations/slot7_testplatform/`: `design_notes.md` (decisions, the rejected first version,
+  simulation notes, open points), `results_v1_analog_switch_small/` (CSV of the first version), `lvs/` (LVS reference
+  netlist of slot_7, netgen reports), `slot_7_foundry_pads.gds` (the `--pads foundry` variant, DRC 0)
+- `sudelbuecher/logs/slot7-testplatform/`: all logs named in this RUNLOG
+- chat log `sudelbuecher/chatlog/2026-11-06_claude_slot7_testplatform.md` (sha256 f9869504...), exported with
+  `docs/slot7_testplatform/tools/export_chatlog.py` from `~/.claude/projects/-home-user/8e15a971-5e3a-5218-b4ab-7a66883211f3.jsonl`;
+  the export was not refused. The transcript file lacks part of the assistant's visible text (46 text blocks are in
+  it, 203 tool calls): recorded in the log's header, not reconstructed. One line added to `sudelbuecher/chatlog/README.md`.
+- notes commit dd4976e, pushed.
+
+## Branches and commits at the end
+
+| repository | branch | commit |
+|---|---|---|
+| design | `claude/c5-slot7-testplatform` | this commit (after 26b9c6c) |
+| design (notes) | `claude/c5-slot7-testplatform-sudel` | dd4976e |
+| delivery `sg13cmos5l_cm_slot7` | `claude/c5-testplatform` | f2c8501 |
+| harness fork | `claude/c5-testplatform-test` | 9981b94 |
