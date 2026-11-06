@@ -231,3 +231,140 @@ Session ran in a Claude Code cloud container, 2026-11-06 (UTC). Entries are gene
 - Output: `docs/delivery_repo/chatlog/2026-11-06_claude_slot7_delivery_repo.md` (sha256 b425e37e3e375955d4259614afa47b1b7edef5907e6de11ec66681350d815e72); script copied to `docs/delivery_repo/tools/`.
 - Export not refused. Secrets grep: none; nothing redacted. Final message to the user is after the export and not in the log.
 
+### 2026-11-06T03:14:24Z — Follow-up: copy bias cores bg_core_pd, oa_core_pd into the delivery repo
+- cwd: `/home/user/sg13cmos5l_cm_ip__single2diff2single`
+- command (per file): `git show cf88683b74ce1284ddc7cd327c4effeb771606a3:macros/<cell>/<path> > /home/user/sg13cmos5l_cm_slot7/macros/<cell>/<path>` for README.md, layout/gds/<cell>.gds, netlist/schematic/<cell>_magic.spice, netlist/layout/<cell>_magic.ext.spc, schematic/xschem/{<cell>.sch,<cell>.sym,xschemrc}, verification/drc/.../<cell>.magic.drc.rpt, verification/lvs/.../<cell>.lvs.out
+- exit: all 0 (column 3 of the manifest below); same content at 4611357 (`git diff --stat 4611357 origin/toplevel -- macros/bg_core_pd macros/oa_core_pd` empty)
+- reason: user request "single2diff2single contains bg and oa bias cores. They need to go in."; Makefile and pex netlists/symbols not copied (Makefile needs the template repo; pex is non-reproducible per the design repo's CLAUDE.md)
+
+```
+macros/bg_core_pd/README.md	1323e7217dd3eddba48c1683a8d341404ba3fb788070bce3ee9d747cd218fc0d	0
+macros/bg_core_pd/layout/gds/bg_core_pd.gds	c799ffb5464610edb334b764305cbbb305ec3f31863f8990cb7f606ab08be10c	0
+macros/bg_core_pd/netlist/schematic/bg_core_pd_magic.spice	a2f6d9d8385f0de4073eefe74219bf57dc49bc8694b284508bf1cc06ec392a9f	0
+macros/bg_core_pd/netlist/layout/bg_core_pd_magic.ext.spc	8650e4ab046df41f366890da79ec7053855b93e2cc03afdef55c34f901488c6d	0
+macros/bg_core_pd/schematic/xschem/bg_core_pd.sch	bd3e1864c9cc6444b6ce42dd4152ae3b6bfc767c910580a39adfae5b6b074a0b	0
+macros/bg_core_pd/schematic/xschem/bg_core_pd.sym	ba65ec364875a3cb4d70f4cee9fbb417cd65314087ab379bf3001327526ca137	0
+macros/bg_core_pd/schematic/xschem/xschemrc	02ebdf0b026bba540dbe5963947261d1c1166ae470913ace15b2297c03b53471	0
+macros/bg_core_pd/verification/drc/bg_core_pd.magic.drc/bg_core_pd.magic.drc.rpt	1603b8cbf81c51020bf43734988113e68a6ad9034db4e092fd1b54acac2ad9d9	0
+macros/bg_core_pd/verification/lvs/bg_core_pd.magic.lvs/bg_core_pd.lvs.out	1a94d96d1f008811b75310728e656059a00bb70f9b58b9dfb26b58674c38bb7d	0
+macros/oa_core_pd/README.md	fbf6b04836ed49c40d104c361086565c9c5d3360b07b57346669b9f142312cf5	0
+macros/oa_core_pd/layout/gds/oa_core_pd.gds	22ad9f9552e4d5807310f8277f0db17de9e7ddb7e77bda91a0cc740c9bc2039f	0
+macros/oa_core_pd/netlist/schematic/oa_core_pd_magic.spice	2bead4323fb461c08e081f514583fa554eac5c298fd8c549cad472d1e3be3d0d	0
+macros/oa_core_pd/netlist/layout/oa_core_pd_magic.ext.spc	55b1bcc7339c25ab95e58ca37a46ed605dece1a25f9354f4e24251607872bc8d	0
+macros/oa_core_pd/schematic/xschem/oa_core_pd.sch	2963b25ec6e351c7638bc818e1b731f144ac7bcda5d6808e808205b41a3ab11c	0
+macros/oa_core_pd/schematic/xschem/oa_core_pd.sym	47028f93b57be1c2ac6df64a3d325cb43a1273536d4454ed0c9f483fd5881b6b	0
+macros/oa_core_pd/schematic/xschem/xschemrc	02ebdf0b026bba540dbe5963947261d1c1166ae470913ace15b2297c03b53471	0
+macros/oa_core_pd/verification/drc/oa_core_pd.magic.drc/oa_core_pd.magic.drc.rpt	7a45eb866cb7d88e11053dc8b95494cceeccdab203ffb9f2cba5985fbeaaa35b	0
+macros/oa_core_pd/verification/lvs/oa_core_pd.magic.lvs/oa_core_pd.lvs.out	3e372812cd1d3eccb5df91a31707444bdf728151b9e429f867e37e10ffd225ed	0
+```
+
+### 2026-11-06T03:14:38Z — Follow-up: KLayout DRC of bg_core_pd (PDK deck, FEOL+BEOL, deep)
+- cwd: `/home/user/work/drc`
+- command: `klayout -b -zz -r /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc -rd input=/home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/layout/gds/bg_core_pd.gds -rd report=/home/user/work/logs/c_drc_bg_core_pd.lyrdb -rd run_mode=deep -rd threads=4 -rd topcell=bg_core_pd `
+- exit: 0
+- log: `logs/c_drc_bg_core_pd.log`
+
+### 2026-11-06T03:14:54Z — Follow-up: KLayout DRC of oa_core_pd (PDK deck, FEOL+BEOL, deep)
+- cwd: `/home/user/work/drc`
+- command: `klayout -b -zz -r /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc -rd input=/home/user/sg13cmos5l_cm_slot7/macros/oa_core_pd/layout/gds/oa_core_pd.gds -rd report=/home/user/work/logs/c_drc_oa_core_pd.lyrdb -rd run_mode=deep -rd threads=4 -rd topcell=oa_core_pd `
+- exit: 0
+- log: `logs/c_drc_oa_core_pd.log`
+
+### 2026-11-06T03:25:27Z — Follow-up: magic extraction of bg_core_pd, try 1 HUNG
+- command: `magic -dnull -noconsole -rcfile /foss/pdks/ihp-sg13cmos5l/libs.tech/magic/ihp-sg13cmos5l.magicrc /home/user/work/lvs/ext_bg_core_pd.tcl` (PATH shim first), cwd `/home/user/work/lvs`
+- extraction and ext2spice completed ("exttospice finished"), but magic did not exit (the script was given as a file argument; the shim/batch mode waits on stdin). Stopped after the 600 s tool timeout. Log: `logs/c_ext_bg_core_pd_try1_HUNG.log`. Retried with the script on stdin (next entries).
+
+### 2026-11-06T03:25:34Z — Follow-up: magic extraction of bg_core_pd (PATH shim, script on stdin)
+- cwd: `/home/user/work/lvs`
+- command: `timeout 300 bash -c magic\ -dnull\ -noconsole\ -rcfile\ /foss/pdks/ihp-sg13cmos5l/libs.tech/magic/ihp-sg13cmos5l.magicrc\ \<\ /home/user/work/lvs/ext_bg_core_pd.tcl `
+- exit: 0
+- log: `logs/c_ext_bg_core_pd.log`
+
+### 2026-11-06T03:25:35Z — Follow-up: netgen LVS of bg_core_pd (extracted vs netlist/schematic/bg_core_pd_magic.spice)
+- cwd: `/home/user/work/lvs`
+- command: `timeout 300 netgen -batch lvs /home/user/work/lvs/bg_core_pd_extracted.spice\ bg_core_pd /home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/netlist/schematic/bg_core_pd_magic.spice\ bg_core_pd /foss/pdks/ihp-sg13cmos5l/libs.tech/netgen/ihp-sg13cmos5l_setup.tcl /home/user/work/logs/c_lvs_bg_core_pd.out `
+- exit: 0
+- log: `logs/c_lvs_bg_core_pd.log`
+
+### 2026-11-06T03:25:35Z — Follow-up: magic extraction of oa_core_pd (PATH shim, script on stdin)
+- cwd: `/home/user/work/lvs`
+- command: `timeout 300 bash -c magic\ -dnull\ -noconsole\ -rcfile\ /foss/pdks/ihp-sg13cmos5l/libs.tech/magic/ihp-sg13cmos5l.magicrc\ \<\ /home/user/work/lvs/ext_oa_core_pd.tcl `
+- exit: 0
+- log: `logs/c_ext_oa_core_pd.log`
+
+### 2026-11-06T03:25:36Z — Follow-up: netgen LVS of oa_core_pd (extracted vs netlist/schematic/oa_core_pd_magic.spice)
+- cwd: `/home/user/work/lvs`
+- command: `timeout 300 netgen -batch lvs /home/user/work/lvs/oa_core_pd_extracted.spice\ oa_core_pd /home/user/sg13cmos5l_cm_slot7/macros/oa_core_pd/netlist/schematic/oa_core_pd_magic.spice\ oa_core_pd /foss/pdks/ihp-sg13cmos5l/libs.tech/netgen/ihp-sg13cmos5l_setup.tcl /home/user/work/logs/c_lvs_oa_core_pd.out `
+- exit: 0
+- log: `logs/c_lvs_oa_core_pd.log`
+
+### 2026-11-06T03:25:56Z — Follow-up: sak-lvs.sh (magic+netgen, as macros/bg_core_pd/Makefile magic-lvs) on the delivered files
+- cwd: `/home/user/work/lvs_sak/bg_core_pd`
+- command: `timeout 500 sak-lvs.sh -d -w /home/user/work/lvs_sak/bg_core_pd -s /home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/netlist/schematic/bg_core_pd_magic.spice -l /home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/layout/gds/bg_core_pd.gds -c bg_core_pd `
+- exit: 4
+- log: `logs/c_saklvs_bg_core_pd_try1_noSTDCELL.log` (exit 4: STD_CELL_LIBRARY not set; retried with the design repo's .designinit variables)
+
+### 2026-11-06T03:25:56Z — Follow-up: sak-lvs.sh (magic+netgen, as macros/oa_core_pd/Makefile magic-lvs) on the delivered files
+- cwd: `/home/user/work/lvs_sak/oa_core_pd`
+- command: `timeout 500 sak-lvs.sh -d -w /home/user/work/lvs_sak/oa_core_pd -s /home/user/sg13cmos5l_cm_slot7/macros/oa_core_pd/netlist/schematic/oa_core_pd_magic.spice -l /home/user/sg13cmos5l_cm_slot7/macros/oa_core_pd/layout/gds/oa_core_pd.gds -c oa_core_pd `
+- exit: 4
+- log: `logs/c_saklvs_oa_core_pd_try1_noSTDCELL.log` (exit 4: STD_CELL_LIBRARY not set; retried with the design repo's .designinit variables)
+
+### 2026-11-06T03:26:08Z — Follow-up: sak-lvs.sh retry with .designinit env (PDKPATH, STD_CELL_LIBRARY=sg13cmos5l_stdcell, KLAYOUT_PATH)
+- cwd: `/home/user/work/lvs_sak/bg_core_pd`
+- command: `timeout 500 sak-lvs.sh -d -w /home/user/work/lvs_sak/bg_core_pd -s /home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/netlist/schematic/bg_core_pd_magic.spice -l /home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/layout/gds/bg_core_pd.gds -c bg_core_pd `
+- exit: 0
+- log: `logs/c_saklvs_bg_core_pd.log`
+
+### 2026-11-06T03:26:08Z — Follow-up: sak-lvs.sh retry with .designinit env (PDKPATH, STD_CELL_LIBRARY=sg13cmos5l_stdcell, KLAYOUT_PATH)
+- cwd: `/home/user/work/lvs_sak/oa_core_pd`
+- command: `timeout 500 sak-lvs.sh -d -w /home/user/work/lvs_sak/oa_core_pd -s /home/user/sg13cmos5l_cm_slot7/macros/oa_core_pd/netlist/schematic/oa_core_pd_magic.spice -l /home/user/sg13cmos5l_cm_slot7/macros/oa_core_pd/layout/gds/oa_core_pd.gds -c oa_core_pd `
+- exit: 0
+- log: `logs/c_saklvs_oa_core_pd.log`
+
+### Note on the hand-written extraction + netgen entries above (c_ext_*, c_lvs_*)
+- That first attempt extracted hierarchically without flattening. For bg_core_pd netgen stopped with `Class "pnpMPA" is instanced inside of itself` (a GDS sub-cell named like the device) and `Cannot find cell bg_core_pd`, yet exited 0: so `exit: 0` in that entry is NOT a pass. oa_core_pd happened to match (28/28 devices, 22/22 nets). Superseded by `sak-lvs.sh`, the tool of the macros' own `make magic-lvs` (it flattens first).
+### Follow-up results: bias cores
+- KLayout DRC (PDK deck, FEOL+BEOL, deep): bg_core_pd 0, oa_core_pd 0 (`logs/c_drc_*.log`, `.lyrdb`). The cores' READMEs said "not yet checked with IHP's own decks"; now checked.
+- Geometry: one top cell each, named like the file; bg_core_pd 47.55 x 50.05 um, oa_core_pd 40.51 x 58.135 um; texts vdd/vss on Metal1 8/25 (top/bottom rail), iout/en_3v3/en_3v3_b on Metal2 10/25 at the right edge.
+- Magic + netgen LVS (`sak-lvs.sh -d`, delivered GDS vs delivered `netlist/schematic/<cell>_magic.spice`): both "Circuits match uniquely", pin lists equivalent; bg 29/29 devices 21/21 nets, oa 28/28 devices 22/22 nets (`logs/c_saklvs_*.lvs.out`).
+
+### 2026-11-06T03:26:48Z — Follow-up: commit bias cores to delivery main
+- cwd: `/home/user/sg13cmos5l_cm_slot7`
+- command: `git commit -q -m $'macros: bias cores bg_core_pd and oa_core_pd for the slot\'s inner circuit\n\nBanba bandgap and Oguey-Aebischer reference-current cores (about 5 uA sourced\ninto the pads\' iref inputs), copied from sg13cmos5l_cm_ip__single2diff2single\ntoplevel cf88683 with their LVS netlists, schematics and reports; sha256 in\nREADME.md. Checked here: KLayout PDK DRC 0 violations, magic+netgen LVS match\nuniquely for both. Not yet placed in slot_7.gds; the harness does not read\nmacros/.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01XU3KH77upRZxPAr9FvWL5j' `
+- exit: 0
+
+### 2026-11-06T03:26:48Z — Follow-up: push delivery main
+- cwd: `/home/user/sg13cmos5l_cm_slot7`
+- command: `git push origin main `
+- exit: 0
+- log: `logs/c_push_delivery.log`
+
+### 2026-11-06T03:26:58Z — Follow-up: make projects-update SLOTS=7 (s7_version -> 40ba9b030d0c3e321438600fea5ae0a13439799a)
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `make projects-update SLOTS=7 `
+- exit: 0
+- log: `logs/c_projects_update.log`
+
+### 2026-11-06T03:26:58Z — Follow-up: make projects-gds SLOTS=7
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `make projects-gds SLOTS=7 `
+- exit: 0
+- log: `logs/c_projects_gds.log`
+
+### 2026-11-06T03:27:11Z — Follow-up: commit s7_version bump on delivery-test
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `git commit -q -m $'delivery-test: slot 7 at delivery main 40ba9b0 (adds the bias cores)\n\nmake projects-update SLOTS=7 and make projects-gds SLOTS=7: exit 0,\nslot_7 placed at 1379.95 2170.05, scripts/user_projects.tcl unchanged.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: https://claude.ai/code/session_01XU3KH77upRZxPAr9FvWL5j' `
+- exit: 0
+
+### 2026-11-06T03:27:11Z — Follow-up: push delivery-test
+- cwd: `/home/user/sg13cmos5l_ocd_chipalooza`
+- command: `git push origin delivery-test `
+- exit: 0
+- log: `logs/c_push_harness.log`
+
+### Follow-up: delivery main 40ba9b0 and harness delivery-test f327570
+- Delivery README: intro corrected (slot_7.gds holds frame + pins + stand-in stubs, not only pins; `macros/` is not read by the harness) and new section "Bias cores for the slot's inner circuit" with the sha256 table. Commit 40ba9b0 pushed to `main`.
+- Harness fork `delivery-test`: `s7_version` -> `main 40ba9b030d0c3e321438600fea5ae0a13439799a`; `make projects-update SLOTS=7` exit 0, `make projects-gds SLOTS=7` exit 0, slot_7 placed at 1379.95 2170.05, `scripts/user_projects.tcl` byte-identical (cmp). Submodule git dir now 1.2M. Commit f327570 pushed.
+- Not done (design decisions, left to the user): placing the cores in slot_7.gds and wiring iout -> s7_an_0_iref / s7_an_1_iref, en_3v3/en_3v3_b, vdd_3v3/vss_3v3; the selector bias_gen_pd has no layout.
+

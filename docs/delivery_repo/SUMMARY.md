@@ -49,3 +49,11 @@ repository and commit; and the Makefile / README sequence would have to run `mak
 - `slot_7.gds` is the plumbing stand-in; the real slot circuit has to be committed to the delivery repo and `s7_version` bumped.
 - Known LVS note (`vss` pin, substrate merge) stays as documented in the pads' READMEs; not re-run here.
 - Nothing was sent to `RTimothyEdwards/*`; telling Tim about the delivery repo is the user's step.
+
+## Follow-up (same day): bias cores added
+
+Delivery `main` now `40ba9b030d0c3e321438600fea5ae0a13439799a`: `macros/bg_core_pd/` (Banba bandgap) and `macros/oa_core_pd/`
+(Oguey–Aebischer), each about 5 uA sourced from `iout` into a pad's `iref` (sha256 in the delivery README). KLayout PDK DRC
+0 / 0; magic + netgen LVS (`sak-lvs.sh`) match uniquely for both. Not placed in `slot_7.gds` yet; the harness does not read
+`macros/`. Harness `delivery-test` f327570 follows 40ba9b0: projects-update / projects-gds exit 0, placement unchanged,
+submodule git dir 1.2M. Tim's requirement (pads on the slot repo's default branch, used as a submodule) is met by `final/pads/`.
