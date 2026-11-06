@@ -1,0 +1,633 @@
+tt -40 low all_off I0=1.601e-12 I1=1.601e-12
+tt -40 low tg_on_cores_off I0=5.729e-12 I1=5.68e-12
+tt -40 low oa_on I0=3.253e-06 I1=1.601e-12
+tt -40 low bg_on I0=1.601e-12 I1=4.862e-06
+tt -40 low both_on I0=3.253e-06 I1=4.862e-06
+tt -40 low cores_on_tg_off I0=1.601e-12 I1=1.601e-12
+tt -40 low enable_low I0=1.601e-12 I1=1.601e-12
+tt -40 low vdd1v2_off I0=1.601e-12 I1=1.601e-12
+tt -40 low vdd1v2_off_1uA I0=1.601e-12 I1=1.601e-12
+tt -40 low vdd3v3_off I0=-2.325e-12 I1=-1.378e-10
+tt -40 low both_supplies_off I0=-4.145e-12 I1=-8.243e-12
+tt -40 nom all_off I0=1.903e-12 I1=1.903e-12
+tt -40 nom tg_on_cores_off I0=6.635e-12 I1=6.608e-12
+tt -40 nom oa_on I0=3.255e-06 I1=1.903e-12
+tt -40 nom bg_on I0=1.903e-12 I1=4.871e-06
+tt -40 nom both_on I0=3.255e-06 I1=4.871e-06
+tt -40 nom cores_on_tg_off I0=1.903e-12 I1=1.903e-12
+tt -40 nom enable_low I0=1.903e-12 I1=1.903e-12
+tt -40 nom vdd1v2_off I0=1.903e-12 I1=1.903e-12
+tt -40 nom vdd1v2_off_1uA I0=1.903e-12 I1=1.903e-12
+tt -40 nom vdd3v3_off I0=-2.325e-12 I1=-1.378e-10
+tt -40 nom both_supplies_off I0=-4.145e-12 I1=-8.243e-12
+tt -40 high all_off I0=2.212e-12 I1=2.212e-12
+tt -40 high tg_on_cores_off I0=7.546e-12 I1=7.621e-12
+tt -40 high oa_on I0=3.257e-06 I1=2.212e-12
+tt -40 high bg_on I0=2.212e-12 I1=4.878e-06
+tt -40 high both_on I0=3.257e-06 I1=4.878e-06
+tt -40 high cores_on_tg_off I0=2.212e-12 I1=2.212e-12
+tt -40 high enable_low I0=2.212e-12 I1=2.212e-12
+tt -40 high vdd1v2_off I0=2.212e-12 I1=2.212e-12
+tt -40 high vdd1v2_off_1uA I0=2.212e-12 I1=2.212e-12
+tt -40 high vdd3v3_off I0=-2.325e-12 I1=-1.378e-10
+tt -40 high both_supplies_off I0=-4.145e-12 I1=-8.243e-12
+tt 27 low all_off I0=1.61e-12 I1=1.61e-12
+tt 27 low tg_on_cores_off I0=5.849e-12 I1=6.729e-12
+tt 27 low oa_on I0=4.99e-06 I1=1.61e-12
+tt 27 low bg_on I0=1.61e-12 I1=4.95e-06
+tt 27 low both_on I0=4.99e-06 I1=4.95e-06
+tt 27 low cores_on_tg_off I0=1.698e-12 I1=1.698e-12
+tt 27 low enable_low I0=1.61e-12 I1=1.61e-12
+tt 27 low vdd1v2_off I0=1.61e-12 I1=1.61e-12
+tt 27 low vdd1v2_off_1uA I0=1.61e-12 I1=1.61e-12
+tt 27 low vdd3v3_off I0=-1.492e-10 I1=-3.893e-09
+tt 27 low both_supplies_off I0=-6.677e-12 I1=-1.378e-11
+tt 27 nom all_off I0=1.937e-12 I1=1.937e-12
+tt 27 nom tg_on_cores_off I0=6.797e-12 I1=8.304e-12
+tt 27 nom oa_on I0=4.992e-06 I1=1.937e-12
+tt 27 nom bg_on I0=1.937e-12 I1=4.958e-06
+tt 27 nom both_on I0=4.992e-06 I1=4.958e-06
+tt 27 nom cores_on_tg_off I0=2.028e-12 I1=2.028e-12
+tt 27 nom enable_low I0=1.937e-12 I1=1.937e-12
+tt 27 nom vdd1v2_off I0=1.937e-12 I1=1.937e-12
+tt 27 nom vdd1v2_off_1uA I0=1.937e-12 I1=1.937e-12
+tt 27 nom vdd3v3_off I0=-1.492e-10 I1=-3.893e-09
+tt 27 nom both_supplies_off I0=-6.677e-12 I1=-1.378e-11
+tt 27 high all_off I0=2.308e-12 I1=2.308e-12
+tt 27 high tg_on_cores_off I0=7.844e-12 I1=1.106e-11
+tt 27 high oa_on I0=4.994e-06 I1=2.308e-12
+tt 27 high bg_on I0=2.308e-12 I1=4.965e-06
+tt 27 high both_on I0=4.994e-06 I1=4.965e-06
+tt 27 high cores_on_tg_off I0=2.402e-12 I1=2.402e-12
+tt 27 high enable_low I0=2.308e-12 I1=2.308e-12
+tt 27 high vdd1v2_off I0=2.308e-12 I1=2.308e-12
+tt 27 high vdd1v2_off_1uA I0=2.308e-12 I1=2.308e-12
+tt 27 high vdd3v3_off I0=-1.492e-10 I1=-3.893e-09
+tt 27 high both_supplies_off I0=-6.677e-12 I1=-1.378e-11
+tt 125 low all_off I0=3.639e-11 I1=6.165e-11
+tt 125 low tg_on_cores_off I0=1.283e-10 I1=9.642e-10
+tt 125 low oa_on I0=6.659e-06 I1=6.165e-11
+tt 125 low bg_on I0=3.639e-11 I1=4.875e-06
+tt 125 low both_on I0=6.659e-06 I1=4.875e-06
+tt 125 low cores_on_tg_off I0=6.708e-11 I1=6.708e-11
+tt 125 low enable_low I0=3.639e-11 I1=6.165e-11
+tt 125 low vdd1v2_off I0=3.639e-11 I1=6.165e-11
+tt 125 low vdd1v2_off_1uA I0=3.639e-11 I1=6.165e-11
+tt 125 low vdd3v3_off I0=-5.883e-09 I1=-2.979e-08
+tt 125 low both_supplies_off I0=-3.082e-10 I1=-6.153e-10
+tt 125 nom all_off I0=3.861e-11 I1=6.472e-11
+tt 125 nom tg_on_cores_off I0=1.395e-10 I1=1.046e-09
+tt 125 nom oa_on I0=6.661e-06 I1=6.472e-11
+tt 125 nom bg_on I0=3.861e-11 I1=4.883e-06
+tt 125 nom both_on I0=6.661e-06 I1=4.883e-06
+tt 125 nom cores_on_tg_off I0=7.027e-11 I1=7.027e-11
+tt 125 nom enable_low I0=3.861e-11 I1=6.472e-11
+tt 125 nom vdd1v2_off I0=3.861e-11 I1=6.472e-11
+tt 125 nom vdd1v2_off_1uA I0=3.861e-11 I1=6.472e-11
+tt 125 nom vdd3v3_off I0=-5.883e-09 I1=-2.979e-08
+tt 125 nom both_supplies_off I0=-3.082e-10 I1=-6.153e-10
+tt 125 high all_off I0=4.143e-11 I1=6.843e-11
+tt 125 high tg_on_cores_off I0=1.531e-10 I1=1.152e-09
+tt 125 high oa_on I0=6.663e-06 I1=6.843e-11
+tt 125 high bg_on I0=4.143e-11 I1=4.891e-06
+tt 125 high both_on I0=6.663e-06 I1=4.891e-06
+tt 125 high cores_on_tg_off I0=7.408e-11 I1=7.408e-11
+tt 125 high enable_low I0=4.143e-11 I1=6.843e-11
+tt 125 high vdd1v2_off I0=4.143e-11 I1=6.843e-11
+tt 125 high vdd1v2_off_1uA I0=4.143e-11 I1=6.843e-11
+tt 125 high vdd3v3_off I0=-5.883e-09 I1=-2.979e-08
+tt 125 high both_supplies_off I0=-3.082e-10 I1=-6.153e-10
+ss -40 low all_off I0=1.6e-12 I1=1.6e-12
+ss -40 low tg_on_cores_off I0=5.73e-12 I1=5.674e-12
+ss -40 low oa_on I0=3.043e-06 I1=1.6e-12
+ss -40 low bg_on I0=1.6e-12 I1=3.853e-06
+ss -40 low both_on I0=3.043e-06 I1=3.853e-06
+ss -40 low cores_on_tg_off I0=1.6e-12 I1=1.6e-12
+ss -40 low enable_low I0=1.6e-12 I1=1.6e-12
+ss -40 low vdd1v2_off I0=1.6e-12 I1=1.6e-12
+ss -40 low vdd1v2_off_1uA I0=1.6e-12 I1=1.6e-12
+ss -40 low vdd3v3_off I0=-2.534e-12 I1=-1.098e-11
+ss -40 low both_supplies_off I0=-2.469e-12 I1=-8.392e-12
+ss -40 nom all_off I0=1.9e-12 I1=1.9e-12
+ss -40 nom tg_on_cores_off I0=6.634e-12 I1=6.579e-12
+ss -40 nom oa_on I0=3.045e-06 I1=1.9e-12
+ss -40 nom bg_on I0=1.9e-12 I1=3.861e-06
+ss -40 nom both_on I0=3.045e-06 I1=3.861e-06
+ss -40 nom cores_on_tg_off I0=1.9e-12 I1=1.9e-12
+ss -40 nom enable_low I0=1.9e-12 I1=1.9e-12
+ss -40 nom vdd1v2_off I0=1.9e-12 I1=1.9e-12
+ss -40 nom vdd1v2_off_1uA I0=1.9e-12 I1=1.9e-12
+ss -40 nom vdd3v3_off I0=-2.534e-12 I1=-1.098e-11
+ss -40 nom both_supplies_off I0=-2.469e-12 I1=-8.392e-12
+ss -40 high all_off I0=2.2e-12 I1=2.2e-12
+ss -40 high tg_on_cores_off I0=7.538e-12 I1=7.483e-12
+ss -40 high oa_on I0=3.046e-06 I1=2.2e-12
+ss -40 high bg_on I0=2.2e-12 I1=3.867e-06
+ss -40 high both_on I0=3.046e-06 I1=3.867e-06
+ss -40 high cores_on_tg_off I0=2.2e-12 I1=2.2e-12
+ss -40 high enable_low I0=2.2e-12 I1=2.2e-12
+ss -40 high vdd1v2_off I0=2.2e-12 I1=2.2e-12
+ss -40 high vdd1v2_off_1uA I0=2.2e-12 I1=2.2e-12
+ss -40 high vdd3v3_off I0=-2.534e-12 I1=-1.098e-11
+ss -40 high both_supplies_off I0=-2.469e-12 I1=-8.392e-12
+ss 27 low all_off I0=1.6e-12 I1=1.6e-12
+ss 27 low tg_on_cores_off I0=5.818e-12 I1=6.011e-12
+ss 27 low oa_on I0=4.699e-06 I1=1.6e-12
+ss 27 low bg_on I0=1.6e-12 I1=3.912e-06
+ss 27 low both_on I0=4.699e-06 I1=3.912e-06
+ss 27 low cores_on_tg_off I0=1.623e-12 I1=1.623e-12
+ss 27 low enable_low I0=1.6e-12 I1=1.6e-12
+ss 27 low vdd1v2_off I0=1.6e-12 I1=1.6e-12
+ss 27 low vdd1v2_off_1uA I0=1.6e-12 I1=1.6e-12
+ss 27 low vdd3v3_off I0=-3.643e-11 I1=-1.31e-09
+ss 27 low both_supplies_off I0=-6.724e-12 I1=-1.163e-11
+ss 27 nom all_off I0=1.901e-12 I1=1.901e-12
+ss 27 nom tg_on_cores_off I0=6.724e-12 I1=6.923e-12
+ss 27 nom oa_on I0=4.701e-06 I1=1.901e-12
+ss 27 nom bg_on I0=1.901e-12 I1=3.919e-06
+ss 27 nom both_on I0=4.701e-06 I1=3.919e-06
+ss 27 nom cores_on_tg_off I0=1.924e-12 I1=1.924e-12
+ss 27 nom enable_low I0=1.901e-12 I1=1.901e-12
+ss 27 nom vdd1v2_off I0=1.901e-12 I1=1.901e-12
+ss 27 nom vdd1v2_off_1uA I0=1.901e-12 I1=1.901e-12
+ss 27 nom vdd3v3_off I0=-3.643e-11 I1=-1.31e-09
+ss 27 nom both_supplies_off I0=-6.724e-12 I1=-1.163e-11
+ss 27 high all_off I0=2.201e-12 I1=2.201e-12
+ss 27 high tg_on_cores_off I0=7.63e-12 I1=7.844e-12
+ss 27 high oa_on I0=4.703e-06 I1=2.201e-12
+ss 27 high bg_on I0=2.201e-12 I1=3.925e-06
+ss 27 high both_on I0=4.703e-06 I1=3.925e-06
+ss 27 high cores_on_tg_off I0=2.225e-12 I1=2.225e-12
+ss 27 high enable_low I0=2.201e-12 I1=2.201e-12
+ss 27 high vdd1v2_off I0=2.201e-12 I1=2.201e-12
+ss 27 high vdd1v2_off_1uA I0=2.201e-12 I1=2.201e-12
+ss 27 high vdd3v3_off I0=-3.643e-11 I1=-1.31e-09
+ss 27 high both_supplies_off I0=-6.724e-12 I1=-1.163e-11
+ss 125 low all_off I0=2.202e-11 I1=2.964e-11
+ss 125 low tg_on_cores_off I0=1.056e-10 I1=6.665e-10
+ss 125 low oa_on I0=6.315e-06 I1=2.964e-11
+ss 125 low bg_on I0=2.202e-11 I1=3.829e-06
+ss 125 low both_on I0=6.315e-06 I1=3.829e-06
+ss 125 low cores_on_tg_off I0=3.121e-11 I1=3.121e-11
+ss 125 low enable_low I0=2.202e-11 I1=2.964e-11
+ss 125 low vdd1v2_off I0=2.202e-11 I1=2.964e-11
+ss 125 low vdd1v2_off_1uA I0=2.202e-11 I1=2.964e-11
+ss 125 low vdd3v3_off I0=-3.178e-09 I1=-1.514e-08
+ss 125 low both_supplies_off I0=-1.843e-10 I1=-3.005e-10
+ss 125 nom all_off I0=2.333e-11 I1=3.126e-11
+ss 125 nom tg_on_cores_off I0=1.133e-10 I1=7.112e-10
+ss 125 nom oa_on I0=6.317e-06 I1=3.126e-11
+ss 125 nom bg_on I0=2.333e-11 I1=3.836e-06
+ss 125 nom both_on I0=6.317e-06 I1=3.836e-06
+ss 125 nom cores_on_tg_off I0=3.289e-11 I1=3.289e-11
+ss 125 nom enable_low I0=2.333e-11 I1=3.126e-11
+ss 125 nom vdd1v2_off I0=2.333e-11 I1=3.126e-11
+ss 125 nom vdd1v2_off_1uA I0=2.333e-11 I1=3.126e-11
+ss 125 nom vdd3v3_off I0=-3.178e-09 I1=-1.514e-08
+ss 125 nom both_supplies_off I0=-1.843e-10 I1=-3.005e-10
+ss 125 high all_off I0=2.468e-11 I1=3.294e-11
+ss 125 high tg_on_cores_off I0=1.211e-10 I1=7.582e-10
+ss 125 high oa_on I0=6.318e-06 I1=3.294e-11
+ss 125 high bg_on I0=2.468e-11 I1=3.842e-06
+ss 125 high both_on I0=6.318e-06 I1=3.842e-06
+ss 125 high cores_on_tg_off I0=3.463e-11 I1=3.463e-11
+ss 125 high enable_low I0=2.468e-11 I1=3.294e-11
+ss 125 high vdd1v2_off I0=2.468e-11 I1=3.294e-11
+ss 125 high vdd1v2_off_1uA I0=2.468e-11 I1=3.294e-11
+ss 125 high vdd3v3_off I0=-3.178e-09 I1=-1.514e-08
+ss 125 high both_supplies_off I0=-1.843e-10 I1=-3.005e-10
+ff -40 low all_off I0=1.704e-12 I1=1.704e-12
+ff -40 low tg_on_cores_off I0=5.833e-12 I1=7.146e-12
+ff -40 low oa_on I0=3.494e-06 I1=1.704e-12
+ff -40 low bg_on I0=1.704e-12 I1=6.22e-06
+ff -40 low both_on I0=3.494e-06 I1=6.22e-06
+ff -40 low cores_on_tg_off I0=1.705e-12 I1=1.705e-12
+ff -40 low enable_low I0=1.704e-12 I1=1.704e-12
+ff -40 low vdd1v2_off I0=1.704e-12 I1=1.704e-12
+ff -40 low vdd1v2_off_1uA I0=1.704e-12 I1=1.704e-12
+ff -40 low vdd3v3_off I0=-4.962e-12 I1=-7.538e-10
+ff -40 low both_supplies_off I0=-4.268e-12 I1=-1.163e-11
+ff -40 nom all_off I0=2.202e-12 I1=2.202e-12
+ff -40 nom tg_on_cores_off I0=7.049e-12 I1=1.157e-11
+ff -40 nom oa_on I0=3.496e-06 I1=2.202e-12
+ff -40 nom bg_on I0=2.202e-12 I1=6.231e-06
+ff -40 nom both_on I0=3.496e-06 I1=6.231e-06
+ff -40 nom cores_on_tg_off I0=2.203e-12 I1=2.203e-12
+ff -40 nom enable_low I0=2.202e-12 I1=2.202e-12
+ff -40 nom vdd1v2_off I0=2.202e-12 I1=2.202e-12
+ff -40 nom vdd1v2_off_1uA I0=2.202e-12 I1=2.202e-12
+ff -40 nom vdd3v3_off I0=-4.962e-12 I1=-7.538e-10
+ff -40 nom both_supplies_off I0=-4.268e-12 I1=-1.163e-11
+ff -40 high all_off I0=2.928e-12 I1=2.928e-12
+ff -40 high tg_on_cores_off I0=8.792e-12 I1=2.097e-11
+ff -40 high oa_on I0=3.498e-06 I1=2.928e-12
+ff -40 high bg_on I0=2.928e-12 I1=6.24e-06
+ff -40 high both_on I0=3.498e-06 I1=6.24e-06
+ff -40 high cores_on_tg_off I0=2.928e-12 I1=2.928e-12
+ff -40 high enable_low I0=2.928e-12 I1=2.928e-12
+ff -40 high vdd1v2_off I0=2.928e-12 I1=2.928e-12
+ff -40 high vdd1v2_off_1uA I0=2.928e-12 I1=2.928e-12
+ff -40 high vdd3v3_off I0=-4.962e-12 I1=-7.538e-10
+ff -40 high both_supplies_off I0=-4.268e-12 I1=-1.163e-11
+ff 27 low all_off I0=2.069e-12 I1=2.072e-12
+ff 27 low tg_on_cores_off I0=6.93e-12 I1=2.059e-11
+ff 27 low oa_on I0=5.321e-06 I1=2.072e-12
+ff 27 low bg_on I0=2.069e-12 I1=6.35e-06
+ff 27 low both_on I0=5.321e-06 I1=6.35e-06
+ff 27 low cores_on_tg_off I0=2.432e-12 I1=2.432e-12
+ff 27 low enable_low I0=2.069e-12 I1=2.072e-12
+ff 27 low vdd1v2_off I0=2.069e-12 I1=2.072e-12
+ff 27 low vdd1v2_off_1uA I0=2.069e-12 I1=2.072e-12
+ff 27 low vdd3v3_off I0=-4.619e-10 I1=-1.056e-08
+ff 27 low both_supplies_off I0=-6.993e-12 I1=-1.805e-11
+ff 27 nom all_off I0=3.041e-12 I1=3.041e-12
+ff 27 nom tg_on_cores_off I0=9.708e-12 I1=4.015e-11
+ff 27 nom oa_on I0=5.323e-06 I1=3.041e-12
+ff 27 nom bg_on I0=3.041e-12 I1=6.36e-06
+ff 27 nom both_on I0=5.323e-06 I1=6.36e-06
+ff 27 nom cores_on_tg_off I0=3.416e-12 I1=3.416e-12
+ff 27 nom enable_low I0=3.041e-12 I1=3.041e-12
+ff 27 nom vdd1v2_off I0=3.041e-12 I1=3.041e-12
+ff 27 nom vdd1v2_off_1uA I0=3.041e-12 I1=3.041e-12
+ff 27 nom vdd3v3_off I0=-4.619e-10 I1=-1.056e-08
+ff 27 nom both_supplies_off I0=-6.993e-12 I1=-1.805e-11
+ff 27 high all_off I0=4.595e-12 I1=4.595e-12
+ff 27 high tg_on_cores_off I0=1.447e-11 I1=7.677e-11
+ff 27 high oa_on I0=5.326e-06 I1=4.595e-12
+ff 27 high bg_on I0=4.595e-12 I1=6.369e-06
+ff 27 high both_on I0=5.326e-06 I1=6.369e-06
+ff 27 high cores_on_tg_off I0=4.981e-12 I1=4.981e-12
+ff 27 high enable_low I0=4.595e-12 I1=4.595e-12
+ff 27 high vdd1v2_off I0=4.595e-12 I1=4.595e-12
+ff 27 high vdd1v2_off_1uA I0=4.595e-12 I1=4.595e-12
+ff 27 high vdd3v3_off I0=-4.619e-10 I1=-1.056e-08
+ff 27 high both_supplies_off I0=-6.993e-12 I1=-1.805e-11
+ff 125 low all_off I0=6.957e-11 I1=1.518e-10
+ff 125 low tg_on_cores_off I0=1.841e-10 I1=1.721e-09
+ff 125 low oa_on I0=7.051e-06 I1=1.518e-10
+ff 125 low bg_on I0=6.957e-11 I1=6.294e-06
+ff 125 low both_on I0=7.051e-06 I1=6.294e-06
+ff 125 low cores_on_tg_off I0=1.709e-10 I1=1.709e-10
+ff 125 low enable_low I0=6.957e-11 I1=1.518e-10
+ff 125 low vdd1v2_off I0=6.957e-11 I1=1.518e-10
+ff 125 low vdd1v2_off_1uA I0=6.957e-11 I1=1.518e-10
+ff 125 low vdd3v3_off I0=-9.18e-09 I1=-8.702e-08
+ff 125 low both_supplies_off I0=-6.149e-10 I1=-1.525e-09
+ff 125 nom all_off I0=7.536e-11 I1=1.6e-10
+ff 125 nom tg_on_cores_off I0=2.097e-10 I1=1.943e-09
+ff 125 nom oa_on I0=7.053e-06 I1=1.6e-10
+ff 125 nom bg_on I0=7.536e-11 I1=6.304e-06
+ff 125 nom both_on I0=7.053e-06 I1=6.304e-06
+ff 125 nom cores_on_tg_off I0=1.794e-10 I1=1.794e-10
+ff 125 nom enable_low I0=7.536e-11 I1=1.6e-10
+ff 125 nom vdd1v2_off I0=7.536e-11 I1=1.6e-10
+ff 125 nom vdd1v2_off_1uA I0=7.536e-11 I1=1.6e-10
+ff 125 nom vdd3v3_off I0=-9.18e-09 I1=-8.702e-08
+ff 125 nom both_supplies_off I0=-6.149e-10 I1=-1.525e-09
+ff 125 high all_off I0=8.314e-11 I1=1.704e-10
+ff 125 high tg_on_cores_off I0=2.441e-10 I1=2.245e-09
+ff 125 high oa_on I0=7.055e-06 I1=1.704e-10
+ff 125 high bg_on I0=8.314e-11 I1=6.315e-06
+ff 125 high both_on I0=7.055e-06 I1=6.315e-06
+ff 125 high cores_on_tg_off I0=1.899e-10 I1=1.899e-10
+ff 125 high enable_low I0=8.314e-11 I1=1.704e-10
+ff 125 high vdd1v2_off I0=8.314e-11 I1=1.704e-10
+ff 125 high vdd1v2_off_1uA I0=8.314e-11 I1=1.704e-10
+ff 125 high vdd3v3_off I0=-9.18e-09 I1=-8.702e-08
+ff 125 high both_supplies_off I0=-6.149e-10 I1=-1.525e-09
+sf -40 low all_off I0=1.608e-12 I1=1.608e-12
+sf -40 low tg_on_cores_off I0=5.733e-12 I1=5.758e-12
+sf -40 low oa_on I0=3.146e-06 I1=1.608e-12
+sf -40 low bg_on I0=1.608e-12 I1=4.864e-06
+sf -40 low both_on I0=3.146e-06 I1=4.864e-06
+sf -40 low cores_on_tg_off I0=1.609e-12 I1=1.609e-12
+sf -40 low enable_low I0=1.608e-12 I1=1.608e-12
+sf -40 low vdd1v2_off I0=1.608e-12 I1=1.608e-12
+sf -40 low vdd1v2_off_1uA I0=1.608e-12 I1=1.608e-12
+sf -40 low vdd3v3_off I0=-2.94e-12 I1=-3.284e-10
+sf -40 low both_supplies_off I0=-4.428e-12 I1=-1.052e-11
+sf -40 nom all_off I0=1.932e-12 I1=1.932e-12
+sf -40 nom tg_on_cores_off I0=6.66e-12 I1=6.988e-12
+sf -40 nom oa_on I0=3.148e-06 I1=1.932e-12
+sf -40 nom bg_on I0=1.932e-12 I1=4.873e-06
+sf -40 nom both_on I0=3.148e-06 I1=4.873e-06
+sf -40 nom cores_on_tg_off I0=1.932e-12 I1=1.932e-12
+sf -40 nom enable_low I0=1.932e-12 I1=1.932e-12
+sf -40 nom vdd1v2_off I0=1.932e-12 I1=1.932e-12
+sf -40 nom vdd1v2_off_1uA I0=1.932e-12 I1=1.932e-12
+sf -40 nom vdd3v3_off I0=-2.94e-12 I1=-3.284e-10
+sf -40 nom both_supplies_off I0=-4.428e-12 I1=-1.052e-11
+sf -40 high all_off I0=2.297e-12 I1=2.297e-12
+sf -40 high tg_on_cores_off I0=7.649e-12 I1=8.959e-12
+sf -40 high oa_on I0=3.15e-06 I1=2.297e-12
+sf -40 high bg_on I0=2.297e-12 I1=4.879e-06
+sf -40 high both_on I0=3.15e-06 I1=4.879e-06
+sf -40 high cores_on_tg_off I0=2.297e-12 I1=2.297e-12
+sf -40 high enable_low I0=2.297e-12 I1=2.297e-12
+sf -40 high vdd1v2_off I0=2.297e-12 I1=2.297e-12
+sf -40 high vdd1v2_off_1uA I0=2.297e-12 I1=2.297e-12
+sf -40 high vdd3v3_off I0=-2.94e-12 I1=-3.284e-10
+sf -40 high both_supplies_off I0=-4.428e-12 I1=-1.052e-11
+sf 27 low all_off I0=1.67e-12 I1=1.67e-12
+sf 27 low tg_on_cores_off I0=5.971e-12 I1=8.859e-12
+sf 27 low oa_on I0=4.843e-06 I1=1.67e-12
+sf 27 low bg_on I0=1.67e-12 I1=4.951e-06
+sf 27 low both_on I0=4.843e-06 I1=4.951e-06
+sf 27 low cores_on_tg_off I0=1.849e-12 I1=1.849e-12
+sf 27 low enable_low I0=1.67e-12 I1=1.67e-12
+sf 27 low vdd1v2_off I0=1.67e-12 I1=1.67e-12
+sf 27 low vdd1v2_off_1uA I0=1.67e-12 I1=1.67e-12
+sf 27 low vdd3v3_off I0=-2.715e-10 I1=-6.48e-09
+sf 27 low both_supplies_off I0=-6.512e-12 I1=-1.478e-11
+sf 27 nom all_off I0=2.11e-12 I1=2.11e-12
+sf 27 nom tg_on_cores_off I0=7.181e-12 I1=1.353e-11
+sf 27 nom oa_on I0=4.845e-06 I1=2.11e-12
+sf 27 nom bg_on I0=2.11e-12 I1=4.959e-06
+sf 27 nom both_on I0=4.845e-06 I1=4.959e-06
+sf 27 nom cores_on_tg_off I0=2.294e-12 I1=2.294e-12
+sf 27 nom enable_low I0=2.11e-12 I1=2.11e-12
+sf 27 nom vdd1v2_off I0=2.11e-12 I1=2.11e-12
+sf 27 nom vdd1v2_off_1uA I0=2.11e-12 I1=2.11e-12
+sf 27 nom vdd3v3_off I0=-2.715e-10 I1=-6.48e-09
+sf 27 nom both_supplies_off I0=-6.512e-12 I1=-1.478e-11
+sf 27 high all_off I0=2.722e-12 I1=2.722e-12
+sf 27 high tg_on_cores_off I0=8.876e-12 I1=2.298e-11
+sf 27 high oa_on I0=4.846e-06 I1=2.722e-12
+sf 27 high bg_on I0=2.722e-12 I1=4.965e-06
+sf 27 high both_on I0=4.846e-06 I1=4.965e-06
+sf 27 high cores_on_tg_off I0=2.912e-12 I1=2.912e-12
+sf 27 high enable_low I0=2.722e-12 I1=2.722e-12
+sf 27 high vdd1v2_off I0=2.722e-12 I1=2.722e-12
+sf 27 high vdd1v2_off_1uA I0=2.722e-12 I1=2.722e-12
+sf 27 high vdd3v3_off I0=-2.715e-10 I1=-6.48e-09
+sf 27 high both_supplies_off I0=-6.512e-12 I1=-1.478e-11
+sf 125 low all_off I0=4.897e-11 I1=9.508e-11
+sf 125 low tg_on_cores_off I0=1.476e-10 I1=1.238e-09
+sf 125 low oa_on I0=6.482e-06 I1=9.508e-11
+sf 125 low bg_on I0=4.897e-11 I1=4.876e-06
+sf 125 low both_on I0=6.482e-06 I1=4.876e-06
+sf 125 low cores_on_tg_off I0=1.054e-10 I1=1.054e-10
+sf 125 low enable_low I0=4.897e-11 I1=9.508e-11
+sf 125 low vdd1v2_off I0=4.897e-11 I1=9.508e-11
+sf 125 low vdd1v2_off_1uA I0=4.897e-11 I1=9.508e-11
+sf 125 low vdd3v3_off I0=-1.067e-08 I1=-2.411e-08
+sf 125 low both_supplies_off I0=-3.546e-10 I1=-8.046e-10
+sf 125 nom all_off I0=5.242e-11 I1=9.992e-11
+sf 125 nom tg_on_cores_off I0=1.637e-10 I1=1.368e-09
+sf 125 nom oa_on I0=6.484e-06 I1=9.992e-11
+sf 125 nom bg_on I0=5.242e-11 I1=4.884e-06
+sf 125 nom both_on I0=6.484e-06 I1=4.884e-06
+sf 125 nom cores_on_tg_off I0=1.104e-10 I1=1.104e-10
+sf 125 nom enable_low I0=5.242e-11 I1=9.992e-11
+sf 125 nom vdd1v2_off I0=5.242e-11 I1=9.992e-11
+sf 125 nom vdd1v2_off_1uA I0=5.242e-11 I1=9.992e-11
+sf 125 nom vdd3v3_off I0=-1.067e-08 I1=-2.411e-08
+sf 125 nom both_supplies_off I0=-3.546e-10 I1=-8.046e-10
+sf 125 high all_off I0=5.701e-11 I1=1.06e-10
+sf 125 high tg_on_cores_off I0=1.846e-10 I1=1.543e-09
+sf 125 high oa_on I0=6.485e-06 I1=1.06e-10
+sf 125 high bg_on I0=5.701e-11 I1=4.891e-06
+sf 125 high both_on I0=6.485e-06 I1=4.891e-06
+sf 125 high cores_on_tg_off I0=1.166e-10 I1=1.166e-10
+sf 125 high enable_low I0=5.701e-11 I1=1.06e-10
+sf 125 high vdd1v2_off I0=5.701e-11 I1=1.06e-10
+sf 125 high vdd1v2_off_1uA I0=5.701e-11 I1=1.06e-10
+sf 125 high vdd3v3_off I0=-1.067e-08 I1=-2.411e-08
+sf 125 high both_supplies_off I0=-3.546e-10 I1=-8.046e-10
+fs -40 low all_off I0=1.6e-12 I1=1.6e-12
+fs -40 low tg_on_cores_off I0=5.73e-12 I1=5.677e-12
+fs -40 low oa_on I0=3.37e-06 I1=1.6e-12
+fs -40 low bg_on I0=1.6e-12 I1=4.86e-06
+fs -40 low both_on I0=3.37e-06 I1=4.86e-06
+fs -40 low cores_on_tg_off I0=1.6e-12 I1=1.6e-12
+fs -40 low enable_low I0=1.6e-12 I1=1.6e-12
+fs -40 low vdd1v2_off I0=1.6e-12 I1=1.6e-12
+fs -40 low vdd1v2_off_1uA I0=1.6e-12 I1=1.6e-12
+fs -40 low vdd3v3_off I0=-2.027e-12 I1=-5.737e-11
+fs -40 low both_supplies_off I0=-3.173e-12 I1=-8.674e-12
+fs -40 nom all_off I0=1.9e-12 I1=1.9e-12
+fs -40 nom tg_on_cores_off I0=6.634e-12 I1=6.581e-12
+fs -40 nom oa_on I0=3.372e-06 I1=1.9e-12
+fs -40 nom bg_on I0=1.9e-12 I1=4.87e-06
+fs -40 nom both_on I0=3.372e-06 I1=4.87e-06
+fs -40 nom cores_on_tg_off I0=1.9e-12 I1=1.9e-12
+fs -40 nom enable_low I0=1.9e-12 I1=1.9e-12
+fs -40 nom vdd1v2_off I0=1.9e-12 I1=1.9e-12
+fs -40 nom vdd1v2_off_1uA I0=1.9e-12 I1=1.9e-12
+fs -40 nom vdd3v3_off I0=-2.027e-12 I1=-5.737e-11
+fs -40 nom both_supplies_off I0=-3.173e-12 I1=-8.674e-12
+fs -40 high all_off I0=2.2e-12 I1=2.2e-12
+fs -40 high tg_on_cores_off I0=7.538e-12 I1=7.488e-12
+fs -40 high oa_on I0=3.373e-06 I1=2.2e-12
+fs -40 high bg_on I0=2.2e-12 I1=4.878e-06
+fs -40 high both_on I0=3.373e-06 I1=4.878e-06
+fs -40 high cores_on_tg_off I0=2.2e-12 I1=2.2e-12
+fs -40 high enable_low I0=2.2e-12 I1=2.2e-12
+fs -40 high vdd1v2_off I0=2.2e-12 I1=2.2e-12
+fs -40 high vdd1v2_off_1uA I0=2.2e-12 I1=2.2e-12
+fs -40 high vdd3v3_off I0=-2.027e-12 I1=-5.737e-11
+fs -40 high both_supplies_off I0=-3.173e-12 I1=-8.674e-12
+fs 27 low all_off I0=1.601e-12 I1=1.601e-12
+fs 27 low tg_on_cores_off I0=5.827e-12 I1=6.205e-12
+fs 27 low oa_on I0=5.151e-06 I1=1.601e-12
+fs 27 low bg_on I0=1.601e-12 I1=4.948e-06
+fs 27 low both_on I0=5.151e-06 I1=4.948e-06
+fs 27 low cores_on_tg_off I0=1.645e-12 I1=1.645e-12
+fs 27 low enable_low I0=1.601e-12 I1=1.601e-12
+fs 27 low vdd1v2_off I0=1.601e-12 I1=1.601e-12
+fs 27 low vdd1v2_off_1uA I0=1.601e-12 I1=1.601e-12
+fs 27 low vdd3v3_off I0=-7.584e-11 I1=-2.282e-09
+fs 27 low both_supplies_off I0=-6.94e-12 I1=-1.317e-11
+fs 27 nom all_off I0=1.903e-12 I1=1.903e-12
+fs 27 nom tg_on_cores_off I0=6.734e-12 I1=7.156e-12
+fs 27 nom oa_on I0=5.153e-06 I1=1.903e-12
+fs 27 nom bg_on I0=1.903e-12 I1=4.957e-06
+fs 27 nom both_on I0=5.153e-06 I1=4.957e-06
+fs 27 nom cores_on_tg_off I0=1.949e-12 I1=1.949e-12
+fs 27 nom enable_low I0=1.903e-12 I1=1.903e-12
+fs 27 nom vdd1v2_off I0=1.903e-12 I1=1.903e-12
+fs 27 nom vdd1v2_off_1uA I0=1.903e-12 I1=1.903e-12
+fs 27 nom vdd3v3_off I0=-7.584e-11 I1=-2.282e-09
+fs 27 nom both_supplies_off I0=-6.94e-12 I1=-1.317e-11
+fs 27 high all_off I0=2.21e-12 I1=2.21e-12
+fs 27 high tg_on_cores_off I0=7.649e-12 I1=8.228e-12
+fs 27 high oa_on I0=5.156e-06 I1=2.21e-12
+fs 27 high bg_on I0=2.21e-12 I1=4.964e-06
+fs 27 high both_on I0=5.156e-06 I1=4.964e-06
+fs 27 high cores_on_tg_off I0=2.257e-12 I1=2.257e-12
+fs 27 high enable_low I0=2.21e-12 I1=2.21e-12
+fs 27 high vdd1v2_off I0=2.21e-12 I1=2.21e-12
+fs 27 high vdd1v2_off_1uA I0=2.21e-12 I1=2.21e-12
+fs 27 high vdd3v3_off I0=-7.584e-11 I1=-2.282e-09
+fs 27 high both_supplies_off I0=-6.94e-12 I1=-1.317e-11
+fs 125 low all_off I0=2.792e-11 I1=4.178e-11
+fs 125 low tg_on_cores_off I0=1.159e-10 I1=7.92e-10
+fs 125 low oa_on I0=6.855e-06 I1=4.178e-11
+fs 125 low bg_on I0=2.792e-11 I1=4.874e-06
+fs 125 low both_on I0=6.855e-06 I1=4.874e-06
+fs 125 low cores_on_tg_off I0=4.464e-11 I1=4.464e-11
+fs 125 low enable_low I0=2.792e-11 I1=4.178e-11
+fs 125 low vdd1v2_off I0=2.792e-11 I1=4.178e-11
+fs 125 low vdd1v2_off_1uA I0=2.792e-11 I1=4.178e-11
+fs 125 low vdd3v3_off I0=-3.866e-09 I1=-2.633e-08
+fs 125 low both_supplies_off I0=-3.14e-10 I1=-5.633e-10
+fs 125 nom all_off I0=2.945e-11 I1=4.383e-11
+fs 125 nom tg_on_cores_off I0=1.244e-10 I1=8.452e-10
+fs 125 nom oa_on I0=6.857e-06 I1=4.383e-11
+fs 125 nom bg_on I0=2.945e-11 I1=4.882e-06
+fs 125 nom both_on I0=6.857e-06 I1=4.882e-06
+fs 125 nom cores_on_tg_off I0=4.678e-11 I1=4.678e-11
+fs 125 nom enable_low I0=2.945e-11 I1=4.383e-11
+fs 125 nom vdd1v2_off I0=2.945e-11 I1=4.383e-11
+fs 125 nom vdd1v2_off_1uA I0=2.945e-11 I1=4.383e-11
+fs 125 nom vdd3v3_off I0=-3.866e-09 I1=-2.633e-08
+fs 125 nom both_supplies_off I0=-3.14e-10 I1=-5.633e-10
+fs 125 high all_off I0=3.119e-11 I1=4.611e-11
+fs 125 high tg_on_cores_off I0=1.336e-10 I1=9.073e-10
+fs 125 high oa_on I0=6.859e-06 I1=4.611e-11
+fs 125 high bg_on I0=3.119e-11 I1=4.89e-06
+fs 125 high both_on I0=6.859e-06 I1=4.89e-06
+fs 125 high cores_on_tg_off I0=4.914e-11 I1=4.914e-11
+fs 125 high enable_low I0=3.119e-11 I1=4.611e-11
+fs 125 high vdd1v2_off I0=3.119e-11 I1=4.611e-11
+fs 125 high vdd1v2_off_1uA I0=3.119e-11 I1=4.611e-11
+fs 125 high vdd3v3_off I0=-3.866e-09 I1=-2.633e-08
+fs 125 high both_supplies_off I0=-3.14e-10 I1=-5.633e-10
+wrote /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/testbenches/ngspice/results/static.csv
+sweep tt -40 I(0.7V) OA 3.255e-06 BG 4.871e-06
+sweep tt 27 I(0.7V) OA 4.992e-06 BG 4.958e-06
+sweep tt 125 I(0.7V) OA 6.661e-06 BG 4.883e-06
+sweep ss -40 I(0.7V) OA 3.045e-06 BG 3.861e-06
+sweep ss 27 I(0.7V) OA 4.701e-06 BG 3.919e-06
+sweep ss 125 I(0.7V) OA 6.317e-06 BG 3.836e-06
+sweep ff -40 I(0.7V) OA 3.496e-06 BG 6.231e-06
+sweep ff 27 I(0.7V) OA 5.323e-06 BG 6.36e-06
+sweep ff 125 I(0.7V) OA 7.053e-06 BG 6.304e-06
+sweep sf -40 I(0.7V) OA 3.148e-06 BG 4.873e-06
+sweep sf 27 I(0.7V) OA 4.845e-06 BG 4.959e-06
+sweep sf 125 I(0.7V) OA 6.484e-06 BG 4.884e-06
+sweep fs -40 I(0.7V) OA 3.372e-06 BG 4.87e-06
+sweep fs 27 I(0.7V) OA 5.153e-06 BG 4.957e-06
+sweep fs 125 I(0.7V) OA 6.857e-06 BG 4.882e-06
+wrote /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/testbenches/ngspice/results/sweep.csv
+  7.12659e-07
+x1.xbg.xr0[10].dt                            0
+x1.xbg.n0[8]                       7.12659e-07
+x1.xbg.xr0[9].dt                             0
+x1.xbg.n0[7]                       7.12658e-07
+x1.xbg.xr0[8].dt                             0
+x1.xbg.n0[6]                       7.12658e-07
+x1.xbg.xr0[7].dt                             0
+x1.xbg.n0[5]                       7.12658e-07
+x1.xbg.xr0[6].dt                             0
+x1.xbg.n0[4]                       7.12658e-07
+x1.xbg.xr0[5].dt                             0
+x1.xbg.n0[3]                       7.12658e-07
+x1.xbg.xr0[4].dt                             0
+x1.xbg.n0[2]                       7.12657e-07
+x1.xbg.xr0[3].dt                             0
+x1.xbg.n0[1]                       7.12657e-07
+x1.xbg.xr0[2].dt                             0
+x1.xbg.n0[0]                       7.12657e-07
+x1.xbg.xr0[1].dt                             0
+x1.xbg.e2                          7.12657e-07
+x1.xbg.xr0[0].dt                             0
+x1.xbg.n1b[8]                      6.41394e-07
+x1.xbg.xr1b[9].dt                            0
+x1.xbg.n1b[7]                      5.70128e-07
+x1.xbg.xr1b[8].dt                            0
+x1.xbg.n1b[6]                      4.98862e-07
+x1.xbg.xr1b[7].dt                            0
+x1.xbg.n1b[5]                      4.27596e-07
+x1.xbg.xr1b[6].dt                            0
+x1.xbg.n1b[4]                       3.5633e-07
+x1.xbg.xr1b[5].dt                            0
+x1.xbg.n1b[3]                      2.85064e-07
+x1.xbg.xr1b[4].dt                            0
+x1.xbg.n1b[2]                      2.13798e-07
+x1.xbg.xr1b[3].dt                            0
+x1.xbg.n1b[1]                      1.42532e-07
+x1.xbg.xr1b[2].dt                            0
+x1.xbg.n1b[0]                      7.12661e-08
+x1.xbg.xr1b[1].dt                            0
+x1.xbg.xr1b[0].dt                            0
+x1.xbg.ms1_1                           3.28358
+x1.xbg.ms1_2                           3.28358
+x1.xbg.ms1_3                           3.28358
+x1.xbg.ms1_4                           3.28358
+x1.xbg.ms1_5                           3.28358
+x1.xbg.ms1_6                           3.28358
+x1.xbg.ms1_7                           3.28358
+x1.xbg.ks                          3.87681e-09
+x1.xbg.xrdum[1].dt                           0
+x1.xbg.xrdum[0].dt                           0
+vbus1#branch                        6.5686e-12
+vbus0#branch                       6.59447e-12
+vd1#branch                                   0
+vd0#branch                                   0
+vd3#branch                        -2.39947e-14
+vd2#branch                        -2.39947e-14
+ven#branch                        -2.39947e-14
+v1#branch                         -5.41991e-06
+v3#branch                         -3.78897e-06
+vss1#branch                        2.41529e-12
+vss3#branch                        9.20885e-06
+
+ Reference value :  0.00000e+00
+ Reference value :  1.04845e-06
+ Reference value :  1.06595e-06
+No. of Data Rows : 75
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+doAnalyses: TRAN:  Timestep too small; time = 1.06595e-06, timestep = 2.5e-20: trouble with x1.xbg.xq1:pnpmpa_mod-instance q.x1.xbg.xq1.qpnpmpa
+
+
+tran simulation(s) aborted
+
+Error: measure  i0_on  find(AT) : out of interval
+ meas tran i0_on find i(vbus0) at=99u failed!
+
+
+Error: measure  i1_on  find(AT) : out of interval
+ meas tran i1_on find i(vbus1) at=99u failed!
+
+
+Error: measure  i0_off  find(AT) : out of interval
+ meas tran i0_off find i(vbus0) at=199u failed!
+
+
+Error: measure  i1_off  find(AT) : out of interval
+ meas tran i1_off find i(vbus1) at=199u failed!
+
+Warning from checkvalid: vector i0_on is not available or has zero length.
+Error: RHS "0.99*i0_on" invalid
+Warning from checkvalid: vector i1_on is not available or has zero length.
+Error: RHS "0.99*i1_on" invalid
+
+Error: measure  t0_on  when(WHEN) : Cannot evaluate lim0 
+ meas tran t0_on when i(vbus0)=lim0 rise=last from=1u to=100u failed!
+
+
+Error: measure  t1_on  when(WHEN) : Cannot evaluate lim1 
+ meas tran t1_on when i(vbus1)=lim1 rise=last from=1u to=100u failed!
+
+Warning from checkvalid: vector i0_on is not available or has zero length.
+Error: RHS "0.01*i0_on" invalid
+Warning from checkvalid: vector i1_on is not available or has zero length.
+Error: RHS "0.01*i1_on" invalid
+
+Error: measure  t0_off  when(WHEN) : Cannot evaluate l0 
+ meas tran t0_off when i(vbus0)=l0 fall=last from=101u to=200u failed!
+
+
+Error: measure  t1_off  when(WHEN) : Cannot evaluate l1 
+ meas tran t1_off when i(vbus1)=l1 fall=last from=101u to=200u failed!
+
+Error: incomplete or empty netlist
+       or no ".plot", ".print", or ".fourier" lines in batch mode;
+no simulations run!
+ngspice failed on /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot7_testplatform/testbenches/ngspice/results/netlists/tran_tt_-40.spice
+
+real	5m52.823s
+user	6m43.895s
+sys	2m41.207s

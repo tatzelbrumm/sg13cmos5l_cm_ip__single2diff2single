@@ -107,3 +107,6 @@
 
 [2026-11-03_opus_c3_s2d_pad_layout.md](2026-11-03_opus_c3_s2d_pad_layout.md)
 : Cloud session C3: the s2d pad cell `sg13cmos5l_IOPadSingle2Diff` from a cleaned-out template through agents P / N / F / BA to a backannotated, DRC / LVS-clean macro, then magic PEX and post-layout CACE.
+
+[2026-11-06_claude_slot7_testplatform.md](2026-11-06_claude_slot7_testplatform.md)
+: Cloud session C5: slot 7 as a stand-alone test platform for the OA and BG bias cores (stage A: fail-safe enable cell `tp_en_ctrl`, `xgate` bus switches, analog_bus0 / 1), schematic, PVT simulation, layout (DRC 0, LVS match), delivery `claude/c5-testplatform`, harness flow and net check on `claude/c5-testplatform-test`; exported from the transcript, which lacks part of the visible assistant text (gap noted in the log).

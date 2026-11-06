@@ -1,0 +1,513 @@
+
+Circuit 1 cell sg13_hv_pmos and Circuit 2 cell sg13_hv_pmos are black boxes.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_hv_pmos                    |Circuit 2: sg13_hv_pmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_hv_pmos and sg13_hv_pmos are equivalent.
+
+Circuit 1 cell sg13_hv_nmos and Circuit 2 cell sg13_hv_nmos are black boxes.
+Warning: Equate pins:  cell sg13_hv_nmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_hv_nmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_hv_nmos                    |Circuit 2: sg13_hv_nmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_hv_nmos and sg13_hv_nmos are equivalent.
+
+Circuit 1 cell pnpMPA and Circuit 2 cell pnpMPA are black boxes.
+Warning: Equate pins:  cell pnpMPA is a placeholder, treated as a black box.
+Warning: Equate pins:  cell pnpMPA is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: pnpMPA                          |Circuit 2: pnpMPA                          
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes pnpMPA and pnpMPA are equivalent.
+
+Circuit 1 cell rhigh and Circuit 2 cell rhigh are black boxes.
+Warning: Equate pins:  cell rhigh is a placeholder, treated as a black box.
+Warning: Equate pins:  cell rhigh is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: rhigh                           |Circuit 2: rhigh                           
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes rhigh and rhigh are equivalent.
+Flattening unmatched subcell slot7_testplatform in circuit slot_7 (1)(1 instance)
+Flattening unmatched subcell tp_en_ctrl in circuit slot_7 (1)(1 instance)
+Flattening unmatched subcell oa_core_pd in circuit slot_7 (1)(1 instance)
+Flattening unmatched subcell bg_core_pd in circuit slot_7 (1)(1 instance)
+Flattening unmatched subcell xgate in circuit slot_7 (1)(2 instances)
+
+Cell slot_7 (0) disconnected node: s7_an_0_vref
+Cell slot_7 (0) disconnected node: s7_an_0_vcm
+Cell slot_7 (0) disconnected node: s7_an_0_en_3v3
+Cell slot_7 (0) disconnected node: s7_an_0_en_3v3_b
+Cell slot_7 (0) disconnected node: s7_an_0_iref
+Cell slot_7 (0) disconnected node: s7_an_1_vinp
+Cell slot_7 (0) disconnected node: s7_an_1_vinn
+Cell slot_7 (0) disconnected node: s7_an_1_vref
+Cell slot_7 (0) disconnected node: s7_an_1_iref
+Cell slot_7 (0) disconnected node: s7_an_1_en_3v3_b
+Cell slot_7 (0) disconnected node: s7_an_1_en_3v3
+Cell slot_7 (0) disconnected node: vbias
+Cell slot_7 (0) disconnected node: dig_in[23]
+Cell slot_7 (0) disconnected node: dig_in[22]
+Cell slot_7 (0) disconnected node: dig_in[21]
+Cell slot_7 (0) disconnected node: dig_in[20]
+Cell slot_7 (0) disconnected node: dig_in[19]
+Cell slot_7 (0) disconnected node: dig_in[18]
+Cell slot_7 (0) disconnected node: dig_in[17]
+Cell slot_7 (0) disconnected node: dig_in[16]
+Cell slot_7 (0) disconnected node: dig_in[15]
+Cell slot_7 (0) disconnected node: dig_in[14]
+Cell slot_7 (0) disconnected node: dig_in[13]
+Cell slot_7 (0) disconnected node: dig_in[12]
+Cell slot_7 (0) disconnected node: dig_in[11]
+Cell slot_7 (0) disconnected node: dig_in[10]
+Cell slot_7 (0) disconnected node: dig_in[9]
+Cell slot_7 (0) disconnected node: dig_in[8]
+Cell slot_7 (0) disconnected node: dig_in[7]
+Cell slot_7 (0) disconnected node: dig_in[6]
+Cell slot_7 (0) disconnected node: dig_in[5]
+Cell slot_7 (0) disconnected node: dig_in[4]
+Cell slot_7 (0) disconnected node: ibias0
+Cell slot_7 (0) disconnected node: ibias1
+Cell slot_7 (0) disconnected node: analog_bus3
+Cell slot_7 (0) disconnected node: analog_bus2
+Cell slot_7 (0) disconnected node: clk
+Cell slot_7 (0) disconnected node: reset
+Cell slot_7 (0) disconnected node: vss_1v2_uq0
+Cell slot_7 (1) disconnected node: dig_in[4]
+Cell slot_7 (1) disconnected node: dig_in[5]
+Cell slot_7 (1) disconnected node: dig_in[6]
+Cell slot_7 (1) disconnected node: dig_in[7]
+Cell slot_7 (1) disconnected node: dig_in[8]
+Cell slot_7 (1) disconnected node: dig_in[9]
+Cell slot_7 (1) disconnected node: dig_in[10]
+Cell slot_7 (1) disconnected node: dig_in[11]
+Cell slot_7 (1) disconnected node: dig_in[12]
+Cell slot_7 (1) disconnected node: dig_in[13]
+Cell slot_7 (1) disconnected node: dig_in[14]
+Cell slot_7 (1) disconnected node: dig_in[15]
+Cell slot_7 (1) disconnected node: dig_in[16]
+Cell slot_7 (1) disconnected node: dig_in[17]
+Cell slot_7 (1) disconnected node: dig_in[18]
+Cell slot_7 (1) disconnected node: dig_in[19]
+Cell slot_7 (1) disconnected node: dig_in[20]
+Cell slot_7 (1) disconnected node: dig_in[21]
+Cell slot_7 (1) disconnected node: dig_in[22]
+Cell slot_7 (1) disconnected node: dig_in[23]
+Cell slot_7 (1) disconnected node: clk
+Cell slot_7 (1) disconnected node: reset
+Cell slot_7 (1) disconnected node: ibias0
+Cell slot_7 (1) disconnected node: ibias1
+Cell slot_7 (1) disconnected node: vbias
+Cell slot_7 (1) disconnected node: analog_bus2
+Cell slot_7 (1) disconnected node: analog_bus3
+Cell slot_7 (1) disconnected node: s7_an_0_vref
+Cell slot_7 (1) disconnected node: s7_an_0_outp
+Cell slot_7 (1) disconnected node: s7_an_0_outn
+Cell slot_7 (1) disconnected node: s7_an_0_vcm
+Cell slot_7 (1) disconnected node: s7_an_0_en_3v3
+Cell slot_7 (1) disconnected node: s7_an_0_en_3v3_b
+Cell slot_7 (1) disconnected node: s7_an_0_iref
+Cell slot_7 (1) disconnected node: s7_an_1_vinp
+Cell slot_7 (1) disconnected node: s7_an_1_vinn
+Cell slot_7 (1) disconnected node: s7_an_1_vref
+Cell slot_7 (1) disconnected node: s7_an_1_iref
+Cell slot_7 (1) disconnected node: s7_an_1_en_3v3_b
+Cell slot_7 (1) disconnected node: s7_an_1_en_3v3
+Class slot_7 (0):  Merged 141 parallel devices.
+Class slot_7 (0):  Merged 36 series devices.
+Class slot_7 (1):  Merged 2 parallel devices.
+Class slot_7 (1):  Merged 36 series devices.
+Cell slot_7 (0) disconnected node: s7_an_0_vref
+Cell slot_7 (0) disconnected node: s7_an_0_vcm
+Cell slot_7 (0) disconnected node: s7_an_0_en_3v3
+Cell slot_7 (0) disconnected node: s7_an_0_en_3v3_b
+Cell slot_7 (0) disconnected node: s7_an_0_iref
+Cell slot_7 (0) disconnected node: s7_an_1_vinp
+Cell slot_7 (0) disconnected node: s7_an_1_vinn
+Cell slot_7 (0) disconnected node: s7_an_1_vref
+Cell slot_7 (0) disconnected node: s7_an_1_iref
+Cell slot_7 (0) disconnected node: s7_an_1_en_3v3_b
+Cell slot_7 (0) disconnected node: s7_an_1_en_3v3
+Cell slot_7 (0) disconnected node: vbias
+Cell slot_7 (0) disconnected node: dig_in[23]
+Cell slot_7 (0) disconnected node: dig_in[22]
+Cell slot_7 (0) disconnected node: dig_in[21]
+Cell slot_7 (0) disconnected node: dig_in[20]
+Cell slot_7 (0) disconnected node: dig_in[19]
+Cell slot_7 (0) disconnected node: dig_in[18]
+Cell slot_7 (0) disconnected node: dig_in[17]
+Cell slot_7 (0) disconnected node: dig_in[16]
+Cell slot_7 (0) disconnected node: dig_in[15]
+Cell slot_7 (0) disconnected node: dig_in[14]
+Cell slot_7 (0) disconnected node: dig_in[13]
+Cell slot_7 (0) disconnected node: dig_in[12]
+Cell slot_7 (0) disconnected node: dig_in[11]
+Cell slot_7 (0) disconnected node: dig_in[10]
+Cell slot_7 (0) disconnected node: dig_in[9]
+Cell slot_7 (0) disconnected node: dig_in[8]
+Cell slot_7 (0) disconnected node: dig_in[7]
+Cell slot_7 (0) disconnected node: dig_in[6]
+Cell slot_7 (0) disconnected node: dig_in[5]
+Cell slot_7 (0) disconnected node: dig_in[4]
+Cell slot_7 (0) disconnected node: ibias0
+Cell slot_7 (0) disconnected node: ibias1
+Cell slot_7 (0) disconnected node: analog_bus3
+Cell slot_7 (0) disconnected node: analog_bus2
+Cell slot_7 (0) disconnected node: clk
+Cell slot_7 (0) disconnected node: reset
+Cell slot_7 (0) disconnected node: vss_1v2_uq0
+Cell slot_7 (1) disconnected node: dig_in[4]
+Cell slot_7 (1) disconnected node: dig_in[5]
+Cell slot_7 (1) disconnected node: dig_in[6]
+Cell slot_7 (1) disconnected node: dig_in[7]
+Cell slot_7 (1) disconnected node: dig_in[8]
+Cell slot_7 (1) disconnected node: dig_in[9]
+Cell slot_7 (1) disconnected node: dig_in[10]
+Cell slot_7 (1) disconnected node: dig_in[11]
+Cell slot_7 (1) disconnected node: dig_in[12]
+Cell slot_7 (1) disconnected node: dig_in[13]
+Cell slot_7 (1) disconnected node: dig_in[14]
+Cell slot_7 (1) disconnected node: dig_in[15]
+Cell slot_7 (1) disconnected node: dig_in[16]
+Cell slot_7 (1) disconnected node: dig_in[17]
+Cell slot_7 (1) disconnected node: dig_in[18]
+Cell slot_7 (1) disconnected node: dig_in[19]
+Cell slot_7 (1) disconnected node: dig_in[20]
+Cell slot_7 (1) disconnected node: dig_in[21]
+Cell slot_7 (1) disconnected node: dig_in[22]
+Cell slot_7 (1) disconnected node: dig_in[23]
+Cell slot_7 (1) disconnected node: clk
+Cell slot_7 (1) disconnected node: reset
+Cell slot_7 (1) disconnected node: ibias0
+Cell slot_7 (1) disconnected node: ibias1
+Cell slot_7 (1) disconnected node: vbias
+Cell slot_7 (1) disconnected node: analog_bus2
+Cell slot_7 (1) disconnected node: analog_bus3
+Cell slot_7 (1) disconnected node: s7_an_0_vref
+Cell slot_7 (1) disconnected node: s7_an_0_outp
+Cell slot_7 (1) disconnected node: s7_an_0_outn
+Cell slot_7 (1) disconnected node: s7_an_0_vcm
+Cell slot_7 (1) disconnected node: s7_an_0_en_3v3
+Cell slot_7 (1) disconnected node: s7_an_0_en_3v3_b
+Cell slot_7 (1) disconnected node: s7_an_0_iref
+Cell slot_7 (1) disconnected node: s7_an_1_vinp
+Cell slot_7 (1) disconnected node: s7_an_1_vinn
+Cell slot_7 (1) disconnected node: s7_an_1_vref
+Cell slot_7 (1) disconnected node: s7_an_1_iref
+Cell slot_7 (1) disconnected node: s7_an_1_en_3v3_b
+Cell slot_7 (1) disconnected node: s7_an_1_en_3v3
+Subcircuit summary:
+Circuit 1: slot_7                          |Circuit 2: slot_7                          
+-------------------------------------------|-------------------------------------------
+sg13_hv_pmos (133->53)                     |sg13_hv_pmos (53)                          
+sg13_hv_nmos (98->45)                      |sg13_hv_nmos (46->45)                      
+rhigh (41->4)                              |rhigh (41->4)                              
+pnpMPA (9->2)                              |pnpMPA (9->2)                              
+Number of devices: 104                     |Number of devices: 104                     
+Number of nets: 72                         |Number of nets: 72                         
+---------------------------------------------------------------------------------------
+Resolving symmetries by property value.
+Resolving symmetries by pin name.
+Netlists match uniquely with port and property errors.
+rhigh:127 vs. slot7_testplatform:1/bg_core_pd:bg/rhigh:R0[17]:
+Property mm_ok in circuit2 has no matching property in circuit1
+rhigh:127 vs. slot7_testplatform:1/bg_core_pd:bg/rhigh:R0[17]:
+Property mm_ok in circuit2 has no matching property in circuit1
+rhigh:107 vs. slot7_testplatform:1/bg_core_pd:bg/rhigh:R1A[10]:
+Property mm_ok in circuit2 has no matching property in circuit1
+rhigh:107 vs. slot7_testplatform:1/bg_core_pd:bg/rhigh:R1A[10]:
+Property mm_ok in circuit2 has no matching property in circuit1
+rhigh:3 vs. slot7_testplatform:1/bg_core_pd:bg/rhigh:R1B[9]:
+Property mm_ok in circuit2 has no matching property in circuit1
+rhigh:3 vs. slot7_testplatform:1/bg_core_pd:bg/rhigh:R1B[9]:
+Property mm_ok in circuit2 has no matching property in circuit1
+rhigh:103 vs. slot7_testplatform:1/bg_core_pd:bg/rhigh:RDUM[1]:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:26 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MS2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:26 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MS2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:43 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MC10:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:43 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MC10:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:24 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:M10:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:23 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MCL:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:23 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MCL:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:18 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:M11:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:47 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MCS:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:47 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MCS:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:41 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MDUM1:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:49 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MDUM2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:118 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:MS2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:118 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:MS2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:238 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:MS3:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:238 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:MS3:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:166 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MS3:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:166 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:MS3:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:56 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:NB:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:91 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:NA:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:272 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:SKS:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:272 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:SKS:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:27 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:SKS:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:27 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_nmos:SKS:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:31 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:MDUM2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:31 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:MDUM2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:31 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_nmos:MDUM2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:44 vs. slot7_testplatform:1/xgate:tg0/sg13_hv_nmos:M2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:44 vs. slot7_testplatform:1/xgate:tg0/sg13_hv_nmos:M2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:196 vs. slot7_testplatform:1/xgate:tg1/sg13_hv_nmos:M2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_nmos:196 vs. slot7_testplatform:1/xgate:tg1/sg13_hv_nmos:M2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:77 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:P0:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:77 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:P0:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:1 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:P0C:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:1 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:P0C:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:100 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:P8C:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:9 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:P2C:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:9 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:P2C:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:96 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:P8:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:82 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:P2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:39 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:PO:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:19 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:SVPG:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:19 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:SVPG:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:0 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MDUM0:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:0 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MDUM0:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:20 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:PB:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:120 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:PBC:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:155 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:PAC:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:38 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:PO:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:5 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:PA:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:143 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:POC:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:99 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:POC:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:79 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:SVPG:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:79 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:SVPG:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:10 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_0:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:10 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_0:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:84 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_0:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:84 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_0:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:264 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_1:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:264 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_1:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:114 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_1:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:114 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_1:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:37 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:37 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:83 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_4:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:83 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_4:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:32 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_3:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:32 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_3:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:54 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_5:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:54 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_5:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:61 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:61 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_2:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:89 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_3:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:89 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_3:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:35 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_4:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:35 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_4:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:64 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_5:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:64 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_5:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:110 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_6:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:110 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_6:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:4 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_6:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:4 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_6:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:80 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_7:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:80 vs. slot7_testplatform:1/oa_core_pd:oa/sg13_hv_pmos:MS1_7:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:15 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_7:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:15 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MS1_7:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:124 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MDUM1:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:25 vs. slot7_testplatform:1/bg_core_pd:bg/sg13_hv_pmos:MDUM0:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:22 vs. slot7_testplatform:1/xgate:tg0/sg13_hv_pmos:M1:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:22 vs. slot7_testplatform:1/xgate:tg0/sg13_hv_pmos:M1:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:176 vs. slot7_testplatform:1/xgate:tg1/sg13_hv_pmos:M1:
+Property mm_ok in circuit2 has no matching property in circuit1
+sg13_hv_pmos:176 vs. slot7_testplatform:1/xgate:tg1/sg13_hv_pmos:M1:
+Property mm_ok in circuit2 has no matching property in circuit1
+
+Subcircuit pins:
+Circuit 1: slot_7                          |Circuit 2: slot_7                          
+-------------------------------------------|-------------------------------------------
+vss_1v2                                    |vss_1v2                                    
+vdd_1v2                                    |vdd_1v2                                    
+enable                                     |enable                                     
+dig_in[0]                                  |dig_in[0]                                  
+dig_in[1]                                  |dig_in[1]                                  
+dig_in[2]                                  |dig_in[2]                                  
+dig_in[3]                                  |dig_in[3]                                  
+dig_out[7]                                 |dig_out[7]                                 
+dig_out[10]                                |dig_out[10]                                
+dig_out[4]                                 |dig_out[4]                                 
+dig_out[5]                                 |dig_out[5]                                 
+dig_out[11]                                |dig_out[11]                                
+dig_out[8]                                 |dig_out[8]                                 
+dig_out[9]                                 |dig_out[9]                                 
+dig_out[6]                                 |dig_out[6]                                 
+dig_out[0]                                 |dig_out[0]                                 
+dig_out[1]                                 |dig_out[1]                                 
+dig_out[2]                                 |dig_out[2]                                 
+dig_out[3]                                 |dig_out[3]                                 
+analog_bus0                                |analog_bus0                                
+analog_bus1                                |analog_bus1                                
+vss_3v3                                    |vss_3v3                                    
+vdd_3v3                                    |vdd_3v3                                    
+s7_an_0_vref                               |s7_an_0_vref                               
+s7_an_0_vcm                                |s7_an_0_vcm                                
+s7_an_0_en_3v3                             |s7_an_0_en_3v3                             
+s7_an_0_en_3v3_b                           |s7_an_0_en_3v3_b                           
+s7_an_0_iref                               |s7_an_0_iref                               
+s7_an_1_vinp                               |s7_an_1_vinp                               
+s7_an_1_vinn                               |s7_an_1_vinn                               
+s7_an_1_vref                               |s7_an_1_vref                               
+s7_an_1_iref                               |s7_an_1_iref                               
+s7_an_1_en_3v3_b                           |s7_an_1_en_3v3_b                           
+s7_an_1_en_3v3                             |s7_an_1_en_3v3                             
+vbias                                      |vbias                                      
+dig_in[23]                                 |dig_in[23]                                 
+dig_in[22]                                 |dig_in[22]                                 
+dig_in[21]                                 |dig_in[21]                                 
+dig_in[20]                                 |dig_in[20]                                 
+dig_in[19]                                 |dig_in[19]                                 
+dig_in[18]                                 |dig_in[18]                                 
+dig_in[17]                                 |dig_in[17]                                 
+dig_in[16]                                 |dig_in[16]                                 
+dig_in[15]                                 |dig_in[15]                                 
+dig_in[14]                                 |dig_in[14]                                 
+dig_in[13]                                 |dig_in[13]                                 
+dig_in[12]                                 |dig_in[12]                                 
+dig_in[11]                                 |dig_in[11]                                 
+dig_in[10]                                 |dig_in[10]                                 
+dig_in[9]                                  |dig_in[9]                                  
+dig_in[8]                                  |dig_in[8]                                  
+dig_in[7]                                  |dig_in[7]                                  
+dig_in[6]                                  |dig_in[6]                                  
+dig_in[5]                                  |dig_in[5]                                  
+dig_in[4]                                  |dig_in[4]                                  
+ibias0                                     |ibias0                                     
+ibias1                                     |ibias1                                     
+analog_bus3                                |analog_bus3                                
+analog_bus2                                |analog_bus2                                
+clk                                        |clk                                        
+reset                                      |reset                                      
+(no matching pin)                          |s7_an_0_outp                               
+(no matching pin)                          |s7_an_0_outn                               
+vss_1v2_uq0                                |(no matching pin)                          
+---------------------------------------------------------------------------------------
+Cell pin lists for slot_7 and slot_7 altered to match.
+Device classes slot_7 and slot_7 are equivalent.
+
+Final result: Top level cell failed pin matching.
+
+The following cells had property errors:
+ slot_7
