@@ -1,0 +1,273 @@
+* LVS reference of slot_7 with stage B (slot7_testplatform_ab + unused frame pins + the 13 pad pin stubs)
+.subckt slot_7 vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 enable dig_in[0] dig_in[1] dig_in[2] dig_in[3] dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9] dig_in[10] dig_in[11] dig_in[12] dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6] dig_out[7] dig_out[8] dig_out[9] dig_out[10] dig_out[11] analog_bus0 analog_bus1 analog_bus2 analog_bus3 ibias0 ibias1 dig_in[13] dig_in[14] dig_in[15] dig_in[16] dig_in[17] dig_in[18] dig_in[19] dig_in[20] dig_in[21] dig_in[22] dig_in[23] clk reset vbias s7_an_0_vref s7_an_0_outp s7_an_0_outn s7_an_0_vcm s7_an_0_en_3v3 s7_an_0_en_3v3_b s7_an_0_iref s7_an_1_vinp s7_an_1_vinn s7_an_1_vref s7_an_1_iref s7_an_1_en_3v3_b s7_an_1_en_3v3
+X1 vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 enable dig_in[0] dig_in[1] dig_in[2] dig_in[3] dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9] dig_in[10] dig_in[11] dig_in[12] dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6] dig_out[7] dig_out[8] dig_out[9] dig_out[10] dig_out[11] analog_bus0 analog_bus1 analog_bus2 analog_bus3 ibias0 ibias1 slot7_testplatform_ab
+.ends slot_7
+.subckt slot7_testplatform_ab vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 enable dig_in[0] dig_in[1] dig_in[2] dig_in[3]
++ dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9] dig_in[10] dig_in[11] dig_in[12]
++ dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6] dig_out[7] dig_out[8]
++ dig_out[9] dig_out[10] dig_out[11] analog_bus0 analog_bus1 analog_bus2 analog_bus3 ibias0 ibias1
+xctl vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 dig_in[0] dig_in[1] dig_in[2] dig_in[3] enable en_oa en_oa_b en_bg en_bg_b
++ en_tg0 en_tg0_b en_tg1 en_tg1_b dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6]
++ dig_out[7] dig_out[8] dig_out[9] dig_out[10] dig_out[11] tp_en_ctrl
+xoa vdd_3v3 vss_3v3 i_oa en_oa en_oa_b oa_core_pd
+xbg vdd_3v3 vss_3v3 i_bg en_bg en_bg_b bg_core_pd
+xtg0 en_tg0_b vdd_3v3 i_oa analog_bus0 vss_3v3 en_tg0 xgate
+xtg1 en_tg1_b vdd_3v3 i_bg analog_bus1 vss_3v3 en_tg1 xgate
+xb vdd_3v3 vss_3v3 vdd_1v2 enable dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9] dig_in[10]
++ dig_in[11] dig_in[12] i_oa i_bg ibias0 ibias1 analog_bus2 analog_bus3 slot7_stage_b
+.ends slot7_testplatform_ab
+.subckt slot7_stage_b vdd_3v3 vss_3v3 vdd_1v2 enable dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9]
++ dig_in[10] dig_in[11] dig_in[12] i_oa i_bg ibias0 ibias1 analog_bus2 analog_bus3
+xctlb vdd_3v3 vss_3v3 vdd_1v2 dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9] dig_in[10] dig_in[11]
++ dig_in[12] enable en_ref_oa en_ref_oa_b en_ref_bg en_ref_bg_b en_ref_ib0 en_ref_ib0_b en_tree en_tree_b
++ en_m_vbp en_m_vbp_b en_m_vbn en_m_vbn_b en_m_vbpc en_m_vbpc_b en_m_vbnc en_m_vbnc_b en_ib1 en_ib1_b tp_en_ctrl_b
+* reference select (xgate: ena_b vdd in out vss ena)
+xr_oa en_ref_oa_b vdd_3v3 i_oa iref vss_3v3 en_ref_oa xgate
+xr_bg en_ref_bg_b vdd_3v3 i_bg iref vss_3v3 en_ref_bg xgate
+xr_ib0 en_ref_ib0_b vdd_3v3 ibias0 iref vss_3v3 en_ref_ib0 xgate
+* the tree (as in the S2D pad)
+xtree vdd_3v3 vss_3v3 iref vbp vbn vbpc vbnc en_tree en_tree_b bias_tree_noab_pd
+* bias-voltage mux onto analog_bus2
+xm_vbp en_m_vbp_b vdd_3v3 vbp analog_bus2 vss_3v3 en_m_vbp xgate
+xm_vbn en_m_vbn_b vdd_3v3 vbn analog_bus2 vss_3v3 en_m_vbn xgate
+xm_vbpc en_m_vbpc_b vdd_3v3 vbpc analog_bus2 vss_3v3 en_m_vbpc xgate
+xm_vbnc en_m_vbnc_b vdd_3v3 vbnc analog_bus2 vss_3v3 en_m_vbnc xgate
+* harness ibias1 onto analog_bus3
+xi_ib1 en_ib1_b vdd_3v3 ibias1 analog_bus3 vss_3v3 en_ib1 xgate
+.ends slot7_stage_b
+.subckt tp_en_ctrl_b vdd_3v3 vss_3v3 vdd_1v2 en0_1v2 en1_1v2 en2_1v2 en3_1v2 en4_1v2 en5_1v2 en6_1v2 en7_1v2
++ en8_1v2 enable en0 en0_b en1 en1_b en2 en2_b en3 en3_b en4 en4_b en5 en5_b en6 en6_b en7 en7_b en8 en8_b
+XPU0 xb0 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU1 xb1 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU2 xb2 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU3 xb3 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU4 xb4 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU5 xb5 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU6 xb6 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU7 xb7 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU8 xb8 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XNI0 xb0 en0_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI1 xb1 en1_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI2 xb2 en2_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI3 xb3 en3_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI4 xb4 en4_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI5 xb5 en5_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI6 xb6 en6_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI7 xb7 en7_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI8 xb8 en8_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNE ns1 enable ns2 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNV ns2 vdd_1v2 vss_3v3 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XPA0 en0 xb0 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA0 en0 xb0 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB0 en0_b en0 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB0 en0_b en0 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA1 en1 xb1 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA1 en1 xb1 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB1 en1_b en1 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB1 en1_b en1 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA2 en2 xb2 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA2 en2 xb2 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB2 en2_b en2 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB2 en2_b en2 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA3 en3 xb3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA3 en3 xb3 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB3 en3_b en3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB3 en3_b en3 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA4 en4 xb4 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA4 en4 xb4 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB4 en4_b en4 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB4 en4_b en4 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA5 en5 xb5 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA5 en5 xb5 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB5 en5_b en5 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB5 en5_b en5 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA6 en6 xb6 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA6 en6 xb6 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB6 en6_b en6 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB6 en6_b en6 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA7 en7 xb7 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA7 en7 xb7 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB7 en7_b en7 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB7 en7_b en7 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA8 en8 xb8 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA8 en8 xb8 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB8 en8_b en8 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB8 en8_b en8 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+.ends tp_en_ctrl_b
+.subckt tp_en_ctrl vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 en0_1v2 en1_1v2 en2_1v2 en3_1v2 enable
++ en0 en0_b en1 en1_b en2 en2_b en3 en3_b rb0 rb1 rb2 rb3 lo4 lo5 lo6 lo7 lo8 lo9 lo10 lo11
+* ratioed AND / level shift
+XPU0 xb0 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU1 xb1 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU2 xb2 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU3 xb3 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XNI0 xb0 en0_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI1 xb1 en1_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI2 xb2 en2_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI3 xb3 en3_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNE ns1 enable ns2 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNV ns2 vdd_1v2 vss_3v3 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+* inverters on vdd_3v3
+XPA0 en0 xb0 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA0 en0 xb0 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB0 en0_b en0 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB0 en0_b en0 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA1 en1 xb1 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA1 en1 xb1 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB1 en1_b en1 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB1 en1_b en1 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA2 en2 xb2 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA2 en2 xb2 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB2 en2_b en2 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB2 en2_b en2 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA3 en3 xb3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA3 en3 xb3 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB3 en3_b en3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB3 en3_b en3 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+* read-back on the 1.2 V rail (hv devices: the gate sees 3.3 V)
+XPR0 rb0 xb0 vdd_1v2 vdd_1v2 sg13_hv_pmos w=1u l=0.45u ng=1
+XNR0 rb0 xb0 vss_1v2 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPR1 rb1 xb1 vdd_1v2 vdd_1v2 sg13_hv_pmos w=1u l=0.45u ng=1
+XNR1 rb1 xb1 vss_1v2 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPR2 rb2 xb2 vdd_1v2 vdd_1v2 sg13_hv_pmos w=1u l=0.45u ng=1
+XNR2 rb2 xb2 vss_1v2 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPR3 rb3 xb3 vdd_1v2 vdd_1v2 sg13_hv_pmos w=1u l=0.45u ng=1
+XNR3 rb3 xb3 vss_1v2 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+* floating vdd_1v2 pull-down
+XNRD vdd_1v2 vdd_3v3 vss_3v3 vss_3v3 sg13_hv_nmos w=0.3u l=20u ng=1
+* tie-lows of dig_out[11:4]
+XNL4 lo4 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL5 lo5 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL6 lo6 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL7 lo7 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL8 lo8 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL9 lo9 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL10 lo10 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL11 lo11 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+.ends tp_en_ctrl
+.subckt bias_tree_noab_pd vdd vss iref vbp vbn vbpc vbnc en_3v3 en_3v3_b
+XTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+XNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBP vbp ni vss vss sg13_hv_nmos w=6u l=6u ng=1
+XNBPC vbpc ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+XPBN vbn vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+Xd vdd vss vbp vbn vbpc vbnc bias_diodes
+* --- layout dummies of the tree rows (C3 backannotation, pad_candidate.cdl), D = S on the rail, gate by poly abutment
+XMDBP vdd vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1
+XMDBN vss ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1
+.ends bias_tree_noab_pd
+.subckt bias_diodes vdd vss vbp vbn vbpc vbnc
+XBP vbp vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1
+XBN vbn vbn vss vss sg13_hv_nmos w=6u l=6u ng=1
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1
+XBPC vbpc vbpc vdd vdd sg13_hv_pmos w=1u l=4u ng=1
+.ends bias_diodes
+.subckt oa_core_pd vdd vss iout en_3v3 en_3v3_b
+*.PININFO vdd:B vss:B en_3v3:I en_3v3_b:I iout:O
+XMS2 ks vbr vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XP0 vpg vpg vdd vdd sg13_hv_pmos w=2u l=8u ng=1 m=1 mm_ok=1
+XP0C vpc vpc vpg vdd sg13_hv_pmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XMC10 vpc vbr d10 vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XM10 d10 vnc vres vss sg13_hv_nmos w=180u l=1u ng=18 m=1 mm_ok=1
+XMCL vres vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1 mm_ok=1
+XP8 c8 vpg vdd vdd sg13_hv_pmos w=16u l=8u ng=8 m=1 mm_ok=1
+XP8C vnc vpc c8 vdd sg13_hv_pmos w=4u l=2u ng=2 m=1 mm_ok=1
+XM11 vnc vnc vss vss sg13_hv_nmos w=90u l=1u ng=9 m=1 mm_ok=1
+XP2 c2 vpg vdd vdd sg13_hv_pmos w=4u l=8u ng=2 m=1 mm_ok=1
+XP2C vbr vpc c2 vdd sg13_hv_pmos w=1u l=2u ng=1 m=1 mm_ok=1
+XMCS vbr vbr vss vss sg13_hv_nmos w=3.4u l=30u ng=1 m=1 mm_ok=1
+XPO co vpg vdd vdd sg13_hv_pmos w=40u l=8u ng=20 m=1 mm_ok=1
+XPOC iout vpc co vdd sg13_hv_pmos w=10u l=2u ng=5 m=1 mm_ok=1
+XSKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XSVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XMS1_0 net1 en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_1 net2 en_3v3_b net1 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_2 net3 en_3v3_b net2 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_3 net4 en_3v3_b net3 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_4 net5 en_3v3_b net4 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_5 net6 en_3v3_b net5 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_6 net7 en_3v3_b net6 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_7 ks en_3v3_b net7 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMDUM0 vdd vpg vdd vdd sg13_hv_pmos w=4.4u l=8u ng=9 m=1 mm_ok=1
+XMDUM1 vss vnc vss vss sg13_hv_nmos w=36u l=1u ng=18 m=1 mm_ok=1
+XMDUM2 vss vbr vss vss sg13_hv_nmos w=4u l=1u ng=2 m=1 mm_ok=1
+.ends
+.subckt bg_core_pd vdd vss iout en_3v3 en_3v3_b
+*.PININFO vdd:B vss:B en_3v3:I en_3v3_b:I iout:O
+XMS2 ks g vss vss sg13_hv_nmos w=10u l=1u ng=1 m=1 mm_ok=1
+XMS3 vpc ks vss vss sg13_hv_nmos w=0.5u l=2u ng=1 m=1 mm_ok=1
+XPB vpg vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XPBC vpc vpc vpg vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XNB vpc g eb vss sg13_hv_nmos w=20u l=4u ng=2 m=1 mm_ok=1
+XQ2 vss vss e2 pnpMPA a=4e-12 p=8e-06 m=8
+XPA ca vpg vdd vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XPAC g vpc ca vdd sg13_hv_pmos w=40u l=1u ng=4 m=1 mm_ok=1
+XNA g g ea vss sg13_hv_nmos w=20u l=4u ng=2 m=1 mm_ok=1
+XQ1 vss vss ea pnpMPA a=4e-12 p=8e-06
+XPO co vpg vdd vdd sg13_hv_pmos w=80u l=1u ng=8 m=1 mm_ok=1
+XPOC iout vpc co vdd sg13_hv_pmos w=80u l=1u ng=8 m=1 mm_ok=1
+XSKS ks en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XSVPG vpg en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1 mm_ok=1
+XR1B[9] eb n1b[8] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B[8] n1b[8] n1b[7] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B[7] n1b[7] n1b[6] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B[6] n1b[6] n1b[5] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B[5] n1b[5] n1b[4] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B[4] n1b[4] n1b[3] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B[3] n1b[3] n1b[2] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B[2] n1b[2] n1b[1] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B[1] n1b[1] n1b[0] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1B[0] n1b[0] vss vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[17] eb n0[16] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[16] n0[16] n0[15] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[15] n0[15] n0[14] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[14] n0[14] n0[13] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[13] n0[13] n0[12] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[12] n0[12] n0[11] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[11] n0[11] n0[10] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[10] n0[10] n0[9] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[9] n0[9] n0[8] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[8] n0[8] n0[7] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[7] n0[7] n0[6] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[6] n0[6] n0[5] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[5] n0[5] n0[4] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[4] n0[4] n0[3] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[3] n0[3] n0[2] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[2] n0[2] n0[1] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[1] n0[1] n0[0] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR0[0] n0[0] e2 vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[10] ea n1a[9] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[9] n1a[9] n1a[8] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[8] n1a[8] n1a[7] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[7] n1a[7] n1a[6] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[6] n1a[6] n1a[5] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[5] n1a[5] n1a[4] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[4] n1a[4] n1a[3] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[3] n1a[3] n1a[2] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[2] n1a[2] n1a[1] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[1] n1a[1] n1a[0] vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XR1A[0] n1a[0] vss vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XMS1_0 net1 en_3v3_b vdd vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_1 net2 en_3v3_b net1 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_2 net3 en_3v3_b net2 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_3 net4 en_3v3_b net3 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_4 net5 en_3v3_b net4 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_5 net6 en_3v3_b net5 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_6 net7 en_3v3_b net6 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMS1_7 ks en_3v3_b net7 vdd sg13_hv_pmos w=0.5u l=12.5u ng=1 m=1 mm_ok=1
+XMDUM0 vdd vpg vdd vdd sg13_hv_pmos w=2.4u l=1u ng=8 m=1 mm_ok=1
+XMDUM1 vdd vpc vdd vdd sg13_hv_pmos w=2.4u l=1u ng=8 m=1 mm_ok=1
+XMDUM2 g g g vss sg13_hv_nmos w=2u l=1u ng=1 m=1 mm_ok=1
+XMDUM3 g g g vss sg13_hv_nmos w=16u l=4u ng=8 m=1 mm_ok=1
+XRDUM[1] vss vss vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+XRDUM[0] vss vss vss rhigh w=0.5u l=9.94u m=1 b=0 mm_ok=1
+.ends
+.subckt xgate ena_b vdd in out vss ena
+*.PININFO out:B in:B vdd:B vss:B ena_b:I ena:I
+XM1 in ena_b out vdd sg13_hv_pmos w=2u l=0.5u ng=1 m=1 mm_ok=1
+XM2 in ena out vss sg13_hv_nmos w=2u l=0.5u ng=1 m=1 mm_ok=1
+.ends

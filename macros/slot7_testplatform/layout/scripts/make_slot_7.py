@@ -85,6 +85,119 @@ def tv1_on_m4col(x, y):
     box(TOP, "TV1", x - 0.21, y - 0.21, x + 0.21, y + 0.21)
 
 
+def stage_b(colA, xg, XP):
+    """Stage B (2026-11-06, slot7_stage_b.spice): tp_en_ctrl_b, bias_tree_noab_pd, 8 xgates, all at x 145 .. 285 um.
+    Stage A's geometry is not touched; only new shapes are added (the i_oa / i_bg Metal4 lines of stage A are
+    extended downwards, the enable row is extended to the right, the TopMetal1 bands are extended to the right)."""
+    import routed_cell as R
+    bands, ext = R.tp_en_ctrl_b_spec()
+    cb, colsb, ybb = R.build_routed("tp_en_ctrl_b", bands, ext)
+    bands, ext = R.tree_spec()
+    ct, colst, ybt = R.build_routed("bias_tree_noab_pd", bands, ext)
+    # tp_en_ctrl_b: not mirrored, pins at its bottom edge at y = 100
+    BX, YB = 187.0, 100.0
+    BY = g5(YB - (ybb - 0.15))
+    TOP.insert(pya.DCellInstArray(cb.cell_index(), pya.DTrans(pya.DVector(BX, BY))))
+    cB = {n: g5(BX + x) for n, x in colsb.items()}
+    ytopB = g5(BY + cb.dbbox().top)
+    # tree: pins at its bottom edge at y = 7
+    TX, YT = 232.0, 7.0
+    TY = g5(YT - (ybt - 0.15))
+    TOP.insert(pya.DCellInstArray(ct.cell_index(), pya.DTrans(pya.DVector(TX, TY))))
+    cT = {n: g5(TX + x) for n, x in colst.items()}
+    # Metal4 lanes between stage A and tp_en_ctrl_b (inputs of the xgates) and right of the xgates (outputs)
+    LANE = {"i_oa": 147.5, "i_bg": 148.5, "ibias0": 149.5, "ibias1": 150.5,
+            "vbp": 151.5, "vbn": 152.5, "vbpc": 153.5, "vbnc": 154.5, "iref": 214.0, "bus2": 215.5, "bus3": 217.0}
+    span = {}                                   # lane -> [ymin, ymax] to draw at the end
+
+    def lane_at(n, y):
+        v3(LANE[n], y)
+        s = span.setdefault(n, [y, y])
+        s[0], s[1] = min(s[0], y), max(s[1], y)
+
+    # inputs: dig_in[4..12] and enable (Metal3 rows at the pin height, Via3, column down from the cell)
+    rows = {f"en{k}_1v2": round(80.22 + 0.44 * k, 2) for k in range(9)}
+    for n, y in rows.items():
+        box(TOP, "M3", 1.0, y - 0.11, cB[n] + 0.15, y + 0.11)
+        box(TOP, "M4", cB[n] - 0.15, y - 0.15, cB[n] + 0.15, YB + 0.3)
+        via("Via3", cB[n], y)
+    y = 89.47
+    box(TOP, "M3", colA["enable"], y - 0.11, cB["enable"] + 0.15, y + 0.11)
+    box(TOP, "M4", cB["enable"] - 0.15, y - 0.15, cB["enable"] + 0.15, YB + 0.3)
+    via("Via3", cB["enable"], y)
+    # supplies: columns over the cell height and down to the tree lines; TopMetal1 bands extended
+    for n in ("vdd_3v3", "vss_3v3"):
+        m4v(cB[n], 0.9, ytopB - 0.3)
+    m4v(cB["vdd_1v2"], 44.5, ytopB - 0.3)
+    box(TOP, "TM1", 140.0, 116.0, 200.0, 125.0)
+    tv1_on_m4col(cB["vss_3v3"], 120.5)
+    box(TOP, "TM1", 140.0, 190.0, 200.0, 200.0)
+    tv1_on_m4col(cB["vdd_3v3"], 195.0)
+    box(TOP, "TM1", 30.0, 40.0, 190.0, 50.0)
+    tv1_on_m4col(cB["vdd_1v2"], 45.0)
+    # sources: i_oa, i_bg (stage A's Metal4 lines extended down), ibias0, ibias1 (rows from the left-edge pins)
+    m4v(88.0, 95.5, 114.0)
+    v3(88.0, 95.5)
+    m3h(95.5, 88.0, LANE["i_oa"])
+    lane_at("i_oa", 95.5)
+    m4v(145.5, 96.5, 105.0)
+    v3(145.5, 96.5)
+    m3h(96.5, 145.5, LANE["i_bg"])
+    lane_at("i_bg", 96.5)
+    for n, y in (("ibias0", 98.155), ("ibias1", 101.095)):
+        box(TOP, "M3", 1.0, y - 0.15, LANE[n] + 0.15, y + 0.15)
+        lane_at(n, y)
+    # analog_bus2 / analog_bus3: stub, Metal4 jog down, Metal3 along y 93.5 / 92.5 to the output lanes
+    for n, yp, xj, yl in (("bus2", 106.975, 4.5, 93.5), ("bus3", 104.035, 5.5, 92.5)):
+        box(TOP, "M3", 1.0, yp - 0.15, xj + 0.15, yp + 0.15)
+        v3(xj, yp)
+        m4v(xj, yl, yp)
+        v3(xj, yl)
+        m3h(yl, xj, LANE[n])
+        lane_at(n, yl)
+    # the eight xgates: one column at x = 200, out pins to the right lanes, the rest to the left
+    XGB = [("i_oa", "iref", 0), ("i_bg", "iref", 1), ("ibias0", "iref", 2), ("ibias1", "bus3", 8),
+           ("vbp", "bus2", 4), ("vbn", "bus2", 5), ("vbpc", "bus2", 6), ("vbnc", "bus2", 7)]
+    for i, (nin, nout, k) in enumerate(XGB):
+        gx, gy = 200.0, g5(74.0 - 7.0 * i)
+        TOP.insert(pya.DCellInstArray(xg.cell_index(), pya.DTrans(pya.DVector(gx, gy))))
+        xp = g5(gx + 3.04)
+        for pin, net in (("vdd", "vdd_3v3"), ("vss", "vss_3v3"), ("ena", f"en{k}"), ("ena_b", f"en{k}_b")):
+            yy = g5(gy + XP[pin][0])
+            v2_on_m2pin(xp, yy, 0, 0, pad=False)
+            m3h(yy, cB[net], xp)
+            v3(cB[net], yy)
+            if net.startswith("en"):
+                m4v(cB[net], yy, YB + 0.3)
+        yy = g5(gy + XP["in"][0])
+        v2_on_m2pin(xp, yy, 0, 0, pad=False)
+        m3h(yy, LANE[nin], xp)
+        lane_at(nin, yy)
+        yo, xo = g5(gy + XP["out"][0]), g5(gx + 8.055)
+        v2_on_m2pin(xo, yo, 0, 0, pad=False)
+        m3h(yo, xo, LANE[nout])
+        lane_at(nout, yo)
+    # tree pins: Metal4 down from the tree's bottom edge to one Metal3 line each (y 0.9 .. 5.7), then left
+    TGT = {"vdd": ("col", "vdd_3v3"), "vss": ("col", "vss_3v3"), "iref": ("lane", "iref"),
+           "vbp": ("lane", "vbp"), "vbn": ("lane", "vbn"), "vbpc": ("lane", "vbpc"), "vbnc": ("lane", "vbnc"),
+           "en_3v3": ("col", "en3"), "en_3v3_b": ("col", "en3_b")}
+    for k, (n, (kind, tgt)) in enumerate(TGT.items()):
+        y = g5(0.9 + 0.6 * k)
+        m4v(cT[n], y, YT + 0.3)
+        v3(cT[n], y)
+        xt = cB[tgt] if kind == "col" else LANE[tgt]
+        m3h(y, xt, cT[n])
+        if kind == "col":
+            v3(xt, y)
+            if tgt.startswith("en"):
+                m4v(xt, y, YB + 0.3)
+        else:
+            lane_at(tgt, y)
+    for n, (y0, y1) in span.items():
+        m4v(LANE[n], y0, y1)
+    return cB
+
+
 def main():
     global TOP
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
@@ -204,6 +317,9 @@ def main():
     m4v(xj, yo, BUS1)
     v3(xj, BUS1)
     box(TOP, "M3", 1.0, BUS1 - 0.15, xj + 0.15, BUS1 + 0.15)
+
+    if '--stage-b' in sys.argv:
+        stage_b(col, xg, XP)
 
     # --- the PDK ptap1 PCell carries a text "sub!" (layer 40/0); magic makes a name ending in "!" a GLOBAL net, which
     # in the harness could join this tie (vss_3v3) to every other "sub!" of the chip. The tie is vss_3v3 by its metal.

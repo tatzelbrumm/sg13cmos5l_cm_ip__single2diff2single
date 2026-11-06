@@ -3,3 +3,5 @@ testbenches/ngspice/results_layout/netlists/
 schematic/xschem/check_out/
 layout/scripts/__pycache__/
 testbenches/ngspice/__pycache__/
+testbenches/ngspice/results_b/netlists/
+testbenches/ngspice/results_b_layout/netlists/

@@ -1,0 +1,114 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* slot7_stage_b: stage B of the slot-7 test platform (2026-11-06, docs/slot7_testplatform/PLAN.md section 9).
+* Stage A (slot7_testplatform.spice) is unchanged; the new top slot7_testplatform_ab instantiates stage A's cells
+* directly (it needs the cores' output nets i_oa / i_bg, which slot7_testplatform does not export) plus stage B.
+*
+* Needs, besides what slot7_testplatform.spice needs:
+*   ../../../bias_tree_noab_pd/netlist/source/bias_tree_noab_pd.spice   (bias_tree_noab_pd; uses bias_diodes)
+*
+* Stage B:
+*   - bias_tree_noab_pd (the tree of the S2D pad); its reference current selectable by transmission gates from the OA
+*     core (dig_in[4]), the BG core (dig_in[5]) or the harness ibias0 (dig_in[6]); tree enable dig_in[7];
+*   - its bias voltages vbp / vbn / vbpc / vbnc onto analog_bus2 through transmission gates (dig_in[8..11]);
+*   - the harness ibias1 onto analog_bus3 (dig_in[12]), to measure the harness bias through the same path;
+*   - every enable fail-safe as in stage A: dig_in[k] AND enable AND (slot vdd_1v2 present), no read-back.
+
+* tp_en_ctrl_b: nine channels of tp_en_ctrl (no read-back, no tie-lows, no NRD: stage A's NRD pulls the slot's
+* vdd_1v2 low when it is gated off, and the read-back pins are all used by stage A).
+.subckt tp_en_ctrl_b vdd_3v3 vss_3v3 vdd_1v2 en0_1v2 en1_1v2 en2_1v2 en3_1v2 en4_1v2 en5_1v2 en6_1v2 en7_1v2
++ en8_1v2 enable en0 en0_b en1 en1_b en2 en2_b en3 en3_b en4 en4_b en5 en5_b en6 en6_b en7 en7_b en8 en8_b
+XPU0 xb0 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU1 xb1 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU2 xb2 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU3 xb3 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU4 xb4 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU5 xb5 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU6 xb6 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU7 xb7 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU8 xb8 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XNI0 xb0 en0_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI1 xb1 en1_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI2 xb2 en2_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI3 xb3 en3_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI4 xb4 en4_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI5 xb5 en5_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI6 xb6 en6_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI7 xb7 en7_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI8 xb8 en8_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNE ns1 enable ns2 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNV ns2 vdd_1v2 vss_3v3 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XPA0 en0 xb0 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA0 en0 xb0 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB0 en0_b en0 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB0 en0_b en0 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA1 en1 xb1 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA1 en1 xb1 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB1 en1_b en1 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB1 en1_b en1 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA2 en2 xb2 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA2 en2 xb2 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB2 en2_b en2 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB2 en2_b en2 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA3 en3 xb3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA3 en3 xb3 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB3 en3_b en3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB3 en3_b en3 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA4 en4 xb4 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA4 en4 xb4 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB4 en4_b en4 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB4 en4_b en4 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA5 en5 xb5 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA5 en5 xb5 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB5 en5_b en5 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB5 en5_b en5 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA6 en6 xb6 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA6 en6 xb6 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB6 en6_b en6 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB6 en6_b en6 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA7 en7 xb7 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA7 en7 xb7 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB7 en7_b en7 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB7 en7_b en7 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA8 en8 xb8 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA8 en8 xb8 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB8 en8_b en8 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB8 en8_b en8 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+.ends tp_en_ctrl_b
+
+* slot7_stage_b: tree, reference select, bias-voltage mux, ibias1 path. i_oa / i_bg: the cores' outputs (stage A nets).
+.subckt slot7_stage_b vdd_3v3 vss_3v3 vdd_1v2 enable dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9]
++ dig_in[10] dig_in[11] dig_in[12] i_oa i_bg ibias0 ibias1 analog_bus2 analog_bus3
+xctlb vdd_3v3 vss_3v3 vdd_1v2 dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9] dig_in[10] dig_in[11]
++ dig_in[12] enable en_ref_oa en_ref_oa_b en_ref_bg en_ref_bg_b en_ref_ib0 en_ref_ib0_b en_tree en_tree_b
++ en_m_vbp en_m_vbp_b en_m_vbn en_m_vbn_b en_m_vbpc en_m_vbpc_b en_m_vbnc en_m_vbnc_b en_ib1 en_ib1_b tp_en_ctrl_b
+* reference select (xgate: ena_b vdd in out vss ena)
+xr_oa en_ref_oa_b vdd_3v3 i_oa iref vss_3v3 en_ref_oa xgate
+xr_bg en_ref_bg_b vdd_3v3 i_bg iref vss_3v3 en_ref_bg xgate
+xr_ib0 en_ref_ib0_b vdd_3v3 ibias0 iref vss_3v3 en_ref_ib0 xgate
+* the tree (as in the S2D pad)
+xtree vdd_3v3 vss_3v3 iref vbp vbn vbpc vbnc en_tree en_tree_b bias_tree_noab_pd
+* bias-voltage mux onto analog_bus2
+xm_vbp en_m_vbp_b vdd_3v3 vbp analog_bus2 vss_3v3 en_m_vbp xgate
+xm_vbn en_m_vbn_b vdd_3v3 vbn analog_bus2 vss_3v3 en_m_vbn xgate
+xm_vbpc en_m_vbpc_b vdd_3v3 vbpc analog_bus2 vss_3v3 en_m_vbpc xgate
+xm_vbnc en_m_vbnc_b vdd_3v3 vbnc analog_bus2 vss_3v3 en_m_vbnc xgate
+* harness ibias1 onto analog_bus3
+xi_ib1 en_ib1_b vdd_3v3 ibias1 analog_bus3 vss_3v3 en_ib1 xgate
+.ends slot7_stage_b
+
+* slot7_testplatform_ab: stage A (its five instances, as in slot7_testplatform) + stage B. Ports = the slot pins used.
+.subckt slot7_testplatform_ab vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 enable dig_in[0] dig_in[1] dig_in[2] dig_in[3]
++ dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9] dig_in[10] dig_in[11] dig_in[12]
++ dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6] dig_out[7] dig_out[8]
++ dig_out[9] dig_out[10] dig_out[11] analog_bus0 analog_bus1 analog_bus2 analog_bus3 ibias0 ibias1
+xctl vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 dig_in[0] dig_in[1] dig_in[2] dig_in[3] enable en_oa en_oa_b en_bg en_bg_b
++ en_tg0 en_tg0_b en_tg1 en_tg1_b dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6]
++ dig_out[7] dig_out[8] dig_out[9] dig_out[10] dig_out[11] tp_en_ctrl
+xoa vdd_3v3 vss_3v3 i_oa en_oa en_oa_b oa_core_pd
+xbg vdd_3v3 vss_3v3 i_bg en_bg en_bg_b bg_core_pd
+xtg0 en_tg0_b vdd_3v3 i_oa analog_bus0 vss_3v3 en_tg0 xgate
+xtg1 en_tg1_b vdd_3v3 i_bg analog_bus1 vss_3v3 en_tg1 xgate
+xb vdd_3v3 vss_3v3 vdd_1v2 enable dig_in[4] dig_in[5] dig_in[6] dig_in[7] dig_in[8] dig_in[9] dig_in[10]
++ dig_in[11] dig_in[12] i_oa i_bg ibias0 ibias1 analog_bus2 analog_bus3 slot7_stage_b
+.ends slot7_testplatform_ab
