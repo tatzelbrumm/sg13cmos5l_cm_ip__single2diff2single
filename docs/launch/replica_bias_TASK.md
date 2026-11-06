@@ -21,12 +21,12 @@ Use only primitives that already exist in this repository: the device instances 
 
 ## Hard rules
 
-1. Design repository: create branch **`replica-bias`** from `origin/toplevel` and push only that branch, plus notes to
-   the orphan branch **`sudel_buecher`** through a separate worktree (`git worktree add ../sg13cmos5l_cm_ip__single2diff2single_sudelbuecher sudel_buecher`;
-   never `git switch sudel_buecher` in the main checkout: it empties the working tree). On `sudel_buecher` write only
-   under `sudelbuecher/design_considerations/replica_bias/` and `sudelbuecher/logs/replica-bias/`; before every push
-   `git fetch` and rebase (the parallel task also pushes there, into other directories). Never push to `main`,
-   `toplevel`, `harness-test` or any other branch.
+1. Design repository: the user has created two branches for this task. Work and push only on them:
+   **`claude/c4-replica-bias`** (from `toplevel`) for the design, and **`claude/c4-replica-bias-sudel`** (from the
+   orphan branch `sudel_buecher`) for notes, logs and the chat log, checked out in a separate worktree
+   (`git worktree add ../sg13cmos5l_cm_ip__single2diff2single_sudelbuecher claude/c4-replica-bias-sudel`; never switch
+   the main checkout to it: an orphan branch empties the working tree). If either branch is missing, stop and tell the
+   user. Never push to `main`, `toplevel`, `sudel_buecher`, `harness-test` or any other branch.
 2. Do not touch `tatzelbrumm/sg13cmos5l_cm_slot7` or `tatzelbrumm/sg13cmos5l_ocd_chipalooza`. Migration of the result
    into the delivery repository is a later task: only write down what would move there.
 3. Do not change the pad cells' layouts or their existing macros; new work goes into NEW macros under `macros/`
@@ -59,7 +59,7 @@ Find out, from what already exists, where the bias voltages should sit, and what
 - The gaps: target values or ranges that no run covers, conditions missing (corners, temperatures, iovdd 3.0 / 3.6 V,
   extracted views), stale results that matter, and contradictions between sources (e.g. 1.2 V versus 1.65 V).
 
-Write it into `docs/replica_bias/SURVEY.md` on your branch (with the run table and the gap list), commit and push.
+Write it into `docs/replica_bias/SURVEY.md` on `claude/c4-replica-bias` (with the run table and the gap list), commit and push.
 
 **Then STOP and ask the user.** Present the proposed targets with their evidence, the gap list and, for each gap, the
 simulation or characterization run you would do to close it (what, which bench, rough run time). Run nothing new
@@ -85,13 +85,13 @@ schematic + simulation and a floorplan sketch (where each block sits: in the pad
 
 ## Records
 
-- On `replica-bias`: each macro's `README.md` (purpose, ports, results tables, limitations) in the style of
+- On `claude/c4-replica-bias`: each macro's `README.md` (purpose, ports, results tables, limitations) in the style of
   `macros/oa_core_pd/README.md`; `docs/replica_bias/RUNLOG.md` (one entry per step: UTC time, exact command with full
   paths, cwd, exit status, log file, what changed; tool versions once); `docs/replica_bias/SUMMARY.md` (at most one
   page: targets, blocks, current saved versus a divider, status, what migrates to the delivery repo later).
-- On `sudel_buecher`: design notes and derivations in `sudelbuecher/design_considerations/replica_bias/`, tee'd logs of
+- On `claude/c4-replica-bias-sudel`: design notes and derivations in `sudelbuecher/design_considerations/replica_bias/`, tee'd logs of
   long runs in `sudelbuecher/logs/replica-bias/`.
-- Chat log: `sudelbuecher/chatlog/<date>_claude_replica_bias.md` on `sudel_buecher`, the visible conversation verbatim,
+- Chat log: `sudelbuecher/chatlog/<date>_claude_replica_bias.md` on `claude/c4-replica-bias-sudel`, the visible conversation verbatim,
   exported from this session's own transcript (`~/.claude/projects/*/<session-id>.jsonl`): user messages, your visible
   messages, one bracketed line per tool call; never reasoning, system text, reminders or tool output; no secrets. If
   the export is refused, record that and continue; do not work around it. Add a one-line entry to

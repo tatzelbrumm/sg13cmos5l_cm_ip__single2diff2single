@@ -23,15 +23,16 @@ Two stages; finish A before starting B:
 
 ## Hard rules
 
-1. Design repository: create branch **`slot7-testplatform`** from `origin/toplevel`; push only that branch, plus notes
-   and logs to the orphan branch **`sudel_buecher`** through a separate worktree (never `git switch sudel_buecher` in
-   the main checkout). On `sudel_buecher` write only under `sudelbuecher/design_considerations/slot7_testplatform/`
-   and `sudelbuecher/logs/slot7-testplatform/`; `git fetch` and rebase before every push (the parallel task pushes
-   there too). Never push to `main`, `toplevel`, `harness-test` or any other branch.
-2. Delivery repository `tatzelbrumm/sg13cmos5l_cm_slot7`: push only a NEW branch **`testplatform`** (from its `main`),
-   with the new `final/gds/slot_7.gds` and its views. Never push to `main`: the user decides the merge.
-3. Harness fork `tatzelbrumm/sg13cmos5l_ocd_chipalooza`: only for verification, on a NEW branch `testplatform-test`
-   from `delivery-test`. Never touch other branches, and nothing in `RTimothyEdwards/*`.
+The user has created the branches for this task. Work and push only on them; if one is missing, stop and tell the
+user.
+1. Design repository: **`claude/c5-slot7-testplatform`** (from `toplevel`) for the design, and
+   **`claude/c5-slot7-testplatform-sudel`** (from the orphan branch `sudel_buecher`) for notes, logs and the chat log,
+   checked out in a separate worktree (never switch the main checkout to it: an orphan branch empties the working tree).
+2. Delivery repository `tatzelbrumm/sg13cmos5l_cm_slot7`: **`claude/c5-testplatform`** (from `main`), with the new
+   `final/gds/slot_7.gds` and its views. Never push to `main`: the user decides the merge.
+3. Harness fork `tatzelbrumm/sg13cmos5l_ocd_chipalooza`: only for verification, on **`claude/c5-testplatform-test`**
+   (from `custom-pad-test`). Nothing in `RTimothyEdwards/*`.
+Never push to any other branch (`main`, `toplevel`, `sudel_buecher`, `harness-test`, `custom-pad-test`, ...).
 4. Environment: `export PDK_ROOT=/foss/pdks; source .designinit` in the design repo before any `make`; in the harness,
    `export PDK_ROOT=/foss/pdks PDK=ihp-sg13cmos5l` and, for magic 8.3.685, the PATH shim
    `docs/custom_pads/tools/shim/magic` of the harness fork for batch magic runs. Avoid `make all` in the design repo.
@@ -62,7 +63,7 @@ Two stages; finish A before starting B:
 ## Phases
 
 1. **Plan:** pin map (which `dig_in` bit does what, which bus line carries what), measurement procedure per observable,
-   power-up / enable sequence, floorplan sketch. Write it into `docs/slot7_testplatform/PLAN.md` on your branch.
+   power-up / enable sequence, floorplan sketch. Write it into `docs/slot7_testplatform/PLAN.md` on `claude/c5-slot7-testplatform`.
 2. **Schematic + simulation:** xschem top cell (new macro, e.g. `macros/slot7_testplatform/`, pins = the slot pins it
    uses) with testbenches: enable / disable of each core, current into a voltage-held bus (SMU model) over corners and
    -40 / 27 / 125 C, bus leakage of disabled switches, behaviour with the gated supplies off (no current, no
@@ -71,19 +72,19 @@ Two stages; finish A before starting B:
    PDK KLayout DRC clean (`libs.tech/klayout/tech/drc/ihp-sg13cmos5l.drc`, feol+beol), magic + netgen LVS against the
    schematic, views (`final/gds/slot_7.gds`, lef, lib, vh) as in the delivery repo. If layout is not finished, deliver
    stage A schematic + simulation and say exactly where layout stopped; do not push a broken `slot_7.gds`.
-4. **Deliver and verify:** branch `testplatform` of the delivery repo with the new views; harness fork branch
-   `testplatform-test`: `s7_version` = `testplatform <commit>`, `make projects-clean SLOTS=7`, `make projects SLOTS=7`,
+4. **Deliver and verify:** branch `claude/c5-testplatform` of the delivery repo with the new views; harness fork branch
+   `claude/c5-testplatform-test`: `s7_version` = `claude/c5-testplatform <commit>`, `make projects-clean SLOTS=7`, `make projects SLOTS=7`,
    `make projects-gds SLOTS=7`, `make gds-prefill`; then a net-by-net extraction check of the pre-fill top for the slot
    7 nets you use (adapt `docs/custom_pads/tools/netcheck_slot7.py` of the harness fork to the left-edge nets).
 
 ## Records
 
-- On `slot7-testplatform`: `docs/slot7_testplatform/RUNLOG.md` (one entry per step: UTC time, exact command with full
+- On `claude/c5-slot7-testplatform`: `docs/slot7_testplatform/RUNLOG.md` (one entry per step: UTC time, exact command with full
   paths, cwd, exit status, log file, what changed; tool versions once), `PLAN.md`, `SUMMARY.md` (at most one page:
   what is on the slot, how to measure it, check results, stage reached, the fallback swap, what Tim needs to know).
-- On `sudel_buecher`: design notes in `sudelbuecher/design_considerations/slot7_testplatform/`, tee'd logs of long runs
+- On `claude/c5-slot7-testplatform-sudel`: design notes in `sudelbuecher/design_considerations/slot7_testplatform/`, tee'd logs of long runs
   in `sudelbuecher/logs/slot7-testplatform/`.
-- Chat log: `sudelbuecher/chatlog/<date>_claude_slot7_testplatform.md` on `sudel_buecher`, the visible conversation
+- Chat log: `sudelbuecher/chatlog/<date>_claude_slot7_testplatform.md` on `claude/c5-slot7-testplatform-sudel`, the visible conversation
   verbatim, exported from this session's own transcript (`~/.claude/projects/*/<session-id>.jsonl`): user messages,
   your visible messages, one bracketed line per tool call; never reasoning, system text, reminders or tool output; no
   secrets. If the export is refused, record that and continue; do not work around it. Add a one-line entry to
