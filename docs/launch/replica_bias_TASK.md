@@ -98,5 +98,8 @@ schematic + simulation and a floorplan sketch (where each block sits: in the pad
   the export is refused, record that and continue; do not work around it. Add a one-line entry to
   `sudelbuecher/chatlog/README.md`. Use `claude` in place of a model name in file names and pushed files.
 
-Final chat message to the user (after the last phase, not after the survey): five lines or fewer: targets, blocks,
-current versus a divider, status, branch names.
+Messages to the user: when the user is talking with you interactively (questions, answers, the stop after a phase),
+keep them short, one point at a time. The final report and everything written to files are for reconstruction after
+the fact: complete and verbatim, no length limit.
+
+Final report to the user (after the last phase): targets, blocks, current versus a divider, status, branch names, open points.
