@@ -1,0 +1,5 @@
+g6_s2d_ac: 30 runs, 0 without result, 14 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/pad_char/results/g6_s2d_ac.tsv
+g6_d2s_ac: 30 runs, 0 without result, 22 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/pad_char/results/g6_d2s_ac.tsv
+g6_s2d_tran: 30 runs, 0 without result, 107 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/pad_char/results/g6_s2d_tran.tsv
+g6_d2s_tran: 30 runs, 0 without result, 125 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/pad_char/results/g6_d2s_tran.tsv
+g6_s2d_en: 30 runs, 0 without result, 77 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/pad_char/results/g6_s2d_en.tsv
