@@ -122,6 +122,14 @@ def run_raw(name, text):
             f.write(text)
         p = _ngspice(path)
         RETRIED.append(name)
+        if p.returncode != 0 or 'no simulations run' in p.stdout or 'aborted' in p.stdout:
+            # second level (transients at -40 C: timestep too small in the bandgap's pnpMPA at the enable edge):
+            # Gear integration and reltol 1e-3
+            text = text.replace('reltol=1e-4 abstol=1e-15', 'reltol=1e-3 abstol=1e-15 method=gear')
+            with open(path, 'w') as f:
+                f.write(text)
+            p = _ngspice(path)
+            RETRIED.append(name + ':gear')
     return p, path
 
 
@@ -280,4 +288,4 @@ if __name__ == '__main__':
         OUT = os.path.join(HERE, 'results_layout')
     for w in (['static', 'sweep', 'tran', 'leak'] if what == 'all' else [what]):
         globals()[w]()
-    print('retried with gmin 1e-12 rshunt 1e14:', len(RETRIED), RETRIED)
+    print('retried (rshunt 1e14; :gear = also method=gear reltol=1e-3):', len(RETRIED), RETRIED)

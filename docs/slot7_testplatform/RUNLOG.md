@@ -184,3 +184,45 @@ Scratch work directory of the container: `/home/user/work` (not committed; logs 
 ### 2026-11-06T14:20Z — the extracted layout netlist simulated
 - `netlist/layout/slot_7_magic.ext.spc` = the LVS extraction; `run_tb.py static --dut layout` at tt / 27 C / nominal:
   I_OA 4.992 uA, I_BG 4.958 uA (as the schematic), all 11 states correct by read-back (`results_layout/summary.md`).
+
+## Phase 2 (continued): final simulation runs
+
+### 2026-11-06T14:13Z..14:22Z — full run with the convergence retry (gmin 1e-15)
+- log overwritten by the next run. Two problems: (a) the first transient (`tran_tt_27`) stopped with "timestep too
+  small" in the bandgap's pnpMPA at the 10 ns enable edge, so the run ended there (exit 1); (b) in the static set a
+  few points at -40 C (tt / nom, fs / high) showed 0.03 .. 1 uA through an OPEN switch. Re-solved with gmin 1e-12:
+  1.9 / 2.2 pA, so (b) were non-physical operating points of the disabled cores' floating nodes at gmin 1e-15.
+- change: gmin 1e-12 everywhere (currents below ~10 pA are the simulation floor), 100 ns enable edges.
+
+### 2026-11-06T14:24:22Z — full run, final settings
+- command (cwd design repo root): `python3 macros/slot7_testplatform/testbenches/ngspice/run_tb.py all`, log `logs/p2_run_tb_all.log`
+- static (495 points: 11 states x 5 corners x 3 temperatures x 3 supply sets) and sweep (15) complete, none retried;
+  the transient set stopped again at `tran_tt_-40` (pnpMPA, timestep too small, even with the retry) -> exit 1.
+- change: second retry level for a failed run: Gear integration and reltol 1e-3 (marked `:gear`).
+
+### 2026-11-06T14:34:23Z — transient and leakage sets
+- command: `python3 macros/slot7_testplatform/testbenches/ngspice/run_tb.py tran && python3 macros/slot7_testplatform/testbenches/ngspice/run_tb.py leak`
+  (log `logs/p2_run_tb_tran_leak.log`): exit 0; 3 transients needed Gear (tt / -40, ss / -40, ff / 27), leakage none.
+- summary: `python3 macros/slot7_testplatform/testbenches/ngspice/summarize.py > .../results/summary.md`: static: all
+  logic levels and read-backs as expected in all 495 points (0 failures); numbers in SUMMARY.md.
+- layout netlist (`--dut layout`, tt / ff x 27 / 125 C x nominal / high, all 11 states): same currents as the schematic
+  to 4 digits, 0 logic failures (`results_layout/summary.md`).
+
+## Phase 4: delivery and harness verification
+
+### 2026-11-06T14:25Z — delivery repository
+- cwd `/home/user/sg13cmos5l_cm_slot7`, branch `claude/c5-testplatform`: copied `macros/slot7_testplatform/final/gds/slot_7.gds`
+  (sha256 d0cdc81d...) and `final/lef/slot_7.lef` (431c564a...); `cmp` showed `slot_7.lib` and `slot_7.vh` identical to the
+  delivery's (same ports); README: description, provenance rows (P = this branch @ a665f66), checks section.
+- commit f2c850111a33775bc1839ca1890e85c04c785c1c, pushed.
+
+### 2026-11-06T14:21Z..14:33Z — harness fork, branch `claude/c5-testplatform-test`
+- see the harness's `docs/custom_pads/RUNLOG.md`, section "Slot-7 test platform", and its `logs/c5_testplatform/`:
+  submodules, `make setup`, `setup_custom_io.sh`, `s7_version`, `make projects-clean SLOTS=7`, `make projects SLOTS=7`,
+  `make projects-gds SLOTS=7`, `make gds-prefill`: all exit 0. slot_7 in the pre-fill GDS: XOR against the delivered GDS
+  empty. New `docs/custom_pads/tools/netcheck_slot7_platform.py` on the pre-fill top (clip 1100 2160 2100 2445):
+  "all 36 used pins and 27 unused pins OK". Harness commit 9981b94d91ecc5c6e383c6ea3b63338a566e6557, pushed.
+- while adapting the net check: clip 1340..2100 x 2160..2475 reached slot 8's vdd_1v2 (second vdd_1v2 net above
+  y 2446.6); clip 1100.. brought in the control block, which reuses the names dig_in[k], enable, `out` on its side ->
+  labels are now judged only inside slot 7's box; vss_1v2: the frame's Metal2 strip (vss1v2) is a separate piece inside
+  the clip, accepted as documented; the slot's own vss_1v2 reaches the control block's ground (DVSS, vssd).
