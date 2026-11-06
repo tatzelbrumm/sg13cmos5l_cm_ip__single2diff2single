@@ -21,7 +21,7 @@ added later without moving anything.
 | current delivery `slot_7.gds` | `sg13cmos5l_cm_slot7` `main` 40ba9b0 = `harness-test` 4611357 (same sha256) | 13 Metal3 pins at x 535.05..536.45, labelled stubs; `outp`->`vinp`, `outn`->`vinn` joined by Metal4 lines at x 530 / 528 |
 | how `analog_bus0..3` reach `analog[0..3]` | harness `verilog/rtl/chipalooza_frame.v` | chip pad `analog[k]` = shared net `user_analog_shared[k]` (one net in `LVS_STRUCTURAL`). Per slot one `analog_switch_med` (hv NMOS + PMOS 10u x 40, gate drive `gate_drive_med`) from that net to the slot's `analog_bus<k>`, enable `select & analog_bus_ena[k]`. The diagnostic switches of project 0 sit on the same net and are off unless `proj_sel` = 0 |
 | what drives `enable`, `dig_in`, the gated supplies | `user_project_control{,_base}.v`, `housekeeping.v`, `router.v` | `proj_sel` (SPI reg 0x50) selects one slot; slot 7 = 7. Reg 0x51 = {`analog_bus_ena[3:0]`, `dig_ena`, `1v2_ena`, `3v3_ena`, `proj_ena`} (bit 7..0); `enable` = `select & proj_ena`; gated supplies by `power_stage2` (3.3 V) / `power_stage1v2` (1.2 V), enable `select & ...`. `dig_in[i]` = router output (reg 0x20+i: 0x0..0xB = digital pad `io_in[n]`, **0xD = 0, 0xE = 1**, 0xF = sequencer; **the reset value 0x0 routes every bit to pad io[0]**), through a latch (`dig_ena` = gate, reset while the slot is not selected), buffered by `buf_8` on the harness's **always-on** 1.2 V rail. So `dig_in` / `enable` are valid 1.2 V levels even when the slot's own `vdd_1v2` is gated off, and 0 whenever slot 7 is not selected. `dig_out` of the selected slot is readable in SPI reg 0x38 / 0x39 (`dbus_in`) without a pad |
-| reusable layouts | READMEs + the delivery repo's run log of 2026-11-06 | `oa_core_pd`, `bg_core_pd`: PDK KLayout DRC 0, magic+netgen "match uniquely" (property errors only on the simulation-only `mm_ok`). `analog_switch_small.klay.gds` (from the harness's magic layout, in `macros/ocd_analog_switches`): **KLayout DRC 0 (checked today, RUNLOG)**. The harness submodule `sg13cmos5l_ocd_ip__analog_switches` is pinned at `d210467` (same commit the copies were made from) |
+| reusable layouts | READMEs + the delivery repo's run log of 2026-11-06 | `oa_core_pd`, `bg_core_pd`: PDK KLayout DRC 0, magic+netgen "match uniquely" (property errors only on the simulation-only `mm_ok`). `analog_switch_small.klay.gds` and `xgate.klay.gds` (from the harness's magic layouts, in `macros/ocd_analog_switches`): **KLayout DRC 0 each (checked today, RUNLOG)**; `xgate` (2/0.5 hv TG of the harness biasgen) is the one used. The harness submodule `sg13cmos5l_ocd_ip__analog_switches` is pinned at `d210467` (same commit the copies were made from) |
 | schematics without layout | `en_ctrl_3v3`, `ls_up_1v2_3v3`, `hv_logic`, bias trees | no layout. Substitute: one new cell `tp_en_ctrl` (section 3) |
 
 ## 2. What goes on the slot
@@ -31,17 +31,21 @@ checked layout, and the core output `iout` (~5 uA, sourced) is itself the quanti
 references are stage B.
 
 ```
-                   vdd_3v3
-                     |
- dig_in[0] --+   +---------+   en_oa, en_oa_b   +-----------+  i_oa   +---------------------+
- dig_in[1] --+-->| tp_en_  |------------------->| oa_core_pd|-------->| TG0 analog_switch_  |--> analog_bus0
- enable    --+   | ctrl    |   en_bg, en_bg_b   +-----------+         | small, en dig_in[2] |
- vdd_1v2 (sense)-|         |------------------->| bg_core_pd|-------->| TG1 ..., en dig_in[3]|--> analog_bus1
-                 +---------+                    +-----------+  i_bg   +---------------------+
-                  |  |
-     dig_out[0] <-+  +-> dig_out[1]     (read-back of en_oa / en_bg on 1.2 V)
-     dig_out[11:2] tied to vss_1v2
+ dig_in[3:0] --+   +-----------+  en_oa, en_oa_b   +------------+  i_oa   +------------+
+ enable      --+-->| tp_en_ctrl|------------------>| oa_core_pd |-------->| TG0 xgate  |--> analog_bus0
+ vdd_1v2 (sense)-->| 4 fail-   |  en_bg, en_bg_b   +------------+         +------------+
+                   | safe      |------------------>| bg_core_pd |-------->| TG1 xgate  |--> analog_bus1
+                   | channels  |  en_tg0/_b, en_tg1/_b ------------------->  (gates)   |
+                   +-----------+                   +------------+  i_bg   +------------+
+                     |       |
+   dig_out[3:0] <----+       +----> dig_out[11:4]: hv NMOS tie-lows (gate vdd_1v2)
+   (read-back of the four enables on 1.2 V)
 ```
+
+**Changed in phase 2 (2026-11-06T14:05Z):** the bus switches were first the harness `analog_switch_small`, enabled by
+`dig_in[2]` / `dig_in[3]` directly. Its `antennanp` cell has a p-diode from `enable` to `dvdd`, so with the slot's
+`vdd_1v2` gated off and those bits high, the harness charged the floating `vdd_1v2` to 0.62 V, and at ff / fs 125 C the
+cores turned on (RUNLOG). Now the switches are bare `xgate` cells driven by two more channels of `tp_en_ctrl`.
 
 **Stage B (only if A is finished):** the bias trees behind the cores, a multiplexer of their bias voltages onto
 `analog_bus2`, and the harness `ibias0` / `ibias1` as a third reference (onto `analog_bus3` or into the tree).
@@ -68,9 +72,8 @@ RD: hv NMOS 0.3/20, gate vdd_3v3, vdd_1v2 -> vss    pulls a gated-off, floating 
 - Cost: ~1.3..2.4 uA from `vdd_3v3` per enabled channel; the cell has no state, so it is slow (tens of ns), which is
   irrelevant for static enables.
 - No standard cells, no 1.2 V supply needed for the enables themselves.
-- TG enables (`dig_in[2]`, `dig_in[3]`) go straight into `analog_switch_small`, whose own `inv_4` input stage and
-  `sw_lvl_shift` run on the slot's `vdd_1v2` / `vdd_3v3`. With `vdd_1v2` gated off a TG's state is undefined, but the
-  cores are then off by construction, so no reference current reaches the bus (to be shown in phase 2).
+- Four identical channels: OA core, BG core, TG0, TG1. The switches are fail-safe like the cores, and nothing on the
+  slot's 1.2 V side is driven from `dig_in` except hv NMOS gates.
 
 ## 4. Pin map
 
@@ -78,19 +81,19 @@ RD: hv NMOS 0.3/20, gate vdd_3v3, vdd_1v2 -> vss    pulls a gated-off, floating 
 |---|---|
 | `dig_in[0]` | OA core enable (AND `enable`, AND `vdd_1v2` present) |
 | `dig_in[1]` | BG core enable (same) |
-| `dig_in[2]` | TG0: OA `iout` -> `analog_bus0` |
-| `dig_in[3]` | TG1: BG `iout` -> `analog_bus1` |
+| `dig_in[2]` | TG0: OA `iout` -> `analog_bus0` (AND `enable`, AND `vdd_1v2` present) |
+| `dig_in[3]` | TG1: BG `iout` -> `analog_bus1` (same) |
 | `dig_in[23:4]` | unused, reserved (stage B, pad enables/selects) |
 | `enable` | global enable of both cores |
 | `clk`, `reset` | unused |
-| `dig_out[0]`, `dig_out[1]` | read-back: `en_oa`, `en_bg` (1.2 V); SPI reg 0x38 bits 0 / 1 |
-| `dig_out[11:2]` | tied to `vss_1v2` (defined level for the harness mux inputs) |
+| `dig_out[3:0]` | read-back of the four enables `en_oa`, `en_bg`, `en_tg0`, `en_tg1` (1.2 V); SPI reg 0x38 bits 3..0 |
+| `dig_out[11:4]` | held low by hv NMOS pull-downs (gate `vdd_1v2`): a defined level for the harness mux inputs, without shorting a port to a supply |
 | `analog_bus0` | OA output current |
 | `analog_bus1` | BG output current |
 | `analog_bus2`, `analog_bus3` | unused, reserved for stage B |
 | `ibias0`, `ibias1`, `vbias` | unused in stage A (stage B) |
-| `vdd_3v3`, `vss_3v3` | cores, `tp_en_ctrl`, TG signal path |
-| `vdd_1v2`, `vss_1v2` | TG input stages, read-back inverters, sensed by `tp_en_ctrl` |
+| `vdd_3v3`, `vss_3v3` | cores, `tp_en_ctrl`, TG bulks |
+| `vdd_1v2`, `vss_1v2` | read-back inverters and tie-lows; `vdd_1v2` is sensed by `tp_en_ctrl` |
 | `s7_an_*` (13) | custom-pad pins, labelled stubs exactly as in the current delivery (unconnected, `outp`/`vinp` and `outn`/`vinn` joined) |
 
 ## 5. Measurement procedure (SPI writes are register address = value)
@@ -111,21 +114,21 @@ Measuring I_OA:
 6. `0x22 = 0x0E` (`dig_in[2]` = 1, TG0 closed); `0x51 = 0x1F` (harness bus-0 switch closed).
 7. SMU on `analog[0]`: force V_F (default 0.7 V, about the gate voltage of the NMOS input diode the core normally
    drives; sweep 0..2 V for the compliance curve), measure I_leak (core still off).
-8. `0x20 = 0x0E` (`dig_in[0]` = 1, OA on). Read `0x38`: bit 0 = 1. Measure I_on. **I_OA = I_on - I_leak** (current
+8. `0x20 = 0x0E` (`dig_in[0]` = 1, OA on). Read `0x38`: bits 2 and 0 = 1. Measure I_on. **I_OA = I_on - I_leak** (current
    flows out of the pin into the SMU; sign by the SMU's convention).
 9. Fail-safe checks, each followed by restoring the state: `0x51 = 0x1B` (1.2 V gated off) -> I back to I_leak;
-   `0x51 = 0x1E` (`enable` = 0) -> I back to I_leak, read-back bit 0 = 0.
+   `0x51 = 0x1E` (`enable` = 0) -> I back to I_leak, read-back bits 2 and 0 = 0 (the TG opens too).
 10. `0x20 = 0x0D`, `0x22 = 0x0D`, `0x51 = 0x0F` (OA off, TG0 open, bus switch open).
 
 Measuring I_BG: steps 6..10 with `0x23` (`dig_in[3]`), `0x21` (`dig_in[1]`), `0x51` bit 5 (`0x2F` / `0x2B` / `0x2E`),
-`analog[1]`, read-back bit 1. Both at once: bits 4 and 5, two SMUs.
+`analog[1]`, read-back bits 3 and 1. Both at once: bits 4 and 5, two SMUs.
 
 Over temperature (-40 / 27 / 125 C): repeat 6..10 at each point; I_leak grows with temperature (17 other slots'
 open `analog_switch_med`, the pad's ESD diodes, TG0 / TG1), hence the subtraction at every point.
 
 Power-down: open the bus switches (`0x51` bits 7..4 = 0) and set the SMU to 0 V **before** gating off `vdd_3v3`. With
-`vdd_3v3` off and a voltage on the bus, the TG PMOS and the core's output PMOS drain conduct into the floating
-`vdd_3v3` (junction to the n-well); phase 2 quantifies this.
+`vdd_3v3` off and a voltage on the bus, the TG PMOS conducts into the floating `vdd_3v3` (p+ to n-well); phase 2:
+up to 87 nA at 0.7 V, `vdd_3v3` floats at 0.6..0.67 V (SUMMARY).
 
 ## 6. Floorplan (slot-local um; final numbers in the layout script)
 
@@ -136,7 +139,7 @@ Power-down: open the bus switches (`0x51` bits 7..4 = 0) and set the SMU to 0 V 
        | | oa_core_pd|  | bg_core_pd|  (M1/M2 only: M3/M4 may     | pads later                   |13 stubs
    ~150| +-----------+  +-----------+   cross them)               |                              |
        |TM1 vss_3v3 (113..143)                                    |                              |
-   ~110| [TG0] [TG1]  analog_switch_small x 2  <- analog_bus0/1  |                              |
+   ~110| [TG0] [TG1]  xgate x 2  <- analog_bus0/1                |                              |
    ~ 90| [ tp_en_ctrl ]  <- dig_in[3:0], enable (y 78..90)        |                              |
    ~ 70|  dig_out[11:0] (y 72..77) tie / read-back; TM1 vss_1v2   |                              |
        |TM1 vdd_1v2 (2..57)                                       |                              |

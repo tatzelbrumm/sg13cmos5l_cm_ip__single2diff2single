@@ -1,0 +1,5 @@
+testbenches/ngspice/results/netlists/
+testbenches/ngspice/results_layout/netlists/
+schematic/xschem/check_out/
+layout/scripts/__pycache__/
+testbenches/ngspice/__pycache__/

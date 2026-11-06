@@ -1,0 +1,86 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* slot7_testplatform: slot 7 as a stand-alone test platform for the two bias reference cores (stage A).
+* Written 2026-11-06 (cloud session, docs/slot7_testplatform/PLAN.md). Source netlist; the xschem sheets in
+* ../../schematic/xschem netlist to the same devices.
+*
+* Needs, at simulation time:
+*   ../../../bias_tree_pd/netlist/source/bias_ref_pd.spice           (oa_core_pd, bg_core_pd)
+*   ../../../ocd_analog_switches/netlist/source/ocd_analog_switches.spice  (xgate)
+*   cornerMOShv.lib, cornerMOSlv.lib, cornerRES.lib, cornerPNP.lib
+
+* tp_en_ctrl: fail-safe 3.3 V enables of the two cores and the two bus switches, read-back on 1.2 V, tie-lows.
+*   xb<k> = NOT( en<k>_1v2 AND enable AND vdd_1v2 )   ratioed: weak PMOS 0.3/20 against an hv NMOS stack
+*   en<k> = NOT xb<k>, en<k>_b = NOT en<k>            hv inverters 1/0.45 on vdd_3v3
+*   rb<k> = NOT xb<k> on vdd_1v2 / vss_1v2             read-back (dig_out[k])
+*   lo<k> : hv NMOS pull-down, gate vdd_1v2            dig_out[k], k = 4..11
+*   NRD   : pulls a floating (gated-off) vdd_1v2 low, gate vdd_3v3
+* All inputs (en<k>_1v2, enable, vdd_1v2) only drive hv NMOS gates: no path from them into any supply.
+.subckt tp_en_ctrl vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 en0_1v2 en1_1v2 en2_1v2 en3_1v2 enable
++ en0 en0_b en1 en1_b en2 en2_b en3 en3_b rb0 rb1 rb2 rb3 lo4 lo5 lo6 lo7 lo8 lo9 lo10 lo11
+* ratioed AND / level shift
+XPU0 xb0 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU1 xb1 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU2 xb2 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XPU3 xb3 vss_3v3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=0.3u l=20u ng=1
+XNI0 xb0 en0_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI1 xb1 en1_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI2 xb2 en2_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNI3 xb3 en3_1v2 ns1 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNE ns1 enable ns2 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+XNV ns2 vdd_1v2 vss_3v3 vss_3v3 sg13_hv_nmos w=2u l=0.45u ng=1
+* inverters on vdd_3v3
+XPA0 en0 xb0 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA0 en0 xb0 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB0 en0_b en0 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB0 en0_b en0 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA1 en1 xb1 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA1 en1 xb1 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB1 en1_b en1 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB1 en1_b en1 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA2 en2 xb2 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA2 en2 xb2 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB2 en2_b en2 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB2 en2_b en2 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPA3 en3 xb3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNA3 en3 xb3 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPB3 en3_b en3 vdd_3v3 vdd_3v3 sg13_hv_pmos w=1u l=0.45u ng=1
+XNB3 en3_b en3 vss_3v3 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+* read-back on the 1.2 V rail (hv devices: the gate sees 3.3 V)
+XPR0 rb0 xb0 vdd_1v2 vdd_1v2 sg13_hv_pmos w=1u l=0.45u ng=1
+XNR0 rb0 xb0 vss_1v2 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPR1 rb1 xb1 vdd_1v2 vdd_1v2 sg13_hv_pmos w=1u l=0.45u ng=1
+XNR1 rb1 xb1 vss_1v2 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPR2 rb2 xb2 vdd_1v2 vdd_1v2 sg13_hv_pmos w=1u l=0.45u ng=1
+XNR2 rb2 xb2 vss_1v2 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+XPR3 rb3 xb3 vdd_1v2 vdd_1v2 sg13_hv_pmos w=1u l=0.45u ng=1
+XNR3 rb3 xb3 vss_1v2 vss_3v3 sg13_hv_nmos w=1u l=0.45u ng=1
+* floating vdd_1v2 pull-down
+XNRD vdd_1v2 vdd_3v3 vss_3v3 vss_3v3 sg13_hv_nmos w=0.3u l=20u ng=1
+* tie-lows of dig_out[11:4]
+XNL4 lo4 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL5 lo5 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL6 lo6 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL7 lo7 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL8 lo8 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL9 lo9 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL10 lo10 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+XNL11 lo11 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1
+.ends tp_en_ctrl
+
+* slot7_testplatform: stage A. Ports = the slot pins it uses.
+* Bus switches: xgate (bare hv transmission gate of the harness biasgen) driven by tp_en_ctrl, so they are fail-safe
+* like the cores. (2026-11-06: analog_switch_small was dropped: its antennanp diode charges a gated-off vdd_1v2 from
+* dig_in, which turned the cores on at ff/fs 125 C; see docs/slot7_testplatform/RUNLOG.md.)
+.subckt slot7_testplatform vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 enable dig_in[0] dig_in[1] dig_in[2] dig_in[3]
++ dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6] dig_out[7] dig_out[8]
++ dig_out[9] dig_out[10] dig_out[11] analog_bus0 analog_bus1
+xctl vdd_3v3 vss_3v3 vdd_1v2 vss_1v2 dig_in[0] dig_in[1] dig_in[2] dig_in[3] enable en_oa en_oa_b en_bg en_bg_b
++ en_tg0 en_tg0_b en_tg1 en_tg1_b dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6]
++ dig_out[7] dig_out[8] dig_out[9] dig_out[10] dig_out[11] tp_en_ctrl
+xoa vdd_3v3 vss_3v3 i_oa en_oa en_oa_b oa_core_pd
+xbg vdd_3v3 vss_3v3 i_bg en_bg en_bg_b bg_core_pd
+* xgate: ena_b vdd in out vss ena
+xtg0 en_tg0_b vdd_3v3 i_oa analog_bus0 vss_3v3 en_tg0 xgate
+xtg1 en_tg1_b vdd_3v3 i_bg analog_bus1 vss_3v3 en_tg1 xgate
+.ends slot7_testplatform
