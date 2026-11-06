@@ -10,7 +10,7 @@
 # Run on the schematic only (-s schematic); mismatch is vacuous on extracted netlists.
 
 name:           vcm_rb
-description:    Replica bias for the pads' internal common mode (S2D vcm = D2S vref), centre of the linear band
+description:    "Replica bias for the pads' internal common mode (S2D vcm = D2S vref), centre of the linear band"
 PDK:            ihp-sg13cmos5l
 
 cace_format:    5.2
@@ -103,7 +103,7 @@ parameters:
   dc_params:
     spec:
       Vcm:
-        display: Output, iovdd 3.3 / 3.6 V
+        display: "Output, iovdd 3.3 / 3.6 V"
         unit: V
         minimum:
           value: 1.031
@@ -112,7 +112,7 @@ parameters:
         maximum:
           value: 1.53
       Ib:
-        display: Block supply current (without the reference)
+        display: "Block supply current (without the reference)"
         unit: uA
         minimum:
           value: any
@@ -136,7 +136,7 @@ parameters:
   dc_3v0_params:
     spec:
       Vcm:
-        display: Output, iovdd 3.0 V
+        display: "Output, iovdd 3.0 V"
         unit: V
         minimum:
           value: 1.031
@@ -145,7 +145,7 @@ parameters:
         maximum:
           value: 1.262
       Ib:
-        display: Block supply current (without the reference)
+        display: "Block supply current (without the reference)"
         unit: uA
         minimum:
           value: any
@@ -169,7 +169,7 @@ parameters:
   sel_params:
     spec:
       Vcm:
-        display: Output, OA core / bandgap core, 3.0 V
+        display: "Output, OA core / bandgap core, 3.0 V"
         unit: V
         minimum:
           value: 1.031
@@ -178,7 +178,7 @@ parameters:
         maximum:
           value: 1.244
       Ib:
-        display: Block supply current (without the reference)
+        display: "Block supply current (without the reference)"
         unit: uA
         minimum:
           value: any
@@ -204,7 +204,7 @@ parameters:
   pd_params:
     spec:
       Vcm:
-        display: Output, disabled
+        display: "Output, disabled"
         unit: V
         minimum:
           value: any
@@ -213,7 +213,7 @@ parameters:
         maximum:
           value: 0.001
       Ib:
-        display: Block supply current, disabled
+        display: "Block supply current, disabled"
         unit: uA
         minimum:
           value: any
@@ -239,7 +239,7 @@ parameters:
   mm_params:
     spec:
       Vcm:
-        display: Output - Mismatch (tt 27 C 3.3 V)
+        display: "Output - Mismatch (tt 27 C 3.3 V)"
         unit: V
         minimum:
           value: 1.2
@@ -248,7 +248,7 @@ parameters:
         maximum:
           value: 1.32
       Ib:
-        display: Block supply current - Mismatch
+        display: "Block supply current - Mismatch"
         unit: uA
         minimum:
           value: any

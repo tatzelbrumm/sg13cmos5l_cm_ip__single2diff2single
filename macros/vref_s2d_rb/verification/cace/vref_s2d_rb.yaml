@@ -10,7 +10,7 @@
 # Run on the schematic only (-s schematic); mismatch is vacuous on extracted netlists.
 
 name:           vref_s2d_rb
-description:    Replica bias for the s2d pad reference: about 0.5 V at 27 C, above the input window's edge when hot
+description:    "Replica bias for the s2d pad reference: about 0.5 V at 27 C, above the input window's edge when hot"
 PDK:            ihp-sg13cmos5l
 
 cace_format:    5.2
@@ -103,7 +103,7 @@ parameters:
   room_params:
     spec:
       Vref:
-        display: Output at 27 C (pad range from 0 V)
+        display: "Output at 27 C (pad range from 0 V)"
         unit: V
         minimum:
           value: 0.47
@@ -112,7 +112,7 @@ parameters:
         maximum:
           value: 0.51
       Ib:
-        display: Block supply current (without the reference)
+        display: "Block supply current (without the reference)"
         unit: uA
         minimum:
           value: any
@@ -136,7 +136,7 @@ parameters:
   hot_params:
     spec:
       Vref:
-        display: Output at 125 C (above the S2D input INL edge, <= 0.542 V)
+        display: "Output at 125 C (above the S2D input INL edge, <= 0.542 V)"
         unit: V
         minimum:
           value: 0.55
@@ -145,7 +145,7 @@ parameters:
         maximum:
           value: 0.7
       Ib:
-        display: Block supply current (without the reference)
+        display: "Block supply current (without the reference)"
         unit: uA
         minimum:
           value: any
@@ -169,7 +169,7 @@ parameters:
   cold_params:
     spec:
       Vref:
-        display: Output at -40 C (pad range from 0 V)
+        display: "Output at -40 C (pad range from 0 V)"
         unit: V
         minimum:
           value: 0.35
@@ -178,7 +178,7 @@ parameters:
         maximum:
           value: 0.5
       Ib:
-        display: Block supply current (without the reference)
+        display: "Block supply current (without the reference)"
         unit: uA
         minimum:
           value: any
@@ -202,7 +202,7 @@ parameters:
   pd_params:
     spec:
       Vref:
-        display: Output, disabled
+        display: "Output, disabled"
         unit: V
         minimum:
           value: any
@@ -211,7 +211,7 @@ parameters:
         maximum:
           value: 0.001
       Ib:
-        display: Block supply current, disabled
+        display: "Block supply current, disabled"
         unit: uA
         minimum:
           value: any
@@ -237,7 +237,7 @@ parameters:
   mm_params:
     spec:
       Vref:
-        display: Output - Mismatch (tt 27 C 3.3 V)
+        display: "Output - Mismatch (tt 27 C 3.3 V)"
         unit: V
         minimum:
           value: 0.47
@@ -246,7 +246,7 @@ parameters:
         maximum:
           value: 0.52
       Ib:
-        display: Block supply current - Mismatch
+        display: "Block supply current - Mismatch"
         unit: uA
         minimum:
           value: any

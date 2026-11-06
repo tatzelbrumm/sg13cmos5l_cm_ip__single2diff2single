@@ -88,7 +88,7 @@ def yaml_text(block, out, desc, groups):
 # Run on the schematic only (-s schematic); mismatch is vacuous on extracted netlists.
 
 name:           {block}
-description:    {desc}
+description:    "{desc}"
 PDK:            ihp-sg13cmos5l
 
 cace_format:    5.2
@@ -181,7 +181,7 @@ parameters:
     for g in groups:
         y.append(f"  {g['name']}:\n    spec:")
         for var, (disp, unit, lo, hi) in g["spec"].items():
-            y.append(f"      {var}:\n        display: {disp}")
+            y.append(f"      {var}:\n        display: \"{disp}\"")
             if unit:
                 y.append(f"        unit: {unit}")
             y.append(f"        minimum:\n          value: {lo}\n        typical:\n          value: any\n"

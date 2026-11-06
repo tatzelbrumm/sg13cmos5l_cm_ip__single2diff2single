@@ -1,0 +1,30 @@
+# cl_s2d_win: S2D pad swept with the block's vref; data files for the window (post-processing)
+# 27 runs, 154 s wall with -j 2, 2026-11-06T19:05:26Z; SI units
+vdd	corner_mos	temp	sel	tag	vref_dc	done	conv
+3.0	ss	-40	0	3.0_ss_-40	0.453236	done	ok
+3.0	ss	27	0	3.0_ss_27	0.501674	done	ok
+3.0	ss	125	0	3.0_ss_125	0.594137	done	ok
+3.0	tt	-40	0	3.0_tt_-40	0.444891	done	ok
+3.0	tt	27	0	3.0_tt_27	0.492593	done	ok
+3.0	tt	125	0	3.0_tt_125	0.583506	done	ok
+3.0	ff	-40	0	3.0_ff_-40	0.436313	done	ok
+3.0	ff	27	0	3.0_ff_27	0.483214	done	ok
+3.0	ff	125	0	3.0_ff_125	0.572437	done	ok
+3.3	ss	-40	0	3.3_ss_-40	0.45432	done	ok
+3.3	ss	27	0	3.3_ss_27	0.502775	done	ok
+3.3	ss	125	0	3.3_ss_125	0.595284	done	ok
+3.3	tt	-40	0	3.3_tt_-40	0.445955	done	ok
+3.3	tt	27	0	3.3_tt_27	0.493672	done	ok
+3.3	tt	125	0	3.3_tt_125	0.584626	done	ok
+3.3	ff	-40	0	3.3_ff_-40	0.43736	done	ok
+3.3	ff	27	0	3.3_ff_27	0.484273	done	ok
+3.3	ff	125	0	3.3_ff_125	0.573537	done	ok
+3.6	ss	-40	0	3.6_ss_-40	0.455347	done	ok
+3.6	ss	27	0	3.6_ss_27	0.503813	done	ok
+3.6	ss	125	0	3.6_ss_125	0.596357	done	ok
+3.6	tt	-40	0	3.6_tt_-40	0.446978	done	ok
+3.6	tt	27	0	3.6_tt_27	0.494704	done	ok
+3.6	tt	125	0	3.6_tt_125	0.585691	done	ok
+3.6	ff	-40	0	3.6_ff_-40	0.438384	done	ok
+3.6	ff	27	0	3.6_ff_27	0.485304	done	ok
+3.6	ff	125	0	3.6_ff_125	0.574607	done	ok

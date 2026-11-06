@@ -122,7 +122,8 @@ echo RES $&t_vcm $&t_vref $&vc_end $&vr_end $&vc_max $&vr_max $&vc_off $&vr_off 
 
 
 def deck_rb_up(c):
-    """iovdd (and the blocks' supplies) ramp 0 -> vdd in 10 us; core 1.2 V and enable present from t = 0."""
+    """iovdd (and the blocks' supplies) ramp 0 -> vdd in 10 us; core 1.2 V and enable present from t = 0; every node
+    starts at 0 V (uic: the operating point with iovdd = 0 does not converge at ss / -40 C, in the bandgap core's PNP)."""
     d = deck_rb_dc(c)
     d = d.replace(f"Vio iovdd 0 dc {c['vdd']}", f"Vio iovdd 0 pwl(0 0 10u {c['vdd']})")
     d = d.replace(f"Vbc vddc 0 dc {c['vdd']}", "Ebc vddc 0 iovdd 0 1").replace(f"Vbr vddr 0 dc {c['vdd']}",
@@ -130,7 +131,7 @@ def deck_rb_up(c):
     d = d.replace("Vs33b s33b 0 3.3", "Es33b s33b 0 iovdd 0 1")
     ctrl = d[d.index(".control"):]
     d = d.replace(ctrl, """.control
-tran 20n 80u
+tran 20n 80u uic
 meas tran vc_end find v(vcm) at=79.9u
 meas tran vr_end find v(vref) at=79.9u
 let ec = abs(v(vcm) - vc_end)
@@ -164,18 +165,26 @@ def deck_s2d_dc_rb(c):
 
 
 def deck_s2d_win_rb(c):
-    """pad swept 0 ... vref + 1 V around the block's vref; output vd(pad) to a file for the window (linear to 1 mV)."""
+    """pad = a GROUND-referenced source swept 0 ... vref + 1 V (vref = the block's DC value, rb_dc), as an external
+    signal would be; the S2D sees pad - vref(block). Output vd(pad) to a file for the window (linear to 1 mV)."""
     d = deck_s2d_dc_rb(c)
+    d = d.replace("Ein vsrc vref u 0 1", f"Vrefx vrefx 0 {c['vref_dc']}\nEin vsrc vrefx u 0 1")
     ctrl = d[d.index(".control"):]
     return d.replace(ctrl, f""".control
 save v(outp) v(outn) v(u) v(vref) v(pad)
-dc Vu -1.0 1.0 0.005
+dc Vu -{c['vref_dc']} 1.0 0.005
 let vd = v(outp) - v(outn)
 wrdata {R.RUNS}/win_{c['tag']}.dat v(pad) vd v(vref)
 echo RES done
 .endc
 .end
 """)
+
+
+def win_conds():
+    v = rb_values()
+    for vdd, m, t in itertools.product(R.VDDS, ["ss", "tt", "ff"], R.TEMPS):
+        yield dict(vdd=vdd, corner_mos=m, temp=t, sel=0, tag=f"{vdd}_{m}_{t}", vref_dc=v[(str(vdd), m, str(t), "0")][0])
 
 
 def deck_d2s_dc_rb(c):
@@ -201,13 +210,16 @@ def deck_loop_rb(c):
 
 
 def deck_s2d_en_rb(c):
+    """S2D enable (en_1v2 at 1 us, u = +0.25 V) with vref / vcm from the blocks; seq 'before': blocks on from t = 0,
+    'together': the blocks' en_1v2 switches with the pad's."""
     d = R.deck_s2d_en_z(dict(c, vref=0, vcm=0, rs=1e-3, cb=0))
     d = d.replace(R.includes(R.S2D_INC), R.includes(R.S2D_INC, RB_INC))
     for s in ("Vref vref 0 dc 0\n", "Vcm vcm 0 0\n", "Rvref vref vrefi 0.001\n", "Rvcm vcm vcmi 0.001\n"):
         d = d.replace(s, "")
     d = d.replace("vcmi vrefi iref", "vcm vref iref").replace("Ein vsrc vref u 0 1", "Ein vsrc vrefx u 0 1")
     # the input source is referenced to the block's settled vref (sampled by an ideal source at its DC value)
-    d = d.replace("Rsrc vsrc pad 50", f"Vrefx vrefx 0 {c['vref_dc']}\nRsrc vsrc pad 50\n" + blocks(c))
+    cb = dict(c, en="pwl(0 0 1u 0 1.001u 1.2)") if c.get("seq") == "together" else c
+    d = d.replace("Rsrc vsrc pad 50", f"Vrefx vrefx 0 {c['vref_dc']}\nRsrc vsrc pad 50\n" + blocks(cb))
     d = d.replace("v(vcmi)", "v(vcm)").replace("v(vrefi)", "v(vref)")
     # pin deviations relative to the blocks' own settled values
     d = d.replace("let ec = v(vcm) - v(vcm)", f"let ec = v(vcm) - {c['vcm_dc']}")
@@ -221,6 +233,13 @@ def rb_values():
     import csv as _csv
     return {(r["vdd"], r["corner_mos"], r["temp"], r["sel"]): (float(r["vref"]), float(r["vcm"]))
             for r in _csv.DictReader(rows, delimiter="\t")}
+
+
+def en_conds():
+    v = rb_values()
+    for vdd, m, seq in itertools.product([3.0, 3.3], ["ss", "tt", "ff"], ["before", "together"]):
+        vr, vc = v[(str(vdd), m, "27", "0")]
+        yield dict(vdd=vdd, corner_mos=m, temp=27, sel=0, seq=seq, vref_dc=vr, vcm_dc=vc)
 
 
 def loop_eq_conds():
@@ -264,10 +283,11 @@ EXP = {
     "cl_loop_eq": dict(what="round trip S2D pad -> D2S pad, vref_s2d / vcm = the blocks' DC outputs (rb_dc, sel 0) as "
                        "ideal sources (exact at DC; the deck with the blocks inside does not converge)", kind="dc",
                        deck=R.deck_loop, cols=R.LOOP_COLS, conds=loop_eq_conds),
+    "cl_s2d_en": dict(what="S2D enable with the blocks (blocks on before / enabled together); pin deviations from the "
+                           "blocks' settled values", kind="dc", deck=deck_s2d_en_rb,
+                      cols=["t_on", "Vc_max", "Vc_min", "dvcm_max", "dvcm_min", "dvref", "vd_end"], conds=en_conds),
     "cl_s2d_win": dict(what="S2D pad swept with the block's vref; data files for the window (post-processing)",
-                       kind="dc", deck=deck_s2d_win_rb, cols=["done"],
-                       conds=lambda: (dict(vdd=v, corner_mos=m, temp=t, sel=0, tag=f"{v}_{m}_{t}")
-                                      for v, m, t in itertools.product(R.VDDS, ["ss", "tt", "ff"], R.TEMPS))),
+                       kind="dc", deck=deck_s2d_win_rb, cols=["done"], conds=win_conds),
 }
 
 if __name__ == "__main__":
@@ -275,6 +295,8 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("experiments", nargs="+")
     ap.add_argument("-j", type=int, default=4)
+    ap.add_argument("--rerun-failed", action="store_true")
     a = ap.parse_args()
-    bad = sum(R.experiment(e, a.j) for e in a.experiments)
+    f = R.rerun_failed if a.rerun_failed else R.experiment
+    bad = sum(f(e, a.j) for e in a.experiments)
     sys.exit(1 if bad else 0)
