@@ -21,12 +21,13 @@ Use only primitives that already exist in this repository: the device instances 
 
 ## Hard rules
 
-1. Design repository: the user has created two branches for this task. Work and push only on them:
-   **`claude/c4-replica-bias`** (from `toplevel`) for the design, and **`claude/c4-replica-bias-sudel`** (from the
-   orphan branch `sudel_buecher`) for notes, logs and the chat log, checked out in a separate worktree
-   (`git worktree add ../sg13cmos5l_cm_ip__single2diff2single_sudelbuecher claude/c4-replica-bias-sudel`; never switch
-   the main checkout to it: an orphan branch empties the working tree). If either branch is missing, stop and tell the
-   user. Never push to `main`, `toplevel`, `sudel_buecher`, `harness-test` or any other branch.
+1. Design repository: create these two branches yourself, push them, and work and push only on them:
+   **`claude/c4-replica-bias`** from `origin/toplevel` for the design, and **`claude/c4-replica-bias-sudel`** from
+   `origin/sudel_buecher` (an orphan branch) for notes, logs and the chat log, checked out in a separate worktree
+   (`git worktree add -b claude/c4-replica-bias-sudel ../sg13cmos5l_cm_ip__single2diff2single_sudelbuecher origin/sudel_buecher`;
+   never switch the main checkout to it: an orphan branch empties the working tree). If a branch of that name already
+   exists on the remote, stop and tell the user. Never push to `main`, `toplevel`, `sudel_buecher`, `harness-test` or
+   any other branch.
 2. Do not touch `tatzelbrumm/sg13cmos5l_cm_slot7` or `tatzelbrumm/sg13cmos5l_ocd_chipalooza`. Migration of the result
    into the delivery repository is a later task: only write down what would move there.
 3. Do not change the pad cells' layouts or their existing macros; new work goes into NEW macros under `macros/`

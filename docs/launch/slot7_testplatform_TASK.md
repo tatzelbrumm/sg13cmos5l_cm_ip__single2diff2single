@@ -23,15 +23,16 @@ Two stages; finish A before starting B:
 
 ## Hard rules
 
-The user has created the branches for this task. Work and push only on them; if one is missing, stop and tell the
-user.
-1. Design repository: **`claude/c5-slot7-testplatform`** (from `toplevel`) for the design, and
-   **`claude/c5-slot7-testplatform-sudel`** (from the orphan branch `sudel_buecher`) for notes, logs and the chat log,
-   checked out in a separate worktree (never switch the main checkout to it: an orphan branch empties the working tree).
-2. Delivery repository `tatzelbrumm/sg13cmos5l_cm_slot7`: **`claude/c5-testplatform`** (from `main`), with the new
+Create these branches yourself from the named starting points, push them, and work and push only on them. If a
+branch of that name already exists on the remote, stop and tell the user.
+1. Design repository: **`claude/c5-slot7-testplatform`** from `origin/toplevel` for the design, and
+   **`claude/c5-slot7-testplatform-sudel`** from `origin/sudel_buecher` (an orphan branch) for notes, logs and the chat
+   log, checked out in a separate worktree (`git worktree add -b claude/c5-slot7-testplatform-sudel ../sg13cmos5l_cm_ip__single2diff2single_sudelbuecher origin/sudel_buecher`;
+   never switch the main checkout to it: an orphan branch empties the working tree).
+2. Delivery repository `tatzelbrumm/sg13cmos5l_cm_slot7`: **`claude/c5-testplatform`** from `origin/main`, with the new
    `final/gds/slot_7.gds` and its views. Never push to `main`: the user decides the merge.
 3. Harness fork `tatzelbrumm/sg13cmos5l_ocd_chipalooza`: only for verification, on **`claude/c5-testplatform-test`**
-   (from `custom-pad-test`). Nothing in `RTimothyEdwards/*`.
+   from `origin/custom-pad-test`. Nothing in `RTimothyEdwards/*`.
 Never push to any other branch (`main`, `toplevel`, `sudel_buecher`, `harness-test`, `custom-pad-test`, ...).
 4. Environment: `export PDK_ROOT=/foss/pdks; source .designinit` in the design repo before any `make`; in the harness,
    `export PDK_ROOT=/foss/pdks PDK=ihp-sg13cmos5l` and, for magic 8.3.685, the PATH shim
