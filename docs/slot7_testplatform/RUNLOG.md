@@ -297,3 +297,30 @@ Scratch work directory of the container: `/home/user/work` (not committed; logs 
   the pre-fill GDS vs the delivered GDS: empty; `netcheck_slot7_platform.py ... 1100 2160 2100 2445 --stage b`: "all 49 used
   pins and 14 unused pins OK". Harness commit c40c99b, pushed. Details: the fork's `docs/custom_pads/RUNLOG.md`.
 - `custom-pad-test` and the delivery `main` are not moved (the user decides).
+
+## After stage B (2026-11-06T19:10Z .. 23:55Z): schematic agent, branch organization
+
+- Schematic agent (worktree `/home/user/s2d2s_c5_schematics`, branch `claude/c5-slot7-schematics` from toplevel 68727a71):
+  finished-style redraws of the stage-A sheets in `macros/slot7_testplatform/schematic/xschem_drawn/` (tp_en_ctrl: one
+  row per channel; top: signal flow left to right), `check_drawn.py`; commit 850dae8f. Re-checked here
+  (`PDK_ROOT=/foss/pdks PDK=ihp-sg13cmos5l python3 check_drawn.py`): tp_en_ctrl 43 / 43, slot7_testplatform 5 / 5
+  devices, 0 differences, drawing lint 0, `RESULT: MATCH`; `--selftest`: PASS (changed label and missing symbols
+  detected). Nothing outside `xschem_drawn/` changed. The drawn `tp_en_ctrl.sym` keeps pin order and names but moves
+  the pins (a sheet using the draft symbol must be rewired to use it).
+- The user's question why the harness fork changed: the original task file's phase 4 required the harness verification
+  on the fork branch `claude/c5-testplatform-test`; for stage B it was repeated on my own judgment (not asked for).
+  Changes in the fork: only that branch and the marker branch `claude/slot7-stage-a`.
+- Tim updated `RTimothyEdwards/sg13cmos5l_ocd_chipalooza` `main` (e7d72da, 2 commits: user custom pad handling,
+  `scripts/setup_custom.sh`). Read-only check here: the fork's `main` (e0445b6) is not an ancestor (5 commits of the
+  fork's own); a test merge into custom-pad-test (throwaway worktree, aborted, nothing pushed) gives one conflict, in
+  `scripts/layout_setup.tcl`, the comment line above `addpath custom_io` only. The user merged Tim's `main` into the
+  fork's `main` himself (3d9baf5) and fast-forwarded his `custom-pad-test` to `claude/c5-testplatform-test`.
+  Note for later: Tim's `setup_custom.sh` and the fork's `setup_custom_io.sh` both write `magic/custom_io`; and
+  `claude/c6-submodule-pads` covers what Tim's new commits do.
+- Design repo, merged by the user: `toplevel` 312150b5 = stage B (fast-forward) + `claude/c5-slot7-schematics`;
+  `sudel_buecher` 88b3fc82 = `claude/c5-slot7-testplatform-sudel`. Checked here: the schematics merge adds only the 8
+  `xschem_drawn` files. Not merged yet: `claude/c4-replica-bias` (5 commits; `git merge-tree` against toplevel: clean)
+  and `claude/c4-replica-bias-sudel` (1 commit; one conflict in `sudelbuecher/chatlog/README.md`, two index lines,
+  keep both).
+- Delivery `main` and the fork's `custom-pad-test` with stage B: the user decides (delivery `claude/c5-testplatform`
+  681c8dd is 2 commits ahead of `main`, fast-forward).
