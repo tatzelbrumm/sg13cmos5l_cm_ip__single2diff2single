@@ -44,3 +44,20 @@ Cloud session, 2026-11-06. Design checkout `/home/user/sg13cmos5l_cm_ip__single2
 | 16 | 13:59 | both checkouts | `git add …; git commit; git push -u origin claude/c4-replica-bias`, `… claude/c4-replica-bias-sudel` | see git | — | Phase 1 committed and pushed |
 
 No simulation was run in Phase 1. Phase 1 ends with the question to the user (task file: "Then STOP and ask the user").
+
+## Phase 2: design and simulation (scope: user's answer 1a, 2A, 3 all)
+
+User's answer (2026-11-06 ~17:25 UTC): **1a** S2D `vref` = 0.5 V from its own block `vref_s2d_rb`; **2A** `vcm` tracks the
+band centre (block `vcm_rb`, shared by S2D `vcm` and D2S `vref`); **3** all gap runs G1–G11.
+Environment for every command below: `export PDK_ROOT=/foss/pdks; source .designinit` in the repo root (sets PDK,
+SPICE_USERINIT_DIR = the PDK's ngspice dir, so decks run anywhere). Pad macros are not changed: gap runs use new decks on
+the pads' source netlists, or temporary yaml copies whose runs are deleted (results copied into the new macros).
+
+| # | time | cwd | command | exit | log / output | what changed |
+|---|---|---|---|---|---|---|
+| 17 | 17:30 | `macros/<pad>/verification/cace` | G11 smoke test: xschem library-path export as the pad Makefile, then `cace sg13cmos5l_IOPadSingle2Diff.yaml -s schematic -p window_params -j 4` and `cace sg13cmos5l_IOPadDiff2Single.yaml -s schematic -p dc_ibias_params -j 4`; `scripts/cace/cace_to_csv.py` into the scratchpad; `rm -rf _runs _docs netlist .xschem_library_path` | 0 / 0 | S2D 27 runs 30 s, D2S 3 runs 4 s | none committed. S2D identical to the committed 2026-11-05 CSV (27 / 27); D2S moved against 2026-10-20 as the design did (I_Q per device 212.4 → 222.9 µA, Iio 298.7 → 308.4 µA, INL 1.356 → 1.376 mV): CACE 2.11.0 works with both yamls |
+| 18 | 17:33 | `macros/vcm_rb/testbenches/pad_char` | new `run_pad_char.py` (decks on the pads' source netlists, template measurement code verbatim); `python3 -I run_pad_char.py val_s2d val_d2s -j 4` | 0 | `results/val_*.tsv` | validation: S2D 13.599 / 5.499 / 32.43 mV against CACE `range_params` 13.60 / 5.50 / 32.43; D2S identical to row 17 |
+| 19 | 17:33–18:03 | same | `python3 -I run_pad_char.py g3_s2d_vcm g4_s2d_vref g1_d2s_vref g2_d2s_vicm g10_s2d_sel g10_d2s_sel g5_s2d_op g5_d2s_op g9_loop -j 4` (background) | 0 | notes branch `logs/replica-bias/phase2_pad_char_dc.log`; `results/*.tsv` | 2104 runs; 3 without result (op failure at tt / −40 °C / 3.3 V in the disabled bandgap core's floating rhigh chain) |
+| 20 | 17:57–18:00 | same | driver: retry with `.options rshunt=1e12` when a run has no complete result; `python3 -I run_pad_char.py g3_s2d_vcm g4_s2d_vref --rerun-failed -j 3` (twice: the first pass missed a short line) | 0 | `results/g3_s2d_vcm.tsv`, `g4_s2d_vref.tsv` (column `conv`) | 3 runs completed with rshunt; no run without result left |
+| 21 | 17:38–17:52 | repo root | `python3 -I macros/vref_s2d_rb/testbenches/spice/explore_ztc.py`; `python3 -I macros/vcm_rb/testbenches/spice/explore_edges.py 0.95 0.9 0.8` / `0.8 0.7 0.6` / `0.8 0.7` | 0 | `macros/vcm_rb/testbenches/spice/results/explore_edges{,_b,_c}.tsv` | exploration (zero-TC currents of the pads' diode sizes; edge-detector replicas on a copy of the pad bias); first run of explore_edges had a node-name clash (`s0` = the harness sel0 line), fixed (`ts<k>`) and rerun |
+| 22 | 18:04 | `macros/vcm_rb/testbenches/pad_char` | `OMP_NUM_THREADS=1 python3 -I -u run_pad_char.py g6_s2d_ac g6_d2s_ac g6_s2d_tran g6_d2s_tran g6_s2d_en -j 4` (background) | running | notes branch `logs/replica-bias/phase2_pad_char_g6.log` | G6 |

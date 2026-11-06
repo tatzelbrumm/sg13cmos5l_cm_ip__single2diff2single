@@ -1,0 +1,4 @@
+# val_d2s: D2S DC deck against the CACE-2.11 dc_ibias point (tt 27 C 3.3 V, vref = vicm = vterm = 1.65)
+# 1 runs, 2 s wall with -j 4, 2026-11-06T17:33:13Z; SI units
+vdd	vref	vicm	vterm	corner_mos	temp	Gain	Vos_out	INL	Iio	IqP	Imin
+3.3	1.65	1.65	1.65	tt	27	0.499949	5.15215E-05	0.00137586	0.00030842	0.000222889	0.000111023
