@@ -1,0 +1,62 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* vcm_rb: replica bias for the internal common mode of the custom pads: S2D vcm = D2S vref (= D2S input common mode).
+* Task docs/launch/replica_bias_TASK.md (branch harness-test); targets and evidence docs/replica_bias/SURVEY.md, design
+* notes on the notes branch (sudelbuecher/design_considerations/replica_bias/).
+*
+* vcm sits at the centre of the band in which both pads stay linear (INL <= 2 mV with +-0.5 V on the unit gates):
+*   top    edge = the gate voltage at which a unit_r2 tail (hv PMOS 5u/6u at vbp, 5 uA) leaves saturation as the input
+*                 follower (hv PMOS 20u/1u ng=2) raises its source;
+*   bottom edge = the output voltage at which the S2D fold cascode CX / CY (hv NMOS 30u/3u at vbnc) leaves saturation
+*                 above the fold node x.
+* Replicas, each from the block's own lines (made from one 5 uA reference current, as bias_tree_pd does):
+*   gh = top-edge detector: TR (5u/6u at vbp) -> MR (20u/1u ng=2, diode) -> sink SH (2 x 2.4u/6u = 4 uA, r = 0.8)
+*        gh = top gate limit + 0.157 V (+-18 mV over corners, -40..125 C, iovdd 3.0..3.6 V, run explore_edges.py)
+*   xp = fold-node replica: one finger of CY (15u/3u at vbnc) at 5 uA on SY (6u/6u)
+*        bottom edge = xp + 0.559 V (+-34 mV)
+*   m  = average of gh and xp by three identical hv PMOS diodes 1u/4u in their own wells, one above m, two in parallel
+*        below (the asymmetry subtracts the 0.06 V offset of (gh + xp)/2 against the centre; explore_vcm_rb.py, G)
+*   vcm = m, buffered by a 5-transistor OTA in unity gain: PMOS pair = the unit's input device (20u/1u ng=2) on a
+*        unit tail (5u/6u at vbp, 5 uA), NMOS mirror 6u/6u; output pole at vcm with CB (12u x 12u hv NMOS capacitor
+*        as the s2d buffer's CLP).
+* Lines: NI (6u/6u NMOS diode, the reference), BP (2u/6u PMOS diode at 2 uA from NBP 2.4u/6u = BP's density in the
+*        tree), BNC (1u/8u NMOS diode at 2 uA from PBNC 2u/6u, as in the tree).
+* Supply current (tt 27 C): 5 uA reference + 2 (BP) + 2 (BNC) + 5 (TR) + 5 (CY) + 5 (OTA) = about 24 uA.
+* Ports: vdd vss iref vcm en_3v3 en_3v3_b (as oa_core_pd: en_3v3_b from en_ctrl_3v3). iref: 5 uA SOURCED into the
+* block (bias_gen_pd's iref, a bias_dist_pd output, or a core's iout).
+* Disabled (en_3v3 = 0): TGN / TGP open the reference, TDN pulls ni to vss (every NMOS off; BP pulls vbp to vdd, every
+* PMOS off), SPD pulls vcm to vss. The s2d pad ties its outputs to vcm while it is off; whoever disables this block
+* must disable every pad that uses vcm with it (vcm is the next stage's common mode while only the s2d pad is off).
+.subckt vcm_rb vdd vss iref vcm en_3v3 en_3v3_b
+* --- reference input (as bias_tree_pd)
+XTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1 mm_ok=1
+XTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1 mm_ok=1
+XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 mm_ok=1
+XNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 mm_ok=1
+* --- lines
+XNBP vbp ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 mm_ok=1
+XBP vbp vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 mm_ok=1
+XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 mm_ok=1
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 mm_ok=1
+* --- top-edge detector
+XTR ts vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 mm_ok=1
+XMR gh gh ts ts sg13_hv_pmos w=20u l=1u ng=2 mm_ok=1
+XSH1 gh ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 mm_ok=1
+XSH2 gh ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 mm_ok=1
+* --- fold-node replica
+XCY vdd vbnc xp vss sg13_hv_nmos w=15u l=3u ng=1 mm_ok=1
+XSY xp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 mm_ok=1
+* --- average: gh -> m -> xp, three identical PMOS diodes in their own wells
+XSU m m gh gh sg13_hv_pmos w=1u l=4u ng=1 mm_ok=1
+XSL1 xp xp m m sg13_hv_pmos w=1u l=4u ng=1 mm_ok=1
+XSL2 xp xp m m sg13_hv_pmos w=1u l=4u ng=1 mm_ok=1
+* --- unity-gain buffer: m -> vcm
+XBT bt vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 mm_ok=1
+XBA bd m bt bt sg13_hv_pmos w=20u l=1u ng=2 mm_ok=1
+XBB vcm vcm bt bt sg13_hv_pmos w=20u l=1u ng=2 mm_ok=1
+XBD bd bd vss vss sg13_hv_nmos w=6u l=6u ng=1 mm_ok=1
+XBM vcm bd vss vss sg13_hv_nmos w=6u l=6u ng=1 mm_ok=1
+XCB vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 mm_ok=1
+* --- disable
+XSPD vcm en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 mm_ok=1
+.ends vcm_rb

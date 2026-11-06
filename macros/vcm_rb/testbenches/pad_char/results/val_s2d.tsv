@@ -1,0 +1,7 @@
+# val_s2d: S2D DC deck against CACE range_params / dc_params points
+# 4 runs, 2 s wall with -j 4, 2026-11-06T17:33:11Z; SI units
+vdd	vref	vcm	corner_mos	temp	Gain	Vos_in	INL	Vcm_err	Iio
+3.0	1.2	1.4	ss	-40	1.9972	-7.03021E-10	0.0135991	0.0132511	0.000114708
+3.0	0.5	1.0	ff	125	1.9972	6.28747E-07	0.0054991	0.00735156	0.000115331
+3.0	1.65	1.2	tt	125	2.00427	1.59413E-07	0.0324319	0.00406931	0.000115
+3.3	1.2	1.2	tt	27	1.99896	-8.64685E-09	0.000151754	0.0104909	0.000115536

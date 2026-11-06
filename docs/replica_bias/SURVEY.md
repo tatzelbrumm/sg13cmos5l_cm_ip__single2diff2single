@@ -195,3 +195,30 @@ Nothing yet. After Phase 2/3 these would move:
 - the pads' new vref / vcm wiring in the slot.
 
 The CACE suites stay here. Migration is a later task (hard rule 2).
+
+## 10. After Phase 2: what the gap runs found (2026-11-06)
+
+Scope from the user's answer: 1a, 2A, all of G1–G11. Results are under `macros/vcm_rb/testbenches/pad_char/results/`
+unless a row says otherwise; commands are in `RUNLOG.md`.
+
+| gap | result |
+|---|---|
+| G1 | D2S band (vref = vicm = vterm), INL ≤ 2 mV: < 0.8 … 1.262 V at iovdd 3.0 V, < 0.8 … 1.530 V at 3.3 V; the top edge is the S2D's within 8 mV; no bottom edge above 0.8 V |
+| G2 | D2S INL ≤ 2 mV for \|vicm − vref\| ≤ 0.1 V at every corner; up to 9 mV at 0.2 V; offset independent of it |
+| G3 | S2D vcm band (pad level): 1.031 … 1.270 / 1.556 / > 1.70 V at 3.0 / 3.3 / 3.6 V; bottom edge 0.89 / 0.95 / 1.02 V at −40 / 27 / 125 °C, the same at every corner and supply |
+| G4 | S2D vref band: bottom edge < 0.4 V up to 27 °C, 0.46 … 0.54 V at 125 °C (fast PMOS highest); top 1.23 V at 3.0 V, ss / −40 °C |
+| G5 | operating points: the bottom edge is the output cascode CX / CY (smallest margin at u = ±0.5 V when hot), the top edge the unit tail; bias lines over PVT on record (`g5_*_op.tsv`) |
+| G6 | AC: 1 MΩ in series with vref / vcm harmless; steps: ≥ 1 pF bypass above 10 kΩ; S2D enable kicks vcm by ±70 mV at 10 kΩ, +0.28 / −0.17 V at 100 kΩ with 1 pF: target ≤ about 30 kΩ |
+| G7 | D2S CACE on the current schematic at 1.2 V and 1.65 V: every limit met; INL at 3.0 V 0.22 … 0.65 mV at 1.2 V against 11 … 88 mV at 1.65 V (`macros/vcm_rb/verification/baseline/`) |
+| G8 | S2D at vref 0.5 V, mismatch: offset σ 5.25 mV, gain σ 0.84 %, CM error σ 11 mV, all within the limits; process MC flat (`macros/vref_s2d_rb/verification/baseline/`) |
+| G9 | round trip at pad level: INL ≤ 3.14 mV at S2D vref 0.5 V (0.45 mV at 1.2 V); with the blocks ≤ 0.75 mV |
+| G10 | the Oguey–Aebischer core at 125 °C narrows the vcm band to 1.10 … 1.30 V (S2D) and lowers the D2S top edge to 1.243 V; bandgap and harness agree within 10 mV |
+| G11 | CACE 2.11.0 reproduces the committed S2D results exactly and runs the D2S suite |
+| G12 | not run (Phase 3) |
+
+Corrections to sections 2 and 3:
+- **vcm band:** the bottom edge at pad level is lower than the 1.07–1.08 V that `results_s2d.txt` gave (1.031 V at
+  125 °C). The common band at 3.0 V is therefore 1.031 … 1.262 V.
+- **S2D vref bottom edge:** its mechanism is the input follower against x, `edge = x − V_SG + 0.676 V`. It is
+  0.46 … 0.54 V at 125 °C, so a fixed 0.5 V is not linear at ff / 125 °C.
+- **The (inferred) cascode mechanism** of section 3 for the vcm bottom edge is confirmed by G5.
