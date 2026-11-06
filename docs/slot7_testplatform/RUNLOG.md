@@ -248,3 +248,52 @@ Scratch work directory of the container: `/home/user/work` (not committed; logs 
 | design (notes) | `claude/c5-slot7-testplatform-sudel` | dd4976e |
 | delivery `sg13cmos5l_cm_slot7` | `claude/c5-testplatform` | f2c8501 |
 | harness fork | `claude/c5-testplatform-test` | 9981b94 |
+
+## Stage B (2026-11-06, on the user's request "go ahead with stage B")
+
+### 2026-11-06T18:4xZ — branches and markers
+- design `claude/c5-slot7-testplatform` fast-forwarded to `origin/toplevel` 68727a71 (it was merged there); delivery
+  `claude/c5-testplatform` re-created from `origin/main` (upstream set to its own remote branch afterwards).
+- stage-A markers (user request): tag pushes were refused by GitHub from this session ("the remote end hung up"), so
+  marker branches: design `claude/slot7-stage-a` = 68727a7, `claude/slot7-stage-a-notes` = 71e2efe (sudel_buecher),
+  delivery `claude/slot7-stage-a` = 39d170f, harness fork `claude/slot7-stage-a` = 9981b94. Local annotated tags
+  `slot7-stage-a` exist in this container only.
+- delivery `main`: `docs/PROGRESS.md` (progress log for the harness owner), fdb7f22.
+- a separate agent redraws the stage-A sheets in finished style (xschem-analog-schematic skill, installed version;
+  the repo copy on sudel_buecher `Claude/skills/xschem-analog-schematic/SKILL.md` is older) in its own worktree, branch
+  `claude/c5-slot7-schematics`, into `schematic/xschem_drawn/`; the draft sheets in `schematic/xschem/` (which the user
+  edits by hand) are not touched by it or by stage B.
+
+### 2026-11-06T18:5xZ — netlist and simulation
+- `netlist/source/slot7_stage_b.spice`: `tp_en_ctrl_b` (9 channels), `slot7_stage_b`, `slot7_testplatform_ab`.
+- `testbenches/ngspice/run_tb_b.py` (ref / ib1 / failsafe), `summarize_b.py`.
+- smoke test (tt, 27 C): with a harness-source model clamped 0.6 V ABOVE the 3.3 V rail, the unselected `ibias0` /
+  `ibias1` pins sat at 3.8 V and forward-biased the xgate PMOS junctions: 2.3 uA on `analog_bus3` with its switch off,
+  and extra current into `iref` in the OA / BG cases. Model corrected: the source is present only where the harness
+  switch would be on, clamped below the rail; otherwise the pin floats. Then OA / BG / ibias0 give the same tree.
+- 2026-11-06T18:52:08Z `python3 macros/slot7_testplatform/testbenches/ngspice/run_tb_b.py all` (log `logs/b2_run_tb_b_all.log`):
+  exit 0, none retried; `results_b/summary.md`.
+
+### 2026-11-06T18:5xZ — layout
+- `layout/scripts/routed_cell.py`: the tp_en_ctrl router generalized (`build_routed`); `tp_en_ctrl.py` itself unchanged.
+- `tp_en_ctrl_b` (103.7 x 98.6 um): DRC first 3 x M1.b (tie extension 25 nm short of the ptap's Metal1; extension now
+  overlaps by 1 um), then 0; LVS "Circuits match uniquely", 56 devices, 42 nets.
+- `bias_tree_noab_pd` (57.3 x 34.4 um): DRC 0; LVS against `macros/bias_tree_noab_pd/netlist/source/bias_tree_noab_pd.spice`
+  + `bias_diodes`: "Circuits match uniquely", 14 devices, 10 nets.
+- `make_slot_7.py --stage-b`: stage B at x 145 .. 281 um; stage A's shapes unchanged.
+  `python3 .../make_slot_7.py /home/user/work/gds/slot_7_base_delivery_40ba9b0.gds /home/user/work/gds/slot_7_b.gds --stage-b`;
+  DRC (deck, feol + beol, deep): 0 on the first build (`logs/b4_drc_slot_7_b_v1.log`).
+- LVS `sak-lvs.sh -s netlist/lvs/slot_7_lvs.spice -l <slot_7_b.gds> -c slot_7`: "Netlists match uniquely with port and
+  property errors", 190 / 190 devices, 120 / 120 nets; port errors: the same three as stage A.
+- views: `build_views.sh <base> --stage-b` (now forwards all options): final GDS = the checked build (XOR empty);
+  sha256 abc7a362...; LEF pin names and PORT count (73) unchanged.
+- extracted netlist: stage-B tests (tt / ff x 27 / 125 C) identical to the schematic; stage-A tests repeated on it:
+  same currents, 0 logic failures.
+- design commit efb80141; delivery branch `claude/c5-testplatform` c0726799 (views, README, PROGRESS).
+
+### 2026-11-06T19:03Z..19:08Z — harness fork, stage B
+- branch `claude/c5-testplatform-test` (= custom-pad-test 9981b94 before): s7_version = delivery `claude/c5-testplatform`
+  c0726799; `make projects-clean / projects / projects-gds SLOTS=7`, `make gds-prefill`: all exit 0; XOR of slot_7 in
+  the pre-fill GDS vs the delivered GDS: empty; `netcheck_slot7_platform.py ... 1100 2160 2100 2445 --stage b`: "all 49 used
+  pins and 14 unused pins OK". Harness commit c40c99b, pushed. Details: the fork's `docs/custom_pads/RUNLOG.md`.
+- `custom-pad-test` and the delivery `main` are not moved (the user decides).

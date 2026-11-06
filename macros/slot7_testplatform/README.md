@@ -2,7 +2,7 @@
 SPDX-FileCopyrightText: 2026 Christoph Maier
 SPDX-License-Identifier: Apache-2.0
 -->
-# slot7_testplatform: slot 7 as a stand-alone test platform for the two bias reference cores (stage A)
+# slot7_testplatform: slot 7 as a stand-alone test platform for the two bias reference cores (stages A and B)
 
 Written 2026-11-06 (cloud session). Plan, pin map, measurement procedure: `docs/slot7_testplatform/PLAN.md`;
 steps and numbers: `docs/slot7_testplatform/RUNLOG.md`; one-page result: `docs/slot7_testplatform/SUMMARY.md`.
@@ -52,3 +52,13 @@ Rebuild (design repo root, `export PDK_ROOT=/foss/pdks; source .designinit`):
   before; property errors only on `mm_ok`.
 - Sheets: xschem netlist = source netlist, device by device (`check_sheets.py`, with a self-test).
 - Simulation: `results/summary.md`.
+
+## Stage B (2026-11-06)
+
+`netlist/source/slot7_stage_b.spice`: `tp_en_ctrl_b` (9 channels), `slot7_stage_b` (tree, 3 reference xgates, 4 mux
+xgates, ibias1 xgate), top `slot7_testplatform_ab`. Layout cells `layout/gds/tp_en_ctrl_b.gds`, `layout/gds/bias_tree_noab_pd.gds`
+from `layout/scripts/routed_cell.py`; `make_slot_7.py --stage-b` / `build_views.sh <base> --stage-b` (`final/` now holds
+the stage-B views; stage A: branch `claude/slot7-stage-a`). LVS reference `netlist/lvs/slot_7_lvs.spice`. Simulation
+`testbenches/ngspice/run_tb_b.py`, `summarize_b.py`, results in `results_b/` and `results_b_layout/`. Pin map and
+measurement: `docs/slot7_testplatform/PLAN.md` section 9. Stage-A sheets unchanged; no sheets for stage B yet (finished-style
+redraws of the stage-A sheets: branch `claude/c5-slot7-schematics`, `schematic/xschem_drawn/`).

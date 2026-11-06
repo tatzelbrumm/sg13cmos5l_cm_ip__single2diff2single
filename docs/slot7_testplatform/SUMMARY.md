@@ -4,7 +4,7 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # SUMMARY: slot 7 test platform for the bias references (2026-11-06)
 
-**Stage reached: A complete (schematic, simulation, layout, DRC, LVS, delivery, harness flow). Stage B not started.**
+**Stage reached: A and B complete (schematic / netlist, simulation, layout, DRC, LVS, delivery branch, harness flow).** Stage-A state: branch `claude/slot7-stage-a`.
 
 **On the slot** (`macros/slot7_testplatform`, delivered as `slot_7.gds` on `sg13cmos5l_cm_slot7` branch `claude/c5-testplatform` f2c8501):
 the Oguey–Aebischer core `oa_core_pd` and the Banba bandgap core `bg_core_pd` (cores, not the full references: they
@@ -57,3 +57,13 @@ ports, `slot_7.lib` and `slot_7.vh` are unchanged; the right-edge Metal2 strip (
 
 **Open:** stage B (trees, bias-voltage mux on `analog_bus2`, `ibias` comparison); back-feeding with `vdd_3v3` off
 (procedure, or an NMOS-only switch); draft-style sheets; no slot-level PEX; chip-level DRC / LVS not run.
+
+**Stage B** (`slot7_stage_b.spice`, PLAN.md section 9): the S2D pad's bias tree `bias_tree_noab_pd` with its reference
+selectable from the OA core, the BG core or the harness `ibias0` (`dig_in[4..6]`, tree enable `dig_in[7]`); `vbp vbn vbpc
+vbnc` onto `analog_bus2` (`dig_in[8..11]`); harness `ibias1` onto `analog_bus3` (`dig_in[12]`); 9 more fail-safe enables
+(`tp_en_ctrl_b`), 8 more `xgate`. Simulation (`results_b/summary.md`, same PVT grid): the tree works from each reference
+(vbn 0.82 .. 0.99 V, vbp 1.49 .. 2.44 V; at tt / 27 C OA, BG, ibias0 give the same vbn to 1 mV), `ibias1` through the
+slot 5.000 uA (off <= 29 pA), fail-safe as stage A. Layout: both new cells DRC 0 / LVS match; `slot_7.gds` DRC 0, LVS
+match (190 devices, the known three port notes); layout netlist = schematic; harness fork `claude/c5-testplatform-test`
+c40c99b: flow exit 0, XOR empty, net check 49 used + 14 unused pins OK. Delivered on `sg13cmos5l_cm_slot7` branch
+`claude/c5-testplatform` c072679 (not yet `main`).

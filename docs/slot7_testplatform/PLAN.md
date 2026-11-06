@@ -171,3 +171,32 @@ pad stubs, so x 140..520 stays free.
   corners for BG), leakage of open TGs, gated supplies off (no current, no back-feeding).
 - Phase 3: PDK KLayout DRC (feol + beol) of `tp_en_ctrl` and `slot_7`; magic + netgen LVS against the sheet.
 - Phase 4: harness flow on `claude/c5-testplatform-test`, net-by-net extraction check of the pre-fill top.
+
+## 9. Stage B (added 2026-11-06, after stage A was merged; stage A state: branch `claude/slot7-stage-a`)
+
+New cells only; stage A's cells, sheets and pins are unchanged. Netlist `macros/slot7_testplatform/netlist/source/slot7_stage_b.spice`
+(new top `slot7_testplatform_ab` = stage A's five instances + `slot7_stage_b`).
+
+| slot pin | stage-B use |
+|---|---|
+| `dig_in[4]` / `[5]` / `[6]` | tree reference: OA core `iout` / BG core `iout` / harness `ibias0` -> tree `iref` (xgate each) |
+| `dig_in[7]` | tree enable (`bias_tree_noab_pd`'s own `en_3v3`: input TG, NI pull-down) |
+| `dig_in[8..11]` | `vbp` / `vbn` / `vbpc` / `vbnc` -> `analog_bus2` (xgate each) |
+| `dig_in[12]` | harness `ibias1` -> `analog_bus3` (xgate) |
+| `ibias0`, `ibias1`, `analog_bus2`, `analog_bus3` | now used |
+| `dig_in[23:13]`, `clk`, `reset`, `vbias` | unused |
+
+All nine enables come from `tp_en_ctrl_b` (same fail-safe stage as stage A: `dig_in[k] AND enable AND vdd_1v2 present`);
+no read-back (`dig_out` is stage A's).
+
+Measurement (after steps 1..5 of section 5; route registers `0x24..0x2C` for `dig_in[4..12]`, 0xD = 0, 0xE = 1):
+1. Reference = OA: `0x20 = 0x0E` (OA core on), `0x22 = 0x0D` (stage-A bus switch of OA open), `0x24 = 0x0E`, `0x27 = 0x0E`
+   (tree on). Reference = BG: `0x21 = 0x0E`, `0x23 = 0x0D`, `0x25 = 0x0E`. Reference = harness `ibias0`: set the iDAC
+   (reg 0x19), `0x52 = 0x01` (ibias0 switch of slot 7), `0x26 = 0x0E`. Only one reference at a time (currents add).
+2. Voltmeter (SMU forcing 0 A) on `analog[2]`, `0x51` bit 6 = 1; select one line: `0x28 = 0x0E` (`vbp`), or `0x29`
+   (`vbn`), `0x2A` (`vbpc`), `0x2B` (`vbnc`); one at a time. Expected (simulation, nominal 5 uA): vbn ~0.91 V, vbp ~1.97 V,
+   vbpc ~1.91 V, vbnc ~1.21 V at tt / 27 C; with the tree off a selected `vbp` reads `vdd` - |Vtp| (~2.8 V).
+3. `ibias1`: iDAC 2 (reg 0x1A), `0x52 = 0x02`, `0x2C = 0x0E`, SMU at 0.7 V on `analog[3]`, `0x51` bit 7 = 1: the
+   harness current through slot 7; compare with the same iDAC code on the diagnostic path (project 0, `analog[2]`).
+The comparison: the same tree voltages from OA, BG and `ibias0` mean the same current; their temperature drift shows
+each reference's tempco through the pad's own bias chain.
