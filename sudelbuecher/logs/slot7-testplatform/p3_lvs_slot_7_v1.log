@@ -1,0 +1,29 @@
+[INFO] DEBUG is enabled!
+[INFO] flag -w is set to </home/user/work/lvs/slot_7>.
+[INFO] flag -s is set to </home/user/work/lvs/slot_7/slot_7_lvs.spice>.
+[INFO] flag -l is set to </home/user/work/gds/slot_7.gds>.
+[INFO] flag -c is set to <slot_7>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using SPICE/CDL netlist file </home/user/work/lvs/slot_7/slot_7_lvs.spice>.
+[INFO] Using layout file </home/user/work/gds/slot_7.gds>.
+[INFO] Running LVS of </home/user/work/gds/slot_7.gds> vs </home/user/work/lvs/slot_7/slot_7_lvs.spice>.
+[INFO] Using SPICE/CDL netlist </home/user/work/lvs/slot_7/slot_7_lvs.spice>...
+[INFO] Extracting netlist from layout </home/user/work/gds/slot_7.gds>...
+[INFO] Run netgen...
+---
+[INFO] Magic+Netgen LVS errors found! Please check </home/user/work/lvs/slot_7/slot_7.magic.lvs/slot_7.lvs.out>!
+---
+LVS ERRORS FOUND! Please check the report(s) above!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |     _____     |
+   \             /
+    '.         .'
+      '-.....-'
+---
+
+real	0m0.446s
+user	0m0.328s
+sys	0m0.109s

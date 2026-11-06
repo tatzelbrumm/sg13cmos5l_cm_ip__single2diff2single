@@ -1,0 +1,81 @@
+
+Circuit 1 cell sg13_hv_pmos and Circuit 2 cell sg13_hv_pmos are black boxes.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_hv_pmos                    |Circuit 2: sg13_hv_pmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_hv_pmos and sg13_hv_pmos are equivalent.
+
+Circuit 1 cell sg13_hv_nmos and Circuit 2 cell sg13_hv_nmos are black boxes.
+Warning: Equate pins:  cell sg13_hv_nmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_hv_nmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_hv_nmos                    |Circuit 2: sg13_hv_nmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_hv_nmos and sg13_hv_nmos are equivalent.
+
+Subcircuit summary:
+Circuit 1: tp_en_ctrl                      |Circuit 2: tp_en_ctrl                      
+-------------------------------------------|-------------------------------------------
+sg13_hv_pmos (16)                          |sg13_hv_pmos (16)                          
+sg13_hv_nmos (27)                          |sg13_hv_nmos (27)                          
+Number of devices: 43                      |Number of devices: 43                      
+Number of nets: 35                         |Number of nets: 35                         
+---------------------------------------------------------------------------------------
+Resolving symmetries by property value.
+Resolving symmetries by pin name.
+Netlists match uniquely.
+
+Subcircuit pins:
+Circuit 1: tp_en_ctrl                      |Circuit 2: tp_en_ctrl                      
+-------------------------------------------|-------------------------------------------
+vdd_1v2                                    |vdd_1v2                                    
+vss_1v2                                    |vss_1v2                                    
+vss_3v3                                    |vss_3v3                                    
+en0_1v2                                    |en0_1v2                                    
+en1_1v2                                    |en1_1v2                                    
+en3_1v2                                    |en3_1v2                                    
+en2_1v2                                    |en2_1v2                                    
+enable                                     |enable                                     
+lo6                                        |lo6                                        
+lo4                                        |lo4                                        
+lo8                                        |lo8                                        
+lo5                                        |lo5                                        
+lo9                                        |lo9                                        
+lo7                                        |lo7                                        
+lo10                                       |lo10                                       
+lo11                                       |lo11                                       
+vdd_3v3                                    |vdd_3v3                                    
+en3                                        |en3                                        
+en0                                        |en0                                        
+en1                                        |en1                                        
+en2                                        |en2                                        
+en3_b                                      |en3_b                                      
+en1_b                                      |en1_b                                      
+en0_b                                      |en0_b                                      
+en2_b                                      |en2_b                                      
+rb0                                        |rb0                                        
+rb2                                        |rb2                                        
+rb1                                        |rb1                                        
+rb3                                        |rb3                                        
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes tp_en_ctrl and tp_en_ctrl are equivalent.
+
+Final result: Circuits match uniquely.
+.

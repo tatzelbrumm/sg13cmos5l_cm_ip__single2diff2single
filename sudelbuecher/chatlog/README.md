@@ -110,3 +110,7 @@
 
 [2026-11-06_claude_replica_bias.md](2026-11-06_claude_replica_bias.md)
 : Cloud session C4, 6 Nov: replica bias for vref / vcm of the custom pads (task `docs/launch/replica_bias_TASK.md` on `harness-test`). Phase 1, a read-only survey of where vref / vcm should sit (`docs/replica_bias/SURVEY.md` on `claude/c4-replica-bias`), then the stop for the user's answer. The transcript keeps only part of the assistant's visible messages; the gap is stated in the log's header. Live/ongoing.
+
+[2026-11-06_claude_slot7_testplatform.md](2026-11-06_claude_slot7_testplatform.md)
+: Cloud session C5: slot 7 as a stand-alone test platform for the OA and BG bias cores (stage A: fail-safe enable cell `tp_en_ctrl`, `xgate` bus switches, analog_bus0 / 1), schematic, PVT simulation, layout (DRC 0, LVS match), delivery `claude/c5-testplatform`, harness flow and net check on `claude/c5-testplatform-test`; exported from the transcript, which lacks part of the visible assistant text (gap noted in the log).
+
