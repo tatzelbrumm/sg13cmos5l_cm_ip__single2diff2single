@@ -1,0 +1,36 @@
+2026-11-06T18:54:24Z
+dc_params: 30 of 30 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v2/dc_params.csv
+dc_params: cace exit 0, 22 s
+dc_3v0_params: 15 of 15 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v2/dc_3v0_params.csv
+dc_3v0_params: cace exit 0, 12 s
+ac_params: 15 of 15 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v2/ac_params.csv
+ac_params: cace exit 0, 42 s
+tran_params: 9 of 9 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v2/tran_params.csv
+tran_params: cace exit 0, 53 s
+pd_params: 48 of 48 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v2/pd_params.csv
+pd_params: cace exit 0, 41 s
+enable_params: 3 of 3 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v2/enable_params.csv
+enable_params: cace exit 0, 41 s
+dc_params: 30 of 30 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v65/dc_params.csv
+dc_params: cace exit 0, 30 s
+dc_3v0_params: 15 of 15 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v65/dc_3v0_params.csv
+dc_3v0_params: cace exit 0, 16 s
+ac_params: 15 of 15 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v65/ac_params.csv
+ac_params: cace exit 0, 27 s
+tran_params: 9 of 9 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v65/tran_params.csv
+tran_params: cace exit 0, 49 s
+pd_params: 48 of 48 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v65/pd_params.csv
+pd_params: cace exit 0, 42 s
+enable_params: 3 of 3 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_1v65/enable_params.csv
+enable_params: cace exit 0, 40 s
+loop_params: 15 of 15 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_loop_1v2/loop_params.csv
+loop_params: cace exit 0, 12 s
+loop_params: 15 of 15 runs -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/verification/baseline/d2s_loop_1v65/loop_params.csv
+loop_params: cace exit 0, 12 s
+mm_params: collated, 100 data lines -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vref_s2d_rb/verification/baseline/s2d_mc_vref0v5/mm_params.csv
+mm_params: cace exit 0, 67 s
+ac_mm_params: collated, 30 data lines -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vref_s2d_rb/verification/baseline/s2d_mc_vref0v5/ac_mm_params.csv
+ac_mm_params: cace exit 0, 58 s
+mc_params: collated, 30 data lines -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vref_s2d_rb/verification/baseline/s2d_mc_vref0v5/mc_params.csv
+mc_params: cace exit 0, 29 s
+2026-11-06T19:04:20Z
