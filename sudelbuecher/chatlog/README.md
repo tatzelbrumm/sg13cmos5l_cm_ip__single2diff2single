@@ -107,3 +107,6 @@
 
 [2026-11-03_opus_c3_s2d_pad_layout.md](2026-11-03_opus_c3_s2d_pad_layout.md)
 : Cloud session C3: the s2d pad cell `sg13cmos5l_IOPadSingle2Diff` from a cleaned-out template through agents P / N / F / BA to a backannotated, DRC / LVS-clean macro, then magic PEX and post-layout CACE.
+
+[2026-11-06_claude_replica_bias.md](2026-11-06_claude_replica_bias.md)
+: Cloud session C4, 6 Nov: replica bias for vref / vcm of the custom pads (task `docs/launch/replica_bias_TASK.md` on `harness-test`). Phase 1, a read-only survey of where vref / vcm should sit (`docs/replica_bias/SURVEY.md` on `claude/c4-replica-bias`), then the stop for the user's answer. The transcript keeps only part of the assistant's visible messages; the gap is stated in the log's header. Live/ongoing.
