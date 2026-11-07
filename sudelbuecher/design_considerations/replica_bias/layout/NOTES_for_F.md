@@ -24,3 +24,8 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
    out unnecessarily to match the slot-to-custom-pads boundaries." / "Pin names vddh and vssh, to they can be
    connected without conflict either way." / "Pad structures are only routed M1/M2. Let's keep it that way for
    consistency." Folded into BRIEF_F.md rules 5, 6, 9.
+6. **Stage A is a throwaway** (Christoph, 2026-11-07, while F ran stage A): "Expect to COMPLETELY throw away stage A
+   placement and do routing driven placement." F was told to keep stage A light (no row compaction, a quick placement
+   and the context picture) and to deliver what a routing-driven placement needs: a pin map per cell, the net list
+   with fan-out and sensitive lines, the facing edges per net, and a routing-order / layer-direction / channel
+   proposal for stage B.
