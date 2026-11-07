@@ -33,8 +33,22 @@ XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 mm_ok=1
 XMDPBN vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 mm_ok=1
 .ends bias_tree_rb
 
+* bypass_rb: the bypass capacitors of vcm and vref (Christoph, 2026-11-07: in a cell of their own, distinct from the
+* blocks; "6 on vref, 4 on vcm"). All 12u x 12u hv NMOS to vss, the s2d pad's load-capacitor device (CLP / CLN).
+*   CBM (m=4) on vcm: with vcm_rb's own CB, 5 x 0.61 pF at 1.26 V.
+*   CBR (m=8) on vref: Christoph's 6 plus CB1 / CB2 moved out of vref_s2d_rb; 8 x 0.20 ... 0.43 pF at vref 0.44 ... 0.6 V
+*   (a 12u x 12u hv NMOS is barely inverted there).
+* NMOS to vss only: PMOS to iovdd couples iovdd into vref, the S2D's zero point (4 ... 7 x the S2D's input-referred
+* iovdd ripple at 1 MHz), and raises vcm's 10 MHz ripple (explore_bypass.py). Effect (rb_char, 2026-11-07): the S2D
+* enable kick 0.236 -> 0.112 V on vcm, 0.212 -> 0.096 V on vref; vcm settles at enable in <= 1 us (harness reference).
+.subckt bypass_rb vss vcm vref
+XCBM vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=4 mm_ok=1
+XCBR vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=8 mm_ok=1
+.ends bypass_rb
+
 .subckt pad_ref_rb vdd vss iref vcm vref en_3v3 en_3v3_b
 Xt vdd vss iref ni vbp vbnc en_3v3 en_3v3_b bias_tree_rb
 Xc vdd vss ni vbp vbnc vcm en_3v3_b vcm_rb
 Xr vdd vss ni vbnc vref en_3v3_b vref_s2d_rb
+Xb vss vcm vref bypass_rb
 .ends pad_ref_rb

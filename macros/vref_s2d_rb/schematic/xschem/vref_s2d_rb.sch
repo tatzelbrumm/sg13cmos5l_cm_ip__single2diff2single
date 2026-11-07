@@ -7,7 +7,6 @@ F {}
 E {}
 P 10 5 265 -595 975 -595 975 -430 265 -430 265 -595 {dash=6}
 P 10 5 450 -270 570 -270 570 -140 450 -140 450 -270 {dash=6}
-P 10 5 625 -270 855 -270 855 -140 625 -140 625 -270 {dash=6}
 P 10 5 165 -270 440 -270 440 -140 165 -140 165 -270 {dash=6}
 T {vref_s2d_rb: replica bias for the pad reference vref of the S2D pad} 100 -1308 0 0 0.6 0.6 {}
 T {vref_s2d_rb: replica bias for the pad reference vref of sg13cmos5l_IOPadSingle2Diff (user's choice 1a: about 0.5 V, so} 100 -1238 0 0 0.25 0.25 {}
@@ -32,7 +31,6 @@ T {(pulling vref low with the tree on would short the follower F from vbnc).} 10
 T {drawn from netlist/source/vref_s2d_rb.spice; make check-sheet netlists this sheet and compares it with that netlist device by device} 100 -810 0 0 0.25 0.25 {}
 T {[1] x-node replica} 884 -618.5 0 0 0.35 0.35 {layer=10}
 T {[1]} 465 -293.5 0 0 0.35 0.35 {layer=10}
-T {[1]} 625 -293.5 0 0 0.35 0.35 {layer=10}
 T {[2] disable} 170 -293.5 0 0 0.35 0.35 {layer=10}
 N 520 -460 520 -250 {lab=vref}
 N 440 -520 480 -520 {lab=vbnc}
@@ -71,31 +69,12 @@ N 360 -490 360 -460 {lab=vref}
 N 400 -220 420 -220 {lab=vss}
 N 400 -190 400 -100 {lab=vss}
 N 340 -100 400 -100 {lab=vss}
-N 840 -100 900 -100 {lab=vss}
 N 360 -460 400 -460 {lab=vref}
 N 300 -220 360 -220 {lab=en_3v3_b}
 N 460 -300 460 -220 {lab=ni}
 N 100 -300 460 -300 {lab=ni}
-N 800 -460 800 -240 {lab=vref}
 N 720 -460 800 -460 {lab=vref}
-N 680 -460 680 -240 {lab=vref}
 N 520 -460 680 -460 {lab=vref}
-N 680 -200 680 -100 {lab=vss}
-N 640 -100 680 -100 {lab=vss}
-N 800 -200 800 -100 {lab=vss}
-N 760 -100 800 -100 {lab=vss}
-N 640 -200 650 -200 {lab=vss}
-N 640 -200 640 -100 {lab=vss}
-N 540 -100 640 -100 {lab=vss}
-N 710 -200 720 -200 {lab=vss}
-N 720 -200 720 -100 {lab=vss}
-N 680 -100 720 -100 {lab=vss}
-N 760 -200 770 -200 {lab=vss}
-N 760 -200 760 -100 {lab=vss}
-N 720 -100 760 -100 {lab=vss}
-N 830 -200 840 -200 {lab=vss}
-N 840 -200 840 -100 {lab=vss}
-N 800 -100 840 -100 {lab=vss}
 N 880 -460 1020 -460 {lab=vref}
 N 880 -720 880 -550 {lab=vdd}
 N 720 -720 720 -550 {lab=vdd}
@@ -157,24 +136,6 @@ mm_ok=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 680 -220 1 0 {name=CB1
-l=12u
-w=12u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 800 -220 1 0 {name=CB2
-l=12u
-w=12u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
 C {sg13cmos5l_pr/sg13_hv_nmos.sym} 380 -220 0 0 {name=SPD
 l=0.45u
 w=1u
@@ -188,3 +149,4 @@ C {devices/lab_wire.sym} 320 -630 0 0 {name=l3 sig_type=std_logic lab=vbnc}
 C {devices/lab_wire.sym} 420 -460 0 0 {name=l4 sig_type=std_logic lab=vref}
 C {devices/title.sym} 160 -40 0 0 {name=l0 author="Christoph Maier"}
 C {devices/lab_wire.sym} 800 -630 0 1 {name=l2 sig_type=std_logic lab=vbnc}
+N 540 -100 900 -100 {lab=vss}

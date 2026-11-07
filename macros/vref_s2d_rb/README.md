@@ -25,8 +25,10 @@ copy of the tree (NI, BP, BNC) and its own reference. Task, survey and run log a
 - **The block:** `vref = vbnc − V_GS(F)`, an x-node replica at low current density.
   - F is four fingers of the S2D fold cascode (15u/3u) at 1.67 µA, against the S2D's 30u/3u at 10 µA.
   - It rises with temperature as x does (+0.6 mV/K) and sits about 0.1 V above it.
-  - Its output impedance is 1/gm(F), about 20 kΩ. CB1 / CB2 (2 × 12u × 12u hv NMOS to vss, not to iovdd, so supply
-    ripple does not reach the pad's zero) hold the pin during the pad's own transients (G6).
+  - Its output impedance is 1/gm(F), about 20 kΩ. Since 2026-11-07 the cell has no capacitor: a follower has no loop.
+    The bypass that holds the pin during the pad's own transients (G6) is `bypass_rb` in `../pad_ref_rb`: 8 × 12u ×
+    12u hv NMOS to vss (CB1 / CB2, before in this cell, and 6 more), not to iovdd, so supply ripple does not reach the
+    pad's zero.
 - **Lines:** from `bias_tree_rb`: ni (NI 6u/6u, the reference) for the sink SF, vbnc (BNC 1u/8u at 2 µA from PBNC
   2u/6u) for the followers F.
 - **Disabled** (`en_3v3` = 0 on `pad_ref_rb`): the tree cuts the reference and pulls ni to vss, vbnc decays to vss, and
@@ -49,7 +51,7 @@ copy of the tree (NI, BP, BNC) and its own reference. Task, survey and run log a
 netlist/source/vref_s2d_rb.spice        source netlist (mm_ok=1 on every device)
 schematic/xschem/vref_s2d_rb.sch/.sym   sheet drawn by hand from the source netlist (2026-11-07, xschem-analog-schematic skill,
                                         compacted by hand by Christoph, then moved onto the shared tree); make check-sheet
-                                        compares it device by device (8 = 8, ports equal)
+                                        compares it device by device (6 = 6, ports equal)
 schematic/vref_s2d_rb.png / .svg        render of the sheet
 ../vcm_rb/schematic/gen_sheet.py        only its --check mode is in use; generating would overwrite the hand-drawn sheet
 ../pad_ref_rb/verification/             CACE suite of pad_ref_rb, which covers this block (vref_room / hot / cold, pd, mm)
@@ -75,7 +77,8 @@ Every DC value is the same as with the block's own tree (2026-11-06) to the last
 | mismatch | σ 3.7 mV (0.486 … 0.502 V, 100 seeds); adds to the S2D's own offset σ 5.25 mV → 6.4 mV | tt, 27 °C, 3.3 V |
 | supply current | 1.56 … 1.60 µA in the block (the follower), plus the shared tree's 3.9 µA and the 5.0 µA reference | |
 | output impedance | 18 … 28 kΩ | |
-| enable to 1 % | 0.34 … 1.17 µs (OA core: up to 25 µs); with the own tree 0.19 … 1.07 µs: one vbnc line now charges all five 15/3 gates | |
+| enable to 1 % | 0.39 … 1.29 µs with bypass_rb (OA core: up to 25 µs); with the own tree 0.19 … 1.07 µs: one vbnc line now charges all five 15/3 gates | |
+| S2D enable kick on vref | ≤ 0.096 V with bypass_rb (0.212 V with CB1 / CB2 alone) | references on before the pad |
 | disabled | vref 0.000 V, current ≤ 10 nA | 3.6 V, tt / ff, 27 / 125 °C |
 
 **Against a divider.**
@@ -95,6 +98,6 @@ Every DC value is the same as with the block's own tree (2026-11-06) to the last
 - **The process spread at 27 °C is ±11 mV, mismatch σ 3.8 mV:** comparable to the pad's own offset.
 - **Layout:** not started. Primitives and a row plan in `../pad_ref_rb/layout/primitives/README.md`.
 - **The bypass is smaller than its area suggests:** at vref ≈ 0.44 … 0.59 V a 12u × 12u hv NMOS is barely inverted,
-  0.20 … 0.43 pF each (0.61 pF at 1.26 V; tt, 27 °C). The simulations include this. A PMOS to iovdd would give 0.64 pF
-  at any vref but couples iovdd into the S2D's zero point (open point in `docs/replica_bias/SUMMARY.md`).
+  0.20 … 0.43 pF each (0.61 pF at 1.26 V; tt, 27 °C). The simulations include this. bypass_rb therefore has 8 of
+  them on vref. A PMOS to iovdd would give 0.64 pF at any vref but couples iovdd into the S2D's zero point.
 - **Extracted views:** none.

@@ -58,8 +58,8 @@ S2D's enable does not kick the pins), a divider needs little rhigh either. What 
   units:
   - in the custom-pad route, the IO ring rails, at the slot's pad-side edge;
   - in the slot fallback, vdd_3v3 / vss_3v3, next to the two pad macros.
-- **Size:** one cell for both references. From the collected primitives: about 2750 µm² of rows, about 64 × 64 µm
-  routed (`macros/pad_ref_rb/layout/primitives/README.md`; before the shared tree: 2 × 50 × 60 µm).
+- **Size:** one cell for both references. From the collected primitives: about 4800 µm² of rows (13 bypass
+  capacitors more than half of it), about 85 × 85 µm routed (`macros/pad_ref_rb/layout/primitives/README.md`; before the shared tree: 2 × 50 × 60 µm).
 - **Reference:** one 5 µA leg from `bias_dist_pd`, fed from the same source as the pads' own legs, so that the
   replica tracks the pads' reference current.
 - **Enable:** one for the cell; it must cover every user of vcm.
@@ -82,9 +82,11 @@ S2D's enable does not kick the pins), a divider needs little rhigh either. What 
 - **The bias distribution:** `bias_dist_pd` (sheet only) has never been simulated. The chain bias_gen_pd →
   bias_dist_pd → both pads and pad_ref_rb, with leg-to-leg mismatch, is not simulated yet; the decks so far give
   pad_ref_rb its own bias_gen_pd of the same selection.
-- **Bypass capacitors:** the 12u × 12u NMOS capacitors give only 0.20 … 0.43 pF at vref. More capacitance and its
-  rail (PMOS to iovdd: 0.64 pF, but couples iovdd) to be decided by a supply-rejection comparison; the cell's rail
-  must be the pads' unit rail in any case.
+- **Bypass capacitors: decided 2026-11-07.** A cell of its own, `bypass_rb`: 4 more 12u × 12u NMOS to vss on vcm
+  (vcm_rb keeps CB for its buffer's phase margin), 8 on vref (vref_s2d_rb has none). The S2D enable kick drops to
+  0.112 / 0.096 V (from 0.236 / 0.212). PMOS to iovdd was rejected: it multiplies the S2D's input-referred iovdd
+  ripple at 1 MHz by 4 … 7. Side finding: the D2S output follows iovdd by 0.38 V/V at any frequency up to 1 MHz,
+  because vcm tracks the band by design (an ideal vcm: 0.3 mV/V).
 - **The vcm overshoot at enable** (≤ 37 mV, ≤ 0.23 V with the OA core; with own trees +0.19 / +0.48 V): sequence the
   pads after the references if it matters.
 - **The S2D zero point drifts +0.9 mV/K** by design. For a ground-referenced signal that is a temperature-dependent

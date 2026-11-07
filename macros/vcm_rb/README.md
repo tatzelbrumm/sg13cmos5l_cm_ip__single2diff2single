@@ -39,7 +39,7 @@ The replicas, on the lines of the shared tree `bias_tree_rb`:
 | gh | TR (5u/6u at vbp) → MR (20u/1u ng=2, diode) → sink 2 × 2.4u/6u (4 µA = 0.8 of TR) | gh = top gate limit + 0.157 V (±18 mV) |
 | xp | one CY finger (15u/3u at vbnc) on SY (6u/6u, 5 µA) | bottom edge = xp + 0.559 V (±34 mV) |
 | m | three identical PMOS diodes 1u/4u in their own wells: one from gh to m, two in parallel from m to xp | m = centre of the band (−65 … +78 mV over all PVT and references, `explore_vcm_rb.py`, candidate G) |
-| vcm | 5-transistor OTA in unity gain: pair = the unit input device 20u/1u ng=2, tail = the unit tail 5u/6u (5 µA), NMOS mirror 6u/6u; CB = 12u × 12u hv NMOS capacitor | vcm = m (offset −0.9 mV at tt) |
+| vcm | 5-transistor OTA in unity gain: pair = the unit input device 20u/1u ng=2, tail = the unit tail 5u/6u (5 µA), NMOS mirror 6u/6u; CB = 12u × 12u hv NMOS capacitor, the one capacitor that stays in this cell (phase margin with any pin load; the bypass is `bypass_rb` in `../pad_ref_rb`) | vcm = m (offset −0.9 mV at tt) |
 
 **Lines** (`bias_tree_rb` in `../pad_ref_rb`, as bias_tree_pd, at the pad devices' current densities):
 - ni: NI, 6u/6u NMOS diode, the reference;
@@ -99,7 +99,8 @@ pass.
 | mismatch | σ 5.3 mV (1.248 … 1.275 V, 100 seeds; with the own tree 6.5 mV; the seeds fall on a different device set, so the two samples are not paired, and I have not traced the difference) | tt, 27 °C, 3.3 V |
 | supply current | 13.5 … 13.7 µA in the block, plus the shared tree's 3.9 µA and the 5.0 µA reference (OA core: block 8.2 … 20.0 µA) | |
 | output impedance | 22 … 35 kΩ (1 kHz and 1 MHz) | 3.0 … 3.6 V, ss / tt / ff, −40 … 125 °C |
-| enable to 1 % | 0.31 … 1.00 µs (OA core: up to 20.5 µs, the core's start-up); overshoot ≤ +37 mV (OA: ≤ +0.23 V; with the own tree +0.19 / +0.48 V) | en_1v2 edge |
+| enable to 1 % | 0.64 … 1.32 µs with bypass_rb (OA core: up to 20.7 µs, the core's start-up); overshoot ≤ +34 mV (OA: ≤ +0.28 V; with the own tree +0.19 / +0.48 V) | en_1v2 edge |
+| S2D enable kick on vcm | ≤ 0.112 V with bypass_rb (0.236 V with CB alone) | references on before the pad |
 | start-up | settled ≤ 9.9 µs after a 10 µs iovdd ramp starts (OA: ≤ 23 µs) | |
 | disabled | vcm 0.000 V, current ≤ 1 nA (DC) | 3.6 V, tt / ff, 27 / 125 °C |
 

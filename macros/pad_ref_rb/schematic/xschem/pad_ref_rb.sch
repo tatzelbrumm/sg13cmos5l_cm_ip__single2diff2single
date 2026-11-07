@@ -15,7 +15,7 @@ T {Ports: vdd vss iref vcm vref en_3v3 en_3v3_b (iref: 5 uA SOURCED into the cel
 T {output or a core's iout; en_3v3 / en_3v3_b from en_ctrl_3v3). vdd / vss: the rails of the pads it serves (the top edge} 100 -926 0 0 0.25 0.25 {}
 T {that vcm_rb tracks is referenced to the pads' unit rail).} 100 -904 0 0 0.25 0.25 {}
 T {Supply current (tt 27 C, 3.3 V): tree 9 uA (5 uA reference + 2 BP + 2 BNC) + vcm_rb 14 uA + vref_s2d_rb 1.7 uA.} 100 -882 0 0 0.25 0.25 {}
-T {drawn from netlist/source/pad_ref_rb.spice; Xt bias_tree_rb (this folder), Xc vcm_rb, Xr vref_s2d_rb} 100 -850 0 0 0.25 0.25 {}
+T {drawn from netlist/source/pad_ref_rb.spice; Xt bias_tree_rb and Xb bypass_rb (this folder), Xc vcm_rb, Xr vref_s2d_rb} 100 -850 0 0 0.25 0.25 {}
 N 500.0 -630.0 500.0 -800 {}
 N 500.0 -490.0 500.0 -380 {}
 N 1000.0 -620.0 1000.0 -800 {}
@@ -58,7 +58,14 @@ C {devices/ipin.sym} 100 -550.0 0 0 {name=p6 lab=en_3v3_b}
 C {bias_tree_rb.sym} 500 -560 0 0 {name=Xt}
 C {vcm_rb.sym} 1000 -540.0 0 0 {name=Xc}
 C {vref_s2d_rb.sym} 1500 -540.0 0 0 {name=Xr}
+C {bypass_rb.sym} 1700 -280 0 0 {name=Xb}
 C {devices/lab_wire.sym} 800 -720 0 0 {name=l1 sig_type=std_logic lab=ni}
 C {devices/lab_wire.sym} 800 -680 0 0 {name=l2 sig_type=std_logic lab=vbnc}
 C {devices/lab_wire.sym} 800 -560.0 0 0 {name=l3 sig_type=std_logic lab=vbp}
 C {devices/title.sym} 160 -300 0 0 {name=l0 author="Christoph Maier"}
+N 1680 -440 1680 -330 {}
+N 1720 -540.0 1720 -330 {}
+N 1700 -230 1700 -210 {}
+N 1520 -210 1700 -210 {}
+N 1500.0 -380 1520 -380 {}
+N 1520 -380 1520 -210 {}
