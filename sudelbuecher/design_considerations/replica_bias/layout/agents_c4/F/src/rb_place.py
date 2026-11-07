@@ -1,34 +1,56 @@
 # SPDX-FileCopyrightText: 2026 Christoph Maier
 # SPDX-License-Identifier: Apache-2.0
-# Claude, agent F (C4): the placement of pad_ref_rb (read by rb_cfg.py, make_frame.py, render.py).
-# Rows bottom to top: bypass_rb_f (2 x 6) | rb_casc | rb_tree_p + rb_tails | rb_mirror, rb_tubs, rb_avg | rb_cload, rb_tree_n.
-# Coordinates: lower left of each oriented bounding box (P cells: their NWell; N cells: ThickGateOx).
-CL = 4.0            # left channel: vssh / vddh rails + vbnc, casc's vdd tie
-T = CL + 19.75 + 3.0  # rb_tubs x0: mirror, 3.0 um gap (vcm, ni, en_3v3_b, iref down to TGP), tubs
-Y_BYP = 1.0
-H_BYP = 27.13                       # bypass_rb_f: 2 rows x 6 columns (build_f_cells.py)
-Y_CASC = Y_BYP + H_BYP + 2.0     # bypass-casc channel 2.0: vcm / vref buses out, vssh
-Y_TAILS = Y_CASC + 12.37 + 2.5
-Y_TUBS = Y_TAILS + 9.16 + 3.4         # tails-tubs channel 3.4 (ts, bt, bd; tree_p's top 1.97 below the tubs: NW.b1)
+# Claude, agent F (C4), v2 (after Christoph's review): the placement of pad_ref_rb (read by rb_cfg.py, capgen.py,
+# make_frame.py, render.py, compose_cdl_rb.py). Rigid rows packed by signal flow, the bypass capacitors as filler.
+# Rows bottom to top:
+#   capr (vref capacitors, full width) | rb_casc (R180: vref top right, xp top left, vbnc / vdd right edge)
+#   rb_tree_n (R0, pins up, en_3v3 on the left edge) | rb_tails (M0) | rb_tree_p (M0, abutting: vbp stubs meet)
+#   rb_mirror (M90) + capm (vcm) on it | rb_avg (R0) | rb_tubs (R0, D MR BA BB D, over the tails) | capt (vcm)
+#   capv (vcm) | rb_cload (M0, pins down onto BB's vcm)
+# Coordinates: lower left of each oriented bounding box (P cells: their NWell; N cells and capacitors: ThickGateOx).
+X0 = 0.9                                  # left channel: input pins (en_3v3, en_3v3_b, iref), vssh, vddh
+# capacitor blocks (name, net, rows, cols, W, L, label): capgen.py. Gate area per node (um2):
+#   vcm : CB 144 (rb_cload) + capv 2 x 19.24 x 12.66 + capm 2 x 8.18 x 3.25 + capt 1 x 2.9 x 12.4 = 144 + 576.3
+#   vref: CBR 144 (rb_cload) + capr 2 x 34.1 x 16.9 = 144 + 1152.6
+CAPS = [('capr', 'vref', 1, 2, 34.1, 16.9, 'CBR'), ('capm', 'vcm', 1, 2, 8.18, 3.25, 'CBM'),
+        ('capt', 'vcm', 1, 1, 2.9, 12.4, 'CBM'), ('capv', 'vcm', 1, 2, 19.24, 12.66, 'CBM')]
+H_CAPR = 16.9 + 2.24
+Y_CAPR = 0.15                             # bottom margin (router edge track)
+Y_CASC = Y_CAPR + H_CAPR                  # abutting: one ThickGateOx, rings 0.54 apart
+Y2 = Y_CASC + 12.37 + 1.5                 # channel: vref, xp, vbnc, vdd
+Y3 = Y2 + 9.16 + 3.23                     # tails-tubs channel; tree_p's top 1.80 below the tubs (NW.b1)
+T = X0 + 34.01 + 0.86 + 2.345             # rb_tubs x0: tails start 2.345 left of it (TR under MR, BT under BA / BB)
+Y_AVG_TOP = Y3 + 14.66
+W = X0 + 34.01 + 0.86 + 24.19 + 12.94 + 0.9
 PLACE = [
     ('frame', 'frame_f', 'R0', 0.0, 0.0),
-    ('byp', 'bypass_rb_f', 'R0', CL, Y_BYP),
-    ('casc', 'rb_casc', 'M0', CL, Y_CASC),                       # vref top left, xp top right, vbnc / vdd left
-    ('tails', 'rb_tails', 'R180', T + 6.855, Y_TAILS),           # ts / bt up under MR / BA-BB; vbp stub left
-    ('treep', 'rb_tree_p', 'R180', T + 6.855 - 12.94, Y_TAILS + 0.22),   # abuts tails: vbp stubs meet, one NWell
-    ('tubs', 'rb_tubs', 'M90', T, Y_TUBS),                       # D BB BA MR D; ts / bt / bd down, gh / m / vcm up
-    ('mirror', 'rb_mirror', 'R180', CL, Y_TUBS - 1.0),           # bd / vcm on its right edge, low
-    ('avg', 'rb_avg', 'R0', T + 28.70 + 2.5, Y_TUBS),            # gh top, m sides, xp bottom
-    ('cload', 'rb_cload', 'M0', CL, Y_TUBS + 11.97 + 2.0),       # vcm / en_3v3_b / vref down
-    ('treen', 'rb_tree_n', 'R180', T + 10.38, Y_TUBS + 14.66 + 2.0),   # pins down: gh over tubs' gh; en_3v3 right
+    ('capr', 'capr', 'R0', X0, Y_CAPR),                          # vref bus on its bottom edge
+    ('casc', 'rb_casc', 'R180', X0, Y_CASC),
+    ('treen', 'rb_tree_n', 'R0', X0, Y2),                        # pins up (gh, xp, vbp, vref, iref); en_3v3 left
+    ('tails', 'rb_tails', 'M0', T - 2.345, Y2),                  # ts / bt up; vbp stub right
+    ('treep', 'rb_tree_p', 'M0', T - 2.345 + 24.19, Y2 + 0.22),  # vbp stub left (abuts), vbnc down, TGP up
+    ('tubs', 'rb_tubs', 'R0', T, Y3),                            # ts / bt / bd down, gh / m / vcm up
+    ('avg', 'rb_avg', 'R0', T - 2.5 - 8.19, Y3),                 # gh top, m sides, xp bottom
+    ('mirror', 'rb_mirror', 'M90', X0, Y3),                      # bd / vcm on its right edge, high
+    ('capm', 'capm', 'R0', X0, Y3 + 9.17),                       # on the mirror (abutting)
+    ('capt', 'capt', 'R0', T + 28.70 + 0.9, Y3),                 # right of the tubs
+    ('capv', 'capv', 'R0', X0, Y_AVG_TOP + 1.0),                 # vcm bus on its top edge
+    ('cload', 'rb_cload', 'M0', W - 0.6 - 29.56, Y3 + 14.64),    # on capt (abutting); vcm / en_3v3_b / vref down
 ]
-W = CL + 79.22 + 2.0
-H = Y_TUBS + 11.97 + 2.0 + 14.24 + 0.5
-PORT_P = 1.08                                   # port pitch: 4 router tracks (0.27)
-PORT_Y = Y_TUBS + 14.66 + 2.0 + 5.595 - 2 * PORT_P   # en_3v3 level of tree_n's right edge, minus two port pitches,
-PORT_Y = 0.265 + 0.27 * round((PORT_Y - 0.265) / 0.27)  # on a router track (first track 0.12 + 0.145 above y 0)
-# rb_casc (M0) vdd pin: frame y 5.83..6.12 -> Y_CASC + 11.16 - y; strap from the vddh rail (x 1.8..2.8) to the pin stub
-STRAPS = [(2.6, Y_CASC + 11.16 - 6.12, CL + 0.25, Y_CASC + 11.16 - 5.83)]
-NETMAP = {'casc': {'vdd': 'vddh_casc'}}     # drawn, not routed
-EXTRA_KEEPOUT = [('M2', (s[0] - 0.4, s[1] - 0.5, s[2] + 0.4, s[3] + 0.5)) for s in STRAPS]
+H = Y_AVG_TOP + 1.0 + 12.66 + 2.24 + 0.15
+VCM_Y = Y3 + 8.7                          # vcm pin on the right edge: the D2S vref (slot y 223.3) straight out
+SLOT_Y0 = 223.315 - VCM_Y                 # so the cell's lower left sits at (535.0 - W, SLOT_Y0) in slot7
+# pins: (net, side, lo, hi) along the edge
+PINS = [('vref', 'right', 9.8, 10.2), ('vcm', 'right', VCM_Y - 0.2, VCM_Y + 0.2),
+        ('en_3v3', 'left', Y2 + 3.9, Y2 + 4.3), ('en_3v3_b', 'left', Y2 + 5.0, Y2 + 5.4),
+        ('iref', 'left', Y2 + 6.1, Y2 + 6.5), ('vssh', 'left', 9.8, 10.2), ('vddh', 'left', Y3 - 2.0, Y3 - 1.6)]
+# rb_casc's vdd (its band's vdd track and the three dummy tracks tied to it, pin on its right edge in R180, frame
+# y 5.83..6.12 -> Y_CASC + 12.37 - 1.21 - y): not routed; a router landing there fills the gaps between those tracks
+# (same net) into a plate wider than Mn.e_w next to vbnc (M2.e, measured in v1 and v2a). Instead F draws a strap of
+# the track's width (after routing, finalize.py) from the pin stub to a vddh terminal box in the right channel.
+_vy0, _vy1 = Y_CASC + 12.37 - 1.21 - 6.12, Y_CASC + 12.37 - 1.21 - 5.83
+NETMAP = {'casc': {'vdd': 'vddh_casc'}}
+FPINS = [('vddh', (X0 + 71.72 + 0.4, _vy0, X0 + 71.72 + 0.8, _vy1))]
+STRAPS = [(X0 + 71.72 - 0.25, _vy0, X0 + 71.72 + 0.5, _vy1)]
+EXTRA_KEEPOUT = [('M2', (X0 + 71.72 - 0.25, _vy0 - 0.3, X0 + 71.72 + 0.4, _vy1 + 0.3))]
 ROUTE_ORDER_PLACE = []

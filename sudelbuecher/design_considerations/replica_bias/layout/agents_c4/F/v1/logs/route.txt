@@ -1,0 +1,45 @@
+frame_f 85.220 x 86.270
+warning: rb_avg and rb_avg$1 differ; both kept
+warning: nmosHV$1 and nmosHV$1$1 differ; both kept
+placed 10 instances, 0 rails, 0 tap stripes: 85.220 x 86.270 um
+block pad_ref_rb: 85.220 x 86.270 um = 7351.9 um2; gate 2961.8 um2 (40.3 %), MOS diffusion 3272.7 um2 (44.5 %)
+layers drawn in the top cell: 10/0 10/2 10/25 19/0 8/0; well fill 0.00 um2, tap stripes 0
+latch-up pmos/ntap: all device diffusion within reach
+latch-up nmos/ptap: all device diffusion within reach
+  ts         M1   0.00 um  M2   3.66 um  vias 1
+  bt         M1   0.00 um  M2   3.93 um  vias 1
+  vbp        M1   5.40 um  M2  21.87 um  vias 4
+  ni         M1  11.34 um  M2  20.25 um  vias 3
+  iref       M1  54.27 um  M2  24.14 um  vias 4
+  en_3v3     M1  13.50 um  M2   0.27 um  vias 2
+  en_3v3_b   M1  68.58 um  M2  34.88 um  vias 6
+  vbnc       M1   6.31 um  M2   5.30 um  vias 1
+  gh         M1   0.54 um  M2   7.29 um  vias 3
+  m          M1  17.71 um  M2   1.08 um  vias 2
+  xp         M1   1.86 um  M2  32.55 um  vias 2
+  bd         M1  17.25 um  M2   0.78 um  vias 1
+  vcm        M1  79.92 um  M2  56.83 um  vias 14
+  vref       M1  61.56 um  M2  47.24 um  vias 4
+  vddh       M1  19.98 um  M2   4.48 um  vias 3
+  vssh       M1  16.73 um  M2   0.00 um  vias 4
+round 0: failed []
+ROUTE_ORDER used: []
+failed: [] time 4 s
+  ts         M1   0.00 um  M2   3.66 um  vias 1
+  bt         M1   0.00 um  M2   3.93 um  vias 1
+  vbp        M1   5.40 um  M2  21.87 um  vias 4
+  ni         M1  11.34 um  M2  20.25 um  vias 3
+  iref       M1  54.27 um  M2  24.14 um  vias 4
+  en_3v3     M1  13.50 um  M2   0.27 um  vias 2
+  en_3v3_b   M1  68.58 um  M2  34.88 um  vias 6
+  vbnc       M1   6.31 um  M2   5.30 um  vias 1
+  gh         M1   0.54 um  M2   7.29 um  vias 3
+  m          M1  17.71 um  M2   1.08 um  vias 2
+  xp         M1   1.86 um  M2  32.55 um  vias 2
+  bd         M1  17.25 um  M2   0.78 um  vias 1
+  vcm        M1  79.92 um  M2  56.83 um  vias 14
+  vref       M1  61.56 um  M2  47.24 um  vias 4
+  vddh       M1  19.98 um  M2   4.48 um  vias 3
+  vssh       M1  16.73 um  M2   0.00 um  vias 4
+ports: {'vref': (84.63, 77.61, 85.22, 77.9), 'vcm': (84.63, 78.69, 85.22, 78.98), 'en_3v3': (84.63, 79.77, 85.22, 80.06), 'en_3v3_b': (84.63, 80.85, 85.22, 81.14), 'iref': (84.63, 81.93, 85.22, 82.22)}
+texts renamed: 9; cells: ['bypass_rb_f', 'frame_f', 'nmosHV', 'nmosHV$1', 'nmosHV$1$1', 'nmosHV$2', 'nmosHV$3', 'nmosHV$4', 'nmosHV$5', 'nmosHV$6', 'nmosHV$7', 'pad_ref_rb', 'rb_avg', 'rb_avg_l', 'rb_avg_u', 'rb_casc', 'rb_cload', 'rb_mirror', 'rb_pmosHV_w1_l0p45', 'rb_pmosHV_w1_l4', 'rb_pmosHV_w20_l1_ng2', 'rb_pmosHV_w2_l6', 'rb_pmosHV_w5_l6', 'rb_tails', 'rb_tree_n', 'rb_tree_p', 'rb_tub_p20x1', 'rb_tubs']

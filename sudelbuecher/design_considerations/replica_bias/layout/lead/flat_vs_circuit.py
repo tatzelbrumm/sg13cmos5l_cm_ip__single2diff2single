@@ -1,5 +1,5 @@
 """Lead's check of a flat CDL of pad_ref_rb against the circuit netlists: every device (actives and dummies) as a
-multiset of model, {d,s}, g, b, W, L, ng after vddh -> vdd, vssh -> vss and the flattener's instance prefixes (c_, r_, t_, b_) removed from internal nets. usage: python3 -I flat_vs_circuit.py <cdl>"""
+multiset of model, {d,s}, g, b, W, L, ng after vddh -> vdd, vssh -> vss and the flattener's instance prefixes (c_, r_, t_, b_) removed from internal nets. usage: python3 -I flat_vs_circuit.py <cdl> [<bypass_rb.spice>]  (the second file replaces the source bypass_rb subckt)"""
 import sys
 from collections import Counter
 from pathlib import Path
@@ -13,12 +13,16 @@ def key(t, p):
     d, g, s, b, model = [ren.get(x, x[2:] if x[:2] in ("c_", "r_", "t_", "b_") else x) for x in t[:4]] + [t[4]]
     return (model, tuple(sorted((d, s))), g, b, v(p["w"]), v(p["l"]), int(p.get("ng", 1)))
 def par(ts): return dict(x.split("=", 1) for x in ts if "=" in x)
+alt = Path(sys.argv[2]) if len(sys.argv) > 2 else None
 circ, cur = Counter(), None
-for f in SRC:
+for f in SRC + ([alt] if alt else []):
     for ln in f.read_text().replace("\n+", " ").splitlines():
         t = ln.split()
         if not t or t[0].startswith("*"): continue
-        if t[0].lower() == ".subckt": cur = t[1]; continue
+        if t[0].lower() == ".subckt":
+            cur = t[1]
+            if alt and cur == "bypass_rb" and f != alt: cur = None
+            continue
         if t[0].lower() == ".ends": cur = None; continue
         if cur in ("bias_tree_rb", "vcm_rb", "vref_s2d_rb", "bypass_rb") and t[0].startswith("X") and "sg13_hv" in ln:
             p = par(t[6:]); m = p.get("m", "1"); circ[key(t[1:6], p)] += M.get(m) or int(m)

@@ -1,0 +1,4 @@
+capr        71.58 x  19.14 um   1370.0 um2  2 x CBR 34.1u x 16.9u on vref, 1 rows x 2 columns
+capm        19.74 x   5.49 um    108.4 um2  2 x CBM 8.18u x 3.25u on vcm, 1 rows x 2 columns
+capt         5.50 x  14.64 um     80.5 um2  1 x CBM 2.9u x 12.4u on vcm, 1 rows x 1 columns
+capv        41.86 x  14.90 um    623.7 um2  2 x CBM 19.24u x 12.66u on vcm, 1 rows x 2 columns

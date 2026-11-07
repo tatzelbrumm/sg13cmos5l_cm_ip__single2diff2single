@@ -51,6 +51,11 @@ Cell frame of each delivered cell (R0); edge = the bounding-box edge the pin box
 | bypass_rb (rb_n_cells.gds) | 53.30 x 40.02 | vcm | vcm | M2 | inside | (12.185, 38.710; 12.685, 39.000) |
 | bypass_rb (rb_n_cells.gds) | 53.30 x 40.02 | vref | vref | M2 | inside | (12.905, -0.540; 13.405, -0.250) |
 | bypass_rb (rb_n_cells.gds) | 53.30 x 40.02 | vss | vssh | M1 | inside | (-0.710, -0.490; -0.210, -0.230) |
-| bypass_rb_f (rb_f_cells.gds) | 79.22 x 27.13 | vcm | vcm | M2 | inside | (12.185, 25.820; 12.685, 26.110) |
-| bypass_rb_f (rb_f_cells.gds) | 79.22 x 27.13 | vref | vref | M2 | inside | (38.105, -0.540; 38.605, -0.250) |
-| bypass_rb_f (rb_f_cells.gds) | 79.22 x 27.13 | vss | vssh | M1 | inside | (-0.710, -0.490; -0.210, -0.230) |
+| capr (rb_caps.gds) | 71.58 x 19.14 | vref | vref | M2 | inside | (34.285, -0.540; 34.785, -0.250) |
+| capr (rb_caps.gds) | 71.58 x 19.14 | vss | vssh | M1 | inside | (-0.710, -0.490; -0.210, -0.230) |
+| capm (rb_caps.gds) | 19.74 x 5.49 | vcm | vcm | M2 | inside | (8.365, 4.180; 8.865, 4.470) |
+| capm (rb_caps.gds) | 19.74 x 5.49 | vss | vssh | M1 | inside | (-0.710, -0.490; -0.210, -0.230) |
+| capt (rb_caps.gds) | 5.50 x 14.64 | vcm | vcm | M2 | inside | (3.085, 13.330; 3.375, 13.620) |
+| capt (rb_caps.gds) | 5.50 x 14.64 | vss | vssh | M1 | inside | (-0.710, -0.490; -0.210, -0.230) |
+| capv (rb_caps.gds) | 41.86 x 14.90 | vcm | vcm | M2 | inside | (19.425, 13.590; 19.925, 13.880) |
+| capv (rb_caps.gds) | 41.86 x 14.90 | vss | vssh | M1 | inside | (-0.710, -0.490; -0.210, -0.230) |

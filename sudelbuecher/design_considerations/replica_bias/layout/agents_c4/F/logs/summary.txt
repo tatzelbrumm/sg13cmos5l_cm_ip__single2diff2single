@@ -1,6 +1,23 @@
 pad_ref_rb run_drc.py: No DRC violations detected | exception lines: 0 | maximal+LU: 0 | LVS: Netlists match
-bypass_rb_f run_drc.py: No DRC violations detected | exception lines: 0 | maximal+LU: 0 | LVS: Netlists match
+capr run_drc.py: No DRC violations detected | exception lines: 0 | maximal+LU: 0 | LVS: Netlists match
+capm run_drc.py: No DRC violations detected | exception lines: 0 | maximal+LU: 0 | LVS: Netlists match
+capt run_drc.py: No DRC violations detected | exception lines: 0 | maximal+LU: 0 | LVS: Netlists match
+capv run_drc.py: No DRC violations detected | exception lines: 0 | maximal+LU: 0 | LVS: Netlists match
 negative LVS test (BA gate m -> gh in the reference): Netlists don't match
 metal connectivity: split nets: 0
-rows identical to the delivered cells: 8 of 9
-ports in slot coordinates: {'vref': (531.7, 97.75), 'vcm': (531.7, 98.84), 'en_3v3': (531.7, 99.92), 'en_3v3_b': (531.7, 101.0), 'iref': (531.7, 102.08)}
+rows identical to the delivered cells: 8 of 8 placed
+sym:   summary: max mirror XOR 0.0384 um2, 0 narrow-poly hits
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+sym:   summary: max mirror XOR 15.6960 um2, 0 narrow-poly hits
+sym:   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+bypass_rb gate area: vcm 576.29 um2 (+ CB 144), vref 1296.58 um2
+block pad_ref_rb: 73.800 x 76.260 um = 5628.0 um2; gate 2962.7 um2 (52.6 %), MOS diffusion 3261.3 um2 (57.9 %)
+ports in slot coordinates: {'vref': (534.75, 179.06), 'vcm': (534.75, 223.34), 'en_3v3': (461.4, 206.33), 'en_3v3_b': (461.4, 207.41), 'iref': (461.4, 208.49), 'vssh': (461.4, 179.06), 'vddh': (461.4, 212.81)}

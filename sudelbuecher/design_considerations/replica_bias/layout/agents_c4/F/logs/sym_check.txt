@@ -20,9 +20,6 @@ rb_mirror: Activ bbox (-1.23,-0.51;17.98,8.12); axes x = 8.375, y = 3.805 um
 == rb_cload --no-y
 rb_cload: Activ bbox (-0.73,-0.51;28.29,13.19); axes x = 13.78, y = 6.34 um
   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
-== bypass_rb_f 
-bypass_rb_f: Activ bbox (-0.73,-0.51;77.95,26.08); axes x = 38.61, y = 12.785 um
-  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
 == rb_casc 
 rb_casc: Activ bbox (-1.74,-0.94;69.44,10.89); axes x = 33.85, y = 4.975 um
   summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

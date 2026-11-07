@@ -10,7 +10,7 @@ import klayout.db as db
 
 FILES = sys.argv[1:4] + sys.argv[8:]
 OUT_GDS, PLACE, PM, NL = sys.argv[4:8]
-CELLS = ['rb_tree_p', 'rb_tails', 'rb_tubs', 'rb_avg', 'rb_tree_n', 'rb_casc', 'rb_mirror', 'rb_cload', 'bypass_rb', 'bypass_rb_f']
+CELLS = ['rb_tree_p', 'rb_tails', 'rb_tubs', 'rb_avg', 'rb_tree_n', 'rb_casc', 'rb_mirror', 'rb_cload', 'bypass_rb', 'capr', 'capm', 'capt', 'capv']
 src = {}
 for f in FILES:
     ly = db.Layout()

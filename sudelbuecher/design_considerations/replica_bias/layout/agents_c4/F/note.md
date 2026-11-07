@@ -1,78 +1,93 @@
 <!-- SPDX-FileCopyrightText: 2026 Christoph Maier / SPDX-License-Identifier: Apache-2.0 -->
-# pad_ref_rb, placed and routed (Claude, agent F, C4, 2026-11-07, 22:24-22:45 CET)
+# pad_ref_rb v2, placed and routed after Christoph's review (Claude, agent F, C4, 2026-11-07, 23:00-23:30 CET)
 
-[M] = tool result, [R] = reasoning. Placement and routing in one process (lead's messages): the grid router drove the
-placement over four candidates. Rebuild: `sh src/all.sh <inputs> <out> <work>` (50 s, byte-identical rebuild [M]).
+[M] = tool result, [R] = reasoning. v1 (7352 um2, pins bunched at slot7's bottom right) is kept in `v1/`.
+Rebuild and check: `sh src/all.sh <inputs> <out> <work>` (2 min).
 
 ## Result [M] (`logs/summary.txt`)
 
 | check | result |
 |---|---|
-| run_drc.py --no_density (pad_ref_rb) | No DRC violations detected, 0 "exception" lines |
+| run_drc.py --no_density | No DRC violations detected, 0 "exception" lines |
 | sg13cmos5l_maximal.drc -rd latchUpRules=true | 0 errors |
-| LVS flat, --disable_tap_extraction, vs `pad_ref_rb.cdl` | Netlists match |
-| negative LVS test (BA's gate moved m -> gh in the reference) | Netlists don't match: the comparison is not vacuous |
-| metal-only connectivity (`metal_conn.py`; LVS joins vss rings through the substrate) | 16 nets, 0 split |
-| rows vs delivered cells, all layers (`row_xor_vs_inputs.txt`) | 8 of 9 identical; bypass_rb replaced by bypass_rb_f |
-| sym_check of every placed row (`sym_check.txt`) | 0, except rb_tree_p Cont 0.0384 (P's known PCell residual) |
-| bypass_rb_f alone (`cells/logs/`; sym in `logs/sym_check.txt`) | DRC 0, maximal + LU 0, LVS match, sym 0 (both axes) |
+| flat LVS, --disable_tap_extraction, vs `pad_ref_rb.cdl` | Netlists match |
+| negative LVS test (BA's gate moved m -> gh) | Netlists don't match: not vacuous |
+| metal-only connectivity (LVS joins vss rings through the substrate) | 16 nets, 0 split |
+| the 8 rows vs the delivered cells, all layers | 8 of 8 identical (texts vdd / vss -> vddh / vssh only) |
+| sym_check, rows | 0; rb_tree_p Cont 0.0384 (P's known PCell residual) |
+| capacitor blocks alone (`cells/logs/`) | DRC 0, maximal + LU 0, LVS match each; sym 0, capt 15.7 um2 (one column) |
+| metal over transistor gates / over capacitor gates | 0 / 11.7 um2 M1 + 0.3 um2 M2 |
 
-`pad_ref_rb.cdl` is composed by script (`compose_cdl_rb.py`) from the circuit files `pad_ref_rb.spice`,
-`vcm_rb.spice`, `vref_s2d_rb.spice` (bypass_rb ncm 4, ncr 9; vdd / vss -> vddh / vssh): 63 devices = 43 active (the 30
-of the three blocks + 4 CBM + 9 CBR) + 20 dummies, the counts of `cdl_vs_circuit.txt` with ncr 9 [M].
+The CDL is composed from the circuit files with `bypass_rb` replaced by `bypass_rb_drawn.spice` (the drawn
+capacitors): 58 devices = 38 active + 20 dummies.
 
-## Area [M]
+## Area and place [M]
 
-85.22 x 86.27 um = 7352 um2 (the 85 x 85 estimate: 7225). Cells 4788 um2 (65 %): the delivered 4772 with bypass_rb
-2133 -> bypass_rb_f 2149. Candidate 2 (bypass 3 x 4) was 77.72 x 99.16 = 7707 um2 with an 18 x 40 um empty corner.
+- **73.80 x 76.26 um = 5628 um2.** v1: 7352 um2. Ceiling: 5700. Cell and capacitor boxes: 4822 um2, 86 %.
+- **Proposed position:** right edge at slot x 535.0, lower left (461.20, 169.07), spanning y 169.1 .. 245.3. This is
+  between the S2D group (112-160) and the D2S group (222-262).
+  - The vcm pin is at the D2S vref pin's height, 223.34, so it runs straight out.
+- **Pins** (slot coordinates), Metal2, 0.29 um wide:
+  - right edge: vref y 179.06 (runs down the right side to the S2D vref, 112.26); vcm y 223.34 (on to the S2D vcm,
+    136.02, along the edge).
+  - left edge, bottom to top: en_3v3 206.33, en_3v3_b 207.41, iref 208.49 (own enables and own iref leg); vssh 179.06,
+    vddh 212.81.
+- **vcm and vref are not crossed at the top level** [R]: the vcm route along the edge ends at 136, above the point
+  where vref turns in at 112.
 
-## Placement (bottom to top; orientations KLayout's; reasons in `routing_plan.md`)
+## Placement, bottom to top (signal flow; routing in `routing_plan.md`)
 
-- bypass_rb_f (R0) over the full width; rb_casc (M0: vref top left, xp top right, vbnc / vdd left).
-- rb_tree_p (R180) abutting rb_tails (R180): the vbp stubs meet, one NWell [M]; rb_tails under rb_tubs, TR under MR,
-  BT under BA / BB.
-- rb_mirror (R180, bd / vcm low on its right edge) | rb_tubs (M90: D BB BA MR D) | rb_avg (R0, gh top, xp bottom).
-- rb_cload (M0, pins down, over the mirror: vcm, en_3v3_b) | rb_tree_n (R180, pins down, gh over the tubs' gh).
-- Pins: vref, vcm, en_3v3, en_3v3_b, iref on Metal2 at the right edge, bottom to top at 1.08 um pitch, y 77.76 ..
-  82.08 (centres); vssh / vddh: Metal2 rails 1.0 um wide on the left edge, full height (`frame_f`).
+- **capr** (vref capacitors), the full width under **rb_casc** (R180: vref top right, xp top left, vbnc / vdd on the
+  right edge). capr and rb_casc abut: one ThickGateOx.
+- **rb_tree_n** (R0: pins up; en_3v3 on the left edge, at the input pins) | **rb_tails** (M0) | **rb_tree_p** (M0).
+  rb_tails and rb_tree_p abut, so the vbp stubs meet; one NWell [M]. rb_tree_p's vbnc pin faces rb_casc's vbnc end.
+- **rb_mirror** (M90: bd / vcm on its right edge) with **capm** on it | **rb_avg** (R0) | **rb_tubs** (R0, over the
+  tails: TR under MR, BT under BA / BB) | **capt**.
+- **capv** | **rb_cload** (M0: pins down, its vcm pin over BB's vcm pin). CB thus sits on the buffer output.
+
+## Capacitors (bypass_rb as drawn: for the lead's backannotation)
+
+All hv NMOS, gate = node, S = D = B = vssh, one finger each. Built by `src/capgen.py`: agent N's `bypass()` code with
+the 12 um unit turned into W x L. Same finger, gate column, facing pairs, closed p+ ring and Metal2 gate bus.
+
+| cell | node | count | W (um) | L (um) | gate (um2) | where |
+|---|---|---:|---:|---:|---:|---|
+| capr | vref | 2 | 34.1 | 16.9 | 1152.6 | full width under rb_casc |
+| rb_cload CBR | vref | 1 | 12 | 12 | 144 | rb_cload (the pad's CLN slot), unchanged |
+| capv | vcm | 2 | 19.24 | 12.66 | 487.2 | top left |
+| capm | vcm | 2 | 8.18 | 3.25 | 53.2 | on rb_mirror |
+| capt | vcm | 1 | 2.9 | 12.4 | 36.0 | right of rb_tubs |
+| rb_cload CB | vcm | 1 | 12 | 12 | 144 | vcm_rb's CB, unchanged |
+
+- **Totals:** vcm 576.3 + CB 144 = 720.3 um2 (target 720); vref 1152.6 + 144 = 1296.6 um2 (target 1296).
+- **Netlist:** `bypass_rb_drawn.spice` holds the subcircuit as drawn: XCBR_cload, XCBR_capr m=2, XCBM_capm m=2,
+  XCBM_capt, XCBM_capv m=2.
+- **Re-simulation [R]:** capr's 34.1 / 16.9 lies outside the sizes simulated so far; the PSP model scales, but the
+  bypass should be re-simulated.
 
 ## Changes to the rows
 
-- **bypass_rb -> bypass_rb_f**: N's own generator (`inputs/N/build_rb_n.py --bypass 4 8 2 6`, unchanged), 2 rows x 6
-  columns instead of 3 x 4. Same 12 capacitors (4 CBM on vcm, 8 CBR on vref, 12u/12u hv NMOS, S = D = B = vss), same
-  unit, columns, ring and buses; 79.22 x 27.13 um. Why: as wide as rb_casc, 12.9 um lower, no empty corner. LU 2 rows.
-- No other row changed (XOR 0 on every layer [M]); only the texts vdd / vss became vddh / vssh (`finalize.py`).
-- No device added, removed or re-tied; the CDL is the circuit netlists as they stand: nothing to backannotate.
-- Rule 9: the small switches stay in their rows' rings [R]: moving TGN / TDN / TGP out would not shorten any route
-  here (their pins are at the row ends, next to the channels that carry ni / en_3v3_b / iref).
+None: the 8 placed rows are XOR 0 against the delivered cells. bypass_rb (N's 3 x 4 array) is replaced by the four
+capacitor blocks above. No transistor or dummy is added, removed or re-tied; only bypass_rb's capacitors change.
 
-## Routing
+## Routing [M]
 
-- C2's grid router `generator.py`, copied unchanged from C3 F (`src/`); config `src/rb_cfg.py` + `src/rb_place.py`.
-  Pitch 0.27, wire 0.29 um, M1 horizontal / M2 vertical preferred, M1 / M2 only, no metal over any gate (0 um2 [M]).
-  All 16 nets routed in the first round [M]: M1 375 um, M2 265 um, 55 vias.
-- Drawn by F: one Metal2 strap (x 2.6 .. 4.25, 0.29 um, the track's width) from the vddh rail to rb_casc's vdd pin.
-  A router landing there had filled the gaps between rb_casc's vdd track and the three dummy tracks tied to it (same
-  net) into one plate wider than 0.3 um, 0.21 um from vbnc: M2.e (first DRC round [M]).
-- Port strips on the right edge, each open only to its own net (otherwise nets ran along the edge past the ports).
-- Net lengths M1 / M2 in um [M]: ts 0 / 3.7, bt 0 / 3.9, gh 0.5 / 7.3, vbnc 6.3 / 5.3, bd 17.2 / 0.8, m 17.7 / 1.1,
-  vbp 5.4 / 21.9, ni 11.3 / 20.2, xp 1.9 / 32.5, en_3v3 13.5 / 0.3, iref 54.3 / 24.1, en_3v3_b 68.6 / 34.9,
-  vref 61.6 / 47.2, vcm 79.9 / 56.8, vddh 20.0 / 4.5, vssh 16.7 / 0.
-- Supplies: each ring / vdd track is one router terminal, so each row is tapped once [R].
-
-## Position in slot7 (`previews/context.png`)
-
-Proposed lower left (446.78, 20.0): the cell spans x 446.78 .. 532.00, y 20.0 .. 106.27, 1.15 um left of the frame's
-M2 vss_1v2 strip (x 533.15) and below y 112. Its pins then sit at x 531.70 .. 532.00, y 97.75 .. 102.08 [M], 10 .. 57
-um below the S2D pins (vref 112.26 .. iref 159.51), in the same order; vcm also goes on to the D2S vref at 223.34.
+- C2's grid router, unchanged (`src/generator.py`, sha256 cea21b865695). Pitch 0.27 um, wire 0.29 um, M1 horizontal
+  and M2 vertical preferred, M1 / M2 only.
+- Every net routed, the second round. Totals: M1 469 um, M2 226 um, 76 vias.
+- **Keep-outs:** every transistor gate (+0.1 um). The capacitor blocks are open to routing, because metal over a
+  bypass gate only adds capacitance to a DC node [R]. Each pin owns its strip of the edge.
+- **One strap drawn by F:** M2, 0.29 um, from rb_casc's vdd pin to a vddh terminal in the right channel. When the
+  router landed on that pin, it filled the gaps between rb_casc's same-net vdd tracks into a plate wider than 0.3 um
+  next to vbnc, which is an M2.e violation (measured in v1 and in v2a).
+- **Net lengths M1 / M2 (um):** ts 0 / 3.3, bt 0 / 3.5, m 17.1 / 1.1, vbnc 19.8 / 1.6, xp 19.5 / 16.7, gh 25.1 / 11.6,
+  ni 30.5 / 10.4, bd 29.2 / 14.4, vbp 39.1 / 27.0, iref 62.9 / 2.8, en_3v3 0 / 0.8, en_3v3_b 71.0 / 26.4,
+  vcm 66.3 / 14.3, vref 48.1 / 65.8, vddh 37.6 / 17.0, vssh 3.0 / 9.6.
 
 ## Open points [R]
 
-1. vcm (137 um) and vref (109 um) are the longest nets: four cells each (bypass, cload, mirror / tubs; casc, tree_n),
-   DC outputs with the bypass on them; the wire resistance (tens of ohms, not extracted) is far below their source
-   impedance (vref about 20 kOhm). PEX not run.
-2. The top-level routes to the S2D / D2S pins and the supply hook-up (slot vdd_3v3 / vss_3v3 or pad iovdd / iovss) are
-   not in this cell; vddh / vssh rails are on the left edge, away from the signal pins.
-3. bypass_rb_f's shape (2 x 6) is F's choice under the new latitude; N's 3 x 4 fits the same placement with a 13 um
-   taller cell (candidate 2, also clean).
-4. rb_tree_p's TGP and rb_tree_n's TGN / TDN stay in their rings (rule 9 optional).
+1. **Area:** 5628 um2 is 1.3 % under the ceiling. The rest is routing channels (1.5 / 3.23 / 1.0 um) and rb_casc's
+   72 um length, which sets the width. capm and capt are thin fillers (49 % and 45 % gate per box).
+2. **Supplies:** vddh and vssh are single edge pins (0.29 um wide) wired by the router. Supply currents are about
+   25 uA. If rails are wanted at the top level, the left edge is free for them.
+3. **Re-simulation:** the bypass, with the new capacitor sizes, and the enable settling.

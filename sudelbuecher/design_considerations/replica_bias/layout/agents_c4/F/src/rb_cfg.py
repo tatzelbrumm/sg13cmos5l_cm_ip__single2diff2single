@@ -12,11 +12,8 @@ I = os.environ['FINPUTS']                     # the read-only inputs
 NAME = 'pad_ref_rb'
 PROCESS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ihp_sg13cmos5l.py')
 # P3 before P: P's superseded rb_avg is then the renamed copy (rb_avg$1) and is dropped as unused
-SOURCES = {'frame': C + '/frame_f.gds', 'P3': I + '/P3/rb_avg_v3.gds', 'P': I + '/P/rb_p_cells.gds',
-           'N': I + '/N/rb_n_cells.gds'}
-for k, f in (('F', C + '/rb_f_cells.gds'),):
-    if os.path.exists(f):
-        SOURCES = dict(list(SOURCES.items())[:1] + [(k, f)] + list(SOURCES.items())[1:])
+SOURCES = {'frame': C + '/frame_f.gds', 'caps': C + '/rb_caps.gds', 'P3': I + '/P3/rb_avg_v3.gds',
+           'P': I + '/P/rb_p_cells.gds', 'N': I + '/N/rb_n_cells.gds'}
 
 SUP = {'vdd': 'vddh', 'vss': 'vssh'}
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'rb_place.py')).read())   # PLACE, W, H, PORT_Y
@@ -47,9 +44,8 @@ FLOORPLAN = '\n'.join(lines) + '\n'
 SIGNAL = ['ts', 'bt', 'vbp', 'ni', 'iref', 'en_3v3', 'en_3v3_b', 'vbnc', 'gh', 'm', 'xp', 'bd', 'vcm', 'vref']
 POWER = ['vddh', 'vssh']
 NETS = SIGNAL + POWER
-# signal pins on Metal2 at the right edge, bottom to top in the slot boundary's order, PORT_P apart
-PORTS = {n: ('right', (PORT_Y + PORT_P * i - 0.1, PORT_Y + PORT_P * i + 0.1))
-         for i, n in enumerate(['vref', 'vcm', 'en_3v3', 'en_3v3_b', 'iref'])}
+# the macro's pins (rb_place.PINS): Metal2 at the cell edge, each at its own height
+PORTS = {n: (side, (lo, hi)) for n, side, lo, hi in PINS}
 
 
 def _keepouts():
@@ -57,8 +53,8 @@ def _keepouts():
     cell is a keep-out for all nets on Metal1 and Metal2."""
     out, seen = [], {}
     for inst, cell, o, x, y in PLACE:
-        if cell == 'frame_f':
-            continue
+        if cell == 'frame_f' or cell.startswith('cap'):
+            continue                      # capacitors: metal may cross their gates (bypass, no matching)
         if cell not in seen:
             ly, c = _cell(cell)
             ra = db.Region(c.begin_shapes_rec(ly.layer(1, 0)))
@@ -66,14 +62,11 @@ def _keepouts():
             seen[cell] = [p.bbox().to_dtype(ly.dbu) for p in (ra & rp).merged().sized(100).merged().each()]
         for b in seen[cell]:
             out.append(dict(metal=('M1', 'M2'), inst=inst, box=(b.left, b.bottom, b.right, b.top), nets=[]))
-    # the port group on the right edge: each port's strip of the edge (0.7 um deep) is open to its own net only, so
-    # no net runs along the edge past another's port
-    names = ['vref', 'vcm', 'en_3v3', 'en_3v3_b', 'iref']
-    for i, n in enumerate(names):
-        y = PORT_Y + PORT_P * i
-        out.append(dict(metal=('M1', 'M2'), inst='frame', box=(W - 0.7, y - 0.54, W, y + 0.54), nets=[n]))
-    out.append(dict(metal=('M1', 'M2'), inst='frame', box=(W - 0.7, PORT_Y - 3.0, W, PORT_Y - 0.54), nets=[]))
-    out.append(dict(metal=('M1', 'M2'), inst='frame', box=(W - 0.7, PORT_Y + 4 * PORT_P + 0.54, W, PORT_Y + 8.0), nets=[]))
+    # each pin owns its strip of the edge (0.7 um deep, its window + 0.54), open to its own net only, so that no net
+    # runs along the edge past another's pin
+    for n, side, lo, hi in PINS:
+        x0, x1 = (W - 0.7, W) if side == 'right' else (0.0, 0.7)
+        out.append(dict(metal=('M1', 'M2'), inst='frame', box=(x0, lo - 0.54, x1, hi + 0.54), nets=[n]))
     out += EXTRA_KEEPOUT
     return out
 

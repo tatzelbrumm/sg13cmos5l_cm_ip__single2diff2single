@@ -1,10 +1,10 @@
-2026-11-07 21:40:54 +0000: Memory Usage (425384K) : Starting running IHP-SG13CMOS5L Klayout DRC maximum runset on /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/F/out/pad_ref_rb.gds
-2026-11-07 21:40:54 +0000: Memory Usage (425384K) : Ruby Version for klayout: 3.2.3
-2026-11-07 21:40:54 +0000: Memory Usage (426616K) : Loading database to memory is complete.
-2026-11-07 21:40:54 +0000: Memory Usage (426616K) : IHP-SG13CMOS5L Klayout DRC maximum runset output at: /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/F/work/final3/chk/maximal.lyrdb
-2026-11-07 21:40:54 +0000: Memory Usage (426616K) : Evaluate switches.
-2026-11-07 21:40:54 +0000: Memory Usage (426616K) : Klayout will use 4 thread(s)
-2026-11-07 21:40:54 +0000: Memory Usage (426616K) :  mode is enabled for sg13cmos5l_maximal runset.
+2026-11-07 22:23:15 +0000: Memory Usage (425240K) : Starting running IHP-SG13CMOS5L Klayout DRC maximum runset on /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/F/out/pad_ref_rb.gds
+2026-11-07 22:23:15 +0000: Memory Usage (425240K) : Ruby Version for klayout: 3.2.3
+2026-11-07 22:23:15 +0000: Memory Usage (426520K) : Loading database to memory is complete.
+2026-11-07 22:23:15 +0000: Memory Usage (426520K) : IHP-SG13CMOS5L Klayout DRC maximum runset output at: /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/F/work/final_v2/chk/maximal.lyrdb
+2026-11-07 22:23:15 +0000: Memory Usage (426520K) : Evaluate switches.
+2026-11-07 22:23:15 +0000: Memory Usage (426520K) : Klayout will use 4 thread(s)
+2026-11-07 22:23:15 +0000: Memory Usage (426520K) :  mode is enabled for sg13cmos5l_maximal runset.
 Rule NW.a: 0 error(s)
 Rule NW.c: 0 error(s)
 Rule NW.c1: 0 error(s)
@@ -292,4 +292,4 @@ Rule OffGrid.dfpad_sbump: 0 error(s)
 Rule OffGrid.PolyRes: 0 error(s)
 Rule OffGrid.LBE: 0 error(s)
 Number of DRC errors for maximum rule set: 0
-2026-11-07 21:41:07 +0000: Memory Usage (453024K) : KLayout DRC run for maximum ruleSet completed in 12.52 seconds
+2026-11-07 22:23:31 +0000: Memory Usage (451020K) : KLayout DRC run for maximum ruleSet completed in 15.81 seconds
