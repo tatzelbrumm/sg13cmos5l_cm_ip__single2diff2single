@@ -1,7 +1,7 @@
 <!-- SPDX-FileCopyrightText: 2026 Christoph Maier / SPDX-License-Identifier: Apache-2.0 -->
 # P (C4) round 2: dummy small tubs in rb_avg (2026-11-07, 21:00–21:08 CET)
 
-Claude (Opus 5.5), agent P. [M] = measured, [R] = reasoning. This report adds to `P_report.md` (round 1).
+Claude, agent P. [M] = measured, [R] = reasoning. This report adds to `P_report.md` (round 1).
 
 Christoph: "apply dummies ... try to reproduce the dummy structures in the pads for matching". Tub order D MR BA BB D: unchanged.
 
