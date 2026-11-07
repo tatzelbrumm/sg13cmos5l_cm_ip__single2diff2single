@@ -10,6 +10,7 @@ MOS capacitors per node, on top of the drawn ones (CB on vcm, CB1 / CB2 on vref,
   both   + 1 NMOS + 1 PMOS (the same added area as nmos / pmos)
   both2  + 2 NMOS + 2 PMOS (twice the area)
   ideal  (psrr only) the pads with ideal vref / vcm at the blocks' DC values: the pads' own supply rejection
+  nmos4, nmos6  (experiments *_n) + 2 NMOS on vcm and + 4 / + 6 NMOS on vref: NMOS area instead of PMOS density
 
 Experiments (results/bypass_*.tsv):
   bypass_s2d   iovdd ripple (1 V AC on every 3.3 V source: pads, harness, blocks) -> S2D differential output referred
@@ -18,7 +19,7 @@ Experiments (results/bypass_*.tsv):
   bypass_d2s   the same ripple -> D2S output (ground-referenced) and |vcm|; D2S input common mode = vcm, as in the chain.
   bypass_kick  S2D enable with the blocks (cl_s2d_en): the kick on vcm and vref.
   bypass_en    the references' own enable time (rb_en), sel 0.
-usage: python3 -I explore_bypass.py bypass_s2d bypass_d2s bypass_kick bypass_en -j N
+usage: python3 -I explore_bypass.py bypass_s2d bypass_d2s bypass_kick bypass_en [bypass_*_n] -j N
 """
 import argparse
 import itertools
@@ -42,7 +43,9 @@ def cap_lines(cap):
             "pmos": p(1, "vcm", "vddc") + p(2, "vcm", "vddc") + p(3, "vref", "vddr") + p(4, "vref", "vddr"),
             "both": n(1, "vcm") + p(2, "vcm", "vddc") + n(3, "vref") + p(4, "vref", "vddr"),
             "both2": n(1, "vcm") + n(2, "vcm") + p(3, "vcm", "vddc") + p(4, "vcm", "vddc")
-            + n(5, "vref") + n(6, "vref") + p(7, "vref", "vddr") + p(8, "vref", "vddr")}[cap]
+            + n(5, "vref") + n(6, "vref") + p(7, "vref", "vddr") + p(8, "vref", "vddr"),
+            "nmos4": n(1, "vcm") + n(2, "vcm") + "".join(n(k, "vref") for k in range(3, 7)),
+            "nmos6": n(1, "vcm") + n(2, "vcm") + "".join(n(k, "vref") for k in range(3, 9))}[cap]
 
 
 _blocks = B.blocks
@@ -86,9 +89,9 @@ def deck_d2s_ac(c):
     return with_ac(B.deck_d2s_dc_rb(c), [("gout", "mag(v(pad))"), ("gvcm", "mag(v(vcm))")])
 
 
-def ac_conds():
+def ac_conds(caps=None):
     v = B.rb_values()
-    for cap, vdd, m, t in itertools.product(["ideal"] + CAPS, [3.3], ["ss", "tt", "ff"], [27, 125]):
+    for cap, vdd, m, t in itertools.product(caps or ["ideal"] + CAPS, [3.3], ["ss", "tt", "ff"], [27, 125]):
         vr, vc = v[(str(vdd), m, str(t), "0")]
         yield dict(cap=cap, vdd=vdd, corner_mos=m, temp=t, sel=0, vref_dc=vr, vcm_dc=vc)
 
@@ -111,6 +114,14 @@ EXP = {
                       conds=lambda: (dict(cap=cap, vdd=v, corner_mos=m, temp=27, sel=0)
                                      for cap, v, m in itertools.product(CAPS, [3.0, 3.6], ["ss", "tt", "ff"]))),
 }
+NCAPS = ["nmos4", "nmos6"]
+EXP.update({
+    "bypass_s2d_n": dict(EXP["bypass_s2d"], conds=lambda: ac_conds(NCAPS)),
+    "bypass_d2s_n": dict(EXP["bypass_d2s"], conds=lambda: ac_conds(NCAPS)),
+    "bypass_kick_n": dict(EXP["bypass_kick"], conds=lambda: (dict(c, cap=cap) for cap in NCAPS for c in B.en_conds())),
+    "bypass_en_n": dict(EXP["bypass_en"], conds=lambda: (dict(cap=cap, vdd=v, corner_mos=m, temp=27, sel=0) for cap, v, m
+                                                         in itertools.product(NCAPS, [3.0, 3.6], ["ss", "tt", "ff"]))),
+})
 
 if __name__ == "__main__":
     R.EXPERIMENTS.update(EXP)
