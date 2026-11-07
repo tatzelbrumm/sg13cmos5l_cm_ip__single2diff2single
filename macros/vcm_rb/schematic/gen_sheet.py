@@ -18,7 +18,7 @@ def parse(src, sub):
     lines, inside, ports, devs, group, notes = open(src).read().splitlines(), False, [], [], "", []
     for l in lines:
         if l.lower().startswith(f".subckt {sub.lower()} "):
-            inside, ports = True, l.split()[2:]
+            inside, ports = True, [t for t in l.split()[2:] if "=" not in t]  # subckt parameters are not ports
             continue
         if not inside:
             if l.startswith("*") and not l.startswith("* SPDX"):
@@ -97,16 +97,34 @@ def gen(src, sub, out, cols=6):
     print(f"{sub}: {len(devs)} devices, {len(ports)} ports -> {out}")
 
 
+def instances(text, sub):
+    """subcircuit instance lines (X<name> <nets ...> <cell>, no '=' parameters) inside .subckt <sub>."""
+    out, inside = {}, False
+    for l in text.splitlines():
+        l = l[2:] if l.startswith("**.") else l
+        if l.lower().startswith(f".subckt {sub.lower()} "):
+            inside = True
+            continue
+        if inside and l.lower().startswith(".ends"):
+            break
+        t = l.split()
+        if inside and t and t[0][:1] in "Xx" and not DEV.match(l):
+            out[t[0].upper()] = tuple(t[1:])  # nets, cell and any parameters (name=value) in order
+    return out
+
+
 def check(src, sub, net):
+    """Compares the sheet's xschem netlist with the source subckt: ports, every hv MOS device (nets, model, w, l, ng, m)
+    and every subcircuit instance (nets, cell)."""
     ports, devs, _ = parse(src, sub)
     want = {d["name"].upper(): (d["d"], d["g"], d["s"], d["b"], d["model"], d["p"]["w"], d["p"]["l"],
                                 str(d["p"].get("ng", 1)), str(d["p"].get("m", 1))) for d in devs}
     got, gports, inside = {}, None, False
-    text = open(net).read().replace("\n+", " ")
+    text = open(net).read().replace("\n+", " ").replace("\n*+", " ")  # xschem wraps long (commented) header lines
     for l in text.splitlines():
         l = l[2:] if l.startswith("**.") else l
         if l.lower().startswith(f".subckt {sub.lower()} "):
-            inside, gports = True, l.split()[2:]
+            inside, gports = True, [t for t in l.split()[2:] if "=" not in t]
             continue
         if inside and l.lower().startswith(".ends"):
             break
@@ -116,9 +134,12 @@ def check(src, sub, net):
             got[m.group(1).upper()] = (m.group(2), m.group(3), m.group(4), m.group(5), m.group(6).lower(), p["w"],
                                        p["l"], p.get("ng", "1"), p.get("m", "1"))
     bad = [n for n in want if want[n] != got.get(n)] + [n for n in got if n not in want]
+    wi, gi = instances(open(src).read(), sub), instances(text, sub)
+    badi = [n for n in wi if wi[n] != gi.get(n)] + [n for n in gi if n not in wi]
+    inst = f"; instances source {len(wi)}, sheet {len(gi)}, mismatches {len(badi)} {badi[:5]}" if (wi or gi) else ""
     print(f"{sub}: ports {'equal' if gports == ports else f'DIFFER {gports} vs {ports}'}; devices source {len(want)}, "
-          f"sheet {len(got)}, mismatches {len(bad)} {bad[:5]}")
-    return 0 if (not bad and gports == ports) else 1
+          f"sheet {len(got)}, mismatches {len(bad)} {bad[:5]}{inst}")
+    return 0 if (not bad and not badi and gports == ports) else 1
 
 
 if __name__ == "__main__":

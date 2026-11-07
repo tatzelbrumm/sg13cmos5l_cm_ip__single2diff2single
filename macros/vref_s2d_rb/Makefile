@@ -1,7 +1,8 @@
 # SPDX-FileCopyrightText: 2026 Tim Edwards and Simon Dorrer
 # SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 #
-# vref_s2d_rb: copied 2026-11-06 from macros/oa_core_pd/Makefile (replica bias task; changed: TOP, CACE_GROUPS, sim-cace exports the macro library path, targets check-sheet and sim-char).
+# vref_s2d_rb: copied 2026-11-06 from macros/oa_core_pd/Makefile (replica bias task; changed: TOP, CACE_GROUPS, SHEET_CELLS, sim-cace exports the macro library path, targets check-sheet and
+# sim-char).
 # oa_core_pd: copied 2026-10-27 from macros/hv_logic/Makefile (itself derived 2026-10-20 from macros/inverter/Makefile. Changed: TOP, sim-cace (loop over CACE_GROUPS,
 # results/<TOP>/ with CSV), spec-table, sim-all = sim-cace, and clean keeps verification/cace/results.
 
@@ -121,7 +122,8 @@ sim-view-xschem: ## Plot Xschem simulation results (usage: make sim-view-xschem 
 .PHONY: sim-view-xschem
 
 # Parameter groups of verification/cace/$(TOP).yaml run by sim-cace. Override with: make sim-cace CACE_GROUPS=<group>
-CACE_GROUPS ?= room_params hot_params cold_params pd_params mm_params
+CACE_GROUPS ?= 
+SHEET_CELLS ?= vref_s2d_rb
 # Parallel CACE jobs (keep small: parallel ngspice runs have stalled on 2-core machines)
 CACE_JOBS   ?= 1
 CACE_SCRIPTS := $(MAKEFILE_DIR)/../../scripts/cace
@@ -129,29 +131,19 @@ CACE_SCRIPTS := $(MAKEFILE_DIR)/../../scripts/cace
 # Per group: run CACE on the schematic netlist, keep plots, the CACE summary and a CSV of all runs under
 # results/$(TOP)/, then drop the run folder. A group that misses a spec makes make fail at the END.
 # (Scheme of chipalooza2/levelshifters/ls_pair/cace.mk.)
-sim-cace: ## Run CACE (-s schematic) and collect plots, summaries and CSV in verification/cace/results/<TOP>/
-	cd $(CACE_DIR) && mkdir -p results/$(TOP) && status=0 && \
-	xschem -x -q -r --rcfile $(MAKEFILE_DIR)/$(XSCHEM_SCH_DIR)/xschemrc \
-	  --command "set fp [open .xschem_library_path w]; puts \$$fp \$$XSCHEM_LIBRARY_PATH; close \$$fp" > /dev/null 2>&1 ; \
-	export XSCHEM_USER_LIBRARY_PATH=$$(tr ':' '\n' < .xschem_library_path | grep '/macros/' | grep -v '^$(MAKEFILE_DIR)/' | paste -sd: -) ; \
-	for g in $(CACE_GROUPS); do \
-	  rm -rf _runs/RUN_* ; \
-	  cace $(TOP).yaml -s schematic -p $$g -j $(CACE_JOBS) --no-progress-bar || status=1 ; \
-	  cp _runs/RUN_*/parameters/$$g/*.png results/$(TOP)/ 2>/dev/null ; \
-	  cp _runs/RUN_*/summary.md results/$(TOP)/summary_$$g.md ; \
-	  python3 $(CACE_SCRIPTS)/cace_to_csv.py $(TOP).yaml $$g _runs/RUN_* results/$(TOP)/$$g.csv || status=1 ; \
-	  rm -rf _runs/RUN_* ; \
-	done ; \
-	rm -rf _runs _docs netlist .xschem_library_path ; exit $$status
+sim-cace: ## CACE suite of pad_ref_rb (this block hangs on its shared tree bias_tree_rb since 2026-11-07)
+	$(MAKE) -C $(MAKEFILE_DIR)/../pad_ref_rb sim-cace
 .PHONY: sim-cace
 
-check-sheet: ## Netlist the sheet with xschem and compare it with netlist/source/<TOP>.spice device by device
-	cd $(XSCHEM_SCH_DIR) && mkdir -p simulations && \
-	xschem -q -x -n -s --tcl 'set top_subckt 1' --rcfile xschemrc -o simulations --netlist_filename $(TOP).spice $(TOP).sch > /dev/null 2>&1 && \
-	python3 $(MAKEFILE_DIR)/../vcm_rb/schematic/gen_sheet.py --check $(MAKEFILE_DIR)/netlist/source/$(TOP).spice $(TOP) simulations/$(TOP).spice
+check-sheet: ## Netlist each sheet (SHEET_CELLS) with xschem and compare it with netlist/source/<TOP>.spice (devices, instances)
+	cd $(XSCHEM_SCH_DIR) && mkdir -p simulations && status=0 && \
+	for c in $(SHEET_CELLS); do \
+	  xschem -q -x -n -s --tcl 'set top_subckt 1' --rcfile xschemrc -o simulations --netlist_filename $$c.spice $$c.sch > /dev/null 2>&1 ; \
+	  python3 $(MAKEFILE_DIR)/../vcm_rb/schematic/gen_sheet.py --check $(MAKEFILE_DIR)/netlist/source/$(TOP).spice $$c simulations/$$c.spice || status=1 ; \
+	done ; exit $$status
 .PHONY: check-sheet
 
-sim-char: ## Block and closed-loop characterization decks (macros/vcm_rb/testbenches/rb_char/run_rb.py)
+sim-char: ## Block and closed-loop characterization decks of pad_ref_rb (macros/vcm_rb/testbenches/rb_char/run_rb.py)
 	python3 -I $(MAKEFILE_DIR)/../vcm_rb/testbenches/rb_char/run_rb.py rb_dc rb_z rb_mm rb_en rb_up -j 4
 .PHONY: sim-char
 

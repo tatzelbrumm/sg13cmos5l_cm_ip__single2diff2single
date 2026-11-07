@@ -1,0 +1,55 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* pad_ref_rb: the replica bias of the custom pads' reference voltages in one cell (2026-11-07, option A of the user's
+* question on sharing): the shared bias tree bias_tree_rb feeds vcm_rb (S2D vcm = D2S vref) and vref_s2d_rb (S2D vref).
+* One 5 uA reference current, one enable. Needs ../../../vcm_rb/netlist/source/vcm_rb.spice and
+* ../../../vref_s2d_rb/netlist/source/vref_s2d_rb.spice. Task docs/launch/replica_bias_TASK.md (branch harness-test),
+* records in docs/replica_bias/.
+* Ports: vdd vss iref vcm vref en_3v3 en_3v3_b (iref: 5 uA SOURCED into the cell, from bias_gen_pd's iref, a bias_dist_pd
+* output or a core's iout; en_3v3 / en_3v3_b from en_ctrl_3v3). vdd / vss: the rails of the pads it serves (the top edge
+* that vcm_rb tracks is referenced to the pads' unit rail).
+* Supply current (tt 27 C, 3.3 V): tree 9 uA (5 uA reference + 2 BP + 2 BNC) + vcm_rb 14 uA + vref_s2d_rb 1.7 uA.
+
+* bias_tree_rb: the lines of both replica blocks, as bias_tree_pd at the pad devices' current densities.
+*   ni   = NI, 6u/6u NMOS diode carrying the reference (= the pads' BN density: 5 uA in 6u/6u)
+*   vbp  = BP, 2u/6u PMOS diode at 2 uA from NBP 2.4u/6u (= the pads' BP density: 5 uA in 5u/6u)
+*   vbnc = BNC, 1u/8u NMOS diode at 2 uA from PBNC 2u/6u (= the pads' BNC)
+* Disabled (en_3v3 = 0): TGN / TGP open the reference, TDN pulls ni to vss; BP pulls vbp to vdd, BNC vbnc to vss.
+* TGP: drain ni, source iref as drawn by Christoph (2026-11-07, b4cd2288); a transmission gate is symmetric.
+.subckt bias_tree_rb vdd vss iref ni vbp vbnc en_3v3 en_3v3_b
+* --- reference input (as bias_tree_pd)
+XTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1 mm_ok=1
+XTGP ni en_3v3_b iref vdd sg13_hv_pmos w=1u l=0.45u ng=1 mm_ok=1
+XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 mm_ok=1
+XNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 mm_ok=1
+* --- lines
+XNBP vbp ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 mm_ok=1
+XBP vbp vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 mm_ok=1
+XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 mm_ok=1
+XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 mm_ok=1
+* --- layout dummy (Christoph, 2026-11-07): the layout copies the s2d pad's tree row bias_tree_noab_p_c3, whose 5u/6u
+*     device PBN (the pad's vbn leg) has no use here. It stays drawn as a dummy in the pads' convention: D = S = B =
+*     vdd, gate vbp by poly abutment with BP and PBNC. No current (V_DS = 0); 30 um2 of gate on vbp.
+XMDPBN vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 mm_ok=1
+.ends bias_tree_rb
+
+* bypass_rb: the bypass capacitors of vcm and vref (Christoph, 2026-11-07: in a cell of their own, distinct from the
+* blocks; "6 on vref, 4 on vcm"; a parametric array). All 12u x 12u hv NMOS to vss, the s2d pad's load-capacitor device
+* (CLP / CLN); parameters ncm, ncr = the number of capacitors on vcm and vref.
+*   CBM (m=ncm, 4) on vcm: with vcm_rb's own CB, 5 x 0.61 pF at 1.26 V.
+*   CBR (m=ncr, 8) on vref: Christoph's 6 plus CB1 / CB2 moved out of vref_s2d_rb; 8 x 0.20 ... 0.43 pF at vref
+*   0.44 ... 0.6 V (a 12u x 12u hv NMOS is barely inverted there).
+* NMOS to vss only: PMOS to iovdd couples iovdd into vref, the S2D's zero point (4 ... 7 x the S2D's input-referred
+* iovdd ripple at 1 MHz), and raises vcm's 10 MHz ripple (explore_bypass.py). Effect (rb_char, 2026-11-07): the S2D
+* enable kick 0.236 -> 0.112 V on vcm, 0.212 -> 0.096 V on vref; vcm settles at enable in <= 1 us (harness reference).
+.subckt bypass_rb vss vcm vref ncm=4 ncr=8
+XCBM vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m={ncm} mm_ok=1
+XCBR vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m={ncr} mm_ok=1
+.ends bypass_rb
+
+.subckt pad_ref_rb vdd vss iref vcm vref en_3v3 en_3v3_b
+Xt vdd vss iref ni vbp vbnc en_3v3 en_3v3_b bias_tree_rb
+Xc vdd vss ni vbp vbnc vcm en_3v3_b vcm_rb
+Xr vdd vss ni vbnc vref en_3v3_b vref_s2d_rb
+Xb vss vcm vref bypass_rb ncm=4 ncr=8
+.ends pad_ref_rb

@@ -25,25 +25,36 @@ new_cace = """sim-cace: ## Run CACE (-s schematic) and collect plots, summaries 
 \t""" + CLEAN + """ ; exit $$status
 .PHONY: sim-cace
 
-check-sheet: ## Netlist the sheet with xschem and compare it with netlist/source/<TOP>.spice device by device
-\tcd $(XSCHEM_SCH_DIR) && mkdir -p simulations && \\
-\txschem -q -x -n -s --tcl 'set top_subckt 1' --rcfile xschemrc -o simulations --netlist_filename $(TOP).spice $(TOP).sch > /dev/null 2>&1 && \\
-\tpython3 $(MAKEFILE_DIR)/../vcm_rb/schematic/gen_sheet.py --check $(MAKEFILE_DIR)/netlist/source/$(TOP).spice $(TOP) simulations/$(TOP).spice
+check-sheet: ## Netlist each sheet (SHEET_CELLS) with xschem and compare it with netlist/source/<TOP>.spice (devices, instances)
+\tcd $(XSCHEM_SCH_DIR) && mkdir -p simulations && status=0 && \\
+\tfor c in $(SHEET_CELLS); do \\
+\t  xschem -q -x -n -s --tcl 'set top_subckt 1' --rcfile xschemrc -o simulations --netlist_filename $$c.spice $$c.sch > /dev/null 2>&1 ; \\
+\t  python3 $(MAKEFILE_DIR)/../vcm_rb/schematic/gen_sheet.py --check $(MAKEFILE_DIR)/netlist/source/$(TOP).spice $$c simulations/$$c.spice || status=1 ; \\
+\tdone ; exit $$status
 .PHONY: check-sheet
 
-sim-char: ## Block and closed-loop characterization decks (macros/vcm_rb/testbenches/rb_char/run_rb.py)
+sim-char: ## Block and closed-loop characterization decks of pad_ref_rb (macros/vcm_rb/testbenches/rb_char/run_rb.py)
 \tpython3 -I $(MAKEFILE_DIR)/../vcm_rb/testbenches/rb_char/run_rb.py rb_dc rb_z rb_mm rb_en rb_up -j 4
 .PHONY: sim-char
 """
 i = src.index("sim-cace: ##")
 j = src.index(".PHONY: sim-cace") + len(".PHONY: sim-cace\n")
-for top, groups in (("vcm_rb", "dc_params dc_3v0_params sel_params pd_params mm_params"),
-                    ("vref_s2d_rb", "room_params hot_params cold_params pd_params mm_params")):
-    s = src[:i] + new_cace + src[j:]
+# Since 2026-11-07 vcm_rb and vref_s2d_rb hang on the shared tree bias_tree_rb: their CACE suite is pad_ref_rb's.
+CELLS = (("vcm_rb", "", "vcm_rb"), ("vref_s2d_rb", "", "vref_s2d_rb"),
+         ("pad_ref_rb", "vcm_dc_params vcm_dc_3v0_params vcm_sel_params vref_room_params vref_hot_params "
+                        "vref_cold_params pd_params mm_params", "pad_ref_rb bias_tree_rb bypass_rb"))
+DELEGATE = """sim-cace: ## CACE suite of pad_ref_rb (this block hangs on its shared tree bias_tree_rb since 2026-11-07)
+\t$(MAKE) -C $(MAKEFILE_DIR)/../pad_ref_rb sim-cace
+.PHONY: sim-cace
+"""
+for top, groups, cells in CELLS:
+    cace = new_cace if groups else DELEGATE + new_cace[new_cace.index("\ncheck-sheet:"):]
+    s = src[:i] + cace + src[j:]
     s = s.replace("TOP = oa_core_pd", f"TOP = {top}")
-    s = re.sub(r"^CACE_GROUPS \?= .*$", f"CACE_GROUPS ?= {groups}", s, flags=re.M)
-    s = s.replace("# oa_core_pd: copied 2026-10-27", f"# {top}: copied 2026-11-06 from macros/oa_core_pd/Makefile (replica bias task;"
-                  " changed: TOP, CACE_GROUPS, sim-cace exports the macro library path, targets check-sheet and sim-char).\n"
+    s = re.sub(r"^CACE_GROUPS \?= .*$", f"CACE_GROUPS ?= {groups}\nSHEET_CELLS ?= {cells}", s, flags=re.M)
+    s = s.replace("# oa_core_pd: copied 2026-10-27", f"# {top}: copied {'2026-11-07' if top == 'pad_ref_rb' else '2026-11-06'} from macros/oa_core_pd/Makefile (replica bias task;"
+                  " changed: TOP, CACE_GROUPS, SHEET_CELLS, sim-cace exports the macro library path, targets check-sheet and\n"
+                  "# sim-char).\n"
                   "# oa_core_pd: copied 2026-10-27", 1)
     (MAC / top / "Makefile").write_text(s)
     print(top, "Makefile written")

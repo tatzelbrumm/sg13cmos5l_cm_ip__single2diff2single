@@ -2,9 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 """Characterization of the replica bias blocks vcm_rb and vref_s2d_rb, alone and with the pads (closed loop).
 
-Every block gets its reference from its own bias_gen_pd (same selection as the pads': 0 harness iDAC 5 uA, 1 Oguey-Aebischer
-core, 2 bandgap core) and its own supply source (Vbc for vcm_rb, Vbr for vref_s2d_rb, both at iovdd), so its current
-is measured; the 5 uA reference it takes from bias_gen_pd is measured in series (Vic / Vir).
+Since 2026-11-07 both blocks hang on one shared tree, bias_tree_rb (macros/pad_ref_rb): one bias_gen_pd (same selection
+as the pads': 0 harness iDAC 5 uA, 1 Oguey-Aebischer core, 2 bandgap core) feeds the tree, whose lines ni / vbp / vbnc
+feed vcm_rb and vref_s2d_rb, as in pad_ref_rb. The three cells are instantiated as pad_ref_rb wires them, each on its
+own supply source at iovdd (Vbt tree, Vbc vcm_rb, Vbr vref_s2d_rb), so the currents are measured separately; the 5 uA
+reference is measured in series (Vir). The CACE suite (macros/pad_ref_rb) runs the pad_ref_rb cell itself.
 Closed loop: the pad decks of ../pad_char/run_pad_char.py with the ideal Vref / Vcm replaced by the blocks.
 
 usage (repo env): python3 -I run_rb.py <experiment> [-j 4]; results in results/<experiment>.tsv
@@ -21,24 +23,24 @@ import run_pad_char as R  # noqa: E402
 R.RUNS = HERE / "_runs"
 R.RES = HERE / "results"
 MAC = R.MACROS
-RB_INC = [str(MAC / "vcm_rb/netlist/source/vcm_rb.spice"), str(MAC / "vref_s2d_rb/netlist/source/vref_s2d_rb.spice")]
+RB_INC = [str(MAC / "vcm_rb/netlist/source/vcm_rb.spice"), str(MAC / "vref_s2d_rb/netlist/source/vref_s2d_rb.spice"),
+          str(MAC / "pad_ref_rb/netlist/source/pad_ref_rb.spice")]
 GEN_INC = ["hv_logic/netlist/source/hv_logic.spice", "ls_up_1v2_3v3/netlist/source/ls_up_1v2_3v3.spice",
            "en_ctrl_3v3/netlist/source/en_ctrl_3v3.spice", "bias_tree_pd/netlist/source/bias_ref_pd.spice",
            "bias_gen_pd/netlist/source/bias_gen_pd.spice"]
 
 
 def blocks(c, vdd_node="iovdd"):
-    """vcm_rb and vref_s2d_rb with their own bias_gen_pd, on the harness controls of R.harness(c, 'b')."""
-    return f"""{R.harness(c, 'b')}Iextc xgc 0 5u
-XEdc xgc xgc vextb vextb sg13_hv_pmos w=5u l=6u
-XEmc ibiasc xgc vextb vextb sg13_hv_pmos w=5u l=6u
-Xgr iovdd 0 ibiasc irr en_3v3b sel0_3v3b sel1_3v3b bias_gen_pd
-Vic irefb irc2 0
-Vir irr irr2 0
+    """bias_tree_rb + vcm_rb + vref_s2d_rb + bypass_rb wired as in pad_ref_rb, from one bias_gen_pd on the harness controls of
+    R.harness(c, 'b'); each cell on its own supply source (all at iovdd) so its current is measured."""
+    return f"""{R.harness(c, 'b')}Vir irefb irr2 0
+Vbt vddt 0 dc {c['vdd']}
 Vbc vddc 0 dc {c['vdd']}
 Vbr vddr 0 dc {c['vdd']}
-Xvcm vddc 0 irc2 vcm en_3v3b en_3v3_bb vcm_rb
-Xvrf vddr 0 irr2 vref en_3v3b en_3v3_bb vref_s2d_rb
+Xtree vddt 0 irr2 rb_ni rb_vbp rb_vbnc en_3v3b en_3v3_bb bias_tree_rb
+Xvcm vddc 0 rb_ni rb_vbp rb_vbnc vcm en_3v3_bb vcm_rb
+Xvrf vddr 0 rb_ni rb_vbnc vref en_3v3_bb vref_s2d_rb
+Xbyp 0 vcm vref bypass_rb
 """
 
 
@@ -53,11 +55,11 @@ def deck_rb_dc(c):
 {blocks(c)}.temp {c['temp']}
 {R.OPTS_S2D}.control
 op
+let it = -i(vbt)
 let ic = -i(vbc)
 let ir = -i(vbr)
-let irefc = i(vic)
-let irefr = i(vir)
-echo RES $&v(vcm) $&v(vref) $&ic $&ir $&irefc $&irefr $&v(xvcm.gh) $&v(xvcm.xp) $&v(xvcm.m)
+let iref = i(vir)
+echo RES $&v(vcm) $&v(vref) $&it $&ic $&ir $&iref $&v(xvcm.gh) $&v(xvcm.xp) $&v(xvcm.m)
 .endc
 .end
 """
@@ -95,7 +97,7 @@ def deck_rb_en(c):
 {blocks(cc)}.temp {c['temp']}
 .options savecurrents method=gear reltol=1e-4 abstol=1e-12 gmin=1e-12
 .control
-save v(vcm) v(vref) i(vbc) i(vbr)
+save v(vcm) v(vref) i(vbt) i(vbc) i(vbr)
 tran 20n 60u
 meas tran vc_end find v(vcm) at=39.9u
 meas tran vr_end find v(vref) at=39.9u
@@ -111,11 +113,9 @@ meas tran vc_max max v(vcm) from=2u to=39.9u
 meas tran vr_max max v(vref) from=2u to=39.9u
 meas tran vc_off find v(vcm) at=59.9u
 meas tran vr_off find v(vref) at=59.9u
-let icc = -i(vbc)
-let irr = -i(vbr)
-meas tran ic_off find icc at=59.9u
-meas tran ir_off find irr at=59.9u
-echo RES $&t_vcm $&t_vref $&vc_end $&vr_end $&vc_max $&vr_max $&vc_off $&vr_off $&ic_off $&ir_off
+let itot = -i(vbt) - i(vbc) - i(vbr)
+meas tran i_off find itot at=59.9u
+echo RES $&t_vcm $&t_vref $&vc_end $&vr_end $&vc_max $&vr_max $&vc_off $&vr_off $&i_off
 .endc
 .end
 """
@@ -128,6 +128,7 @@ def deck_rb_up(c):
     d = d.replace(f"Vio iovdd 0 dc {c['vdd']}", f"Vio iovdd 0 pwl(0 0 10u {c['vdd']})")
     d = d.replace(f"Vbc vddc 0 dc {c['vdd']}", "Ebc vddc 0 iovdd 0 1").replace(f"Vbr vddr 0 dc {c['vdd']}",
                                                                               "Ebr vddr 0 iovdd 0 1")
+    d = d.replace(f"Vbt vddt 0 dc {c['vdd']}", "Ebt vddt 0 iovdd 0 1")
     d = d.replace("Vs33b s33b 0 3.3", "Es33b s33b 0 iovdd 0 1")
     ctrl = d[d.index(".control"):]
     d = d.replace(ctrl, """.control
@@ -252,15 +253,14 @@ def loop_eq_conds():
 EXP = {
     "rb_dc": dict(what="blocks alone: vcm, vref, block supply currents (without / with the 5 uA reference), internal nodes",
                   kind="dc", deck=deck_rb_dc,
-                  cols=["vcm", "vref", "I_vcm_rb", "I_vref_s2d_rb", "Iref_vcm_rb", "Iref_vref_s2d_rb", "gh", "xp", "m"],
+                  cols=["vcm", "vref", "I_tree", "I_vcm_rb", "I_vref_s2d_rb", "Iref", "gh", "xp", "m"],
                   conds=lambda: R.grid(vdd=R.VDDS, corner_mos=R.CORNERS, temp=R.TEMPS, sel=[0, 1, 2])),
     "rb_z": dict(what="output impedance |Z| at 1 kHz / 1 MHz (vcm_rb with its CB, vref_s2d_rb with CB1 / CB2)", kind="dc",
                  deck=deck_rb_z, cols=["Zvcm_1k", "Zvcm_1M", "Zvref_1k", "Zvref_1M"],
                  conds=lambda: R.grid(vdd=[3.0, 3.3, 3.6], corner_mos=["ss", "tt", "ff"], temp=R.TEMPS, sel=[0])),
     "rb_en": dict(what="enable (en_1v2 0 -> 1.2 V at 2 us) and disable (at 40 us): settling to 1 %, overshoot, off state",
                   kind="dc", deck=deck_rb_en,
-                  cols=["t_vcm", "t_vref", "vcm", "vref", "vcm_max", "vref_max", "vcm_off", "vref_off", "I_vcm_rb_off",
-                        "I_vref_s2d_rb_off"],
+                  cols=["t_vcm", "t_vref", "vcm", "vref", "vcm_max", "vref_max", "vcm_off", "vref_off", "I_off"],
                   conds=lambda: R.grid(vdd=[3.0, 3.6], corner_mos=["ss", "tt", "ff"], temp=[-40, 27, 125],
                                        sel=[0, 1, 2])),
     "rb_up": dict(what="start-up: iovdd ramp 0 -> vdd in 10 us with the enable requested from t = 0", kind="dc",
@@ -268,8 +268,8 @@ EXP = {
                   conds=lambda: R.grid(vdd=[3.0, 3.6], corner_mos=["ss", "tt", "ff"], temp=[-40, 27, 125],
                                        sel=[0, 1, 2])),
     "rb_mm": dict(what="mismatch Monte Carlo of the blocks (mos tt_mismatch, mm_ok = 1 on every block device), tt 27 C",
-                  kind="dc", deck=deck_rb_mm, cols=["vcm", "vref", "I_vcm_rb", "I_vref_s2d_rb", "Iref_vcm_rb",
-                                                    "Iref_vref_s2d_rb", "gh", "xp", "m"],
+                  kind="dc", deck=deck_rb_mm, cols=["vcm", "vref", "I_tree", "I_vcm_rb", "I_vref_s2d_rb", "Iref", "gh",
+                                                    "xp", "m"],
                   conds=lambda: (dict(vdd=3.3, temp=27, sel=0, seed=s) for s in range(1, 101))),
     "cl_s2d_dc": dict(what="S2D DC (INL over u = +-0.5 V around the block's vref) with vref / vcm from the blocks",
                       kind="dc", deck=deck_s2d_dc_rb, cols=R.S2D_DC_COLS + ["vref", "vcm"],

@@ -37,6 +37,9 @@ slot  (slot7_wrapper-compatible; fallback wiring of both pads)
 | `oa_core_pd`, `bg_core_pd` | the Oguey–Aebischer and the Banba bandgap core, sourced reference current out | sheets (from `bias_sel_pd`) |
 | `bias_gen_pd` | `bias_sel_pd` without the tree: selectable reference current, in both pads (`xg`, next to the tree `xt`) since 2026-10-28, or in the slot's main area | sheet, 2026-10-27; on its own not simulated |
 | `bias_dist_pd` | switchable distribution mirror, 3 inputs, 4 outputs, one per pad tree | sheet, 2026-10-27, not simulated |
+| `pad_ref_rb` | replica bias of the custom pads' reference voltages in one cell: the shared bias tree `bias_tree_rb` (own sheet in this macro) feeding `vcm_rb` and `vref_s2d_rb`; one 5 µA reference (a `bias_dist_pd` leg), one enable | 2026-11-07: sheets + source, `make check-sheet`; CACE 8 / 8 groups pass (schematic); layout primitives collected from the s2d pad cell (`layout/primitives/`), no layout |
+| `vcm_rb` | replica bias for the pads' internal common mode (S2D `vcm` = D2S `vref`), centred in the band where both pads stay linear; also holds the block / closed-loop / gap-run testbenches of the replica bias task (`testbenches/`, `docs/replica_bias/`) | 2026-11-06 / 07: sheet + source, `make check-sheet`; characterized through `pad_ref_rb` |
+| `vref_s2d_rb` | replica bias for the S2D pad reference `vref`, about 0.5 V, rising with temperature as the S2D input edge does | 2026-11-06 / 07: sheet + source, `make check-sheet`; characterized through `pad_ref_rb` |
 | `bias_in_pd`, `_out_pd`, `_oa_pd`, `_bg_pd` | the four reference circuits on their own (flat, with the tree), with power-down; class-AB stacks as CACE fixtures since 2026-10-27 | sheets (from `power_down/xschem`) + CACE |
 | `en_ctrl_3v3` | `en_3v3 = en_1v2 ∧ vdd_1v2 present ∧ vdd_3v3 present`, level-shifted select bits | sheets + CACE |
 | `ls_up_1v2_3v3`, `ls_dn_3v3_1v2` | level shifters (from `ls_pair`) | sheets + CACE |

@@ -8,8 +8,9 @@ The pad reference `vref` of `sg13cmos5l_IOPadSingle2Diff`: the S2D gives `outp �
 
 **The user's choice (2026-11-06, answer 1a):** about 0.5 V, so that the pad range 0 … 1 V includes iovss.
 
-The block is made from a 5 µA reference current, with lines and devices as in `../vcm_rb`. Task, survey and run log are
-in `docs/replica_bias/`.
+Since 2026-11-07 it hangs on the shared bias tree `bias_tree_rb`, which also feeds `../vcm_rb`; both sit in the cell
+`pad_ref_rb` (`../pad_ref_rb`), made from one 5 µA reference current with one enable. Until then the block had its own
+copy of the tree (NI, BP, BNC) and its own reference. Task, survey and run log are in `docs/replica_bias/`.
 
 ## Function
 
@@ -24,37 +25,47 @@ in `docs/replica_bias/`.
 - **The block:** `vref = vbnc − V_GS(F)`, an x-node replica at low current density.
   - F is four fingers of the S2D fold cascode (15u/3u) at 1.67 µA, against the S2D's 30u/3u at 10 µA.
   - It rises with temperature as x does (+0.6 mV/K) and sits about 0.1 V above it.
-  - Its output impedance is 1/gm(F), about 20 kΩ. CB1 / CB2 (2 × 12u × 12u hv NMOS to vss, not to iovdd, so supply
-    ripple does not reach the pad's zero) hold the pin during the pad's own transients (G6).
-- **Lines:** NI 6u/6u, the reference; BP 2u/6u at 2 µA from NBP 2.4u/6u; BNC 1u/8u at 2 µA from PBNC 2u/6u.
-- **Disabled:** the reference is cut and ni pulled to vss, and SPD pulls `vref` to vss (the S2D's vref drives gates
-  only).
+  - Its output impedance is 1/gm(F), about 20 kΩ. Since 2026-11-07 the cell has no capacitor: a follower has no loop.
+    The bypass that holds the pin during the pad's own transients (G6) is `bypass_rb` in `../pad_ref_rb`: 8 × 12u ×
+    12u hv NMOS to vss (CB1 / CB2, before in this cell, and 6 more), not to iovdd, so supply ripple does not reach the
+    pad's zero.
+- **Lines:** from `bias_tree_rb`: ni (NI 6u/6u, the reference) for the sink SF, vbnc (BNC 1u/8u at 2 µA from PBNC
+  2u/6u) for the followers F.
+- **Disabled** (`en_3v3` = 0 on `pad_ref_rb`): the tree cuts the reference and pulls ni to vss, vbnc decays to vss, and
+  SPD pulls `vref` to vss (the S2D's vref drives gates only).
+- **No own enable:** vref is on whenever `pad_ref_rb` is. Pulling vref low with the tree on would short the followers F
+  from vbnc to vss.
 
 ## Ports
 
 | port | dir | |
 |---|---|---|
 | vdd, vss | inout | iovdd / iovss |
-| iref | in | 5 µA, **sourced** into the block |
+| ni, vbnc | in | the lines of `bias_tree_rb` (gates only) |
 | vref | out | to the S2D pad's `vref` (gates only) |
-| en_3v3, en_3v3_b | in | 3.3 V enable and complement (en_ctrl_3v3) |
+| en_3v3_b | in | complement of the 3.3 V enable (en_ctrl_3v3), gate of SPD |
 
 ## Files
 
 ```
 netlist/source/vref_s2d_rb.spice        source netlist (mm_ok=1 on every device)
-schematic/xschem/vref_s2d_rb.sch/.sym   sheet drawn by hand from the source netlist (2026-11-07, xschem-analog-schematic skill);
-                                        make check-sheet netlists it with xschem and compares it device by device (16 = 16, ports equal)
+schematic/xschem/vref_s2d_rb.sch/.sym   sheet drawn by hand from the source netlist (2026-11-07, xschem-analog-schematic skill,
+                                        compacted by hand by Christoph, then moved onto the shared tree); make check-sheet
+                                        compares it device by device (6 = 6, ports equal)
 schematic/vref_s2d_rb.png / .svg        render of the sheet
 ../vcm_rb/schematic/gen_sheet.py        only its --check mode is in use; generating would overwrite the hand-drawn sheet
-verification/cace/                      CACE suite: room (27 C), hot (125 C), cold (-40 C), pd, mm; results/vref_s2d_rb/
+../pad_ref_rb/verification/             CACE suite of pad_ref_rb, which covers this block (vref_room / hot / cold, pd, mm)
+verification/baseline/cace_own_tree/    CACE results of 2026-11-06, with the block's own tree
 verification/baseline/s2d_mc_vref0v5/   G8: S2D mismatch / process MC at vref 0.5 V (current schematic)
 testbenches/spice/                      explore_ztc.py (zero-TC currents of the pads' diode sizes), explore_vref.py
 ```
 
-The block and closed-loop decks are shared with vcm_rb: `../vcm_rb/testbenches/rb_char/run_rb.py`.
+The block and closed-loop decks run pad_ref_rb: `../vcm_rb/testbenches/rb_char/run_rb.py`.
 
-## Results (schematic, 2026-11-06)
+## Results (schematic; on the shared tree, 2026-11-07)
+
+Every DC value is the same as with the block's own tree (2026-11-06) to the last printed digit. CACE:
+`../pad_ref_rb/verification/cace/results/pad_ref_rb/`, 8 / 8 groups pass.
 
 | quantity | result | condition |
 |---|---|---|
@@ -63,14 +74,16 @@ The block and closed-loop decks are shared with vcm_rb: `../vcm_rb/testbenches/r
 | margin to the S2D INL edge | ≥ +31 mV at 125 °C (ff) | harness reference |
 | S2D pad range with this vref (linear to 1 mV, ground-referenced source) | 0.000 … ≥ 1.09 V up to 27 °C; 0.015 … 0.095 to ≥ 1.215 V at 125 °C | `cl_s2d_win`; an ideal 0.5 V gives 0 … 1.057 V at 3.0 V ss −40 °C |
 | S2D INL with this vref and vcm_rb | ≤ 1.28 mV (OA core: 1.73) | ideal 0.5 / 1.2 V: up to 3.65 mV |
-| mismatch | σ 3.8 mV (0.486 … 0.501 V, 100 seeds); adds to the S2D's own offset σ 5.25 mV → 6.5 mV | tt, 27 °C, 3.3 V |
-| supply current | 5.5 µA + 5.0 µA reference | |
+| mismatch | σ 3.7 mV (0.486 … 0.502 V, 100 seeds); adds to the S2D's own offset σ 5.25 mV → 6.4 mV | tt, 27 °C, 3.3 V |
+| supply current | 1.56 … 1.60 µA in the block (the follower), plus the shared tree's 3.9 µA and the 5.0 µA reference | |
 | output impedance | 18 … 28 kΩ | |
-| enable to 1 % | 0.19 … 1.07 µs (OA core: up to 25 µs) | |
+| enable to 1 % | 0.39 … 1.29 µs with bypass_rb (OA core: up to 25 µs); with the own tree 0.19 … 1.07 µs: one vbnc line now charges all five 15/3 gates | |
+| S2D enable kick on vref | ≤ 0.096 V with bypass_rb (0.212 V with CB1 / CB2 alone) | references on before the pad |
 | disabled | vref 0.000 V, current ≤ 10 nA | 3.6 V, tt / ff, 27 / 125 °C |
 
 **Against a divider.**
-- **Current:** a divider giving 0.494 V at the same 21 kΩ draws 19.9 µA, against 10.5 µA here (0.5×).
+- **Current:** a divider giving 0.494 V at the same 21 kΩ draws 19.9 µA. Here: 1.6 µA in the block plus its share of
+  the tree and reference; both references together in `../pad_ref_rb/README.md`.
 - **Supply:** a divider moves with iovdd (±45 mV over 3.0 … 3.6 V). For a ground-referenced input that is input
   offset.
 - **Temperature:** it stays at 0.5 V when hot, where the S2D input needs ≥ 0.55 V.
@@ -83,6 +96,8 @@ The block and closed-loop decks are shared with vcm_rb: `../vcm_rb/testbenches/r
   ff / 125 °C.
   - vref is not observable at a pin unless routed out (for example to the analog bus).
 - **The process spread at 27 °C is ±11 mV, mismatch σ 3.8 mV:** comparable to the pad's own offset.
-- **Layout:** not started (floorplan in `docs/replica_bias/SUMMARY.md`). Gate area 564 µm², half of it the two bypass
-  capacitors.
+- **Layout:** not started. Primitives and a row plan in `../pad_ref_rb/layout/primitives/README.md`.
+- **The bypass is smaller than its area suggests:** at vref ≈ 0.44 … 0.59 V a 12u × 12u hv NMOS is barely inverted,
+  0.20 … 0.43 pF each (0.61 pF at 1.26 V; tt, 27 °C). The simulations include this. bypass_rb therefore has 8 of
+  them on vref. A PMOS to iovdd would give 0.64 pF at any vref but couples iovdd into the S2D's zero point.
 - **Extracted views:** none.
