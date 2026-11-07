@@ -2,7 +2,7 @@
 SPDX-FileCopyrightText: 2026 Christoph Maier
 SPDX-License-Identifier: Apache-2.0
 -->
-# Cloud session C4: replica bias for the reference and common-mode inputs of the custom pads (2026-11-06)
+# Cloud session C4: replica bias for the reference and common-mode inputs of the custom pads (2026-11-06 / 07)
 
 - **Session:** Claude Code cloud session (https://claude.ai/code/session_01XU3KH9LkJUXwr5yuksqCZG), claude. Launch
   prompt: the task file `docs/launch/replica_bias_TASK.md` on branch `harness-test`.
@@ -22,3 +22,6 @@ SPDX-License-Identifier: Apache-2.0
   are missing here. They are not reconstructed: the only other trace of them is inside the reasoning records, which
   this log excludes. The full content of Phase 1 is in `docs/replica_bias/SURVEY.md` and `RUNLOG.md` on the design
   branch.
+- **Day 2 (2026-11-07):** the shared bias tree pad_ref_rb (option A), Christoph's hand-compacted sheets and the short
+  in them, the skill update, the layout primitives. The conversation passed a context compaction; the log follows the
+  live path across it (`logicalParentUuid`). Notes: `../design_considerations/replica_bias/phase2b/README.md`.

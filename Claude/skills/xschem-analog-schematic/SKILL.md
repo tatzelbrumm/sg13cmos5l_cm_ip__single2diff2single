@@ -1,12 +1,13 @@
 ---
 name: "xschem-analog-schematic"
-description: "Draw or tidy xschem .sch schematics from a SPICE netlist, for any PDK (IHP, sky130, gf180, ...), in readable analog style, verified by netlisting back and comparing device by device."
+description: "Draw, tidy or check xschem .sch/.sym schematics and testbenches from a SPICE netlist, for any PDK (IHP, sky130, gf180, ...), in readable analog style, verified by netlisting back and comparing device by device or by topology."
 ---
 
 # xschem-analog-schematic
 
 Use this skill when the deliverable is an **xschem schematic** (`.sch` / `.sym`), not a figure.
-For SVG/PNG figures in reports, use `analog-schematic` instead.
+For SVG/PNG figures in reports, use `analog-schematic` instead. Use it also to **check sheets the
+user has edited by hand** (see "Hand edits and symbol changes").
 
 The skill is **process-agnostic**. Everything that depends on a PDK (symbol names, pin positions,
 parameter names, how a resistor's substrate is connected) is **read from that PDK's `.sym`
@@ -35,16 +36,22 @@ round-trip comparison caught them.
    `@pinlist` order. Replace `{param}` expressions by their defaults; the schematics carry plain
    values.
 4. **Plan the placement** using the style rules below: rows, columns, mirror pairs, rails. Write
-   it as a `name: (x, y, rot, flip)` table before writing any file.
+   it as a `name: (x, y, rot, flip)` table before writing any file. For a testbench, first look
+   for a sibling testbench the user has already drawn and use it as the template (see
+   "Testbench style").
 5. **Write the `.sch`**, with real orthogonal wires for every net that has a short route, and a
-   `lab_pin` only where a wire would cross more than half the sheet. Use the property names from
-   the PDK's own `template` (`w`/`l`/`ng`/`m` for IHP, `W`/`L`/`nf`/`mult` for sky130).
-6. **Write the `.sym`.** Its pin order must equal the `.subckt` port order.
-7. **Netlist with xschem and compare** (see Verification). Fix every mismatch before delivering.
-8. **Render and look.** Use `xschem -q -x --svg --plotfile f.svg f.sch`, convert it to PNG
-   (cairosvg), and open the PNG. Check that no labels overlap, rails are continuous and stacks are
-   straight. Do not copy the images into the user's folders: files that pass through the app get a
-   provenance stamp. Show them in the conversation only if asked.
+   `lab_pin` only where a wire would cross more than half the sheet. A wire that crosses a few
+   others without a dot is still better than a label (see "Hand-drawn refinements"). Use the
+   property names from the PDK's own `template` (`w`/`l`/`ng`/`m` for IHP, `W`/`L`/`nf`/`mult`
+   for sky130).
+6. **Write the `.sym`.** Its pin order must equal the `.subckt` port order, and its pin names must
+   equal the `ipin`/`opin`/`iopin` names in the `.sch` (see "Hand edits and symbol changes").
+7. **Lint the geometry, netlist with xschem and compare** (see Verification). Fix every short and
+   every mismatch before delivering, and do both again after every manual move or compaction.
+8. **Render and look** (recipe under "Rendering"). Check that no labels overlap symbol text or
+   each other, rails are continuous, stacks are straight and no wire stub is left dangling. Do not
+   copy the images into the user's folders: files that pass through the app get a provenance
+   stamp. Show them in the conversation only if asked.
 
 A first pass that puts a net label on every terminal (stub plus `lab_pin`) is acceptable as a
 quick, connectivity-exact draft. Say that it is a draft. The finished style below uses wires.
@@ -90,7 +97,18 @@ These rules are about circuit structure, not about any one process.
 - Crossings without a dot are not connections; xschem draws the dots at T-junctions.
 - Bulks are wired to their source or rail, never left to a label alone. Even inside a branch, the
   PMOS bulk goes to the supply and the NMOS bulk to ground, unless the source netlist ties it
-  elsewhere.
+  elsewhere. How the bulk wire is drawn: see "Hand-drawn refinements".
+
+**Labels** (from his hand-drawn tb_pd_enable and his label flips in the IOPadDiff2Single CACE
+templates, 2026-10-25)
+- `lab_pin` and `lab_wire` are always placed with rot 0. The text points **away from the wire it
+  ends**: `flip=0` (text left) at the left end of a bus or on a stub that runs left, `flip=1`
+  (text right) at the right end of a bus, on a stub that runs right, and on vertical stubs.
+- A label stub is short (20–40 units), touches nothing but its own pin, never runs into a symbol
+  body, and its text does not overlap symbol text, another label or a wire.
+- When the same fix is needed in several sibling sheets ("flip them, mutatis mutandis"), find the
+  labels by their role (same net, same position relative to the same instance pin), not by name,
+  because label names (`lp5`, `l12`) differ between copies.
 
 **What to avoid** (each of these was seen)
 - Net-label soup: one label per terminal, with names colliding ("vbpvbp", "vddvss").
@@ -98,6 +116,120 @@ These rules are about circuit structure, not about any one process.
   labels, which merges nets **silently**.
 - Leftover labels under a hand-drawn wire. They are harmless only while they agree with the wire;
   once someone edits the wire, they keep the old connection alive.
+- A label stub that ends on another net's bus. That is the same silent merge; it happened when a
+  stub from a new source's `+` pin ended on the `vss` bus just above the source row.
+- **A wire along a row of pins that runs past the pin it serves.** xschem joins every pin and
+  every wire end that lies anywhere on a wire. After a manual compaction (vcm_rb, b4cd2288,
+  2026-11-07) the `m` wire along y = −690 into BA's gate ran on 60 units: through BA's bulk pin,
+  which sits on the gate's height 40 units to the right, and onto the end of BA's bulk jog, so `m`
+  merged with the OTA's tail node `bt`. The netlist only showed renamed nets. Rules: end every
+  wire on its own pin; never draw a wire along a pin's height past pins of other nets (on a MOS the
+  gate and the bulk share one height); after every manual move or compaction, run `sch_lint.py`
+  and the netlist comparison again.
+- A wire end that overshoots into a symbol body (a gate trunk ending 20 units inside the next
+  device, a bulk stub starting inside its own device). Harmless while it carries the pin's own
+  net, but it is how the next edit picks up a pin. `sch_lint.py -v` lists them as THROUGH.
+- A device moved without its label: a `lab_pin` left on the old gate position names its net
+  silently (joined by name) and its text lands on whatever is moved there next.
+- Group titles and labels on top of wires (a title crossed by a drain wire, a title sitting on a
+  bus). Move the title, or widen the box so the title fits inside it.
+
+## Hand-drawn refinements (from his edits of vcm_rb / vref_s2d_rb, 2026-11-07)
+
+He took two sheets drawn by these rules and edited them by hand (commits c84cc366 → b4cd2288 →
+d0638017 in sg13cmos5l_cm_ip__single2diff2single). Each change below recurs across both sheets,
+so take it as a rule.
+
+**Leave every pin along its own lead.** Gates and bulks leave horizontally, drains and sources
+vertically (for a rotated symbol, along the rotated lead), for at least one 20-unit step before
+the wire turns. He re-routed every gate wire that turned straight up or down at the gate pin: the
+gate now steps 20 sideways and then turns (TR: gate at x 1140, wire to 1120, then down to `vbp`).
+A gate trunk between two facing gates connects to its bus from the trunk's middle, not from a pin.
+
+**Bulks: a 20-unit stub, then a wire of its own.** Every bulk leaves its B pin by a 20-unit stub on
+the bulk side and continues as a separate vertical to the rail, or to the node line of its source
+when the bulk is tied to an internal source (MR's bulk to `ts`, SU's to `gh`, BA's and BB's to
+`bt`). He replaced both of the other forms:
+- a short wire from B to S along the symbol's own column: it hides the bulk inside the symbol;
+- a 10-unit stub kept clear of the parameter text: the bulk vertical may run through the text.
+
+Devices stacked in one column share one bulk vertical (CY over SY, TGN over TDN). The bulks of
+two facing devices may be joined by one horizontal at the B height (F2 to F3 in vref_s2d_rb),
+which then drops to the rail.
+
+**All devices upright, also pass devices.** TGP of a transmission gate had been drawn upside down
+(rot 2) because the netlist had D on iref. He drew it upright and swapped D and S in the source
+netlist, with a comment ("a transmission gate is symmetric"). For a symmetric pass device, propose
+that swap instead of rot 2.
+
+**Placement**
+- Put a device next to the line it is biased from, so the bias line is a short wire: he moved
+  the fold-node replica CY / SY from the far side of the average to directly beside BNC, so `vbnc`
+  became a 160-unit wire instead of a label. The signal net (`xp`) now crosses the detector column
+  once; he preferred that.
+- A series stack shares one column: `gh` → SU → `m` → SL1 → `xp` (SU and SL1 both flipped, same
+  x); the parallel device SL2 is the mirror image beside SL1, gates facing.
+- Flip a diode-connected device so that its gate faces the side where the diode node continues
+  (MR and SU: gate on the right, the gate-to-drain link drops onto the node line on that side).
+- A block that is "as <another cell>" is drawn as in that cell: the reference input went back to
+  his bias_tree_pd drawing (TDN under TGN in one column, NI flipped under TGP, the `en_3v3_b`
+  trunk dropping from the input pin to TDN's gate).
+- MOS capacitors are drawn as capacitors: rot 1, gate up to the node, D / S / B down to the rail
+  (CB, CB1, CB2), each under the node it holds.
+
+**Compaction**
+- Spacing is set by text, not by a pitch: he packed the groups until one device's parameter text
+  ends 20–40 units before the next device's pins or wires (vcm_rb: 2840 → 2150 units wide).
+- Rails hug the circuit. In vref_s2d_rb he moved the supply from −1240 to −1000 and the lines'
+  PMOS row from −1140 to −900; the supply now sits 70–100 units above the topmost source pin.
+- Take an output straight out of the node where it is made: `vref` runs along the source line of
+  the F fingers to the pin, not down to a separate output bus.
+- The title block (`title.sym`) sits right under the ground rail.
+
+**Labels**
+- Prefer a wire to a label, even across several crossings without a dot: he replaced the
+  `en_3v3_b` labels at TDN and SPD by one wire that crosses nine other wires.
+- Labels stay as annotation: a `lab_wire` at both ends of a long bus (`flip=0` at the left end,
+  `flip=1` at the right end), a `lab_pin` at the far end of a long trunk, a `lab_wire` naming each
+  internal node at a corner where it is drawn.
+
+## Testbench style (from his hand-drawn tb_pd_enable, 2026-10-25)
+
+- **Sources in one row at the bottom**, all upright and on one y, their `−` pins on a single GND
+  bus wire across the full width, with one `gnd` symbol on it.
+- **Each `+` runs straight up to its rail.** `vdd` and `vddo` are horizontal buses across the top,
+  labelled at both ends. `vss` and `vsso` are short buses just above the source row, from their
+  source to the instances that use them.
+- **Stimulus sources** (for example `Vp`/`Vn` on the inputs) stand on the bus they are referenced
+  to (`vref`), which runs horizontally under the device under test.
+- **Enable** is one vertical trunk with a label at each instance pin it drives.
+- **Bias lines** from a bias block to the device under test run as a staircase: from each output
+  pin horizontally to its own column, then vertically to the input pin, with a `lab_wire` at each
+  corner.
+- **Loads** (`RL`, `CL`) sit right of the output; the output label is on the right edge.
+- The **code block** is at the bottom left; the title and the explanatory notes are at the top
+  left.
+
+**Siblings are redrawn from the user's template, not drawn anew.** When the user has redrawn one
+testbench of a family (enable, leak, startup, unpowered, …), carry his layout over to the others:
+1. Start from his sheet. Remove the instances the sibling does not have.
+2. For instances both have, take the sibling's symbol and properties but keep his position.
+   Take the sibling's code block and texts, placed where his are.
+3. Put each instance the sibling adds in the place of the one it replaces (state the rot/flip), or
+   else in a free slot of the source row, at least 120 units from its neighbours.
+4. Wherever one of his wires would now make a wrong connection, cut it at that pin.
+5. **Wire the new sources in; don't leave them on labels.** Put a series source in the line it
+   measures (a 0 V ammeter source between the rail and the supply pin it feeds, `+` towards the
+   rail), a source that drives a node under that node with its `−` on the GND bus, and a
+   source that ties two rails in the column between them. To make room, shorten buses that
+   run past their last connection only to carry an end label (in tb_pd_leak/unpowered the `vref`
+   bus ran on to the right edge after its load was gone). Labels are the fallback where no
+   wire fits; name an unlabelled new net with a `lab_wire` on its wire.
+6. Trim wire ends that your edit left dangling back to their last attachment. Leave his own
+   overshoots alone: a wire end that already dangled in his sheet stays.
+7. Verify by topology against the sibling as it was (see Verification), then render and look.
+   Report any intended difference (for example a source return he moved from GND to `vss`) as
+   carried over, not as fixed.
 
 ## Geometry (xschem 3.4; holds for every PDK)
 
@@ -108,6 +240,9 @@ These rules are about circuit structure, not about any one process.
   These rules were checked against hand-drawn files for rot 0/1/3 and for flip on MOS devices.
 - Wires are `N x1 y1 x2 y2 {lab=net}`. The `lab` on a wire is only a hint; connectivity comes
   from geometry. Any wire end or pin that touches another joins the nets.
+- **A pin connects anywhere along a wire**, not only at its ends. Hand-drawn wires often run
+  past the pin they serve (a supply wire from the rail to y = −70 for a pin at y = −80). Never
+  delete such a wire because one end dangles; count everything that lies on it.
 - Generic symbols come from xschem's own `devices/` library and are the same for every PDK:
   `lab_pin`, `ipin`, `opin`, `iopin` (pin at (0,0); `lab_pin` text sits left of the pin,
   `flip=1` puts it right), `isource` (p (0,−30), m (0,30); current flows p → m inside the
@@ -150,6 +285,10 @@ def sym_info(path):
   name.
 - **Device names.** Most PDK templates use `spiceprefix=X`, so xschem writes `X<name>`. Compare
   by instance name with the prefix stripped.
+- **Look for standard cells before drawing logic from transistors.** In IHP sg13cmos5l the
+  standard cells and the gates inside the IO cells are 1.2 V only; there is no 3.3 V logic
+  library. `sg13cmos5l_LevelUp` / `LevelUpInv` (1.2 → 3.3 V) exist only as sub-cells inside
+  `sg13cmos5l_IOPadInOut30mA.gds`. A 3.3 V inverter or level shifter has to be drawn.
 
 ### Worked examples (read from the symbols, 2026-10-01)
 
@@ -171,21 +310,111 @@ The IHP rows were confirmed by round-trip netlisting of full schematics. Of the 
 The IHP pmos lists S before D, while the sky130 pfet lists D first, with the same geometry. That
 is exactly the kind of difference that makes a hard-coded D G S B order wrong for one of them.
 
+## Hand edits and symbol changes
+
+The user redraws sheets and symbols by hand. His version is then the source of the drawing:
+never regenerate over it, and check it by topology, not by names.
+
+- **Moving, renaming or reordering pins in a `.sym` breaks every sheet that places it, silently.**
+  xschem does not move the wires. The old wire ends either dangle (the instance is disconnected)
+  or, worse, land on another pin, so that nets rotate. In this project, moving the pins of
+  `d2s_mpdda_pd.sym` left `Xd` disconnected in all four power-down testbenches and put `vbpc` on
+  `vbn`. After any `.sym` edit: list every `.sch` that places the symbol, **including the CACE
+  templates** (`verification/cace/templates/*.sch`) and testbenches, then re-wire or regenerate
+  them and check each by topology. Tell the user which sheets were affected before touching them.
+- **The `.sym` pin names must equal the `ipin`/`opin`/`iopin` names in its `.sch`.** If one is
+  renamed and not the other, xschem netlists without an error: the `.subckt` header takes the
+  `.sym` names, and the sheet's nets of the old names float inside. Seen with `inv_3v3_pd`
+  (sheet ports `a`/`y`, symbol pins `en_3v3`/`en_3v3_b`).
+- **Duplicated cells.** Where the same cell exists in two places (a scratch repository and the
+  delivered macros), list the duplicates and say which copy is ahead; don't replace duplicates by
+  symlinks unless the user asks.
+- **One cross-macro `xschemrc`.** Each macro's own `xschemrc` references only that macro. For
+  interactive work across macros, one `macros/xschemrc` that adds every macro's schematic and
+  testbench directory is enough; start xschem from `macros/`. Check for basename collisions
+  first: with two `foo.sym` on the path, the first one wins without a warning.
+- **Learn from his edits.** After he has edited a sheet you drew, compare the two versions by
+  instance (position, rot, flip) and by how each pin is wired (direction of the first segment,
+  stub lengths, shared verticals), render both side by side, and write the changes that recur
+  into the style rules here. A one-off may be a slip: a label left behind, a title on a wire.
+- **His drawing can change the netlist.** When he swaps the terminals of a symmetric device to draw
+  it upright, the source netlist is changed with it; until it is, the device-by-device comparison
+  fails on purpose. Report it; don't "fix" the drawing back.
+- **Keep a reference snapshot** of what was delivered (sheets, symbols, CACE templates, in their
+  directory layout, read-only), so hand edits can be checked against it later. If the user keeps
+  the project in git but the tool container has no git, get an old commit on the host with
+  `git archive <commit> <dirs> | tar -x -C <ref_dir>`, inside a directory the container can see.
+
+## Splitting a sheet into a hierarchy (pad_ref_rb, 2026-11-07)
+
+When a group moves out of a sheet into its own cell (the shared bias tree of vcm_rb and
+vref_s2d_rb became bias_tree_rb):
+1. Work on his sheet as committed (a `git archive` export), not on a regenerated one, so that the
+   script can be rerun.
+2. Delete the moved devices, their labels, their group boxes and titles, and every wire that lies
+   entirely in the freed region. Cut a wire that spans the cut back to its new start.
+3. Bring each net that came from the moved group in as an input pin in the port column, at the
+   height where its bus started, so that the bus still runs straight (`vbp`, `vbnc`, `ni`).
+4. Shift the rest by the freed width; move a rail when the moved group was the only thing that
+   held it (vref_s2d_rb: the supply came down from −1000 to −720). Renumber the group titles in
+   netlist order and replace the header text with the new netlist's header.
+5. The new cell's sheet is cut from his drawing of the group, with its outputs as pins on the
+   right edge at the bus heights. Fix what the cut exposes (NI's text ran into TDN's: NI moved
+   next to NBP, the two gates now share a trunk).
+6. The top sheet: the blocks in a row on common rails, every `vdd` up and every `vss` down by its
+   own vertical. The shared lines run straight from the tree into the first block at the same
+   pin heights, and over the top of that block to the next one. Of the lines that climb out of
+   the bundle, the top one branches first and runs highest, so the branches don't cross each
+   other (a lower line still crosses the lines above it, once each). The enable runs along the
+   bottom with a riser to each block.
+7. Symbols: inputs on the left in port order, outputs on the right, `vdd` on top, `vss` below,
+   and `@symname` outside the box (inside, a long name ran into the `vss` pin label).
+8. Check each leaf device by device, the top's instance lines (cell and nets) against the source
+   subckt, and the whole hierarchy flattened against the flattened source netlists by topology.
+
 ## Verification
 
 - Netlist each schematic with xschem in batch mode:
-  `xschem --rcfile <dir>/xschemrc -n -s -q -x -o <dir>/net <dir>/<cell>.sch`
+  `xschem --rcfile <dir>/xschemrc -n -s -q -x --no_x -o <dir>/net <dir>/<cell>.sch`
   - Use **absolute paths and set `PWD`** in the subprocess environment. xschem resolves relative
     names against `$PWD`, not against the working directory of the process. A wrong `PWD`
     silently netlists an empty schematic.
   - **Delete the old netlist first**, so that a failed run cannot be compared as if it were fresh.
-  - **Don't treat the exit status as pass/fail.** xschem 3.4.8 has returned 10 while writing a
-    complete netlist. Print the status and xschem's messages, then compare whatever was written.
+  - **Don't treat the exit status as pass/fail, but read every `Error:` line.** Run with
+    `--log FILE`; `-q` hides the messages. xschem 3.4.8 returns 10 both for harmless ERC notes
+    (`undriven node` on testbench nets that sources in code blocks drive) and for real faults that
+    no netlist comparison sees: `Unmatched subcircuit schematic pin direction: iin0 ipin <-->
+    inout` (a sheet pin of another type than the symbol's pin) still writes a correct netlist.
+    Check that every pin's type (ipin / opin / iopin) matches the symbol's `dir`.
+  - **Missing symbols show up in the netlist, not on stderr:** search the netlist for
+    `IS MISSING`. Test the search once on a sheet with a deliberately wrong library path.
+  - To netlist a cell as a real `.subckt` (for comparison with a parent's view), add
+    `--tcl 'set top_is_subckt 1'`.
+- **Lint the geometry before netlisting:** `python3 -I sch_lint.py [-v] [--lib DIR] SHEET.sch …`
+  (in this skill's folder, standard library only) rebuilds the connectivity the way xschem does
+  and reports every connected group that carries two label or port names, with the join that
+  separates them and every device pin lying inside one of its wires. It caught the `bt` / `m`
+  short of b4cd2288 (join at (1750, −690), BA.G and BA.B inside the `m` wire) and is clean on
+  d0638017. With `-v` it also lists pins inside wires elsewhere and the crossings.
 - Parse xschem's netlist (`X…`/`M…`/`R…`/`C…`/`I…` lines; the `**.subckt` header gives the port
-  order). Compare per device: model (allowing for a prefix the `format` adds), terminal nets
+  order). xschem wraps long lines, the commented header too: join `\n+` and `\n*+` before parsing,
+  or a cell with many ports (18 in bias_dist_pd) reads as having lost its last port. Compare per device: model (allowing for a prefix the `format` adds), terminal nets
   **in `@pinlist` order** mapped back to the source's terminal order, the sizing parameters, and
   the port order. Report every difference and exit non-zero if there is any.
+- **Compare by topology when names may differ.** After a hand edit, internal net names and
+  instance names change while the circuit does not. Flatten both netlists to primitives and test
+  them for graph isomorphism with the ports anchored by name. MOS drain and source are
+  interchangeable, so are the two ends of a resistor or capacitor, and the two terminal pairs of
+  an E/G source swap only together (keep the polarity). Compare sizes too. A behavioural source
+  (`E … value=…`) is not a linear E; don't parse it as one. Report the differences as
+  "device, value, net before → net after", and list every symbol whose pins moved, were renamed
+  or reordered, with the sheets that place it.
+- **Build the reference netlists with the reference tree's own symbols and rc.** Netlisting an
+  old sheet against the current symbols already contains the breakage you are looking for.
+- **Include testbenches and CACE templates** in every check, not only the cell schematics.
 - Sanity-check the checker once by changing one label in a copy and confirming that it fails.
+- A source netlist may leave `m` at its default while xschem writes `m=1` on every device: add
+  the default before comparing sizes, or every device differs.
 - Port order: in hierarchical use, xschem takes the port order from the **`.sym`**, for both
   the instance line and the `.subckt` definition it writes. The order of pin instances in the
   `.sch` is ignored there. This was checked with xschem 3.4.4: a parent schematic was netlisted
@@ -196,9 +425,28 @@ is exactly the kind of difference that makes a hard-coded D G S B order wrong fo
   equal to the source netlist (it is what parents use), and keep the `.sch` in the same order so
   that stand-alone netlists stay usable.
 
-Reference implementations (IHP-specific symbol table; replace it with a `sym_info` lookup when
-porting): `gen_xschem.py` (label-draft generator) and `check_xschem.py` (round-trip comparison)
-in `sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/`.
+Reference implementations: `gen_xschem.py` (label-draft generator, IHP-specific symbol table;
+replace it with a `sym_info` lookup when porting) and `check_xschem.py` (round-trip comparison by
+name) in `sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_considerations/class_ab_pad_driver/`;
+`scripts/xschem/sheet_equiv.py OLD_ROOT NEW_ROOT [SHEET ...]` (topology comparison of whole
+trees, testbenches and CACE templates included; pure Python, no networkx) and
+`macros/vcm_rb/schematic/gen_sheet.py --check SOURCE CELL NETLIST` (devices and subcircuit
+instances by name) in `sg13cmos5l_cm_ip__single2diff2single`; `sch_lint.py` (geometric shorts) in
+this skill's folder. The delivered reference snapshot of 2026-10-20 is in
+`…_sudelbuecher/sudelbuecher/design_considerations/consolidation/reference_sheets_2026-10-20/`.
+
+## Rendering
+
+- Headless, with the window system faked:
+  `xvfb-run -a xschem -q --rcfile <rc> --command "xschem zoom_full; xschem print svg <f>.svg; xschem exit closewindow force" <sheet>.sch`,
+  then convert with cairosvg (`output_width` about 1800) and open the PNG. Without
+  `zoom_full` the image can come out empty, and with xschem 3.4.8RC the shorter
+  `-q -x --svg --plotfile` form gave blank images.
+- Run it with `PWD` set to the sheet's directory and the same rc as for netlisting, so that the
+  symbols resolve.
+- At sheet scale the parameter text is unreadable; render at 6000–8000 px wide and crop regions to
+  check overlaps. To study an old version, `git archive <commit> <dirs> | tar -x` into a scratch
+  folder and render it from there with its own rc.
 
 ## Environment notes
 
@@ -209,6 +457,9 @@ in `sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/sudelbuecher/design_consid
 - `devices/lab_pin.sym`-style references resolve only if `…/xschem_library` itself (not just
   `…/xschem_library/devices`) is on `XSCHEM_LIBRARY_PATH`. If labels don't name their nets,
   the netlist shows `net1, net2, …`; check the path before anything else.
+- The IIC-OSIC-TOOLS container has no git and no networkx. Anything the user is to run there
+  must be pure Python on the standard library. The host's `~/EDA` is `/foss/designs` inside it,
+  and the container cannot see the host's `/tmp`.
 - In a cloud container without the user's toolchain, `apt-get install xschem` works (3.4.4).
   PDK symbol libraries can be cloned from GitHub (IHP-Open-PDK, `dev` branch for sg13cmos5l;
   `StefanSchippers/xschem_sky130`). Rendering and netlisting work headless with `-q -x`.

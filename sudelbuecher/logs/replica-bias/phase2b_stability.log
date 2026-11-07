@@ -1,0 +1,2 @@
+stab_vcm: 108 runs, 0 without result, 65 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/stab_vcm.tsv
+stab_vref: 54 runs, 0 without result, 30 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/stab_vref.tsv
