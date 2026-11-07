@@ -1,0 +1,112 @@
+* tb_truth: truth table of bias_dist_pd, DC operating points, tt 27 C, 3.3 V
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* Run from this directory in the repo environment (source .designinit): ngspice -b tb_truth.spice
+* Sources: each iin<k> gets 5 uA from a PMOS mirror on its own 3.3 V supply (as the harness iDAC; a blocked input lets
+* the mirror output rise to its supply). Loads: each iout<j> drives a 6u/6u NMOS diode to vss (a bias tree's NI, its
+* own TG left out). Printed per case: the enables, the currents into the four loads, v(ni), v(vpd).
+.lib cornerMOShv.lib mos_tt
+.lib cornerMOSlv.lib mos_tt
+.include ../../../hv_logic/netlist/source/hv_logic.spice
+.include ../../netlist/source/bias_dist_pd.spice
+Vdd vdd 0 3.3
+Ven en 0 3.3
+Venb enb 0 0
+Vi0 ei0 0 0
+Vi1 ei1 0 0
+Vi2 ei2 0 0
+Vo0 eo0 0 0
+Vo1 eo1 0 0
+Vo2 eo2 0 0
+Vo3 eo3 0 0
+* input sources (sourced 5 uA each)
+Vext vext 0 3.3
+Iref0 g0 0 5u
+XD0 g0 g0 vext vext sg13_hv_pmos w=5u l=6u
+XM0 iin0 g0 vext vext sg13_hv_pmos w=5u l=6u
+Iref1 g1 0 5u
+XD1 g1 g1 vext vext sg13_hv_pmos w=5u l=6u
+XM1 iin1 g1 vext vext sg13_hv_pmos w=5u l=6u
+Iref2 g2 0 5u
+XD2 g2 g2 vext vext sg13_hv_pmos w=5u l=6u
+XM2 iin2 g2 vext vext sg13_hv_pmos w=5u l=6u
+* loads: current meter + NMOS diode per output
+Vm0 iout0 l0 0
+XL0 l0 l0 0 0 sg13_hv_nmos w=6u l=6u
+Vm1 iout1 l1 0
+XL1 l1 l1 0 0 sg13_hv_nmos w=6u l=6u
+Vm2 iout2 l2 0
+XL2 l2 l2 0 0 sg13_hv_nmos w=6u l=6u
+Vm3 iout3 l3 0
+XL3 l3 l3 0 0 sg13_hv_nmos w=6u l=6u
+X1 vdd 0 en enb iin0 iin1 iin2 ei0 ei1 ei2 iout0 iout1 iout2 iout3 eo0 eo1 eo2 eo3 bias_dist_pd
+.options gmin=1e-15 reltol=1e-4 abstol=1e-15
+.control
+* case: en en_b | en_in0..2 | en_out0..3
+let cases = 9
+foreach c 1 2 3 4 5 6 7 8 9
+  if $c = 1
+    alter ven dc=3.3
+    alter venb dc=0
+    alter vi0 dc=3.3
+    alter vo0 dc=3.3
+  end
+  if $c = 2
+    alter vo1 dc=3.3
+    alter vo2 dc=3.3
+    alter vo3 dc=3.3
+  end
+  if $c = 3
+    alter vi1 dc=3.3
+  end
+  if $c = 4
+    alter vi2 dc=3.3
+  end
+  if $c = 5
+    alter vi0 dc=0
+    alter vi1 dc=0
+    alter vi2 dc=0
+  end
+  if $c = 6
+    alter vi0 dc=3.3
+    alter vo0 dc=0
+    alter vo1 dc=0
+    alter vo2 dc=0
+    alter vo3 dc=0
+  end
+  if $c = 7
+    alter vo0 dc=3.3
+    alter vo1 dc=3.3
+    alter vo2 dc=3.3
+    alter vo3 dc=3.3
+    alter ven dc=0
+    alter venb dc=3.3
+  end
+  if $c = 8
+    alter ven dc=3.3
+    alter venb dc=3.3
+  end
+  if $c = 9
+    alter ven dc=0
+    alter venb dc=0
+  end
+  op
+  let e = v(en)
+  let eb = v(enb)
+  let a0 = v(ei0)
+  let a1 = v(ei1)
+  let a2 = v(ei2)
+  let b0 = v(eo0)
+  let b1 = v(eo1)
+  let b2 = v(eo2)
+  let b3 = v(eo3)
+  let i0 = i(vm0)*1e6
+  let i1 = i(vm1)*1e6
+  let i2 = i(vm2)*1e6
+  let i3 = i(vm3)*1e6
+  let vni = v(x1.ni)
+  let vpd = v(x1.vpd)
+  echo "case $c: en_3v3 $&e en_3v3_b $&eb | en_in $&a0 $&a1 $&a2 | en_out $&b0 $&b1 $&b2 $&b3 | iout uA $&i0 $&i1 $&i2 $&i3 | ni $&vni vpd $&vpd"
+end
+.endc
+.end
