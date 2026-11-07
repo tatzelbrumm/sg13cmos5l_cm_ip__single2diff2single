@@ -1,0 +1,62 @@
+
+Circuit 1 cell sg13_hv_pmos and Circuit 2 cell sg13_hv_pmos are black boxes.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_hv_pmos                    |Circuit 2: sg13_hv_pmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_hv_pmos and sg13_hv_pmos are equivalent.
+
+Circuit 1 cell sg13_hv_nmos and Circuit 2 cell sg13_hv_nmos are black boxes.
+Warning: Equate pins:  cell sg13_hv_nmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_hv_nmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_hv_nmos                    |Circuit 2: sg13_hv_nmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_hv_nmos and sg13_hv_nmos are equivalent.
+Flattening unmatched subcell bias_diodes in circuit bias_tree_noab_pd (1)(1 instance)
+
+Class bias_tree_noab_pd (0):  Merged 25 parallel devices.
+Subcircuit summary:
+Circuit 1: bias_tree_noab_pd               |Circuit 2: bias_tree_noab_pd               
+-------------------------------------------|-------------------------------------------
+sg13_hv_nmos (22->8)                       |sg13_hv_nmos (8)                           
+sg13_hv_pmos (17->6)                       |sg13_hv_pmos (6)                           
+Number of devices: 14                      |Number of devices: 14                      
+Number of nets: 10                         |Number of nets: 10                         
+---------------------------------------------------------------------------------------
+Resolving symmetries by property value.
+Netlists match uniquely.
+
+Subcircuit pins:
+Circuit 1: bias_tree_noab_pd               |Circuit 2: bias_tree_noab_pd               
+-------------------------------------------|-------------------------------------------
+en_3v3                                     |en_3v3                                     
+iref                                       |iref                                       
+en_3v3_b                                   |en_3v3_b                                   
+vdd                                        |vdd                                        
+vbp                                        |vbp                                        
+vbpc                                       |vbpc                                       
+vbn                                        |vbn                                        
+vbnc                                       |vbnc                                       
+vss                                        |vss                                        
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes bias_tree_noab_pd and bias_tree_noab_pd are equivalent.
+
+Final result: Circuits match uniquely.
+.
