@@ -330,7 +330,9 @@ Scratch work directory of the container: `/home/user/work` (not committed; logs 
 The earlier layout agents A2 / A3 / A4 (2026-10-28) belonged to a session outside reach; their roles were re-created
 from their briefs and reports (`sudel_buecher`: `sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/`) and their
 exported skill (`.../pad_buffer_layout/bg_core_pd_2026-10-28/skill/`), in worktree `/home/user/s2d2s_c5_tree`.
-Agents cannot write `.md` files in this session; their reports are summarized here.
+Agents cannot write `.md` files in this session (Claude Code refuses report files from subagents: "Subagents should
+return findings as text, not write report files"; no settings file is involved); their reports are summarized here and,
+at the user's request, filed verbatim from their hand-backs as `layout/tree/{nmos,pmos,assembly}/report.md` (380d0e58).
 
 - NMOS specialist, `macros/slot7_testplatform/layout/tree/nmos/`: `tree_nmos` 32.21 x 9.73 um (naive NMOS row 49.08 x 8.61);
   one row of rotated 1.2/6 units on one ni poly plate, order `d ABCBABABACAB d | NNNNN | c` (A NI, B NBP, C NBPC, d the
@@ -353,3 +355,17 @@ Agents cannot write `.md` files in this session; their reports are summarized he
   agree to ~1 mV, but the tree voltages shift against the schematic by the narrow-width effect of the unit fingers
   (1.2 / 1 um instead of 6 / 5 um devices): tt / 27 C, OA reference: vbn 0.928 V (schematic 0.913), vbp 1.994 (1.973),
   vbpc 1.898 (1.913), vbnc 1.200 (1.207). So these voltages can differ by up to ~20 mV from the pad's own tree (wide devices).
+
+### Delivery and harness flow of the matched tree (2026-11-07T13:30Z..13:45Z, user's choice "1")
+
+- Delivery `tatzelbrumm/sg13cmos5l_cm_slot7` branch `claude/c5-testplatform` (was = main 681c8dd): `final/gds/slot_7.gds`
+  (sha256 b08f8bfd60a07fe19303aeccf0759e0fbcd3d997a5e672796aa39ce9a25ebd5f) and `final/lef/slot_7.lef`
+  (8d925fc6fe62002494acee4d9262d61aeed2805c70e94b902dbd0001b8bcb684) copied from this branch @ 380d0e58; `.lib` / `.vh`
+  unchanged (6137d623..., 1ba0f560...); README provenance `P` = `claude/c5-tree-layout` @ 380d0e58; PROGRESS entries.
+  Commits 5c3b9fc (files) and a PROGRESS commit after the harness run. `main` untouched.
+- Fork `tatzelbrumm/sg13cmos5l_ocd_chipalooza` branch `claude/c5-testplatform-test`: fast-forwarded to `custom-pad-test`
+  750e249; `s7_version` = 5c3b9fc; `make projects-clean / projects / projects-gds SLOTS=7`, `make gds-prefill`: exit 0;
+  XOR of slot_7 in the pre-fill GDS vs the delivered file: none (new `docs/custom_pads/tools/xor_slot7.py`, negative
+  test against the naive-tree slot_7.gds: 20 layers differ); `netcheck_slot7_platform.py ... --stage b`: 49 used + 14
+  unused pins OK. `scripts/user_projects.tcl` now gets `gds drccheck off` from Tim's updated `get_project_gds.sh`.
+  Commit f443ce1, details in the fork's `docs/custom_pads/RUNLOG.md`.
