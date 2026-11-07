@@ -1,0 +1,6 @@
+# corner temp  I_PU_per_enabled_channel(A, from vdd_3v3)  I_NRD(A, from vdd_1v2; ngspice sign: negative = delivered)
+tt 27 1.49784E-06 -4.09752E-06
+ss -40 1.75238E-06 -4.88253E-06
+ss 27 1.3857E-06 -3.72672E-06
+ff 27 1.6083E-06 -4.56746E-06
+ff 125 1.20028E-06 -3.21933E-06

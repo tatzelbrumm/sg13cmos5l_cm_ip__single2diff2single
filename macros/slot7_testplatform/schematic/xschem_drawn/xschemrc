@@ -44,7 +44,7 @@ if {![llength [info commands append_xschem_library_path_unique]]} {
 # slot7_testplatform.sym have the same basenames) to the xschem library path
 append_xschem_library_path_unique [file dirname [info script]]
 # slot7_testplatform: the reused macros (bias_tree_noab_pd for stage B)
-foreach m {oa_core_pd bg_core_pd ocd_analog_switches bias_tree_noab_pd} {
+foreach m {oa_core_pd bg_core_pd ocd_analog_switches bias_tree_noab_pd en_ctrl_3v3 ls_up_1v2_3v3 hv_logic} {
   append_xschem_library_path_unique [file join [file dirname [info script]] ../../../$m/schematic/xschem]
 }
 

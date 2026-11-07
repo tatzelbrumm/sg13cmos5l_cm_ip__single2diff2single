@@ -18,7 +18,8 @@ The stage-B sheets (below) have no draft; they exist only here.
 | `tp_en_ctrl_b.sch` / `.sym` | stage B: nine enable channels, 56 hv devices (`../../netlist/source/slot7_stage_b.spice`) |
 | `slot7_stage_b.sch` / `.sym` | stage B: `xctlb`, reference select `xr_oa` / `xr_bg` / `xr_ib0`, `xtree` (`bias_tree_noab_pd.sym`, `macros/bias_tree_noab_pd`), bias mux `xm_vbp` / `xm_vbpc` / `xm_vbnc` / `xm_vbn`, `xi_ib1` |
 | `slot7_testplatform_ab.sch` / `.sym` | the new top: stage A's five instances (as in `slot7_testplatform.sch`) and `xb` (`slot7_stage_b`) |
-| `xschemrc` | the one of `../xschem/` with **this** directory instead of `../xschem` (no basename clash with the draft `tp_en_ctrl.sym`) plus the reused macros' directories (`bias_tree_noab_pd` added for stage B) |
+| `en_ctrl_stage_b.sch` / `.sym` | **DRAFT** drop-in for `tp_en_ctrl_b` (same symbol geometry, ports and order): one `en_ctrl_3v3` (slot-fallback wiring) makes `en_m`; its sel0/sel1 shifters feed channels 0/1, seven `ls_up_1v2_3v3` channels 2..8; per channel `nand2_hv(ch, en_m)` = `en<k>_b`, `inv_hv` -> `en<k>`. Source `../../netlist/source/en_ctrl_stage_b.spice`; sheet written by `gen_en_ctrl_stage_b.py`, checked by `check_en_ctrl_stage_b.py` (MATCH, 26 instances; self-test with a relabelled net fails as it should). Not simulated, no layout. Not yet placed in `slot7_stage_b.sch` |
+| `xschemrc` | (2026-11-07: + `en_ctrl_3v3`, `ls_up_1v2_3v3`, `hv_logic` for the draft) the one of `../xschem/` with **this** directory instead of `../xschem` (no basename clash with the draft `tp_en_ctrl.sym`) plus the reused macros' directories (`bias_tree_noab_pd` added for stage B) |
 | `check_drawn.py` | netlists all five sheets with xschem and compares them with the source netlists |
 
 ## Check

@@ -1,0 +1,40 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* en_ctrl_stage_b: DRAFT drop-in replacement for tp_en_ctrl_b (same ports, same order), built from existing cells
+* instead of ratioed logic. en<k> = en<k>_1v2 AND en_m, en<k>_b = NOT en<k>, where
+* en_m = enable AND (vdd_1v2 present) AND (vdd_3v3 present) from one en_ctrl_3v3 in its slot-fallback wiring
+* (vddh = vdd_3v3, vddl = vdd_1v2, sense inputs on the supplies themselves; macros/en_ctrl_3v3/README.md).
+* Channels 0 and 1 use en_ctrl_3v3's own sel0 / sel1 level shifters; channels 2..8 have one ls_up_1v2_3v3 each.
+* Each channel: nand2_hv(ch, en_m) = en<k>_b, inv_hv -> en<k>. en_ctrl_3v3's en_3v3_b output (en_m_b) is unused.
+* Cells: ../../../en_ctrl_3v3/netlist/source/en_ctrl_3v3.spice (pg_det, en_ctrl_3v3),
+*        ../../../ls_up_1v2_3v3/netlist/source/ls_up_1v2_3v3.spice, ../../../hv_logic/netlist/source/hv_logic.spice
+* Not simulated, no layout. Like tp_en_ctrl_b, ground is vss_3v3 only (the ls_up input inverters' vss included).
+.subckt en_ctrl_stage_b vdd_3v3 vss_3v3 vdd_1v2 en0_1v2 en1_1v2 en2_1v2 en3_1v2 en4_1v2 en5_1v2 en6_1v2 en7_1v2
++ en8_1v2 enable en0 en0_b en1 en1_b en2 en2_b en3 en3_b en4 en4_b en5 en5_b en6 en6_b en7 en7_b en8 en8_b
+XEC vdd_3v3 vdd_1v2 vss_3v3 enable en0_1v2 en1_1v2 vdd_1v2 vdd_3v3 en_m ch0 ch1 en_m_b en_ctrl_3v3
+XL2 vss_3v3 vdd_1v2 vdd_3v3 ch2 en2_1v2 ls_up_1v2_3v3
+XL3 vss_3v3 vdd_1v2 vdd_3v3 ch3 en3_1v2 ls_up_1v2_3v3
+XL4 vss_3v3 vdd_1v2 vdd_3v3 ch4 en4_1v2 ls_up_1v2_3v3
+XL5 vss_3v3 vdd_1v2 vdd_3v3 ch5 en5_1v2 ls_up_1v2_3v3
+XL6 vss_3v3 vdd_1v2 vdd_3v3 ch6 en6_1v2 ls_up_1v2_3v3
+XL7 vss_3v3 vdd_1v2 vdd_3v3 ch7 en7_1v2 ls_up_1v2_3v3
+XL8 vss_3v3 vdd_1v2 vdd_3v3 ch8 en8_1v2 ls_up_1v2_3v3
+XN0 vdd_3v3 vss_3v3 ch0 en_m en0_b nand2_hv
+XI0 vdd_3v3 vss_3v3 en0_b en0 inv_hv
+XN1 vdd_3v3 vss_3v3 ch1 en_m en1_b nand2_hv
+XI1 vdd_3v3 vss_3v3 en1_b en1 inv_hv
+XN2 vdd_3v3 vss_3v3 ch2 en_m en2_b nand2_hv
+XI2 vdd_3v3 vss_3v3 en2_b en2 inv_hv
+XN3 vdd_3v3 vss_3v3 ch3 en_m en3_b nand2_hv
+XI3 vdd_3v3 vss_3v3 en3_b en3 inv_hv
+XN4 vdd_3v3 vss_3v3 ch4 en_m en4_b nand2_hv
+XI4 vdd_3v3 vss_3v3 en4_b en4 inv_hv
+XN5 vdd_3v3 vss_3v3 ch5 en_m en5_b nand2_hv
+XI5 vdd_3v3 vss_3v3 en5_b en5 inv_hv
+XN6 vdd_3v3 vss_3v3 ch6 en_m en6_b nand2_hv
+XI6 vdd_3v3 vss_3v3 en6_b en6 inv_hv
+XN7 vdd_3v3 vss_3v3 ch7 en_m en7_b nand2_hv
+XI7 vdd_3v3 vss_3v3 en7_b en7 inv_hv
+XN8 vdd_3v3 vss_3v3 ch8 en_m en8_b nand2_hv
+XI8 vdd_3v3 vss_3v3 en8_b en8 inv_hv
+.ends en_ctrl_stage_b
