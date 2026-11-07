@@ -1,5 +1,5 @@
 # cl_s2d_win: S2D pad swept with the block's vref; data files for the window (post-processing)
-# 27 runs, 154 s wall with -j 2, 2026-11-06T19:05:26Z; SI units
+# 27 runs, 53 s wall with -j 3, 2026-11-07T17:23:22Z; SI units
 vdd	corner_mos	temp	sel	tag	vref_dc	done	conv
 3.0	ss	-40	0	3.0_ss_-40	0.453236	done	ok
 3.0	ss	27	0	3.0_ss_27	0.501674	done	ok
