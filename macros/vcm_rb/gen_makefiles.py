@@ -42,7 +42,7 @@ j = src.index(".PHONY: sim-cace") + len(".PHONY: sim-cace\n")
 # Since 2026-11-07 vcm_rb and vref_s2d_rb hang on the shared tree bias_tree_rb: their CACE suite is pad_ref_rb's.
 CELLS = (("vcm_rb", "", "vcm_rb"), ("vref_s2d_rb", "", "vref_s2d_rb"),
          ("pad_ref_rb", "vcm_dc_params vcm_dc_3v0_params vcm_sel_params vref_room_params vref_hot_params "
-                        "vref_cold_params pd_params mm_params", "pad_ref_rb bias_tree_rb"))
+                        "vref_cold_params pd_params mm_params", "pad_ref_rb bias_tree_rb bypass_rb"))
 DELEGATE = """sim-cace: ## CACE suite of pad_ref_rb (this block hangs on its shared tree bias_tree_rb since 2026-11-07)
 \t$(MAKE) -C $(MAKEFILE_DIR)/../pad_ref_rb sim-cace
 .PHONY: sim-cace

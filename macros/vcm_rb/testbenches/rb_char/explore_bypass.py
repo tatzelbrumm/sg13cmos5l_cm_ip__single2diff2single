@@ -21,6 +21,8 @@ Experiments (results/bypass_*.tsv):
   bypass_d2s   the same ripple -> D2S output (ground-referenced) and |vcm|; D2S input common mode = vcm, as in the chain.
   bypass_kick  S2D enable with the blocks (cl_s2d_en): the kick on vcm and vref.
   bypass_en    the references' own enable time (rb_en), sel 0.
+Run 2026-11-07 before the bypass moved into bypass_rb (pad_ref_rb): "now" was CB in vcm_rb and CB1 / CB2 in
+vref_s2d_rb. Since then blocks() includes bypass_rb (4 more on vcm, 8 on vref), so "now" means that.
 usage: python3 -I explore_bypass.py bypass_s2d bypass_d2s bypass_kick bypass_en [bypass_*_n] -j N
 """
 import argparse

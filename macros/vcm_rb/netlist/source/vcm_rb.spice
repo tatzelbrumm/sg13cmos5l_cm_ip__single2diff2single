@@ -18,7 +18,10 @@
 *        below (the asymmetry subtracts the 0.06 V offset of (gh + xp)/2 against the centre; explore_vcm_rb.py, G)
 *   vcm = m, buffered by a 5-transistor OTA in unity gain: PMOS pair = the unit's input device (20u/1u ng=2) on a
 *        unit tail (5u/6u at vbp, 5 uA), NMOS mirror 6u/6u; output pole at vcm with CB (12u x 12u hv NMOS capacitor
-*        as the s2d buffer's CLP).
+*        as the s2d buffer's CLP). CB is the one capacitor that stays in this cell: without it the buffer is stable
+*        but peaks up to 1.25 (about 45 deg) with 50 ... 200 fF on the pin, with it <= 1.09 whatever the pin sees
+*        (explore_stability.py). The bypass against the S2D's enable kick (4 more 12u x 12u) is in bypass_rb
+*        (pad_ref_rb; Christoph 2026-11-07).
 * Since 2026-11-07 the lines (reference NI, BP, BNC) are the shared cell bias_tree_rb, which also feeds vref_s2d_rb;
 * before, each block had its own copy (option A of the user's question on sharing). The lines are gate voltages from
 * the neighbouring cell on the same rails, inside pad_ref_rb.

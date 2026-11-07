@@ -17,7 +17,7 @@ that pad_ref_rb uses.
 | `pad_ref_rb_primitives.gds` | top cell `pad_ref_rb_primitives`: rows on the left, leaf devices on the right, names on TEXT 63/0 |
 | `pad_ref_rb_primitives.png` | its render |
 | `primitives.tsv` | the 14 leaf device cells: type, W, L, ng (measured from Activ ∩ GatPoly), bbox, name in the pad cell |
-| `mapping.tsv` | each of the 33 MOS devices of pad_ref_rb (32 + the dummy MDPBN) → its leaf primitive → the pad structure it replicates |
+| `mapping.tsv` | each MOS device of pad_ref_rb (with the dummy MDPBN and bypass_rb's CBM m=4, CBR m=8) → its leaf primitive → the pad structure it replicates |
 
 - **Naming:**
   - Every copied cell is prefixed `rbsrc_`.
@@ -57,16 +57,17 @@ leaves, gives each replica the same surroundings as the device it copies: neighb
 | tubs | `s2d_inputs_c3`, one row cut to 5 | dummy, MR, BA, BB, dummy | MR copies the unit input device; BA / BB are the same device in the OTA |
 | cascodes | `s2d_casc_n_f`, cut | CY, F1–F4 (5 × 15/3, all on vbnc), BNC 1/8 in the middle, 2/3 dummies at the ends | CY and the four followers copy CX / CY; BNC sits next to them as in the pad |
 | mirror | `sinks_6x6_s2d_c3_core`, one row cut to 4 | SF (2/6) at one end in place of a 2/6 dummy, BD, BM, dummy 2/6 | BD / BM 6/6 are the sink finger; the pad's sink rows end in 2/6 |
-| caps | `s2d_cload_c3` + one 12×12 | CB1, CB2, both SPD (vcm, vref) in the TPN / TNN slots; CB as an extra capacitor | the same row as the pad's load capacitors |
+| caps | `s2d_cload_c3`, repeated | 13 × 12×12: CB (vcm_rb), CBM 4 × (vcm), CBR 8 × (vref, bypass_rb); both SPD (vcm, vref) in a TPN / TNN slot | the same row as the pad's load capacitors; no matching needed, so they can fill left-over space |
 | small tubs | **new**, after `tub_p20x1_c3` | SU, SL1, SL2: 1/4 PMOS each in its own well (bulk = source) | the only structure the pad does not have |
 
 **Area estimate** (sum of row bounding boxes, before routing):
 
 | tree P | tree N | tails | tubs | cascodes | mirror | caps | small tubs | sum |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 134 | 248 | 214 | 407 | 750 | 227 | 641 | 124 | ≈ 2750 µm² |
+| 134 | 248 | 214 | 407 | 750 | 227 | ≈ 2700 | 124 | ≈ 4800 µm² |
 
-With routing, about 1.5×, so roughly 4100 µm², about 64 × 64 µm, for both references. The estimate in
+With routing, about 1.5×, so roughly 7200 µm², about 85 × 85 µm, for both references; the 13 capacitors are more
+than half of it (before the bypass decision: 3 capacitors, ≈ 2750 µm² of rows, 64 × 64 µm routed). The estimate in
 `docs/replica_bias/SUMMARY.md` before the shared tree was 2 × 50 × 60 µm.
 - **cascodes:** about 52 µm wide when the five fingers are folded 3 + 2 into the row's two levels; 72.7 µm as one
   full level.
@@ -92,7 +93,7 @@ purely a dummy.
    the sheet ([3] layout dummy). TR stays with BT in the tails row.
 4. **xschem's "finger width is too big" / "length is too big"** (the PDK's `fet_drc`: hv w/ng ≤ 10 µm,
    l ≤ 10 µm):
-   - CY and F1–F4 (15/3, ng=1) and CB, CB1, CB2 (12/12) trigger it.
+   - CY and F1–F4 (15/3, ng=1) and the 12/12 capacitors (CB, CBM, CBR) trigger it.
    - These are the pad's own devices: CX / CY are 30/3 ng=2 = 15 µm fingers, CLP / CLN 12/12.
    - The pad sheets size them with expressions (`w={10e-6*lcas}`, `w={wcl}`), which `fet_drc` cannot read, so only
      the replica sheets warn.

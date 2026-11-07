@@ -73,7 +73,7 @@ def leaf_name(typ, w, l, ng):
 
 
 def devices():
-    """pad_ref_rb's MOS devices: (cell, name, type, W total, L, ng) from the source netlists."""
+    """pad_ref_rb's MOS devices: (cell, name, type, W total, L, ng, m) from the source netlists."""
     out, sub = [], None
     for f in NETS:
         for l in f.read_text().splitlines():
@@ -83,7 +83,7 @@ def devices():
             if m:
                 p = dict(kv.split("=") for kv in m.group(3).split())
                 w, ln = float(p["w"].rstrip("u")), float(p["l"].rstrip("u"))
-                out.append((sub, m.group(1), m.group(2), w, ln, int(p.get("ng", 1))))
+                out.append((sub, m.group(1), m.group(2), w, ln, int(p.get("ng", 1)), int(p.get("m", 1))))
     return out
 
 
@@ -94,6 +94,8 @@ REPLICATES = {
     ("bias_tree_rb", "NBP"): "bias_tree_noab_n_c3 NBPC (2.4/6 on ni)", ("bias_tree_rb", "BP"): "bias_tree_noab_p_c3 dummy 2/6 slot, as diode",
     ("bias_tree_rb", "PBNC"): "bias_tree_noab_p_c3 PBNC", ("bias_tree_rb", "BNC"): "s2d_casc_n_f BNC (1/8 in the cascode row)",
     ("bias_tree_rb", "MDPBN"): "bias_tree_noab_p_c3 PBN 5/6 slot, kept as a dummy (D = S = B = vdd, gate vbp)",
+    ("bypass_rb", "CBM"): "s2d_cload_c3 CLP / CLN 12x12 (x 4, bypass of vcm)",
+    ("bypass_rb", "CBR"): "s2d_cload_c3 CLP / CLN 12x12 (x 8, bypass of vref)",
     ("vcm_rb", "TR"): "s2d_tails_hi_f unit tail (or bias_tree_noab_p_c3 PBN 5/6 slot)", ("vcm_rb", "BT"): "s2d_tails_hi_f unit tail",
     ("vcm_rb", "MR"): "tub_p20x1_c3 (s2d_inputs_c3)", ("vcm_rb", "BA"): "tub_p20x1_c3 (s2d_inputs_c3)",
     ("vcm_rb", "BB"): "tub_p20x1_c3 (s2d_inputs_c3)",
@@ -173,12 +175,12 @@ def main():
     miss = []
     with open(HERE / "mapping.tsv", "w", newline="") as f:
         w = csv.writer(f, delimiter="\t")
-        w.writerow(["cell", "device", "type", "W", "L", "ng", "primitive", "replicates (s2d pad structure)"])
-        for sub, name, t, wd, ln, ng in devices():
+        w.writerow(["cell", "device", "type", "W", "L", "ng", "m", "primitive", "replicates (s2d pad structure)"])
+        for sub, name, t, wd, ln, ng, mult in devices():
             prim = by.get((t, wd, ln, ng), "MISSING")
             if prim == "MISSING":
                 miss.append((sub, name))
-            w.writerow([sub, name, t, wd, ln, ng, prim, REPLICATES.get((sub, name), "")])
+            w.writerow([sub, name, t, wd, ln, ng, mult, prim, REPLICATES.get((sub, name), "")])
     render()
     print(f"{len(rows)} rows, {len(leaves)} leaf devices -> {HERE / 'pad_ref_rb_primitives.gds'}")
     print(f"XOR against the s2d pad cell: {'identical' if not bad else bad}")

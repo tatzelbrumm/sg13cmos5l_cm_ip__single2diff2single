@@ -31,7 +31,7 @@ GEN_INC = ["hv_logic/netlist/source/hv_logic.spice", "ls_up_1v2_3v3/netlist/sour
 
 
 def blocks(c, vdd_node="iovdd"):
-    """bias_tree_rb + vcm_rb + vref_s2d_rb wired as in pad_ref_rb, from one bias_gen_pd on the harness controls of
+    """bias_tree_rb + vcm_rb + vref_s2d_rb + bypass_rb wired as in pad_ref_rb, from one bias_gen_pd on the harness controls of
     R.harness(c, 'b'); each cell on its own supply source (all at iovdd) so its current is measured."""
     return f"""{R.harness(c, 'b')}Vir irefb irr2 0
 Vbt vddt 0 dc {c['vdd']}
@@ -40,6 +40,7 @@ Vbr vddr 0 dc {c['vdd']}
 Xtree vddt 0 irr2 rb_ni rb_vbp rb_vbnc en_3v3b en_3v3_bb bias_tree_rb
 Xvcm vddc 0 rb_ni rb_vbp rb_vbnc vcm en_3v3_bb vcm_rb
 Xvrf vddr 0 rb_ni rb_vbnc vref en_3v3_bb vref_s2d_rb
+Xbyp 0 vcm vref bypass_rb
 """
 
 

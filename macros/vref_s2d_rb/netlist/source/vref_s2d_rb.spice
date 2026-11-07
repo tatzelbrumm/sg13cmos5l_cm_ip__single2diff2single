@@ -10,8 +10,9 @@
 * vref = vbnc - V_GS(F): an x-node replica at a lower current density (F = 4 fingers of the fold cascode, 15u/3u, at
 * 1.67 uA, against the S2D's 30u/3u at 10 uA), so it rises with temperature like x and sits about 0.1 V above it:
 * about 0.49 V at 27 C (pad range from 0 V), 0.44 V at -40 C, and >= 30 mV above the INL edge at 125 C
-* (explore_vref.py). Output impedance about 1/gm(F) = 20 kOhm; CB1 / CB2 (2 x 12u x 12u hv NMOS to vss) hold the pin
-* during the pad's own transients (G6: steps and enable).
+* (explore_vref.py). Output impedance about 1/gm(F) = 20 kOhm. No capacitor in this cell (Christoph 2026-11-07: the
+* bypass in a cell of its own unless needed for stability; a follower has no loop, explore_stability.py): the bypass
+* that holds vref during the pad's own transients (G6) is bypass_rb in pad_ref_rb, 8 x 12u x 12u hv NMOS to vss.
 * Since 2026-11-07 the lines come from the shared cell bias_tree_rb (macros/pad_ref_rb), which also feeds vcm_rb; before,
 * this block had its own copy (reference NI, BP, BNC). Supply current (tt 27 C): 1.67 uA (the follower).
 * Ports: vdd vss ni vbnc vref en_3v3_b. ni / vbnc: bias_tree_rb's lines (ni = its 6u/6u NMOS reference diode, vbnc =
@@ -26,8 +27,6 @@ XF2 vdd vbnc vref vss sg13_hv_nmos w=15u l=3u ng=1 mm_ok=1
 XF3 vdd vbnc vref vss sg13_hv_nmos w=15u l=3u ng=1 mm_ok=1
 XF4 vdd vbnc vref vss sg13_hv_nmos w=15u l=3u ng=1 mm_ok=1
 XSF vref ni vss vss sg13_hv_nmos w=2u l=6u ng=1 mm_ok=1
-XCB1 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 mm_ok=1
-XCB2 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 mm_ok=1
 * --- disable
 XSPD vref en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 mm_ok=1
 .ends vref_s2d_rb

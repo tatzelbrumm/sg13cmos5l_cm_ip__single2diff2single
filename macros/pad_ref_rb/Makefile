@@ -123,7 +123,7 @@ sim-view-xschem: ## Plot Xschem simulation results (usage: make sim-view-xschem 
 
 # Parameter groups of verification/cace/$(TOP).yaml run by sim-cace. Override with: make sim-cace CACE_GROUPS=<group>
 CACE_GROUPS ?= vcm_dc_params vcm_dc_3v0_params vcm_sel_params vref_room_params vref_hot_params vref_cold_params pd_params mm_params
-SHEET_CELLS ?= pad_ref_rb bias_tree_rb
+SHEET_CELLS ?= pad_ref_rb bias_tree_rb bypass_rb
 # Parallel CACE jobs (keep small: parallel ngspice runs have stalled on 2-core machines)
 CACE_JOBS   ?= 1
 CACE_SCRIPTS := $(MAKEFILE_DIR)/../../scripts/cace
