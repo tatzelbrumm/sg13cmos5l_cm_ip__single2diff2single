@@ -120,7 +120,7 @@ def check(src, sub, net):
     want = {d["name"].upper(): (d["d"], d["g"], d["s"], d["b"], d["model"], d["p"]["w"], d["p"]["l"],
                                 str(d["p"].get("ng", 1)), str(d["p"].get("m", 1))) for d in devs}
     got, gports, inside = {}, None, False
-    text = open(net).read().replace("\n+", " ")
+    text = open(net).read().replace("\n+", " ").replace("\n*+", " ")  # xschem wraps long (commented) header lines
     for l in text.splitlines():
         l = l[2:] if l.startswith("**.") else l
         if l.lower().startswith(f".subckt {sub.lower()} "):

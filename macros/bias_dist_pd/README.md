@@ -28,7 +28,10 @@ en_out2 en_out3`.
 ## Files
 
 ```
-schematic/xschem/bias_dist_pd.sch/.sym   sheet in label style (lab_pin on every device pin), generated; symbol
+schematic/xschem/bias_dist_pd.sch/.sym   sheet drawn by hand in readable analog style (2026-11-07, xschem-analog-schematic
+                                         skill): wires, devices upright, groups [D] enable decode, [S] switches,
+                                         [M] mirror, [O] PMOS outputs; symbol unchanged
+schematic/bias_dist_pd.png / .svg        render of the sheet
 schematic/xschem/xschemrc                adds hv_logic
 netlist/source/bias_dist_pd.spice        source netlist (with hv_logic.spice)
 ```
@@ -37,3 +40,27 @@ Checked 2026-10-27: xschem's netlist of the sheet against the source subckt, dev
 symbol pin order = source port order. Not simulated: no CACE suite yet. To be decided: the number of inputs and
 outputs (3 / 4 here), where `en_in<k>` / `en_out<j>` come from (static configuration bits through `ls_up_1v2_3v3`),
 and the matching requirement, which sets NI / NM / PD / PO sizes.
+
+Redrawn 2026-11-07 from the label-style sheet (Christoph: "a human readable schematic that contains everything is a
+good start"): xschem's netlist against the source subckt 23 = 23 devices, 14 = 14 gate instances, ports equal;
+topology-equivalent to the label-style sheet (`scripts/xschem/sheet_equiv.py`); no short (`sch_lint.py`); xschem exit 0,
+no `Error:` in its log. The supply pins of the hv_logic gates join vdd / vss by label: wired, every `iin` / `po` line
+would cross them (88 crossings against 45).
+
+## Layout note: a later split into analog and digital cells (not done)
+
+Christoph, 2026-11-07: "For layout purposes, maybe some split of bias_dist_pd into analog switches and digital control
+might prove advantageous." Two clean cuts (from the redraw):
+
+- **A, strict:** a digital cell of 7 `nand2_hv` + 7 `inv_hv` (in: `en_3v3`, `en_in0..2`, `en_out0..3`; out: 14 control
+  nets `ei<k>` / `ei<k>_b` / `eo<j>` / `eo<j>_b`) and an analog cell (TGs, mirror, outputs) that takes the 14 control
+  nets, `en_3v3` (SVPD) and `en_3v3_b` (TDN).
+- **B, by row (probably better for layout):** one switch slice per input and output (nand + inverter + TG; ports in,
+  out, `en_3v3`, `en_k`, vdd, vss; the logic-to-switch nets stay inside the slice), 7 slices around one analog core
+  (NI, NM, TDN, PD, SVPD, PO0..3) whose boundary nets are `ni`, `po0..3`, `en_3v3`, `en_3v3_b`, vdd, vss. The matched
+  devices (NI / NM 6u/6u, PD / PO 5u/6u) stay together in the core; the decode is static configuration and makes noise
+  only when the configuration changes.
+
+Open questions from the redraw: `iin<k>` are `inout` on the symbol but `iout<j>` are `out`, although both are current
+nodes; `en_3v3` and `en_3v3_b` are separate ports, so the caller must keep them complementary (both high would let TDN
+pull `ni` to vss with input TGs on).
