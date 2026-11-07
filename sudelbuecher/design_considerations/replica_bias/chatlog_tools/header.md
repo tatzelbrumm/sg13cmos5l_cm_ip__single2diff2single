@@ -25,3 +25,11 @@ SPDX-License-Identifier: Apache-2.0
 - **Day 2 (2026-11-07):** the shared bias tree pad_ref_rb (option A), Christoph's hand-compacted sheets and the short
   in them, the skill update, the layout primitives. The conversation passed a context compaction; the log follows the
   live path across it (`logicalParentUuid`). Notes: `../design_considerations/replica_bias/phase2b/README.md`.
+- **Day 2, afternoon and evening (2026-11-07, turns 15–40):** the bypass cell bypass_rb and its PMOS / NMOS / varicap
+  study, bias_dist_pd's sheet and truth table, the survey of external switch and level-shifter cells, the CACE
+  characterization of analog_pswitch_small (agent), and the layout of pad_ref_rb by agents P, P3, N and F (briefs with
+  Christoph's layout rules verbatim, rb_avg redrawn, dummies backannotated, the rb_casc alternatives, F's brief and
+  Christoph's placement answers). A second context compaction; the log follows the live path across it the same way.
+  Notes: `../design_considerations/replica_bias/layout/`.
+- **Updated 2026-11-07 (21:25 UTC):** turns 15–40 added by the same scripts; turns 1–14 are unchanged except for the
+  tool lines at the end of turn 14 that came after the first export.
