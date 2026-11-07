@@ -137,8 +137,8 @@ echo $&V_in $&V_out $&V_drop $&V_head $&I_in $&I_err $&I_nb $&I_err18 $&Vg """ +
 TRAN_VARS = ["Verr_on", "Verr_off", "td_on", "td_off", "t_on", "t_off", "V_load", "Q_inj"]
 TRAN_SRC = r"""Vdd dvdd 0 CACE\{dvdd=1.2\}
 Vav avdd 0 CACE\{avdd=3.3\}
-* enable (0.1 ns edges): 0 | on at 1 us | off at 3 us | on at 5 us | end 7 us
-Ven enable 0 PWL(0 0 1u 0 1.0001u CACE\{dvdd=1.2\} 3u CACE\{dvdd=1.2\} 3.0001u 0 5u 0 5.0001u CACE\{dvdd=1.2\})
+* enable (0.1 ns edges): 0 | on at 0.2 us | off at 0.7 us | on at 1.2 us | end 1.7 us
+Ven enable 0 PWL(0 0 0.2u 0 0.2001u CACE\{dvdd=1.2\} 0.7u CACE\{dvdd=1.2\} 0.7001u 0 1.2u 0 1.2001u CACE\{dvdd=1.2\})
 Vs out 0 CACE\{vsig=2.5\}
 * x1: 10 kOhm || 1 pF load at in.  x2: held node in2 (1 pF only), starts at vsig
 Rl in 0 10k
@@ -149,14 +149,15 @@ TRAN_NG = ANT + "\n" + INC + r"""
 .options gmin=1e-15 abstol=1e-14 reltol=1e-4 method=gear SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 .option warn=1
 .control
-tran 0.1n 7u
+* max step 0.1 ns: delays within ~3 % of a 0.02 ns run (checked at tt, 125 C)
+tran 0.1n 1.7u 0 0.1n
 let va = CACE\{avdd=3.3\}
 let vs = CACE\{vsig=2.5\}
 * gate of the pass PMOS (x1.net3) before each enable edge: off, on, off, on
-meas tran g0 find v(x1.net3) at=0.99u
-meas tran g1 find v(x1.net3) at=2.99u
-meas tran g2 find v(x1.net3) at=4.99u
-meas tran g3 find v(x1.net3) at=6.99u
+meas tran g0 find v(x1.net3) at=0.19u
+meas tran g1 find v(x1.net3) at=0.69u
+meas tran g2 find v(x1.net3) at=1.19u
+meas tran g3 find v(x1.net3) at=1.69u
 let Verr_on = 0.5 * (g1 + g3 + abs(g1 - g3))
 let Verr_off = va - 0.5 * (g0 + g2 - abs(g0 - g2))
 * defaults (1 s) stay when a measurement finds no crossing
@@ -164,23 +165,23 @@ let td_on = 1
 let td_off = 1
 let t_on = 1
 let t_off = 1
-meas tran td_on trig v(enable) val=CACE[CACE\{dvdd=1.2\} / 2] td=4.5u rise=1 targ v(x1.net3) val=CACE[CACE\{avdd=3.3\} / 2] td=4.5u fall=1
-meas tran td_off trig v(enable) val=CACE[CACE\{dvdd=1.2\} / 2] td=2.5u fall=1 targ v(x1.net3) val=CACE[CACE\{avdd=3.3\} / 2] td=2.5u rise=1
-meas tran vl3 find v(in) at=6.99u
-meas tran vl1 find v(in) at=2.99u
+meas tran td_on trig v(enable) val=CACE[CACE\{dvdd=1.2\} / 2] td=1.1u rise=1 targ v(x1.net3) val=CACE[CACE\{avdd=3.3\} / 2] td=1.1u fall=1
+meas tran td_off trig v(enable) val=CACE[CACE\{dvdd=1.2\} / 2] td=0.6u fall=1 targ v(x1.net3) val=CACE[CACE\{avdd=3.3\} / 2] td=0.6u rise=1
+meas tran vl3 find v(in) at=1.69u
+meas tran vl1 find v(in) at=0.69u
 let V_load = vl3 / vs
 let h3 = 0.5 * vl3
 let h1 = 0.5 * vl1
-meas tran t_on trig v(enable) val=CACE[CACE\{dvdd=1.2\} / 2] td=4.5u rise=1 targ v(in) val=$&h3 td=4.5u rise=1
-meas tran t_off trig v(enable) val=CACE[CACE\{dvdd=1.2\} / 2] td=2.5u fall=1 targ v(in) val=$&h1 td=2.5u fall=1
-meas tran hb find v(in2) at=2.99u
-meas tran ha find v(in2) at=3.5u
+meas tran t_on trig v(enable) val=CACE[CACE\{dvdd=1.2\} / 2] td=1.1u rise=1 targ v(in) val=$&h3 td=1.1u rise=1
+meas tran t_off trig v(enable) val=CACE[CACE\{dvdd=1.2\} / 2] td=0.6u fall=1 targ v(in) val=$&h1 td=0.6u fall=1
+meas tran hb find v(in2) at=0.69u
+meas tran ha find v(in2) at=1.15u
 let Q_inj = 1e-12 * (ha - hb)
 echo $&Verr_on $&Verr_off $&td_on $&td_off $&t_on $&t_off $&V_load $&Q_inj """ + ECHO + r"""
 .endc"""
 
 # ------------------------------------------------------------------ transient: dvdd loss / power-up without dvdd
-PWR_VARS = ["S_50u", "S_1m", "S_10m", "S_100m", "Verr_end"]
+PWR_VARS = ["S_50u", "S_1m", "S_10m", "S_100m", "I_avdd", "Verr_end"]
 PWR_SRC = r"""* scen 1: dvdd lost at 10 us (1 us ramp) with the switch on, enable follows dvdd; dvdd and enable back at 100 ms
 * scen 2: same with the switch off | scen 3: avdd ramps up 10 .. 20 us with dvdd = 0, enable = 0; dvdd up at 100 ms
 .param sc=CACE\{scen=1\} vl=CACE\{dvdd=1.2\} va=CACE\{avdd=3.3\}
@@ -196,7 +197,7 @@ Vx gx 0 \{gx\}
 Vs out 0 2.0
 Rl in 0 10k"""
 PWR_NG = ANT + "\n" + INC + r"""
-.options gmin=1e-15 abstol=1e-14 reltol=1e-4 method=gear
+.options gmin=1e-15 abstol=1e-14 reltol=1e-4 method=gear SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 .option warn=1
 .control
 tran 10u 100.05m 0 0.5m
@@ -208,12 +209,14 @@ meas tran g10m find v(x1.net3) at=10m
 meas tran g100m find v(x1.net3) at=99.9m
 meas tran gend find v(x1.net3) at=100.04m
 meas tran gexp find v(gx) at=100.04m
+meas tran iav find i(Vav) at=99.9m
 let S_50u = g50u / va
 let S_1m = g1m / va
 let S_10m = g10m / va
 let S_100m = g100m / va
+let I_avdd = -iav
 let Verr_end = abs(gend - gexp)
-echo $&S_50u $&S_1m $&S_10m $&S_100m $&Verr_end """ + ECHO + r"""
+echo $&S_50u $&S_1m $&S_10m $&S_100m $&I_avdd $&Verr_end """ + ECHO + r"""
 .endc"""
 
 
@@ -369,11 +372,22 @@ GROUPS = [
          "S_1m": ("gate/avdd 1 ms", "", A, A),
          "S_10m": ("gate/avdd 10 ms", "", A, A),
          "S_100m": ("gate/avdd 100 ms", "", A, A),
+         "I_avdd": ("Current from avdd at 100 ms", "uA", A, A),
          "Verr_end": ("Gate error after dvdd is back (enable = prior state)", "V", A, 0.1)},
         dict(scen=[1, 2, 3], avdd=[3.0, 3.6], corner_mos=CORN, temp=TEMPS),
         plots={"S_10m_vs_temp": dict(type="xyplot", xaxis="temp", yaxis="S_10m")},
         comment="dvdd lost while on (1) / off (2), avdd up with dvdd = 0 (3): state over 100 ms, then dvdd back; "
                 "3 x 2 x 5 x 3 = 90 runs.  Verr_end functional (recovery); S_* characterization."),
+    grp("pwr_mm_params", "pwr",
+        {"S_50u": ("gate/avdd 50 us (1 off, 0 on): mismatch", "", A, A),
+         "S_1m": ("gate/avdd 1 ms: mismatch", "", A, A),
+         "S_10m": ("gate/avdd 10 ms: mismatch", "", A, A),
+         "S_100m": ("gate/avdd 100 ms: mismatch", "", A, A),
+         "I_avdd": ("Current from avdd at 100 ms: mismatch", "uA", A, A),
+         "Verr_end": ("Gate error after dvdd is back: mismatch", "V", A, 0.1)},
+        dict(iterations=ITER, scen=3, corner_mos="tt_mismatch", temp=27, avdd=3.3), collate=True,
+        comment="Mismatch MC (50 runs) of scenario 3 (avdd up with dvdd = 0) at tt, 27 C: is the power-up state of the "
+                "latch systematic or set by mismatch?"),
 ]
 
 HEADER = f"""# SPDX-FileCopyrightText: 2026 Christoph Maier
