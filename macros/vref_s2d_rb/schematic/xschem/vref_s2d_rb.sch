@@ -19,8 +19,8 @@ T {125 C). It is below 0.4 V up to 27 C and 0.46 ... 0.54 V at 125 C (fast PMOS 
 T {vref = vbnc - V_GS(F): an x-node replica at a lower current density (F = 4 fingers of the fold cascode, 15u/3u, at} 100 -1084 0 0 0.25 0.25 {}
 T {1.67 uA, against the S2D's 30u/3u at 10 uA), so it rises with temperature like x and sits about 0.1 V above it:} 100 -1062 0 0 0.25 0.25 {}
 T {about 0.49 V at 27 C (pad range from 0 V), 0.44 V at -40 C, and >= 30 mV above the INL edge at 125 C} 100 -1040 0 0 0.25 0.25 {}
-T {(explore_vref.py). Output impedance about 1/gm(F) = 20 kOhm; CB1 / CB2 (2 x 12u x 12u hv NMOS to vss) hold the pin} 100 -1018 0 0 0.25 0.25 {}
-T {during the pad's own transients (G6: steps and enable).} 100 -996 0 0 0.25 0.25 {}
+T {(explore_vref.py). Output impedance about 1/gm(F) = 20 kOhm. No capacitor in this cell: the bypass that holds the pin} 100 -1018 0 0 0.25 0.25 {}
+T {during the pad's own transients (G6) is bypass_rb in pad_ref_rb. [DM]: rb_casc's dummies, D = S = B = vss, gate vbnc.} 100 -996 0 0 0.25 0.25 {}
 T {Since 2026-11-07 the lines come from the shared cell bias_tree_rb (macros/pad_ref_rb), which also feeds vcm_rb; before,} 100 -974 0 0 0.25 0.25 {}
 T {this block had its own copy (reference NI, BP, BNC). Supply current (tt 27 C): 1.67 uA (the follower).} 100 -952 0 0 0.25 0.25 {}
 T {Ports: vdd vss ni vbnc vref en_3v3_b. ni / vbnc: bias_tree_rb's lines (ni = its 6u/6u NMOS reference diode, vbnc =} 100 -930 0 0 0.25 0.25 {}
@@ -147,6 +147,40 @@ spiceprefix=X
 }
 C {devices/lab_wire.sym} 320 -630 0 0 {name=l3 sig_type=std_logic lab=vbnc}
 C {devices/lab_wire.sym} 420 -460 0 0 {name=l4 sig_type=std_logic lab=vref}
+P 10 5 585 -320 885 -320 885 -150 585 -150 585 -320 {dash=6}
+T {[DM] layout dummies (rb_casc, on vss)} 590 -343.5 0 0 0.35 0.35 {layer=10}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 640 -250 0 0 {name=MDC[3:0]
+l=3u
+w=2u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X
+}
+N 660 -280 680 -280 {lab=vss}
+N 660 -250 680 -250 {lab=vss}
+N 660 -220 680 -220 {lab=vss}
+N 680 -280 680 -190 {lab=vss}
+C {devices/lab_pin.sym} 680 -190 0 1 {name=ldm0_r sig_type=std_logic lab=vss}
+N 620 -250 600 -250 {lab=vbnc}
+C {devices/lab_pin.sym} 600 -250 0 0 {name=ldm0_g sig_type=std_logic lab=vbnc}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 800 -250 0 0 {name=MDCX[2:0]
+l=3u
+w=15u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X
+}
+N 820 -280 840 -280 {lab=vss}
+N 820 -250 840 -250 {lab=vss}
+N 820 -220 840 -220 {lab=vss}
+N 840 -280 840 -190 {lab=vss}
+C {devices/lab_pin.sym} 840 -190 0 1 {name=ldm1_r sig_type=std_logic lab=vss}
+N 780 -250 760 -250 {lab=vbnc}
+C {devices/lab_pin.sym} 760 -250 0 0 {name=ldm1_g sig_type=std_logic lab=vbnc}
 C {devices/title.sym} 160 -40 0 0 {name=l0 author="Christoph Maier"}
 C {devices/lab_wire.sym} 800 -630 0 1 {name=l2 sig_type=std_logic lab=vbnc}
 N 540 -100 900 -100 {lab=vss}

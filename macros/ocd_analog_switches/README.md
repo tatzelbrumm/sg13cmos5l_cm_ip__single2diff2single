@@ -111,7 +111,63 @@ Regenerate: `python3 -I scripts/mag2klay.py --harness <harness checkout> --out m
   harness netlists for all six subcircuits.
 - Not done: any simulation (no ngspice/xschem was available in the session), CACE suite, PVT of the switch resistance, leakage with
   `avdd` off, ESD on nodes connected to pads, KLayout DRC/LVS of the imported layouts (see Layout).
+  (2026-11-07: done for `analog_pswitch_small` except `avdd` off, ESD and layout; see the next section.)
 - The sheets need the `sg13cmos5l_stdcells` symbols (`sg13cmos5l_inv_4`, `_antennanp`, `_decap_4`) from the PDK's xschem library path,
   as in the harness; the netlist needs the standard-cell spice.
 - `make` targets: `Makefile.new` is a copy of `hv_logic`'s (no CACE groups, no layout); `mv Makefile.new Makefile` as in `macros/README.md`.
 - The large `analog_switch` (m=100) of the harness dependency is not copied.
+
+## Characterization of `analog_pswitch_small` (CACE, 2026-11-07)
+
+Question: is the harness PMOS switch fit as the per-leg switch of a bias-current distribution (1 ... 50 uA sourced into a
+6u/6u hv NMOS diode at about 0.6 ... 1.5 V)? Schematic netlist only (no PEX, no layout), CACE 2.11.0, ngspice-47, IHP models of
+the installed `ihp-sg13cmos5l`. 1225 runs, all of them through `make sim-cace`. **Limits: "F" = functional (the gate at the rail it
+must be at, recovery after dvdd returns); "P" = proposal = worst simulated case + margin, set after the first run, not a
+requirement; "-" = characterized only.** All F and P limits pass; the weak spots are in the "-" rows.
+
+| group (runs) | swept | measured (min ... max over the sweep) | limit | verdict |
+|---|---|---|---|---|
+| `func_params` (135) | enable 0-1-0-1, dvdd 1.08/1.2/1.32 x avdd 3.0/3.3/3.6, 5 corners, -40/27/125 C, 2.5 V into 10k \|\| 1p | polarity right everywhere (gate within 0.5 uV of avss on, = avdd off); enable -> gate 0.46 ... 36.6 ns (tt nominal 0.93 / 1.15 ns); load 50 %: 1.1 ... 37.3 ns; V_load/2.5 V 0.949 ... 0.977; held 1 pF at turn-off: +27.8 ... +33.9 fC | F 0.1 V; P 50 / 40 / 50 / 50 ns, >= 0.9 | pass |
+| `func_mm_params` (200) | mismatch MC at the slowest point (sf, -40 C, dvdd 1.08, avdd 3.6) | always toggles; enable -> gate on 17 ... 223 ns (median 37, 99 % 139), off 9 ... 109 ns | F; P 500 ns | pass |
+| `func1v_params` (15) | the same with 1.0 V into 10k \|\| 1p, nominal supplies | V_load/1 V <= 0.13 % (ff 125 C), 1e-9 at ss -40 C: **does not pass 1 V** | - | - |
+| `ron_params` (450) | out = 0.3 ... 3.0 V, in = out - 10 mV, avdd 3.0/3.3/3.6, 5 x 3 | R_sw: >= 2.0 V: 176 ... 803 ohm; 1.5 V: 0.97 ... 5.2 k; 1.3 V: 2.1 k ... 4.6 M; 1.2 V: 3.8 k ... 0.67 G; <= 0.9 V: >= 1.3 M (ff 125 C), 10 G at tt 27 C (open). tt 27 C 3.3 V: 262 / 541 / 1730 / 8.9 k / 107 k ohm at 3.0 / 2.0 / 1.5 / 1.3 / 1.2 V. I_dvdd <= 85 nA, I_avdd <= 1.2 nA, I_en <= 1.3 nA (tt 27 C: 1.0 nA, 1.3 pA, 0.18 nA) | F gate; P 120 nA / 2 nA / 2 nA | pass |
+| `leak_params` (90) | off, in/out each 0 / 1.7 / 3.6 V, avdd 3.6, dvdd 1.32, 5 corners, 27/125 C | \|I_in\|, \|I_out\| <= 3.3 nA (ff 125 C, 3.6 V across), <= 0.1 nA at 27 C; with out <= 1.7 V, in = 0: <= 0.53 nA (n-well junction). I_dvdd <= 95 nA, I_avdd <= 2.0 nA, I_en >= -0.55 nA (tt 27 C: 1.7 nA, 17 pA, -0.10 nA) | F gate; P +-5 nA, 130 nA, 3 nA, -0.8 nA | pass |
+| `bias_params` (135) | iDAC stand-in (1:1 hv PMOS mirror on avdd) -> switch -> 6u/6u diode, 1 / 5 / 50 uA, avdd 3.0/3.3/3.6, 5 x 3; one off neighbour on the iDAC node | diode 0.58 ... 0.80 / 0.82 ... 0.99 / 1.45 ... 1.79 V; drop 0.40 ... 0.65 / 0.23 ... 0.51 / 0.035 ... 0.13 V; iDAC node <= 1.84 V, headroom avdd - node >= 1.17 V; error (in - out)/out <= +0.025 % (1 uA, ff 125 C), <= 0.005 % at 5 uA; one off neighbour injects <= 176 pA, x 18 (harness: 19 switches per iDAC node) -> <= +0.34 % at 1 uA, 0.063 % at 5 uA, 0.004 % at 50 uA | F gate; P drop <= 0.8 V, headroom >= 1.0 V, +-0.05 %, +-250 pA, +-0.5 % | pass |
+| `pwr_params` (90) | dvdd lost (1 us ramp) while on / while off, avdd up with dvdd = 0; 100 ms, then dvdd back; avdd 3.0/3.6, 5 x 3 | lost while on: stays on 100 ms everywhere. Lost while off: stays off for 100 ms at -40/27 C (gate >= 0.88 avdd), at 125 C turns on within 1 ... 10 ms (sf) or 10 ... 100 ms (ss), drifts to 0.73 ... 0.94 avdd (tt, ff), stays off (fs); a drifting level shifter draws up to **0.20 mA from avdd** (> 1 uA in 13 of these 30 runs and in 4 of the 30 power-up runs). avdd up without dvdd: **comes up on** at -40 and 27 C in all corners, at 125 C on (ss, sf) or drifting. After dvdd returns: correct state in all 90 | F 0.1 V (recovery) | pass |
+| `pwr_mm_params` (50) | avdd up with dvdd = 0, mismatch MC, tt 27 C | all 50 come up on: systematic, not mismatch | F | pass |
+| `dvdd_off_params` (60) | DC, dvdd = 0, latch preset on / off, R at 2.0 V | preset on: on (371 ... 803 ohm) in 30/30; preset off: the solver lands on "on" in 18/30, mid-rail latch nodes draw up to 0.23 mA from avdd (the DC end point, reached only slowly at <= 27 C, see `pwr_params`) | - | - |
+
+**Fit as a bias-leg switch for 1 ... 50 uA into ~0.9 V: yes, with conditions** (measured above, reasoning here). The leg works
+because the current is forced: the PMOS (gate at avss) conducts once its source (the iDAC side) is about one |Vth| above ground, so
+the iDAC node rises to 1.0 ... 1.84 V and the switch drops 0.035 ... 0.65 V; the current reaches the diode to better than 0.03 %
+(0.34 % with 18 off neighbours at 1 uA, 125 C). Conditions: (1) the source must be a sourcing current source with compliance to
+about 1.9 V at avdd = 3.0 V (the harness iDAC and a PMOS mirror are; with avdd >= 3.0 V there is >= 1.17 V left for it);
+(2) the switched node must not be a voltage that has to pass: below ~1.3 V (tt) / 1.5 V (worst) the cell is not a voltage switch
+(R >= 2 k at 1.3 V, open at <= 0.9 V; 1 V does not reach a 10 k load), so a leg that must pull a node near ground, or an
+NMOS-sink leg at a low node, does not work; (3) dvdd must be up whenever avdd is: without dvdd the state is undefined (comes up
+on, an off switch can turn on at 125 C, and up to 0.2 mA crowbar from avdd per cell). In the harness, dvdd = `vdd1v2` (core
+supply, not a slot's gated supply), so there this matters only for power sequencing; a copy inside a slot with dvdd = the slot's
+gated `vdd_1v2` while `vdd_3v3` stays on hits all three effects. (4) The level shifter (1.2 V-driven 2u/0.5u hv NMOS against a
+0.5u/0.5u hv PMOS latch) has little margin at sf, -40 C, dvdd 1.08 V, avdd 3.6 V: 37 ns at the corner, up to 223 ns with
+mismatch; no failure in 200 MC runs, failure rate not quantified beyond that. For static bias selection the delay is irrelevant.
+Not checked: layout parasitics / PEX, avdd = 0 with dvdd up, ESD, noise, settling of the bias node after switching.
+
+Simulation notes. xschem netlists the sheet's standard cells as empty subcircuits; the templates include the PDK's
+`sg13cmos5l_stdcell.spice` first, and ngspice keeps the first definition ("redefinition of .subckt ..., ignored" in the logs). The
+PDK antenna diode `dantenna` (model `darea`, tt = 701 ns) stalls ngspice-47 transients at >= 85 C; the two transient templates
+define `sg13cmos5l_antennanp` with tt = 0 (forward bias only; identical results at tt 27 C). The CACE DUT netlist is checked equal
+to `netlist/source/ocd_analog_switches.spice`. The `Error: undriven node` lines in the log come from xschem's netlist check (the
+sources are in code blocks) and are harmless. Transient delays are within ~3 % of a 0.02 ns max-step run.
+
+Rerun (about 13 min on 4 cores; `gen_cace.py` writes the yaml and the templates, edit it rather than them):
+
+```sh
+export PDK_ROOT=/foss/pdks; source .designinit
+python3 -I macros/ocd_analog_switches/verification/gen_cace.py
+make -C macros/ocd_analog_switches sim-cace TOP=analog_pswitch_small CACE_JOBS=4 \
+  CACE_GROUPS="ron_params leak_params dvdd_off_params bias_params func_params func1v_params func_mm_params pwr_params pwr_mm_params"
+make -C macros/ocd_analog_switches spec-table TOP=analog_pswitch_small
+```
+
+Results: `verification/cace/results/analog_pswitch_small/` (`<group>.csv` in SI units, except the `%` errors and the ratios;
+`summary_<group>.md`; plots).

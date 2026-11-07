@@ -107,6 +107,40 @@ C {devices/opin.sym} 940 -800 0 0 {name=p4 lab=vbp}
 C {devices/opin.sym} 940 -630 0 0 {name=p5 lab=vbnc}
 C {devices/ipin.sym} 100 -520 0 0 {name=p6 lab=en_3v3}
 C {devices/ipin.sym} 100 -640 0 0 {name=p7 lab=en_3v3_b}
+P 10 5 1040 -470 1300 -470 1300 -290 1040 -290 1040 -470 {dash=6}
+T {[3] layout dummies, NMOS tree row (on vss)} 1045 -493.5 0 0 0.35 0.35 {layer=10}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 1100 -400 0 0 {name=MDTN6
+l=6u
+w=2u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X
+}
+N 1120 -430 1140 -430 {lab=vss}
+N 1120 -400 1140 -400 {lab=vss}
+N 1120 -370 1140 -370 {lab=vss}
+N 1140 -430 1140 -340 {lab=vss}
+C {devices/lab_pin.sym} 1140 -340 0 1 {name=ldn0_r sig_type=std_logic lab=vss}
+N 1080 -400 1060 -400 {lab=ni}
+C {devices/lab_pin.sym} 1060 -400 0 0 {name=ldn0_g sig_type=std_logic lab=ni}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 1240 -400 0 0 {name=MDTN7
+l=6u
+w=2.4u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X
+}
+N 1260 -430 1280 -430 {lab=vss}
+N 1260 -400 1280 -400 {lab=vss}
+N 1260 -370 1280 -370 {lab=vss}
+N 1280 -430 1280 -340 {lab=vss}
+C {devices/lab_pin.sym} 1280 -340 0 1 {name=ldn1_r sig_type=std_logic lab=vss}
+N 1220 -400 1200 -400 {lab=ni}
+C {devices/lab_pin.sym} 1200 -400 0 0 {name=ldn1_g sig_type=std_logic lab=ni}
 C {devices/title.sym} 160 -40 0 0 {name=l0 author="Christoph Maier"}
 C {sg13cmos5l_pr/sg13_hv_nmos.sym} 200 -520 0 0 {name=TGN
 l=0.45u

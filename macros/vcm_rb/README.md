@@ -65,13 +65,32 @@ to vss, so every current is off. SPD (gate `en_3v3_b`) pulls `vcm` to vss.
 
 `pad_ref_rb`'s ports: `vdd vss iref vcm vref en_3v3 en_3v3_b` (`iref`: 5 µA, **sourced** into the cell).
 
+
+## Layout dummies [DM]
+
+The rows of `pad_ref_rb`'s layout (`../pad_ref_rb/layout/primitives/README.md`, agents P, P3, N on 2026-11-07) end in
+dummies in the pads' convention: source, drain and bulk on one rail, gate by poly abutment with the row. They are in the
+netlist and the sheet (group [DM]) so that LVS sees them; they carry no current.
+
+| dummies | W/L | d g s b | row |
+|---|---|---|---|
+| MDT[1:0] | 5u/6u | vdd vbp vdd vdd | rb_tails `D TR BT D` |
+| MDU[1:0] | 20u/1u ng=2 | vdd vdd vdd vdd | rb_tubs `D MR BA BB D` (the pad's dummy tubs) |
+| MDAU[1:0] | 1u/4u | gh m gh gh | rb_avg, well gh: `D SU D` |
+| MDAL[1:0] | 1u/4u | m xp m m | rb_avg, well m: `D SL1 SL2 D` |
+| MDM[1:0] | 2u/6u | vss bd vss vss | rb_mirror `D BD BM D` (row 1 of the pad's sinks) |
+
+rb_avg's dummies sit on their well's net, not on vdd: one NWell per bulk net, the dummies extend the abutted gate strip
+(Christoph: "why can't you abut by gate poly?"). They replace the first draft's MDA[1:0] on vdd.
+
 ## Files
 
 ```
 netlist/source/vcm_rb.spice        source netlist (mm_ok=1 on every device, as the pads' sheets)
 schematic/xschem/vcm_rb.sch/.sym   sheet drawn by hand from the source netlist (2026-11-07, xschem-analog-schematic skill,
                                    compacted by hand by Christoph, then moved onto the shared tree); make check-sheet netlists
-                                   it with xschem and compares it device by device (16 = 16, ports equal)
+                                   it with xschem and compares it device by device (26 = 26 with the 10 layout
+                                   dummies [DM], ports equal)
 schematic/vcm_rb.png / .svg        render of the sheet
 schematic/gen_sheet.py             only its --check mode is in use; generating would overwrite the hand-drawn sheet
 ../pad_ref_rb/verification/        CACE suite of pad_ref_rb (gen_cace.py), which covers this block; make sim-cace here runs it

@@ -1,5 +1,5 @@
 # rb_dc: blocks alone: vcm, vref, block supply currents (without / with the 5 uA reference), internal nodes
-# 135 runs, 30 s wall with -j 3, 2026-11-07T18:32:18Z; SI units
+# 135 runs, 54 s wall with -j 3, 2026-11-07T20:35:00Z; SI units
 vdd	corner_mos	temp	sel	vcm	vref	I_tree	I_vcm_rb	I_vref_s2d_rb	Iref	gh	xp	m	conv
 3.0	ss	-40	0	1.11957	0.453236	3.86984E-06	1.34932E-05	1.563E-06	5.00804E-06	1.92651	0.345237	1.12002	ok
 3.0	ss	-40	1	1.11695	0.375598	2.35768E-06	8.2013E-06	9.44765E-07	3.04329E-06	1.99552	0.284925	1.11748	ok

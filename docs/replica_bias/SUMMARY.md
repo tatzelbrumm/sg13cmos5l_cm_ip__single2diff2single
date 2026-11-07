@@ -35,7 +35,8 @@ reference and one tree each). Replicas of the pads' devices only (hv MOS of the 
 - **S2D:** INL ≤ 1.73 mV. The ideal fixed 0.5 / 1.2 V reaches 3.65 mV.
 - **D2S:** INL ≤ 1.72 mV.
 - **Round trip:** INL ≤ 0.75 mV (ideal fixed: 3.14 mV).
-- **S2D enable:** 1.4 µs, as with ideal sources.
+- **S2D enable:** 1.4 µs, as with ideal sources (since the layout dummies: 1.42 … 1.49 µs with the references on
+  before, 1.65 … 1.68 µs enabled together).
 - **S2D pad range:** 0 … ≥ 1.09 V up to 27 °C.
 
 **Current against a divider** (same output, same output impedance, tt / 27 °C / 3.3 V):
@@ -83,12 +84,13 @@ S2D's enable does not kick the pins), a divider needs little rhigh either. What 
   bias_dist_pd → both pads and pad_ref_rb, with leg-to-leg mismatch, is not simulated yet; the decks so far give
   pad_ref_rb its own bias_gen_pd of the same selection.
 - **Bypass capacitors: decided 2026-11-07.** A cell of its own, `bypass_rb`: 4 more 12u × 12u NMOS to vss on vcm
-  (vcm_rb keeps CB for its buffer's phase margin), 8 on vref (vref_s2d_rb has none). The S2D enable kick drops to
-  0.112 / 0.096 V (from 0.236 / 0.212). PMOS to iovdd was rejected: it multiplies the S2D's input-referred iovdd
+  (vcm_rb keeps CB for its buffer's phase margin), 9 on vref (vref_s2d_rb has none; the 9th in the layout's rb_cload).
+  The S2D enable kick drops to 0.112 / 0.088 V (from 0.236 / 0.212). PMOS to iovdd was rejected: it multiplies the S2D's input-referred iovdd
   ripple at 1 MHz by 4 … 7. Side finding: the D2S output follows iovdd by 0.38 V/V at any frequency up to 1 MHz,
   because vcm tracks the band by design (an ideal vcm: 0.3 mV/V).
-- **The vcm overshoot at enable** (≤ 37 mV, ≤ 0.23 V with the OA core; with own trees +0.19 / +0.48 V): sequence the
-  pads after the references if it matters.
+- **The overshoot at enable:** none with the harness or bandgap reference since the layout dummies (before: ≤ 37 mV);
+  with the OA core ≤ 0.22 V on vcm, ≤ 0.39 V on vref (with own trees +0.19 / +0.48 V). The dummies' gate on vbnc
+  slows the enable to 0.8 … 2.0 µs. Sequence the pads after the references if it matters.
 - **The S2D zero point drifts +0.9 mV/K** by design. For a ground-referenced signal that is a temperature-dependent
   offset, and vref is not observable unless routed out.
 - **D2S output offset 5.5 mV** with the OA core at ff / 125 °C (limit 5 mV; the same with an ideal reference).
