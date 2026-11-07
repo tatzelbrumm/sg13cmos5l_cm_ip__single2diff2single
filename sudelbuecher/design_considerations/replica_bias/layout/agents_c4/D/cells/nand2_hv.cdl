@@ -1,0 +1,10 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* nand2_hv (Claude, agent D, C4 2026-11-07). hv devices 1u/0.45u; every device as drawn.
+
+.SUBCKT nand2_hv a b vdd vss y
+MPA y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MPB y b vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MNA y a n1 vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MNB n1 b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS nand2_hv

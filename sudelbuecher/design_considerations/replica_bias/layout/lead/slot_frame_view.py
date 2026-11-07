@@ -1,8 +1,8 @@
 # SPDX-FileCopyrightText: 2026 Christoph Maier
 # SPDX-License-Identifier: Apache-2.0
 """The whole slot7 frame (537.15 x 273 um) with the drawn layouts placed, for a size estimate: pad_ref_rb v2 (agent F)
-at F's proposed position, oa_core_pd and bg_core_pd stacked vertically to its left (positions only proposed),
-bias_dist_pd as a placeholder (layout in progress). vcm / vref drawn straight out to the edge; the run to the S2D
+at F's proposed position; oa_core_pd and bg_core_pd stacked vertically to its left and bias_dist_pd (agent D) above them
+(positions proposed). vcm / vref drawn straight out to the edge; the run to the S2D
 pins is global routing. Device layers of the placed cells; frame pins from final/gds/slot_7.gds."""
 import klayout.db as db
 import matplotlib
@@ -16,6 +16,8 @@ PLACE = [  # (gds, cell, x0, y0 of the cell's bbox corner, label)
     (F + "pad_ref_rb.gds", "pad_ref_rb", 461.20, 169.07, "pad_ref_rb v2\n73.8 × 76.3"),
     (REPO + "macros/bg_core_pd/layout/gds/bg_core_pd.gds", "bg_core_pd", 457.2 - 47.55, 169.07, "bg_core_pd\n47.6 × 50.1"),
     (REPO + "macros/oa_core_pd/layout/gds/oa_core_pd.gds", "oa_core_pd", 457.2 - 40.51, 169.07 - 2 - 58.13, "oa_core_pd\n40.5 × 58.1"),
+    ("/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/D/out/bias_dist_pd.gds",
+     "bias_dist_pd", 457.2 - 60.49, 221.12, "bias_dist_pd (agent D)\n60.5 × 16.2"),
 ]
 STY = [((31, 0), "#c8e6c9", 0.55), ((1, 0), "#2f8f2f", 0.7), ((5, 0), "#e8443a", 0.5), ((8, 0), "#4a90e2", 0.3),
        ((10, 0), "#b05ad6", 0.3)]
@@ -33,10 +35,6 @@ for gds, name, x0, y0, lab in PLACE:
     w, h = bb.width() * u, bb.height() * u; used += w * h
     ax.add_patch(Rectangle((x0, y0), w, h, fc="none", ec="#c0392b", lw=1.2))
     ax.text(x0 + w / 2, y0 + h + 1.5, lab, ha="center", va="bottom", fontsize=7.5, color="#c0392b")
-bx, by, bw, bh = 457.2 - 45, 221.0, 45, 40
-ax.add_patch(Rectangle((bx, by), bw, bh, fc="none", ec="#1f77b4", ls="--", lw=1.2))
-ax.text(bx + bw / 2, by + bh / 2, "bias_dist_pd\n(layout in progress;\nsize guessed)", ha="center", va="center",
-        fontsize=7, color="#1f77b4")
 # frame pins
 ly = db.Layout(); ly.read(REPO + "final/gds/slot_7.gds"); t = ly.top_cell(); u = ly.dbu
 for li in ly.layer_indexes():
@@ -55,6 +53,6 @@ ax.plot([535.0, 536.45], [223.34, 223.34], color="#8e44ad", lw=2); ax.plot([535.
 ax.text(533, 181.5, "vref straight out", fontsize=6.5, ha="right", color="#e91e63")
 ax.set_xlim(-5, 575); ax.set_ylim(-5, 280); ax.set_aspect("equal"); ax.set_xlabel("x (µm, slot coordinates)")
 ax.set_title(f"slot7 (537.15 × 273 µm = 146,600 µm²) with the drawn layouts placed: {used:,.0f} µm² ({100 * used / (W * H):.1f} %) "
-             "+ bias_dist_pd; core / bias_dist positions are proposals, the routes to the pad pins are global routing", fontsize=10)
+             "; core / bias_dist positions are proposals, the routes to the pad pins are global routing", fontsize=10)
 fig.tight_layout(); fig.savefig("slot_frame_view.png", dpi=130)
 print("placed", round(used), "um2", round(100 * used / (W * H), 1), "%")

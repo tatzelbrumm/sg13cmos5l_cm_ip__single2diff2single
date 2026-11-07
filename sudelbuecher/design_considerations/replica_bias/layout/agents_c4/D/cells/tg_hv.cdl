@@ -1,0 +1,8 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* tg_hv (Claude, agent D, C4 2026-11-07). hv devices 1u/0.45u; every device as drawn.
+
+.SUBCKT tg_hv en en_b io_a io_b vdd vss
+MTGP io_a en_b io_b vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MTGN io_a en io_b vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS tg_hv
