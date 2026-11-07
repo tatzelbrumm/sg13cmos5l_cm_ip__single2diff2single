@@ -43,7 +43,10 @@ in `docs/replica_bias/`.
 
 ```
 netlist/source/vref_s2d_rb.spice        source netlist (mm_ok=1 on every device)
-schematic/xschem/vref_s2d_rb.sch/.sym   generated label-style sheet; make check-sheet: 16 = 16 devices, ports equal
+schematic/xschem/vref_s2d_rb.sch/.sym   sheet drawn by hand from the source netlist (2026-11-07, xschem-analog-schematic skill);
+                                        make check-sheet netlists it with xschem and compares it device by device (16 = 16, ports equal)
+schematic/vref_s2d_rb.png / .svg        render of the sheet
+../vcm_rb/schematic/gen_sheet.py        only its --check mode is in use; generating would overwrite the hand-drawn sheet
 verification/cace/                      CACE suite: room (27 C), hot (125 C), cold (-40 C), pd, mm; results/vref_s2d_rb/
 verification/baseline/s2d_mc_vref0v5/   G8: S2D mismatch / process MC at vref 0.5 V (current schematic)
 testbenches/spice/                      explore_ztc.py (zero-TC currents of the pads' diode sizes), explore_vref.py

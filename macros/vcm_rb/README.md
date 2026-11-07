@@ -64,8 +64,10 @@ current is off. SPD pulls `vcm` to vss.
 
 ```
 netlist/source/vcm_rb.spice        source netlist (mm_ok=1 on every device, as the pads' sheets)
-schematic/xschem/vcm_rb.sch/.sym   label-style sheet generated from the netlist (schematic/gen_sheet.py); make check-sheet
-                                   netlists it with xschem and compares it device by device (24 = 24, ports equal)
+schematic/xschem/vcm_rb.sch/.sym   sheet drawn by hand from the source netlist (2026-11-07, xschem-analog-schematic skill);
+                                   make check-sheet netlists it with xschem and compares it device by device (24 = 24, ports equal)
+schematic/vcm_rb.png / .svg        render of the sheet
+schematic/gen_sheet.py             only its --check mode is in use; generating would overwrite the hand-drawn sheet
 verification/cace/                 CACE suite (verification/gen_cace.py): dc, dc_3v0, sel, pd, mm; results/vcm_rb/
 verification/baseline/             G7: D2S CACE on the current schematic at vref = vicm = 1.2 V and 1.65 V, loop fixture;
                                    run_cace_copy.py (temporary yaml copies; the pad macros stay unchanged), run_g7_g8.sh
