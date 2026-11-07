@@ -1,0 +1,46 @@
+
+Circuit 1 cell sg13_hv_pmos and Circuit 2 cell sg13_hv_pmos are black boxes.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_hv_pmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_hv_pmos                    |Circuit 2: sg13_hv_pmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_hv_pmos and sg13_hv_pmos are equivalent.
+
+Class tree_pmos (0):  Merged 11 parallel devices.
+Class tree_pmos (1):  Merged 11 parallel devices.
+Subcircuit summary:
+Circuit 1: tree_pmos                       |Circuit 2: tree_pmos                       
+-------------------------------------------|-------------------------------------------
+sg13_hv_pmos (17->6)                       |sg13_hv_pmos (17->6)                       
+Number of devices: 6                       |Number of devices: 6                       
+Number of nets: 8                          |Number of nets: 8                          
+---------------------------------------------------------------------------------------
+Resolving symmetries by property value.
+Resolving symmetries by pin name.
+Netlists match uniquely.
+
+Subcircuit pins:
+Circuit 1: tree_pmos                       |Circuit 2: tree_pmos                       
+-------------------------------------------|-------------------------------------------
+vbpc                                       |vbpc                                       
+en_3v3_b                                   |en_3v3_b                                   
+iref                                       |iref                                       
+ni                                         |ni                                         
+vbn                                        |vbn                                        
+vbnc                                       |vbnc                                       
+vbp                                        |vbp                                        
+vdd                                        |vdd                                        
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes tree_pmos and tree_pmos are equivalent.
+
+Final result: Circuits match uniquely.
+.

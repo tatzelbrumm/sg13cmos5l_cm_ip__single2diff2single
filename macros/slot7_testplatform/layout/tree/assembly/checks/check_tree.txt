@@ -1,0 +1,28 @@
+== cell bias_tree_noab_pd (0,0;32.21,18.68) 32.210 x 18.680 = 601.7 um2
+== layers above Metal2
+  Via2      0 shapes
+  Metal3    0 shapes
+  Via3      0 shapes
+  Metal4    0 shapes
+  Via4      0 shapes
+  Metal5    0 shapes
+  TopVia1   0 shapes
+  TopMetal1 0 shapes
+== pins (top-level shapes)
+  vdd       M1 (0,17.32;32.21,18.68)          right top
+  vss       M1 (0,0;32.21,1.01)               right bottom
+  en_3v3_b  M2 (31.78,16.445;32.21,16.735)    right
+  iref      M2 (31.78,15.545;32.21,15.835)    right
+  vbpc      M2 (31.78,14.645;32.21,14.935)    right
+  vbp       M2 (31.78,13.745;32.21,14.035)    right
+  vbn       M2 (31.78,12.845;32.21,13.135)    right
+  vbnc      M2 (31.78,11.945;32.21,12.235)    right
+  en_3v3    M2 (31.78,10.715;32.21,11.005)    right
+  signal pins on the right edge: 7, min gap 0.61 um
+== latch-up (LU_a / LU_b = 20 um)
+  P+Activ in NWell -> N tie  diffusion shapes  34, ties 1 ((1.025,17.76;20.77,18.06)), farthest 6.89 um at (3.07, 10.87)
+  N+Activ -> p+ tie          diffusion shapes  43, ties 1 ((0.52,0.27;31.69,0.57)), farthest 8.89 um at (30.69, 9.46)
+== area
+  naive bias_tree_noab_pd 57.31 x 34.41 = 1972.0 um2; assembled 601.7 um2 (-69.5 %)
+  halves' boxes 490.3 um2 (81.5 % of the cell); rest = channel + fan-out bay beside tree_pmos
+RESULT PASS

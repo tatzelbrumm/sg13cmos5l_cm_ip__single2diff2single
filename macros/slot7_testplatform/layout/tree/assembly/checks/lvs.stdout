@@ -1,0 +1,26 @@
+[INFO] DEBUG is enabled!
+[INFO] flag -w is set to </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/assembly/checks/lvs>.
+[INFO] flag -s is set to </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/assembly/checks/bias_tree_noab_pd_source_ref.spice>.
+[INFO] flag -l is set to </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/assembly/bias_tree_noab_pd.gds>.
+[INFO] flag -c is set to <bias_tree_noab_pd>.
+[INFO] ihp-sg13cmos5l PDK selected.
+[INFO] Using SPICE/CDL netlist file </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/assembly/checks/bias_tree_noab_pd_source_ref.spice>.
+[INFO] Using layout file </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/assembly/bias_tree_noab_pd.gds>.
+[INFO] Running LVS of </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/assembly/bias_tree_noab_pd.gds> vs </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/assembly/checks/bias_tree_noab_pd_source_ref.spice>.
+[INFO] Using SPICE/CDL netlist </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/assembly/checks/bias_tree_noab_pd_source_ref.spice>...
+[INFO] Extracting netlist from layout </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/assembly/bias_tree_noab_pd.gds>...
+[INFO] Run netgen...
+---
+[INFO] Magic+Netgen LVS is OK, schematic/netlist and layout match!
+---
+CONGRATULATIONS! LVS is OK, schematic/netlist and layout match!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |    \_____/    |
+   \             /
+    '.         .'
+      '-.....-'
+---
+[DONE] Bye!

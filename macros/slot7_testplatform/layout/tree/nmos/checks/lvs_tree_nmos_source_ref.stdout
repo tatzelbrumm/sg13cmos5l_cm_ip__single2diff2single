@@ -1,0 +1,18 @@
+[INFO] Running LVS of </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/nmos/tree_nmos.gds> vs </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/nmos/checks/tree_nmos_source_ref.spice>.
+[INFO] Using SPICE/CDL netlist </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/nmos/checks/tree_nmos_source_ref.spice>...
+[INFO] Extracting netlist from layout </home/user/s2d2s_c5_tree/macros/slot7_testplatform/layout/tree/nmos/tree_nmos.gds>...
+[INFO] Run netgen...
+---
+[INFO] Magic+Netgen LVS is OK, schematic/netlist and layout match!
+---
+CONGRATULATIONS! LVS is OK, schematic/netlist and layout match!
+      .-"""""-.
+    .'  _   _  '.
+   /   (o) (o)   \
+  |       <       |
+  |    \_____/    |
+   \             /
+    '.         .'
+      '-.....-'
+---
+[DONE] Bye!

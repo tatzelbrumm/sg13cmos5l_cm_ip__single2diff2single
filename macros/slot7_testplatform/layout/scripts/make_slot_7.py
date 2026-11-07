@@ -92,19 +92,33 @@ def stage_b(colA, xg, XP):
     import routed_cell as R
     bands, ext = R.tp_en_ctrl_b_spec()
     cb, colsb, ybb = R.build_routed("tp_en_ctrl_b", bands, ext)
-    bands, ext = R.tree_spec()
-    ct, colst, ybt = R.build_routed("bias_tree_noab_pd", bands, ext)
+    routed_tree = '--tree' in sys.argv and sys.argv[sys.argv.index('--tree') + 1] == 'routed'
+    if routed_tree:                     # the first, naive tree (2026-11-06): one NMOS and one PMOS row, routed
+        bands, ext = R.tree_spec()
+        ct, colst, ybt = R.build_routed("bias_tree_noab_pd", bands, ext)
+    else:                               # the matched tree (2026-11-07): layout/tree/assembly, pins on its right edge
+        ct = import_cell(os.path.join(MAC, 'slot7_testplatform', 'layout', 'tree', 'assembly', 'bias_tree_noab_pd.gds'),
+                         'bias_tree_noab_pd')
     # tp_en_ctrl_b: not mirrored, pins at its bottom edge at y = 100
     BX, YB = 187.0, 100.0
     BY = g5(YB - (ybb - 0.15))
     TOP.insert(pya.DCellInstArray(cb.cell_index(), pya.DTrans(pya.DVector(BX, BY))))
     cB = {n: g5(BX + x) for n, x in colsb.items()}
     ytopB = g5(BY + cb.dbbox().top)
-    # tree: pins at its bottom edge at y = 7
-    TX, YT = 232.0, 7.0
-    TY = g5(YT - (ybt - 0.15))
-    TOP.insert(pya.DCellInstArray(ct.cell_index(), pya.DTrans(pya.DVector(TX, TY))))
-    cT = {n: g5(TX + x) for n, x in colst.items()}
+    if routed_tree:
+        # tree: pins at its bottom edge at y = 7
+        TX, YT = 232.0, 7.0
+        TY = g5(YT - (ybt - 0.15))
+        TOP.insert(pya.DCellInstArray(ct.cell_index(), pya.DTrans(pya.DVector(TX, TY))))
+        cT = {n: g5(TX + x) for n, x in colst.items()}
+    else:
+        # matched tree, mirrored about the y axis (x -> TX - x) so that its right-edge Metal2 pins face left;
+        # cell 32.21 x 18.68: x 229.79 .. 262.00, y 1.0 .. 19.68 (below the lowest xgate, whose pins start at y 20.16)
+        TX, TY = 262.0, 1.0
+        TOP.insert(pya.DCellInstArray(ct.cell_index(), pya.DTrans(pya.DTrans.M90, pya.DVector(TX, TY))))
+        TPIN = {"en_3v3_b": 16.59, "iref": 15.69, "vbpc": 14.79, "vbp": 13.89, "vbn": 12.99, "vbnc": 12.09,
+                "en_3v3": 10.86}          # pin centres (cell y), pins at cell x 31.78 .. 32.21
+        xpin = g5(TX - 32.0)             # 230.0, inside the mirrored pin boxes (229.79 .. 230.22)
     # Metal4 lanes between stage A and tp_en_ctrl_b (inputs of the xgates) and right of the xgates (outputs)
     LANE = {"i_oa": 147.5, "i_bg": 148.5, "ibias0": 149.5, "ibias1": 150.5,
             "vbp": 151.5, "vbn": 152.5, "vbpc": 153.5, "vbnc": 154.5, "iref": 214.0, "bus2": 215.5, "bus3": 217.0}
@@ -177,22 +191,44 @@ def stage_b(colA, xg, XP):
         v2_on_m2pin(xo, yo, 0, 0, pad=False)
         m3h(yo, xo, LANE[nout])
         lane_at(nout, yo)
-    # tree pins: Metal4 down from the tree's bottom edge to one Metal3 line each (y 0.9 .. 5.7), then left
     TGT = {"vdd": ("col", "vdd_3v3"), "vss": ("col", "vss_3v3"), "iref": ("lane", "iref"),
            "vbp": ("lane", "vbp"), "vbn": ("lane", "vbn"), "vbpc": ("lane", "vbpc"), "vbnc": ("lane", "vbnc"),
            "en_3v3": ("col", "en3"), "en_3v3_b": ("col", "en3_b")}
-    for k, (n, (kind, tgt)) in enumerate(TGT.items()):
-        y = g5(0.9 + 0.6 * k)
-        m4v(cT[n], y, YT + 0.3)
-        v3(cT[n], y)
+
+    def to_target(n, y, x_from):
+        kind, tgt = TGT[n]
         xt = cB[tgt] if kind == "col" else LANE[tgt]
-        m3h(y, xt, cT[n])
+        m3h(y, xt, x_from)
         if kind == "col":
             v3(xt, y)
             if tgt.startswith("en"):
                 m4v(xt, y, YB + 0.3)
         else:
             lane_at(tgt, y)
+
+    if routed_tree:
+        # tree pins: Metal4 down from the tree's bottom edge to one Metal3 line each (y 0.9 .. 5.7), then left
+        for k, n in enumerate(TGT):
+            y = g5(0.9 + 0.6 * k)
+            m4v(cT[n], y, YT + 0.3)
+            v3(cT[n], y)
+            to_target(n, y, cT[n])
+    else:
+        # signal pins: Via2 on the Metal2 pin, Metal3 to the left at the pin height
+        for n, yc in TPIN.items():
+            y = g5(TY + yc)
+            v2_on_m2pin(xpin, y, 0, 0, pad=False)
+            to_target(n, y, xpin)
+        # rails: Metal1 extended 2.3 um left of the cell, then Via1 / Via2 to a Metal3 line to the supply column
+        for n, (r0, r1) in (("vss", (0.0, 1.01)), ("vdd", (17.32, 18.68))):
+            y0, y1 = g5(TY + r0), g5(TY + r1)
+            box(TOP, "M1", TX - 32.21 - 2.3, y0, TX - 32.21 + 0.1, y1)
+            xs, ys = g5(TX - 32.21 - 1.5), g5((y0 + y1) / 2)
+            via("Via1", xs, ys)
+            for lay in ("M2", "M3"):
+                box(TOP, lay, xs - 0.195, ys - 0.195, xs + 0.195, ys + 0.195)
+            via("Via2", xs, ys)
+            to_target(n, ys, xs)
     for n, (y0, y1) in span.items():
         m4v(LANE[n], y0, y1)
     return cB

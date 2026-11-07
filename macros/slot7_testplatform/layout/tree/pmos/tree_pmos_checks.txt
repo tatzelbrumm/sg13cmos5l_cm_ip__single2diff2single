@@ -1,0 +1,16 @@
+== LU.a (LU_a = 20.0 um, json key LU_a)
+  P+Activ shapes: 17, not within 20 um of a tie: 0
+  farthest P+Activ corner from the tie: 6.89 um (tie: (0.62,7.51;20.365,7.81))
+== mirror row: centroids per drain net (finger pitch units from the row centre)
+  vbp   5 fingers: positions -6 -3 +1 +3 +5, centroid +0.000, mean square 16.00
+  vbn   5 fingers: positions -5 -2 -1 +2 +6, centroid +0.000, mean square 14.00
+  vbnc  2 fingers: positions -4 +4, centroid +0.000, mean square 16.00
+== mirror row: XOR with its mirror image about x = 11.415 um
+  (window: the row's Activ x 2.665 .. 20.165, y 0.620 .. 7.300; the tie above is excluded)
+  Activ   XOR area 0.0000 um2  (0 shapes)
+  GatPoly XOR area 0.0000 um2  (0 shapes)
+  Cont    XOR area 0.0000 um2  (0 shapes)
+  pSD     XOR area 0.0000 um2  (0 shapes)
+  M1      XOR area 0.0000 um2  (0 shapes)
+  Via1    XOR area 0.4332 um2  (12 shapes)
+  M2      XOR area 0.0000 um2  (0 shapes)

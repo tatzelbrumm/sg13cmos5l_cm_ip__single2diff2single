@@ -324,3 +324,32 @@ Scratch work directory of the container: `/home/user/work` (not committed; logs 
   keep both).
 - Delivery `main` and the fork's `custom-pad-test` with stage B: the user decides (delivery `claude/c5-testplatform`
   681c8dd is 2 commits ahead of `main`, fast-forward).
+
+## Matched bias tree (2026-11-07, branch `claude/c5-tree-layout`, on the user's request "same treatment as the cores")
+
+The earlier layout agents A2 / A3 / A4 (2026-10-28) belonged to a session outside reach; their roles were re-created
+from their briefs and reports (`sudel_buecher`: `sudelbuecher/sg13cmos5l_IOPadDiff2Single_build/agents/`) and their
+exported skill (`.../pad_buffer_layout/bg_core_pd_2026-10-28/skill/`), in worktree `/home/user/s2d2s_c5_tree`.
+Agents cannot write `.md` files in this session; their reports are summarized here.
+
+- NMOS specialist, `macros/slot7_testplatform/layout/tree/nmos/`: `tree_nmos` 32.21 x 9.73 um (naive NMOS row 49.08 x 8.61);
+  one row of rotated 1.2/6 units on one ni poly plate, order `d ABCBABABACAB d | NNNNN | c` (A NI, B NBP, C NBPC, d the
+  two halves of the dummy MDBN, N BN, c BNC), TDN + TGN as one stack; NBPC centroid exact, NI / NBP 0.29 um apart (two
+  odd counts in one row; exhaustive search over 16632 orders). DRC 0 (main and maximal deck), LVS match (22 -> 8).
+- PMOS specialist, `layout/tree/pmos/`: `tree_pmos` 20.985 x 8.43 um (naive PMOS row 36.77 x 8.00); one row of 1/6 units
+  `r a b c a b b x a b a c a b r` (a BP, b PBN, c PBNC, x / r the dummy MDBP as 1 + 0.5 + 0.5), exact common centroid for
+  all three; BPC and TGP at the left end. DRC 0, LVS match (17 -> 6).
+- Assembler, `layout/tree/assembly/`: `bias_tree_noab_pd` 32.21 x 18.68 = 601.7 um2 (naive 57.31 x 34.41 = 1972 um2,
+  -69.5 %); PMOS half on top, NMOS below; vdd Metal1 rail top, vss bottom, signal pins Metal2 on the right edge (like
+  the cores); Metal1 / Metal2 only. DRC 0 (main and maximal deck), LVS against the unchanged source netlist (`bias_tree_noab_pd`
+  + `bias_diodes`): match, 14 devices, 10 nets, no property errors. GDS sha256 704b21ce7540...
+- Checked here independently (2026-11-07): both halves and the assembly rebuilt from their scripts (same bytes), PDK DRC
+  0, LVS match, finger W sums equal to the source netlist for every device, no layers above Metal2.
+- Integration: `make_slot_7.py` uses the matched tree by default (the naive one: `--tree routed`), mirrored about y so
+  its pins face left, at x 229.79 .. 262.0, y 1.0 .. 19.68; pins by Via2 + Metal3 to the lanes / enable columns, rails by
+  Metal1 extensions and Via1 / Via2 stacks to the supply columns. `slot_7.gds`: DRC 0 and LVS (190 devices, 120 nets,
+  the same three known port notes) on the first build; LEF pin names unchanged; final GDS sha256 b08f8bfd60a0...
+- Extracted layout: stage A unchanged (currents to 4 digits, 0 logic failures); stage B: the three references still
+  agree to ~1 mV, but the tree voltages shift against the schematic by the narrow-width effect of the unit fingers
+  (1.2 / 1 um instead of 6 / 5 um devices): tt / 27 C, OA reference: vbn 0.928 V (schematic 0.913), vbp 1.994 (1.973),
+  vbpc 1.898 (1.913), vbnc 1.200 (1.207). So these voltages can differ by up to ~20 mV from the pad's own tree (wide devices).

@@ -12,15 +12,15 @@
 | enable_low (dig_in 1111, en 0, 3v3 1, 1v2 1) | 1.94e-12 .. 6.45e-11 A | 1.94e-12 .. 1.57e-10 A | yes | ff 125 C high |
 | vdd1v2_off (dig_in 1111, en 1, 3v3 1, 1v2 0) | 1.94e-12 .. 6.45e-11 A | 1.94e-12 .. 1.57e-10 A | yes | ff 125 C high |
 | vdd1v2_off_1uA (dig_in 1111, en 1, 3v3 1, 1v2 0) | 1.94e-12 .. 6.45e-11 A | 1.94e-12 .. 1.57e-10 A | yes | ff 125 C high |
-| vdd3v3_off (dig_in 1111, en 1, 3v3 0, 1v2 1) | -6.14e-08 .. -1.54e-10 A | -8.83e-08 .. -3.91e-09 A | yes | tt 27 C high |
-| both_supplies_off (dig_in 1111, en 1, 3v3 0, 1v2 0) | -1.79e-09 .. -2.22e-11 A | -2.87e-09 .. -3.16e-11 A | yes | ff 125 C nom |
+| vdd3v3_off (dig_in 1111, en 1, 3v3 0, 1v2 1) | -4.69e-08 .. -1.54e-10 A | -8.83e-08 .. -3.91e-09 A | yes | ff 27 C nom |
+| both_supplies_off (dig_in 1111, en 1, 3v3 0, 1v2 0) | -1.79e-09 .. -2.38e-11 A | -2.87e-09 .. -3.42e-11 A | yes | ff 125 C high |
 
-tie-lows dig_out[4] / dig_out[11], vdd_1v2 on: max 0 / 0 V (into 1 Tohm)
-supply currents, all_off: I(vdd_3v3) 2.79e-10 .. 1.44e-08 A, I(vdd_1v2) 2.91e-06 .. 5.42e-06 A
+tie-lows dig_out[4] / dig_out[11], vdd_1v2 on: max 8.82e-05 / 8.82e-05 V (into 1 Tohm)
+supply currents, all_off: I(vdd_3v3) 3.23e-10 .. 1.45e-08 A, I(vdd_1v2) 2.91e-06 .. 5.42e-06 A
 supply currents, both_on: I(vdd_3v3) 2.46e-05 .. 3.03e-05 A, I(vdd_1v2) 2.91e-06 .. 5.42e-06 A
 floating vdd_1v2 when gated off: 0 .. 0 V
-floating vdd_3v3, vdd3v3_off: 0.483 .. 0.665 V
-floating vdd_3v3, both_supplies_off: 0.54 .. 0.589 V
+floating vdd_3v3, vdd3v3_off: 0.509 .. 0.665 V
+floating vdd_3v3, both_supplies_off: 0.538 .. 0.589 V
 
 | corner | T (C) | I_OA (uA) low / nom / high supply | I_BG (uA) low / nom / high |
 |---|---|---|---|
