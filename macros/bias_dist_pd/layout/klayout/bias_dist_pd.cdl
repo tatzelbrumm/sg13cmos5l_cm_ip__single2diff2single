@@ -1,0 +1,86 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bias_dist_pd.cdl: flat reference netlist of bias_dist_pd.gds, composed by build_bdp.py (Claude, agent D, C4 2026-11-07)
+* from macros/bias_dist_pd/netlist/source/bias_dist_pd.spice + macros/hv_logic/netlist/source/hv_logic.spice
+* (gates expanded, vdd / vss -> vddh / vssh) plus the drawn dummies MDN0 / MDN3 (bdp_mirror_n) and MDP0 / MDP6 (bdp_mirror_p).
+
+.SUBCKT bias_dist_pd vddh vssh en_3v3 en_3v3_b iin0 iin1 iin2 iin3 en_in0 en_in1 en_in2 en_in3 iout0 iout1 iout2 iout3 en_out0 en_out1 en_out2 en_out3
+MIA0_PA ei0_b en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA0_PB ei0_b en_in0 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA0_NA ei0_b en_3v3 XIA0_n1 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MIA0_NB XIA0_n1 en_in0 vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MIB0_P ei0 ei0_b vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIB0_N ei0 ei0_b vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTIN0 iin0 ei0 ni vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTIP0 iin0 ei0_b ni vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA1_PA ei1_b en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA1_PB ei1_b en_in1 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA1_NA ei1_b en_3v3 XIA1_n1 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MIA1_NB XIA1_n1 en_in1 vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MIB1_P ei1 ei1_b vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIB1_N ei1 ei1_b vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTIN1 iin1 ei1 ni vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTIP1 iin1 ei1_b ni vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA2_PA ei2_b en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA2_PB ei2_b en_in2 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA2_NA ei2_b en_3v3 XIA2_n1 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MIA2_NB XIA2_n1 en_in2 vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MIB2_P ei2 ei2_b vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIB2_N ei2 ei2_b vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTIN2 iin2 ei2 ni vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTIP2 iin2 ei2_b ni vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA3_PA ei3_b en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA3_PB ei3_b en_in3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIA3_NA ei3_b en_3v3 XIA3_n1 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MIA3_NB XIA3_n1 en_in3 vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MIB3_P ei3 ei3_b vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MIB3_N ei3 ei3_b vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTIN3 iin3 ei3 ni vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTIP3 iin3 ei3_b ni vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MTDN ni en_3v3_b vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MNI ni ni vssh vssh sg13_hv_nmos w=6u l=6u ng=1 m=1
+MNM vpd ni vssh vssh sg13_hv_nmos w=6u l=6u ng=1 m=1
+MPD vpd vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
+MSVPD vpd en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA0_PA eo0_b en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA0_PB eo0_b en_out0 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA0_NA eo0_b en_3v3 XOA0_n1 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MOA0_NB XOA0_n1 en_out0 vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MOB0_P eo0 eo0_b vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOB0_N eo0 eo0_b vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MPO0 po0 vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTON0 po0 eo0 iout0 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTOP0 po0 eo0_b iout0 vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA1_PA eo1_b en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA1_PB eo1_b en_out1 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA1_NA eo1_b en_3v3 XOA1_n1 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MOA1_NB XOA1_n1 en_out1 vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MOB1_P eo1 eo1_b vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOB1_N eo1 eo1_b vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MPO1 po1 vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTON1 po1 eo1 iout1 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTOP1 po1 eo1_b iout1 vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA2_PA eo2_b en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA2_PB eo2_b en_out2 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA2_NA eo2_b en_3v3 XOA2_n1 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MOA2_NB XOA2_n1 en_out2 vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MOB2_P eo2 eo2_b vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOB2_N eo2 eo2_b vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MPO2 po2 vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTON2 po2 eo2 iout2 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTOP2 po2 eo2_b iout2 vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA3_PA eo3_b en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA3_PB eo3_b en_out3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOA3_NA eo3_b en_3v3 XOA3_n1 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MOA3_NB XOA3_n1 en_out3 vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MOB3_P eo3 eo3_b vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MOB3_N eo3 eo3_b vssh vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MPO3 po3 vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTON3 po3 eo3 iout3 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTOP3 po3 eo3_b iout3 vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+* dummies (D = S = B on the rail, gate by abutment)
+MDN0 vssh ni vssh vssh sg13_hv_nmos w=2u l=6u ng=1 m=1
+MDN3 vssh ni vssh vssh sg13_hv_nmos w=2u l=6u ng=1 m=1
+MDP0 vddh vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
+MDP6 vddh vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS bias_dist_pd
