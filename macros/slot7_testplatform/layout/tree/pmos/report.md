@@ -1,10 +1,10 @@
 <!--
 Saved verbatim by the main session on 2026-11-07 at the user's request: the PMOS specialist agent could not write .md
-files in this session and returned this report in its hand-back. Text unchanged.
+files in this session and returned this report in its hand-back. Text unchanged, except that a model name in the byline is replaced by `claude`.
 -->
 # report.md: tree_pmos, the PMOS devices of bias_tree_noab_pd, compact and matched
 
-2026-11-07, Claude (Opus 5.5), PMOS specialist for slot 7's tree (the role A4 had for oa_pmir_c / bg_pmir_pcas_c). [m] = measured on the GDS or by a tool, [r] = reasoning.
+2026-11-07, claude, PMOS specialist for slot 7's tree (the role A4 had for oa_pmir_c / bg_pmir_pcas_c). [m] = measured on the GDS or by a tool, [r] = reasoning.
 
 ## Result [m]
 

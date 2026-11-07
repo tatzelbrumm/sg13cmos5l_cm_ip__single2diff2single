@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 Christoph Maier
 # SPDX-License-Identifier: Apache-2.0
-"""Render tree_nmos.gds to tree_nmos.png with the PDK layer properties (2026-11-07, Claude Opus 5.5).
+"""Render tree_nmos.gds to tree_nmos.png with the PDK layer properties (2026-11-07, claude).
 python3 render_tree_nmos.py [gds] [png]"""
 import os
 import sys

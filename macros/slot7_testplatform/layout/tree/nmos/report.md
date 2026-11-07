@@ -1,9 +1,9 @@
 <!--
 Saved verbatim by the main session on 2026-11-07 at the user's request: the NMOS specialist agent could not write .md
-files in this session and returned this report in its hand-back. Text unchanged.
+files in this session and returned this report in its hand-back. Text unchanged, except that a model name in the byline is replaced by `claude`.
 -->
 # Report: tree_nmos (NMOS half of bias_tree_noab_pd, slot 7, IHP sg13cmos5l)
-2026-11-07, Claude (Opus 5.5). "Measured" means read from the GDS or the logs; anything else is marked as reasoning.
+2026-11-07, claude. "Measured" means read from the GDS or the logs; anything else is marked as reasoning.
 
 ## Floorplan
 One row of rotated fingers: W along x, L along y. Sources are at the bottom on the tie, drains at the top. Each gate net has one continuous poly plate.

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """bias_tree_noab_pd: the slot-7 bias tree assembled from its two verified halves (IHP sg13cmos5l, hv devices).
 
-2026-11-07, Claude (Opus 5.5), in the role of A2 (oa_core_pd / bg_core_pd assembly, 2026-10-28).
+2026-11-07, claude, in the role of A2 (oa_core_pd / bg_core_pd assembly, 2026-10-28).
 Circuit (source of truth, not edited): macros/bias_tree_noab_pd/netlist/source/bias_tree_noab_pd.spice
 (+ bias_diodes in macros/bias_tree_pd/netlist/source/bias_ref_pd.spice).
 

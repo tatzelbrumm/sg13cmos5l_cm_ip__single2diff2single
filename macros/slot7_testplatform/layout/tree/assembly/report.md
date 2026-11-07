@@ -1,6 +1,6 @@
 <!--
 Saved verbatim by the main session on 2026-11-07 at the user's request: the assembler agent could not write .md files
-in this session and returned this report in its hand-back. Text unchanged.
+in this session and returned this report in its hand-back. Text unchanged, except that a model name in the byline is replaced by `claude`.
 -->
 ## bias_tree_noab_pd assembly (slot 7): done
 

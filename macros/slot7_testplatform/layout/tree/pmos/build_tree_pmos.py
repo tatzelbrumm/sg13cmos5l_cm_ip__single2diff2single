@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """tree_pmos: the PMOS devices of bias_tree_noab_pd (slot 7), compact and matched.
 
-2026-11-07, Claude (Opus 5.5), in the role of A4 (compact PMOS primitives, 2026-10-28).
+2026-11-07, claude, in the role of A4 (compact PMOS primitives, 2026-10-28).
 Circuit (source of truth, not edited): macros/bias_tree_noab_pd/netlist/source/bias_tree_noab_pd.spice
 (+ bias_diodes in macros/bias_tree_pd/netlist/source/bias_ref_pd.spice). PMOS devices, all sg13_hv_pmos, B = vdd:
   BP (vbp vbp vdd) 5/6, PBN (vbn vbp vdd) 5/6, PBNC (vbnc vbp vdd) 2/6   mirror 5 : 5 : 2 units of 1/6

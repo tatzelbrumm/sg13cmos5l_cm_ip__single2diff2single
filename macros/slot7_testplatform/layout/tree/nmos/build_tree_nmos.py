@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """tree_nmos: the NMOS half of bias_tree_noab_pd (slot 7, IHP sg13cmos5l, hv devices), compact and matched.
 
-Written 2026-11-07 by Claude (Opus 5.5) for Christoph Maier, after the OA / BG core primitives of 2026-10-28
+Written 2026-11-07 by claude for Christoph Maier, after the OA / BG core primitives of 2026-10-28
 (agent A3): rotated fingers (W along x, L along y), one row, one gate-poly plate per gate net, end dummies, one
 p+ tie strip along the bottom (no ring, no NWell), drain tracks on Metal2 above the row, pins on the top edge.
 
