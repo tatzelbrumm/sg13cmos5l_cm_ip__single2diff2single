@@ -11,9 +11,9 @@ T {bypass_rb: the bypass capacitors of vcm and vref, in a cell of their own} 100
 T {Christoph, 2026-11-07: distinct from vcm_rb and vref_s2d_rb, "6 on vref, 4 on vcm". All 12u x 12u hv NMOS to vss, the s2d} 100 -730 0 0 0.25 0.25 {}
 T {pad's load-capacitor device (CLP / CLN). vcm_rb keeps its CB (the buffer's phase margin); vref_s2d_rb has none (no loop).} 100 -708 0 0 0.25 0.25 {}
 T {NMOS to vss only: PMOS to iovdd couples iovdd into vref, the S2D's zero point (explore_bypass.py).} 100 -686 0 0 0.25 0.25 {}
-T {drawn from netlist/source/pad_ref_rb.spice (subckt bypass_rb)} 100 -654 0 0 0.25 0.25 {}
-T {[1] vcm 4 x} 305 -313.5 0 0 0.3 0.3 {layer=10}
-T {[2] vref 8 x} 465 -313.5 0 0 0.3 0.3 {layer=10}
+T {parameters ncm (default 4), ncr (default 8): the number of capacitors on vcm and vref. Drawn from netlist/source/pad_ref_rb.spice (subckt bypass_rb)} 100 -654 0 0 0.25 0.25 {}
+T {[1] vcm ncm x} 305 -313.5 0 0 0.3 0.3 {layer=10}
+T {[2] vref ncr x} 465 -313.5 0 0 0.3 0.3 {layer=10}
 N 100 -400 300 -400 {lab=vcm}
 N 300 -400 300 -240 {lab=vcm}
 N 100 -460 460 -460 {lab=vref}
@@ -36,7 +36,7 @@ C {sg13cmos5l_pr/sg13_hv_nmos.sym} 300 -220 1 0 {name=CBM
 l=12u
 w=12u
 ng=1
-m=4
+m=\{ncm\}
 mm_ok=1
 model=sg13_hv_nmos
 spiceprefix=X
@@ -45,7 +45,7 @@ C {sg13cmos5l_pr/sg13_hv_nmos.sym} 460 -220 1 0 {name=CBR
 l=12u
 w=12u
 ng=1
-m=8
+m=\{ncr\}
 mm_ok=1
 model=sg13_hv_nmos
 spiceprefix=X

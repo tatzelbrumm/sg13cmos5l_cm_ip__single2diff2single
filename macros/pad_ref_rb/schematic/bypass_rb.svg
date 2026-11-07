@@ -206,7 +206,7 @@ text {font-family: Sans-Serif;}
 <text fill="#ff0000"  xml:space="preserve" font-size="6.57995" transform="translate(294.525, 522.669) rotate(270)" >S</text>
 <text fill="#ff0000"  xml:space="preserve" font-size="6.57995" transform="translate(331.598, 523.669) rotate(270)" >D</text>
 <text fill="#ff0000"  xml:space="preserve" font-size="6.57995" transform="translate(317.724, 520.56) rotate(270)" >B</text>
-<text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(303.491, 546.051) rotate(270)" >m=4</text>
+<text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(303.491, 566.051) rotate(270)" >m={ncm}</text>
 <text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(310.873, 546.051) rotate(270)" >ng=1</text>
 <text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(321.418, 548.051) rotate(270)" >l=12u</text>
 <text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(330.908, 553.051) rotate(270)" >w=12u</text>
@@ -216,13 +216,13 @@ text {font-family: Sans-Serif;}
 <text fill="#ff0000"  xml:space="preserve" font-size="6.57995" transform="translate(429.499, 522.669) rotate(270)" >S</text>
 <text fill="#ff0000"  xml:space="preserve" font-size="6.57995" transform="translate(466.571, 523.669) rotate(270)" >D</text>
 <text fill="#ff0000"  xml:space="preserve" font-size="6.57995" transform="translate(452.697, 520.56) rotate(270)" >B</text>
-<text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(438.465, 546.051) rotate(270)" >m=8</text>
+<text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(438.465, 561.051) rotate(270)" >m={ncr}</text>
 <text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(445.846, 546.051) rotate(270)" >ng=1</text>
 <text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(456.391, 548.051) rotate(270)" >l=12u</text>
 <text fill="#aaaa00"  xml:space="preserve" font-size="8.77327" transform="translate(465.881, 553.051) rotate(270)" >w=12u</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="17.5465" transform="translate(391.001, 671.684)" >         bypass_rb.sch</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="17.5465" transform="translate(391.001, 646.376)" >Christoph Maier</text>
-<text fill="#cccccc"  xml:space="preserve" font-size="17.5465" transform="translate(880.215, 646.376)" >2026-11-07  18:31:32</text>
+<text fill="#cccccc"  xml:space="preserve" font-size="17.5465" transform="translate(881.215, 646.376)" >2026-11-07  19:37:12</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="43.8664" transform="translate(196.977, 670.275)" >SCHEM</text>
 <path class="l1" d="M142.144 347.844L310.861 347.844"/>
 <path class="l1" d="M310.861 347.844L310.861 482.817"/>
@@ -263,7 +263,7 @@ text {font-family: Sans-Serif;}
 <text fill="#cccccc"  xml:space="preserve" font-size="10.9666" transform="translate(142.144, 79.4185)" >Christoph, 2026-11-07: distinct from vcm_rb and vref_s2d_rb, "6 on vref, 4 on vcm". All 12u x 12u hv NMOS to vss, the s2d</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="10.9666" transform="translate(142.144, 97.9774)" >pad's load-capacitor device (CLP / CLN). vcm_rb keeps its CB (the buffer's phase margin); vref_s2d_rb has none (no loop).</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="10.9666" transform="translate(142.144, 116.536)" >NMOS to vss only: PMOS to iovdd couples iovdd into vref, the S2D's zero point (explore_bypass.py).</text>
-<text fill="#cccccc"  xml:space="preserve" font-size="10.9666" transform="translate(142.144, 143.531)" >drawn from netlist/source/pad_ref_rb.spice (subckt bypass_rb)</text>
-<text fill="#ff00ff"  xml:space="preserve" font-size="13.1599" transform="translate(315.079, 432.763)" >[1] vcm 4 x</text>
-<text fill="#ff00ff"  xml:space="preserve" font-size="13.1599" transform="translate(450.052, 432.763)" >[2] vref 8 x</text>
+<text fill="#cccccc"  xml:space="preserve" font-size="10.9666" transform="translate(142.144, 143.531)" >parameters ncm (default 4), ncr (default 8): the number of capacitors on vcm and vref. Drawn from netlist/source/pad_ref_rb.spice (subckt bypass_rb)</text>
+<text fill="#ff00ff"  xml:space="preserve" font-size="13.1599" transform="translate(315.079, 432.763)" >[1] vcm ncm x</text>
+<text fill="#ff00ff"  xml:space="preserve" font-size="13.1599" transform="translate(450.052, 432.763)" >[2] vref ncr x</text>
 </svg>

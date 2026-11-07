@@ -1,8 +1,8 @@
 v {xschem version=3.4.8RC file_version=1.3}
 G {}
 K {type=subcircuit
-format="@name @pinlist @symname"
-template="name=x1"
+format="@name @pinlist @symname ncm=@ncm ncr=@ncr"
+template="name=x1 ncm=4 ncr=8"
 description="bypass_rb: bypass capacitors of vcm and vref (12u x 12u hv NMOS to vss)"
 }
 V {}
@@ -21,3 +21,4 @@ T {vref} 8 -26 0 0 0.2 0.2 {}
 T {vss} -10 8 0 0 0.2 0.2 {}
 T {@symname} -45 34 0 0 0.25 0.25 {}
 T {@name} 55 -45 0 0 0.2 0.2 {}
+T {ncm=@ncm ncr=@ncr} 55 -25 0 0 0.2 0.2 {}

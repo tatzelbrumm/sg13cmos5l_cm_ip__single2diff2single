@@ -18,7 +18,7 @@ def parse(src, sub):
     lines, inside, ports, devs, group, notes = open(src).read().splitlines(), False, [], [], "", []
     for l in lines:
         if l.lower().startswith(f".subckt {sub.lower()} "):
-            inside, ports = True, l.split()[2:]
+            inside, ports = True, [t for t in l.split()[2:] if "=" not in t]  # subckt parameters are not ports
             continue
         if not inside:
             if l.startswith("*") and not l.startswith("* SPDX"):
@@ -108,8 +108,8 @@ def instances(text, sub):
         if inside and l.lower().startswith(".ends"):
             break
         t = l.split()
-        if inside and t and t[0][:1] in "Xx" and not DEV.match(l) and not any("=" in x for x in t):
-            out[t[0].upper()] = tuple(t[1:])
+        if inside and t and t[0][:1] in "Xx" and not DEV.match(l):
+            out[t[0].upper()] = tuple(t[1:])  # nets, cell and any parameters (name=value) in order
     return out
 
 
@@ -124,7 +124,7 @@ def check(src, sub, net):
     for l in text.splitlines():
         l = l[2:] if l.startswith("**.") else l
         if l.lower().startswith(f".subckt {sub.lower()} "):
-            inside, gports = True, l.split()[2:]
+            inside, gports = True, [t for t in l.split()[2:] if "=" not in t]
             continue
         if inside and l.lower().startswith(".ends"):
             break
