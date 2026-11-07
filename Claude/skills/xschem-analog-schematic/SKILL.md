@@ -380,8 +380,12 @@ vref_s2d_rb became bias_tree_rb):
     names against `$PWD`, not against the working directory of the process. A wrong `PWD`
     silently netlists an empty schematic.
   - **Delete the old netlist first**, so that a failed run cannot be compared as if it were fresh.
-  - **Don't treat the exit status as pass/fail.** xschem 3.4.8 has returned 10 while writing a
-    complete netlist. Print the status and xschem's messages, then compare whatever was written.
+  - **Don't treat the exit status as pass/fail, but read every `Error:` line.** Run with
+    `--log FILE`; `-q` hides the messages. xschem 3.4.8 returns 10 both for harmless ERC notes
+    (`undriven node` on testbench nets that sources in code blocks drive) and for real faults that
+    no netlist comparison sees: `Unmatched subcircuit schematic pin direction: iin0 ipin <-->
+    inout` (a sheet pin of another type than the symbol's pin) still writes a correct netlist.
+    Check that every pin's type (ipin / opin / iopin) matches the symbol's `dir`.
   - **Missing symbols show up in the netlist, not on stderr:** search the netlist for
     `IS MISSING`. Test the search once on a sheet with a deliberately wrong library path.
   - To netlist a cell as a real `.subckt` (for comparison with a parent's view), add
@@ -393,7 +397,8 @@ vref_s2d_rb became bias_tree_rb):
   short of b4cd2288 (join at (1750, −690), BA.G and BA.B inside the `m` wire) and is clean on
   d0638017. With `-v` it also lists pins inside wires elsewhere and the crossings.
 - Parse xschem's netlist (`X…`/`M…`/`R…`/`C…`/`I…` lines; the `**.subckt` header gives the port
-  order). Compare per device: model (allowing for a prefix the `format` adds), terminal nets
+  order). xschem wraps long lines, the commented header too: join `\n+` and `\n*+` before parsing,
+  or a cell with many ports (18 in bias_dist_pd) reads as having lost its last port. Compare per device: model (allowing for a prefix the `format` adds), terminal nets
   **in `@pinlist` order** mapped back to the source's terminal order, the sizing parameters, and
   the port order. Report every difference and exit non-zero if there is any.
 - **Compare by topology when names may differ.** After a hand edit, internal net names and
