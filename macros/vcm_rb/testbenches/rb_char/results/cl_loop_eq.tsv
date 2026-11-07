@@ -1,5 +1,5 @@
 # cl_loop_eq: round trip S2D pad -> D2S pad, vref_s2d / vcm = the blocks' DC outputs (rb_dc, sel 0) as ideal sources (exact at DC; the deck with the blocks inside does not converge)
-# 45 runs, 268 s wall with -j 4, 2026-11-06T18:47:55Z; SI units
+# 45 runs, 277 s wall with -j 3, 2026-11-07T17:15:53Z; SI units
 vdd	corner_mos	temp	vref_s2d	vcm	Gain	Vos	INL	Vd_s2d0	Iio	conv
 3.0	ss	-40	0.453236	1.11957	0.998411	3.27435E-05	0.0003697	9.59523E-10	0.000408906	ok
 3.0	ss	27	0.501674	1.13994	0.998552	4.15804E-05	0.000269192	-1.01301E-08	0.000408804	ok
