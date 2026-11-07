@@ -1,0 +1,10 @@
+rb_dc: 135 runs, 0 without result, 30 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_dc.tsv
+rb_z: 27 runs, 0 without result, 10 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_z.tsv
+rb_mm: 100 runs, 0 without result, 23 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_mm.tsv
+cl_s2d_dc: 135 runs, 0 without result, 317 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/cl_s2d_dc.tsv
+cl_d2s_dc: 135 runs, 0 without result, 185 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/cl_d2s_dc.tsv
+cl_loop_eq: 45 runs, 0 without result, 277 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/cl_loop_eq.tsv
+rb_en: 54 runs, 0 without result, 162 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_en.tsv
+rb_up: 54 runs, 0 without result, 170 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_up.tsv
+cl_s2d_en: 12 runs, 0 without result, 63 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/cl_s2d_en.tsv
+cl_s2d_win: 27 runs, 0 without result, 53 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/cl_s2d_win.tsv
