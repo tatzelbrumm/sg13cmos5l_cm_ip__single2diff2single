@@ -92,6 +92,26 @@ pad's split across its tree rows; the harness's `xgate` (`../ocd_analog_switches
 is the same circuit with 2u / 0.5u devices, a KLayout layout and no level shifter. A slice cell of option B would make
 the TG a cell.
 
+**Reuse candidates outside this repo** (read 2026-11-07, Christoph's request; read only, nothing copied):
+- **The harness already distributes bias currents this way.** `RTimothyEdwards/sg13cmos5l_ocd_chipalooza`,
+  `netlist/schematic/chipalooza_frame.spice`: the bias generator `sg13cmos5l_ocd_ip__biasgen2` has two current DACs,
+  `idac1_source` and `idac2_source` (5-bit, sourced); each slot gets both as `ibias<n>[0:1]`, each through its own
+  `analog_pswitch_small` (a PMOS pass switch 4 x 5u/0.4u with its own 1.2 -> 3.3 V shifter `sw_lvl_shift`, enable on
+  the 1.2 V domain), and `vbias<n>` from the voltage generator through an `analog_switch_small`. So slot 7 receives
+  exactly two harness currents (`ibias0`, `ibias1`, used by the two pads' `bias_gen_pd` today); a third leg for
+  pad_ref_rb comes from a distribution inside the slot, i.e. this cell.
+- **`analog_pswitch_small`** (`RTimothyEdwards/sg13cmos5l_ocd_ip__analog_switches`, Magic layout and netgen LVS in that
+  repo; copy in `../ocd_analog_switches`): the harness's verified way to switch a sourced bias current from a 1.2 V
+  enable. It could replace an input or output leg's TG + nand / inverter + the 3.3 V enable (larger: about 4 x 5u/0.4u
+  plus shifter, inverters, decaps; on-resistance irrelevant at µA).
+- **`xgate`** (biasgen, copy in `../ocd_analog_switches`): the same TG as here with 2u/0.5u devices; KLayout layout in
+  our copy.
+- **Level shifters:** `ls_up_1v2_3v3` / `ls_dn_3v3_1v2` here are `tatzelbrumm/sg13cmos5l_cm_ip__shared_levelshifters`
+  (`ls_pair`, "Claude's pick" after the survey there); the harness's `level_shift` (biasgen2, Magic layout, 1.2 -> 3.3 V,
+  needs `in_p` and `in_n`) and `sw_lvl_shift` (inside the analog switches) are the laid-out alternatives.
+- Christoph's fork of the harness adds `validate/switch_polarity/check_polarity.py`, which measures every switch's
+  control polarity in simulation: worth running on any switch taken over.
+
 Open questions from the redraw: `iin<k>` are `inout` on the symbol but `iout<j>` are `out`, although both are current
 nodes; `en_3v3` and `en_3v3_b` are separate ports, so the caller must keep them complementary (both high would let TDN
 pull `ni` to vss with input TGs on).
