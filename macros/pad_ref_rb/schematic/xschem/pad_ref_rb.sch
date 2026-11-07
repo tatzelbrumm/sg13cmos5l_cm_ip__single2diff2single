@@ -16,14 +16,14 @@ T {output or a core's iout; en_3v3 / en_3v3_b from en_ctrl_3v3). vdd / vss: the 
 T {that vcm_rb tracks is referenced to the pads' unit rail).} 100 -684 0 0 0.25 0.25 {}
 T {Supply current (tt 27 C, 3.3 V): tree 9 uA (5 uA reference + 2 BP + 2 BNC) + vcm_rb 14 uA + vref_s2d_rb 1.7 uA.} 100 -662 0 0 0.25 0.25 {}
 T {drawn from netlist/source/pad_ref_rb.spice; Xt bias_tree_rb (this folder), Xc vcm_rb, Xr vref_s2d_rb} 100 -630 0 0 0.25 0.25 {}
-N 500 -580 500 -490 {lab=vdd}
-N 500 -350 500 -100 {lab=vss}
-N 1000 -580 1000 -480 {lab=vdd}
-N 1000 -320 1000 -100 {lab=vss}
-N 1500 -580 1500 -470 {lab=vdd}
-N 1500 -330 1500 -100 {lab=vss}
-N 1000 -580 1500 -580 {lab=vdd}
-N 1000 -100 1500 -100 {lab=vss}
+N 500 -580 500 -490 {lab=vddh}
+N 500 -350 500 -100 {lab=vssh}
+N 1000 -580 1000 -480 {lab=vddh}
+N 1000 -320 1000 -100 {lab=vssh}
+N 1500 -580 1500 -470 {lab=vddh}
+N 1500 -330 1500 -100 {lab=vssh}
+N 1000 -580 1500 -580 {lab=vddh}
+N 1000 -100 1500 -100 {lab=vssh}
 N 100 -450 400 -450 {lab=iref}
 N 100 -430 400 -430 {lab=en_3v3}
 N 200 -410 400 -410 {lab=en_3v3_b}
@@ -46,24 +46,24 @@ N 860 -380 860 -280 {lab=en_3v3_b}
 N 860 -380 900 -380 {lab=en_3v3_b}
 N 1100 -400 1140 -400 {lab=vcm}
 N 1140 -400 1140 -300 {lab=vcm}
-N 100 -580 500 -580 {lab=vdd}
-N 100 -100 500 -100 {lab=vss}
-N 500 -580 1000 -580 {lab=vdd}
-N 500 -100 1000 -100 {lab=vss}
+N 100 -580 500 -580 {lab=vddh}
+N 100 -100 500 -100 {lab=vssh}
+N 500 -580 1000 -580 {lab=vddh}
+N 500 -100 1000 -100 {lab=vssh}
 N 600 -440 680 -440 {lab=ni}
 N 600 -400 720 -400 {lab=vbnc}
 N 100 -410 200 -410 {lab=en_3v3_b}
 N 200 -280 860 -280 {lab=en_3v3_b}
-N 1500 -100 1700 -100 {lab=vss}
+N 1500 -100 1700 -100 {lab=vssh}
 N 1680 -300 1760 -300 {lab=vcm}
 N 1720 -400 1760 -400 {lab=vref}
-N 1700 -140 1700 -100 {lab=vss}
+N 1700 -140 1700 -100 {lab=vssh}
 N 1720 -400 1720 -240 {lab=vref}
 N 1600 -400 1720 -400 {lab=vref}
 N 1680 -300 1680 -240 {lab=vcm}
 N 1140 -300 1680 -300 {lab=vcm}
-C {devices/iopin.sym} 100 -580 0 1 {name=p0 lab=vdd}
-C {devices/iopin.sym} 100 -100 0 1 {name=p1 lab=vss}
+C {devices/iopin.sym} 100 -580 0 1 {name=p0 lab=vddh}
+C {devices/iopin.sym} 100 -100 0 1 {name=p1 lab=vssh}
 C {devices/ipin.sym} 100 -450 0 0 {name=p2 lab=iref}
 C {devices/opin.sym} 1760 -300 0 0 {name=p3 lab=vcm}
 C {devices/opin.sym} 1760 -400 0 0 {name=p4 lab=vref}
@@ -72,7 +72,7 @@ C {devices/ipin.sym} 100 -410 0 0 {name=p6 lab=en_3v3_b}
 C {bias_tree_rb.sym} 500 -420 0 0 {name=Xt}
 C {vcm_rb.sym} 1000 -400 0 0 {name=Xc}
 C {vref_s2d_rb.sym} 1500 -400 0 0 {name=Xr}
-C {bypass_rb.sym} 1700 -190 0 0 {name=Xb ncm=4 ncr=9}
+C {bypass_rb.sym} 1700 -190 0 0 {name=Xb}
 C {devices/lab_wire.sym} 800 -540 0 0 {name=l1 sig_type=std_logic lab=ni}
 C {devices/lab_wire.sym} 800 -520 0 0 {name=l2 sig_type=std_logic lab=vbnc}
 C {devices/lab_wire.sym} 800 -420 0 0 {name=l3 sig_type=std_logic lab=vbp}

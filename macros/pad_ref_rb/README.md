@@ -21,7 +21,7 @@ Task: `docs/launch/replica_bias_TASK.md` (branch `harness-test`). Records: `docs
 | `bias_tree_rb` | `netlist/source/pad_ref_rb.spice`, `schematic/xschem/bias_tree_rb.sch` | TGN / TGP / TDN (reference switch, as bias_tree_pd), NI 6u/6u (`ni`), NBP 2.4u/6u → BP 2u/6u (`vbp`), PBNC 2u/6u → BNC 1u/8u (`vbnc`); TGP drawn with drain ni, source iref as Christoph drew it; layout dummies: MDPBN 5u/6u (D = S = B = vdd, gate vbp) in the PBN slot of the copied pad tree row; MDTN6 2u/6u, MDTN7 2.4u/6u (D = S = B = vss, gate ni) in the NMOS tree row rb_tree_n |
 | `vcm_rb` | `../vcm_rb` | top-edge detector, fold-node replica, average, unit-device OTA buffer; takes `ni vbp vbnc` |
 | `vref_s2d_rb` | `../vref_s2d_rb` | x-node replica follower (4 × 15u/3u) with its sink; takes `ni vbnc`; no capacitor |
-| `bypass_rb` | `netlist/source/pad_ref_rb.spice`, `schematic/xschem/bypass_rb.sch` | the bypass capacitors, in a cell of their own (Christoph, 2026-11-07): CBM 4 × and CBR 9 × 12u × 12u hv NMOS to vss on vcm and vref (ncm, ncr; the 9th vref capacitor sits in the layout's rb_cload, the pad's CLN slot; Christoph: "I don't see any reason how a 9th capacitor should hurt"). vcm_rb keeps its CB, the minimum for its buffer's phase margin; vref_s2d_rb needs none (a follower, no loop) |
+| `bypass_rb` | `netlist/source/pad_ref_rb.spice`, `schematic/xschem/bypass_rb.sch` | the bypass capacitors, in a cell of their own (Christoph, 2026-11-07), hv NMOS to vss, shapes as drawn in the layout ("capacitor placement is pretty much ad lib", the total per node kept): vref 1296.6 µm² = 9 × 144 (CBR1 12u/12u in rb_cload, CBR2 2 × 34.1u/16.9u), vcm 576.3 µm² = 4 × 144 (CBM1 2 × 19.24u/12.66u, CBM2 2 × 8.18u/3.25u, CBM3 2.9u/12.4u). Before the layout: CBM m=ncm=4, CBR m=ncr=9, 12u × 12u. vcm_rb keeps its CB, the minimum for its buffer's phase margin; vref_s2d_rb needs none (a follower, no loop) |
 | `pad_ref_rb` | `schematic/xschem/pad_ref_rb.sch` | Xt (tree), Xc (vcm_rb), Xr (vref_s2d_rb) |
 
 **Why sharing costs nothing at DC:** the tree's lines drive gates only. Every DC result is the same as with two own
@@ -31,7 +31,7 @@ trees to the last printed digit (rb_dc, the closed loops, the round trip, the S2
 
 | port | dir | |
 |---|---|---|
-| vdd, vss | inout | the rail of the pads' units. vcm_rb's top edge is referenced to it, so it must be the pads' own iovdd / iovss (custom-pad route: the padframe rails; slot fallback: vdd_3v3 / vss_3v3) |
+| vddh, vssh | inout | (named so since 2026-11-07, Christoph: "so they can be connected without conflict either way"; the subcells call them vdd / vss) the rail of the pads' units. vcm_rb's top edge is referenced to it, so it must be the pads' own iovdd / iovss (custom-pad route: the padframe rails; slot fallback: vdd_3v3 / vss_3v3) |
 | iref | in | 5 µA, **sourced** into the cell (NMOS diode NI behind TGN / TGP): a `bias_dist_pd` output fed from the same source as the pads' own iref, so that the replica tracks the pads' reference current |
 | vcm | out | to S2D `vcm` and D2S `vref` (gates, plus the S2D's output ties while it is off) |
 | vref | out | to S2D `vref` (gates only) |
@@ -68,7 +68,11 @@ schematic/xschem/                   bias_tree_rb.sch / .sym, bypass_rb.sch / .sy
 schematic/*.png / .svg              renders of the two sheets
 verification/gen_cace.py            writes the CACE suite (pins read from pad_ref_rb.sym)
 verification/cace/                  pad_ref_rb.yaml, templates/, results/pad_ref_rb/
+layout/klayout/pad_ref_rb.klay.gds   the layout (agent F, v2, 2026-11-07): 73.80 × 76.26 µm, M1 / M2 only; .cdl its flat LVS
+                                    reference; .png the cell, _in_slot7.png its proposed position in slot7
 layout/primitives/                  layout primitives collected from the s2d pad cell, row plan, area estimate
+netlist/schematic, netlist/layout   make klayout-lvs-netlist / klayout-lvs (xschem CDL, extracted netlist)
+verification/lvs/                   make klayout-lvs report (LVS OK)
 Makefile                            from oa_core_pd's (gen: ../vcm_rb/gen_makefiles.py): sim-cace, check-sheet
                                     (pad_ref_rb, bias_tree_rb, bypass_rb), sim-char
 ```
@@ -81,12 +85,17 @@ vref_s2d_rb 13 = 13, with their layout dummies). The whole hierarchy flattened w
 
 ## Open points
 
-- **Layout:** rows drawn per cell by layout agents from C3's row generators (P: PMOS rows, P3: rb_avg, N: NMOS rows and
-  capacitors), each DRC 0, LVS match, mirror-symmetric; reports on the notes branch
-  (`sudelbuecher/design_considerations/replica_bias/layout/`). The lead's check: all 42 active devices drawn with the
-  circuit's nets and sizes, every dummy in the netlists (bias_tree_rb, vcm_rb, vref_s2d_rb). Christoph's decisions:
-  rb_casc keeps the pad's 8 slots and band, its empty track places drawn as dummy M2 tracks on vdd; the 9th vref
-  capacitor in rb_cload. Next: assembly (agent F), routing, flat LVS of pad_ref_rb, PEX.
+- **Layout: done, v2** (`layout/klayout/`, agent F, 2026-11-07), built from the rows of agents P, P3, N (C3's row
+  generators; reports and build scripts on the notes branch, `design_considerations/replica_bias/layout/`).
+  - 73.80 × 76.26 µm = 5628 µm², M1 / M2 only. Proposed position: slot7 at (461.20, 169.07), right edge at the slot's
+    right edge, vcm pin level with the D2S vref pin (y 223.34), vref pin at y 179.06 (straight out; the run to the S2D's
+    vref at 112.26 is global routing), inputs en_3v3 / en_3v3_b / iref and vddh / vssh on the left edge.
+  - Checks: KLayout DRC (`--no_density`) clean, maximal deck with latch-up 0 (F), `make klayout-lvs` OK against the
+    sheet, flat LVS against F's CDL (lead's rerun), 58 / 58 devices against the circuit. Cell names other than
+    `rb_*` carry the prefix `prb_` (no clash with the pads' or the cores' `nmosHV$n`). PEX not run.
+  - The bypass capacitors are filler between the rows; their shapes are backannotated into bypass_rb (above); the
+    results with them equal the 12u × 12u array's (|Z| 0.1 %, enable 33 ns, S2D kick 0.7 mV;
+    `../vcm_rb/testbenches/rb_char/explore_layout_caps.py`).
 - **Bias current:** the iref leg comes from `bias_dist_pd` (3 inputs, 4 switchable 1 : 1 outputs: S2D, D2S, this
   cell, a spare). That cell is a sheet only, never simulated, without layout. The decks so far feed this cell from
   its own `bias_gen_pd` with the pads' selection: the ideal case, without leg-to-leg mismatch.

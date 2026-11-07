@@ -15,7 +15,7 @@ from pathlib import Path
 MAC = Path(__file__).resolve().parents[2]
 TOP = "pad_ref_rb"
 SYM = MAC / TOP / "schematic/xschem" / f"{TOP}.sym"
-NET = {"vdd": "vddb", "vss": "0"}          # harness nets of the DUT pins (others: same name)
+NET = {"vddh": "vddb", "vssh": "0"}          # harness nets of the DUT pins (others: same name)
 S2D_TPL = MAC / "sg13cmos5l_IOPadSingle2Diff/verification/cace/templates/sg13cmos5l_IOPadSingle2Diff_tb_dc.sch"
 tpl = S2D_TPL.read_text().splitlines()
 i0 = next(i for i, l in enumerate(tpl) if l.startswith("C {en_ctrl_3v3.sym}"))
@@ -123,14 +123,14 @@ paths:
   runs:             cace/_runs
 
 pins:
-  vdd:
-    description: IO ring supply
+  vddh:
+    description: Supply of the block (the pads' iovdd or the slot's vdd_3v3)
     type: power
     direction: inout
     Vmin: 3.0
     Vmax: 3.6
-  vss:
-    description: IO ring ground
+  vssh:
+    description: Ground of the block (the pads' iovss or the slot's vss_3v3)
     type: ground
     direction: inout
   iref:

@@ -28,14 +28,14 @@ paths:
   runs:             cace/_runs
 
 pins:
-  vdd:
-    description: IO ring supply
+  vddh:
+    description: Supply of the block (the pads' iovdd or the slot's vdd_3v3)
     type: power
     direction: inout
     Vmin: 3.0
     Vmax: 3.6
-  vss:
-    description: IO ring ground
+  vssh:
+    description: Ground of the block (the pads' iovss or the slot's vss_3v3)
     type: ground
     direction: inout
   iref:
