@@ -1,0 +1,4 @@
+rb_dc: 135 runs, 0 without result, 32 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_dc.tsv
+rb_en: 54 runs, 0 without result, 161 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_en.tsv
+rb_up: 54 runs, 0 without result, 171 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_up.tsv
+cl_s2d_en: 12 runs, 0 without result, 72 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/cl_s2d_en.tsv
