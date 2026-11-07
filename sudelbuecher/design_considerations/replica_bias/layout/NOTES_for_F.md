@@ -33,3 +33,9 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
    stage A / B split of BRIEF_F.md and note 6. F was told to place and route as one process, routing driving the
    placement, to a routed pad_ref_rb (M1 / M2, DRC and flat LVS clean against the circuit with every dummy, vddh /
    vssh), with progress lines in `reports/F_progress.md`.
+8. **Freedom to rework the rows** (Christoph, 2026-11-07): "F has the freedom to tweak the inputs from the specialist
+   agents as compact placement and routing requires, within good circuit layout judgment as has been demonstrated
+   with the oa and bg cores, and the custom diff2single and single2diff pads." Passed to F with the four layouts as
+   precedent (oa_core_pd, bg_core_pd, both pad cells). The lead kept one standing decision: rb_casc's 8-slot
+   structure ("keep A for matching"); its ring, pins, straps and band may change. Every device added, removed or
+   re-tied goes into F's CDL and note for backannotation.
