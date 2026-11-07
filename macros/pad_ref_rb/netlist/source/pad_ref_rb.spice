@@ -27,6 +27,10 @@ XNBP vbp ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 mm_ok=1
 XBP vbp vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 mm_ok=1
 XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 mm_ok=1
 XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 mm_ok=1
+* --- layout dummy (Christoph, 2026-11-07): the layout copies the s2d pad's tree row bias_tree_noab_p_c3, whose 5u/6u
+*     device PBN (the pad's vbn leg) has no use here. It stays drawn as a dummy in the pads' convention: D = S = B =
+*     vdd, gate vbp by poly abutment with BP and PBNC. No current (V_DS = 0); 30 um2 of gate on vbp.
+XMDPBN vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 mm_ok=1
 .ends bias_tree_rb
 
 .subckt pad_ref_rb vdd vss iref vcm vref en_3v3 en_3v3_b

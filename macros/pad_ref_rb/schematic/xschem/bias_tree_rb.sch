@@ -17,6 +17,8 @@ T {TGP: drain ni, source iref as drawn by Christoph (2026-11-07, b4cd2288); a tr
 T {drawn from netlist/source/pad_ref_rb.spice (subckt bias_tree_rb); cut from vref_s2d_rb.sch as Christoph drew it (d0638017)} 100 -1090 0 0 0.25 0.25 {}
 T {[1] reference input} 135 -783.5 0 0 0.35 0.35 {layer=10}
 T {[2] lines} 585 -973.5 0 0 0.35 0.35 {layer=10}
+T {[3] layout dummy} 375 -973.5 0 0 0.35 0.35 {layer=10}
+P 10 5 372 -950 476 -950 476 -830 372 -830 372 -950 {dash=6}
 N 340 -720 340 -670 {lab=iref}
 N 220 -720 220 -550 {lab=iref}
 N 340 -320 340 -300 {lab=ni}
@@ -172,3 +174,20 @@ N 460 -220 520 -220 {lab=ni}
 N 400 -220 420 -220 {lab=vss}
 N 400 -220 400 -100 {lab=vss}
 N 420 -190 420 -100 {lab=vss}
+N 460 -900 480 -900 {lab=vbp}
+N 480 -900 480 -800 {lab=vbp}
+N 480 -800 580 -800 {lab=vbp}
+N 420 -1000 420 -930 {lab=vdd}
+N 400 -900 420 -900 {lab=vdd}
+N 420 -870 420 -850 {lab=vdd}
+N 400 -850 420 -850 {lab=vdd}
+N 400 -1000 400 -850 {lab=vdd}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 440 -900 0 1 {name=MDPBN
+l=6u
+w=5u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X
+}
