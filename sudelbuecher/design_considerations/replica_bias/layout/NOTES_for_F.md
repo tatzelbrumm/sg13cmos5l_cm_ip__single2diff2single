@@ -63,3 +63,7 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
 12. **Own enables** (Christoph, 2026-11-07, verbatim): "Give pad_ref_rb its own enables for now. We can connect them
     together a level up later." en_3v3 / en_3v3_b stay pad_ref_rb's own pins (left edge with iref), not aligned with
     the S2D's enable pins; no netlist change.
+13. **vref straight out** (Christoph, 2026-11-07, on pad_ref_rb v2's context picture): "the vref connection in the
+    preview picture can go straight out. No good reason to jog the line downwards. This can be taken care of by global
+    routing if necessary." The cell's vref pin (right edge, slot y 179.06) exits straight to the edge like vcm (223.34);
+    the run to the S2D's vref pin (112.26) belongs to global routing. Shown so in `lead/slot_frame_view.png`.
