@@ -26,8 +26,8 @@ copy of the tree (NI, BP, BNC) and its own reference. Task, survey and run log a
   - F is four fingers of the S2D fold cascode (15u/3u) at 1.67 µA, against the S2D's 30u/3u at 10 µA.
   - It rises with temperature as x does (+0.6 mV/K) and sits about 0.1 V above it.
   - Its output impedance is 1/gm(F), about 20 kΩ. Since 2026-11-07 the cell has no capacitor: a follower has no loop.
-    The bypass that holds the pin during the pad's own transients (G6) is `bypass_rb` in `../pad_ref_rb`: 8 × 12u ×
-    12u hv NMOS to vss (CB1 / CB2, before in this cell, and 6 more), not to iovdd, so supply ripple does not reach the
+    The bypass that holds the pin during the pad's own transients (G6) is `bypass_rb` in `../pad_ref_rb`: 9 × 12u ×
+    12u hv NMOS to vss (CB1 / CB2, before in this cell, 6 more, and one in the layout's rb_cload slot), not to iovdd, so supply ripple does not reach the
     pad's zero.
 - **Lines:** from `bias_tree_rb`: ni (NI 6u/6u, the reference) for the sink SF, vbnc (BNC 1u/8u at 2 µA from PBNC
   2u/6u) for the followers F.
@@ -35,6 +35,10 @@ copy of the tree (NI, BP, BNC) and its own reference. Task, survey and run log a
   SPD pulls `vref` to vss (the S2D's vref drives gates only).
 - **No own enable:** vref is on whenever `pad_ref_rb` is. Pulling vref low with the tree on would short the followers F
   from vbnc to vss.
+- **Layout dummies [DM]:** the cascode row rb_casc (the pad's 8-slot row, kept at Christoph's word: "Plenty of
+  space. Keep 8 slots") holds F1–F4, CY (vcm_rb) and BNC (bias_tree_rb). Its dummies are in this cell: MDC[3:0] 2u/3u
+  (the pad's end dummies) and MDCX[2:0] 15u/3u (the 3 spare slots), all `vss vbnc vss vss`, gate by poly abutment. No
+  current; 159 µm² of gate on vbnc.
 
 ## Ports
 
@@ -51,7 +55,7 @@ copy of the tree (NI, BP, BNC) and its own reference. Task, survey and run log a
 netlist/source/vref_s2d_rb.spice        source netlist (mm_ok=1 on every device)
 schematic/xschem/vref_s2d_rb.sch/.sym   sheet drawn by hand from the source netlist (2026-11-07, xschem-analog-schematic skill,
                                         compacted by hand by Christoph, then moved onto the shared tree); make check-sheet
-                                        compares it device by device (6 = 6, ports equal)
+                                        compares it device by device (13 = 13 with the 7 layout dummies, ports equal)
 schematic/vref_s2d_rb.png / .svg        render of the sheet
 ../vcm_rb/schematic/gen_sheet.py        only its --check mode is in use; generating would overwrite the hand-drawn sheet
 ../pad_ref_rb/verification/             CACE suite of pad_ref_rb, which covers this block (vref_room / hot / cold, pd, mm)

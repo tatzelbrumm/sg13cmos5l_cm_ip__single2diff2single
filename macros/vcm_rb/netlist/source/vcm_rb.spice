@@ -56,12 +56,19 @@ XSPD vcm en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 mm_ok=1
 * --- layout dummies [DM] (pad_ref_rb layout, 2026-11-07; as in the pads: D = S = B on the rail, gate as drawn)
 *     MDT: the tail row's end dummies (rb_tails D TR BT D, as s2d_tails_lo_f's ends), gate vbp by abutment
 *     MDU: the tub row's dummy tubs (rb_tubs D MR BA BB D, the pad's dummy tub_p20x1), all on vdd
-*     MDA: dummy small tubs at both ends of the averaging diodes (rb_avg, Christoph: "reproduce the dummy structures
-*          in the pads"), all on vdd
+*     MDAU / MDAL: rb_avg's end dummies (agent P3, 2026-11-07, after Christoph's "why can't you abut by gate poly?"):
+*          one NWell per bulk net, gate strip by poly abutment, D = S = B = that well's net: MDAU[1:0] at both ends of
+*          SU in well gh (gate m), MDAL[1:0] at both ends of SL1 SL2 in well m (gate xp). They replace the MDA[1:0] on
+*          vdd of the first draft. No DC current; 2 x 4 um2 of gate m-gh and xp-m each.
+*     MDM: rb_mirror's end dummies (D BD BM D, row 1 of the pad's sinks), 2u/6u, gate bd by abutment, on vss
 XMDT[1] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 mm_ok=1
 XMDT[0] vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 mm_ok=1
 XMDU[1] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2 mm_ok=1
 XMDU[0] vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2 mm_ok=1
-XMDA[1] vdd vdd vdd vdd sg13_hv_pmos w=1u l=4u ng=1 mm_ok=1
-XMDA[0] vdd vdd vdd vdd sg13_hv_pmos w=1u l=4u ng=1 mm_ok=1
+XMDAU[1] gh m gh gh sg13_hv_pmos w=1u l=4u ng=1 mm_ok=1
+XMDAU[0] gh m gh gh sg13_hv_pmos w=1u l=4u ng=1 mm_ok=1
+XMDAL[1] m xp m m sg13_hv_pmos w=1u l=4u ng=1 mm_ok=1
+XMDAL[0] m xp m m sg13_hv_pmos w=1u l=4u ng=1 mm_ok=1
+XMDM[1] vss bd vss vss sg13_hv_nmos w=2u l=6u ng=1 mm_ok=1
+XMDM[0] vss bd vss vss sg13_hv_nmos w=2u l=6u ng=1 mm_ok=1
 .ends vcm_rb

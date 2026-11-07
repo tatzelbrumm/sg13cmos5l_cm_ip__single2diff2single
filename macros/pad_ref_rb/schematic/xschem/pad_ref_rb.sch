@@ -72,7 +72,7 @@ C {devices/ipin.sym} 100 -410 0 0 {name=p6 lab=en_3v3_b}
 C {bias_tree_rb.sym} 500 -420 0 0 {name=Xt}
 C {vcm_rb.sym} 1000 -400 0 0 {name=Xc}
 C {vref_s2d_rb.sym} 1500 -400 0 0 {name=Xr}
-C {bypass_rb.sym} 1700 -190 0 0 {name=Xb}
+C {bypass_rb.sym} 1700 -190 0 0 {name=Xb ncm=4 ncr=9}
 C {devices/lab_wire.sym} 800 -540 0 0 {name=l1 sig_type=std_logic lab=ni}
 C {devices/lab_wire.sym} 800 -520 0 0 {name=l2 sig_type=std_logic lab=vbnc}
 C {devices/lab_wire.sym} 800 -420 0 0 {name=l3 sig_type=std_logic lab=vbp}

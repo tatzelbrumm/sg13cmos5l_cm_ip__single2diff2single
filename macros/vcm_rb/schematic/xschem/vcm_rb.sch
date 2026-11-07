@@ -343,10 +343,11 @@ C {devices/lab_wire.sym} 920 -690 0 0 {name=l7 sig_type=std_logic lab=m}
 C {devices/lab_wire.sym} 1190 -780 0 0 {name=l8 sig_type=std_logic lab=bt}
 C {devices/lab_wire.sym} 1130 -400 0 1 {name=l9 sig_type=std_logic lab=bd}
 C {devices/title.sym} 160 -40 0 0 {name=l0 author="Christoph Maier"}
-P 10 5 1680 -1190 2000 -1190 2000 -700 1680 -700 1680 -1190 {dash=6}
+P 10 5 1680 -1190 2000 -1190 2000 -380 1680 -380 1680 -1190 {dash=6}
 T {[DM] layout dummies} 1685 -1213.5 0 0 0.35 0.35 {layer=10}
 T {as drawn in the rows (pad convention):} 1690 -1170 0 0 0.2 0.2 {layer=10}
 T {D = S = B on the rail, gate as drawn} 1690 -1150 0 0 0.2 0.2 {layer=10}
+T {MDAU, MDAL: rail = well net} 1690 -1130 0 0 0.2 0.2 {layer=10}
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1800 -1060 0 0 {name=MDT[1:0]
 l=6u
 w=5u
@@ -379,7 +380,7 @@ N 1840 -890 1840 -980 {lab=vdd}
 C {devices/lab_pin.sym} 1840 -980 0 1 {name=ldm1_r sig_type=std_logic lab=vdd}
 N 1780 -920 1740 -920 {lab=vdd}
 C {devices/lab_pin.sym} 1740 -920 0 0 {name=ldm1_g sig_type=std_logic lab=vdd}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1800 -780 0 0 {name=MDA[1:0]
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1800 -780 0 0 {name=MDAU[1:0]
 l=4u
 w=1u
 ng=1
@@ -388,10 +389,42 @@ mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-N 1820 -810 1840 -810 {lab=vdd}
-N 1820 -780 1840 -780 {lab=vdd}
-N 1820 -750 1840 -750 {lab=vdd}
-N 1840 -750 1840 -840 {lab=vdd}
-C {devices/lab_pin.sym} 1840 -840 0 1 {name=ldm2_r sig_type=std_logic lab=vdd}
-N 1780 -780 1740 -780 {lab=vdd}
-C {devices/lab_pin.sym} 1740 -780 0 0 {name=ldm2_g sig_type=std_logic lab=vdd}
+N 1820 -810 1840 -810 {lab=gh}
+N 1820 -780 1840 -780 {lab=gh}
+N 1820 -750 1840 -750 {lab=gh}
+N 1840 -750 1840 -840 {lab=gh}
+C {devices/lab_pin.sym} 1840 -840 0 1 {name=ldm2_r sig_type=std_logic lab=gh}
+N 1780 -780 1740 -780 {lab=m}
+C {devices/lab_pin.sym} 1740 -780 0 0 {name=ldm2_g sig_type=std_logic lab=m}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1800 -640 0 0 {name=MDAL[1:0]
+l=4u
+w=1u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_pmos
+spiceprefix=X
+}
+N 1820 -670 1840 -670 {lab=m}
+N 1820 -640 1840 -640 {lab=m}
+N 1820 -610 1840 -610 {lab=m}
+N 1840 -610 1840 -700 {lab=m}
+C {devices/lab_pin.sym} 1840 -700 0 1 {name=ldm3_r sig_type=std_logic lab=m}
+N 1780 -640 1740 -640 {lab=xp}
+C {devices/lab_pin.sym} 1740 -640 0 0 {name=ldm3_g sig_type=std_logic lab=xp}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 1800 -480 0 0 {name=MDM[1:0]
+l=6u
+w=2u
+ng=1
+m=1
+mm_ok=1
+model=sg13_hv_nmos
+spiceprefix=X
+}
+N 1820 -510 1840 -510 {lab=vss}
+N 1820 -480 1840 -480 {lab=vss}
+N 1820 -450 1840 -450 {lab=vss}
+N 1840 -510 1840 -420 {lab=vss}
+C {devices/lab_pin.sym} 1840 -420 0 1 {name=ldm4_r sig_type=std_logic lab=vss}
+N 1780 -480 1740 -480 {lab=bd}
+C {devices/lab_pin.sym} 1740 -480 0 0 {name=ldm4_g sig_type=std_logic lab=bd}
