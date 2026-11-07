@@ -100,9 +100,12 @@ the TG a cell.
   the 1.2 V domain), and `vbias<n>` from the voltage generator through an `analog_switch_small`. So slot 7 receives
   exactly two harness currents (`ibias0`, `ibias1`, used by the two pads' `bias_gen_pd` today); a third leg for
   pad_ref_rb comes from a distribution inside the slot, i.e. this cell.
-- **`analog_pswitch_small`** (`RTimothyEdwards/sg13cmos5l_ocd_ip__analog_switches`, Magic layout and netgen LVS in that
-  repo; copy in `../ocd_analog_switches`): the harness's verified way to switch a sourced bias current from a 1.2 V
-  enable. It could replace an input or output leg's TG + nand / inverter + the 3.3 V enable (larger: about 4 x 5u/0.4u
+- **`analog_pswitch_small`** (`RTimothyEdwards/sg13cmos5l_ocd_ip__analog_switches`; copy in `../ocd_analog_switches`):
+  the harness's way to switch a sourced bias current from a 1.2 V enable. Status in that repo: Magic layout, netgen
+  LVS "Circuits match uniquely", one transient testbench sheet (`analog_pswitch_small_tb.sch`, `tran 1n 2u`); no
+  characterization data (no CACE suite, no corners, no on-resistance or leakage numbers published). Christoph: "if
+  analog_pswitch_small is a fully characterized cell, then that's a good starting point": characterizing it is the
+  first step before it is taken over. It could replace an input or output leg's TG + nand / inverter + the 3.3 V enable (larger: about 4 x 5u/0.4u
   plus shifter, inverters, decaps; on-resistance irrelevant at µA).
 - **`xgate`** (biasgen, copy in `../ocd_analog_switches`): the same TG as here with 2u/0.5u devices; KLayout layout in
   our copy.
@@ -111,6 +114,11 @@ the TG a cell.
   needs `in_p` and `in_n`) and `sw_lvl_shift` (inside the analog switches) are the laid-out alternatives.
 - Christoph's fork of the harness adds `validate/switch_polarity/check_polarity.py`, which measures every switch's
   control polarity in simulation: worth running on any switch taken over.
+
+**Inputs wanted** (Christoph, 2026-11-07): feed from the Oguey–Aebischer core, the bandgap core (or both at once), or
+one or both of the harness currents (`ibias0`, `ibias1`): four sources, any combination; enabled inputs add in NI.
+This cell has three inputs (`iin0..2`), so a fourth is needed if all four are to be wired at once. Different biases
+for different blocks may follow later; the replica bias comes first.
 
 Open questions from the redraw: `iin<k>` are `inout` on the symbol but `iout<j>` are `out`, although both are current
 nodes; `en_3v3` and `en_3v3_b` are separate ports, so the caller must keep them complementary (both high would let TDN
