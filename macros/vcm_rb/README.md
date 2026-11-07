@@ -86,17 +86,21 @@ testbenches/spice/                 explorations: explore_edges.py, explore_vcm_r
 `make sim-cace`, `make check-sheet` and `make sim-char` run in the repo environment (`export PDK_ROOT=/foss/pdks; source
 .designinit`).
 
-## Results (schematic, ngspice-47, CACE 2.11.0, 2026-11-06)
+## Results (schematic, ngspice-47, CACE 2.11.0; on the shared tree, 2026-11-07)
+
+Every DC value is the same as with the block's own tree (2026-11-06) to the last printed digit: the tree's lines are
+gates, so sharing them changes no current. CACE: `../pad_ref_rb/verification/cace/results/pad_ref_rb/`, 8 / 8 groups
+pass.
 
 | quantity | result | condition |
 |---|---|---|
 | vcm | 1.120 … 1.193 / 1.242 … 1.295 / 1.289 … 1.395 V | iovdd 3.0 / 3.3 / 3.6 V, 5 MOS corners, −40 / 27 / 125 °C, harness reference |
 | margin to the band of both pads | ≥ +40 mV (Oguey–Aebischer core, ff, 125 °C, 3.0 V: band 1.126 … 1.244 V, vcm 1.204 V); ≥ +142 mV with the harness reference | every PVT point, references 0 / 1 / 2 (rb_dc against G1 / G3 / G10) |
-| mismatch | σ 6.5 mV (1.245 … 1.279 V, 100 seeds) | tt, 27 °C, 3.3 V |
-| supply current | 17.5 µA + 5.0 µA reference (OA core: 10.6 … 25.6 µA) | |
+| mismatch | σ 5.3 mV (1.248 … 1.275 V, 100 seeds; with the own tree 6.5 mV; the seeds fall on a different device set, so the two samples are not paired, and I have not traced the difference) | tt, 27 °C, 3.3 V |
+| supply current | 13.5 … 13.7 µA in the block, plus the shared tree's 3.9 µA and the 5.0 µA reference (OA core: block 8.2 … 20.0 µA) | |
 | output impedance | 22 … 35 kΩ (1 kHz and 1 MHz) | 3.0 … 3.6 V, ss / tt / ff, −40 … 125 °C |
-| enable to 1 % | 0.30 … 0.95 µs (OA core: up to 20 µs, the core's start-up); overshoot +0.17 … +0.19 V (OA: up to +0.48 V) | en_1v2 edge |
-| start-up | settled at the end of a 10 µs iovdd ramp (OA: ≤ 23 µs) | |
+| enable to 1 % | 0.31 … 1.00 µs (OA core: up to 20.5 µs, the core's start-up); overshoot ≤ +37 mV (OA: ≤ +0.23 V; with the own tree +0.19 / +0.48 V) | en_1v2 edge |
+| start-up | settled ≤ 9.9 µs after a 10 µs iovdd ramp starts (OA: ≤ 23 µs) | |
 | disabled | vcm 0.000 V, current ≤ 1 nA (DC) | 3.6 V, tt / ff, 27 / 125 °C |
 
 **Closed loop** (pads with this block instead of an ideal source; `testbenches/rb_char/results/cl_*`):
@@ -109,17 +113,18 @@ testbenches/spice/                 explorations: explore_edges.py, explore_vcm_r
 | S2D enable time | 1.39 … 1.44 µs | 1.40 … 1.42 µs |
 
 **Against a divider.**
-- **Current:** a resistive divider giving the same 1.26 V at the same output impedance (27 kΩ) draws 28.8 µA, against
-  22.5 µA here. That is 0.8×, not "well below".
+- **Current:** a resistive divider giving the same 1.26 V at the same output impedance (27 kΩ) draws 28.8 µA. Here:
+  13.6 µA in the block plus its share of the tree and reference; for both references together see
+  `../pad_ref_rb/README.md` (24.1 µA against 48.7 µA for two dividers).
 - **Tracking:** a divider from iovdd is ratiometric and cannot follow the band. It gives 1.09 V at 3.0 V, below the
   band with the OA core at 125 °C (bottom edge 1.126 V).
 
 ## Not done, limitations
 
-- **Layout:** not started (Phase 3; floorplan in `docs/replica_bias/SUMMARY.md`). Gate area 542 µm².
-- **Overshoot at enable:** +0.17 … +0.19 V on vcm, up to +0.48 V with the OA core. The buffer comes up before the
-  average m. The pads enabled together with the block still meet their enable time. If the overshoot matters, enable
-  the pads after the references.
+- **Layout:** not started. Primitives collected and a row plan in `../pad_ref_rb/layout/primitives/README.md`.
+- **Overshoot at enable:** ≤ +37 mV on vcm, up to +0.23 V with the OA core (it was +0.19 / +0.48 V with the own
+  tree). The buffer comes up before the average m. The pads enabled together with the block still meet their enable
+  time. If the overshoot matters, enable the pads after the references.
 - **D2S output offset:** with the OA core at ff / 125 °C / 3.0 V it is 5.5 mV (limit 5 mV). This is the same with an
   ideal 1.2 V reference, so it is a property of the D2S pad, not of this block.
 - **Extracted views:** none.
