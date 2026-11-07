@@ -76,6 +76,18 @@ the pads' source netlists, or temporary yaml copies whose runs are deleted (resu
 
 | 34 | 2026-11-07 13:09–13:47 | repo root | subagent with the skill `anthropic-skills:xschem-analog-schematic` (user's request): redrew `macros/vcm_rb/schematic/xschem/vcm_rb.sch` and `macros/vref_s2d_rb/schematic/xschem/vref_s2d_rb.sch` by hand in readable analog style (symbols, ports, device names and parameters unchanged); checks: `make -C macros/vcm_rb check-sheet`, `make -C macros/vref_s2d_rb check-sheet` (repeated here), the skill's `scripts/xschem/sheet_equiv.py` against HEAD `2c1c08a4` (both sheets and both CACE templates equivalent), no missing symbols; renders copied to `macros/<cell>/schematic/<cell>.png / .svg`; READMEs' file lists updated | 0 | — | sheets: 24 = 24 and 16 = 16 devices, ports equal. Agent's note on vcm_rb: CY carries 5 uA minus the averaging stack's current (nA ... 0.9 uA), not exactly 5 uA as its header says (comment wording; the simulations include it) |
 
+## Phase 2b: shared bias tree (2026-11-07, the user's option A)
+
+The user asked (15:06 UTC) whether vcm_rb and vref_s2d_rb could share one bias tree, and chose option A (16:52): one
+tree `bias_tree_rb` for both blocks, in a new cell `pad_ref_rb` with one reference and one enable. Same environment as
+in Phase 2.
+
+| # | time | cwd | command | exit | log / output | what changed |
+|---|---|---|---|---|---|---|
+| 35 | 16:53–16:55 | repo root | `git fetch origin claude/c4-replica-bias claude/c4-replica-bias-sudel`; `git merge --ff-only origin/claude/c4-replica-bias` (the user's hand-compacted sheets, `b4cd2288`); `make -C macros/vcm_rb check-sheet`; `make -C macros/vref_s2d_rb check-sheet`; `xschem` render of the user's vcm_rb sheet; pin-by-pin comparison of the mismatching devices | 1 (check-sheet) | — | vref_s2d_rb: only TGP differs (drain and source swapped, intended: a transmission gate is symmetric). vcm_rb: BT's drain `bt` merged into `m` (BT, BA, BB on `m`): the `m` wire ran through BA's bulk pin into the bulk-tie jog, a compaction short. Reported to the user |
+| 36 | 16:57–16:59 | repo root | `git stash` (shared-tree work in progress; copy in the scratchpad) while the user fixed the sheet; `git merge --ff-only origin/claude/c4-replica-bias` (`d0638017`); `make check-sheet` for both blocks; `scripts/xschem/sheet_equiv.py <c84cc366 archive> <checkout>` for both sheets; `git stash pop` | 0 | — | both sheets equal the netlists of the time except the intended TGP swap; topologically equivalent to the agent's sheets of `c84cc366` |
+| 37 | 16:53–17:02 | repo root | edits: new `macros/pad_ref_rb/netlist/source/pad_ref_rb.spice` (`bias_tree_rb` = TGN TGP TDN NI NBP BP PBNC BNC; `pad_ref_rb` = tree + vcm_rb + vref_s2d_rb); vcm_rb ports `vdd vss ni vbp vbnc vcm en_3v3_b`, vref_s2d_rb ports `vdd vss ni vbnc vref en_3v3_b`; TGP backannotated as drawn by the user (drain ni, source iref); `run_rb.py` decks on the three cells; smoke test of `rb_dc`, `cl_s2d_dc`, `cl_d2s_dc` at tt / 27 °C / 3.3 V | 0 | — | vcm 1.26148 V, vref 0.493672 V (unchanged); supply 19.1 µA + 5.0 µA reference = 24.1 µA (two blocks with own trees: 33 µA); S2D gain 1.99752, INL 0.31 mV; D2S gain 0.499948, INL 0.127 mV |
+
 ## Phase 3: layout
 
 Not started (decision 19:12 UTC): two hv layouts with DRC / LVS would not fit what is left of this session next to the

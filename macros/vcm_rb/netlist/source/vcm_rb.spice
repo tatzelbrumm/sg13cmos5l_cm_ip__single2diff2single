@@ -9,35 +9,26 @@
 *                 follower (hv PMOS 20u/1u ng=2) raises its source;
 *   bottom edge = the output voltage at which the S2D fold cascode CX / CY (hv NMOS 30u/3u at vbnc) leaves saturation
 *                 above the fold node x.
-* Replicas, each from the block's own lines (made from one 5 uA reference current, as bias_tree_pd does):
+* Replicas, on the lines of the shared tree bias_tree_rb (macros/pad_ref_rb):
 *   gh = top-edge detector: TR (5u/6u at vbp) -> MR (20u/1u ng=2, diode) -> sink SH (2 x 2.4u/6u = 4 uA, r = 0.8)
 *        gh = top gate limit + 0.157 V (+-18 mV over corners, -40..125 C, iovdd 3.0..3.6 V, run explore_edges.py)
-*   xp = fold-node replica: one finger of CY (15u/3u at vbnc) at 5 uA on SY (6u/6u)
-*        bottom edge = xp + 0.559 V (+-34 mV)
+*   xp = fold-node replica: one finger of CY (15u/3u at vbnc) on SY (6u/6u, 5 uA); CY carries 5 uA minus the averaging
+*        stack's current (nA ... 0.9 uA). bottom edge = xp + 0.559 V (+-34 mV)
 *   m  = average of gh and xp by three identical hv PMOS diodes 1u/4u in their own wells, one above m, two in parallel
 *        below (the asymmetry subtracts the 0.06 V offset of (gh + xp)/2 against the centre; explore_vcm_rb.py, G)
 *   vcm = m, buffered by a 5-transistor OTA in unity gain: PMOS pair = the unit's input device (20u/1u ng=2) on a
 *        unit tail (5u/6u at vbp, 5 uA), NMOS mirror 6u/6u; output pole at vcm with CB (12u x 12u hv NMOS capacitor
 *        as the s2d buffer's CLP).
-* Lines: NI (6u/6u NMOS diode, the reference), BP (2u/6u PMOS diode at 2 uA from NBP 2.4u/6u = BP's density in the
-*        tree), BNC (1u/8u NMOS diode at 2 uA from PBNC 2u/6u, as in the tree).
-* Supply current (tt 27 C): 5 uA reference + 2 (BP) + 2 (BNC) + 5 (TR) + 5 (CY) + 5 (OTA) = about 24 uA.
-* Ports: vdd vss iref vcm en_3v3 en_3v3_b (as oa_core_pd: en_3v3_b from en_ctrl_3v3). iref: 5 uA SOURCED into the
-* block (bias_gen_pd's iref, a bias_dist_pd output, or a core's iout).
-* Disabled (en_3v3 = 0): TGN / TGP open the reference, TDN pulls ni to vss (every NMOS off; BP pulls vbp to vdd, every
-* PMOS off), SPD pulls vcm to vss. The s2d pad ties its outputs to vcm while it is off; whoever disables this block
+* Since 2026-11-07 the lines (reference NI, BP, BNC) are the shared cell bias_tree_rb, which also feeds vref_s2d_rb;
+* before, each block had its own copy (option A of the user's question on sharing). The lines are gate voltages from
+* the neighbouring cell on the same rails, inside pad_ref_rb.
+* Supply current (tt 27 C): 4 (SH) + 5 (SY) + 5 (OTA) = about 14 uA; the tree adds 5 uA reference + 2 (BP) + 2 (BNC).
+* Ports: vdd vss ni vbp vbnc vcm en_3v3_b. ni / vbp / vbnc: bias_tree_rb's lines (ni = its 6u/6u NMOS reference diode,
+* vbp = its 2u/6u PMOS diode at 2 uA, vbnc = its 1u/8u NMOS diode at 2 uA); en_3v3_b: complement of the enable.
+* Disabled (en_3v3 = 0): the tree cuts the reference and pulls ni to vss (every NMOS off; BP pulls vbp to vdd, every
+* PMOS off), SPD pulls vcm to vss. The s2d pad ties its outputs to vcm while it is off; whoever disables pad_ref_rb
 * must disable every pad that uses vcm with it (vcm is the next stage's common mode while only the s2d pad is off).
-.subckt vcm_rb vdd vss iref vcm en_3v3 en_3v3_b
-* --- reference input (as bias_tree_pd)
-XTGN iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1 mm_ok=1
-XTGP iref en_3v3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1 mm_ok=1
-XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 mm_ok=1
-XNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 mm_ok=1
-* --- lines
-XNBP vbp ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 mm_ok=1
-XBP vbp vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 mm_ok=1
-XPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 mm_ok=1
-XBNC vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 mm_ok=1
+.subckt vcm_rb vdd vss ni vbp vbnc vcm en_3v3_b
 * --- top-edge detector
 XTR ts vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 mm_ok=1
 XMR gh gh ts ts sg13_hv_pmos w=20u l=1u ng=2 mm_ok=1

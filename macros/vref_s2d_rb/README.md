@@ -8,8 +8,9 @@ The pad reference `vref` of `sg13cmos5l_IOPadSingle2Diff`: the S2D gives `outp �
 
 **The user's choice (2026-11-06, answer 1a):** about 0.5 V, so that the pad range 0 … 1 V includes iovss.
 
-The block is made from a 5 µA reference current, with lines and devices as in `../vcm_rb`. Task, survey and run log are
-in `docs/replica_bias/`.
+Since 2026-11-07 it hangs on the shared bias tree `bias_tree_rb`, which also feeds `../vcm_rb`; both sit in the cell
+`pad_ref_rb` (`../pad_ref_rb`), made from one 5 µA reference current with one enable. Until then the block had its own
+copy of the tree (NI, BP, BNC) and its own reference. Task, survey and run log are in `docs/replica_bias/`.
 
 ## Function
 
@@ -26,33 +27,38 @@ in `docs/replica_bias/`.
   - It rises with temperature as x does (+0.6 mV/K) and sits about 0.1 V above it.
   - Its output impedance is 1/gm(F), about 20 kΩ. CB1 / CB2 (2 × 12u × 12u hv NMOS to vss, not to iovdd, so supply
     ripple does not reach the pad's zero) hold the pin during the pad's own transients (G6).
-- **Lines:** NI 6u/6u, the reference; BP 2u/6u at 2 µA from NBP 2.4u/6u; BNC 1u/8u at 2 µA from PBNC 2u/6u.
-- **Disabled:** the reference is cut and ni pulled to vss, and SPD pulls `vref` to vss (the S2D's vref drives gates
-  only).
+- **Lines:** from `bias_tree_rb`: ni (NI 6u/6u, the reference) for the sink SF, vbnc (BNC 1u/8u at 2 µA from PBNC
+  2u/6u) for the followers F.
+- **Disabled** (`en_3v3` = 0 on `pad_ref_rb`): the tree cuts the reference and pulls ni to vss, vbnc decays to vss, and
+  SPD pulls `vref` to vss (the S2D's vref drives gates only).
+- **No own enable:** vref is on whenever `pad_ref_rb` is. Pulling vref low with the tree on would short the followers F
+  from vbnc to vss.
 
 ## Ports
 
 | port | dir | |
 |---|---|---|
 | vdd, vss | inout | iovdd / iovss |
-| iref | in | 5 µA, **sourced** into the block |
+| ni, vbnc | in | the lines of `bias_tree_rb` (gates only) |
 | vref | out | to the S2D pad's `vref` (gates only) |
-| en_3v3, en_3v3_b | in | 3.3 V enable and complement (en_ctrl_3v3) |
+| en_3v3_b | in | complement of the 3.3 V enable (en_ctrl_3v3), gate of SPD |
 
 ## Files
 
 ```
 netlist/source/vref_s2d_rb.spice        source netlist (mm_ok=1 on every device)
-schematic/xschem/vref_s2d_rb.sch/.sym   sheet drawn by hand from the source netlist (2026-11-07, xschem-analog-schematic skill);
-                                        make check-sheet netlists it with xschem and compares it device by device (16 = 16, ports equal)
+schematic/xschem/vref_s2d_rb.sch/.sym   sheet drawn by hand from the source netlist (2026-11-07, xschem-analog-schematic skill,
+                                        compacted by hand by Christoph, then moved onto the shared tree); make check-sheet
+                                        compares it device by device (8 = 8, ports equal)
 schematic/vref_s2d_rb.png / .svg        render of the sheet
 ../vcm_rb/schematic/gen_sheet.py        only its --check mode is in use; generating would overwrite the hand-drawn sheet
-verification/cace/                      CACE suite: room (27 C), hot (125 C), cold (-40 C), pd, mm; results/vref_s2d_rb/
+../pad_ref_rb/verification/             CACE suite of pad_ref_rb, which covers this block (vref_room / hot / cold, pd, mm)
+verification/baseline/cace_own_tree/    CACE results of 2026-11-06, with the block's own tree
 verification/baseline/s2d_mc_vref0v5/   G8: S2D mismatch / process MC at vref 0.5 V (current schematic)
 testbenches/spice/                      explore_ztc.py (zero-TC currents of the pads' diode sizes), explore_vref.py
 ```
 
-The block and closed-loop decks are shared with vcm_rb: `../vcm_rb/testbenches/rb_char/run_rb.py`.
+The block and closed-loop decks run pad_ref_rb: `../vcm_rb/testbenches/rb_char/run_rb.py`.
 
 ## Results (schematic, 2026-11-06)
 
