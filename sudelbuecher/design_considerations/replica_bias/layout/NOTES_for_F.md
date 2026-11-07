@@ -39,3 +39,7 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
    precedent (oa_core_pd, bg_core_pd, both pad cells). The lead kept one standing decision: rb_casc's 8-slot
    structure ("keep A for matching"); its ring, pins, straps and band may change. Every device added, removed or
    re-tied goes into F's CDL and note for backannotation.
+9. **"The inputs" = layout primitives** (Christoph, 2026-11-07): "where 'the inputs' means layout primitives. Could be
+   confused with input pins. They can be moved within reason, too, but the overall connectivity and I/O and power
+   pins of the entire macro must be preserved." Passed to F: the macro keeps exactly vddh, vssh, vref, vcm, en_3v3,
+   en_3v3_b, iref (names, directions, boundary order); pins may move within reason; connectivity checked by flat LVS.
