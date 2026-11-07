@@ -17,3 +17,10 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
 4. **rb_casc stays as drawn (A)** (Christoph, 2026-11-07, after the sketches of alternatives B / C in
    `lead/rb_casc_alternatives.png`): "keep A for matching. On slot7, we have area to waste." The pad's 8-slot block with
    BNC in the middle, 3 spare 15/3 dummies and the 2/3 end dummies, band tracks as dummies on vdd. Do not trim it.
+5. **Christoph's answers before launch** (2026-11-07, verbatim): "Might be a good idea to move the small transistors
+   in rb_tree_n and rb_tree_p out of the main transistors' guard ring. Not a must." / "Look at where the voltages
+   are needed by the custom pads. The replica bias block should end up close, and routing should be easy." / "Try
+   to reproduce the connection sequence of the slot7 boundary to the custom pads." / "Don't stretch the connections
+   out unnecessarily to match the slot-to-custom-pads boundaries." / "Pin names vddh and vssh, to they can be
+   connected without conflict either way." / "Pad structures are only routed M1/M2. Let's keep it that way for
+   consistency." Folded into BRIEF_F.md rules 5, 6, 9.
