@@ -2,13 +2,13 @@
 SPDX-FileCopyrightText: 2026 Christoph Maier
 SPDX-License-Identifier: Apache-2.0
 -->
-# bias_dist_pd: switchable distribution mirror (3 inputs, 4 outputs)
+# bias_dist_pd: switchable distribution mirror (4 inputs, 4 outputs)
 
 New on 2026-10-27, for the floorplan with the generator in the slot's main area: one or more reference currents in,
 one copy per pad tree out, each input and each output switchable.
 
 ```
-iin0..2 --TG(en_in<k>)--+-- ni: NI (NMOS diode 6u/6u) --- NM (6u/6u) --- vpd: PD (PMOS diode 5u/6u)
+iin0..3 --TG(en_in<k>)--+-- ni: NI (NMOS diode 6u/6u) --- NM (6u/6u) --- vpd: PD (PMOS diode 5u/6u)
                         |                                                  |
                        TDN (ni -> vss while disabled)            PO0..3 (5u/6u) --TG(en_out<j>)-- iout0..3
 ```
@@ -22,8 +22,14 @@ iin0..2 --TG(en_in<k>)--+-- ni: NI (NMOS diode 6u/6u) --- NM (6u/6u) --- vpd: PD
 - Devices: those of `bias_tree_pd` (NI 6u/6u like the tree's NI, PD / PO 5u/6u like BP, switches 1u/0.45u). The
   current passes two mirrors more than with the generator next to the tree: their mismatch adds to the tree's.
 
-Ports (order): `vdd vss en_3v3 en_3v3_b iin0 iin1 iin2 en_in0 en_in1 en_in2 iout0 iout1 iout2 iout3 en_out0 en_out1
+Ports (order): `vdd vss en_3v3 en_3v3_b iin0 iin1 iin2 iin3 en_in0 en_in1 en_in2 en_in3 iout0 iout1 iout2 iout3 en_out0 en_out1
 en_out2 en_out3`.
+
+**4 inputs since 2026-11-07** (Christoph: lay out the shared option, one set of sources for all pads): iin0 = the
+Oguey–Aebischer core, iin1 = the bandgap core, iin2 = harness ibias0, iin3 = harness ibias1, any combination (enabled
+inputs add in NI). Outputs: iout0..3 = S2D, D2S, pad_ref_rb, spare. The fourth input slice (XIA3 / XIB3 / TIN3 / TIP3)
+is a copy of the other three. `tb_truth.out` (2026-11-07): cases 1–9 as before; case 10 (input 3 alone) 5.07 µA at
+every output, case 11 (all four) 20.04 µA. The sheet and the symbol still show three inputs until they are redrawn.
 
 ## Truth table
 

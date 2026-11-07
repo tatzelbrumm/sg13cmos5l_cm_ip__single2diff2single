@@ -15,6 +15,7 @@ Venb enb 0 0
 Vi0 ei0 0 0
 Vi1 ei1 0 0
 Vi2 ei2 0 0
+Vi3 ei3 0 0
 Vo0 eo0 0 0
 Vo1 eo1 0 0
 Vo2 eo2 0 0
@@ -30,6 +31,9 @@ XM1 iin1 g1 vext vext sg13_hv_pmos w=5u l=6u
 Iref2 g2 0 5u
 XD2 g2 g2 vext vext sg13_hv_pmos w=5u l=6u
 XM2 iin2 g2 vext vext sg13_hv_pmos w=5u l=6u
+Iref3 g3 0 5u
+XD3 g3 g3 vext vext sg13_hv_pmos w=5u l=6u
+XM3 iin3 g3 vext vext sg13_hv_pmos w=5u l=6u
 * loads: current meter + NMOS diode per output
 Vm0 iout0 l0 0
 XL0 l0 l0 0 0 sg13_hv_nmos w=6u l=6u
@@ -39,12 +43,12 @@ Vm2 iout2 l2 0
 XL2 l2 l2 0 0 sg13_hv_nmos w=6u l=6u
 Vm3 iout3 l3 0
 XL3 l3 l3 0 0 sg13_hv_nmos w=6u l=6u
-X1 vdd 0 en enb iin0 iin1 iin2 ei0 ei1 ei2 iout0 iout1 iout2 iout3 eo0 eo1 eo2 eo3 bias_dist_pd
+X1 vdd 0 en enb iin0 iin1 iin2 iin3 ei0 ei1 ei2 ei3 iout0 iout1 iout2 iout3 eo0 eo1 eo2 eo3 bias_dist_pd
 .options gmin=1e-15 reltol=1e-4 abstol=1e-15
 .control
-* case: en en_b | en_in0..2 | en_out0..3
-let cases = 9
-foreach c 1 2 3 4 5 6 7 8 9
+* case: en en_b | en_in0..3 | en_out0..3
+let cases = 11
+foreach c 1 2 3 4 5 6 7 8 9 10 11
   if $c = 1
     alter ven dc=3.3
     alter venb dc=0
@@ -90,12 +94,24 @@ foreach c 1 2 3 4 5 6 7 8 9
     alter ven dc=0
     alter venb dc=0
   end
+  if $c = 10
+    alter ven dc=3.3
+    alter venb dc=0
+    alter vi0 dc=0
+    alter vi3 dc=3.3
+  end
+  if $c = 11
+    alter vi0 dc=3.3
+    alter vi1 dc=3.3
+    alter vi2 dc=3.3
+  end
   op
   let e = v(en)
   let eb = v(enb)
   let a0 = v(ei0)
   let a1 = v(ei1)
   let a2 = v(ei2)
+  let a3 = v(ei3)
   let b0 = v(eo0)
   let b1 = v(eo1)
   let b2 = v(eo2)
@@ -106,7 +122,7 @@ foreach c 1 2 3 4 5 6 7 8 9
   let i3 = i(vm3)*1e6
   let vni = v(x1.ni)
   let vpd = v(x1.vpd)
-  echo "case $c: en_3v3 $&e en_3v3_b $&eb | en_in $&a0 $&a1 $&a2 | en_out $&b0 $&b1 $&b2 $&b3 | iout uA $&i0 $&i1 $&i2 $&i3 | ni $&vni vpd $&vpd"
+  echo "case $c: en_3v3 $&e en_3v3_b $&eb | en_in $&a0 $&a1 $&a2 $&a3 | en_out $&b0 $&b1 $&b2 $&b3 | iout uA $&i0 $&i1 $&i2 $&i3 | ni $&vni vpd $&vpd"
 end
 .endc
 .end

@@ -1,12 +1,14 @@
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
-* bias_dist_pd: switchable distribution mirror (2026-10-27). Sourced reference currents into iin0..2 (e.g.
-* bias_gen_pd's iref, the harness ibias, a second generator); every input with en_in<k> = 1 is passed by its
+* bias_dist_pd: switchable distribution mirror (2026-10-27; 4 inputs since 2026-11-07, Christoph: one shared set of
+* sources for all pads, any combination of the Oguey-Aebischer core, the bandgap core and the harness ibias0 / ibias1).
+* Sourced reference currents into iin0..3 (intended: iin0 = oa_core_pd, iin1 = bg_core_pd, iin2 = ibias0,
+* iin3 = ibias1); every input with en_in<k> = 1 is passed by its
 * transmission gate TIN / TIP into the NMOS diode NI, so enabled inputs add. NM copies the sum into the PMOS diode
 * PD; the four PMOS outputs PO0..3 source it (1 : 1) through their transmission gates TON / TOP into iout0..3,
 * each enabled by en_out<j>. iout<j> goes into a bias_tree_pd (NMOS input diode behind its own TG).
 * en_3v3 = 0: every TG open, TDN pulls ni to vss, SVPD pulls vpd to vdd. Gates: hv_logic (nand2_hv, inv_hv).
-.subckt bias_dist_pd vdd vss en_3v3 en_3v3_b iin0 iin1 iin2 en_in0 en_in1 en_in2 iout0 iout1 iout2 iout3 en_out0 en_out1 en_out2 en_out3
+.subckt bias_dist_pd vdd vss en_3v3 en_3v3_b iin0 iin1 iin2 iin3 en_in0 en_in1 en_in2 en_in3 iout0 iout1 iout2 iout3 en_out0 en_out1 en_out2 en_out3
 XIA0 vdd vss en_3v3 en_in0 ei0_b nand2_hv
 XIB0 vdd vss ei0_b ei0 inv_hv
 XTIN0 iin0 ei0 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
@@ -19,6 +21,10 @@ XIA2 vdd vss en_3v3 en_in2 ei2_b nand2_hv
 XIB2 vdd vss ei2_b ei2 inv_hv
 XTIN2 iin2 ei2 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
 XTIP2 iin2 ei2_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1
+XIA3 vdd vss en_3v3 en_in3 ei3_b nand2_hv
+XIB3 vdd vss ei3_b ei3 inv_hv
+XTIN3 iin3 ei3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1
+XTIP3 iin3 ei3_b ni vdd sg13_hv_pmos w=1u l=0.45u ng=1
 XTDN ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
 XNI ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1
 XNM vpd ni vss vss sg13_hv_nmos w=6u l=6u ng=1
