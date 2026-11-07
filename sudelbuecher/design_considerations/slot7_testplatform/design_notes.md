@@ -92,3 +92,23 @@ clamps below the rail and leaves the pin floating where the harness switch would
 
 Layout: `routed_cell.py` = the tp_en_ctrl router generalized; one fix (tie Metal1 extension must overlap the ptap's own
 Metal1). `slot_7.gds` with stage B was DRC clean on the first build and LVS clean on the first run.
+
+## Matched bias tree (2026-11-07, design branch `claude/c5-tree-layout`)
+
+The naive tree layout (one row of whole devices per type, 57.31 x 34.41 um) was replaced, on the user's request "same
+treatment as the cores", by the method of the 2026-10-28 core layouts: an NMOS specialist, a PMOS specialist and an
+assembler, re-created from the briefs, reports and skill of A2 / A3 / A4. Result `bias_tree_noab_pd` 32.21 x 18.68 um
+(-69.5 %), same netlist and ports; reports in `macros/slot7_testplatform/layout/tree/{nmos,pmos,assembly}/report.md`.
+
+- Unit fingers: NMOS 1.2/6 (the largest W dividing 6 and 2.4), PMOS 1/6; dummies split so that their W sums stay those of
+  the netlist (no variant netlist).
+- Centroids: PMOS exact for all three mirror devices (13 positions, dummy in the centre); NMOS NBPC exact, NI / NBP
+  0.29 um apart (two odd counts in one row cannot share an exact centroid; ~3 ppm at 1 %/mm).
+- Cost of matching: narrow-width effect. On the extracted slot, the tree voltages differ from the schematic (wide
+  devices) by up to ~20 mV (tt, 27 C, OA reference: vbn 0.928 V vs 0.913, vbp 1.994 vs 1.973, vbpc 1.898 vs 1.913, vbnc
+  1.200 vs 1.207). So the slot-7 tree is not a bit-exact copy of the pad's tree; the references themselves are unchanged.
+- Delivered on `sg13cmos5l_cm_slot7` branch `claude/c5-testplatform` (5c3b9fc), harness flow on the fork branch
+  `claude/c5-testplatform-test` (f443ce1): XOR empty, net check 49 + 14 pins OK (logs `t7_*` in
+  `sudelbuecher/logs/slot7-testplatform/`).
+- Agents in this session cannot write `.md` files (Claude Code refuses report files from subagents; not a settings
+  rule). Their reports were filed by the main session from their hand-backs, at the user's request.
