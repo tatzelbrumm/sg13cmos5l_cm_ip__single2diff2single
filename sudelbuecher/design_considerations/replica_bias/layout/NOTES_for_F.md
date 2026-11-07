@@ -60,3 +60,6 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
     vref (136.0 / 112.3), outputs spaced by their destinations; en_3v3, en_3v3_b, iref on the left edge; capacitors as
     filler, split / reshaped, gate area per node ≥ vcm 720 µm² (CB beside the buffer) and vref 1296 µm²; area ceiling
     5700 µm²; every capacitor's W / L / count / node reported for backannotation.
+12. **Own enables** (Christoph, 2026-11-07, verbatim): "Give pad_ref_rb its own enables for now. We can connect them
+    together a level up later." en_3v3 / en_3v3_b stay pad_ref_rb's own pins (left edge with iref), not aligned with
+    the S2D's enable pins; no netlist change.
