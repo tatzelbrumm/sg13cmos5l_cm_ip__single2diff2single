@@ -1,0 +1,33 @@
+cell	device	type	W	L	ng	primitive	replicates (s2d pad structure)
+bias_tree_rb	TGN	n	1.0	0.45	1	rbsrc_nhv_w1_l0p45	bias_tree_noab_n_c3 TGN
+bias_tree_rb	TGP	p	1.0	0.45	1	rbsrc_phv_w1_l0p45	bias_tree_noab_p_c3 TGP
+bias_tree_rb	TDN	n	1.0	0.45	1	rbsrc_nhv_w1_l0p45	bias_tree_noab_n_c3 TDN
+bias_tree_rb	NI	n	6.0	6.0	1	rbsrc_nhv_w6_l6	bias_tree_noab_n_c3 NI
+bias_tree_rb	NBP	n	2.4	6.0	1	rbsrc_nhv_w2p4_l6	bias_tree_noab_n_c3 NBPC (2.4/6 on ni)
+bias_tree_rb	BP	p	2.0	6.0	1	rbsrc_phv_w2_l6	bias_tree_noab_p_c3 dummy 2/6 slot, as diode
+bias_tree_rb	PBNC	p	2.0	6.0	1	rbsrc_phv_w2_l6	bias_tree_noab_p_c3 PBNC
+bias_tree_rb	BNC	n	1.0	8.0	1	rbsrc_nhv_w1_l8	s2d_casc_n_f BNC (1/8 in the cascode row)
+vcm_rb	TR	p	5.0	6.0	1	rbsrc_phv_w5_l6	s2d_tails_hi_f unit tail (or bias_tree_noab_p_c3 PBN 5/6 slot)
+vcm_rb	MR	p	20.0	1.0	2	rbsrc_phv_w20_l1_ng2	tub_p20x1_c3 (s2d_inputs_c3)
+vcm_rb	SH1	n	2.4	6.0	1	rbsrc_nhv_w2p4_l6	bias_tree_noab_n_c3 dummy 2.4/6 slot (MDBN)
+vcm_rb	SH2	n	2.4	6.0	1	rbsrc_nhv_w2p4_l6	2.4/6 finger next to NI (new slot)
+vcm_rb	CY	n	15.0	3.0	1	rbsrc_nhv_w15_l3	s2d_casc_n_f CY finger 15/3 on vbnc
+vcm_rb	SY	n	6.0	6.0	1	rbsrc_nhv_w6_l6	sinks_6x6 SY finger 6/6 (or bias_tree_noab_n_c3 NBP 6/6 slot)
+vcm_rb	SU	p	1.0	4.0	1	rbsrc_phv_w1_l4	1/4 finger of s2d_loads_f, but in its own well: NEW small tub (no s2d structure)
+vcm_rb	SL1	p	1.0	4.0	1	rbsrc_phv_w1_l4	1/4 PMOS in its own well: NEW small tub
+vcm_rb	SL2	p	1.0	4.0	1	rbsrc_phv_w1_l4	1/4 PMOS in its own well: NEW small tub
+vcm_rb	BT	p	5.0	6.0	1	rbsrc_phv_w5_l6	s2d_tails_hi_f unit tail
+vcm_rb	BA	p	20.0	1.0	2	rbsrc_phv_w20_l1_ng2	tub_p20x1_c3 (s2d_inputs_c3)
+vcm_rb	BB	p	20.0	1.0	2	rbsrc_phv_w20_l1_ng2	tub_p20x1_c3 (s2d_inputs_c3)
+vcm_rb	BD	n	6.0	6.0	1	rbsrc_nhv_w6_l6	sinks_6x6 6/6 finger (mirror pair BD / BM)
+vcm_rb	BM	n	6.0	6.0	1	rbsrc_nhv_w6_l6	sinks_6x6 6/6 finger (mirror pair BD / BM)
+vcm_rb	CB	n	12.0	12.0	1	rbsrc_nhv_w12_l12	s2d_cload_c3 CLP / CLN 12x12
+vcm_rb	SPD	n	1.0	0.45	1	rbsrc_nhv_w1_l0p45	s2d_cload_c3 TNN / TPN 1/0.45
+vref_s2d_rb	F1	n	15.0	3.0	1	rbsrc_nhv_w15_l3	s2d_casc_n_f 15/3 finger on vbnc
+vref_s2d_rb	F2	n	15.0	3.0	1	rbsrc_nhv_w15_l3	s2d_casc_n_f 15/3 finger on vbnc
+vref_s2d_rb	F3	n	15.0	3.0	1	rbsrc_nhv_w15_l3	s2d_casc_n_f 15/3 finger on vbnc
+vref_s2d_rb	F4	n	15.0	3.0	1	rbsrc_nhv_w15_l3	s2d_casc_n_f 15/3 finger on vbnc
+vref_s2d_rb	SF	n	2.0	6.0	1	rbsrc_nhv_w2_l6	sinks_6x6 end device 2/6 (a dummy there)
+vref_s2d_rb	CB1	n	12.0	12.0	1	rbsrc_nhv_w12_l12	s2d_cload_c3 CLP / CLN 12x12
+vref_s2d_rb	CB2	n	12.0	12.0	1	rbsrc_nhv_w12_l12	s2d_cload_c3 CLP / CLN 12x12
+vref_s2d_rb	SPD	n	1.0	0.45	1	rbsrc_nhv_w1_l0p45	s2d_cload_c3 TNN / TPN 1/0.45
