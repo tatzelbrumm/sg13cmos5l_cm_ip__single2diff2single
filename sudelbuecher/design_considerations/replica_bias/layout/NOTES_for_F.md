@@ -51,3 +51,12 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
     blocks together. And yes, the layout should be MUCH more compact." Both the bunched pins (1.08 µm pitch) and the
     bottom-right position came from the lead's brief (rule 5), not from F. Next: position decided with Christoph
     (`lead/slot_right_options.png`), then F reworks the cell.
+11. **Position and capacitors** (Christoph, 2026-11-07, verbatim): "Option 2 or even higher up, reference cores are
+    probably best stacked vertically instead of horizontally. The bypass mos capacitors don't have to be a contiguous
+    array, and they don't even have to be square. For a compact layout, they might be shaped and places where there is
+    extra space between blocks with a more rigid geometry. The capacitor placement is pretty much ad lib (maintaining
+    overall capacitance to the nodes and avoiding long interconnects)". Passed to F (rework): right edge at y ≳ 165
+    (between or above the pad pin groups); vcm straight out to the D2S vref (223.3) and down the edge to the S2D vcm /
+    vref (136.0 / 112.3), outputs spaced by their destinations; en_3v3, en_3v3_b, iref on the left edge; capacitors as
+    filler, split / reshaped, gate area per node ≥ vcm 720 µm² (CB beside the buffer) and vref 1296 µm²; area ceiling
+    5700 µm²; every capacitor's W / L / count / node reported for backannotation.
