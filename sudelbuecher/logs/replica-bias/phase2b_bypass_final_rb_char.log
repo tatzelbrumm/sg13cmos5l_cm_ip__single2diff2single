@@ -1,0 +1,8 @@
+rb_dc: 135 runs, 0 without result, 30 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_dc.tsv
+rb_z: 27 runs, 0 without result, 10 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_z.tsv
+rb_en: 54 runs, 0 without result, 160 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_en.tsv
+rb_up: 54 runs, 0 without result, 166 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_up.tsv
+cl_s2d_en: 12 runs, 0 without result, 62 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/cl_s2d_en.tsv
+rb_dc: 135 runs, 0 without result, 30 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_dc.tsv
+rb_z: 27 runs, 0 without result, 10 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/rb_z.tsv
+cl_s2d_en: 12 runs, 0 without result, 64 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/cl_s2d_en.tsv
