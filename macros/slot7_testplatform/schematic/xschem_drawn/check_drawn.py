@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # SPDX-FileCopyrightText: 2026 Christoph Maier
 # SPDX-License-Identifier: Apache-2.0
-"""Check the finished-style sheets in this directory against the source netlist.
+"""Check the finished-style sheets in this directory against the source netlists.
 
-For tp_en_ctrl.sch and slot7_testplatform.sch:
+For tp_en_ctrl.sch, slot7_testplatform.sch (stage A, ../../netlist/source/slot7_testplatform.spice) and
+tp_en_ctrl_b.sch, slot7_stage_b.sch, slot7_testplatform_ab.sch (stage B, ../../netlist/source/slot7_stage_b.spice):
   1. netlist with xschem (this directory's xschemrc, absolute paths, PWD set, old netlist deleted first,
      'set top_is_subckt 1'); report 'IS MISSING' symbols;
-  2. compare with ../../netlist/source/slot7_testplatform.spice device by device: model, terminal nets in order,
+  2. compare with the source netlist device by device: model, terminal nets in order,
      w / l / ng, and the port order of the .subckt header;
   3. the .sym next to each sheet: pin order = .subckt port order, pin names = the sheet's ipin/opin/iopin names;
   4. drawing lint: wire ends that touch nothing (dangling) and wire ends of different nets that touch.
@@ -23,9 +24,12 @@ import subprocess
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.normpath(os.path.join(HERE, '..', '..', 'netlist', 'source', 'slot7_testplatform.spice'))
+SRCDIR = os.path.normpath(os.path.join(HERE, '..', '..', 'netlist', 'source'))
+SRC = os.path.join(SRCDIR, 'slot7_testplatform.spice')
+SRC_B = os.path.join(SRCDIR, 'slot7_stage_b.spice')
 OUTD = os.path.join(HERE, 'check_out')
-SHEETS = ['tp_en_ctrl', 'slot7_testplatform']
+SHEETS = [('tp_en_ctrl', SRC), ('slot7_testplatform', SRC),
+          ('tp_en_ctrl_b', SRC_B), ('slot7_stage_b', SRC_B), ('slot7_testplatform_ab', SRC_B)]
 
 
 def subckt(text, name):
@@ -122,7 +126,7 @@ def find_sym(ref, d):
     paths = [d, os.path.join(os.environ.get('PDK_ROOT', '/foss/pdks'), os.environ.get('PDK', 'ihp-sg13cmos5l'),
                              'libs.tech', 'xschem')]
     paths += [os.path.join(HERE, '..', '..', '..', m, 'schematic', 'xschem')
-              for m in ('oa_core_pd', 'bg_core_pd', 'ocd_analog_switches')]
+              for m in ('oa_core_pd', 'bg_core_pd', 'ocd_analog_switches', 'bias_tree_noab_pd')]
     xl = shutil.which('xschem')
     if xl:
         paths.append(os.path.join(os.path.dirname(os.path.realpath(xl)), '..', 'share', 'xschem', 'xschem_library'))
@@ -174,9 +178,9 @@ def lint(sch_path):
 
 
 def check(d, rc, outdir):
-    src = open(SRC).read()
     errs = []
-    for s in SHEETS:
+    for s, srcfile in SHEETS:
+        src = open(srcfile).read()
         text, miss = netlist(os.path.join(d, s + '.sch'), outdir, rc)
         errs += miss
         errs += compare(s, text, src)
@@ -189,7 +193,9 @@ def check(d, rc, outdir):
 
 def selftest():
     """1. one lab_pin vdd_1v2 -> vss_1v2 in a copy of tp_en_ctrl.sch: the compare must fail;
-       2. the copy's top sheet netlisted with an rc that lacks the reused macros: IS MISSING must be reported."""
+       2. one lab_wire xb3 -> xb4 in a copy of tp_en_ctrl_b.sch: the compare must fail;
+       3. the copies of slot7_testplatform.sch and slot7_stage_b.sch netlisted with an rc that lacks the reused
+          macros: IS MISSING must be reported for both."""
     d = os.path.join(OUTD, 'selftest')
     shutil.rmtree(d, ignore_errors=True)
     os.makedirs(d)
@@ -200,6 +206,10 @@ def selftest():
     t2 = re.sub(r'(lab_pin\.sym\}[^\n]*lab=)vdd_1v2\}', r'\1vss_1v2}', t, count=1)
     assert t2 != t
     open(os.path.join(d, 'tp_en_ctrl.sch'), 'w').write(t2)
+    t = open(os.path.join(d, 'tp_en_ctrl_b.sch')).read()
+    t2 = re.sub(r'(lab_wire\.sym\}[^\n]*lab=)xb3\}', r'\1xb4}', t, count=1)
+    assert t2 != t
+    open(os.path.join(d, 'tp_en_ctrl_b.sch'), 'w').write(t2)
     # rc of the copy: only the PDK and the copy's own directory, so the reused macros are missing
     open(os.path.join(d, 'xschemrc'), 'w').write(
         'source $env(PDK_ROOT)/$env(PDK)/libs.tech/xschem/xschemrc\nappend XSCHEM_LIBRARY_PATH :[file dirname [info script]]\n')
@@ -208,12 +218,19 @@ def selftest():
     e1 = compare('tp_en_ctrl', text, src)
     for e in e1:
         print('  ', e)
-    text, miss = netlist(os.path.join(d, 'slot7_testplatform.sch'), d, os.path.join(d, 'xschemrc'))
-    for m in miss:
-        print('  ', m)
-    ok = bool(e1) and bool(miss)
-    print('selftest:', 'PASS (changed label and missing symbols both detected)' if ok else
-          f'FAIL (label change detected: {bool(e1)}, missing symbols detected: {bool(miss)})')
+    text, _ = netlist(os.path.join(d, 'tp_en_ctrl_b.sch'), d, os.path.join(d, 'xschemrc'))
+    e2 = compare('tp_en_ctrl_b', text, open(SRC_B).read())
+    for e in e2:
+        print('  ', e)
+    miss = []
+    for s in ('slot7_testplatform', 'slot7_stage_b'):
+        _, m = netlist(os.path.join(d, s + '.sch'), d, os.path.join(d, 'xschemrc'))
+        for x in m:
+            print('  ', x)
+        miss.append(bool(m))
+    ok = bool(e1) and bool(e2) and all(miss)
+    print('selftest:', 'PASS (changed labels and missing symbols all detected)' if ok else
+          f'FAIL (label changes detected: {bool(e1)} / {bool(e2)}, missing symbols detected: {miss})')
     return ok
 
 

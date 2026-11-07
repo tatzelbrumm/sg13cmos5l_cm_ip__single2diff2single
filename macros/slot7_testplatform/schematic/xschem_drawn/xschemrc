@@ -43,8 +43,8 @@ if {![llength [info commands append_xschem_library_path_unique]]} {
 # Add this directory (the finished-style sheets; NOT ../xschem, whose draft tp_en_ctrl.sym and
 # slot7_testplatform.sym have the same basenames) to the xschem library path
 append_xschem_library_path_unique [file dirname [info script]]
-# slot7_testplatform: the reused macros
-foreach m {oa_core_pd bg_core_pd ocd_analog_switches} {
+# slot7_testplatform: the reused macros (bias_tree_noab_pd for stage B)
+foreach m {oa_core_pd bg_core_pd ocd_analog_switches bias_tree_noab_pd} {
   append_xschem_library_path_unique [file join [file dirname [info script]] ../../../$m/schematic/xschem]
 }
 
