@@ -280,7 +280,7 @@ text {font-family: Sans-Serif;}
 <text fill="#00ddff"  xml:space="preserve" font-size="8.33636" transform="translate(475.187, 407.887)" >vbp</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="12.3502" transform="translate(251.199, 579.181)" >         pad_ref_rb.sch</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="12.3502" transform="translate(251.199, 561.368)" >Christoph Maier</text>
-<text fill="#cccccc"  xml:space="preserve" font-size="12.3502" transform="translate(598.299, 561.368)" >2026-11-07  18:31:11</text>
+<text fill="#cccccc"  xml:space="preserve" font-size="12.3502" transform="translate(589.299, 561.368)" >2026-11-07  19:20:26</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="30.8754" transform="translate(114.635, 578.189)" >SCHEM</text>
 <path class="l1" d="M313.544 268.119L313.544 369.058"/>
 <path class="l1" d="M313.544 452.184L313.544 517.497"/>
@@ -314,12 +314,6 @@ text {font-family: Sans-Serif;}
 <path class="l1" d="M669.798 422.496L693.549 422.496"/>
 <path class="l1" d="M693.549 422.496L693.549 481.872"/>
 <path class="l1" d="M1014.18 481.872L1061.68 481.872"/>
-<path class="l1" d="M1014.18 481.872L1014.18 547.185"/>
-<path class="l1" d="M1037.93 422.496L1037.93 547.185"/>
-<path class="l1" d="M1026.05 606.561L1026.05 618.436"/>
-<path class="l1" d="M919.177 618.436L1026.05 618.436"/>
-<path class="l1" d="M907.301 517.497L919.177 517.497"/>
-<path class="l1" d="M919.177 517.497L919.177 618.436"/>
 <path class="l1" d="M76.0408 268.119L313.544 268.119"/>
 <path class="l1" d="M76.0408 517.497L313.544 517.497"/>
 <path class="l1" d="M313.544 268.119L610.423 268.119"/>
@@ -328,35 +322,41 @@ text {font-family: Sans-Serif;}
 <path class="l1" d="M372.92 422.496L444.17 422.496"/>
 <path class="l1" d="M76.0408 416.559L135.417 416.559"/>
 <path class="l1" d="M135.417 493.747L527.297 493.747"/>
+<path class="l1" d="M1014.18 481.872L1014.18 547.185"/>
+<path class="l1" d="M1037.93 422.496L1037.93 547.185"/>
+<path class="l1" d="M1026.05 606.561L1026.05 618.436"/>
+<path class="l1" d="M919.177 618.436L1026.05 618.436"/>
+<path class="l1" d="M907.301 517.497L919.177 517.497"/>
+<path class="l1" d="M919.177 517.497L919.177 618.436"/>
 <path class="l1" d="M693.549 481.872L1014.18 481.872"/>
 <path class="l1" d="M966.677 422.496L1037.93 422.496"/>
 <circle class="l1" cx="527.297" cy="493.747" r="2.1969"/>
 <circle class="l1" cx="135.417" cy="416.559" r="2.1969"/>
-<circle class="l1" cx="135.417" cy="416.559" r="2.1969"/>
 <circle class="l1" cx="313.544" cy="268.119" r="2.1969"/>
-<circle class="l1" cx="527.297" cy="493.747" r="2.1969"/>
 <circle class="l1" cx="135.417" cy="416.559" r="2.1969"/>
-<circle class="l1" cx="610.423" cy="268.119" r="2.1969"/>
+<circle class="l1" cx="135.417" cy="416.559" r="2.1969"/>
 <circle class="l1" cx="313.544" cy="517.497" r="2.1969"/>
+<circle class="l1" cx="444.17" cy="422.496" r="2.1969"/>
+<circle class="l1" cx="420.42" cy="398.746" r="2.1969"/>
+<circle class="l1" cx="313.544" cy="268.119" r="2.1969"/>
+<circle class="l1" cx="610.423" cy="268.119" r="2.1969"/>
+<circle class="l1" cx="444.17" cy="422.496" r="2.1969"/>
+<circle class="l1" cx="420.42" cy="398.746" r="2.1969"/>
+<circle class="l1" cx="444.17" cy="422.496" r="2.1969"/>
+<circle class="l1" cx="420.42" cy="398.746" r="2.1969"/>
+<circle class="l1" cx="313.544" cy="517.497" r="2.1969"/>
+<circle class="l1" cx="313.544" cy="268.119" r="2.1969"/>
+<circle class="l1" cx="313.544" cy="517.497" r="2.1969"/>
+<circle class="l1" cx="610.423" cy="517.497" r="2.1969"/>
+<circle class="l1" cx="1014.18" cy="481.872" r="2.1969"/>
+<circle class="l1" cx="1014.18" cy="481.872" r="2.1969"/>
+<circle class="l1" cx="527.297" cy="493.747" r="2.1969"/>
+<circle class="l1" cx="527.297" cy="493.747" r="2.1969"/>
+<circle class="l1" cx="610.423" cy="268.119" r="2.1969"/>
+<circle class="l1" cx="610.423" cy="517.497" r="2.1969"/>
+<circle class="l1" cx="610.423" cy="268.119" r="2.1969"/>
 <circle class="l1" cx="610.423" cy="517.497" r="2.1969"/>
 <circle class="l1" cx="907.301" cy="517.497" r="2.1969"/>
-<circle class="l1" cx="444.17" cy="422.496" r="2.1969"/>
-<circle class="l1" cx="444.17" cy="422.496" r="2.1969"/>
-<circle class="l1" cx="420.42" cy="398.746" r="2.1969"/>
-<circle class="l1" cx="420.42" cy="398.746" r="2.1969"/>
-<circle class="l1" cx="313.544" cy="268.119" r="2.1969"/>
-<circle class="l1" cx="610.423" cy="268.119" r="2.1969"/>
-<circle class="l1" cx="444.17" cy="422.496" r="2.1969"/>
-<circle class="l1" cx="420.42" cy="398.746" r="2.1969"/>
-<circle class="l1" cx="313.544" cy="517.497" r="2.1969"/>
-<circle class="l1" cx="313.544" cy="268.119" r="2.1969"/>
-<circle class="l1" cx="313.544" cy="517.497" r="2.1969"/>
-<circle class="l1" cx="610.423" cy="517.497" r="2.1969"/>
-<circle class="l1" cx="1014.18" cy="481.872" r="2.1969"/>
-<circle class="l1" cx="1014.18" cy="481.872" r="2.1969"/>
-<circle class="l1" cx="527.297" cy="493.747" r="2.1969"/>
-<circle class="l1" cx="610.423" cy="517.497" r="2.1969"/>
-<circle class="l1" cx="610.423" cy="268.119" r="2.1969"/>
 <circle class="l1" cx="907.301" cy="517.497" r="2.1969"/>
 <circle class="l1" cx="907.301" cy="517.497" r="2.1969"/>
 <circle class="l1" cx="1037.93" cy="422.496" r="2.1969"/>
@@ -373,5 +373,5 @@ text {font-family: Sans-Serif;}
 <text fill="#cccccc"  xml:space="preserve" font-size="7.71885" transform="translate(76.0408, 200.315)" >output or a core's iout; en_3v3 / en_3v3_b from en_ctrl_3v3). vdd / vss: the rails of the pads it serves (the top edge</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="7.71885" transform="translate(76.0408, 213.377)" >that vcm_rb tracks is referenced to the pads' unit rail).</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="7.71885" transform="translate(76.0408, 226.44)" >Supply current (tt 27 C, 3.3 V): tree 9 uA (5 uA reference + 2 BP + 2 BNC) + vcm_rb 14 uA + vref_s2d_rb 1.7 uA.</text>
-<text fill="#cccccc"  xml:space="preserve" font-size="7.71885" transform="translate(76.0408, 245.44)" >drawn from netlist/source/pad_ref_rb.spice; Xt bias_tree_rb and Xb bypass_rb (this folder), Xc vcm_rb, Xr vref_s2d_rb</text>
+<text fill="#cccccc"  xml:space="preserve" font-size="7.71885" transform="translate(76.0408, 245.44)" >drawn from netlist/source/pad_ref_rb.spice; Xt bias_tree_rb (this folder), Xc vcm_rb, Xr vref_s2d_rb</text>
 </svg>

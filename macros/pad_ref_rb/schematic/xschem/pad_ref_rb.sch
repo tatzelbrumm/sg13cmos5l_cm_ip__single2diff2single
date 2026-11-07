@@ -66,7 +66,14 @@ C {devices/ipin.sym} 100 -550 0 0 {name=p6 lab=en_3v3_b}
 C {bias_tree_rb.sym} 500 -560 0 0 {name=Xt}
 C {vcm_rb.sym} 1000 -540 0 0 {name=Xc}
 C {vref_s2d_rb.sym} 1500 -540 0 0 {name=Xr}
+C {bypass_rb.sym} 1700 -280 0 0 {name=Xb}
 C {devices/lab_wire.sym} 800 -720 0 0 {name=l1 sig_type=std_logic lab=ni}
 C {devices/lab_wire.sym} 800 -680 0 0 {name=l2 sig_type=std_logic lab=vbnc}
 C {devices/lab_wire.sym} 800 -560 0 0 {name=l3 sig_type=std_logic lab=vbp}
 C {devices/title.sym} 160 -300 0 0 {name=l0 author="Christoph Maier"}
+N 1680 -440 1680 -330 {lab=vcm}
+N 1720 -540 1720 -330 {lab=vref}
+N 1700 -230 1700 -210 {lab=vss}
+N 1520 -210 1700 -210 {lab=vss}
+N 1500 -380 1520 -380 {lab=vss}
+N 1520 -380 1520 -210 {lab=vss}
