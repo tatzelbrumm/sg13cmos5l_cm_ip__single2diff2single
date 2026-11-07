@@ -43,3 +43,11 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
    confused with input pins. They can be moved within reason, too, but the overall connectivity and I/O and power
    pins of the entire macro must be preserved." Passed to F: the macro keeps exactly vddh, vssh, vref, vcm, en_3v3,
    en_3v3_b, iref (names, directions, boundary order); pins may move within reason; connectivity checked by flat LVS.
+10. **Review of F's first routed cell** (Christoph, 2026-11-07, verbatim): "There's ABSOLUTELY NO GOOD REASON to bring
+    the terminal lines close together and not route them straight out, given that the distance of the pad
+    connections is further apart. There's also ABSOLUTELY NO GOOD REASON to place the replica bias generator next to
+    the VSS1V2 pin at the bottom right. This building block should be near the top right, where we need to sort out
+    how to place it relative to the bias sources and the (to be laid out) bias_dist_pd network that connects these
+    blocks together. And yes, the layout should be MUCH more compact." Both the bunched pins (1.08 µm pitch) and the
+    bottom-right position came from the lead's brief (rule 5), not from F. Next: position decided with Christoph
+    (`lead/slot_right_options.png`), then F reworks the cell.
