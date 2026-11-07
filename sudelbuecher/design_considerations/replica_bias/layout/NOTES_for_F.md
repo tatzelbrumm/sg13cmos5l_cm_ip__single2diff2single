@@ -1,0 +1,16 @@
+<!--
+SPDX-FileCopyrightText: 2026 Christoph Maier
+SPDX-License-Identifier: Apache-2.0
+-->
+# Notes for the assembly agent F (pad_ref_rb), collected by the lead
+
+To be folded into F's brief, after the rule sections copied verbatim from C3's F brief.
+
+1. **rb_tree_n's switches** (Christoph, 2026-11-07): "F may decide to move the small rb_tree_n transistors out of the
+   guard ring to save area. Then again, there's plenty of room on the slot7 bottom. But it's still good (and
+   consistent) practice to keep layout compact, if only for matching purposes."
+   - TGN and TDN (1u/0.45u) sit inside rb_tree_n's ring at its two ends (as TGN / TDN in the pad's tree row).
+   - TGP is in rb_tree_p, at the end of the PMOS tree row.
+2. **Compactness counts** for matching, not only for area. Report each assembled block's area against the row sum
+   (N 3953 µm², P rows, rb_avg 120 µm²) and against the 85 × 85 µm estimate.
+3. **rb_avg** (P3): two wells, translated rows; pins gh (top), m (both sides), xp (bottom); no vdd.

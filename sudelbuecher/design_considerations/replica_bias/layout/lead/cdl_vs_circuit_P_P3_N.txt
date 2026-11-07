@@ -1,0 +1,23 @@
+circuit: 42 active devices (+ 7 netlisted dummies); drawn: 43 active; matched 42
+  EXTRA    1 ('sg13_hv_nmos', ('vss', 'vss'), 'vref', 'vss', 12000, 12000, 1) ['rb_cload:MCBR_1', 'bypass_rb:MCBR_4', 'bypass_rb:MCBR_5', 'bypass_rb:MCBR_6', 'bypass_rb:MCBR_7', 'bypass_rb:MCBR_8', 'bypass_rb:MCBR_9', 'bypass_rb:MCBR_10', 'bypass_rb:MCBR_11']
+dummies drawn: 20
+   rb_tree_p MDPBN vdd vbp vdd vdd 5u 6u 1 
+   rb_tails MDT0 vdd vbp vdd vdd 5u 6u 1 
+   rb_tails MDT3 vdd vbp vdd vdd 5u 6u 1 
+   rb_tubs MDU0 vdd vdd vdd vdd 20u 1u 2 
+   rb_tubs MDU4 vdd vdd vdd vdd 20u 1u 2 
+   rb_avg MDU0 gh m gh gh 1u 4u 1 
+   rb_avg MDU1 gh m gh gh 1u 4u 1 
+   rb_avg MDL0 m xp m m 1u 4u 1 
+   rb_avg MDL1 m xp m m 1u 4u 1 
+   rb_tree_n MDTN6 vss ni vss vss 2u 6u 1 
+   rb_tree_n MDTN7 vss ni vss vss 2.4u 6u 1 
+   rb_casc MDC10 vss vbnc vss vss 2u 3u 1 
+   rb_casc MDC14 vss vbnc vss vss 15u 3u 1 
+   rb_casc MDC15 vss vbnc vss vss 2u 3u 1 
+   rb_casc MDC20 vss vbnc vss vss 2u 3u 1 
+   rb_casc MDC21 vss vbnc vss vss 15u 3u 1 
+   rb_casc MDC22 vss vbnc vss vss 15u 3u 1 
+   rb_casc MDC25 vss vbnc vss vss 2u 3u 1 
+   rb_mirror MDM0 vss bd vss vss 2u 6u 1 
+   rb_mirror MDM3 vss bd vss vss 2u 6u 1 
