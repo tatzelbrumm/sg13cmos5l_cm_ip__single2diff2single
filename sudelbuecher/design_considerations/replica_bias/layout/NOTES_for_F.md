@@ -29,3 +29,7 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
    and the context picture) and to deliver what a routing-driven placement needs: a pin map per cell, the net list
    with fan-out and sensitive lines, the facing edges per net, and a routing-order / layer-direction / channel
    proposal for stage B.
+7. **No distinct stages** (Christoph, 2026-11-07, right after 6): "THERE ARE NO DISTINCT STAGES." Supersedes the
+   stage A / B split of BRIEF_F.md and note 6. F was told to place and route as one process, routing driving the
+   placement, to a routed pad_ref_rb (M1 / M2, DRC and flat LVS clean against the circuit with every dummy, vddh /
+   vssh), with progress lines in `reports/F_progress.md`.
