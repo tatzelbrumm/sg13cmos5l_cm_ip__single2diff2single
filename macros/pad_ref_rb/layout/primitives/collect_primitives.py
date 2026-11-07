@@ -93,6 +93,7 @@ REPLICATES = {
     ("bias_tree_rb", "TGP"): "bias_tree_noab_p_c3 TGP", ("bias_tree_rb", "NI"): "bias_tree_noab_n_c3 NI",
     ("bias_tree_rb", "NBP"): "bias_tree_noab_n_c3 NBPC (2.4/6 on ni)", ("bias_tree_rb", "BP"): "bias_tree_noab_p_c3 dummy 2/6 slot, as diode",
     ("bias_tree_rb", "PBNC"): "bias_tree_noab_p_c3 PBNC", ("bias_tree_rb", "BNC"): "s2d_casc_n_f BNC (1/8 in the cascode row)",
+    ("bias_tree_rb", "MDPBN"): "bias_tree_noab_p_c3 PBN 5/6 slot, kept as a dummy (D = S = B = vdd, gate vbp)",
     ("vcm_rb", "TR"): "s2d_tails_hi_f unit tail (or bias_tree_noab_p_c3 PBN 5/6 slot)", ("vcm_rb", "BT"): "s2d_tails_hi_f unit tail",
     ("vcm_rb", "MR"): "tub_p20x1_c3 (s2d_inputs_c3)", ("vcm_rb", "BA"): "tub_p20x1_c3 (s2d_inputs_c3)",
     ("vcm_rb", "BB"): "tub_p20x1_c3 (s2d_inputs_c3)",

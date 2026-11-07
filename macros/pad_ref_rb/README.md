@@ -18,7 +18,7 @@ Task: `docs/launch/replica_bias_TASK.md` (branch `harness-test`). Records: `docs
 
 | cell | where | what |
 |---|---|---|
-| `bias_tree_rb` | `netlist/source/pad_ref_rb.spice`, `schematic/xschem/bias_tree_rb.sch` | TGN / TGP / TDN (reference switch, as bias_tree_pd), NI 6u/6u (`ni`), NBP 2.4u/6u → BP 2u/6u (`vbp`), PBNC 2u/6u → BNC 1u/8u (`vbnc`); TGP drawn with drain ni, source iref as Christoph drew it |
+| `bias_tree_rb` | `netlist/source/pad_ref_rb.spice`, `schematic/xschem/bias_tree_rb.sch` | TGN / TGP / TDN (reference switch, as bias_tree_pd), NI 6u/6u (`ni`), NBP 2.4u/6u → BP 2u/6u (`vbp`), PBNC 2u/6u → BNC 1u/8u (`vbnc`); TGP drawn with drain ni, source iref as Christoph drew it; layout dummy MDPBN 5u/6u (D = S = B = vdd, gate vbp) in the PBN slot of the copied pad tree row |
 | `vcm_rb` | `../vcm_rb` | top-edge detector, fold-node replica, average, unit-device OTA buffer; takes `ni vbp vbnc` |
 | `vref_s2d_rb` | `../vref_s2d_rb` | x-node replica follower (4 × 15u/3u) with its sink and bypass; takes `ni vbnc` |
 | `pad_ref_rb` | `schematic/xschem/pad_ref_rb.sch` | Xt (tree), Xc (vcm_rb), Xr (vref_s2d_rb) |
@@ -70,13 +70,14 @@ Makefile                            from oa_core_pd's (gen: ../vcm_rb/gen_makefi
 ```
 
 `make check-sheet` netlists both sheets with xschem and compares them with the source netlist: devices (bias_tree_rb
-8 = 8) and subcell instances (pad_ref_rb 3 = 3), ports equal. The sheets of the two blocks are checked from their
-own macros (16 = 16, 8 = 8). The whole hierarchy flattened is topology-equivalent to the source (32 devices).
+9 = 9 with the dummy) and subcell instances (pad_ref_rb 3 = 3), ports equal. The sheets of the two blocks are checked from their
+own macros (16 = 16, 8 = 8). The whole hierarchy flattened was topology-equivalent to the source (32 devices, checked before the dummy was added).
 
 ## Open points
 
 - **Layout:** primitives collected (`layout/primitives/README.md`); assembly, routing, DRC / LVS not started.
-  Decisions open there: flat LVS of pad_ref_rb, the tree row's spare 5/6 slot.
+  Decision open there: flat LVS of pad_ref_rb or sheets regrouped by row. The tree row's spare 5/6 slot is a dummy
+  (MDPBN).
 - **Bias current:** the iref leg comes from `bias_dist_pd` (3 inputs, 4 switchable 1 : 1 outputs: S2D, D2S, this
   cell, a spare). That cell is a sheet only, never simulated, without layout. The decks so far feed this cell from
   its own `bias_gen_pd` with the pads' selection: the ideal case, without leg-to-leg mismatch.

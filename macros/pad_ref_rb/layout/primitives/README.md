@@ -17,7 +17,7 @@ that pad_ref_rb uses.
 | `pad_ref_rb_primitives.gds` | top cell `pad_ref_rb_primitives`: rows on the left, leaf devices on the right, names on TEXT 63/0 |
 | `pad_ref_rb_primitives.png` | its render |
 | `primitives.tsv` | the 14 leaf device cells: type, W, L, ng (measured from Activ ∩ GatPoly), bbox, name in the pad cell |
-| `mapping.tsv` | each of the 32 MOS devices of pad_ref_rb → its leaf primitive → the pad structure it replicates |
+| `mapping.tsv` | each of the 33 MOS devices of pad_ref_rb (32 + the dummy MDPBN) → its leaf primitive → the pad structure it replicates |
 
 - **Naming:**
   - Every copied cell is prefixed `rbsrc_`.
@@ -51,7 +51,7 @@ leaves, gives each replica the same surroundings as the device it copies: neighb
 
 | assembled row | from | devices of pad_ref_rb | note |
 |---|---|---|---|
-| tree P | `bias_tree_noab_p_c3`, as drawn | TGP, PBNC; BP in the dummy 2/6 slot (as a diode); the 5/6 slot spare or a dummy | the pad's own tree row; rewiring only |
+| tree P | `bias_tree_noab_p_c3`, as drawn | TGP, PBNC; BP in the dummy 2/6 slot (as a diode); the 5/6 slot (the pad's PBN) a dummy, MDPBN | the pad's own tree row; rewiring only |
 | tree N | `bias_tree_noab_n_c3` + one 2.4/6 slot | TGN, TDN, NI; NBP in the NBPC 2.4/6 slot; SH1 in the dummy 2.4/6 slot, SH2 in the new slot; SY in the 6/6 slot (NBP in the pad: 6/6 on ni) | every device on ni together, as in the pad tree |
 | tails | `s2d_tails_hi_f`, cut to 4 | dummy, TR, BT, dummy | TR is the edge detector's copy of the unit tail: same row, same well |
 | tubs | `s2d_inputs_c3`, one row cut to 5 | dummy, MR, BA, BB, dummy | MR copies the unit input device; BA / BB are the same device in the OTA |
@@ -87,8 +87,9 @@ purely a dummy.
    - The cascode row holds BNC (bias_tree_rb), CY (vcm_rb) and F1–F4 (vref_s2d_rb).
    - Proposal: LVS pad_ref_rb flat, and keep the sheets functional (tree, vcm, vref). The other way is to regroup
      the sheets by row.
-3. **The tree's spare 5/6 slot:** either a dummy, or TR moves there and the tails cut shrinks to dummy, BT, dummy.
-   TR copies the unit tail, so it belongs in the tails row; the slot becomes a dummy.
+3. **The tree's spare 5/6 slot: a dummy** (Christoph, 2026-11-07: "Make it a dummy"). `XMDPBN vdd vbp vdd vdd`
+   5u/6u in bias_tree_rb, in the pads' convention (D = S = B on the rail, gate by poly abutment); in the netlist and
+   the sheet ([3] layout dummy). TR stays with BT in the tails row.
 4. **xschem's "finger width is too big" / "length is too big"** (the PDK's `fet_drc`: hv w/ng ≤ 10 µm,
    l ≤ 10 µm):
    - CY and F1–F4 (15/3, ng=1) and CB, CB1, CB2 (12/12) trigger it.
@@ -105,4 +106,4 @@ purely a dummy.
   their tie or ring closed.
 - LVS, PEX.
 - The small-tub primitive for SU / SL1 / SL2.
-- Decisions on 2 and 3 above.
+- The decision on 2 above (flat LVS or sheets regrouped by row).
