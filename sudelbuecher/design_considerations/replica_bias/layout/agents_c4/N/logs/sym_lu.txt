@@ -1,0 +1,16 @@
+rb_casc: Activ bbox (-1.74,-0.94;69.44,10.89); axes x = 33.85, y = 4.975 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+bypass_rb: Activ bbox (-0.73,-0.51;52.03,38.97); axes x = 25.65, y = 19.23 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+(--no-y: one row)
+rb_tree_n: Activ bbox (-3.06,-0.51;30.41,8.665); axes x = 13.675, y = 4.077 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+rb_mirror: Activ bbox (-1.23,-0.51;17.98,8.12); axes x = 8.375, y = 3.805 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+rb_cload: Activ bbox (-0.73,-0.51;28.29,13.19); axes x = 13.78, y = 6.34 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+rb_tree_n    farthest N+ to tie   4.30 um (LU.b 20)
+rb_casc      farthest N+ to tie   5.62 um (LU.b 20)
+rb_mirror    farthest N+ to tie   4.02 um (LU.b 20)
+rb_cload     farthest N+ to tie   6.55 um (LU.b 20)
+bypass_rb    farthest N+ to tie  19.44 um (LU.b 20)

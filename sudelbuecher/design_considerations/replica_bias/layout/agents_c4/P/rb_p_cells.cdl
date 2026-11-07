@@ -1,0 +1,34 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* rb_p_cells.cdl: reference netlists of rb_p_cells.gds, written by build_rb_p.py (C4, agent P, 2026-11-07).
+* Devices as drawn (netlists pad_ref_rb / vcm_rb), dummies included (D = S = B on vdd).
+
+.SUBCKT rb_tree_p en_3v3_b iref ni vbnc vbp vdd
+MPBNC vbnc vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MDPBN vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MBP vbp vbp vdd vdd sg13_hv_pmos w=2u l=6u ng=1 m=1
+MTGP ni en_3v3_b iref vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+.ENDS rb_tree_p
+
+.SUBCKT rb_tails bt ts vbp vdd
+MDT0 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MTR ts vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MBT bt vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MDT3 vdd vbp vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS rb_tails
+
+.SUBCKT rb_tubs bd bt gh m ts vcm vdd
+MDU0 vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2 m=1
+MMR gh gh ts ts sg13_hv_pmos w=20u l=1u ng=2 m=1
+MBA bd m bt bt sg13_hv_pmos w=20u l=1u ng=2 m=1
+MBB vcm vcm bt bt sg13_hv_pmos w=20u l=1u ng=2 m=1
+MDU4 vdd vdd vdd vdd sg13_hv_pmos w=20u l=1u ng=2 m=1
+.ENDS rb_tubs
+
+.SUBCKT rb_avg gh m vdd xp
+MDA0 vdd vdd vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+MSL1 xp xp m m sg13_hv_pmos w=1u l=4u ng=1 m=1
+MSU m m gh gh sg13_hv_pmos w=1u l=4u ng=1 m=1
+MSL2 xp xp m m sg13_hv_pmos w=1u l=4u ng=1 m=1
+MDA1 vdd vdd vdd vdd sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS rb_avg

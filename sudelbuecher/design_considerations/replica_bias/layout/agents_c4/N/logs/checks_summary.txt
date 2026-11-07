@@ -1,0 +1,11 @@
+DRC / LVS on rb_n_cells.gds, Sat Nov  7 21:18:10 CET 2026
+== rb_tree_n DRC: violations 0, files mentioning exception 0  
+== rb_tree_n LVS: Netlists match 
+== rb_casc DRC: violations 0, files mentioning exception 0  
+== rb_casc LVS: Netlists match 
+== rb_mirror DRC: violations 0, files mentioning exception 0  
+== rb_mirror LVS: Netlists match 
+== rb_cload DRC: violations 0, files mentioning exception 0  
+== rb_cload LVS: Netlists match 
+== bypass_rb DRC: violations 0, files mentioning exception 0  
+== bypass_rb LVS: Netlists match 

@@ -1,0 +1,20 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bypass_rb_f.cdl: reference netlists of bypass_rb_f.gds (build_rb_n.py --bypass 4 8 2 6).
+* F (Claude, agent F, C4): cell renamed bypass_rb_f by build_f_cells.py.
+* One line per finger as drawn, every dummy a device; bulk = vss (substrate).
+
+.SUBCKT bypass_rb_f vcm vref vss
+MCBM_0 vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBM_1 vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBM_2 vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBM_3 vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_4 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_5 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_6 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_7 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_8 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_9 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_10 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_11 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+.ENDS bypass_rb_f

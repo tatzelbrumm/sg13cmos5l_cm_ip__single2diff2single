@@ -1,0 +1,4 @@
+rb_tree_p        farthest P+Activ to an N+ tie: 3.55 um (LU.a 20)
+rb_tails         farthest P+Activ to an N+ tie: 3.67 um (LU.a 20)
+rb_tubs          farthest P+Activ to an N+ tie: 10.45 um (LU.a 20)
+rb_avg           farthest P+Activ to an N+ tie: 1.45 um (LU.a 20)

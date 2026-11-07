@@ -1,0 +1,40 @@
+rb_pmosHV_w2_l6 vs pad pmosHV_w2_l6                                         XOR 0
+rb_pmosHV_w5_l6 vs pad pmosHV_w5_l6                                         XOR 0
+rb_pmosHV_w1_l0p45 vs pad pmosHV_w1_l0p45                                   XOR 0
+rb_pmosHV_w20_l1_ng2 vs pad pmosHV_w20_l1_ng2                               XOR 0
+rb_pmosHV_w1_l4 vs pad pmosHV_w1_l4$1                                       XOR 0
+rb_tub_p20x1 vs pad tub_p20x1_c3                                            XOR 0
+rb_tree_p vs pad bias_tree_noab_p_c3                                        XOR:
+      8/0 2.1419 um2 in (3.35,8.26;11.11,8.83)
+      10/0 1.5873 um2 in (5.295,8.32;6.405,9.75)
+      10/2 0.3330 um2 in (5.295,9.45;6.405,9.75)
+      19/0 0.1083 um2 in (5.345,8.37;6.355,8.56)
+rb_tree_p vs pad bias_tree_noab_p_c3                                        XOR 0
+rb_tails vs pad s2d_tails_lo_f window (-2.02, 10.375)                       XOR:
+      6/0 0.7808 um2 in (0.135,0.07;10.375,7.85)
+rb_tails vs pad s2d_tails_lo_f window (-10.375, 2.02) (right-aligned)       XOR:
+      6/0 0.7808 um2 in (-10.375,0.07;-0.135,7.85)
+rb_tails vs pad s2d_tails_lo_f window (-2.02, 10.375)                       XOR:
+      6/0 0.7808 um2 in (0.135,0.07;10.375,7.85)
+rb_tails vs pad s2d_tails_lo_f window (-10.375, 2.02) (right-aligned)       XOR:
+      6/0 0.7808 um2 in (-10.375,0.07;-0.135,7.85)
+rb_tails vs pad s2d_tails_hi_f window (-2.02, 10.375)                       XOR:
+      6/0 0.7808 um2 in (0.135,0.07;10.375,7.85)
+rb_tails vs pad s2d_tails_hi_f window (-10.375, 2.02) (right-aligned)       XOR:
+      6/0 0.7808 um2 in (-10.375,0.07;-0.135,7.85)
+rb_tails vs pad s2d_tails_hi_f window (-2.02, 10.375)                       XOR:
+      6/0 0.7808 um2 in (0.135,0.07;10.375,7.85)
+      8/0 1.5708 um2 in (0.59,0.3;6.1,0.87)
+rb_tails vs pad s2d_tails_hi_f window (-10.375, 2.02) (right-aligned)       XOR:
+      6/0 0.7808 um2 in (-10.375,0.07;-0.135,7.85)
+rb_tails vs pad s2d_tails_lo_f window (-2.02, 10.375, 0.3, 7.62)            XOR 0
+rb_tails vs pad s2d_tails_lo_f window (-10.375, 2.02, 0.3, 7.62) (right-aligned) XOR 0
+rb_tails vs pad s2d_tails_hi_f window (-2.02, 10.375, 0.3, 7.62)            XOR 0
+rb_tails vs pad s2d_tails_hi_f window (-10.375, 2.02, 0.3, 7.62) (right-aligned) XOR 0
+rb_tubs vs pad s2d_inputs_c3 window (-0.62, 28.08, -0.6200000000000001, 11.35) XOR 0
+rb_tubs vs pad s2d_inputs_c3 window (-0.62, 28.08, -0.6200000000000001, 11.35) XOR:
+      8/0 7.8924 um2 in (-0.44,-0.62;27.39,11.35)
+      8/2 1.5660 um2 in (6.17,-0.62;20.82,11.35)
+      10/0 7.2274 um2 in (-0.62,-0.62;26.485,-0.09)
+      10/2 0.1405 um2 in (-0.62,-0.62;-0.12,11.16)
+      19/0 0.7220 um2 in (-0.39,-0.62;26.87,11.125)

@@ -1,0 +1,62 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* rb_n_cells.cdl: reference netlists of rb_n_cells.gds (build_rb_n.py, agent N, C4 2026-11-07).
+* One line per finger as drawn, every dummy a device; bulk = vss (substrate).
+
+.SUBCKT rb_tree_n en_3v3 en_3v3_b gh iref ni vbp vref vss xp
+MSH2_0 gh ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+MSF_1 vref ni vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MNBP_2 vbp ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+MSY_3 xp ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MNI_4 ni ni vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MSH1_5 gh ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+MDTN6 vss ni vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MDTN7 vss ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 m=1
+MTGN_8 iref en_3v3 ni vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTDN_9 ni en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS rb_tree_n
+
+.SUBCKT rb_casc vbnc vdd vref vss xp
+MDC10 vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MF1_1 vdd vbnc vref vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MF2_2 vdd vbnc vref vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MCY_3 vdd vbnc xp vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MDC14 vss vbnc vss vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MDC15 vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MDC20 vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MDC21 vss vbnc vss vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MDC22 vss vbnc vss vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MF3_9 vdd vbnc vref vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MF4_10 vdd vbnc vref vss sg13_hv_nmos w=15u l=3u ng=1 m=1
+MDC25 vss vbnc vss vss sg13_hv_nmos w=2u l=3u ng=1 m=1
+MBNC_12 vbnc vbnc vss vss sg13_hv_nmos w=1u l=8u ng=1 m=1
+.ENDS rb_casc
+
+.SUBCKT rb_mirror bd vcm vss
+MDM0 vss bd vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+MBD_1 bd bd vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MBM_2 vcm bd vss vss sg13_hv_nmos w=6u l=6u ng=1 m=1
+MDM3 vss bd vss vss sg13_hv_nmos w=2u l=6u ng=1 m=1
+.ENDS rb_mirror
+
+.SUBCKT rb_cload en_3v3_b vcm vref vss
+MCB_0 vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_1 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MSPDC_2 vcm en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MSPDR_3 vref en_3v3_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS rb_cload
+
+.SUBCKT bypass_rb vcm vref vss
+MCBM_0 vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBM_1 vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBM_2 vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBM_3 vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_4 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_5 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_6 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_7 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_8 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_9 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_10 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+MCBR_11 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1
+.ENDS bypass_rb

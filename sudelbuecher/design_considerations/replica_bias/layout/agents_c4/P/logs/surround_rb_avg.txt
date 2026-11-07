@@ -1,0 +1,2 @@
+SL1 window (+-1 pitch) vs SU window, device layers: XOR 0.0000 um2
+SL2 window (+-1 pitch) vs SU window, device layers: XOR 0.0000 um2

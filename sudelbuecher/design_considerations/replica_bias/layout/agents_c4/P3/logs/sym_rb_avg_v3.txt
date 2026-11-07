@@ -1,0 +1,6 @@
+rb_avg: Activ bbox (0.62,0.62;7.57,14.04); axes x = 4.095, y = 7.33 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+rb_avg_u: Activ bbox (-1.1,-4.68;4.6,0.51); axes x = 1.75, y = -2.085 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+rb_avg_l: Activ bbox (-1.1,-4.68;5.85,0.51); axes x = 2.375, y = -2.085 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
