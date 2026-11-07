@@ -77,3 +77,21 @@ No W, L, ng or finger split changed. Dummies (MD + row + position; d g s b):
 2. rb_cload's CLN slot: a vref capacitor, a vcm capacitor, or a dummy with its gate on vss?
 3. rb_tree_n: keep the pad's dummy next to NI and put SH1 / SH2 at the ends? Same area, but it needs T straps.
 4. Add true end dummies to rb_tree_n, or 6/6 dummies beside BD / BM?
+
+## Round 5 (21:33 CET): rb_casc only; decisions: 8 slots, CLN = 9th vref capacitor (ncr = 9), tree as drawn
+
+- **Size:** 71.72 × 12.37 µm (887.2 µm²), the same before and after. The band keeps the pad's 5 track places. I first
+  tried shrinking it and reverted that on the lead's correction.
+- **Dummy tracks:** the 3 empty places (the pad's vcmfb, voutp and voutn) now carry dummy M2 tracks with the band
+  tracks' extents. They have no tabs: the pad's tabs there would land on replica drains.
+- **Tie:** the dummy tracks are tied to **vdd** through an M1 vertical with Via1s at the free R0 place inside the right
+  ring leg. vdd rather than vss because of the C2 pd_n review ("vsso shouldn't be metal2 for the primitive"), and vdd is
+  already a band track.
+- **Band XOR against s2d_casc_n_f** (x −1.0…68.7, y 3.68…6.27) [M]:
+  - M2 dropped from 60.45 to 0.25 µm²; what remains is the vdd tie stubs beyond x 68.485.
+  - M1 12.57 and Via1 1.41 µm² remain: the drain tabs, which land on vdd (track 4) instead of the pad's
+    vcmfb / voutp / voutn, and the spare dummies' T straps.
+- **Checks [M]** (`logs/round5.txt`):
+  - rb_casc: DRC 0, LVS match, sym 0, LU 5.62 µm. The rows and BNC are still XOR 0 against the pad.
+  - The other four cells are XOR 0 against round 4, and the `--pad` regression is XOR 0.
+  - The CDL is unchanged; `cdl_vs_netlist.py` gives 32 devices, 0 mismatches. gds sha256 26571adaa801.
