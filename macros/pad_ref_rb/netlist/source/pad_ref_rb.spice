@@ -47,7 +47,8 @@ XMDTN7 vss ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 mm_ok=1
 *   vref 0.44 ... 0.6 V (a 12u x 12u hv NMOS is barely inverted there). Layout: 8 in the bypass_rb array, 1 in rb_cload.
 * NMOS to vss only: PMOS to iovdd couples iovdd into vref, the S2D's zero point (4 ... 7 x the S2D's input-referred
 * iovdd ripple at 1 MHz), and raises vcm's 10 MHz ripple (explore_bypass.py). Effect (rb_char, 2026-11-07): the S2D
-* enable kick 0.236 -> 0.112 V on vcm, 0.212 -> 0.096 V on vref; vcm settles at enable in <= 1 us (harness reference).
+* enable kick 0.236 -> 0.112 V on vcm, 0.212 -> 0.088 V on vref (9 capacitors); with the layout dummies (159 um2 of gate
+* on vbnc) vcm / vref settle at enable in 0.8 ... 1.5 us (harness reference), 0.3 ... 0.85 us slower than without.
 .subckt bypass_rb vss vcm vref ncm=4 ncr=9
 XCBM vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m={ncm} mm_ok=1
 XCBR vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m={ncr} mm_ok=1

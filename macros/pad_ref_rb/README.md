@@ -50,11 +50,11 @@ CACE `verification/cace/results/pad_ref_rb/`: 8 / 8 groups pass.
 | supply current, all PVT | 18.7 … 19.5 µA without the reference; OA core 11.5 … 28.0 µA | |
 | mismatch | vcm σ 5.3 mV, vref σ 3.7 mV (100 seeds) | tt, 27 °C, 3.3 V |
 | disabled | vcm, vref 0.000 V; ≤ 10 nA | 3.6 V, tt / ff, 27 / 125 °C |
-| enable | vcm 0.64 … 1.32 µs, overshoot ≤ 34 mV (OA core ≤ 0.28 V); vref 0.39 … 1.29 µs (OA core: the core's start-up, ≤ 25 µs) | with bypass_rb |
-| S2D enable kick | vcm ≤ 0.112 V, vref ≤ 0.096 V (without bypass_rb 0.236 / 0.212 V); S2D enable time 1.44 µs either way | references on before the pad |
+| enable | vcm 0.79 … 1.81 µs, vref 1.03 … 2.02 µs, no overshoot (harness / bandgap reference); OA core: the core's start-up, ≤ 25 µs, overshoot ≤ 0.22 / 0.39 V. 20 µs after disable: vref ≤ 1.1 mV, ≤ 0.53 µA, still decaying | with bypass_rb and the layout dummies (159 µm² of gate on vbnc: 0.3 … 0.85 µs slower than without; rb_en 2026-11-07) |
+| S2D enable kick | vcm ≤ 0.112 V, vref ≤ 0.088 V (without bypass_rb 0.236 / 0.212 V); S2D enable time 1.42 … 1.49 µs with the references on before, 1.65 … 1.68 µs enabled together | references on before the pad; 9 capacitors on vref, layout dummies |
 | output impedance | vcm 21 … 35 kΩ, vref 18 … 26 kΩ (1 kHz / 1 MHz) | |
 | stability, each block alone | vcm_rb's buffer: no peaking without load, ≤ 1.25 with 50 … 200 fF, ≤ 1.09 with its CB at any load; vref_s2d_rb: no loop | `explore_stability.py` |
-| closed loop | S2D INL ≤ 1.73 mV, D2S INL ≤ 1.72 mV, round trip INL ≤ 0.75 mV, S2D enable 1.39 … 1.45 µs, S2D pad range 0 … ≥ 1.09 V up to 27 °C: all as with the own trees | `../vcm_rb/testbenches/rb_char/results/` |
+| closed loop | S2D INL ≤ 1.73 mV, D2S INL ≤ 1.72 mV, round trip INL ≤ 0.75 mV, S2D enable 1.42 … 1.68 µs (since the layout dummies; 1.39 … 1.45 before), S2D pad range 0 … ≥ 1.09 V up to 27 °C: all as with the own trees | `../vcm_rb/testbenches/rb_char/results/` |
 
 **Against dividers** (same outputs and output impedances, tt / 27 °C / 3.3 V): two dividers draw 28.8 + 19.9 =
 48.7 µA, this cell 24.1 µA including its reference (0.5×). The dividers cannot track the band or the S2D input edge
