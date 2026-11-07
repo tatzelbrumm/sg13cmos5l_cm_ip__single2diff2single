@@ -26,7 +26,7 @@
 | Vcm: disabled        | ngspice              | Vcm                  |             any |          ​ |          any |          ​ |      0.001 V |          ​ |   Skip 🟧    |
 | Vref: disabled       | ngspice              | Vref                 |             any |          ​ |          any |          ​ |      0.001 V |          ​ |   Skip 🟧    |
 | Supply current (tree + both blocks, without the reference) | ngspice              | Ib                   |             any |          ​ |          any |          ​ |       0.1 uA |          ​ |   Skip 🟧    |
-| Vcm: mismatch (tt 27 C 3.3 V) | ngspice              | Vcm                  |           1.2 V |    1.246 V |          any |    1.260 V |       1.32 V |    1.274 V |   Pass ✅    |
-| Vref: mismatch (tt 27 C 3.3 V) | ngspice              | Vref                 |          0.47 V |    0.484 V |          any |    0.493 V |       0.52 V |    0.501 V |   Pass ✅    |
-| Supply current (tree + both blocks, without the reference) | ngspice              | Ib                   |             any |  18.718 uA |          any |  19.026 uA |        25 uA |  19.455 uA |   Pass ✅    |
+| Vcm: mismatch (tt 27 C 3.3 V) | ngspice              | Vcm                  |           1.2 V |    1.247 V |          any |    1.261 V |       1.32 V |    1.274 V |   Pass ✅    |
+| Vref: mismatch (tt 27 C 3.3 V) | ngspice              | Vref                 |          0.47 V |    0.481 V |          any |    0.493 V |       0.52 V |    0.502 V |   Pass ✅    |
+| Supply current (tree + both blocks, without the reference) | ngspice              | Ib                   |             any |  18.762 uA |          any |  19.051 uA |        25 uA |  19.419 uA |   Pass ✅    |
 
