@@ -14,3 +14,6 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
 2. **Compactness counts** for matching, not only for area. Report each assembled block's area against the row sum
    (N 3953 µm², P rows, rb_avg 120 µm²) and against the 85 × 85 µm estimate.
 3. **rb_avg** (P3): two wells, translated rows; pins gh (top), m (both sides), xp (bottom); no vdd.
+4. **rb_casc stays as drawn (A)** (Christoph, 2026-11-07, after the sketches of alternatives B / C in
+   `lead/rb_casc_alternatives.png`): "keep A for matching. On slot7, we have area to waste." The pad's 8-slot block with
+   BNC in the middle, 3 spare 15/3 dummies and the 2/3 end dummies, band tracks as dummies on vdd. Do not trim it.
