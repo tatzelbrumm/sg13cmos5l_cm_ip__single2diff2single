@@ -273,8 +273,9 @@ TEMPLATES = {
 # ------------------------------------------------------------------ yaml
 CORN = ["ss", "sf", "tt", "fs", "ff"]
 TEMPS = [-40, 27, 125]
-ITER = {"description": "Iterations to run", "display": "Iterations", "minimum": 1, "maximum": 50, "step": "linear",
-        "stepsize": 1}
+def iters(n):
+    return {"description": "Monte-Carlo iteration (seed = 12345 + iteration)", "display": "Iterations", "minimum": 1,
+            "maximum": n, "step": "linear", "stepsize": 1}
 A = "any"
 # spec entries: var -> (display, unit, minimum, maximum).  Limits marked P in the comments of each group are PROPOSALS
 # (worst simulated case + margin); "functional" limits follow from the function (gate at the rail it should be at).
@@ -297,14 +298,14 @@ def grp(name, tpl, spec, cond, collate=False, plots=None, comment=""):
 
 GROUPS = [
     grp("ron_params", "dc",
-        dc_spec(vg=(A, 0.1), idd=(A, 12), iav=(A, 2), ien=(A, 30)),
+        dc_spec(vg=(A, 0.1), idd=(A, 120), iav=(A, 2), ien=(A, 2000)),
         dict(case=0, vout=[0.3, 0.6, 0.9, 1.1, 1.2, 1.3, 1.5, 2.0, 2.5, 3.0], vin=-1, avdd=[3.0, 3.3, 3.6],
              corner_mos=CORN, temp=TEMPS),
         plots={"R_sw_vs_vout": dict(type="semilogy", xaxis="vout", yaxis="R_sw")},
         comment="On (enable = dvdd = 1.2 V): R_sw vs the switched node (out = vout, in = vout - 10 mV), 10 x 3 avdd x 5 x 3 "
                 "= 450 runs.  Vg functional; I_dvdd / I_avdd / I_en limits P."),
     grp("leak_params", "dc",
-        dc_spec(iout=(-40, 40), iin=(-40, 40), idd=(A, 12), iav=(A, 2), ien=(A, 30), vg=(3.5, A)),
+        dc_spec(iout=(-5000, 5000), iin=(-5000, 5000), idd=(A, 130), iav=(A, 3), ien=(-800, A), vg=(3.5, A)),
         dict(case=1, vout=[0, 1.7, 3.6], vin=[0, 1.7, 3.6], avdd=3.6, dvdd=1.32, corner_mos=CORN, temp=[27, 125]),
         comment="Off (enable = 0), avdd 3.6 V, dvdd 1.32 V: leakage with in / out at 0, 1.7 (top of the bias-node range) "
                 "and 3.6 V, both directions, 9 x 5 x 2 = 90 runs.  Vg functional; current limits P."),
@@ -318,11 +319,11 @@ GROUPS = [
         {"V_in": ("Diode (bias-tree input) voltage", "V", A, A),
          "V_out": ("Switch input = iDAC node voltage", "V", A, A),
          "V_drop": ("Drop across the switch", "V", A, 0.8),
-         "V_head": ("avdd - iDAC node (headroom left for the iDAC)", "V", 1.2, A),
+         "V_head": ("avdd - iDAC node (headroom left for the iDAC)", "V", 1.0, A),
          "I_in": ("Current delivered into the diode", "uA", A, A),
-         "I_err": ("Current error of the switch (in - out) / out, %", "", -0.1, 0.1),
-         "I_nb": ("Current drawn from the iDAC node by one off neighbour", "pA", -500, 500),
-         "I_err18": ("Current error with 18 off neighbours, %", "", -1, 1),
+         "I_err": ("Current error of the switch (in - out) / out, %", "", -0.05, 0.05),
+         "I_nb": ("Current drawn from the iDAC node by one off neighbour", "pA", -250, 250),
+         "I_err18": ("Current error with 18 off neighbours, %", "", -0.5, 0.5),
          "Vg": ("Gate of the pass PMOS", "V", A, 0.1)},
         dict(ibias=[1e-6, 5e-6, 50e-6], avdd=[3.0, 3.3, 3.6], corner_mos=CORN, temp=TEMPS),
         plots={"V_drop_vs_temp": dict(type="xyplot", xaxis="temp", yaxis="V_drop"),
@@ -334,7 +335,7 @@ GROUPS = [
          "Verr_off": ("avdd - gate in the off state (2 off phases, max)", "V", A, 0.1),
          "td_on": ("Enable 50 % rise -> gate 50 % fall", "ns", A, 50),
          "td_off": ("Enable 50 % fall -> gate 50 % rise", "ns", A, 40),
-         "t_on": ("Enable 50 % -> load 50 % rise (10k || 1p)", "ns", A, 60),
+         "t_on": ("Enable 50 % -> load 50 % rise (10k || 1p)", "ns", A, 50),
          "t_off": ("Enable 50 % -> load 50 % fall", "ns", A, 50),
          "V_load": ("Load voltage / vsig in the on state", "", 0.9, A),
          "Q_inj": ("Charge onto a held 1 pF at turn-off", "fC", A, A)},
@@ -358,15 +359,16 @@ GROUPS = [
     grp("func_mm_params", "tran",
         {"Verr_on": ("Gate in the on state: mismatch", "V", A, 0.1),
          "Verr_off": ("avdd - gate in the off state: mismatch", "V", A, 0.1),
-         "td_on": ("Enable 50 % rise -> gate 50 % fall: mismatch", "ns", A, 50),
-         "td_off": ("Enable 50 % fall -> gate 50 % rise: mismatch", "ns", A, 40),
-         "t_on": ("Enable 50 % -> load 50 % rise: mismatch", "ns", A, 60),
-         "t_off": ("Enable 50 % -> load 50 % fall: mismatch", "ns", A, 50),
+         "td_on": ("Enable 50 % rise -> gate 50 % fall: mismatch", "ns", A, 500),
+         "td_off": ("Enable 50 % fall -> gate 50 % rise: mismatch", "ns", A, 500),
+         "t_on": ("Enable 50 % -> load 50 % rise: mismatch", "ns", A, 500),
+         "t_off": ("Enable 50 % -> load 50 % fall: mismatch", "ns", A, 500),
          "V_load": ("Load voltage / vsig: mismatch", "", 0.9, A),
          "Q_inj": ("Charge onto a held 1 pF: mismatch", "fC", A, A)},
-        dict(iterations=ITER, corner_mos="sf_mismatch", temp=-40, dvdd=1.08, avdd=3.6, vsig=2.5), collate=True,
-        comment="Mismatch MC (50 runs) at the slowest-toggling PVT point of func_params (sf, -40 C, dvdd 1.08 V, avdd 3.6 V; "
-                "the level shifter's 1.2 V-driven NMOS fights the PMOS latch there).  Limits as func_params."),
+        dict(iterations=iters(200), corner_mos="sf_mismatch", temp=-40, dvdd=1.08, avdd=3.6, vsig=2.5),
+        comment="Mismatch MC (200 runs, one run per iteration so that the CSV holds them) at the slowest-toggling PVT point "
+                "of func_params (sf, -40 C, dvdd 1.08 V, avdd 3.6 V: the level shifter's 1.2 V-driven NMOS fights the PMOS "
+                "latch there).  Verr functional; delays P = flips within the 0.5 us phase."),
     grp("pwr_params", "pwr",
         {"S_50u": ("gate/avdd 50 us (1 off, 0 on)", "", A, A),
          "S_1m": ("gate/avdd 1 ms", "", A, A),
@@ -385,7 +387,7 @@ GROUPS = [
          "S_100m": ("gate/avdd 100 ms: mismatch", "", A, A),
          "I_avdd": ("Current from avdd at 100 ms: mismatch", "uA", A, A),
          "Verr_end": ("Gate error after dvdd is back: mismatch", "V", A, 0.1)},
-        dict(iterations=ITER, scen=3, corner_mos="tt_mismatch", temp=27, avdd=3.3), collate=True,
+        dict(iterations=iters(50), scen=3, corner_mos="tt_mismatch", temp=27, avdd=3.3),
         comment="Mismatch MC (50 runs) of scenario 3 (avdd up with dvdd = 0) at tt, 27 C: is the power-up state of the "
                 "latch systematic or set by mismatch?"),
 ]

@@ -58,7 +58,7 @@ D3 1 2 dcorner area=DEV_C
 .include sg13cmos5l_stdcell.spice
 .include CACE\{DUT_path\}
 .temp CACE\{temp\}
-.options gmin=1e-15 abstol=1e-14 reltol=1e-4 method=gear
+.options gmin=1e-15 abstol=1e-14 reltol=1e-4 method=gear SEED=CACE[CACE\{seed=12345\} + CACE\{iterations=0\}]
 .option warn=1
 .control
 tran 10u 100.05m 0 0.5m
@@ -70,11 +70,13 @@ meas tran g10m find v(x1.net3) at=10m
 meas tran g100m find v(x1.net3) at=99.9m
 meas tran gend find v(x1.net3) at=100.04m
 meas tran gexp find v(gx) at=100.04m
+meas tran iav find i(Vav) at=99.9m
 let S_50u = g50u / va
 let S_1m = g1m / va
 let S_10m = g10m / va
 let S_100m = g100m / va
+let I_avdd = -iav
 let Verr_end = abs(gend - gexp)
-echo $&S_50u $&S_1m $&S_10m $&S_100m $&Verr_end > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
+echo $&S_50u $&S_1m $&S_10m $&S_100m $&I_avdd $&Verr_end > CACE\{simpath\}/CACE\{filename\}_CACE\{N\}.data
 .endc
 "}

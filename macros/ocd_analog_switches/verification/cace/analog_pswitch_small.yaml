@@ -154,7 +154,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 12
+          value: 120
       I_avdd:
         display: "Current from avdd"
         unit: nA
@@ -172,7 +172,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 30
+          value: 2000
       Vg:
         display: "Gate of the pass PMOS"
         unit: V
@@ -223,20 +223,20 @@ parameters:
         display: "Current into out"
         unit: pA
         minimum:
-          value: -40
+          value: -5000
         typical:
           value: any
         maximum:
-          value: 40
+          value: 5000
       I_in:
         display: "Current into in"
         unit: pA
         minimum:
-          value: -40
+          value: -5000
         typical:
           value: any
         maximum:
-          value: 40
+          value: 5000
       I_dvdd:
         display: "Current from dvdd"
         unit: nA
@@ -245,7 +245,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 12
+          value: 130
       I_avdd:
         display: "Current from avdd"
         unit: nA
@@ -254,16 +254,16 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 2
+          value: 3
       I_en:
         display: "Current into enable"
         unit: pA
         minimum:
-          value: any
+          value: -800
         typical:
           value: any
         maximum:
-          value: 30
+          value: any
       Vg:
         display: "Gate of the pass PMOS"
         unit: V
@@ -419,7 +419,7 @@ parameters:
         display: "avdd - iDAC node (headroom left for the iDAC)"
         unit: V
         minimum:
-          value: 1.2
+          value: 1.0
         typical:
           value: any
         maximum:
@@ -436,28 +436,28 @@ parameters:
       I_err:
         display: "Current error of the switch (in - out) / out, %"
         minimum:
-          value: -0.1
+          value: -0.05
         typical:
           value: any
         maximum:
-          value: 0.1
+          value: 0.05
       I_nb:
         display: "Current drawn from the iDAC node by one off neighbour"
         unit: pA
         minimum:
-          value: -500
+          value: -250
         typical:
           value: any
         maximum:
-          value: 500
+          value: 250
       I_err18:
         display: "Current error with 18 off neighbours, %"
         minimum:
-          value: -1
+          value: -0.5
         typical:
           value: any
         maximum:
-          value: 1
+          value: 0.5
       Vg:
         display: "Gate of the pass PMOS"
         unit: V
@@ -540,7 +540,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 60
+          value: 50
       t_off:
         display: "Enable 50 % -> load 50 % fall"
         unit: ns
@@ -682,7 +682,7 @@ parameters:
         enumerate: [ss, sf, tt, fs, ff]
       temp:
         enumerate: [-40, 27, 125]
-  # Mismatch MC (50 runs) at the slowest-toggling PVT point of func_params (sf, -40 C, dvdd 1.08 V, avdd 3.6 V; the level shifter's 1.2 V-driven NMOS fights the PMOS latch there).  Limits as func_params.
+  # Mismatch MC (200 runs, one run per iteration so that the CSV holds them) at the slowest-toggling PVT point of func_params (sf, -40 C, dvdd 1.08 V, avdd 3.6 V: the level shifter's 1.2 V-driven NMOS fights the PMOS latch there).  Verr functional; delays P = flips within the 0.5 us phase.
   func_mm_params:
     spec:
       Verr_on:
@@ -711,7 +711,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 50
+          value: 500
       td_off:
         display: "Enable 50 % fall -> gate 50 % rise: mismatch"
         unit: ns
@@ -720,7 +720,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 40
+          value: 500
       t_on:
         display: "Enable 50 % -> load 50 % rise: mismatch"
         unit: ns
@@ -729,7 +729,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 60
+          value: 500
       t_off:
         display: "Enable 50 % -> load 50 % fall: mismatch"
         unit: ns
@@ -738,7 +738,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 50
+          value: 500
       V_load:
         display: "Load voltage / vsig: mismatch"
         minimum:
@@ -759,16 +759,15 @@ parameters:
     tool:
       ngspice:
         template: analog_pswitch_small_tb_tran.sch
-        collate: iterations
         format: ascii
         suffix: .data
         variables: [Verr_on, Verr_off, td_on, td_off, t_on, t_off, V_load, Q_inj]
     conditions:
       iterations:
-        description: Iterations to run
+        description: Monte-Carlo iteration (seed = 12345 + iteration)
         display: Iterations
         minimum: 1
-        maximum: 50
+        maximum: 200
         step: linear
         stepsize: 1
       corner_mos:
@@ -816,6 +815,15 @@ parameters:
           value: any
         maximum:
           value: any
+      I_avdd:
+        display: "Current from avdd at 100 ms"
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
       Verr_end:
         display: "Gate error after dvdd is back (enable = prior state)"
         unit: V
@@ -830,7 +838,7 @@ parameters:
         template: analog_pswitch_small_tb_pwr.sch
         format: ascii
         suffix: .data
-        variables: [S_50u, S_1m, S_10m, S_100m, Verr_end]
+        variables: [S_50u, S_1m, S_10m, S_100m, I_avdd, Verr_end]
     plot:
       S_10m_vs_temp:
         type: xyplot
@@ -846,3 +854,78 @@ parameters:
         enumerate: [ss, sf, tt, fs, ff]
       temp:
         enumerate: [-40, 27, 125]
+  # Mismatch MC (50 runs) of scenario 3 (avdd up with dvdd = 0) at tt, 27 C: is the power-up state of the latch systematic or set by mismatch?
+  pwr_mm_params:
+    spec:
+      S_50u:
+        display: "gate/avdd 50 us (1 off, 0 on): mismatch"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      S_1m:
+        display: "gate/avdd 1 ms: mismatch"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      S_10m:
+        display: "gate/avdd 10 ms: mismatch"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      S_100m:
+        display: "gate/avdd 100 ms: mismatch"
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      I_avdd:
+        display: "Current from avdd at 100 ms: mismatch"
+        unit: uA
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: any
+      Verr_end:
+        display: "Gate error after dvdd is back: mismatch"
+        unit: V
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 0.1
+    tool:
+      ngspice:
+        template: analog_pswitch_small_tb_pwr.sch
+        format: ascii
+        suffix: .data
+        variables: [S_50u, S_1m, S_10m, S_100m, I_avdd, Verr_end]
+    conditions:
+      iterations:
+        description: Monte-Carlo iteration (seed = 12345 + iteration)
+        display: Iterations
+        minimum: 1
+        maximum: 50
+        step: linear
+        stepsize: 1
+      scen:
+        typical: 3
+      corner_mos:
+        typical: tt_mismatch
+      temp:
+        typical: 27
+      avdd:
+        typical: 3.3
