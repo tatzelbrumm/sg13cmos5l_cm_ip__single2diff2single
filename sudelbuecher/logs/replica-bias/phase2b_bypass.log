@@ -1,0 +1,8 @@
+bypass_s2d: 36 runs, 0 without result, 76 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/bypass_s2d.tsv
+bypass_d2s: 36 runs, 0 without result, 99 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/bypass_d2s.tsv
+bypass_kick: 60 runs, 0 without result, 431 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/bypass_kick.tsv
+bypass_en: 30 runs, 0 without result, 104 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/bypass_en.tsv
+bypass_s2d_n: 12 runs, 0 without result, 15 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/bypass_s2d_n.tsv
+bypass_d2s_n: 12 runs, 0 without result, 22 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/bypass_d2s_n.tsv
+bypass_kick_n: 24 runs, 0 without result, 74 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/bypass_kick_n.tsv
+bypass_en_n: 12 runs, 0 without result, 20 s -> /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/vcm_rb/testbenches/rb_char/results/bypass_en_n.tsv
