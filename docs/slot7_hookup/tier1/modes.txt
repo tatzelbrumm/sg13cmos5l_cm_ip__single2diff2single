@@ -7,7 +7,7 @@ ext         tt   27 |     0.91 |        -        -
 all_high    tt   27 |     0.90 |        -        -
 swap+feed   tt   27 |     0.05 |        -        -
 no_key_swap tt   27 |     0.90 |        -        -
-default     ss  -40 | FAILED
+default     ss  -40 |     1.31 |        -        -
 swap        ss  -40 | FAILED
 mon         ss  -40 | FAILED
 feed        ss  -40 | FAILED
