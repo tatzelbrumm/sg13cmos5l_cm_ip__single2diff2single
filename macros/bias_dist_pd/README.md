@@ -101,7 +101,12 @@ would cross them (88 crossings against 45).
   passes"): the switch row 0.20 µm taller; every contacted gate pad now reaches 0.32 … 0.37 µm beyond the 0.25 µm
   endcap zone, so sym_check's narrow-poly check finds 0 hits on every cell and on the whole cell (before: tg_hv's pads
   0.14 / 0.27 µm, a false alarm on 0.45 µm wide poly). Mirrors byte-identical to round 1.
-- **Open (agent D):** the switch row has tie strips, not a closed ring.
+- **Open (agent D):** the switch row has tie strips, not a closed ring (options in agent R's survey on the notes
+  branch, `design_considerations/replica_bias/layout/agents_c4/R/survey.md`; the PDK has no endcap / tap cells).
+- **Postponed** (Christoph, 2026-11-08: "decap cells sound good, but let's postpone it"): hv MOS decap cells in place
+  of the row's fillers (NMOS gate to vddh in the lower half, PMOS gate to vssh in the NWell; about 10 fF per µm of
+  filler, 0.15 ... 0.2 pF in all; one agent round plus backannotation). The row has a common height and rail scheme
+  but no horizontal site grid (cell widths on the 5 nm grid; slices on 4.38 µm, outputs under the PO drains).
 - Proposed place in slot7: above the stacked cores, left of pad_ref_rb (`../pad_ref_rb/layout/klayout/pad_ref_rb_in_slot7.png`).
 
 ## Layout note: a later split into analog and digital cells (not done)
