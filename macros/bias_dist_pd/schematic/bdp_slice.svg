@@ -265,7 +265,7 @@ text {font-family: Sans-Serif;}
 <text fill="#cccccc"  xml:space="preserve" font-size="9.34955" transform="translate(554.938, 354.59)" >tg_hv</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="18.6991" transform="translate(388.624, 612.101)" >         bdp_slice.sch</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="18.6991" transform="translate(388.624, 585.131)" >Christoph Maier</text>
-<text fill="#cccccc"  xml:space="preserve" font-size="18.6991" transform="translate(898.335, 585.131)" >2026-11-08  12:09:42</text>
+<text fill="#cccccc"  xml:space="preserve" font-size="18.6991" transform="translate(899.335, 585.131)" >2026-11-08  12:47:59</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="46.7477" transform="translate(181.855, 610.6)" >SCHEM</text>
 <path class="l1" d="M87.4608 284.969L213.32 284.969"/>
 <path class="l1" d="M87.4608 320.929L213.32 320.929"/>
@@ -278,15 +278,33 @@ text {font-family: Sans-Serif;}
 <path class="l1" d="M590.898 302.949L590.898 356.889"/>
 <path class="l1" d="M87.4608 392.849L554.938 392.849"/>
 <path class="l1" d="M626.858 392.849L752.717 392.849"/>
-<path class="l1" d="M285.24 258L285.24 275.979"/>
-<path class="l1" d="M267.26 329.919L267.26 347.899"/>
-<path class="l1" d="M447.059 266.989L447.059 284.969"/>
-<path class="l1" d="M429.079 320.929L429.079 338.909"/>
-<path class="l1" d="M617.868 338.909L617.868 356.889"/>
-<path class="l1" d="M617.868 428.809L617.868 446.788"/>
+<path class="l1" d="M267.26 329.919L267.26 500.728"/>
+<path class="l1" d="M429.079 320.929L429.079 500.728"/>
+<path class="l1" d="M617.868 428.809L617.868 500.728"/>
+<path class="l1" d="M429.079 500.728L617.868 500.728"/>
+<path class="l1" d="M87.4608 500.728L267.26 500.728"/>
+<path class="l1" d="M267.26 500.728L429.079 500.728"/>
+<path class="l1" d="M617.868 213.05L617.868 356.889"/>
+<path class="l1" d="M447.059 213.05L617.868 213.05"/>
+<path class="l1" d="M285.24 213.05L285.24 275.979"/>
+<path class="l1" d="M87.4608 213.05L285.24 213.05"/>
+<path class="l1" d="M447.059 213.05L447.059 284.969"/>
+<path class="l1" d="M285.24 213.05L447.059 213.05"/>
+<circle class="l1" cx="285.24" cy="213.05" r="3.32628"/>
+<circle class="l1" cx="447.059" cy="213.05" r="3.32628"/>
+<circle class="l1" cx="285.24" cy="213.05" r="3.32628"/>
+<circle class="l1" cx="285.24" cy="213.05" r="3.32628"/>
+<circle class="l1" cx="267.26" cy="500.728" r="3.32628"/>
+<circle class="l1" cx="429.079" cy="500.728" r="3.32628"/>
+<circle class="l1" cx="267.26" cy="500.728" r="3.32628"/>
+<circle class="l1" cx="267.26" cy="500.728" r="3.32628"/>
 <circle class="l1" cx="357.159" cy="302.949" r="3.32628"/>
 <circle class="l1" cx="357.159" cy="302.949" r="3.32628"/>
 <circle class="l1" cx="357.159" cy="302.949" r="3.32628"/>
+<circle class="l1" cx="447.059" cy="213.05" r="3.32628"/>
+<circle class="l1" cx="447.059" cy="213.05" r="3.32628"/>
+<circle class="l1" cx="429.079" cy="500.728" r="3.32628"/>
+<circle class="l1" cx="429.079" cy="500.728" r="3.32628"/>
 <text fill="#cccccc"  xml:space="preserve" font-size="18.6991" transform="translate(33.5212, 86.1894)" >bdp_slice: one switched leg of bias_dist_pd, as the layout cell bdp_slice: nand2_hv | inv_hv | tg_hv</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="11.6869" transform="translate(33.5212, 124.772)" >e_b = NAND(en_3v3, en), e = NOT e_b; the transmission gate passes a &lt;-&gt; b while en_3v3 = 1 and en = 1.</text>
 <text fill="#cccccc"  xml:space="preserve" font-size="11.6869" transform="translate(33.5212, 144.55)" >Source: netlist/source/bias_dist_pd.spice. Gate and TG supplies join vdd / vss by label (wired, the a line would cross them).</text>
