@@ -26,4 +26,6 @@ vertical, TopMetal1 straps for vdd_3v3 / vss_3v3; DRC clean incl. the maximal de
 `--run_mode=deep` match with 0 port mismatches, 497 devices; pins that share one net are one CDL port named with the
 comma list of their labels, as KLayout names such a net) and `layout/klayout/s7_ctrl.klay.gds` (DRC / LVS clean).
 dig_out[11:0] are held low by `s7_doutpd` (as the fallback did; back-annotated into the source netlist and the sheets,
-`s7_doutpd.sch/.sym`). Open: coupling of the long Metal3 bus / dig_in lines that cross pad_ref_rb and bias_dist_pd. Check summary: `layout/klayout/slot_7_checks.txt`.
+`s7_doutpd.sch/.sym`). Routes over the analog blocks (from agent A's build log, `layout/klayout/slot_7_routes.png`): only `en`, `en_b` and
+`s7_an_0_iref` cross pad_ref_rb (Metal3, all DC), only the supply straps cross bias_dist_pd; the long dig_in / enable /
+analog_bus lines end at s7_ctrl. No shield needed. Check summary: `layout/klayout/slot_7_checks.txt`.
