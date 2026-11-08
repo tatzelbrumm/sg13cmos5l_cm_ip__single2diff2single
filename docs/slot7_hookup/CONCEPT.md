@@ -105,6 +105,16 @@ on-slot reference, on-slot replica bias monitored on the buses, single → diff 
 4. **Stale docs:** `macros/slot/README.md` lists 19 pad wires (en_1v2, sel, sense, ibias); the delivered pads have 13.
    `TOP_LEVEL_MODULE.md` still names `analog_pin[2:0]` and `select & clk`.
 
+## Tier 1 (proposal for a 4-hour hand-over, 2026-11-08)
+
+`tier1/slot7_tier1.spice`: the default mode only, no decoder (harness enable → `ls_up_fs` → all enables; BG core →
+bias_dist_pd → pad_ref_rb and both pads; loop S2D → D2S; bus0..3 = outp, outn, vcm, vref). `tier1/run_tier1.py`
+simulates it with the extracted pads, pad_ref_rb and bias_dist_pd (`tier1/results.txt`): round trip pad in → pad out
+error ≤ 1.3 mV (−40 / 27 °C), ≤ 6.5 mV (125 °C, pad in 0 … 1 V); vcm 1.12–1.37 V, vref 0.44–0.58 V; enabled: slot
+vdd_3v3 48–50 µA, pad ring 365–396 µA; disabled (transient): ≤ 56 nA slot, ≤ 58 nA ring. Bus taps on outp / outn are
+stable but slow the loop while the bus switch is closed (RUNLOG row 112). Layout: `ls_up_fs` (agent), then the slot
+assembly.
+
 ## Path to the hand-over
 
 Fixed table → slot-level schematic (pads as black boxes, the blocks above, TGs, decode) → testbenches for modes D,
