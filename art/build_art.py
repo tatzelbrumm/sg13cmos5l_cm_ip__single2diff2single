@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the tughra metal art for slot_7: image -> octilinear polygons on five metal layers -> GDS.
+"""Build the tughra metal art for slot_7: image -> staircase polygons on five metal layers -> GDS.
 
 usage: build_art.py [--slot SLOT_GDS] [--scale UM_PER_PX] [--out DIR]
 
@@ -9,8 +9,8 @@ Pipeline (all lengths in um, grid G = 0.05 um):
  3. Per layer (mapping in LAYER_OF): every stroke is widened along its centreline to the design minimum width
     (skeleton + disk of the minimum radius where the stroke is thinner), gaps below the design minimum space are
     closed.  Strokes are never narrowed, so thick strokes keep their shape.
- 4. The binary image is contoured with marching squares on the grid (vertices at edge midpoints), which gives only
-    0 / 45 / 90 degree edges, as the deck's angle rule requires; all vertices are multiples of 0.025 um (5 nm grid).
+ 4. The binary image becomes a staircase polygon (runs of 0.05 um cells merged): only 0 / 90 degree edges, as the deck's
+    angle rule allows, all vertices multiples of 0.05 um (on the 5 nm grid), and no 45-degree chamfers (see mask_to_region).
  5. Written as cell "tughra_art" (art/tughra_art.gds) and as a copy of slot_7 with the art placed in the common
     free region (art/slot7_with_art.gds).  The slot7 source file is only read.
 The script re-runs deterministically.
@@ -19,7 +19,6 @@ import argparse, json, os, sys
 import numpy as np
 import cv2
 from skimage.morphology import skeletonize
-from skimage.measure import find_contours
 import klayout.db as db
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -30,42 +29,52 @@ import pdk_layers as pl
 G = 0.05                                   # raster grid (um); contour vertices land on multiples of G/2
 LAYER_OF = {"purple": "TopMetal1", "green": "Metal4", "red": "Metal3", "blue": "Metal2",
             "orange": "Metal1", "gold": "Metal1"}
-DESIGN = {                                 # design minimum width / space (um); PDK minimum is in pdk_layers
-    "Metal1": (0.30, 0.30), "Metal2": (0.30, 0.30), "Metal3": (0.30, 0.30), "Metal4": (0.30, 0.30),
-    "TopMetal1": (1.70, 1.70),
+DESIGN = {                                 # (kernel cells n, chamfer cells c); flat = (n - 2c) * G, body = n * G
+    "Metal1": (7, 1), "Metal2": (7, 1), "Metal3": (7, 1), "Metal4": (7, 1),    # 0.35 um body, 0.25 um flat
+    "TopMetal1": (39, 2),                                                      # 1.95 um body, 1.75 um flat
 }
 SLOT_DEFAULT = os.environ.get("SLOT7_GDS", "/home/user/sg13cmos5l_cm_slot7/final/gds/slot_7.gds")
 CELL = "tughra_art"
 
 
-def disk(r_cells):
-    r = max(1, int(round(r_cells)))
-    return cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * r + 1, 2 * r + 1))
+def kernel(n, c):
+    """n x n square with 45-degree corner chamfers of c cells: every row and column keeps a flat of n - 2c cells."""
+    k = np.ones((n, n), np.uint8)
+    for a in range(c):
+        for b in range(c - a):
+            k[a, b] = k[a, n - 1 - b] = k[n - 1 - a, b] = k[n - 1 - a, n - 1 - b] = 0
+    return k
 
 
-def widen_to_min(mask, w_um):
-    """Every stroke at least w_um wide: disk of radius w/2 on each skeleton pixel whose local radius is smaller."""
-    r_min = w_um / 2 / G
+def widen_to_min(mask, K):
+    """Every stroke at least as wide as K: stamp K on each skeleton pixel whose local half-width is smaller."""
+    n = K.shape[0]
     dt = cv2.distanceTransform(mask.astype(np.uint8), cv2.DIST_L2, 5)
     sk = skeletonize(mask)
-    ys, xs = np.where(sk & (dt < r_min - 0.5))
-    out = mask.astype(np.uint8).copy()
-    ri = int(round(r_min))
-    for y, x in zip(ys, xs):
-        cv2.circle(out, (int(x), int(y)), ri, 1, -1)
-    return out.astype(bool)
+    pts = np.zeros(mask.shape, np.uint8)
+    pts[sk & (dt < n / 2 - 0.5)] = 1
+    return mask | (cv2.dilate(pts, K) > 0)
 
 
-def conform(mask, w_um, s_um):
-    m = widen_to_min(mask, w_um)
-    m = cv2.morphologyEx(m.astype(np.uint8), cv2.MORPH_CLOSE, disk(s_um / 2 / G)).astype(bool)
-    # closing can leave pinches; one more floor pass and close for stability
-    m = widen_to_min(m, w_um)
-    m = cv2.morphologyEx(m.astype(np.uint8), cv2.MORPH_CLOSE, disk(s_um / 2 / G)).astype(bool)
-    n, lab, st, _ = cv2.connectedComponentsWithStats(m.astype(np.uint8), connectivity=4)
-    keep = np.zeros_like(m)
-    for i in range(1, n):
-        if st[i, 4] * G * G >= 1.0 * w_um * w_um:      # drop specks smaller than one minimum-width square
+def conform(mask, K):
+    """Width floor along the centreline, then alternate closing (space) and opening (width) with the same kernel.
+
+    The kernel is a chamfered square, not a disk: with a disk, the end of a stroke and every tight bend has rows only
+    one or two cells wide, and the deck's Euclidean width / space check reports those (Mn.a, Mn.b). With the square,
+    every flat extremity is at least n - 2c cells long, so it passes.
+    """
+    m = widen_to_min(mask, K)
+    for _ in range(4):
+        prev = m
+        m = cv2.morphologyEx(m.astype(np.uint8), cv2.MORPH_CLOSE, K)
+        m = cv2.morphologyEx(m, cv2.MORPH_OPEN, K).astype(bool)
+        if (m == prev).all():
+            break
+    m = cv2.morphologyEx(m.astype(np.uint8), cv2.MORPH_CLOSE, K)
+    n_, lab, st, _ = cv2.connectedComponentsWithStats(m, connectivity=4)
+    keep = np.zeros(m.shape, bool)
+    for i in range(1, n_):
+        if st[i, 4] >= 2 * K.shape[0] ** 2:           # drop specks smaller than two kernel squares
             keep |= lab == i
     return keep
 
@@ -85,64 +94,50 @@ def class_masks(path, scale):
     return out, (x0, y0, x1, y1), (rgb, lab)
 
 
-def rings_to_region(mask_u8, dbu_um=0.001):
-    """Binary mask (row 0 = top of the art) -> klayout Region in the art cell frame (origin = lower-left)."""
-    H, W = mask_u8.shape
-    pad = np.pad(mask_u8.astype(float), 1)
-    cont = find_contours(pad, 0.5)
-    rings = []
-    for c in cont:
-        # c: (row, col) in padded coordinates, vertices at edge midpoints; closed
-        if len(c) < 4:
-            continue
-        x = (c[:, 1] - 1 + 0.5) * G                 # cell centre of col j is at (j+0.5)*G
-        y = (H - (c[:, 0] - 1 + 0.5)) * G
-        pts = np.round(np.stack([x, y], 1) / 0.025).astype(np.int64) * 25      # nm, multiples of 25 nm
-        # drop repeated and collinear vertices
-        keep = [pts[0]]
-        for p in pts[1:-1]:
-            if (p != keep[-1]).any():
-                keep.append(p)
-        pts = np.array(keep)
-        if len(pts) > 2:
-            a, b, cc = np.roll(pts, 1, 0), pts, np.roll(pts, -1, 0)
-            cross = (b[:, 0] - a[:, 0]) * (cc[:, 1] - b[:, 1]) - (b[:, 1] - a[:, 1]) * (cc[:, 0] - b[:, 0])
-            pts = pts[cross != 0]
-        if len(pts) < 3:
-            continue
-        area2 = float(np.sum(pts[:, 0] * np.roll(pts[:, 1], -1) - np.roll(pts[:, 0], -1) * pts[:, 1]))
-        rings.append((area2, pts))
-    # nesting by even-odd: outer rings and holes via polygon containment using a Region XOR chain per top-level group
-    # skimage returns holes with the opposite orientation of outer rings: sign of area separates them.
-    if not rings:
-        return db.Region()
-    sgn = np.sign(max(rings, key=lambda t: abs(t[0]))[0])      # the largest ring is always an outer ring
-    outers = [(a, p) for a, p in rings if np.sign(a) == sgn]
-    holes = [(a, p) for a, p in rings if np.sign(a) != sgn]
-    # assign each hole to the smallest outer ring that contains one of its points
-    import shapely.geometry as sg
-    from shapely.strtree import STRtree
-    outer_polys = [sg.Polygon(p) for _, p in outers]
-    tree = STRtree(outer_polys)
-    hole_of = {i: [] for i in range(len(outers))}
-    for _, hp in holes:
-        pt = sg.Point(hp[0])
-        cand = [i for i in tree.query(pt) if outer_polys[i].contains(pt)]
-        if not cand:       # point exactly on the outer ring: try another vertex
-            for q in hp[1:]:
-                pt = sg.Point(q)
-                cand = [i for i in tree.query(pt) if outer_polys[i].contains(pt)]
-                if cand:
-                    break
-        if cand:
-            hole_of[min(cand, key=lambda i: outer_polys[i].area)].append(hp)
+def mask_to_region(mask):
+    """Binary mask (row 0 = top of the art) -> klayout Region in the art cell frame (origin = lower-left, dbu 1 nm).
+
+    Every run of set cells in a row becomes a box of G x G cells; the union is a pure staircase (0 / 90 degree edges,
+    all vertices multiples of G = 50 nm).  A 45-degree chamfer outline was tried first and rejected: two convex 45-degree
+    turns over a short edge (every round end and tight bend) are reported by the deck as Mn.a / Mn.b / Mn.i violations,
+    whereas a staircase has no chamfers.
+    """
+    H, W = mask.shape
+    step = int(round(G / 0.001))
     region = db.Region()
-    for i, (_, p) in enumerate(outers):
-        poly = db.Polygon([db.Point(int(x), int(y)) for x, y in p])
-        for hp in hole_of[i]:
-            poly.insert_hole([db.Point(int(x), int(y)) for x, y in hp])
-        region.insert(poly)
+    m = np.pad(mask.astype(np.int8), ((0, 0), (1, 1)))
+    d = np.diff(m, axis=1)
+    for r in range(H):
+        starts = np.where(d[r] == 1)[0]
+        ends = np.where(d[r] == -1)[0]
+        y1 = (H - r) * step
+        for a, b in zip(starts, ends):
+            region.insert(db.Box(int(a) * step, y1 - step, int(b) * step, y1))
     return region.merged()
+
+
+def repair(reg, w_um, s_um, margin_um=0.01, tries=20):
+    """Patch what the raster morphology leaves: diagonal necks and tips that are narrower than the rule when measured
+    Euclidean.  Runs the same width / space check as the deck on the Region; every marker is covered with a box
+    (marker bbox + 75 nm, snapped outward to the 50 nm grid) and merged.  Repeats until the checks are empty."""
+    dbu = 0.001
+    w = int(round((w_um + margin_um) / dbu)); sp = int(round((s_um + margin_um) / dbu))
+    grid = int(round(G / dbu)); pad = 75
+    log = []
+    for it in range(tries):
+        bad = reg.width_check(w, False, db.Region.Euclidian)
+        gap = reg.space_check(sp, False, db.Region.Euclidian)
+        n = bad.count() + gap.count()
+        log.append(n)
+        if n == 0:
+            break
+        fill = db.Region()
+        for ep in list(bad.each()) + list(gap.each()):
+            b = ep.bbox().enlarged(pad, pad)
+            fill.insert(db.Box((b.left // grid) * grid, (b.bottom // grid) * grid,
+                               -((-b.right) // grid) * grid, -((-b.top) // grid) * grid))
+        reg = (reg + fill).merged()
+    return reg, log
 
 
 def main():
@@ -168,10 +163,11 @@ def main():
     regions = {}
     proc = {}
     for L, m in per_layer.items():
-        w, s = DESIGN[L]
-        assert w >= metal_rules[L]["w"] and s >= metal_rules[L]["s"], (L, w, s)
+        n, c = DESIGN[L]
+        flat = (n - 2 * c) * G
+        assert flat >= metal_rules[L]["w"] and flat >= metal_rules[L]["s"], (L, flat)
         mp = np.pad(m, PADC)
-        res = conform(mp, w, s)
+        res = conform(mp, kernel(n, c))
         proc[L] = res
         regions[L] = res
     # common bounding box of everything after processing (cells, padded frame)
@@ -183,6 +179,19 @@ def main():
     for L in proc:
         proc[L] = proc[L][cy0:cy1, cx0:cx1]
     Hc, Wc = proc[next(iter(proc))].shape
+    # shape fidelity: per layer, intersection-over-union of the final mask with the union of its source colours, and
+    # per colour the share of the source colour area that the layer covers (same G grid, same crop)
+    fid = {}
+    for L, r in proc.items():
+        cols = [c for c, v in LAYER_OF.items() if v == L]
+        src = np.zeros_like(r)
+        for c in cols:
+            src |= np.pad(masks[c], PADC)[cy0:cy1, cx0:cx1]
+        fid[L] = {"colours": cols, "iou": float((r & src).sum() / max(1, (r | src).sum())),
+                  "area_ratio_final_over_source": float(r.sum() / max(1, src.sum())),
+                  "source_area_covered": {c: float((r & np.pad(masks[c], PADC)[cy0:cy1, cx0:cx1]).sum() /
+                                                   max(1, np.pad(masks[c], PADC)[cy0:cy1, cx0:cx1].sum())) for c in cols}}
+    stats["fidelity"] = fid
     art_w, art_h = Wc * G, Hc * G
     # placement
     free_json = os.path.join(HERE, "free_space.json")
@@ -209,13 +218,17 @@ def main():
     for L in pl.METALS:
         if L in proc:
             layer_idx[L] = ly.layer(*ln[L + ".drawing"])
-            reg = rings_to_region(proc[L])
+            reg = mask_to_region(proc[L])
+            r = metal_rules[L]
+            reg, log = repair(reg, r["w"], r["s"])
+            assert log[-1] == 0, (L, log)
             cell.shapes(layer_idx[L]).insert(reg)
             stats["layers"][L] = {"gds": list(ln[L + ".drawing"]), "polygons": reg.count(),
-                                  "vertices": sum(p.num_points() for p in reg.each()), "area_um2": reg.area() * 1e-6,
+                                  "vertices": sum(p.num_points() for p in reg.each()), "area_um2": reg.area() * 1e-6, "repair_marker_counts": log,
                                   "colours": [c for c, v in LAYER_OF.items() if v == L]}
     art_path = os.path.join(a.out, "tughra_art.gds")
-    ly.write(art_path)
+    opt = db.SaveLayoutOptions(); opt.format = 'GDS2'; opt.gds2_max_vertex_count = 4000
+    ly.write(art_path, opt)
 
     # ---- merged copy of slot_7
     m = db.Layout(); m.read(a.slot)
@@ -228,7 +241,7 @@ def main():
         art_cell.shapes(li).insert(cell.shapes(layer_idx[L]))
     top.insert(db.CellInstArray(art_cell.cell_index(), db.Trans(int(round(px / m.dbu)), int(round(py / m.dbu)))))
     merged_path = os.path.join(a.out, "slot7_with_art.gds")
-    m.write(merged_path)
+    m.write(merged_path, opt)
     stats["files"] = {"art": "tughra_art.gds", "merged": "slot7_with_art.gds"}
     json.dump(stats, open(os.path.join(a.out, "build_stats.json"), "w"), indent=1)
     print(json.dumps(stats, indent=1))

@@ -72,4 +72,45 @@ def main():
     print("wrote previews", comp.shape, side.shape)
 
 
+def slot_context():
+    """Whole slot_7 (existing metal in grey, TopMetal1 darker) with the art in its colours, from slot7_with_art.gds."""
+    m = db.Layout(); m.read(os.path.join(D, "slot7_with_art.gds"))
+    top = m.cell("slot_7"); dbu = m.dbu; ln = pl.layer_numbers()
+    P = 3
+    bb = top.bbox(); W = int(bb.width() * dbu * P) + 1; H = int(bb.height() * dbu * P) + 1
+    img = np.full((H, W, 3), 255, np.uint8)
+    refs = S.sample_refs(np.array(__import__("PIL.Image", fromlist=["Image"]).open(os.path.join(HERE, "source/tughra_source.webp")).convert("RGB")))
+    col = {c: tuple(int(v) for v in refs[c]) for c in S.COLORS}
+    art_idx = m.cell("tughra_art").cell_index()
+    for L, g in [("Metal1", 200), ("Metal2", 185), ("Metal3", 170), ("Metal4", 150), ("TopMetal1", 215)]:
+        li = m.find_layer(*ln[L + ".drawing"])
+        # shapes outside the art cell only: skip the art instance
+        it = db.RecursiveShapeIterator(m, top, li)
+        it.unselect_cells([art_idx])
+        reg = db.Region(it).merged()
+        mask = np.zeros((H, W), np.uint8)
+        for p in reg.each():
+            hull = np.array([[q.x * dbu * P, H - q.y * dbu * P] for q in p.each_point_hull()], np.int32)
+            cv2.fillPoly(mask, [hull], 255)
+            for h in range(p.holes()):
+                hp = np.array([[q.x * dbu * P, H - q.y * dbu * P] for q in p.each_point_hole(h)], np.int32)
+                cv2.fillPoly(mask, [hp], 0)
+        img[mask > 0] = (g, g, g)
+    for L in ["Metal1", "Metal2", "Metal3", "Metal4", "TopMetal1"]:
+        inst = [i for i in top.each_inst() if i.cell_index == art_idx][0]
+        reg = db.Region(m.cell(art_idx).begin_shapes_rec(m.find_layer(*ln[L + ".drawing"]))).transformed(inst.trans).merged()
+        mask = np.zeros((H, W), np.uint8)
+        for p in reg.each():
+            hull = np.array([[q.x * dbu * P, H - q.y * dbu * P] for q in p.each_point_hull()], np.int32)
+            cv2.fillPoly(mask, [hull], 255)
+            for h in range(p.holes()):
+                hp = np.array([[q.x * dbu * P, H - q.y * dbu * P] for q in p.each_point_hole(h)], np.int32)
+                cv2.fillPoly(mask, [hp], 0)
+        img[mask > 0] = col[LCOL[L][0]]
+    cv2.rectangle(img, (0, 0), (W - 1, H - 1), (0, 0, 0), 2)
+    cv2.imwrite(os.path.join(D, "preview_slot_context.png"), img[..., ::-1])
+    print("wrote slot context", img.shape)
+
+
 main()
+slot_context()
