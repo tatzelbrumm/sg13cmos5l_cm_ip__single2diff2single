@@ -56,6 +56,7 @@ v2 testbench with v1's shifters).
 | enable / disable delay, 50 fF load | 9.5–31 ns / 94–315 ns |
 | slot vdd_3v3 floating at 0.6 V, enable high | outputs follow the floating rail (0.62–0.71 V); 2 nA from it |
 | **starvation:** pad ring current, iref open, en_3v3 / en_3v3_b each anywhere in 0 … 3.6 V (169 pairs), pad 0 / 1.8 / 3.6 V | S2D ≤ 0.4 nA (−40 / 27 °C), ≤ 25 nA (125 °C); D2S ≤ 4.3 nA / ≤ 67 nA. Leakage of the output and ESD devices, nearly independent of the enable levels |
+| starvation of pad_ref_rb (if on the ring), same sweep | ≤ 1.0 nA (−40 / 27 °C), ≤ 10.6 nA (125 °C) |
 
 Not done: Monte Carlo (the margins are ratios of 10× and more: XN1 vs XPF, the leaker vs XN1's leakage), layout,
 the sheets and the CACE suite for v2.

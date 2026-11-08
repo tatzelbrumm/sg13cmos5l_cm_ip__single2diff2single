@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2026 Christoph Maier
 # SPDX-License-Identifier: Apache-2.0
-"""Starvation check: ring (iovdd) current of the two custom pads with the slot off, i.e. no iref, enables anywhere.
+"""Starvation check: ring (iovdd) current of the two custom pads and of pad_ref_rb with the slot off, i.e. no iref,
+enables anywhere (pad_ref_rb has no pad pin: its line shows pad_V 0).
 
 usage (repo env, from this directory): python3 -I run_starve.py   -> results/starve.txt (decks and logs in runs/)
 
@@ -21,7 +22,8 @@ RES = HERE / "results"
 PADS = {"s2d": ("sg13cmos5l_IOPadSingle2Diff", "X1 en enb iovdd 0 iref outn outp padn vcm vref",
                 ["iref", "vcm", "vref", "outp", "outn"]),
         "d2s": ("sg13cmos5l_IOPadDiff2Single", "X1 en enb iovdd 0 iref padn vinn vinp vref",
-                ["iref", "vinn", "vinp", "vref"])}
+                ["iref", "vinn", "vinp", "vref"]),
+        "prb": ("pad_ref_rb", "X1 en enb iref vcm iovdd vref 0", ["iref", "vcm", "vref"])}
 CORNERS = [("tt", 27), ("ff", 125), ("fs", 125), ("sf", 125), ("ss", -40)]
 
 
@@ -56,7 +58,7 @@ def main():
     for pad, (cell, inst, floating) in PADS.items():
         flat = convert(cell)
         for c, t in CORNERS:
-            for vp in (0, 1.8, 3.6):
+            for vp in ((0, 1.8, 3.6) if pad != "prb" else (0,)):
                 fl = "\n".join(f"Rf{i} {n} 0 1G" for i, n in enumerate(floating))
                 deck = f"""* starvation: {cell}, {c} {t} C, pad at {vp} V
 .lib cornerMOShv.lib mos_{c}

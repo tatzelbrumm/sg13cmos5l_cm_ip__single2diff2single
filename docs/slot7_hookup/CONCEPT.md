@@ -89,7 +89,7 @@ on-slot reference, on-slot replica bias monitored on the buses, single → diff 
   switched vdd_3v3. With iref open and en_3v3 / en_3v3_b each anywhere in 0 … 3.6 V (169 pairs), pad pin at
   0 / 1.8 / 3.6 V, extracted layout netlists, 5 corners: S2D ≤ 0.4 nA, D2S ≤ 4.3 nA at −40 / 27 °C; ≤ 25 / 67 nA at
   125 °C, leakage nearly independent of the enable levels. No ring-side detector or pull-down needed; pads unchanged.
-- pad_ref_rb on the ring is starved the same way (its tree hangs on iref); not yet simulated with floating enables.
+- pad_ref_rb on the ring is starved the same way (its tree hangs on iref): ≤ 1.0 nA at −40 / 27 °C, ≤ 10.6 nA at 125 °C, same sweep.
 - pad_ref_rb on the ring keeps the replica referenced to the pads' own iovdd (its vcm tracks the pads' top edge);
   on the slot's vdd_3v3 it would track a different rail. bias_dist_pd and the cores stay on the gated slot supply.
 - Harness side (F, fallback PLAN): open the bus / ibias / vbias switches and set the SMUs to 0 V before gating the
