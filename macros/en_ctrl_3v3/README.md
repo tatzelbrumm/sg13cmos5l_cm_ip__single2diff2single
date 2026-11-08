@@ -4,8 +4,8 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # en_ctrl_3v3: fail-safe enable and select bits for the 3.3 V circuits of slot 7
 
-**v2 (2026-11-08)**, netlist and simulation. The sheets (`en_ctrl_3v3.sch`, `pg_det.sch`) and the CACE suite still
-describe v1 and are to be redrawn / rewritten; v1 is in git history (last commit before 2026-11-08 15:00 UTC).
+**v2 (2026-11-08)**: netlist, sheets (`ls_up_fs.sch/.sym` new, `en_ctrl_3v3.sch` redrawn, `pg_det` removed), simulation
+and CACE suite. v1 is in git history (last commit before 2026-11-08 15:00 UTC).
 
 ```
 en_3v3   = en_1v2 at 3.3 V     en_3v3_b = NOT en_3v3     sel*_3v3 = sel*_1v2 at 3.3 V (gated by en_3v3 downstream)
@@ -66,6 +66,6 @@ the sheets and the CACE suite for v2.
 ```
 netlist/source/en_ctrl_3v3.spice     ls_up_fs, en_ctrl_3v3 (v2)
 testbenches/spice/                   tb_states / tb_powerup templates, run_states.py, run_starve.py, results/
-schematic/xschem/                    v1 sheets (en_ctrl_3v3, pg_det): to be redrawn for v2
+schematic/xschem/                    en_ctrl_3v3.sch/.sym (symbol unchanged), ls_up_fs.sch/.sym; renders in schematic/
 verification/cace/                   v1 suite and results: to be rewritten for v2
 ```
