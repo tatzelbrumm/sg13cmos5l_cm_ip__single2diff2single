@@ -1,0 +1,49 @@
+== DRC (run_drc.py --no_density, exception count), maximal + latchUpRules, LVS --disable_tap_extraction
+ls_up_fs run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+en_ctrl_3v3 run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+== negative LVS (must not match): XPF gate y -> in; XS0 / XS1 outputs swapped
+ls_up_fs_negative: Netlists don't match
+en_ctrl_3v3_negative: Netlists don't match
+== en_ctrl_3v3 without the stubs of vddl / vdd1v2_sense / vdd3v3_sense
+en_ctrl_3v3_nostub: Netlists match
+== extracted top pins and devices
+ls_up_fs pins: .SUBCKT ls_up_fs in out out_b vddh vss
+ls_up_fs devices:       4 sg13_hv_nmos L=0.45u W=1u
+ls_up_fs devices:       3 sg13_hv_pmos L=0.45u W=1u
+ls_up_fs devices:      10 sg13_hv_pmos L=20u W=0.3u
+ls_up_fs devices:       1 sg13_hv_pmos L=5u W=0.3u
+en_ctrl_3v3 pins: .SUBCKT en_ctrl_3v3 en_1v2 en_3v3 en_3v3_b sel0_1v2 sel0_3v3 sel1_1v2 sel1_3v3 vddh vss
+en_ctrl_3v3 devices:      12 sg13_hv_nmos L=0.45u W=1u
+en_ctrl_3v3 devices:       9 sg13_hv_pmos L=0.45u W=1u
+en_ctrl_3v3 devices:      30 sg13_hv_pmos L=20u W=0.3u
+en_ctrl_3v3 devices:       3 sg13_hv_pmos L=5u W=0.3u
+== sym_check N check (narrow contacted poly beyond the endcap zone)
+ls_up_fs:   summary: max mirror XOR 79.8200 um2, 0 narrow-poly hits
+efs_ls_core:   summary: max mirror XOR 79.8200 um2, 0 narrow-poly hits
+efs_inv_hv:   summary: max mirror XOR 0.9424 um2, 0 narrow-poly hits
+efs_xn1:   summary: max mirror XOR 0.0700 um2, 0 narrow-poly hits
+en_ctrl_3v3:   summary: max mirror XOR 239.4600 um2, 0 narrow-poly hits
+== contacted gate poly outside Activ (no endcap-zone subtraction)
+ls_up_fs: 6 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+efs_inv_hv: 1 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+efs_xn1: 1 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+== supply connectivity through tie Activ / Cont / M1 / Via1 / M2 only
+ls_up_fs: nets holding tie Activ (metal + tie Activ only): 2
+   vddh         tie area    17.78 um2
+   vss          tie area     2.72 um2
+en_ctrl_3v3: nets holding tie Activ (metal + tie Activ only): 2
+   vddh         tie area    50.82 um2
+   vss          tie area     5.45 um2
+== efs_inv_hv vs D's bdp_inv_hv (macros/bias_dist_pd/layout/klayout/bias_dist_pd.klay.gds), all layers
+  Activ    XOR   0.0000 um2
+  GatPoly  XOR   0.0000 um2
+  Cont     XOR   0.0000 um2
+  pSD      XOR   0.0000 um2
+  NWell    XOR   0.0000 um2
+  TGO      XOR   0.0000 um2
+  M1       XOR   0.0000 um2
+  Via1     XOR   0.0000 um2
+  M2       XOR   0.0000 um2
+== gds sha256
+32def911d0c81363
+2c9e48fd8fc9f276
