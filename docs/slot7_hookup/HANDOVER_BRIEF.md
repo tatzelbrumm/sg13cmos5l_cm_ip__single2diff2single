@@ -25,7 +25,8 @@ fallback's stubs.
 | `macros/slot_7/layout/klayout/slot_7.klay.gds` (top cell `slot_7`, 537.15 × 273 µm, sha256 5f8fd14a722ec458…) | `final/gds/slot_7.gds` |
 | `macros/slot_7/layout/klayout/slot_7.cdl` (sha256 af1e5f027f9f90c1…; self-contained: slot_7 and all 11 subcircuits) | `netlist/slot_7.cdl` (LVS reference) |
 | `macros/slot_7/netlist/source/slot_7.spice` | `netlist/slot_7.spice` (source of the slot circuit) |
-| `macros/slot_7/README.md` (mode table, default, register settings) | `docs/slot_7.md`, linked from `README.md` |
+| `docs/slot7_hookup/FOR_TIM.md` (the page for Tim: modes, harness settings, what to expect, verification) | `docs/FOR_TIM.md`, linked from the top of `README.md` |
+| `macros/slot_7/README.md` (design notes) | `docs/slot_7.md` |
 | `macros/slot_7/layout/klayout/slot_7.png` | `docs/` (picture for the README) |
 | LEF / Liberty / Verilog stub of `slot_7` | `final/{lef,lib,vh}/`, regenerated the way stage A's were (new ports: dig_in[0..5] used, the 13 pad nets) |
 
