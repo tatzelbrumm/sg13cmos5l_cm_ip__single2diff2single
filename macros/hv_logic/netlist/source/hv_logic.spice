@@ -25,3 +25,9 @@ XNA y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1
 XNB y b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
 XNC y c vss vss sg13_hv_nmos w=1u l=0.45u ng=1
 .ends nor3_hv
+* tg_hv: the project's standard 3.3 V transmission gate (1u / 0.45u hv NMOS and PMOS, bulks on vss / vdd), a cell since
+* 2026-11-08 after agent D's layout cell tg_hv in bias_dist_pd. en / en_b: complementary gate drives; a / b symmetric.
+.subckt tg_hv vdd vss en en_b a b
+XN a en b vss sg13_hv_nmos w=1u l=0.45u ng=1
+XP a en_b b vdd sg13_hv_pmos w=1u l=0.45u ng=1
+.ends tg_hv
