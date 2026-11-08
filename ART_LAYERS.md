@@ -41,7 +41,7 @@ Measured on the segmented image:
 ## Revision history
 
 - Rev 1 (first commit): green TopMetal1, red Metal4, blue Metal3, purple Metal2, orange + gold Metal1.
-- Rev 2 (tag `art-rev2-topmetal1`, local only; commit `abe3133`): purple TopMetal1, green Metal4, red Metal3, blue Metal2, orange + gold Metal1. Motivation: green on TopMetal1 turned the stems into one blob
+- Rev 2 (tag `art-rev2-topmetal1`, local only; commit `4447bed`): purple TopMetal1, green Metal4, red Metal3, blue Metal2, orange + gold Metal1. Motivation: green on TopMetal1 turned the stems into one blob
   and red's word into mush when tested at 1.64 um (IoU of the result with the source mask: red 0.65, green 0.63, purple 0.61, blue 0.59, gold 0.54, orange 0.43,
   test at 0.0955 um/px). Result: the purple word became a blob (IoU 0.48).
 - Rev 3 (tag `art-rev3-m1-m4`, local only): no TopMetal1; red, orange and gold on Metal1; purple Metal2; blue Metal3; green Metal4.

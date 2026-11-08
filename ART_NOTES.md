@@ -16,8 +16,8 @@ in slot coordinates. **TopMetal1 is not used** (too coarse, 1.64 um). Five layer
 The merged GDS adds **no DRC violation** (all tables, density, antenna), the XOR against the untouched slot7 is **empty**, and LVS
 still matches with an **identical extracted netlist**.
 
-This is revision 4. Earlier revisions are in the git history: rev 2 (purple on TopMetal1) is commit `abe3133`, rev 3 (Metal1-Metal4 only,
-no no-fill markers) is `45a1be5`; both have local tags `art-rev2-topmetal1` and `art-rev3-m1-m4`, but the remote refused to take the tags
+This is revision 4. Earlier revisions are in the git history: rev 2 (purple on TopMetal1) is commit `4447bed`, rev 3 (Metal1-Metal4 only,
+no no-fill markers) is `4d8833a` (hashes after the rebase onto `toplevel`); both have local tags `art-rev2-topmetal1` and `art-rev3-m1-m4`, but the remote refused to take the tags
 (branch pushes work), so only the commit hashes are on GitHub. The very first geometry (green on TopMetal1) was a test run and was never committed.
 
 | file | what |
@@ -42,11 +42,14 @@ Re-run: `export PDK_ROOT=/foss/pdks; python3 art/find_free_space.py; python3 art
 - Reference `tatzelbrumm/claude-cloud-config`: read only (README for the environment: tools under `/foss/tools`, KLayout 0.30.12). Nothing pushed.
 - Slot7 repo `tatzelbrumm/sg13cmos5l_cm_slot7`, commit `454da6a`: **read only.** No branch, commit, file edit, push, PR or issue. `git status` there is clean.
   Input file `final/gds/slot_7.gds`, sha256 `5f8fd14a...bd` (the same as its README lists as the source file).
-- Work repo: branch `art/tughra-metal` made from `origin/main`, the remote's default branch (`git remote show origin`: HEAD branch main, commit `60f270a`;
-  `git merge-base art/tughra-metal origin/main` = `60f270a`). The session's checkout was on `claude/gifted-cray-wapti0` (a copy of `toplevel`, which is an ancestor of `main`), left untouched.
-  No merge, no PR, default branch untouched.
-- The default branch's CLAUDE.md says "no git commands without asking first" (written for a local connected-folder sandbox). This task explicitly
-  asks for commits and pushes and git works in this cloud container, so the task's instruction was followed.
+- Work repo: branch `art/tughra-metal`. It was first made from `origin/main`, the remote's default branch (as the brief said: `git remote show origin` HEAD branch main, commit `60f270a`),
+  and then **rebased onto `origin/toplevel` (`4223a63`) on request** (`git rebase --onto origin/toplevel origin/main art/tughra-metal`). `main` and `toplevel` have **unrelated histories**
+  (no merge base; `toplevel` has 207 commits that `main` lacks, `main` has 15 that `toplevel` lacks, among them its CLAUDE.md updates), so the branch **no longer contains those 15 `main` commits**.
+  The branch only adds `art/`, `ART_LAYERS.md` and `ART_NOTES.md`; the rebase had no conflicts and the content of those files is identical before and after.
+  The session's own checkout was on `claude/gifted-cray-wapti0` (a copy of `toplevel`), left untouched. No merge, no PR, default branch untouched.
+  The rebase rewrote the branch, so it was pushed with `--force-with-lease`; the commit hashes of the earlier revisions changed (below).
+- Git policy: `toplevel`'s CLAUDE.md (the cloud version) says git works here; `main`'s CLAUDE.md says "no git commands without asking first" (written for a local sandbox).
+  This task explicitly asks for commits and pushes, so the task was followed either way.
 
 ## Free space and placement
 
@@ -141,7 +144,7 @@ only fills inside a seal ring (layer 39/0), which the bare slot lacks, so a synt
 
 ## Assumptions (all of them)
 
-1. "Default branch" = `origin`'s HEAD, `main`, not the session branch.
+1. "Default branch" = `origin`'s HEAD, `main`, at first; later rebased onto `toplevel` as requested (the brief's "default branch" was probably meant to be `toplevel`).
 2. Legend cut at source row 897 (the first row of legend ink), not at 87 % = row 891.
 3. One scale for the whole art; aspect kept (1.70, not exactly 3:2, because the legend row is cut).
 4. The art goes into the largest rectangle that is free on the four art metals and clear of the TopMetal1 straps (so nothing is hidden under a strap), not into the
