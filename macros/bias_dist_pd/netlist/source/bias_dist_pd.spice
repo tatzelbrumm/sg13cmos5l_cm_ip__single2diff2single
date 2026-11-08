@@ -3,8 +3,8 @@
 * bias_dist_pd: switchable distribution mirror (2026-10-27; 4 inputs since 2026-11-07, Christoph: one shared set of
 * sources for all pads, any combination of the Oguey-Aebischer core, the bandgap core and the harness ibias0 / ibias1).
 * Sourced reference currents into iin0..3 (intended: iin0 = oa_core_pd, iin1 = bg_core_pd, iin2 = ibias0,
-* iin3 = ibias1; outputs iout0 = D2S, iout1 = S2D, iout2 = pad_ref_rb, iout3 = spare: PO1 / PO2 are the layout's inner pair
-* beside PD, Christoph 2026-11-08: "give the S2D an inner slot next to PD"); every input with en_in<k> = 1 is passed by its
+* iin3 = ibias1; outputs iout0 = pad_ref_rb, iout1 = S2D, iout2 = D2S, iout3 = spare: PO1 / PO2 are the layout's inner
+* pair beside PD, Christoph 2026-11-08: "both pads on the inner pair please"); every input with en_in<k> = 1 is passed by its
 * transmission gate TIN / TIP into the NMOS diode NI, so enabled inputs add. NM copies the sum into the PMOS diode
 * PD; the four PMOS outputs PO0..3 source it (1 : 1) through their transmission gates TON / TOP into iout0..3,
 * each enabled by en_out<j>. iout<j> goes into a bias_tree_pd (NMOS input diode behind its own TG).

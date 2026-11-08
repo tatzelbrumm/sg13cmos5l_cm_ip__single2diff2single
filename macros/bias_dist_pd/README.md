@@ -27,9 +27,9 @@ en_out2 en_out3`.
 
 **4 inputs since 2026-11-07** (Christoph: lay out the shared option, one set of sources for all pads): iin0 = the
 Oguey–Aebischer core, iin1 = the bandgap core, iin2 = harness ibias0, iin3 = harness ibias1, any combination (enabled
-inputs add in NI). Outputs (Christoph, 2026-11-08: "give the S2D an inner slot next to PD"): iout0 = D2S, iout1 = S2D,
-iout2 = pad_ref_rb, iout3 = spare. PO1 / PO2 are the inner pair beside the PMOS diode PD, mirror images of each other,
-so the S2D and the replica that copies its operating point get the matched pair. The fourth input slice (XIA3 / XIB3 / TIN3 / TIP3)
+inputs add in NI). Outputs (Christoph, 2026-11-08: "give the S2D an inner slot next to PD", then "both pads on the inner
+pair please"): iout0 = pad_ref_rb, iout1 = S2D, iout2 = D2S, iout3 = spare. PO1 / PO2 are the inner pair beside the PMOS
+diode PD, mirror images of each other: both pads get the matched pair. The fourth input slice (XIA3 / XIB3 / TIN3 / TIP3)
 is a copy of the other three. `tb_truth.out` (2026-11-07): cases 1–9 as before; case 10 (input 3 alone) 5.07 µA at
 every output, case 11 (all four) 20.04 µA. Supply ports `vddh` / `vssh` since 2026-11-07, as pad_ref_rb's (they connect to
 the pads' rails or the slot's 3.3 V). Layout dummies (agent D): XMDN[1:0] 2u/6u `vssh ni vssh vssh`, XMDP[1:0] 5u/6u
@@ -95,7 +95,7 @@ would cross them (88 crossings against 45).
 - **Checks:** KLayout DRC (`--no_density`) clean, maximal deck with latch-up 0, flat LVS against D's CDL (a negative test
   fails), `make klayout-lvs` OK against the sheet; the lead's device check 73 / 73 + 4 dummies. Cell names `bdp_*`. PEX
   not run.
-- **Inner pair** (decided 2026-11-08): PO1 = S2D and PO2 = pad_ref_rb beside PD, PO0 = D2S and PO3 = spare outside;
+- **Inner pair** (decided 2026-11-08): PO1 = S2D and PO2 = D2S beside PD, PO0 = pad_ref_rb and PO3 = spare outside;
   an assignment of the outputs, no layout change.
 - **Open (agent D):** the switch row has tie strips, not a closed ring; the split TG gates trip sym_check's narrow-poly
   flag (contacted poly ≥ 0.39 µm; a 0.04 µm taller row would clear it).
