@@ -5,7 +5,8 @@
 * One 5 uA reference current, one enable. Needs ../../../vcm_rb/netlist/source/vcm_rb.spice and
 * ../../../vref_s2d_rb/netlist/source/vref_s2d_rb.spice. Task docs/launch/replica_bias_TASK.md (branch harness-test),
 * records in docs/replica_bias/.
-* Ports: vdd vss iref vcm vref en_3v3 en_3v3_b (iref: 5 uA SOURCED into the cell, from bias_gen_pd's iref, a bias_dist_pd
+* Ports: vddh vssh iref vcm vref en_3v3 en_3v3_b (Christoph, 2026-11-07: "Pin names vddh and vssh, so they can be
+* connected without conflict either way": to the pads' iovdd / iovss or the slot's vdd_3v3 / vss_3v3; iref: 5 uA SOURCED into the cell, from bias_gen_pd's iref, a bias_dist_pd
 * output or a core's iout; en_3v3 / en_3v3_b from en_ctrl_3v3). vdd / vss: the rails of the pads it serves (the top edge
 * that vcm_rb tracks is referenced to the pads' unit rail).
 * Supply current (tt 27 C, 3.3 V): tree 9 uA (5 uA reference + 2 BP + 2 BNC) + vcm_rb 14 uA + vref_s2d_rb 1.7 uA.
@@ -39,24 +40,28 @@ XMDTN7 vss ni vss vss sg13_hv_nmos w=2.4u l=6u ng=1 mm_ok=1
 .ends bias_tree_rb
 
 * bypass_rb: the bypass capacitors of vcm and vref (Christoph, 2026-11-07: in a cell of their own, distinct from the
-* blocks; "6 on vref, 4 on vcm"; a parametric array). All 12u x 12u hv NMOS to vss, the s2d pad's load-capacitor device
-* (CLP / CLN); parameters ncm, ncr = the number of capacitors on vcm and vref.
-*   CBM (m=ncm, 4) on vcm: with vcm_rb's own CB, 5 x 0.61 pF at 1.26 V.
-*   CBR (m=ncr, 9) on vref: Christoph's 6 plus CB1 / CB2 moved out of vref_s2d_rb, plus one in the layout's rb_cload
-*   (the pad's CLN slot; Christoph: "I don't see any reason how a 9th capacitor should hurt"); 9 x 0.20 ... 0.43 pF at
-*   vref 0.44 ... 0.6 V (a 12u x 12u hv NMOS is barely inverted there). Layout: 8 in the bypass_rb array, 1 in rb_cload.
-* NMOS to vss only: PMOS to iovdd couples iovdd into vref, the S2D's zero point (4 ... 7 x the S2D's input-referred
-* iovdd ripple at 1 MHz), and raises vcm's 10 MHz ripple (explore_bypass.py). Effect (rb_char, 2026-11-07): the S2D
-* enable kick 0.236 -> 0.112 V on vcm, 0.212 -> 0.088 V on vref (9 capacitors); with the layout dummies (159 um2 of gate
-* on vbnc) vcm / vref settle at enable in 0.8 ... 1.5 us (harness reference), 0.3 ... 0.85 us slower than without.
-.subckt bypass_rb vss vcm vref ncm=4 ncr=9
-XCBM vss vcm vss vss sg13_hv_nmos w=12u l=12u ng=1 m={ncm} mm_ok=1
-XCBR vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m={ncr} mm_ok=1
+* blocks; "6 on vref, 4 on vcm"). All hv NMOS to vss, the s2d pad's load-capacitor device type (CLP / CLN); NMOS to vss
+* only: PMOS to iovdd couples iovdd into vref, the S2D's zero point (4 ... 7 x the S2D's input-referred iovdd ripple at
+* 1 MHz), and raises vcm's 10 MHz ripple (explore_bypass.py).
+* Shapes as drawn in the layout (agent F, pad_ref_rb v2, 2026-11-07; Christoph: "The bypass mos capacitors don't have to
+* be a contiguous array, and they don't even have to be square ... The capacitor placement is pretty much ad lib
+* (maintaining overall capacitance to the nodes and avoiding long interconnects)"). The total gate area per node is that
+* of the 12u x 12u array it replaces (until then: parameters ncm = 4, ncr = 9, m={ncm} / m={ncr}):
+*   vref 1296.6 um2 = 9 x 144: CBR1 12u/12u (rb_cload, the pad's CLN slot) + CBR2 2 x 34.1u/16.9u (under rb_casc);
+*   vcm   576.3 um2 = 4 x 144 (+ CB 144 in vcm_rb): CBM1 2 x 19.24u/12.66u, CBM2 2 x 8.18u/3.25u, CBM3 2.9u/12.4u.
+* The drawn shapes give the same results as the array to within 0.1 % (|Z|), 33 ns (enable) and 0.7 mV (the S2D's
+* enable kick: 0.236 -> 0.112 V on vcm, 0.212 -> 0.088 V on vref); explore_layout_caps.py, results/drawn_*.tsv.
+.subckt bypass_rb vss vcm vref
+XCBR1 vss vref vss vss sg13_hv_nmos w=12u l=12u ng=1 m=1 mm_ok=1
+XCBR2 vss vref vss vss sg13_hv_nmos w=34.1u l=16.9u ng=1 m=2 mm_ok=1
+XCBM1 vss vcm vss vss sg13_hv_nmos w=19.24u l=12.66u ng=1 m=2 mm_ok=1
+XCBM2 vss vcm vss vss sg13_hv_nmos w=8.18u l=3.25u ng=1 m=2 mm_ok=1
+XCBM3 vss vcm vss vss sg13_hv_nmos w=2.9u l=12.4u ng=1 m=1 mm_ok=1
 .ends bypass_rb
 
-.subckt pad_ref_rb vdd vss iref vcm vref en_3v3 en_3v3_b
-Xt vdd vss iref ni vbp vbnc en_3v3 en_3v3_b bias_tree_rb
-Xc vdd vss ni vbp vbnc vcm en_3v3_b vcm_rb
-Xr vdd vss ni vbnc vref en_3v3_b vref_s2d_rb
-Xb vss vcm vref bypass_rb ncm=4 ncr=9
+.subckt pad_ref_rb vddh vssh iref vcm vref en_3v3 en_3v3_b
+Xt vddh vssh iref ni vbp vbnc en_3v3 en_3v3_b bias_tree_rb
+Xc vddh vssh ni vbp vbnc vcm en_3v3_b vcm_rb
+Xr vddh vssh ni vbnc vref en_3v3_b vref_s2d_rb
+Xb vssh vcm vref bypass_rb
 .ends pad_ref_rb

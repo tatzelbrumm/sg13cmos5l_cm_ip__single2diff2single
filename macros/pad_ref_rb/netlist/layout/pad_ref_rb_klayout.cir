@@ -1,0 +1,78 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 07/11/2026 22:54
+
+.SUBCKT pad_ref_rb en_3v3 en_3v3_b iref vcm vddh vref vssh
+M$1 vcm en_3v3_b vssh vssh sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.19p PS=2.68u
++ PD=1.38u rfmode=0
+M$2 vssh en_3v3_b vref vssh sg13_hv_nmos L=0.45u W=1u AS=0.19p AD=0.34p
++ PS=1.38u PD=2.68u rfmode=0
+M$3 vssh en_3v3_b \$17 vssh sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$4 \$17 en_3v3 iref vssh sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$5 vssh vcm vssh vssh sg13_hv_nmos L=12u W=12u AS=4.08p AD=4.08p PS=24.68u
++ PD=24.68u rfmode=0
+M$6 vssh vref vssh vssh sg13_hv_nmos L=12u W=12u AS=4.08p AD=4.08p PS=24.68u
++ PD=24.68u rfmode=0
+M$7 vssh vcm vssh vssh sg13_hv_nmos L=12.66u W=38.48u AS=13.0832p AD=13.0832p
++ PS=78.32u PD=78.32u rfmode=0
+M$9 vssh vcm vssh vssh sg13_hv_nmos L=12.4u W=2.9u AS=0.986p AD=0.986p PS=6.48u
++ PD=6.48u rfmode=0
+M$10 vssh vcm vssh vssh sg13_hv_nmos L=3.25u W=16.36u AS=5.5624p AD=5.5624p
++ PS=34.08u PD=34.08u rfmode=0
+M$12 iref en_3v3_b \$17 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$13 vddh \$13 \$6 vddh sg13_hv_pmos L=6u W=2u AS=0.68p AD=0.68p PS=4.68u
++ PD=4.68u rfmode=0
+M$14 vddh \$13 \$13 vddh sg13_hv_pmos L=6u W=2u AS=0.68p AD=0.68p PS=4.68u
++ PD=4.68u rfmode=0
+M$15 vddh \$13 vddh vddh sg13_hv_pmos L=6u W=15u AS=5.1p AD=5.1p PS=32.04u
++ PD=32.04u rfmode=0
+M$18 vddh \$13 \$25 vddh sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$19 vddh \$13 \$24 vddh sg13_hv_pmos L=6u W=5u AS=1.7p AD=1.7p PS=10.68u
++ PD=10.68u rfmode=0
+M$20 \$26 \$26 vssh vssh sg13_hv_nmos L=6u W=6u AS=2.04p AD=2.04p PS=12.68u
++ PD=12.68u rfmode=0
+M$21 vcm \$26 vssh vssh sg13_hv_nmos L=6u W=6u AS=2.04p AD=2.04p PS=12.68u
++ PD=12.68u rfmode=0
+M$22 \$17 \$17 vssh vssh sg13_hv_nmos L=6u W=6u AS=2.04p AD=2.04p PS=12.68u
++ PD=12.68u rfmode=0
+M$23 \$8 \$17 vssh vssh sg13_hv_nmos L=6u W=6u AS=2.04p AD=2.04p PS=12.68u
++ PD=12.68u rfmode=0
+M$24 vssh \$26 vssh vssh sg13_hv_nmos L=6u W=4u AS=1.36p AD=1.36p PS=9.36u
++ PD=9.36u rfmode=0
+M$26 vssh \$17 vssh vssh sg13_hv_nmos L=6u W=4.4u AS=1.496p AD=1.496p PS=10.16u
++ PD=10.16u rfmode=0
+M$27 vref \$17 vssh vssh sg13_hv_nmos L=6u W=2u AS=0.68p AD=0.68p PS=4.68u
++ PD=4.68u rfmode=0
+M$28 \$23 \$17 vssh vssh sg13_hv_nmos L=6u W=4.8u AS=1.632p AD=1.632p PS=10.96u
++ PD=10.96u rfmode=0
+M$31 \$13 \$17 vssh vssh sg13_hv_nmos L=6u W=2.4u AS=0.816p AD=0.816p PS=5.48u
++ PD=5.48u rfmode=0
+M$32 \$6 \$6 vssh vssh sg13_hv_nmos L=8u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$33 vssh \$6 vssh vssh sg13_hv_nmos L=3u W=53u AS=18.02p AD=18.02p PS=110.76u
++ PD=110.76u rfmode=0
+M$36 vddh \$6 vref vssh sg13_hv_nmos L=3u W=60u AS=20.4p AD=20.4p PS=122.72u
++ PD=122.72u rfmode=0
+M$39 vddh \$6 \$8 vssh sg13_hv_nmos L=3u W=15u AS=5.1p AD=5.1p PS=30.68u
++ PD=30.68u rfmode=0
+M$45 vssh vref vssh vssh sg13_hv_nmos L=16.9u W=68.2u AS=23.188p AD=23.188p
++ PS=137.76u PD=137.76u rfmode=0
+M$47 \$31 \$8 \$8 \$31 sg13_hv_pmos L=4u W=2u AS=0.68p AD=0.68p PS=5.36u
++ PD=5.36u rfmode=0
+M$49 \$31 \$8 \$31 \$31 sg13_hv_pmos L=4u W=2u AS=0.68p AD=0.68p PS=5.36u
++ PD=5.36u rfmode=0
+M$51 \$23 \$31 \$31 \$23 sg13_hv_pmos L=4u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$52 \$23 \$31 \$23 \$23 sg13_hv_pmos L=4u W=2u AS=0.68p AD=0.68p PS=5.36u
++ PD=5.36u rfmode=0
+M$54 \$24 \$23 \$23 \$24 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$56 \$25 \$31 \$26 \$25 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$58 \$25 vcm vcm \$25 sg13_hv_pmos L=1u W=20u AS=5.3p AD=5.3p PS=31.06u
++ PD=31.06u rfmode=0
+M$60 vddh vddh vddh vddh sg13_hv_pmos L=1u W=40u AS=10.6p AD=10.6p PS=62.12u
++ PD=62.12u rfmode=0
+.ENDS pad_ref_rb

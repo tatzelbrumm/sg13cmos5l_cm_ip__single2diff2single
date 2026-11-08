@@ -2,13 +2,13 @@
 SPDX-FileCopyrightText: 2026 Christoph Maier
 SPDX-License-Identifier: Apache-2.0
 -->
-# bias_dist_pd: switchable distribution mirror (3 inputs, 4 outputs)
+# bias_dist_pd: switchable distribution mirror (4 inputs, 4 outputs)
 
 New on 2026-10-27, for the floorplan with the generator in the slot's main area: one or more reference currents in,
 one copy per pad tree out, each input and each output switchable.
 
 ```
-iin0..2 --TG(en_in<k>)--+-- ni: NI (NMOS diode 6u/6u) --- NM (6u/6u) --- vpd: PD (PMOS diode 5u/6u)
+iin0..3 --TG(en_in<k>)--+-- ni: NI (NMOS diode 6u/6u) --- NM (6u/6u) --- vpd: PD (PMOS diode 5u/6u)
                         |                                                  |
                        TDN (ni -> vss while disabled)            PO0..3 (5u/6u) --TG(en_out<j>)-- iout0..3
 ```
@@ -22,8 +22,20 @@ iin0..2 --TG(en_in<k>)--+-- ni: NI (NMOS diode 6u/6u) --- NM (6u/6u) --- vpd: PD
 - Devices: those of `bias_tree_pd` (NI 6u/6u like the tree's NI, PD / PO 5u/6u like BP, switches 1u/0.45u). The
   current passes two mirrors more than with the generator next to the tree: their mismatch adds to the tree's.
 
-Ports (order): `vdd vss en_3v3 en_3v3_b iin0 iin1 iin2 en_in0 en_in1 en_in2 iout0 iout1 iout2 iout3 en_out0 en_out1
+Ports (order): `vddh vssh en_3v3 en_3v3_b iin0 iin1 iin2 iin3 en_in0 en_in1 en_in2 en_in3 iout0 iout1 iout2 iout3 en_out0 en_out1
 en_out2 en_out3`.
+
+**4 inputs since 2026-11-07** (Christoph: lay out the shared option, one set of sources for all pads): iin0 = the
+Oguey–Aebischer core, iin1 = the bandgap core, iin2 = harness ibias0, iin3 = harness ibias1, any combination (enabled
+inputs add in NI). Outputs (Christoph, 2026-11-08: "give the S2D an inner slot next to PD", then "both pads on the inner
+pair please"): iout0 = pad_ref_rb, iout1 = S2D, iout2 = D2S, iout3 = spare. PO1 / PO2 are the inner pair beside the PMOS
+diode PD, mirror images of each other: both pads get the matched pair. The fourth input slice (XIA3 / XIB3 / TIN3 / TIP3)
+is a copy of the other three. `tb_truth.out` (2026-11-07): cases 1–9 as before; case 10 (input 3 alone) 5.07 µA at
+every output, case 11 (all four) 20.04 µA. Supply ports `vddh` / `vssh` since 2026-11-07, as pad_ref_rb's (they connect to
+the pads' rails or the slot's 3.3 V). Layout dummies (agent D): XMDN[1:0] 2u/6u `vssh ni vssh vssh`, XMDP[1:0] 5u/6u
+`vddh vpd vddh vddh` at the ends of the two matched rows. Sheet and symbol redrawn with the fourth input, the dummies
+(group [DM]) and the new port names: xschem's netlist against the source 29 = 29 devices, 16 = 16 gate instances, ports
+equal; no short (`sch_lint.py`); no `Error:`.
 
 ## Truth table
 
@@ -57,6 +69,9 @@ schematic/bias_dist_pd.png / .svg        render of the sheet
 schematic/xschem/xschemrc                adds hv_logic
 netlist/source/bias_dist_pd.spice        source netlist (with hv_logic.spice)
 testbenches/spice/tb_truth.spice / .out  truth table, DC (ngspice -b in this folder, repo environment)
+layout/klayout/bias_dist_pd.klay.gds     the layout (agent D, round 2, 2026-11-08): 60.49 × 16.44 µm, M1 / M2; .cdl its flat LVS
+                                         reference; .png the cell
+netlist/schematic, netlist/layout        make klayout-lvs-netlist / klayout-lvs (LVS OK)
 ```
 
 Checked 2026-10-27: xschem's netlist of the sheet against the source subckt, device by device (37 devices, equal),
@@ -69,6 +84,25 @@ good start"): xschem's netlist against the source subckt 23 = 23 devices, 14 = 1
 topology-equivalent to the label-style sheet (`scripts/xschem/sheet_equiv.py`); no short (`sch_lint.py`); xschem exit 0,
 no `Error:` in its log. The supply pins of the hv_logic gates join vdd / vss by label: wired, every `iin` / `po` line
 would cross them (88 crossings against 45).
+
+## Layout (agent D, 2026-11-07)
+
+`layout/klayout/bias_dist_pd.klay.gds`, 60.49 × 16.44 µm = 994.5 µm² (round 2), Metal1 / Metal2 only (as the pads).
+- **Structure:** option B below, one slice per leg (nand2_hv | inv_hv | tg_hv), all eight slices plus TDN and SVPD in one
+  row under the two matched rows: NMOS `D NI NM D` (rb_mirror's code, XOR 0 against it) and PMOS
+  `D PO0 PO1 PD PO2 PO3 D` (rb_tails' code, the diode PD in the middle). Inputs iin0..3 on the left edge, outputs
+  iout0..3 on the right (Metal1), enables on the bottom edge, vddh / vssh on the top ring legs.
+- **Checks:** KLayout DRC (`--no_density`) clean, maximal deck with latch-up 0, flat LVS against D's CDL (a negative test
+  fails), `make klayout-lvs` OK against the sheet; the lead's device check 73 / 73 + 4 dummies. Cell names `bdp_*`. PEX
+  not run.
+- **Inner pair** (decided 2026-11-08): PO1 = S2D and PO2 = D2S beside PD, PO0 = pad_ref_rb and PO3 = spare outside;
+  an assignment of the outputs, no layout change.
+- **Round 2** (Christoph, 2026-11-08: "we're not short of area, so move the pads away from the channels so the check
+  passes"): the switch row 0.20 µm taller; every contacted gate pad now reaches 0.32 … 0.37 µm beyond the 0.25 µm
+  endcap zone, so sym_check's narrow-poly check finds 0 hits on every cell and on the whole cell (before: tg_hv's pads
+  0.14 / 0.27 µm, a false alarm on 0.45 µm wide poly). Mirrors byte-identical to round 1.
+- **Open (agent D):** the switch row has tie strips, not a closed ring.
+- Proposed place in slot7: above the stacked cores, left of pad_ref_rb (`../pad_ref_rb/layout/klayout/pad_ref_rb_in_slot7.png`).
 
 ## Layout note: a later split into analog and digital cells (not done)
 
@@ -117,7 +151,7 @@ the TG a cell.
 
 **Inputs wanted** (Christoph, 2026-11-07): feed from the Oguey–Aebischer core, the bandgap core (or both at once), or
 one or both of the harness currents (`ibias0`, `ibias1`): four sources, any combination; enabled inputs add in NI.
-This cell has three inputs (`iin0..2`), so a fourth is needed if all four are to be wired at once. Different biases
+This cell has had four inputs (`iin0..3`) since 2026-11-07. Different biases
 for different blocks may follow later; the replica bias comes first.
 
 Open questions from the redraw: `iin<k>` are `inout` on the symbol but `iout<j>` are `out`, although both are current
