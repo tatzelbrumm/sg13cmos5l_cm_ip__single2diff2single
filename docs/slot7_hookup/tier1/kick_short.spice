@@ -1,0 +1,35 @@
+* S2D enable kick on the pads' vcm / vref with pad_ref_rb (extracted, bypass caps) behind the ext switches (short), tt 27 C
+.lib cornerMOShv.lib mos_tt
+.lib cornerRES.lib res_typ
+.include /foss/pdks/ihp-sg13cmos5l/libs.tech/ngspice/models/diodes.lib
+.include /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/netlist/source/hv_logic.spice
+.include runs/sg13cmos5l_IOPadSingle2Diff_flat.spice
+.include runs/pad_ref_rb_flat.spice
+.temp 27
+.option gmin=1e-12 method=gear cshunt=1e-15
+Vdd vdd 0 3.3
+* pad_ref_rb on from the start, 5 uA sourced into its iref
+Ir vdd ir 5u
+XR vdd 0 ir vcm_rb vref_rb vdd 0 pad_ref_rb
+VT9 vcm_rb vcm_pad 0
+VT10 vref_rb vref_pad 0
+* S2D enabled at 30 us, 5 uA iref
+Is vdd is 5u
+Ven en 0 pwl(0 0 30u 0 30.01u 3.3)
+Venb enb 0 pwl(0 3.3 30u 3.3 30.01u 0)
+Vin padin 0 0.5
+XS vdd 0 vdd 0 padin outp outn vcm_pad vref_pad is en enb sg13cmos5l_IOPadSingle2Diff
+Cp outp 0 0.5p
+Cn outn 0 0.5p
+.control
+tran 10n 70u
+meas tran vcm0 find v(vcm_pad) at=29.9u
+meas tran vref0 find v(vref_pad) at=29.9u
+meas tran vcm1 find v(vcm_pad) at=69u
+meas tran vref1 find v(vref_pad) at=69u
+meas tran vcm_max max v(vcm_pad) from=30u to=69u
+meas tran vcm_min min v(vcm_pad) from=30u to=69u
+meas tran vref_max max v(vref_pad) from=30u to=69u
+meas tran vref_min min v(vref_pad) from=30u to=69u
+.endc
+.end

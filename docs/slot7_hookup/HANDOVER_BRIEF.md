@@ -8,6 +8,12 @@ From cloud session C4 (design repo `tatzelbrumm/sg13cmos5l_cm_ip__single2diff2si
 to the session that maintains `tatzelbrumm/sg13cmos5l_cm_slot7`. Take only what is listed; nothing else from the design
 repo goes into the hand-over repo. Christoph decides when; open checks are listed at the end.
 
+## v3 (2026-11-08)
+
+At C6's request (harness test): the bandgap's GDS cell `pnpMPA` renamed `bgc_pnpMPA` (magic stopped with "instanced
+inside of itself"), `slot_7.gds` written without KLayout's `$$$CONTEXT_INFO$$$` cell, an X-card netlist for netgen. No
+circuit or geometry change (XOR 0 against v2); KLayout DRC / LVS unchanged, magic + netgen match without workarounds.
+
 ## What changes in slot 7
 
 The fallback's stage A (OA / BG cores, bus diagnostics, `tp_en_ctrl`) is replaced by the slot circuit for the custom
@@ -22,10 +28,12 @@ fallback's stubs.
 
 | source (design repo, branch claude/c4-replica-bias) | destination (slot7 repo) |
 |---|---|
-| `macros/slot_7/layout/klayout/slot_7.klay.gds` (top cell `slot_7`, 537.15 × 273 µm, sha256 5f8fd14a722ec458…) | `final/gds/slot_7.gds` |
+| `macros/slot_7/layout/klayout/slot_7.klay.gds` (v3, top cell `slot_7`, 537.15 × 273 µm, sha256 7394d0923c511631…) | `final/gds/slot_7.gds` |
 | `macros/slot_7/layout/klayout/slot_7.cdl` (sha256 af1e5f027f9f90c1…; self-contained: slot_7 and all 11 subcircuits) | `netlist/slot_7.cdl` (LVS reference) |
-| `macros/slot_7/netlist/source/slot_7.spice` | `netlist/slot_7.spice` (source of the slot circuit) |
-| `macros/slot_7/README.md` (mode table, default, register settings) | `docs/slot_7.md`, linked from `README.md` |
+| `macros/slot_7/layout/klayout/slot_7_netgen.spice` (sha256 a1e08178c24776c7…; X cards, for magic + netgen) and `netgen_check.sh` | `netlist/slot_7_netgen.spice`, `netlist/netgen_check.sh` |
+| `macros/slot_7/netlist/source/slot_7.spice` | `netlist/slot_7.spice` (source of the slot's own levels; use the two above for LVS) |
+| `docs/slot7_hookup/FOR_TIM.md` (the page for Tim: modes, harness settings, what to expect, verification) | `docs/FOR_TIM.md`, linked from the top of `README.md` |
+| `macros/slot_7/README.md` (design notes) | `docs/slot_7.md` |
 | `macros/slot_7/layout/klayout/slot_7.png` | `docs/` (picture for the README) |
 | LEF / Liberty / Verilog stub of `slot_7` | `final/{lef,lib,vh}/`, regenerated the way stage A's were (new ports: dig_in[0..5] used, the 13 pad nets) |
 
@@ -52,9 +60,13 @@ fallback's stubs.
   closed (stable, 10-30× slower).
 - Disable: `enable` = 0; with the slot's supplies off, the pads draw leakage only (≤ 67 nA at 125 °C).
 
+## Checked since the first draft
+
+- S2D enable kick with the vcm / vref switches between pad_ref_rb's bypass capacitors and the pads (tt, 27 °C): vcm
+  +118 / −63 mV, vref +85 / −62 mV, against +107 / −58 and +81 / −54 mV with the switches shorted; no extra capacitors.
+- Routes over the analog blocks: only DC nets cross pad_ref_rb (`slot_7_routes.png`).
+
 ## Open (Christoph decides whether they block the hand-over)
 
-- S2D enable kick with the new vcm / vref switches between pad_ref_rb's bypass capacitors and the pads (being checked;
-  fix if needed: MOS capacitors on the pads' side in the empty slot area).
 - Mode simulations at ss / −40 °C: tt and ff pass all 8 modes; at ss −40 the default (DC), feed and ext (transient from
   power-up) pass; swap and mon stall at the bandgap's start-up node in the solver (rerun with a slower enable edge).
