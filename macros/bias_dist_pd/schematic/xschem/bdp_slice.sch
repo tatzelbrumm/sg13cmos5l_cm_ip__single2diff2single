@@ -7,7 +7,7 @@ F {}
 E {}
 T {bdp_slice: one switched leg of bias_dist_pd, as the layout cell bdp_slice: nand2_hv | inv_hv | tg_hv} 0 -260 0 0 0.4 0.4 {}
 T {e_b = NAND(en_3v3, en), e = NOT e_b; the transmission gate passes a <-> b while en_3v3 = 1 and en = 1.} 0 -210 0 0 0.25 0.25 {}
-T {Source: netlist/source/bias_dist_pd.spice. Gate and TG supplies join vdd / vss by label (wired, the a line would cross them).} 0 -188 0 0 0.25 0.25 {}
+T {Source: netlist/source/bias_dist_pd.spice. vdd / vss: 3.3 V rail of bias_dist_pd (vddh / vssh), for the gates and the TG bulks.} 0 -188 0 0 0.25 0.25 {}
 N 60 -20 200 -20 {lab=en_3v3}
 N 60 20 200 20 {lab=en}
 N 320 0 360 0 {lab=e_b}
