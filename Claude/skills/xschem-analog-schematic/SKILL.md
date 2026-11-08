@@ -39,13 +39,17 @@ round-trip comparison caught them.
    it as a `name: (x, y, rot, flip)` table before writing any file. For a testbench, first look
    for a sibling testbench the user has already drawn and use it as the template (see
    "Testbench style").
-5. **Write the `.sch`**, with real orthogonal wires for every net that has a short route, and a
-   `lab_pin` only where a wire would cross more than half the sheet. A wire that crosses a few
-   others without a dot is still better than a label (see "Hand-drawn refinements"). Use the
+5. **Write the `.sch`**, with real orthogonal wires for every signal net, also one that runs
+   across the whole sheet and crosses many others without a dot (see "Hand-drawn refinements" and
+   "Logic cells and hierarchical sheets"). Supplies are wired as rails in a cell sheet; on a top
+   sheet full of subcells, the subcells' supply pins may stay on labels. A `lab_pin` next to a
+   wired pin stays as annotation. Use the
    property names from the PDK's own `template` (`w`/`l`/`ng`/`m` for IHP, `W`/`L`/`nf`/`mult`
    for sky130).
 6. **Write the `.sym`.** Its pin order must equal the `.subckt` port order, and its pin names must
    equal the `ipin`/`opin`/`iopin` names in the `.sch` (see "Hand edits and symbol changes").
+   Pins on the 20-unit grid, groups separated by a free slot, each output across from its input
+   (see "His symbol").
 7. **Lint the geometry, netlist with xschem and compare** (see Verification). Fix every short and
    every mismatch before delivering, and do both again after every manual move or compaction.
 8. **Render and look** (recipe under "Rendering"). Check that no labels overlap symbol text or
@@ -192,6 +196,83 @@ that swap instead of rot 2.
 - Labels stay as annotation: a `lab_wire` at both ends of a long bus (`flip=0` at the left end,
   `flip=1` at the right end), a `lab_pin` at the far end of a long trunk, a `lab_wire` naming each
   internal node at a corner where it is drawn.
+
+## Logic cells and hierarchical sheets (from his edits of tg_hv / nand2_hv / bdp_slice / bias_dist_pd, 2026-11-08)
+
+He took four sheets drawn by these rules, the hv logic cells and the switched distribution mirror
+built from them, and redrew the wiring by hand (commit 81609ffb → a5340070 in
+sg13cmos5l_cm_ip__single2diff2single: `macros/hv_logic/schematic/xschem/{tg_hv,nand2_hv}.sch`,
+`macros/bias_dist_pd/schematic/xschem/{bdp_slice,bias_dist_pd}.sch`). xschem's netlist of the
+edited sheets is byte-identical to the one before, and every label survived (lab_pin counts 16, 6
+and 27 unchanged); he only added wires (nand2_hv 16 → 31, bdp_slice 17 → 23, bias_dist_pd
+114 → 154 segments) and moved things. Draw new cells this way from the start.
+
+**A gate is drawn as the textbook gate, fully wired** (nand2_hv; the draft had four loose devices
+with every net by label):
+- vdd rail as a horizontal wire at the top, vss rail at the bottom, both straight from their
+  ports on the left; every source and bulk on a rail drops to it by a vertical (only NA's bulk,
+  in the middle of the stack, stays on its label).
+- The series stack in one column under the output: PA, y, NA, n1, NB (x 420). The parallel
+  device PB stands beside PA under the vdd rail; the two drains join in one horizontal at the y
+  node, and y runs from that node straight right to the output port.
+- Each input enters from its port at the height of one of its gates, runs straight to it, and
+  reaches its other gate by one vertical: `b` at PB's gate height, down at x 180 to NB; `a` at
+  NA's gate height, up at x 360 to PA. The device order follows from that (PB, fed first by `b`,
+  stands left of PA).
+- Ports on the left, top to bottom in the order of the rows they feed: vdd, b, a, vss; the
+  output on the right at the y node's height.
+
+**A transmission gate is drawn along its signal path** (tg_hv):
+- Both devices rotated so the channel runs horizontally from `a` (left) to `b` (right): P above
+  (rot 1 flip 1), N below (rot 3 flip 1). The gates face each other in the middle, the bulks face
+  their rails (P bulk up to vdd, N bulk down to vss). The parameter text then runs vertically;
+  that is accepted.
+- `a` and `b` are each one vertical joining the two devices' terminals, so the parallel pair
+  reads as one switch.
+- Ports on the left, top to bottom, each at the height of the pin it feeds: vdd, en_b, a, en,
+  vss; `b` on the right at a's height. The en_b and en lines cross the `a` vertical without a dot.
+
+**A cell built from subcells hangs every supply pin from drawn rails** (bdp_slice): a vdd rail at
+the top and a vss rail at the bottom, both from the ports, and one vertical drop to each subcell's
+vdd / vss pin (nand2_hv, inv_hv, tg_hv). The drops cross the signal lines (`a`, `e_b`) without a
+dot. The draft had joined the supplies by label "because the a line would cross them"; that is
+no reason.
+
+**Top sheet: ports at the height of their destination, wired across** (bias_dist_pd):
+- Every port on the left edge sits at the height of the line it feeds and runs straight across
+  to it. The port column therefore follows the rows, not the names: vddh, en_3v3, then per
+  channel en_out<j>, en_in<j>, iin<j>, ..., en_3v3_b, vssh. The outputs iout<j> sit on the right
+  at their slice's height.
+- en_out0..3 had been a cluster of ports at the bottom left, joined to the output slices by
+  label. He moved each one up to its output slice's row and wired it straight across the sheet,
+  x 100 to 2480 of a sheet whose outputs sit at 2760, right under the en_3v3 line to the same
+  slice. The input
+  slices moved down to make room; the sheet's height stayed the same.
+- en_3v3 became one trunk (x 220) with a horizontal to each of the eight slices; the draft had
+  wired it to the input slices and labeled it at the output slices.
+- The slices' vddh / vssh stayed on labels here: on a top sheet with eight subcells, supply
+  labels at the subcells are accepted, signal labels are not.
+
+**His symbol** (bias_dist_pd.sym, commit d0831379, same day). Pin order, names, directions,
+box and text sizes unchanged; only the pin positions moved, and each pin's name text with it:
+- **Every pin on the 20-unit grid.** The generated symbol had its pins at odd multiples of 10
+  (y −130, −110, ..., 130, centered on the box), so a wire drawn on the sheets' 20 grid could not
+  reach them. Now y −140 ... 140 in steps of 20.
+- **An empty pin slot between groups:** en_3v3, en_3v3_b, iin0..3 above, then one free slot
+  (y −20), then en_in0..3 and en_out0..3.
+- **Each output across from its input:** iout<k> on the right at the height of iin<k> on the
+  left (y −100 ... −40), not centered on the right edge.
+- **Supply pins off center:** vddh on top at x −20, vssh at the bottom at x +20 (were both at
+  x 0). He gave no reason; ask before generalizing it.
+
+Draw new symbols that way. A symbol already placed in a sheet is a different matter: moving its
+pins detaches the wires in every sheet that places it (see "Hand edits and symbol changes"), so
+propose the change and list the affected sheets first.
+
+**Keep the sheet's notes in step with the drawing.** After his rewiring, two notes still describe
+the draft: nand2_hv "nets by label", bdp_slice "Gate and TG supplies join vdd / vss by label
+(wired, the a line would cross them)". When you rewire, rewrite the note; better, don't describe
+the drawing method in a note at all, describe the circuit.
 
 ## Testbench style (from his hand-drawn tb_pd_enable, 2026-10-25)
 
