@@ -1,0 +1,11 @@
+== s7_ctrl (Claude, agent C, C4 2026-11-08): gds sha256 b3ffa1bd2f2240cb, cdl f638dc366f9d76d5
+run_drc.py --no_density --mp=4: No DRC violations detected | 'exception' lines: 0
+maximal deck + latchUpRules=true: Number of DRC errors for maximum rule set: 0
+run_lvs.py --disable_tap_extraction vs s7_ctrl.cdl: Netlists match (layout=222 devices)
+negative LVS (XT1 en / en_b swapped): Netlists don't match (must not match)
+extracted devices: 222 ;      76 sg13_hv_nmos L=0.45u W=1u;     69 sg13_hv_pmos L=0.45u W=1u;     70 sg13_hv_pmos L=20u W=0.3u;      7 sg13_hv_pmos L=5u W=0.3u;
+sym_check N (E's src/sym_check.py --no-y):   summary: max mirror XOR 883.5602 um2, 0 narrow-poly hits
+contacted poly outside Activ: s7_ctrl: 85 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+supply metal (tie Activ, Cont, M1, Via1, M2 only): s7_ctrl: nets holding tie Activ (metal + tie Activ only): 2 vddh tie area 140.06 um2 vss tie area 34.64 um2 
+reused cells identical to their sources (shapes, texts, instances): 14 / 14; all-layer XOR nonzero lines: 0
+layers used for routing: ['10/0', '10/2', '10/25', '19/0', '31/0', '44/0', '5/0', '6/0', '8/0', '8/2', '8/25']
