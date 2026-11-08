@@ -28,4 +28,5 @@ comma list of their labels, as KLayout names such a net) and `layout/klayout/s7_
 dig_out[11:0] are held low by `s7_doutpd` (as the fallback did; back-annotated into the source netlist and the sheets,
 `s7_doutpd.sch/.sym`). Routes over the analog blocks (from agent A's build log, `layout/klayout/slot_7_routes.png`): only `en`, `en_b` and
 `s7_an_0_iref` cross pad_ref_rb (Metal3, all DC), only the supply straps cross bias_dist_pd; the long dig_in / enable /
-analog_bus lines end at s7_ctrl. No shield needed. Check summary: `layout/klayout/slot_7_checks.txt`.
+analog_bus lines end at s7_ctrl. No shield needed. S2D enable kick through the ext switches (tt, 27 °C): vcm +118 / −63 mV,
+vref +85 / −62 mV (shorted: +107 / −58, +81 / −54 mV), so pad_ref_rb's bypass capacitors still work through them. Check summary: `layout/klayout/slot_7_checks.txt`.

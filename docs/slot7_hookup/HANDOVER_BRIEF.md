@@ -52,9 +52,13 @@ fallback's stubs.
   closed (stable, 10-30× slower).
 - Disable: `enable` = 0; with the slot's supplies off, the pads draw leakage only (≤ 67 nA at 125 °C).
 
+## Checked since the first draft
+
+- S2D enable kick with the vcm / vref switches between pad_ref_rb's bypass capacitors and the pads (tt, 27 °C): vcm
+  +118 / −63 mV, vref +85 / −62 mV, against +107 / −58 and +81 / −54 mV with the switches shorted; no extra capacitors.
+- Routes over the analog blocks: only DC nets cross pad_ref_rb (`slot_7_routes.png`).
+
 ## Open (Christoph decides whether they block the hand-over)
 
-- S2D enable kick with the new vcm / vref switches between pad_ref_rb's bypass capacitors and the pads (being checked;
-  fix if needed: MOS capacitors on the pads' side in the empty slot area).
 - Mode simulations at ss / −40 °C: tt and ff pass all 8 modes; at ss −40 the default (DC), feed and ext (transient from
   power-up) pass; swap and mon stall at the bandgap's start-up node in the solver (rerun with a slower enable edge).
