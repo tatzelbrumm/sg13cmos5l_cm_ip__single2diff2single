@@ -58,6 +58,11 @@ v2 testbench with v1's shifters).
 | **starvation:** pad ring current, iref open, en_3v3 / en_3v3_b each anywhere in 0 … 3.6 V (169 pairs), pad 0 / 1.8 / 3.6 V | S2D ≤ 0.4 nA (−40 / 27 °C), ≤ 25 nA (125 °C); D2S ≤ 4.3 nA / ≤ 67 nA. Leakage of the output and ESD devices, nearly independent of the enable levels |
 | starvation of pad_ref_rb (if on the ring), same sweep | ≤ 1.0 nA (−40 / 27 °C), ≤ 10.6 nA (125 °C) |
 
+**CACE** (`make sim-cace`, schematic netlist of the v2 sheets, 2026-11-08): all 128 runs pass (`make spec-table`).
+Output errors ≤ 1.3 µV; vddh ≤ 172 nA (enabled, one select bit high; limit 240); vddl, sense and en_1v2 inputs 0
+(limit 1 / 1 / 0.3 nA); enable / disable delay ≤ 2.4 / 81 ns with 100 ps input edges (limits 40 / 410). The vddl-off
+and floating groups equal the vddl-on ones, as they must: vddl is not connected inside.
+
 Not done: Monte Carlo (the margins are ratios of 10× and more: XN1 vs XPF, the leaker vs XN1's leakage), layout,
 the sheets and the CACE suite for v2.
 
