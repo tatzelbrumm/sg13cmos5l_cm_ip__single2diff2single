@@ -1,43 +1,61 @@
 # ART_LAYERS: proposed metal layer per colour (tughra art in slot_7)
 
-Proposal, written before the geometry. Numbers come from the PDK files (`art/pdk_layers.py` reads
-`sg13cmos5l.lyp` and `sg13cmos5l_tech_default.json`), the slot7 GDS (`art/find_free_space.py`, report in
-`art/free_space.md`) and the source image (`art/segment.py`). Stroke widths are measured at the planned scale of
-0.098 um per source pixel (see ART_NOTES.md for the final scale).
+Numbers come from the PDK files (`art/pdk_layers.py` reads `sg13cmos5l.lyp` and `sg13cmos5l_tech_default.json`), the
+slot7 GDS (`art/find_free_space.py`, report in `art/free_space.md`) and the source image (`art/segment.py`). Stroke
+widths are measured at the scale used, 0.0975 um per source pixel (ART_NOTES.md).
 
 The process has **five** metal layers (Metal1..Metal4, TopMetal1; Metal5/TopMetal2 are forbidden by the deck,
 `CMOS5L.FORB`). Six colours do not fit one-to-one, so two colours share a layer.
 
-| colour | layer | GDS layer/datatype | min width / min space (um) | reason |
+## Mapping (revised after the first geometry run, see "Revision" below)
+
+| colour | layer | GDS layer/datatype | PDK min width / min space (um) | reason |
 |---|---|---|---|---|
-| green | TopMetal1 | 126/0 | 1.64 / 1.64 | Widest strokes (median 1.57 um, thickest 2.2 um; the three tall stems are 1.9-2.2 um). Only TopMetal1's 1.64 um minimum can be met by the stems without losing them, and the three stems are 5+ um apart, so the 1.64 um spacing costs little. TopMetal1 is also the topmost, thickest metal, so the biggest element is the most visible one, and in the source the green stems lie over the ribbons, as they do here. |
-| red | Metal4 | 50/0 | 0.20 / 0.21 | Long, medium-width ribbon (median 1.4 um). Metal4 is the highest layer under TopMetal1, so it is the second most visible. Free on the whole slot except a few straps (98 % free). In the source the red ribbon lies over the blue one where they cross, which Metal4 over Metal3 reproduces. |
-| blue | Metal3 | 30/0 | 0.20 / 0.21 | Second long ribbon (median 1.25 um, thin tail 0.4 um). Metal3 is the busiest layer of the slot (92 % free) but the chosen spot is free on it. Lies under red, as in the source. |
-| purple | Metal2 | 10/0 | 0.20 / 0.21 | Smallest element (67 um2, three pieces, one word). Lowest visibility is acceptable for the smallest colour; it hardly crosses any other colour (0.7 um2 within 0.3 um of blue). |
-| orange **and** gold (shared) | Metal1 | 8/0 | 0.16 / 0.18 | Finest detail: orange is the smallest, densest calligraphy (strokes 0.4 um at the thinnest) and gold has the 0.4 um swoosh tail; Metal1 has the smallest minimum width and space of the stack. These two colours are the neighbours in hue, so merging them loses the least. |
+| purple | TopMetal1 | 126/0 | 1.64 / 1.64 | TopMetal1 cannot draw fine calligraphy: its 1.64 um minimum width and space are 5-8x the other layers'. It gets the smallest, simplest element (one word, 64 um2, 3 pieces) so that the damage is smallest. It is the topmost, thickest metal, so this element is the most visible one under a microscope. |
+| green | Metal4 | 50/0 | 0.20 / 0.21 | Tall stems and a word; the stems converge into a dense cluster (on TopMetal1 that cluster merged into one blob in the test). Metal4 is the highest layer that can hold detail and the second most visible. 98 % of the slot is free on Metal4. In the source green lies over red and blue where they cross, and Metal4 is above Metal3 and Metal2. |
+| red | Metal3 | 30/0 | 0.20 / 0.21 | Long ribbon plus one word, strokes 0.4-2 um. Lies over blue in the source and Metal3 is above Metal2. Metal3 is the busiest layer of the slot (92 % free) but the chosen spot is free on it. |
+| blue | Metal2 | 10/0 | 0.20 / 0.21 | Second long ribbon plus the large word, thin tail 0.4 um. Lowest of the three ribbon colours, as in the source. |
+| orange **and** gold (shared) | Metal1 | 8/0 | 0.16 / 0.18 | Finest detail: orange is the smallest, densest calligraphy and gold has the 0.4 um swoosh tail; Metal1 has the smallest minimum width and space of the stack. These two colours are neighbours in hue, so merging them loses the least. |
+
+Stack order seen from above: TopMetal1 (purple) > Metal4 (green) > Metal3 (red) > Metal2 (blue) > Metal1 (orange/gold).
 
 ## The merge: what touches and what is lost
 
-- Orange and gold are the pair chosen. Measured on the segmented image: **the closest orange stroke and gold stroke are
-  9.4 um apart** (96 px at 0.098 um/px). No stroke of the two colours touches, comes within the layer's minimum
+- Orange and gold are the pair merged. Measured on the segmented image: **the closest orange stroke and gold stroke
+  are 9.4 um apart** (96 px at 0.098 um/px). No stroke of the two colours touches, comes within the layer's minimum
   space, or merges. Nothing is shorted and no polygon is joined by the merge.
 - **Lost:** the colour distinction orange vs gold (both words are Metal1 and look the same under a microscope).
   The words stay separate shapes.
-- Other pairs with zero contact exist (blue-orange, orange-purple, purple-red, gold-red) but they differ more in hue
-  or use different thickness classes; orange-gold was preferred for the hue reason.
-- Different layers cross in plan view (for example green over red). No vias are drawn, so nothing connects.
-  The upper layer hides the lower one where they overlap when seen from above; the order TopMetal1 > Metal4 >
-  Metal3 > Metal2 > Metal1 is green > red > blue > purple > orange/gold.
+- Different layers cross in plan view. No vias are drawn, so nothing connects. The upper layer hides the lower one
+  where they overlap when seen from above.
+
+## Revision (why the first proposal changed)
+
+The first proposal put green on TopMetal1, red on Metal4, blue on Metal3, purple on Metal2. Before writing any
+polygon I measured how each colour survives TopMetal1's 1.64 / 1.64 rule (strokes widened to 1.7 um, gaps under 1.7 um
+closed, one test run at 0.0955 um/px, intersection-over-union of the result with the source mask):
+
+| colour | source area (um2) | area on TopMetal1 | IoU |
+|---|---|---|---|
+| red | 370 | 567 (x1.53) | 0.65 |
+| green | 403 | 641 (x1.59) | 0.63 |
+| purple | 64 | 105 (x1.65) | 0.61 |
+| blue | 422 | 715 (x1.69) | 0.59 |
+| gold | 234 | 435 (x1.86) | 0.54 |
+| orange | 103 | 243 (x2.35) | 0.43 |
+
+The IoU values are close, but the pictures are not: green on TopMetal1 turned its converging stems into one blob;
+red on TopMetal1 kept the long ribbons but its word became unreadable. Whichever colour gets TopMetal1 loses its
+detail, so the **smallest colour (purple) takes it** and the four finer layers keep all other colours at nearly
+full detail. Cost: the purple word becomes a blob (its letter shapes are lost) and TopMetal1 shows only that.
 
 ## Caveats stated up front
 
-- **TopMetal1 minimum width 1.64 um is larger than most of the green stroke.** At the planned scale 53 % of the
-  green skeleton is already below 1.64 um. The green strokes will be thickened and the thin tapering tips and
-  the thin cross strokes (where they are thinner than the minimum) will be thickened or dropped; green strokes closer
-  than 1.64 um will merge. The shape loss is measured and reported in ART_NOTES.md.
+- **TopMetal1 minimum width 1.64 um is larger than most of a purple stroke.** Purple strokes are widened to 1.7 um
+  and gaps under 1.7 um are filled, so the word becomes a solid shape.
 - **Metal1-Metal4 get a design minimum of 0.30 um width and 0.30 um space** (the PDK minimum is 0.16 / 0.18 on
   Metal1 and 0.20 / 0.21 on Metal2-4), so that the 45-degree and wide-line spacing rules (0.22 / 0.24 um) and the
-  grid snapping have margin.
+  grid snapping have margin. Strokes thinner than 0.30 um are widened to it.
 - **Edges are 0 / 45 / 90 degrees only**: the deck's angle rule (`3_2_angle.drc`) allows only those on metal. Curves are
   therefore octilinear stair-steps, not smooth curves.
 - **Colour under a microscope is not guaranteed.** All five layers are aluminium, so the six colours will not look
