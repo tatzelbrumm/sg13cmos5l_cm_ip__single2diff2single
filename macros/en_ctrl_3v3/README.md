@@ -2,90 +2,69 @@
 SPDX-FileCopyrightText: 2026 Christoph Maier
 SPDX-License-Identifier: Apache-2.0
 -->
-# en_ctrl_3v3: fail-safe enable and select bits for the 3.3 V pad circuits
+# en_ctrl_3v3: fail-safe enable and select bits for the 3.3 V circuits of slot 7
+
+**v2 (2026-11-08)**, netlist and simulation. The sheets (`en_ctrl_3v3.sch`, `pg_det.sch`) and the CACE suite still
+describe v1 and are to be redrawn / rewritten; v1 is in git history (last commit before 2026-11-08 15:00 UTC).
 
 ```
-en_3v3   = en_1v2  AND  (vdd_1v2 present)  AND  (vdd_3v3 present)
-sel*_3v3 = sel*_1v2, level-shifted (gated with en_3v3 in bias_sel_pd)
-en_3v3_b = NOT en_3v3 (XIB), for d2s_mpdda_pd and bias_sel_pd
+en_3v3   = en_1v2 at 3.3 V     en_3v3_b = NOT en_3v3     sel*_3v3 = sel*_1v2 at 3.3 V (gated by en_3v3 downstream)
 ```
 
-Ports (order): `vddh vddl vss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b`.
+Ports (order, unchanged from v1 so the sheets that place the symbol stay valid): `vddh vddl vss en_1v2 sel0_1v2
+sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b`. **`vddl` and the two sense inputs are no longer
+connected inside.** `vddh` / `vss` = the slot's switched `vdd_3v3` / `vss_3v3`.
 
-| port | in the custom pad cell | in the slot fallback |
-|---|---|---|
-| vddh | iovdd (pad ring) | vdd_3v3 |
-| vddl | core ring vdd (1.2 V, always on with the chip) | vdd_1v2 |
-| vss | iovss | vss_3v3 |
-| vdd1v2_sense / vdd3v3_sense | the slot's gated vdd_1v2 / vdd_3v3 (two slot-to-pad wires) | vdd_1v2 / vdd_3v3 |
-| en_1v2, sel0_1v2, sel1_1v2 | harness `enable` and two `dig_in` bits, through the slot | same |
+## Why v2
 
-## How it works
+v1 sensed the slot supplies with two ratioed detectors (`pg_det`: hv NMOS against a weak hv PMOS, RD pulling a floating
+sense input low) and shifted with `ls_up_1v2_3v3` (needs the slot's 1.2 V). Enabled it drew 0.7–1.9 µA from vddh plus
+0.4–1.7 µA into each sense input; with the slot's 1.2 V off and en_1v2 high its shifter latch drew up to 152 µA
+(ss, −40 °C), and a held select bit lets a latch node float and drift into a crowbar (64 µA at sf, 125 °C, in the
+v2 testbench with v1's shifters).
 
-- Three `ls_up_1v2_3v3` (`macros/ls_up_1v2_3v3`) shift en, sel0, sel1 to vddh.
-- Two `pg_det` cells detect the slot supplies without needing a 1.2 V supply themselves: an hv NMOS (2u / 0.45u)
-  with its gate on the sensed supply pulls `pg_b` low against a weak hv PMOS (0.3u / 50u). RD (0.3u / 100u) pulls a
-  floating, gated-off sense input low. PU and RD are gated by the level-shifted enable: with en_1v2 = 0 the cell
-  draws leakage only.
-- `nor3_hv(en_ls_b, pg1_b, pg3_b)` gives en_3v3. With vddl = 0 the ls_up latches are undefined; pg_det of vdd_1v2
-  then forces en_3v3 low either way (if en_ls_b is high the NOR is low; if it is low, PU is on and pg1_b is high).
-- `XIB` (inv_hv, 1u / 0.45u) makes `en_3v3_b` from en_3v3, once for the pad (since 2026-10-25; before, d2s_mpdda_pd
-  and bias_sel_pd each had their own inverter). It adds one gate to the en_3v3 load: nominal (tt, 27 C, 50 fF)
-  enable delay 1.74 -> 1.79 ns, disable 2.56 -> 2.58 ns; the results below were simulated without it.
-- `hv_logic` (`macros/hv_logic`) supplies inv_hv and nor3_hv. IHP's `sg13cmos5l_LevelUp` can replace ls_up_1v2_3v3
-  in the pad cell (same topology, foundry layout in the IO GDS).
+## How v2 works
+
+- The harness drives `enable` and `dig_in` from its **always-on** 1.2 V rail: they are valid 0 / 1.2 V levels even
+  while the slot's own `vdd_1v2` is off, and 0 while the slot is not selected. So no 1.2 V supply is needed to read them.
+- **`ls_up_fs`** (one per bit): `XN1` (hv NMOS 1u/0.45u, gate = the 1.2 V input) pulls node x low. A **leaker** of
+  10 hv PMOS 0.3u/20u in series, gates on the same input, pulls x high when the input is 0 (full gate drive) and is
+  2–5× weaker while the input is 1.2 V. `XPF` (0.3u/5u, gate y) latches x high once disabled: hysteresis, and it
+  holds x against XN1's leakage. Three inv_hv: y = in, out, out_b. The leaker is the only static current, and it flows
+  only while the input is high.
+- **No supply sensing.** The cell sits on the slot's switched vdd_3v3 and is unpowered with it. The pads on the ring
+  take all their bias from `iref`, which the slot sources from that same supply; with the slot off they get none, and
+  draw leakage only whatever the enable lines float to (starvation check below). A pull-down, detector or quiescent
+  fail-safe on the ring side is therefore not needed. The pads are unchanged.
+- `vddl` is not needed at all: slot 7 works with only its 3.3 V switched on.
+- The input must be a harness level (enable, dig_in) or another always-valid 1.2 V level: XN1 conducts 0.6–8 µA at a
+  0.67 V gate, so an input that floats at the level of a half-discharged rail would read as 1.
+
+## Results (ngspice, extracted pads, 2026-11-08)
+
+`testbenches/spice/`: `run_states.py` → `results/states.txt`, `run_starve.py` → `results/starve.txt` (decks and logs in
+`runs/`, not committed). 11 points: tt / ss / ff / fs / sf × −40 / 27 / 125 °C × vddh 3.0 / 3.3 / 3.6 V, en and sel at
+1.08 / 1.2 / 1.32 V. Supplies behind PMOS power switches as in the harness; vdd_1v2 off (discharged) and floating at
+0.62 V; vdd_3v3 floating at 0.6 V.
+
+| quantity | result |
+|---|---|
+| logic, 8 states per point (enabled, disabled, select, each with vdd_1v2 on / off / floating) | all correct |
+| power-up with enable already high, vdd_1v2 off (default mode) | comes up enabled at every point |
+| vddh current, enabled | 26–92 nA (plus the same per select bit that is high: 49–184 nA with one) |
+| vddh current, disabled (also with vdd_1v2 off or floating) | ≤ 2.4 nA (125 °C), 0.0 at ≤ 27 °C |
+| enable / disable delay, 50 fF load | 9.5–31 ns / 94–315 ns |
+| slot vdd_3v3 floating at 0.6 V, enable high | outputs follow the floating rail (0.62–0.71 V); 2 nA from it |
+| **starvation:** pad ring current, iref open, en_3v3 / en_3v3_b each anywhere in 0 … 3.6 V (169 pairs), pad 0 / 1.8 / 3.6 V | S2D ≤ 0.4 nA (−40 / 27 °C), ≤ 25 nA (125 °C); D2S ≤ 4.3 nA / ≤ 67 nA. Leakage of the output and ESD devices, nearly independent of the enable levels |
+
+Not done: Monte Carlo (the margins are ratios of 10× and more: XN1 vs XPF, the leaker vs XN1's leakage), layout,
+the sheets and the CACE suite for v2.
 
 ## Files
 
 ```
-netlist/source/en_ctrl_3v3.spice              source netlist (pg_det, en_ctrl_3v3)
-schematic/xschem/en_ctrl_3v3.sch/.sym, pg_det.sch/.sym   label-style sheets, box symbols (pins in port order)
-verification/cace/en_ctrl_3v3.yaml            CACE suite, groups below
-verification/cace/templates/en_ctrl_3v3_tb_{dc,tran_en,tran_pg}.sch
-verification/cace/results/en_ctrl_3v3/        CSV and CACE summaries of the last `make sim-cace`
+netlist/source/en_ctrl_3v3.spice     ls_up_fs, en_ctrl_3v3 (v2)
+testbenches/spice/                   tb_states / tb_powerup templates, run_states.py, run_starve.py, results/
+schematic/xschem/                    v1 sheets (en_ctrl_3v3, pg_det): to be redrawn for v2
+verification/cace/                   v1 suite and results: to be rewritten for v2
 ```
-
-| group | what | runs |
-|---|---|---:|
-| truth_params | 8 input states at tt, 27 C, nominal: all on; en = 0; vdd_1v2 sense off; vdd_3v3 sense off; vdd_1v2 gated off (vddl = sense = 0, en still high); vdd_1v2 sense floating; vdd_3v3 sense floating; sel swapped | 8 |
-| pvt_params | enabled, 5 corners x -40 / 125 C x (vddl, vddh) = (1.08, 3.0) / (1.32, 3.6) V | 20 |
-| vddl_off_params | vdd_1v2 gated off with en_1v2 still high, same PVT | 20 |
-| float_params | floating sense inputs at ss / ff x -40 / 125 C, low supply | 8 |
-| tran_en_params | enable / disable delay, 50 fF on en_3v3, 5 corners x -40 / 125 C x low / high supply | 20 |
-| tran_pg_params | supply loss (1 -> 0 V in 1 us) with en_1v2 held high: vdd_1v2 sense, vdd_3v3 sense, vdd_1v2 = vddl and sense together; 5 corners x -40 / 125 C, low supply | 30 |
-
-The current and timing limits are proposals (worst case of these runs + ~30 %); the output-error limits (0.1 V)
-are functional requirements.
-
-## Results (CACE, schematic netlist, 2026-10-20)
-
-All 106 runs pass. Cloud run with the IIC-OSIC-TOOLS 2026.09 pins (xschem `ddc7344`, ngspice-47, IHP-Open-PDK
-iic-jku `c271a7e9`), CACE 2.13.0.
-
-| quantity | limit (proposal) | worst | where |
-|---|---:|---:|---|
-| en_3v3 / sel_3v3 error, every DC state and corner | <= 0.1 V | 3 uV | truth, pvt, vddl_off, float |
-| vddh current, enabled | <= 2.5 uA | 1.94 uA | ff, -40 C, 3.6 V |
-| vdd_1v2 sense / vdd_3v3 sense current, enabled | <= 1.9 / 2.3 uA | 1.43 / 1.73 uA | ff, -40 C, high supply |
-| vddl current, enabled | <= 50 nA | 39 nA | ff, 125 C |
-| en_1v2 input current | <= 0.3 nA | 0.2 nA | ff, 125 C |
-| enable delay (50 fF on en_3v3) | <= 4.8 ns | 3.7 ns (1.1 at best) | |
-| disable delay | <= 7 ns | 5.4 ns (1.7 at best) | |
-| supply loss -> en_3v3 low (supply ramps 1 -> 0 V in 1 us) | <= 1.2 us | 0.92 us | vdd_3v3 sense lost: 0.80-0.92 us; vdd_1v2 sense lost: 0.40-0.69 us (same with vddl ramping too) |
-| en_3v3 after the loss | <= 0.1 V | 0.7 uV | |
-
-Truth table at tt, 27 C: en_3v3 high only for "all on" and "sel swapped"; low for en = 0, either sense off, vdd_1v2
-gated off, and either sense floating. Full table: `make spec-table`. Plots: `make sim-cace` (not copied to this
-folder; only CSV and the CACE summaries are).
-
-**Finding, vddl_off_params:** with vddl = 0 and en_1v2 still at 1.08 V (the harness enable alive while the ls_up
-input inverters are unpowered), en_3v3 is correctly low at every corner, but at ss, -40 C, low supply the ls_up
-latch of `en_ls` settles in a ratioed state and draws 152 uA from vddh (0.33-0.97 uA elsewhere). In the pad cell
-vddl is the always-on core ring, so this state does not occur; in the slot fallback en_1v2 comes from the same
-gated vdd_1v2 domain and falls with it. Left as report-only (`any`).
-
-**Enabled-state current:** the two sense inputs draw 0.4-1.7 uA each from the slot's vdd_1v2 / vdd_3v3 (RD), and
-vddh 0.7-1.9 uA (the pg_det pull-ups). Disabled by en_1v2 = 0 the cell draws pA.
-
-Not done: layout, extraction, Monte Carlo, and the transient of a slot vdd_1v2 that floats (rather than ramps) after
-its power switch opens.
