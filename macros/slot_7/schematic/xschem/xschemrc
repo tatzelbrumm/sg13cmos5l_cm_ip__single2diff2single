@@ -63,6 +63,8 @@ if {![llength [info commands pin_netlist_dir]]} {
 pin_netlist_dir [file dirname [info script]]
 set load_file_postprocess {pin_netlist_dir [xschem get current_dirname]}
 
-# en_ctrl_3v3 uses ls_up_1v2_3v3 and the hv_logic gates
-append_xschem_library_path_unique [file join [file dirname [info script]] ../../../ls_up_1v2_3v3/schematic/xschem]
-append_xschem_library_path_unique [file join [file dirname [info script]] ../../../hv_logic/schematic/xschem]
+# slot_7 places s7_ctrl (this folder), bg_core_pd, bias_dist_pd and pad_ref_rb; s7_ctrl places ls_up_fs (en_ctrl_3v3)
+# and the hv_logic gates; pad_ref_rb places vcm_rb and vref_s2d_rb. No basename occurs twice on this path.
+foreach dep {en_ctrl_3v3 hv_logic bg_core_pd bias_dist_pd pad_ref_rb vcm_rb vref_s2d_rb} {
+  append_xschem_library_path_unique [file join [file dirname [info script]] ../../../$dep/schematic/xschem]
+}
