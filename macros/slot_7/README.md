@@ -20,7 +20,10 @@ Default (enable = 1, any dig_in without the key): bandgap reference, replica bia
 disconnected, vcm / vref on analog_bus2 / 3 (close the harness's bus switches, reg 0x51 bits 6 / 7, to read them).
 
 Files: `netlist/source/slot_7.spice` (s7_ctrl, slot_7; source of truth); sheets `schematic/xschem/{s7_ctrl,slot_7}.sch`;
-layout `layout/klayout/slot_7.klay.gds` (INTERMEDIATE v1 of agent A, 17:34 UTC: all four blocks placed near the pad
-stubs, supplies on TopMetal1 straps from the harness pins; DRC clean incl. the maximal deck with latch-up rules; LVS
-deep match, 485 devices; flat LVS matches only with top-port checking off, open) and `layout/klayout/s7_ctrl.klay.gds`
-(DRC / LVS clean). Check summary: `layout/klayout/slot_7_checks.txt`.
+layout `layout/klayout/slot_7.klay.gds` (agent A's v2, 2026-11-08 17:42 UTC: bg_core_pd (330, 152.7), bias_dist_pd
+(385, 183.1), pad_ref_rb (450, 150), s7_ctrl (452, 60), s7_doutpd (8, 60) µm; M1 / M2 stubs, M3 horizontal, M4
+vertical, TopMetal1 straps for vdd_3v3 / vss_3v3; DRC clean incl. the maximal deck with latch-up rules; LVS
+`--run_mode=deep` match with 0 port mismatches, 497 devices; pins that share one net are one CDL port named with the
+comma list of their labels, as KLayout names such a net) and `layout/klayout/s7_ctrl.klay.gds` (DRC / LVS clean).
+dig_out[11:0] are held low by `s7_doutpd` (as the fallback did; back-annotated into the source netlist; the slot_7 sheet
+does not have it yet). Open: coupling of the long Metal3 bus / dig_in lines that cross pad_ref_rb and bias_dist_pd. Check summary: `layout/klayout/slot_7_checks.txt`.

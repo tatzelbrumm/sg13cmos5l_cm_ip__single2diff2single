@@ -341,11 +341,29 @@ MN a en b vss sg13_hv_nmos w=1u l=0.45u ng=1
 MP a en_b b vdd sg13_hv_pmos w=1u l=0.45u ng=1
 .ends tg_hv
 
-.SUBCKT slot_7 vdd_3v3 vss_3v3 enable dig_in[0] dig_in[1] dig_in[2] dig_in[3] dig_in[4] dig_in[5] analog_bus0 analog_bus1 analog_bus2,s7_an_0_vcm,s7_an_1_vref analog_bus3,s7_an_0_vref s7_an_0_outp s7_an_0_outn s7_an_0_en_3v3,s7_an_1_en_3v3 s7_an_0_en_3v3_b,s7_an_1_en_3v3_b s7_an_0_iref s7_an_1_vinp s7_an_1_vinn s7_an_1_iref
+* ---- /tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/A/run/s7_doutpd.cdl
+* s7_doutpd: dig_out pull-downs (agent A, C4)
+.subckt s7_doutpd d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 d11 vdd_1v2 vss_1v2 vss_3v3
+M0 d0 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M1 d1 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M2 d2 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M3 d3 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M4 d4 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M5 d5 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M6 d6 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M7 d7 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M8 d8 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M9 d9 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M10 d10 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+M11 d11 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+.ends s7_doutpd
+
+.SUBCKT slot_7 vdd_3v3 vss_3v3 enable dig_in[0] dig_in[1] dig_in[2] dig_in[3] dig_in[4] dig_in[5] analog_bus0 analog_bus1 analog_bus2,s7_an_0_vcm,s7_an_1_vref analog_bus3,s7_an_0_vref s7_an_0_outp s7_an_0_outn s7_an_0_en_3v3,s7_an_1_en_3v3 s7_an_0_en_3v3_b,s7_an_1_en_3v3_b s7_an_0_iref s7_an_1_vinp s7_an_1_vinn s7_an_1_iref dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6] dig_out[7] dig_out[8] dig_out[9] dig_out[10] dig_out[11] vdd_1v2 vss_1v2
 XC vdd_3v3 vss_3v3 enable dig_in[0] dig_in[1] dig_in[2] dig_in[3] dig_in[4] dig_in[5] s7_an_0_en_3v3,s7_an_1_en_3v3 s7_an_0_en_3v3_b,s7_an_1_en_3v3_b s7_an_0_outp s7_an_0_outn
 + s7_an_1_vinp s7_an_1_vinn analog_bus0 analog_bus1 vcm_rb vref_rb analog_bus2,s7_an_0_vcm,s7_an_1_vref analog_bus3,s7_an_0_vref s7_ctrl
 XBG vdd_3v3 vss_3v3 ibg s7_an_0_en_3v3,s7_an_1_en_3v3 s7_an_0_en_3v3_b,s7_an_1_en_3v3_b bg_core_pd
 XD vdd_3v3 vss_3v3 s7_an_0_en_3v3,s7_an_1_en_3v3 s7_an_0_en_3v3_b,s7_an_1_en_3v3_b ibg vss_3v3 vss_3v3 vss_3v3 vdd_3v3 vss_3v3 vss_3v3 vss_3v3 iprb s7_an_0_iref s7_an_1_iref
 + isp vdd_3v3 vdd_3v3 vdd_3v3 vss_3v3 bias_dist_pd
 XR vdd_3v3 vss_3v3 iprb vcm_rb vref_rb s7_an_0_en_3v3,s7_an_1_en_3v3 s7_an_0_en_3v3_b,s7_an_1_en_3v3_b pad_ref_rb
+XDO dig_out[0] dig_out[1] dig_out[2] dig_out[3] dig_out[4] dig_out[5] dig_out[6] dig_out[7] dig_out[8] dig_out[9] dig_out[10] dig_out[11] vdd_1v2 vss_1v2 vss_3v3 s7_doutpd
 .ENDS slot_7

@@ -6,7 +6,8 @@
 *   off); pad_ref_rb (on the slot's vdd_3v3: the pad ring is not reachable inside the slot) -> vcm to S2D vcm and D2S
 *   vref, vref to S2D vref; analog_bus2 / 3 = vcm / vref, isolated by the harness's own per-slot bus switches (reg 0x51 bits 6 / 7).
 * Ports: the slot's harness ports used here, then the 13 custom-pad nets (names as in the harness's custom-io route).
-* Unused harness ports (dig_in, dig_out, clk, reset, ibias0/1, vbias, vdd_1v2, vss_1v2) are not listed.
+* dig_out0..11 are held low by s7_doutpd (needs the slot's vdd_1v2 on); unused, not listed: dig_in6..23, clk, reset,
+* ibias0/1, vbias.
 * s7_ctrl: mode control and switch matrix of slot 7 (tier 1, 2026-11-08, Christoph's spec):
 *   dig_in0 = swap (loop crossed), dig_in1 = mon (S2D outputs -> analog_bus0/1, loop stays on),
 *   dig_in2 = feed (analog_bus0/1 -> D2S inputs, loop off), dig_in5 = ext (pad_ref_rb's vcm / vref disconnected
@@ -67,9 +68,28 @@ XT9 vddh vss rc rc_b vcm_rb vcm_pad tg_hv
 XT10 vddh vss rc rc_b vref_rb vref_pad tg_hv
 .ends s7_ctrl
 
+* s7_doutpd: holds the unused dig_out[11:0] low while the slot's vdd_1v2 is on, as the fallback slot did (hv NMOS 0.5u /
+* 0.45u per output, gate vdd_1v2, source vss_1v2, bulk = substrate vss_3v3). Back-annotated from agent A's layout.
+.subckt s7_doutpd d0 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 d11 vdd_1v2 vss_1v2 vss_3v3
+XM0 d0 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM1 d1 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM2 d2 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM3 d3 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM4 d4 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM5 d5 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM6 d6 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM7 d7 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM8 d8 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM9 d9 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM10 d10 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+XM11 d11 vdd_1v2 vss_1v2 vss_3v3 sg13_hv_nmos w=0.5u l=0.45u ng=1 m=1
+.ends s7_doutpd
+
 .subckt slot_7 vdd_3v3 vss_3v3 enable dig_in0 dig_in1 dig_in2 dig_in3 dig_in4 dig_in5 analog_bus0 analog_bus1 analog_bus2 analog_bus3
 + s7_an_0_vref s7_an_0_outp s7_an_0_outn s7_an_0_vcm s7_an_0_en_3v3 s7_an_0_en_3v3_b s7_an_0_iref
 + s7_an_1_vinp s7_an_1_vinn s7_an_1_vref s7_an_1_iref s7_an_1_en_3v3_b s7_an_1_en_3v3
++ dig_out0 dig_out1 dig_out2 dig_out3 dig_out4 dig_out5 dig_out6 dig_out7 dig_out8 dig_out9 dig_out10 dig_out11
++ vdd_1v2 vss_1v2
 * master enable, mode decode and the switch matrix S2D -> D2S / bus0/1
 XC vdd_3v3 vss_3v3 enable dig_in0 dig_in1 dig_in2 dig_in3 dig_in4 dig_in5 en en_b s7_an_0_outp s7_an_0_outn
 + s7_an_1_vinp s7_an_1_vinn analog_bus0 analog_bus1 vcm_rb vref_rb vcm vref s7_ctrl
@@ -92,4 +112,7 @@ Vsr0 vref s7_an_0_vref 0
 * bus taps 2 / 3 on the pads' vcm / vref (monitor, or external feed with ext; the harness's per-slot switch is the off switch)
 Vsb2 vcm analog_bus2 0
 Vsb3 vref analog_bus3 0
+* unused digital outputs held low
+XDO dig_out0 dig_out1 dig_out2 dig_out3 dig_out4 dig_out5 dig_out6 dig_out7 dig_out8 dig_out9 dig_out10 dig_out11
++ vdd_1v2 vss_1v2 vss_3v3 s7_doutpd
 .ends slot_7
