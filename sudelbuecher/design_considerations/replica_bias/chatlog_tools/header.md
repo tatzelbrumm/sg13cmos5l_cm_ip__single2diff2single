@@ -2,7 +2,7 @@
 SPDX-FileCopyrightText: 2026 Christoph Maier
 SPDX-License-Identifier: Apache-2.0
 -->
-# Cloud session C4: replica bias for the reference and common-mode inputs of the custom pads (2026-11-06 / 07)
+# Cloud session C4: replica bias for the reference and common-mode inputs of the custom pads (2026-11-06 / 08)
 
 - **Session:** Claude Code cloud session (https://claude.ai/code/session_01XU3KH9LkJUXwr5yuksqCZG), claude. Launch
   prompt: the task file `docs/launch/replica_bias_TASK.md` on branch `harness-test`.
@@ -33,3 +33,10 @@ SPDX-License-Identifier: Apache-2.0
   Notes: `../design_considerations/replica_bias/layout/`.
 - **Updated 2026-11-07 (21:25 UTC):** turns 15–40 added by the same scripts; turns 1–14 are unchanged except for the
   tool lines at the end of turn 14 that came after the first export.
+- **Days 2–3 (2026-11-07 late evening to 2026-11-08, turns 41 on):** F's assembly of pad_ref_rb (routing-driven
+  placement, pins straight out, position in slot7), the drawn bypass capacitors backannotated, bias_dist_pd by agent D
+  (two rounds, the narrow-poly check), the standard-cell fill / decap / endcap survey (agent R), the `.klay.klib`
+  companion files, the slice hierarchy backannotated into the sheets, Christoph's hand edits of those sheets and of the
+  symbols, and the skill updates from them. More context compactions; the log follows the live path across them.
+  The long check results of these turns are in `docs/replica_bias/RUNLOG.md` rows 74–103 on the design branch.
+- **Updated 2026-11-08:** turns from 41 on added by the same scripts.
