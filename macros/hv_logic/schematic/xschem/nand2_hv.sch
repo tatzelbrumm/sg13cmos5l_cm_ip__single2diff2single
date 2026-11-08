@@ -5,13 +5,45 @@ V {}
 S {}
 F {}
 E {}
-T {nand2_hv: 3.3 V static CMOS gate (sg13_hv), y = not (a and b). Source: netlist/source/hv_logic.spice} 0 -60 0 0 0.4 0.4 {}
-C {devices/iopin.sym} 40 40 0 0 {name=p0 lab=vdd}
-C {devices/iopin.sym} 40 70 0 0 {name=p1 lab=vss}
-C {devices/ipin.sym} 40 100 0 0 {name=p2 lab=a}
-C {devices/ipin.sym} 40 130 0 0 {name=p3 lab=b}
-C {devices/opin.sym} 40 160 0 0 {name=p4 lab=y}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 200 60 0 0 {name=PA
+T {nand2_hv: 3.3 V static CMOS gate (sg13_hv), y = not (a and b). Source: netlist/source/hv_logic.spice} 0 -600 0 0 0.4 0.4 {}
+T {PMOS above, NMOS below; nets by label. vdd / vss: 3.3 V rail of the circuit using the gate.} 40 -100 0 0 0.25 0.25 {}
+N 420 -400 420 -350 {lab=y}
+N 360 -480 380 -480 {lab=a}
+N 420 -480 440 -480 {lab=vdd}
+N 240 -450 240 -420 {lab=y}
+N 240 -480 260 -480 {lab=vdd}
+N 360 -320 380 -320 {lab=a}
+N 420 -320 440 -320 {lab=vss}
+N 420 -170 420 -120 {lab=vss}
+N 420 -200 440 -200 {lab=vss}
+N 360 -480 360 -320 {lab=a}
+N 60 -320 360 -320 {lab=a}
+N 180 -480 200 -480 {lab=b}
+N 180 -480 180 -200 {lab=b}
+N 60 -480 180 -480 {lab=b}
+N 180 -200 380 -200 {lab=b}
+N 420 -560 440 -560 {lab=vdd}
+N 440 -560 440 -480 {lab=vdd}
+N 420 -560 420 -510 {lab=vdd}
+N 260 -560 420 -560 {lab=vdd}
+N 260 -560 260 -480 {lab=vdd}
+N 240 -560 260 -560 {lab=vdd}
+N 240 -560 240 -510 {lab=vdd}
+N 60 -560 240 -560 {lab=vdd}
+N 420 -400 500 -400 {lab=y}
+N 420 -420 420 -400 {lab=y}
+N 420 -290 420 -230 {lab=n1}
+N 440 -200 440 -120 {lab=vss}
+N 420 -120 440 -120 {lab=vss}
+N 60 -120 420 -120 {lab=vss}
+N 240 -420 420 -420 {lab=y}
+N 420 -450 420 -420 {lab=y}
+C {devices/iopin.sym} 60 -560 0 1 {name=p0 lab=vdd}
+C {devices/iopin.sym} 60 -120 0 1 {name=p1 lab=vss}
+C {devices/ipin.sym} 60 -320 0 0 {name=p2 lab=a}
+C {devices/ipin.sym} 60 -480 0 0 {name=p3 lab=b}
+C {devices/opin.sym} 500 -400 0 0 {name=p4 lab=y}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 400 -480 0 0 {name=PA
 l=0.45u
 w=1u
 ng=1
@@ -20,15 +52,11 @@ mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-N 220 90 220 110 {lab=y}
-C {devices/lab_pin.sym} 220 110 0 1 {name=l1 sig_type=std_logic lab=y}
-N 180 60 160 60 {lab=a}
-C {devices/lab_pin.sym} 160 60 0 0 {name=l2 sig_type=std_logic lab=a}
-N 220 30 220 10 {lab=vdd}
-C {devices/lab_pin.sym} 220 10 0 1 {name=l3 sig_type=std_logic lab=vdd}
-N 220 60 240 60 {lab=vdd}
-C {devices/lab_pin.sym} 240 60 0 1 {name=l4 sig_type=std_logic lab=vdd}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 400 60 0 0 {name=PB
+C {devices/lab_pin.sym} 420 -430 0 1 {name=l1 sig_type=std_logic lab=y}
+C {devices/lab_pin.sym} 360 -480 0 0 {name=l2 sig_type=std_logic lab=a}
+C {devices/lab_pin.sym} 420 -530 0 1 {name=l3 sig_type=std_logic lab=vdd}
+C {devices/lab_pin.sym} 440 -480 0 1 {name=l4 sig_type=std_logic lab=vdd}
+C {sg13cmos5l_pr/sg13_hv_pmos.sym} 220 -480 0 0 {name=PB
 l=0.45u
 w=1u
 ng=1
@@ -37,15 +65,11 @@ mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-N 420 90 420 110 {lab=y}
-C {devices/lab_pin.sym} 420 110 0 1 {name=l5 sig_type=std_logic lab=y}
-N 380 60 360 60 {lab=b}
-C {devices/lab_pin.sym} 360 60 0 0 {name=l6 sig_type=std_logic lab=b}
-N 420 30 420 10 {lab=vdd}
-C {devices/lab_pin.sym} 420 10 0 1 {name=l7 sig_type=std_logic lab=vdd}
-N 420 60 440 60 {lab=vdd}
-C {devices/lab_pin.sym} 440 60 0 1 {name=l8 sig_type=std_logic lab=vdd}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 200 260 0 0 {name=NA
+C {devices/lab_pin.sym} 240 -430 0 1 {name=l5 sig_type=std_logic lab=y}
+C {devices/lab_pin.sym} 180 -480 0 0 {name=l6 sig_type=std_logic lab=b}
+C {devices/lab_pin.sym} 240 -530 0 1 {name=l7 sig_type=std_logic lab=vdd}
+C {devices/lab_pin.sym} 260 -480 0 1 {name=l8 sig_type=std_logic lab=vdd}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 400 -320 0 0 {name=NA
 l=0.45u
 w=1u
 ng=1
@@ -54,15 +78,11 @@ mm_ok=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-N 220 230 220 210 {lab=y}
-C {devices/lab_pin.sym} 220 210 0 1 {name=l9 sig_type=std_logic lab=y}
-N 180 260 160 260 {lab=a}
-C {devices/lab_pin.sym} 160 260 0 0 {name=l10 sig_type=std_logic lab=a}
-N 220 290 220 310 {lab=n1}
-C {devices/lab_pin.sym} 220 310 0 1 {name=l11 sig_type=std_logic lab=n1}
-N 220 260 240 260 {lab=vss}
-C {devices/lab_pin.sym} 240 260 0 1 {name=l12 sig_type=std_logic lab=vss}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 400 260 0 0 {name=NB
+C {devices/lab_pin.sym} 420 -370 0 1 {name=l9 sig_type=std_logic lab=y}
+C {devices/lab_pin.sym} 360 -320 0 0 {name=l10 sig_type=std_logic lab=a}
+C {devices/lab_pin.sym} 420 -270 0 1 {name=l11 sig_type=std_logic lab=n1}
+C {devices/lab_pin.sym} 440 -320 0 1 {name=l12 sig_type=std_logic lab=vss}
+C {sg13cmos5l_pr/sg13_hv_nmos.sym} 400 -200 0 0 {name=NB
 l=0.45u
 w=1u
 ng=1
@@ -71,13 +91,8 @@ mm_ok=1
 model=sg13_hv_nmos
 spiceprefix=X
 }
-N 420 230 420 210 {lab=n1}
-C {devices/lab_pin.sym} 420 210 0 1 {name=l13 sig_type=std_logic lab=n1}
-N 380 260 360 260 {lab=b}
-C {devices/lab_pin.sym} 360 260 0 0 {name=l14 sig_type=std_logic lab=b}
-N 420 290 420 310 {lab=vss}
-C {devices/lab_pin.sym} 420 310 0 1 {name=l15 sig_type=std_logic lab=vss}
-N 420 260 440 260 {lab=vss}
-C {devices/lab_pin.sym} 440 260 0 1 {name=l16 sig_type=std_logic lab=vss}
-T {PMOS above, NMOS below; nets by label. vdd / vss: 3.3 V rail of the circuit using the gate.} 40 360 0 0 0.25 0.25 {}
-C {devices/title.sym} 160 600 0 0 {name=l0 author="Christoph Maier"}
+C {devices/lab_pin.sym} 420 -250 0 1 {name=l13 sig_type=std_logic lab=n1}
+C {devices/lab_pin.sym} 360 -200 0 0 {name=l14 sig_type=std_logic lab=b}
+C {devices/lab_pin.sym} 420 -150 0 1 {name=l15 sig_type=std_logic lab=vss}
+C {devices/lab_pin.sym} 440 -200 0 1 {name=l16 sig_type=std_logic lab=vss}
+C {devices/title.sym} 160 -40 0 0 {name=l0 author="Christoph Maier"}

@@ -14,22 +14,28 @@ N 320 0 360 0 {lab=e_b}
 N 360 0 400 0 {lab=e_b}
 N 360 0 360 160 {lab=e_b}
 N 360 160 620 160 {lab=e_b}
-N 620 160 620 140 {lab=e_b}
+N 620 140 620 160 {lab=e_b}
 N 480 0 620 0 {lab=e}
 N 620 0 620 60 {lab=e}
 N 60 100 580 100 {lab=a}
 N 660 100 800 100 {lab=b}
-N 280 -30 280 -50 {lab=vdd}
+N 260 30 260 220 {lab=vss}
+N 440 20 440 220 {lab=vss}
+N 650 140 650 220 {lab=vss}
+N 440 220 650 220 {lab=vss}
+N 60 220 260 220 {lab=vss}
+N 260 220 440 220 {lab=vss}
+N 650 -100 650 60 {lab=vdd}
+N 460 -100 650 -100 {lab=vdd}
+N 280 -100 280 -30 {lab=vdd}
+N 60 -100 280 -100 {lab=vdd}
+N 460 -100 460 -20 {lab=vdd}
+N 280 -100 460 -100 {lab=vdd}
 C {devices/lab_pin.sym} 280 -50 0 1 {name=l1 sig_type=std_logic lab=vdd}
-N 260 30 260 50 {lab=vss}
 C {devices/lab_pin.sym} 260 50 0 1 {name=l2 sig_type=std_logic lab=vss}
-N 460 -20 460 -40 {lab=vdd}
 C {devices/lab_pin.sym} 460 -40 0 1 {name=l3 sig_type=std_logic lab=vdd}
-N 440 20 440 40 {lab=vss}
 C {devices/lab_pin.sym} 440 40 0 1 {name=l4 sig_type=std_logic lab=vss}
-N 650 60 650 40 {lab=vdd}
 C {devices/lab_pin.sym} 650 40 0 1 {name=l5 sig_type=std_logic lab=vdd}
-N 650 140 650 160 {lab=vss}
 C {devices/lab_pin.sym} 650 160 0 1 {name=l6 sig_type=std_logic lab=vss}
 C {devices/lab_wire.sym} 560 0 0 0 {name=l7 sig_type=std_logic lab=e}
 C {devices/lab_wire.sym} 560 160 0 0 {name=l8 sig_type=std_logic lab=e_b}
