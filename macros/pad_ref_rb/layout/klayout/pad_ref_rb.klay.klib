@@ -1,0 +1,8 @@
+{
+    "technology": "",
+    "statements": [
+        {
+            "comment": "Companion file of pad_ref_rb.klay.gds for the KLayout Library Manager plugin (written by Claude, cloud session C4, like slot.klay.klib). The layout references no GDS library; its nmosHV cells are PCell variants of the PDK's SG13_dev library, which the IHP technology registers itself."
+        }
+    ]
+}
