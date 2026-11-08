@@ -29,3 +29,10 @@ transmission gate made a cell after agent D's layout cell of the same name in bi
   device (model, terminals, w / l / ng / m, port order), with no missing symbols.
 - No CACE suite: the gates are characterized as part of `en_ctrl_3v3` and `bias_sel_pd`. `make sim-cace` does nothing here.
 - No layout yet.
+- **For the hv standard-cell set** (Christoph, 2026-11-08: "the off grid symbols become important once I have you build
+  a set of standard cells"): put every cell symbol's pins on the 20-unit grid, with supply pins off center (vdd top at
+  x −20, vss bottom at x +20, as in `bias_dist_pd.sym` and `bdp_slice.sym`) so vertical supply lines can run through
+  stacked symbols without crossing. Off the grid today: `nand2_hv.sym`, `nor2_hv.sym`, `tg_hv.sym` here, and
+  `bdp_slice.sym` (`en_3v3`, `en`, `a`, `b`, and vdd / vss at y ∓70) in `macros/bias_dist_pd`. Moving pins detaches
+  the wires of every sheet that places the symbol (today `bdp_slice.sch`, `bias_dist_pd.sch`, `bias_gen_pd.sch`,
+  `bias_sel_pd.sch`, `bias_sel_noab_pd.sch`); re-wire and check each with `scripts/xschem/sheet_equiv.py`.
