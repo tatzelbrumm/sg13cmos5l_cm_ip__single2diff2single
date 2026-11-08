@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the tughra metal art for slot_7: image -> staircase polygons on five metal layers -> GDS.
+"""Build the tughra metal art for slot_7: image -> staircase polygons on GatPoly and four metal layers -> GDS.
 
 usage: build_art.py [--slot SLOT_GDS] [--scale UM_PER_PX] [--out DIR]
 
@@ -27,11 +27,13 @@ import segment as S
 import pdk_layers as pl
 
 G = 0.05                                   # raster grid (um); contour vertices land on multiples of G/2
-LAYER_OF = {"red": "Metal1", "orange": "Metal1", "gold": "Metal1", "purple": "Metal2", "blue": "Metal3",
+LAYER_OF = {"purple": "GatPoly", "red": "Metal1", "orange": "Metal1", "gold": "Metal2", "blue": "Metal3",
             "green": "Metal4"}
 DESIGN = {                                 # (kernel cells n, chamfer cells c); flat = (n - 2c) * G, body = n * G
-    "Metal1": (7, 1), "Metal2": (7, 1), "Metal3": (7, 1), "Metal4": (7, 1),    # 0.35 um body, 0.25 um flat
+    "GatPoly": (7, 1), "Metal1": (7, 1), "Metal2": (7, 1), "Metal3": (7, 1), "Metal4": (7, 1),    # 0.35 um body, 0.25 um flat
 }
+NOFILL = ["Activ.nofill", "GatPoly.nofill", "Metal1.nofill", "Metal2.nofill", "Metal3.nofill", "Metal4.nofill", "TopMetal1.nofill"]
+NOFILL_MARGIN = 3.0        # um around the art, clipped to the free rectangle
 SLOT_DEFAULT = os.environ.get("SLOT7_GDS", "/home/user/sg13cmos5l_cm_slot7/final/gds/slot_7.gds")
 CELL = "tughra_art"
 
@@ -220,7 +222,7 @@ def main():
     if a.region:
         rect = [float(v) for v in a.region.split(",")]
     else:
-        cand = [r for r in j["m1_m4_visible_rects_um"] if (r[2] - r[0]) >= art_w and (r[3] - r[1]) >= art_h]
+        cand = [r for r in j["art_region_rects_um"] if (r[2] - r[0]) >= art_w and (r[3] - r[1]) >= art_h]
         if not cand:
             sys.exit(f"art {art_w:.2f} x {art_h:.2f} um does not fit any common free rectangle; lower --scale")
         rect = max(cand, key=lambda r: (r[2] - r[0]) * (r[3] - r[1]))
@@ -236,7 +238,7 @@ def main():
     ly = db.Layout(); ly.dbu = 0.001
     cell = ly.create_cell(CELL)
     layer_idx = {}
-    for L in pl.METALS:
+    for L in [pl.POLY] + pl.METALS:
         if L in proc:
             layer_idx[L] = ly.layer(*ln[L + ".drawing"])
             reg = mask_to_region(proc[L])
@@ -247,6 +249,16 @@ def main():
             stats["layers"][L] = {"gds": list(ln[L + ".drawing"]), "polygons": reg.count(),
                                   "vertices": sum(p.num_points() for p in reg.each()), "area_um2": reg.area() * 1e-6, "repair_marker_counts": log,
                                   "colours": [c for c, v in LAYER_OF.items() if v == L]}
+    # no-fill markers: art box grown by NOFILL_MARGIN, clipped to the free rectangle (cell coordinates)
+    bx0, by0, bx1, by1 = 0.0, 0.0, art_w, art_h
+    nf = [max(bx0 - NOFILL_MARGIN, rx0 - px), max(by0 - NOFILL_MARGIN, ry0 - py),
+          min(bx1 + NOFILL_MARGIN, rx1 - px), min(by1 + NOFILL_MARGIN, ry1 - py)]
+    nf_box = db.Box(*[int(round(v / 0.001)) for v in nf])
+    for name in NOFILL:
+        cell.shapes(ly.layer(*ln[name])).insert(nf_box)
+    stats["nofill_box_um_cell_frame"] = [round(v, 3) for v in nf]
+    stats["nofill_box_um_slot_frame"] = [round(nf[0] + px, 3), round(nf[1] + py, 3), round(nf[2] + px, 3), round(nf[3] + py, 3)]
+    stats["nofill_layers"] = {n: list(ln[n]) for n in NOFILL}
     art_path = os.path.join(a.out, "tughra_art.gds")
     opt = db.SaveLayoutOptions(); opt.format = 'GDS2'; opt.gds2_max_vertex_count = 4000
     ly.write(art_path, opt)
@@ -257,9 +269,9 @@ def main():
         sys.exit(f"cell {CELL} already exists in {a.slot}")
     top = m.cell("slot_7")
     art_cell = m.create_cell(CELL)
-    for L in layer_idx:
-        li = m.layer(*ln[L + ".drawing"])
-        art_cell.shapes(li).insert(cell.shapes(layer_idx[L]))
+    for li0 in ly.layer_indexes():              # every layer of the art cell: art layers and no-fill markers
+        info = ly.get_info(li0)
+        art_cell.shapes(m.layer(info.layer, info.datatype)).insert(cell.shapes(li0))
     top.insert(db.CellInstArray(art_cell.cell_index(), db.Trans(int(round(px / m.dbu)), int(round(py / m.dbu)))))
     merged_path = os.path.join(a.out, "slot7_with_art.gds")
     m.write(merged_path, opt)

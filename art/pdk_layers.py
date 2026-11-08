@@ -9,6 +9,9 @@ import xml.etree.ElementTree as ET
 PDK = os.environ.get("PDK_ROOT", "/foss/pdks") + "/ihp-sg13cmos5l"
 TECH = PDK + "/libs.tech/klayout/tech"
 METALS = ["Metal1", "Metal2", "Metal3", "Metal4", "TopMetal1"]   # the whole stack of this PDK (M1-M4-TM1)
+POLY = "GatPoly"                                                 # art layer below Metal1 (no Activ underneath)
+# GDS layer numbers that are not FEOL: metals, vias, TopVia, prBoundary, TEXT
+NON_FEOL = {8, 10, 30, 50, 126, 19, 29, 49, 125, 189, 63}
 
 
 def layer_numbers():
@@ -44,12 +47,13 @@ def metal_rules():
             out[m] = dict(w=r["Mn_a"], s=r["Mn_b"], e_s=r["Mn_e"], e_w=r["Mn_e_w"], e_l=r["Mn_e_cr"],
                           f_s=r["Mn_f"], f_w=r["Mn_f_w"], f_l=r["Mn_f_cr"], s45=r["Mn_i"], w45=r["Mn_g"],
                           dmin=r["Mn_j"], dmax=r["Mn_k"], area=r["Mn_d"], fill_h=r["MFil_h"], fill_k=r["MFil_k"])
+    out[POLY] = dict(w=r["Gat_a"], s=r["Gat_b"])
     return out
 
 
 def drawing_layers():
     ln = layer_numbers()
-    return {m: ln[m + ".drawing"] for m in METALS}
+    return {m: ln[m + ".drawing"] for m in [POLY] + METALS}
 
 
 if __name__ == "__main__":

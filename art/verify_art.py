@@ -85,23 +85,25 @@ def clearance():
     inst = [i for i in m.cell("slot_7").each_inst() if m.cell(i.cell_index).name == "tughra_art"][0]
     dx, dy = inst.trans.disp.x, inst.trans.disp.y
     res = {"origin_um": [dx * m.dbu, dy * m.dbu], "layers": {}}
-    slot = db.Region(otop.bbox())
-    for L in pl.METALS:
+    # existing shapes: FEOL (every layer that is not metal / via / boundary / text) and each metal
+    def existing(name):
+        occ = db.Region()
+        for li in orig.layer_indexes():
+            i = orig.get_info(li)
+            if i.datatype in (1, 25):
+                continue
+            hit = (i.layer not in pl.NON_FEOL) if name == "FEOL" else (i.layer == ln[name + ".drawing"][0])
+            if hit:
+                occ += db.Region(otop.begin_shapes_rec(li))
+        return occ.merged()
+    occs = {n: existing(n) for n in ["FEOL"] + pl.METALS}
+    for L in [pl.POLY] + pl.METALS:
         l, d = ln[L + ".drawing"]
         if art.find_layer(l, d) is None:
             continue            # layer not used by the art
-        artR = db.Region(atop.begin_shapes_rec(art.find_layer(l, d))).transformed(db.Trans(dx, dy)) if art.find_layer(l, d) is not None else db.Region()
-        # existing shapes on all five metals, all datatypes except text/label
+        artR = db.Region(atop.begin_shapes_rec(art.find_layer(l, d))).transformed(db.Trans(dx, dy)).merged()
         entry = {"art_polygons": artR.count(), "art_area_um2": artR.area() * 1e-6}
-        for L2 in pl.METALS:
-            l2 = ln[L2 + ".drawing"][0]
-            occ = db.Region()
-            for li in orig.layer_indexes():
-                i = orig.get_info(li)
-                if i.layer == l2 and i.datatype not in (1, 25):
-                    occ += db.Region(otop.begin_shapes_rec(li))
-            occ = occ.merged()
-            # minimum distance: smallest d from a ladder for which grown art touches existing shapes
+        for n, occ in occs.items():
             dist = None
             if not (artR.sized(int(60 / m.dbu)) & occ).is_empty():          # something within 60 um: bisect to 5 nm
                 lo, hi = 0.0, 60.0
@@ -112,12 +114,27 @@ def clearance():
                     else:
                         hi = mid
                 dist = round(hi, 3)
-            entry[f"vs_{L2}"] = {"overlap_um2": (artR & occ).area() * 1e-6, "touches_within_um": dist,
-                                 "separation_violations_lt_3um": (artR.separation_check(occ, int(3.0 / m.dbu)).count() if not occ.is_empty() else 0)}
-        edge = (slot - artR).is_empty()
+            entry[f"vs_{n}"] = {"overlap_um2": (artR & occ).area() * 1e-6, "touches_within_um": dist}
         bb = artR.bbox()
         entry["min_distance_to_slot_edge_um"] = min(bb.left, bb.bottom, otop.bbox().right - bb.right, otop.bbox().top - bb.top) * m.dbu
         res["layers"][L] = entry
+    # no-fill markers: present on every listed layer, and each art layer lies inside its marker
+    nf = {}
+    for name in ["Activ.nofill", "GatPoly.nofill", "Metal1.nofill", "Metal2.nofill", "Metal3.nofill", "Metal4.nofill", "TopMetal1.nofill"]:
+        li = art.find_layer(*ln[name])
+        r = db.Region(atop.begin_shapes_rec(li)).transformed(db.Trans(dx, dy)) if li is not None else db.Region()
+        nf[name] = {"gds": list(ln[name]), "boxes": r.count(), "box_um": [round(v * m.dbu, 3) for v in (r.bbox().left, r.bbox().bottom, r.bbox().right, r.bbox().top)] if not r.is_empty() else None}
+    allart = db.Region()
+    for L in [pl.POLY] + pl.METALS:
+        li = art.find_layer(*ln[L + ".drawing"])
+        if li is not None:
+            allart += db.Region(atop.begin_shapes_rec(li)).transformed(db.Trans(dx, dy))
+    nfreg = db.Region(atop.begin_shapes_rec(art.find_layer(*ln["Metal1.nofill"]))).transformed(db.Trans(dx, dy))
+    nf["art_inside_nofill_box"] = (allart - nfreg).is_empty()
+    # nofill markers of the other layers equal the Metal1 one
+    nf["all_markers_identical"] = all((db.Region(atop.begin_shapes_rec(art.find_layer(*ln[n]))) ^ db.Region(atop.begin_shapes_rec(art.find_layer(*ln["Metal1.nofill"])))).is_empty()
+                                      for n in ["Activ.nofill", "GatPoly.nofill", "Metal2.nofill", "Metal3.nofill", "Metal4.nofill", "TopMetal1.nofill"])
+    res["nofill"] = nf
     return res
 
 
@@ -198,13 +215,21 @@ def main():
           f"- instances of `tughra_art` removed: {x['instances_of_art_cell']}",
           f"- XOR polygons over all {len(x['layers'])} layer/datatypes (flattened): **{x['total_xor_polygons']}**",
           f"- text labels identical: {x['labels_equal']}; cell list identical after removal: {x['cells_after_removal_equal']}", ""]
-    L += ["## Clearance of the art to existing metal (um)", "",
-          "| art layer | polygons | area (um2) | overlap with any existing metal (um2) | closest approach to existing metal on the same layer | to slot edge |", "|---|---|---|---|---|---|"]
+    L += ["## Clearance of the art to existing shapes (um)", "",
+          "| art layer | polygons | area (um2) | overlap with any existing shape on the metals / front end (um2) | closest approach to existing shapes of its own kind (um) | to slot edge |", "|---|---|---|---|---|---|"]
     for Ly, e in rep["clearance"]["layers"].items():
-        ov = sum(e[f"vs_{k}"]["overlap_um2"] for k in pl.METALS)
-        same = e[f"vs_{Ly}"]["touches_within_um"]
-        L.append(f"| {Ly} | {e['art_polygons']} | {e['art_area_um2']:.1f} | {ov:.3f} | {'> 60' if same is None else f'{same:.2f}'} | {e['min_distance_to_slot_edge_um']:.1f} |")
-    L += ["", "(Closest approach is found by bisection: the art grown by d first touches existing shapes at d. The same figure for the other four metal layers is in verify_report.json.)", ""]
+        kinds = ["FEOL"] + pl.METALS
+        ov = sum(e[f"vs_{k}"]["overlap_um2"] for k in kinds)
+        own = "FEOL" if Ly == pl.POLY else Ly
+        same = e[f"vs_{own}"]["touches_within_um"]
+        L.append(f"| {Ly} | {e['art_polygons']} | {e['art_area_um2']:.1f} | {ov:.3f} | {'> 60' if same is None else f'{same:.2f}'} (vs {own}) | {e['min_distance_to_slot_edge_um']:.1f} |")
+    L += ["", "(Closest approach is found by bisection: the art grown by d first touches existing shapes at d. \"FEOL\" = every front-end layer (Activ, GatPoly, Cont, wells, implants...). Figures against the other layers are in verify_report.json.)", ""]
+    nf = rep["clearance"]["nofill"]
+    L += ["## No-fill markers", "", "| layer | GDS | boxes | box (um, slot coordinates) |", "|---|---|---|---|"]
+    for k, v_ in nf.items():
+        if isinstance(v_, dict):
+            L.append(f"| {k} | {v_['gds'][0]}/{v_['gds'][1]} | {v_['boxes']} | {v_['box_um']} |")
+    L += ["", f"- all art layers lie inside the marker box: {nf['art_inside_nofill_box']}; the seven markers are identical: {nf['all_markers_identical']}", ""]
     L += ["## DRC (PDK run_drc.py, all tables, density and antenna on)", "",
           f"- rules violated by the original slot_7: {sorted(rep['drc']['original']['markers'])}",
           f"- rules violated by the merged GDS: {sorted(rep['drc']['merged']['markers'])}",

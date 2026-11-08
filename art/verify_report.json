@@ -3,8 +3,10 @@
   "instances_of_art_cell": 1,
   "layers": {
    "1/0": 0,
+   "1/23": 0,
    "5/0": 0,
    "5/2": 0,
+   "5/23": 0,
    "6/0": 0,
    "7/0": 0,
    "8/0": 0,
@@ -21,11 +23,13 @@
    "29/0": 0,
    "30/0": 0,
    "30/2": 0,
+   "30/23": 0,
    "30/25": 0,
    "31/0": 0,
    "44/0": 0,
    "49/0": 0,
    "50/0": 0,
+   "50/23": 0,
    "51/0": 0,
    "52/0": 0,
    "63/0": 0,
@@ -33,6 +37,7 @@
    "125/0": 0,
    "126/0": 0,
    "126/2": 0,
+   "126/23": 0,
    "126/25": 0,
    "128/0": 0,
    "189/4": 0
@@ -47,126 +52,246 @@
    141.3
   ],
   "layers": {
-   "Metal1": {
-    "art_polygons": 25,
-    "art_area_um2": 816.4699999999999,
+   "GatPoly": {
+    "art_polygons": 2,
+    "art_area_um2": 74.195,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
     "vs_Metal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_Metal2": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_Metal3": {
      "overlap_um2": 0.0,
-     "touches_within_um": 27.949,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": 46.648
     },
     "vs_Metal4": {
      "overlap_um2": 0.0,
-     "touches_within_um": 53.353,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_TopMetal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": 1.304,
-     "separation_violations_lt_3um": 33
+     "touches_within_um": 20.002
+    },
+    "min_distance_to_slot_edge_um": 93.60000000000001
+   },
+   "Metal1": {
+    "art_polygons": 18,
+    "art_area_um2": 544.4525,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 50.197
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 53.353
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 22.654
     },
     "min_distance_to_slot_edge_um": 63.65
    },
    "Metal2": {
-    "art_polygons": 2,
-    "art_area_um2": 74.375,
+    "art_polygons": 7,
+    "art_area_um2": 272.09999999999997,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
     "vs_Metal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_Metal2": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_Metal3": {
      "overlap_um2": 0.0,
-     "touches_within_um": 46.648,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": 27.949
     },
     "vs_Metal4": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_TopMetal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": 20.002,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": 1.304
     },
-    "min_distance_to_slot_edge_um": 93.60000000000001
+    "min_distance_to_slot_edge_um": 105.9
    },
    "Metal3": {
-    "art_polygons": 16,
+    "art_polygons": 12,
     "art_area_um2": 484.0725,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
     "vs_Metal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_Metal2": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_Metal3": {
      "overlap_um2": 0.0,
-     "touches_within_um": 36.599,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": 36.599
     },
     "vs_Metal4": {
      "overlap_um2": 0.0,
-     "touches_within_um": 50.702,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": 50.702
     },
     "vs_TopMetal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": 9.954,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": 9.954
     },
     "min_distance_to_slot_edge_um": 72.55
    },
    "Metal4": {
-    "art_polygons": 15,
+    "art_polygons": 13,
     "art_area_um2": 478.4025,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
     "vs_Metal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_Metal2": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_Metal3": {
      "overlap_um2": 0.0,
-     "touches_within_um": 39.349,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": 39.349
     },
     "vs_Metal4": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": null
     },
     "vs_TopMetal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": 1.304,
-     "separation_violations_lt_3um": 57
+     "touches_within_um": 1.304
     },
     "min_distance_to_slot_edge_um": 42.300000000000004
    }
+  },
+  "nofill": {
+   "Activ.nofill": {
+    "gds": [
+     1,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "GatPoly.nofill": {
+    "gds": [
+     5,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "Metal1.nofill": {
+    "gds": [
+     8,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "Metal2.nofill": {
+    "gds": [
+     10,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "Metal3.nofill": {
+    "gds": [
+     30,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "Metal4.nofill": {
+    "gds": [
+     50,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "TopMetal1.nofill": {
+    "gds": [
+     126,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "art_inside_nofill_box": true,
+   "all_markers_identical": true
   }
  },
  "drc": {
@@ -205,9 +330,9 @@
    },
    "density_ratio_percent": {
     "AFil.g": 4.006,
-    "GFil.g": 3.591,
-    "M1.j": 2.198,
-    "M2.j": 0.808,
+    "GFil.g": 3.642,
+    "M1.j": 2.012,
+    "M2.j": 0.942,
     "M3.j": 2.47,
     "M4.j": 0.979,
     "TM1.c": 7.044

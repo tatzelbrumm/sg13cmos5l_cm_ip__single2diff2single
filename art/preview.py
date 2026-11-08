@@ -3,7 +3,7 @@
 and the art in place inside slot_7.
 usage: preview.py [art_dir]   reads tughra_art.gds, slot7_with_art.gds, layer_colour_map.npz
 writes preview_art.png, preview_layers.png, preview_side_by_side.png, preview_slot_context.png
-Layers shared by several colours (Metal1: red, orange, gold) are drawn in the colour of the nearest source stroke
+Layers shared by several colours (Metal1: red, orange) are drawn in the colour of the nearest source stroke
 (layer_colour_map.npz, written by build_art.py); the GDS itself carries no colour.
 """
 import sys, os
@@ -16,8 +16,8 @@ import segment as S, pdk_layers as pl
 
 D = sys.argv[1] if len(sys.argv) > 1 else HERE
 PX = 12                                  # preview pixels per um
-LAYERS = ["Metal1", "Metal2", "Metal3", "Metal4"]           # bottom to top
-LCOL = {"Metal1": ("red", "orange", "gold"), "Metal2": ("purple",), "Metal3": ("blue",), "Metal4": ("green",)}
+LAYERS = ["GatPoly", "Metal1", "Metal2", "Metal3", "Metal4"]           # bottom to top
+LCOL = {"GatPoly": ("purple",), "Metal1": ("red", "orange"), "Metal2": ("gold",), "Metal3": ("blue",), "Metal4": ("green",)}
 SRC = os.path.join(HERE, "source/tughra_source.webp")
 
 
@@ -62,7 +62,12 @@ def main():
     cmaps = {k: cmaps[k] for k in cmaps.files}
     ly = db.Layout(); ly.read(os.path.join(D, "tughra_art.gds"))
     cell = ly.cell("tughra_art"); dbu = ly.dbu; ln = pl.layer_numbers()
-    bb = cell.bbox(); ox, oy = bb.left * dbu, bb.bottom * dbu
+    allreg = db.Region()                    # box of the art layers only (the no-fill markers are larger)
+    for L in LAYERS:
+        li = ly.find_layer(*ln[L + ".drawing"])
+        if li is not None:
+            allreg += db.Region(cell.begin_shapes_rec(li))
+    bb = allreg.bbox(); ox, oy = bb.left * dbu, bb.bottom * dbu
     W = int(np.ceil(bb.width() * dbu * PX)) + 1; H = int(np.ceil(bb.height() * dbu * PX)) + 1
     comp = np.full((H, W, 3), 255, np.uint8); panels = []
     for L in LAYERS:
@@ -98,8 +103,8 @@ def main():
     art_idx = m.cell("tughra_art").cell_index()
     inst = [i for i in top.each_inst() if i.cell_index == art_idx][0]
     ax, ay = inst.trans.disp.x * dbu, inst.trans.disp.y * dbu
-    greys = {"Metal1": 200, "Metal2": 185, "Metal3": 170, "Metal4": 150, "TopMetal1": 215}
-    for L in ["Metal1", "Metal2", "Metal3", "Metal4", "TopMetal1"]:
+    greys = {"GatPoly": 228, "Metal1": 200, "Metal2": 185, "Metal3": 170, "Metal4": 150, "TopMetal1": 215}
+    for L in ["GatPoly", "Metal1", "Metal2", "Metal3", "Metal4", "TopMetal1"]:
         li = m.find_layer(*ln[L + ".drawing"])
         it = db.RecursiveShapeIterator(m, top, li)
         it.unselect_cells([art_idx])                       # everything except the art
