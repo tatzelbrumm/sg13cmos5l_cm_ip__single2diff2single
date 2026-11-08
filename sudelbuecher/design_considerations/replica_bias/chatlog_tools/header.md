@@ -40,3 +40,8 @@ SPDX-License-Identifier: Apache-2.0
   symbols, and the skill updates from them. More context compactions; the log follows the live path across them.
   The long check results of these turns are in `docs/replica_bias/RUNLOG.md` rows 74–103 on the design branch.
 - **Updated 2026-11-08:** turns from 41 on added by the same scripts.
+- **Day 3, afternoon (2026-11-08, turns 68 on):** the slot-7 hookup concept (research agent on the harness and the other
+  sessions), the fail-safe enable redesigned (en_ctrl_3v3 v2: nA leaker shifter, no supply detectors; sheets, CACE,
+  layout by agents), the pads' starvation check, the reference cores' start-up current, the tier-1 slot netlist and its
+  switch matrix (`macros/slot_7`), and the parallel layout agents for the slot assembly. Check results in
+  `docs/replica_bias/RUNLOG.md` rows 104-116.
