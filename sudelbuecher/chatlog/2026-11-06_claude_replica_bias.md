@@ -2,7 +2,7 @@
 SPDX-FileCopyrightText: 2026 Christoph Maier
 SPDX-License-Identifier: Apache-2.0
 -->
-# Cloud session C4: replica bias for the reference and common-mode inputs of the custom pads (2026-11-06 / 07)
+# Cloud session C4: replica bias for the reference and common-mode inputs of the custom pads (2026-11-06 / 08)
 
 - **Session:** Claude Code cloud session (https://claude.ai/code/session_01XU3KH9LkJUXwr5yuksqCZG), claude. Launch
   prompt: the task file `docs/launch/replica_bias_TASK.md` on branch `harness-test`.
@@ -33,6 +33,13 @@ SPDX-License-Identifier: Apache-2.0
   Notes: `../design_considerations/replica_bias/layout/`.
 - **Updated 2026-11-07 (21:25 UTC):** turns 15–40 added by the same scripts; turns 1–14 are unchanged except for the
   tool lines at the end of turn 14 that came after the first export.
+- **Days 2–3 (2026-11-07 late evening to 2026-11-08, turns 41 on):** F's assembly of pad_ref_rb (routing-driven
+  placement, pins straight out, position in slot7), the drawn bypass capacitors backannotated, bias_dist_pd by agent D
+  (two rounds, the narrow-poly check), the standard-cell fill / decap / endcap survey (agent R), the `.klay.klib`
+  companion files, the slice hierarchy backannotated into the sheets, Christoph's hand edits of those sheets and of the
+  symbols, and the skill updates from them. More context compactions; the log follows the live path across them.
+  The long check results of these turns are in `docs/replica_bias/RUNLOG.md` rows 74–103 on the design branch.
+- **Updated 2026-11-08:** turns from 41 on added by the same scripts.
 
 ## Turn 1 (2026-11-06 13:39 UTC)
 
@@ -3461,7 +3468,1463 @@ if you're not doing it already, update logs and chatlogs within what Anthropic a
 Updating the chat log from the session transcript with the existing build and verify scripts; RUNLOG is already current through row 73.
 
 *[Bash: Rebuild the chat log from the transcript and verify it.]*  
+*[Bash: Read the chat log verifier.]*  
+*[Bash: Check whether reasoning-window hits come from visible text.]*  
+*[Bash: Check the chat log index entry and header note.]*  
+*[Bash: Read the index entry for this chat log.]*  
+*[Bash: Add the day-2 evening note to the header, rebuild and verify.]*  
+*[Bash: Check the rebuilt log for model names.]*  
+*[Bash: Rebuild, verify, install the chat log and update its index entry.]*  
+*[Bash: Confirm the log check and look at the run-log manifest.]*  
+*[Bash: Read the manifest's columns and last rows.]*  
+*[Bash: Map each run log to its RUNLOG row and command.]*  
+
+**Assistant:**
+
+Adding this session's run logs to the notes branch manifest, which records provenance, the way session C3 did.
+
+*[Bash: Find the RUNLOG rows for the block CACE runs.]*  
+*[Bash: Append this session's run logs to the manifest.]*  
+*[Bash: Commit the chat log, index and manifest; log RUNLOG row 74.]*  
+
+**Assistant:**
+
+The chat log, its index entry and the run-log manifest are updated and pushed. RUNLOG was already current; this step is row 74.
+
+- **Chat log** (`chatlog/2026-11-06_claude_replica_bias.md` on the notes branch):
+  - It now covers turns 1–40, up to your message that "the inputs" means layout primitives. I rebuilt it with the existing build and verify scripts from the raw transcript, following the conversation across the second context compaction.
+  - It contains your messages and my visible replies verbatim, and tool calls as one-line summaries. My internal reasoning is left out.
+  - The verifier found all 272 of your messages and my visible replies in the log, verbatim, with none missing.
+  - It also found 79 40-character snippets that the log shares with my reasoning. I checked those separately: every one also appears in visible text (your messages, my replies or tool inputs), so none comes from the reasoning.
+  - The header has a new day-2 afternoon and evening section and a dated update note. Turns 1–14 are unchanged, apart from tool lines at the end of turn 14 that came after the first export.
+- **Chat log index:** the README entry now covers both days, from the survey through F's launch.
+- **Run logs:** the 16 logs in `logs/replica-bias/` had no entries in `MANIFEST.tsv`. Each now has a row with file time, size, the commit that added it, the command and its RUNLOG row. Times are in UTC.
+
+The log has the same gap the header already noted: the transcript keeps only some of my progress messages, so those aren't in it.
+
+F is still placing and routing pad_ref_rb.
+
+*[Hand-back report of agent "Layout F: pad_ref_rb stage A" arrived (46 lines).]*  
+*[Bash: Read F's check summary and the reference netlist head.]*  
+*[Task notification: Agent "Layout F: pad_ref_rb stage A" finished.]*  
+*[Bash: Check F's flat reference netlist against the circuit.]*  
+*[Bash: Normalize instance prefixes and recheck F's netlist.]*  
+*[Bash: Rerun LVS on F's layout independently.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/F/out/previews/pad_ref_rb.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/F/out/previews/context.png`.]*  
+
+**Assistant:**
+
+F is done: pad_ref_rb is placed and routed. I reran LVS myself (match) and checked F's reference netlist against the circuit (63 of 63 devices). Now I'm saving its outputs and the record.
+
+*[Bash: Read F's open points and check its files for model names.]*  
+*[Bash: Read F's open points.]*  
+*[Bash: Check the size of the agents' outputs.]*  
+*[Bash: Copy the agents' outputs to the notes branch without large logs.]*  
+*[Bash: Copy agent outputs to the notes branch with Python, skipping large logs.]*  
+*[Bash: See where model names appear in copied files.]*  
+*[Bash: Commit F's outputs and the lead's checks; log RUNLOG row 75.]*  
+*[Sent to the user: `pad_ref_rb.png`, `context.png`, `core.png`, `ports.png` (caption: "pad_ref_rb placed and routed by F (85 × 86 µm, M1/M2): whole cell with nets, its position in slot7's bottom-right corner, the core close-up, the pin edge.").]*  
+
+**Assistant:**
+
+F has placed and routed pad_ref_rb, and every check is clean. The pictures above show the whole cell, its position in slot7's bottom-right corner, a close-up of the core and the pin edge.
+
+**Result:** 85.2 × 86.3 µm (7,352 µm², close to the 85 × 85 estimate), routed in M1/M2 only.
+- **F's checks:**
+  - DRC is clean, including the latch-up rules.
+  - Flat LVS matches the circuit with every dummy and the 9 vref capacitors.
+  - A deliberately broken reference netlist fails, so the match isn't vacuous.
+  - A metal-only check finds the supplies connected, without relying on the shared substrate.
+- **My checks:** F's reference netlist has the same 63 devices as the circuit (43 active, 20 dummies), and I reran LVS on F's files: match.
+- **Pins:** vref, vcm, en_3v3, en_3v3_b and iref sit on the right edge, bottom to top, 1.08 µm apart. vddh and vssh are rails on the left edge. F's proposed position at (446.8, 20.0) in slot7 puts the pins at x 531.7, y 97.8–102.1, just below the S2D's vref pin at y 112.
+- **Changes to the rows:** only bypass_rb was reshaped, to 2 rows × 6 columns with the same 12 capacitors, which makes it as wide as rb_casc. The other eight rows are as the specialists delivered them. The small switches stayed inside their rings, because F found that moving them shortened no route. No device changed, so nothing needs backannotating.
+
+**My read: it's correct but not yet compact.**
+- **Coverage:** the cells cover only 65 % of the area.
+- **Long outputs:** vcm runs 137 µm and vref 109 µm, because the cells on those nets sit in different corners. The bypass array is at the bottom, rb_cload top left, the mirror and tubs in the middle, rb_casc and rb_tree_n elsewhere, while the pins are at the top right. Electrically that is harmless: tens of ohms of wire against about 20 kΩ of source impedance. But a placement driven by routing would put bypass_rb and rb_cload next to the pin edge.
+- **Signal flow is fine:** the tails sit under their tubs (ts and bt are about 4 µm), and rb_tree_p abuts rb_tails and shares its NWell.
+
+Everything is on the notes branch under `layout/agents_c4/F/`, with my checks, and logged as RUNLOG row 75. The cell is not in `macros/pad_ref_rb/layout/` yet.
+
+Shall I have F tighten the placement around the output nets, or do you want to review the layout yourself first?
+
+## Turn 41 (2026-11-07 21:52 UTC)
+
+**User:**
+
+There's ABSOLUTELY NO GOOD REASON to bring the terminal lines close together and not route them straight out, given that the distance of the pad connections is further apart. There's also ABSOLUTELY NO GOOD REASON to place the replica bias generator next to the VSS1V2 pin at the bottom right. This building block should be near the top right, where we need to sort out how to place it relative to the bias sources and the (to be laid out) bias_dist_pd network that connects these blocks together.
+And yes, the layout should be MUCH more compact.
+
+*[Bash: Collect slot left-edge pins and the core layout sizes.]*  
+*[Bash: Check which bias blocks the slot holds and which have layouts.]*  
+*[Bash: Read what bias_gen_pd and bias_dist_pd contain.]*  
+*[Bash: Sketch two placement options for pad_ref_rb in slot7.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/lead/floorplan/slot_right_options.png`.]*  
+*[Bash: Redraw the slot sketch at full width, options stacked.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/lead/floorplan/slot_right_options.png`.]*  
+
+**Assistant:**
+
+I'm correcting the sketch: my "compact target" box was smaller than the rows' own area, so I'm splitting the bypass array out as its own block.
+
+*[Bash: Fix the size targets and draw bypass_rb as a separate block.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/lead/floorplan/slot_right_options.png`.]*  
+*[Sent to the user: `slot_right_options.png` (caption: "slot7 to scale: pad pins, harness bias pins, and two candidate positions for pad_ref_rb near the custom pads (bias blocks are placeholders).").]*  
+*[Bash: Save the placement options and review; log RUNLOG row 76.]*  
+
+**Assistant:**
+
+The sketch above shows slot7 to scale with the pins that matter and two candidate positions for pad_ref_rb near the custom pads. Both faults you named came from my brief, not from F: I told it to bunch the pins, and I picked the bottom-right corner myself.
+
+**What the slot gives us:**
+- **Pad pins, on the right edge in Metal3:** the S2D pad's sit at y 112–160 (vref at 112.3, vcm at 136.0, then en_3v3, en_3v3_b, iref). The D2S pad's sit at y 222–262; its vref, which is our vcm, is at 223.3.
+- **Harness bias inputs, on the left edge:** ibias0 and ibias1 at y 98–101 and vbias at 95.2. Those currents have to cross about 430 µm of slot to reach the pads.
+- **Supplies, on the left edge:** vss_3v3 at y 128.6 and vdd_3v3 at y 203.6.
+- **Bias sources with layout:** oa_core_pd (40.5 × 58.1 µm) and bg_core_pd (47.6 × 50.1 µm). bias_gen_pd's selection logic, bias_dist_pd and en_ctrl_3v3 have no layout yet.
+- **The slot schematic today** still has one bias_gen_pd and one en_ctrl_3v3 per pad.
+
+**Size:** the rows without the bypass array add up to 2,640 µm². bypass_rb (2,133 µm², 79 × 27 µm as 2 × 6) is a cell of its own, so it can sit separately on vref and vcm instead of inside the block. That is how both options in the sketch draw it.
+
+**The two options:**
+1. **Beside the S2D pins:** the core sits below the S2D's en_3v3 line, so vref and vcm go straight out and the pads' enable and iref lines pass above it. vcm also climbs the edge to the D2S at 223.3.
+2. **Between the two pad pin groups**, nearer the top right: vcm runs 30 µm and 57 µm vertically to its two pins, and vref 54 µm down to its pin.
+
+**One circuit constraint on "straight out":** pad_ref_rb's iref is its own bias_dist_pd leg, separate from the S2D pad's iref. Routing it straight to the S2D's iref pin would split one current between two diodes. So straight out applies to vref and vcm. pad_ref_rb's en_3v3, en_3v3_b and iref come from inside the slot.
+
+**What I need from you:**
+- **Position:** option 1, option 2, or somewhere else near the top right?
+- **Bias sources:** one shared bias_gen_pd feeding bias_dist_pd, which serves the S2D, the D2S, pad_ref_rb and a spare, placed just left of pad_ref_rb? Or keep one generator per pad, as the slot schematic has now?
+- **Enable:** does pad_ref_rb take the S2D pad's en_3v3 and en_3v3_b, or an enable of its own?
+
+Once you've answered, F reworks the cell: much more compact, vref and vcm aligned with their pad pins, and bypass_rb placed where the floorplan wants it. The review and the sketch are on the notes branch, and the steps are logged in RUNLOG row 76.
+
+## Turn 42 (2026-11-07 22:03 UTC)
+
+**User:**
+
+Position: 
+Option 2 or even higher up, reference cores are probably best stacked vertically instead of horizontally. The bypass mos capacitors don't have to be a contiguous array, and they don't even have to be square. For a compact layout, they might be shaped and places where there is extra space between blocks with a more rigid geometry. The capacitor placement is pretty much ad lib (maintaining overall capacitance to the nodes and avoiding long interconnects)
+
+*[SendMessage to an agent: F rework: compact, top-right position, flexible caps.]*  
+*[Bash: Record the position and capacitor decisions; log RUNLOG row 77.]*  
+
+**User (mid-turn, 2026-11-07 22:04 UTC):**
+
+Give pad_ref_rb its own enables for now. We can connect them together a level up later.
+
+*[SendMessage to an agent: F: pad_ref_rb keeps its own enables.]*  
+*[Bash: Record the own-enables decision and push.]*  
+
+**Assistant:**
+
+F is reworking pad_ref_rb with your answers. I've kept its first result for comparison.
+
+- **Position:** on slot7's right edge at y ≥ 165, between the S2D and D2S pin groups or higher. The reference cores will stack vertically to its left later.
+- **Outputs:** vcm runs straight out to the D2S's vref pin at 223.3, and the exits for vcm and vref point straight down the edge to the S2D's pins at 136.0 and 112.3. The pins are spaced to match those destinations, not bunched.
+- **Inputs:** en_3v3, en_3v3_b and iref sit on the left edge, toward the bias sources. pad_ref_rb keeps its own enables, separate from the S2D's, to be joined a level up. Its iref never joins the S2D's.
+- **Compactness:** the rigid rows get packed by signal flow. The bypass capacitors become filler: split, reshaped and placed in the gaps between rows.
+  - **Capacitance per node:** vcm keeps at least 720 µm² of gate area and vref at least 1,296 µm², each on short connections.
+  - **CB stays put:** it remains next to vcm_rb's buffer output, because the buffer's phase margin depends on it.
+  - **Area:** I set 5,700 µm² as the ceiling, against 7,352 µm² before, and asked for lower.
+- **Netlist:** F reports every capacitor's size, count and node, and I'll update bypass_rb's netlist and sheet from that.
+- **Unchanged:** M1/M2 only, rb_casc's 8 slots, the matching rules, DRC including latch-up, flat LVS against the circuit, and the slot-context picture at the new position.
+
+Your decisions are in the notes for F and RUNLOG rows 77–78.
+
+**Still open:** one shared bias_gen_pd feeding bias_dist_pd for all the pads, or one generator per pad as the slot schematic has now. It doesn't block F; it decides what goes to pad_ref_rb's left.
+
+## Turn 43 (2026-11-07 22:11 UTC)
+
+**User:**
+
+make slot.sch human readable that I know what you're talking about when you write "one generator per pad"
+
+*[Bash: Survey the slot schematic's contents and checks.]*  
+*[Bash: Locate the schematic skill files and slot sheet history.]*  
+*[Agent started: Redraw slot.sch human readable.]*  
+*[Bash: Log the slot sheet redraw in the RUNLOG.]*  
+
+**Assistant:**
+
+I've started the schematic agent on slot.sch with the project's drawing skill. That skill includes your own hand edits.
+
+**What changes:** only the drawing. Connectivity, symbols, instance names and parameters stay exactly as they are.
+- **Flow:** left to right, from the harness slot pins through each pad's enable control and bias generator to the pad macro and its pins.
+- **Groups:** each pad's chain gets its own titled box, [S2D] and [D2S], so it's visible that each has its own generator.
+- **Wires and labels:** real wires show the flow from enable control to generator to pad. Labels remain for supplies and nets with many connections.
+
+**Checks:** the agent proves the new sheet is equivalent to the current one, lints it for shorts, checks the xschem log for errors and renders a picture. I'll review it before I show it to you.
+
+**What "one generator per pad" means today:** the slot sheet gives each pad its own en_ctrl_3v3 and its own bias_gen_pd, xs2d_c/xs2d_g for the S2D and xd2s_c/xd2s_g for the D2S. Each bias_gen_pd holds an Oguey–Aebischer core, a bandgap core and the switch for the harness ibias, selected by dig_in bits. So the slot carries two of each core. The alternative is one bias_gen_pd feeding bias_dist_pd, which hands out the current to the S2D, the D2S, pad_ref_rb and a spare.
+
+This sheet is the slot fallback, with both pads inside the slot. pad_ref_rb and bias_dist_pd aren't in it yet.
+
+F is still reworking pad_ref_rb in parallel. Logged as RUNLOG row 79.
+
+## Turn 44 (2026-11-07 22:14 UTC)
+
+**User:**
+
+So are you asking me whether you should place one set of bias generators/replica bias generators PER PAD, or a shared one?
+
+**Assistant:**
+
+Yes, but only for the bias current generators. pad_ref_rb is already a single cell shared by both pads: its vcm feeds the S2D's vcm and the D2S's vref, and its vref feeds the S2D. That isn't in question.
+
+The open question is where the reference currents come from. A bias_gen_pd contains an OA core, a BG core and the harness-ibias switch.
+
+- **Per pad (what slot.sch has now):** two bias_gen_pd, one for the S2D and one for the D2S. That means two OA cores and two BG cores. pad_ref_rb would then need a third source, or a tap off one of the pads' generators.
+- **Shared:** one set of sources (OA core, BG core, harness ibias0/ibias1, in any combination) feeding bias_dist_pd. bias_dist_pd then hands out 5 µA legs to the S2D, the D2S, pad_ref_rb and a spare.
+
+You already answered this earlier, when you said bias_dist_pd should take the OA core, the BG core or both, and one or both harness currents. That is the shared variant. So I'll plan for it unless you say otherwise. It also suits the replica best: pad_ref_rb tracks the pads only if its iref comes from the same source as theirs, and it saves one OA core and one BG core.
+
+Separate per-block biasing, which you mentioned as a possible later refinement, would then come from bias_dist_pd's per-output selection rather than from duplicated generators.
+
+## Turn 45 (2026-11-07 22:15 UTC)
+
+**User:**
+
+ok lay out for the shared option, there's plenty of space to duplicate the layout if the mood hits me (Frank'n'Furter)
+
+*[Bash: Read bias_dist_pd's input definition and open points.]*  
+*[Bash: Check core ports, bias_gen_pd's wiring and hv_logic layouts.]*  
+*[Bash: Read bias_dist_pd's netlist, core netlists and the truth-table bench.]*  
+*[Bash: Find users of bias_dist_pd and the core netlists.]*  
+*[Bash: Read the rest of the truth-table bench and its output.]*  
+
+**Assistant:**
+
+Laying out the shared option needs bias_dist_pd to take four inputs (OA core, BG core, ibias0, ibias1); it has three. I'm adding the fourth input to its netlist and truth-table testbench first.
+
+*[Bash: Add the fourth input to bias_dist_pd's netlist and testbench.]*  
+*[Bash: Read the testbench's measurement and print section.]*  
+*[Bash: Add four-input cases and run the truth table.]*  
+*[Bash: Document the four-input change, log RUNLOG row 80, commit.]*  
+*[Bash: Check hv_logic gate sizes and existing layouts.]*  
+*[Bash: Write agent D's brief and set up its inputs.]*  
+*[Agent started: Layout D: bias_dist_pd 4-in.]*  
+*[Bash: Save brief D to the notes branch; log RUNLOG row 81.]*  
+
+**Assistant:**
+
+I'm laying out the shared option. Three agents are running:
+
+1. **pad_ref_rb rework (F):**
+   - Placed at the top right, with vcm and vref aimed straight at their pad pins.
+   - Its own enables and its iref on the left edge.
+   - The bypass capacitors used as filler, and much more compact.
+2. **bias_dist_pd layout (new agent D):**
+   - The circuit first needed a fourth input, which I added:
+     - iin0 from the OA core, iin1 from the BG core, iin2 and iin3 from harness ibias0 and ibias1, in any combination.
+     - The outputs go to the S2D, the D2S, pad_ref_rb and a spare.
+     - Truth table: the old cases are unchanged; the fourth input alone gives 5.07 µA at every output, and all four together give 20.04 µA.
+   - D works under the same binding rules as the other layout agents:
+     - the matched mirror devices (NI/NM, PD/PO) in rows like the pads' tree and tail rows;
+     - the standard 1u/0.45u switch, taken from the D2S pad's layout;
+     - new compact cells for the hv inverter and nand, which have no layout yet;
+     - M1/M2 only, inputs on the left toward the stacked cores and the harness, outputs to the right and up.
+3. **slot.sch redraw (schematic agent):** still running.
+
+**Not yet updated:** bias_dist_pd's sheet and symbol still show three inputs. I'll have them redrawn after slot.sch is done, so for now the sheet check fails against the netlist.
+
+**Later:** with pad_ref_rb and bias_dist_pd laid out, the next step is assembling the bias corner. That means the two cores stacked vertically, bias_dist_pd, and pad_ref_rb at the top right, plus the routes to the pad pins.
+
+The changes are pushed, and RUNLOG rows 80–81 record them.
+
+## Turn 46 (2026-11-07 22:20 UTC)
+
+**User:**
+
+what does slot.sch have to do with this?
+
+**Assistant:**
+
+For the layout, nothing. The layout of pad_ref_rb, bias_dist_pd and the cores works from the macros' own netlists and doesn't read slot.sch.
+
+slot.sch came in only because you asked for it to be made readable, so you could see what I meant by "one generator per pad". That sheet shows the per-pad arrangement: each pad with its own en_ctrl_3v3 and its own bias_gen_pd. It is also the slot fallback, with both pads inside the slot rather than in the padframe.
+
+It matters again later, at the slot's top level. To check the assembled slot against its schematic, the sheet has to carry the shared arrangement: one set of sources, bias_dist_pd and pad_ref_rb, instead of two generators. That is a separate step after the layout.
+
+The redraw agent is still running. I'd let it finish, since you asked for the readable sheet and it will be the starting point for drawing in the shared chain. Say so if you'd rather I stop it now.
+
+## Turn 47 (2026-11-07 22:21 UTC)
+
+**User:**
+
+ah yes, i apologize for my scatterbrainedness. yes, show me slot.sch once it's human readable, and its location in the dizzying mess of respositories, branches, and directories.
+
+**Assistant:**
+
+No problem. When the redraw is finished and checked, I'll show it to you, rendered. Its location:
+
+- **Repository:** `tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single`
+- **Branch:** `claude/c4-replica-bias`, the design branch of this session. The notes and agent reports are on `claude/c4-replica-bias-sudel`.
+- **Sheet:** `macros/slot/schematic/xschem/slot.sch`
+- **Render:** `macros/slot/schematic/slot.png` and `slot.svg` (new; the macro had no render before).
+
+Other branches have the same file at the same path; only this branch will get the redrawn version, once I commit it after review.
+
+The agent is still running. I'll send the picture when it reports.
+
+*[Hand-back report of agent "Redraw slot.sch human readable" arrived (18 lines).]*  
+*[Bash: Prepare an independent check of the redrawn slot sheet.]*  
+*[Task notification: Agent "Redraw slot.sch human readable" finished.]*  
+*[Bash: Independently compare the old and new slot sheets.]*  
+*[Read `/home/user/sg13cmos5l_cm_ip__single2diff2single/macros/slot/schematic/slot.png`.]*  
+*[Bash: Commit the redrawn slot sheet and its report; log RUNLOG row 82.]*  
+*[Sent to the user: `slot.png` (caption: "slot.sch redrawn: [S2D] and [D2S] each with its own en_ctrl_3v3 → bias_gen_pd → pad (the "one generator per pad" arrangement), connectivity unchanged.").]*  
+
+**Assistant:**
+
+Here is slot.sch, redrawn so it can be read. The connections are unchanged: I compared the new sheet with the old one and they are equivalent (549 devices).
+
+The sheet has two boxes, one per pad. Each runs left to right through three parts:
+- **en_ctrl_3v3** (xs2d_c, xd2s_c): shifts the enable and the two select bits from 1.2 V to 3.3 V.
+- **bias_gen_pd** (xs2d_g, xd2s_g): picks the OA core, the bandgap core or a harness current, and sends 5 µA into its pad's iref. The S2D's generator takes ibias1 and the D2S's takes ibias0.
+- **The pad macro.** The S2D's outputs feed the D2S's inputs.
+
+The duplicated generator in each box is what I meant by "one generator per pad". This is the slot fallback, with both pads inside the slot and vref and vcm from the harness vbias. pad_ref_rb and bias_dist_pd don't appear in it yet.
+
+**Where it lives:**
+- **Repository:** `tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single`
+- **Branch:** `claude/c4-replica-bias`
+- **Sheet:** `macros/slot/schematic/xschem/slot.sch`
+- **Picture:** `macros/slot/schematic/slot.png` and `slot.svg`, new in this commit
+- **The agent's report:** `sudelbuecher/design_considerations/replica_bias/layout/slot_sch_report.md` on `claude/c4-replica-bias-sudel`
+
+**Not fixed:** some supply stubs still cross the block names, because those names sit over pins inside the symbol files. Fixing that would mean editing the symbols, so the agent left it.
+
+Pushed (RUNLOG row 82). The layout agents for pad_ref_rb and bias_dist_pd are still running.
+
+*[Hand-back report of agent "Layout F: pad_ref_rb stage A" arrived (50 lines).]*  
+*[Bash: Read F's drawn capacitor subcircuit and check summary.]*  
+*[Task notification: Agent "Layout F: pad_ref_rb stage A" finished.]*  
+
+**User (mid-turn, 2026-11-07 22:26 UTC):**
+
+THANK YOU! This REALLY helps ... now that you show me where to find the information you already provided. There's just so much of it. AI is so much faster than mere humans.
+
+**Assistant:**
+
+Thank you, I'm glad the map helped. Reviewing F's second version now: 5,628 µm², at the top right, all checks clean.
+
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/F/out/previews/pad_ref_rb.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/F/out/previews/context.png`.]*  
+*[Bash: Check v2's netlist with the drawn capacitors and rerun LVS.]*  
+*[Bash: Find how the testbenches include the bypass cell.]*  
+*[Bash: Write a driver that reruns the decks with the drawn capacitors.]*  
+*[Bash: Run impedance, enable and kick decks with the drawn capacitors.]*  
+*[Bash: Confirm the drawn-capacitor runs started.]*  
+*[Bash: Copy F's second version and the lead's checks to the notes worktree.]*  
+*[Bash: Check the drawn-capacitor simulation progress.]*  
+*[Bash: Compare output impedance with the drawn capacitors.]*  
+
+**Assistant:**
+
+Impedance with the capacitors as drawn is unchanged, within 0.1 %. The enable and kick runs are still going, a few more minutes. I'll report F's second version with those numbers when they're in.
+
+**Stop hook:**
+
+Stop hook feedback:
+[command hook]: There are untracked files in the repository. Please commit and push these changes to the remote branch.
+
+*[Bash: List uncommitted files in both worktrees.]*  
+*[Bash: Commit F's v2 outputs and the capacitor rerun driver.]*  
+
+**Assistant:**
+
+To satisfy the commit hook, I committed and pushed what was pending:
+- **Design branch:** the script that reruns the testbenches with the capacitors as F drew them, plus its first result. Output impedance is unchanged, within 0.1 %.
+- **Notes branch:** F's second pad_ref_rb version with my checks, and its first version kept in a `v1/` folder.
+
+The enable and kick simulations with the drawn capacitors are still running. I'll report the second version with those numbers once they finish.
+
+## Turn 48 (2026-11-07 22:32 UTC)
+
+**User:**
+
+the vref connection in the preview picture can go straight out. No good reason to jog the line downwards. This can be taken care of by global routing if necessary.
+Also show the layout(s) within the entire slot frame, for size estimate.
+
+*[Bash: List the slot frame's layers and extents.]*  
+*[Task notification: Background command "Run impedance, enable and kick decks with the drawn capacitors" completed (exit code 0).]*  
+*[Bash: Compare enable and kick results with the drawn capacitors.]*  
+
+**Assistant:**
+
+With the capacitors as drawn, enable and S2D kick are unchanged too: at most 33 ns of settling and 0.7 mV of kick. Now drawing the whole slot with the layouts placed.
+
+*[Bash: Render the whole slot frame with the placed layouts.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/lead/floorplan/slot_frame_view.png`.]*  
+*[Sent to the user: `slot_frame_view.png`, `pad_ref_rb.png` (caption: "The whole slot7 frame with pad_ref_rb v2 and the two cores placed (7.1 % of the slot), bias_dist_pd as a placeholder; and pad_ref_rb v2 itself (73.8 × 76.3 µm).").]*  
+*[Bash: Save the slot view, record vref straight out, log rows 83-84.]*  
+
+**Assistant:**
+
+The pictures above show the whole slot7 frame with the layouts placed, and pad_ref_rb's second version on its own.
+
+**Size estimate:** pad_ref_rb plus the two reference cores take 10,363 µm², 7.1 % of the slot's 146,600 µm².
+- **pad_ref_rb v2:** 73.8 × 76.3 µm, down from 85 × 86 µm, at the right edge between y 169 and 245.
+- **Cores:** bg_core_pd and oa_core_pd stacked vertically to its left. That position is my proposal.
+- **bias_dist_pd:** a dashed placeholder above the cores, with a guessed size; its layout is still running.
+
+**vref:** drawn straight out to the edge at y 179, like vcm at y 223.3 (the D2S's vref). Getting vref down to the S2D's pin at y 112 is left to global routing, as you said. I've added that to F's notes.
+
+**pad_ref_rb v2:**
+- **Checks:** DRC is clean, including latch-up, and flat LVS matches. I reran LVS and checked F's netlist against the circuit: 58 of 58 devices.
+- **Rows:** the eight rows are as the specialists delivered them.
+- **Capacitors:** split into four groups of different shapes and fitted into the gaps between rows. vref has 1,297 µm² of gate area and vcm 720 µm², the same totals as before. CB sits right at the vcm buffer's output, as its phase margin requires.
+- **Simulation with the capacitors as drawn:** output impedance stays within 0.1 %, enable settling within 33 ns, and the S2D's enable kick within 0.7 mV. The new shapes change nothing measurable.
+- **Not yet backannotated:** the netlist still has the 12 × 12 µm capacitor array. I'll update bypass_rb's netlist and sheet to the drawn shapes once you accept this version.
+
+**Open points from F:**
+- Some routes cross the capacitors' gates, adding 12 µm² of metal over them. That only adds capacitance to DC nodes.
+- vddh and vssh are single narrow pins, carrying about 25 µA in total.
+- rb_casc's 72 µm length sets the cell's width.
+
+Everything is pushed (RUNLOG rows 83–84). Agent D is still laying out bias_dist_pd.
+
+## Turn 49 (2026-11-07 22:34 UTC)
+
+**User:**
+
+Compared to the bias blocks and the pads, the replica bias is surpisingly large ... but there's plenty of room in the slot. Looking good so far.
+
+**Assistant:**
+
+Thanks. Most of the size comes from two decisions, not from the replica circuitry itself. Here is how the 5,628 µm² splits, by cell footprint:
+
+| part | µm² | share |
+|---|---:|---:|
+| Bypass capacitors (four filler blocks plus rb_cload) | ≈ 2,600 | 46 % |
+| rb_casc, the pad's 8-slot cascode row | 887 | 16 % |
+| The active replica rows (trees, tails, tubs, averaging diodes, mirror) | ≈ 1,330 | 24 % |
+| Routing and gaps | ≈ 800 | 14 % |
+
+- **Capacitors:** the replica needs only CB for its buffer's phase margin. The other 13 µm² × 144 sets of capacitance, 4 on vcm and 9 on vref, are there to halve the S2D's enable kick, from 0.24 V to 0.11 V.
+- **rb_casc:** 5 active fingers in 8 slots, kept for matching.
+
+If area ever gets tight, the capacitor count is the lever. With the slot only 7 % full, I'd leave it as it is.
+
+**Next steps:**
+- **When agent D reports:** I'll review bias_dist_pd's layout and add it to the slot picture in place of the placeholder.
+- **Once you accept pad_ref_rb v2:** I'll update bypass_rb's netlist and sheet to the capacitor shapes as drawn, then move the cell into `macros/pad_ref_rb/layout/`.
+
+Shall I do that now, or wait until bias_dist_pd is in?
+
+## Turn 50 (2026-11-07 22:48 UTC)
+
+**User:**
+
+I'm AFK. Go ahead. Better to ask for forgiveness (and git revert) than permission.
+
+*[TaskCreate call.]*  
+*[TaskCreate call.]*  
+*[TaskCreate call.]*  
+*[TaskUpdate call.]*  
+*[Bash: Read the bypass_rb sheet and symbol.]*  
+*[Bash: Find every use of the bypass_rb parameters.]*  
+*[Bash: Backannotate the drawn capacitors and check the sheets.]*  
+*[Bash: Check the netlist against F's layout netlist, render, start re-simulation.]*  
+
+**Assistant:**
+
+Backannotation is in and checked (the source netlist now matches F's layout netlist, 58 of 58). I'm restarting the re-simulation as a tracked background job so I get notified when it ends.
+
+*[Bash: Stop the untracked simulation job by PID.]*  
+*[Bash: Check which simulation processes remain.]*  
+*[Bash: Rerun replica bias characterization and CACE with the drawn capacitors.]*  
+*[TaskUpdate call.]*  
+*[Bash: Check layout cell-name collisions with other macros.]*  
+*[Bash: See how the macro Makefile runs layout DRC and LVS.]*  
+*[Result: error (Exit code 1).]*  
+*[Bash: Check where pad_ref_rb's supply port names are used.]*  
+
+**Assistant:**
+
+Making the layout's generic cell names unique before it goes into the macro: names like `nmosHV$1` also exist, with different contents, in the pad and core layouts.
+
+*[Bash: Prefix generic cell names, write the macro layout, check XOR.]*  
+*[Bash: Run DRC and LVS on the macro copy of the layout.]*  
+*[Bash: Check the reruns and where the top sheet names vdd and vss.]*  
+*[Bash: Read how gen_cace maps the DUT's pins.]*  
+
+**Assistant:**
+
+Renaming pad_ref_rb's supply ports to vddh/vssh in the schematic and CACE suite so they match the layout's pins:
+
+*[Bash: Rename the supply ports to vddh/vssh and regenerate the CACE suite.]*  
+*[Bash: Run the macro's own LVS flow on the moved layout.]*  
+*[Bash: See which generated layout files other macros commit.]*  
+*[Bash: List the LVS report files and check the reruns.]*  
+*[Bash: Add previews to the macro and find README sections to update.]*  
+*[Bash: Update the macro README for the layout and the new ports.]*  
+
+**Assistant:**
+
+Layout is in the macro, and the macro's own LVS flow passes against the schematic. Committing that now; the simulation reruns are still going.
+
+*[Bash: Update the macro index and stage the layout and backannotation.]*  
+*[Bash: Re-render the top sheet and commit the layout move and backannotation.]*  
+*[TaskUpdate call.]*  
+*[Bash: Check the rerun progress and agent D's reports.]*  
+*[Bash: Read agent D's progress lines.]*  
+*[Bash: Log RUNLOG row 85 and commit the finished reruns.]*  
+
+**Assistant:**
+
+pad_ref_rb v2 is now in the macro and the netlist matches it; the start-up, S2D-kick and CACE reruns are still going. Everything below is pushed to `claude/c4-replica-bias`.
+
+- **Layout:** `macros/pad_ref_rb/layout/klayout/pad_ref_rb.klay.gds`, with its LVS reference netlist, a picture of the cell and one of it placed in slot7.
+  - I renamed the layout's generic cells (`nmosHV$1` and similar) with a `prb_` prefix. The pads and the cores have cells of the same names with different contents, which would collide when the slot is assembled.
+  - DRC is clean. LVS matches both F's netlist and the schematic, through the macro's own `make klayout-lvs`.
+- **bypass_rb:** the netlist and sheet now carry the capacitor shapes as drawn: 1,297 µm² of gate on vref and 576 µm² on vcm, plus CB. The old count parameters are gone. The sheet check, the short lint and the xschem log are clean.
+- **Pin names:** pad_ref_rb's supply ports are now vddh and vssh in the netlist, sheet, symbol and CACE suite, matching the layout.
+- **Reruns so far:** DC, output impedance and enable are done and match the earlier drawn-capacitor runs.
+
+bias_dist_pd's layout (agent D) is going well: the first full build is 60.5 × 16.2 µm, with DRC and LVS clean. D is now running its symmetry and LVS cross-checks and drawing its previews.
+
+When everything is in, I'll review D's layout, backannotate its dummies, have bias_dist_pd's sheet and symbol redrawn with the fourth input, and update the slot picture.
+
+## Turn 51 (2026-11-07 22:56 UTC)
+
+**User:**
+
+show me bias_dist_pd when D is done
+
+**Assistant:**
+
+Will do. When D is done I'll check bias_dist_pd myself (DRC, LVS rerun, the netlist against the circuit), then show you the layout and its place in the slot picture. D is still running; the reruns for pad_ref_rb are finishing in parallel.
+
+**Stop hook:**
+
+Stop hook feedback:
+[command hook]: There are uncommitted changes in the repository. Please commit and push these changes to the remote branch.
+
+*[Bash: List uncommitted changes and rerun status.]*  
+*[Bash: Commit the finished start-up rerun and push.]*  
+
+**Assistant:**
+
+I committed and pushed the start-up rerun, which just finished. The S2D-kick rerun and the CACE suite are still running, and I'll commit their results when they finish. D is still working on bias_dist_pd.
+
+*[Hand-back report of agent "Layout D: bias_dist_pd 4-in" arrived (37 lines).]*  
+*[Bash: Read D's check summary and netlist format.]*  
+*[Task notification: Agent "Layout D: bias_dist_pd 4-in" finished.]*  
+*[Bash: Check D's netlist against the circuit and rerun its LVS.]*  
+*[TaskUpdate call.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/D/out/previews/bias_dist_pd.png`.]*  
+*[Bash: Put bias_dist_pd's layout into the slot frame view.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/lead/floorplan/slot_frame_view.png`.]*  
+*[Sent to the user: `bias_dist_pd.png`, `slot_frame_view.png` (caption: "bias_dist_pd by agent D (60.5 × 16.2 µm, 4 inputs / 4 outputs, M1/M2), and slot7 with it placed above the stacked cores next to pad_ref_rb.").]*  
+*[Bash: Save D's outputs, report and the lead's checks to the notes branch.]*  
+*[Bash: Backannotate bias_dist_pd's dummies and port names; rerun the truth table.]*  
+*[Result: error (Exit code 1).]*  
+*[Bash: Keep the new truth-table output.]*  
+*[SendMessage to an agent: Redraw bias_dist_pd sheet/symbol: 4 inputs, dummies, vddh.]*  
+*[Bash: Copy bias_dist_pd's layout into its macro with unique cell names.]*  
+*[Task notification: Background command "Rerun replica bias characterization and CACE with the drawn capacitors" completed (exit code 0).]*  
+
+**Assistant:**
+
+The pad_ref_rb reruns finished. Checking them, then committing with bias_dist_pd's backannotation.
+
+*[Bash: Check the pad_ref_rb reruns and CACE results.]*  
+*[Bash: Look at the CACE run's error lines.]*  
+*[Bash: Compare the error lines with the previous CACE run.]*  
+*[Bash: Commit reruns, bias_dist_pd backannotation and layout; log rows 85-87.]*  
+*[TaskUpdate call.]*  
+
+**Assistant:**
+
+bias_dist_pd's layout is done, and both pictures are above: the cell, and slot7 with it placed.
+
+**bias_dist_pd** is 60.5 × 16.2 µm (982 µm²), routed in M1/M2 only.
+- **Matched devices, top:** two rows. NMOS: dummy, NI, NM, dummy (the rb_mirror row's code). PMOS: dummy, PO0, PO1, PD, PO2, PO3, dummy, with the diode PD in the middle (the rb_tails row's code).
+- **Switches, bottom:** one row of eight identical slices, one per input or output, each nand + inverter + transmission gate. The control nets stay inside their slice.
+- **Pins:** inputs iin0–3 on the left edge, outputs iout0–3 on the right, enables on the bottom, vddh/vssh on the top.
+- **Checks:**
+  - **D's:** DRC 0, latch-up 0, LVS matches, and a deliberately broken netlist fails.
+  - **Mine:** all 73 devices against the circuit, plus D's 4 dummies, and an LVS rerun that matches.
+
+**In the slot:** I placed it above the two stacked cores, to the left of pad_ref_rb. The four layouts now take 11,345 µm², 7.7 % of slot7.
+
+**Done since you left:**
+- **pad_ref_rb:**
+  - Its v2 layout is in `macros/pad_ref_rb/layout/klayout/`. The macro's own `make klayout-lvs` passes against the schematic.
+  - bypass_rb's netlist and sheet now carry the capacitor shapes as drawn.
+  - Its supply ports are renamed vddh/vssh everywhere, including the CACE suite. CACE passes 8 of 8, and the replica bias reruns match the drawn-capacitor runs.
+- **bias_dist_pd:**
+  - D's four dummies added to the netlist, and its supply ports renamed vddh/vssh like pad_ref_rb's. The truth table is unchanged.
+  - Its layout is in `macros/bias_dist_pd/layout/klayout/`.
+- **Unique cell names:** generic cells in both layouts got `prb_`/`bdp_` prefixes. The pads and cores have cells with the same names, which would collide when the slot is assembled.
+
+**Still running:** the schematic agent is redrawing bias_dist_pd's sheet and symbol for the fourth input, the dummies and the new port names. After that I'll run the macro's LVS flow on bias_dist_pd.
+
+**D's open points:**
+1. Which outputs take the inner pair next to PD? Today the D2S and pad_ref_rb do, and the S2D sits on the outer pair. My suggestion: give the S2D an inner slot, since the pads matter most.
+2. The switch row has tie strips at top and bottom instead of a closed ring.
+3. The split switch gates trip the symmetry script's narrow-poly flag. The poly is wide enough where contacted; a 0.04 µm taller row would clear the flag.
+
+Everything is pushed (RUNLOG rows 85–87).
+
+*[Hand-back report of agent "Redraw slot.sch human readable" arrived (16 lines).]*  
+*[Bash: Recheck bias_dist_pd's sheet against its netlist; look for LVS targets.]*  
+*[Task notification: Agent "Redraw slot.sch human readable" finished.]*  
+*[Bash: Run bias_dist_pd's own LVS flow against the redrawn sheet.]*  
+*[Bash: Find the bias_dist_pd README lines to update.]*  
+*[Bash: Update bias_dist_pd's README and the slot picture in the macro.]*  
+*[Bash: Commit bias_dist_pd's sheet, LVS results and docs; log RUNLOG row 88.]*  
+*[TaskUpdate call.]*  
+*[Sent to the user: `bias_dist_pd.png` (caption: "bias_dist_pd sheet redrawn: 4 inputs, [DM] layout dummies, ports vddh / vssh; its layout passes the macro's own LVS against this sheet.").]*  
+
+**Assistant:**
+
+Everything is done and pushed to `claude/c4-replica-bias`: pad_ref_rb and bias_dist_pd each have a layout that passes DRC and the macro's own LVS against its schematic.
+
+**pad_ref_rb**
+- **Layout:** v2 in `macros/pad_ref_rb/layout/klayout/`, 73.8 × 76.3 µm.
+- **Schematic:** matches the layout. bypass_rb now carries the capacitor shapes as drawn, and the supply ports are vddh/vssh.
+- **Simulation:** CACE passes 8 of 8. The replica bias reruns with the drawn capacitors match the 12 × 12 µm array within 0.5 %.
+
+**bias_dist_pd**
+- **Layout:** D's layout in `macros/bias_dist_pd/layout/klayout/`, 60.5 × 16.2 µm.
+- **Schematic:** the redrawn sheet above has the fourth input, the four layout dummies and the vddh/vssh ports. Its netlist matches the source: 29 devices, 16 gates.
+- **Simulation:** only the truth table so far. It is unchanged apart from leakage in the fifth digit.
+
+**Slot picture:** both cells and the two cores, placed at the proposed positions, take 7.7 % of slot7. It's in `macros/pad_ref_rb/layout/klayout/pad_ref_rb_in_slot7.png`.
+
+**Waiting on you:**
+1. Which bias_dist_pd outputs go on the two mirror positions next to the diode PD? Today they are the D2S and pad_ref_rb. I'd give one of them to the S2D.
+2. The positions of the cores and bias_dist_pd in the slot are my proposal.
+3. **Assembling the bias corner** is the next step, but I'm not starting it without you because it changes the slot's top level:
+   - routing between the cores, bias_dist_pd and pad_ref_rb;
+   - carrying the shared chain into the slot schematic;
+   - the global routes to the pad pins.
+
+Neither cell has been through PEX yet.
+
+## Turn 52 (2026-11-08 00:29 UTC)
+
+**User:**
+
+give the S2D an inner slot next to PD
+
+*[Bash: Find where the output-to-pad assignment is written down.]*  
+*[Bash: Set the output assignment in the README and inspect the open-point text.]*  
+*[Bash: Record the new output assignment and push.]*  
+
+**Assistant:**
+
+The S2D now has an inner slot next to PD. This needed no layout change, only a different assignment of the outputs:
+
+| output | mirror device | position | goes to |
+|---|---|---|---|
+| iout0 | PO0 | outer | D2S |
+| iout1 | PO1 | inner, next to PD | **S2D** (was the D2S) |
+| iout2 | PO2 | inner, next to PD | pad_ref_rb (unchanged) |
+| iout3 | PO3 | outer | spare |
+
+I kept pad_ref_rb on the other inner position because PO1 and PO2 are mirror images about PD. The replica copies the S2D's operating point, so the two of them now get the best-matched pair. The D2S moves to an outer position. If you'd rather have both pads on the inner pair, it's the same kind of one-line reassignment.
+
+I updated the assignment in bias_dist_pd's netlist header, its README and `macros/README.md`, and logged it as RUNLOG row 89. The devices, sheet and layout are unchanged. Pushed.
+
+## Turn 53 (2026-11-08 00:32 UTC)
+
+**User:**
+
+both pads on the inner pair please.
+
+*[Bash: Put both pads on the inner pair and push.]*  
+
+**Assistant:**
+
+Both pads are now on the inner pair next to PD:
+
+| output | mirror device | position | goes to |
+|---|---|---|---|
+| iout0 | PO0 | outer | pad_ref_rb |
+| iout1 | PO1 | inner | S2D |
+| iout2 | PO2 | inner | D2S |
+| iout3 | PO3 | outer | spare |
+
+Like the previous change, this only reassigns the outputs; the devices, sheet and layout are unchanged. It's in bias_dist_pd's netlist header and READMEs, logged as RUNLOG row 90, and pushed.
+
+## Turn 54 (2026-11-08 00:35 UTC)
+
+**User:**
+
+Exact location in the file system of the layout, show me pictures of "the switch row", "tie strips", "split switch gates" and fill me in what implicit assumptions you make when talking about "narrow-poly flag".
+
+*[Bash: Find the narrow-poly check in the symmetry script.]*  
+*[Bash: Read the narrow-poly check and D's notes on it.]*  
+*[Bash: Read D's notes on the switch row and list the cell placements.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/D/out/previews/tg_hv.png`.]*  
+*[Bash: Measure the switch row's tie strips and the TG gate poly.]*  
+
+**Assistant:**
+
+I'm drawing annotated close-ups of the switch row, the tie strips and the switch gates, with the narrow-poly check's geometry overlaid.
+
+*[Bash: Render annotated close-ups of the switch row, ties and TG gates.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/lead/bdp_explain/1_switch_row.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/lead/bdp_explain/2_tie_strips.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/lead/bdp_explain/3_split_gates_narrow_poly.png`.]*  
+*[Bash: Move overlapping labels in the close-ups.]*  
+*[Sent to the user: `1_switch_row.png`, `2_tie_strips.png`, `3_split_gates_narrow_poly.png` (caption: "bias_dist_pd: (1) the switch row, (2) its tie strips vs. the mirrors' closed rings, (3) the transmission gate's split gates and what the narrow-poly check measures.").]*  
+*[Bash: Save the annotated views and log RUNLOG row 91.]*  
+
+**Assistant:**
+
+The three annotated pictures are above.
+
+**Where the layout is**
+- **Repository:** `tatzelbrumm/sg13cmos5l_cm_ip__single2diff2single`
+- **Branch:** `claude/c4-replica-bias`
+- **Layout:** `macros/bias_dist_pd/layout/klayout/bias_dist_pd.klay.gds`, top cell `bias_dist_pd`
+- **Next to it:** `bias_dist_pd.cdl` (D's flat LVS reference) and `bias_dist_pd.png`
+- **Working copies:** D's build scripts and check logs are on `claude/c4-replica-bias-sudel` under `sudelbuecher/design_considerations/replica_bias/layout/agents_c4/D/`. These three pictures are under `.../layout/lead/bdp_explain/`.
+
+**The terms**
+- **Switch row (picture 1):** the bottom row of the cell.
+  - Eight identical slices: in0–in3 on the left and out0–out3 under the PMOS outputs. Each slice is a nand2_hv, an inv_hv and a transmission gate.
+  - Plus TDN, SVPD and filler cells.
+  - It is one row with the NWell (PMOS) in its upper half and the NMOS below. The two matched mirror rows sit above it.
+- **Tie strips (picture 2):** the substrate and well contacts of the switch row are two straight lines along its full length, not a ring:
+  - bottom: p+ to vssh, y 0.00–0.30 µm;
+  - top: n+ in the NWell to vddh, y 4.40–4.70 µm.
+
+  The left and right ends of the row are open. By contrast, the two mirror rows above each have a closed tie ring, as your "taps as rings" rule asks.
+- **Split switch gates (picture 3):**
+  - **Two gates:** in each transmission gate, the PMOS (TGP, gate ei_b) and the NMOS (TGN, gate ei) take complementary signals. So they have two separate gate polys, each with its own contact pad, facing each other across the NWell edge. An inverter, by contrast, has one shared gate.
+  - **Spacing:** the two active areas are 1.24 µm apart, set by the NWell edge rules. Both contact pads have to fit into that gap.
+
+**The "narrow-poly flag" and what it assumes.** It's the N check in `sym_check.py`. Session C2 wrote that script for your rule "no narrowed poly feeding gate contacts", so it is a heuristic, not a PDK DRC rule. Its assumptions:
+1. **Endcap zone:** all gate poly within 0.25 µm of the active area counts as gate plus endcap. Only the poly beyond that zone counts as the link to the contact.
+2. **Minimum width:** any link piece that touches a contact must be at least 0.30 µm wide in every direction. 0.30 µm is the contact (0.16) plus the poly enclosure on both sides (2 × 0.07). Anything thinner counts as a neck.
+3. **Measured dimension:** it measures the piece left over after cutting away the zone, in its smallest dimension. So a short, wide piece counts the same as a long, thin one.
+4. **Scope:** only poly touching a contact is checked, in the cell on its own, flattened.
+
+In the transmission gate, assumption 3 produces a false alarm.
+- **What it measures:** the contact pads sit so close to the channels that only a short piece of each pad lies beyond the zone: 0.14 µm for TGN, 0.27 µm for TGP. Those are the pads' lengths beyond the zone, not their widths.
+- **The actual poly:** it is 0.45 µm wide right through to the contact, so there is no neck.
+- **DRC:** IHP's DRC passes.
+- **Correction to my earlier relay:** D's note said 0.14 µm for each pad, which is only true for TGN. D's remark that a 0.04 µm taller row would clear the flag would only lift TGP's 0.27 µm. TGN's pad would need to move about 0.16 µm further from its channel.
+
+**Your call:** move the pads away from the channels so the check passes, or treat this as a known limitation of the check and leave the cell as it is. Recorded in RUNLOG row 91.
+
+## Turn 55 (2026-11-08 00:46 UTC)
+
+**User:**
+
+I have no idea where you got the rule from or who or what came up with the layout, but we're not short of area, so move the pads away from the channels so the check passes.
+
+*[Bash: Trace where the narrow-poly rule came from.]*  
+*[Bash: Read where the necked-poly rule was recorded.]*  
+*[SendMessage to an agent: D: move TG gate pads so narrow-poly check passes.]*  
+*[Bash: Log the round-2 request in the RUNLOG.]*  
+
+**Assistant:**
+
+I've sent D back to move the transmission gate's contact pads away from the channels until the narrow-poly check reports zero on every cell. The usual route is to make the switch row taller; area doesn't matter. D will rerun every check and keep the current version for comparison. When it's done, I'll recheck it, put it into the macro and rerun the macro's own LVS.
+
+**Where the rule came from:**
+- **Your review:** on 2026-10-31 you rejected the first set of layout primitives from session C2. One of your reasons was "necked gate-contact poly".
+- **The script:** session C2 then wrote `sym_check.py`, with this check as an automated stand-in for that rule. Its own handover note says: "The narrow-poly test is a heuristic; Christoph's review is the real check."
+- **How it reached D:** later briefs carried it on in two forms, "no necked gate poly" and "gate contacts on full-width poly", including D's.
+- **Records:** on `claude/c4-replica-bias-sudel`, under `sudelbuecher/design_considerations/pad_buffer_layout/pad_cell_2026-10-31/`: the rejection in `report.md`, the caveat in `HANDOFF.md`, and the script itself, `sym_check.py`.
+
+**Who drew the layout:** agent D, the layout agent I started in this session for bias_dist_pd.
+- **Mirror rows:** built with session C3's row generators.
+- **Gates:** D drew the transmission gate, nand and inverter cells itself, because no layout for them existed.
+
+Logged as RUNLOG row 92.
+
+*[Hand-back report of agent "Layout D: bias_dist_pd 4-in" arrived (21 lines).]*  
+*[Bash: Run the narrow-poly check on every cell and recheck the netlist.]*  
+*[Task notification: Agent "Layout D: bias_dist_pd 4-in" finished.]*  
+*[Bash: Fix the dummy classification, recheck, rerun LVS on round 2.]*  
+
+**Assistant:**
+
+Round 2 checks out: the narrow-poly check is clean, the netlist matches 73 + 4, and my LVS rerun matches. Putting it into the macro and rerunning the macro's LVS:
+
+*[Bash: Put round 2 into the macro; run DRC and the macro's LVS flow.]*  
+*[Bash: Update READMEs and redraw the TG figure and slot view for round 2.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/layout_rb/lead/bdp_explain/3_split_gates_narrow_poly.png`.]*  
+*[Bash: Compute the gap annotation from the geometry and redraw.]*  
+*[Bash: Save round 2 outputs, report and checks to the notes branch.]*  
+*[Bash: Commit round 2 into the macro and log RUNLOG row 93.]*  
+*[Sent to the user: `3_split_gates_narrow_poly.png` (caption: "tg_hv after round 2: pads moved away from the channels, the narrow-poly check passes (no red edges).").]*  
+
+**Assistant:**
+
+The pads are moved, and the narrow-poly check now passes on every cell of bias_dist_pd. The picture above shows the transmission gate after the change: no red edges any more.
+
+- **Change:** D made the switch row 0.20 µm taller, which moves each gate contact pad further from its channel. The pads now reach 0.32–0.37 µm past the endcap zone, against the 0.30 µm the check asks for. They are still full-width 0.45 µm poly.
+- **Size:** 60.5 × 16.4 µm, 994.5 µm², up 12 µm². The two mirror rows are identical to before, and the netlist is unchanged.
+- **D's checks:** DRC and latch-up are clean, LVS matches for the whole cell and each sub-cell, and a deliberately broken netlist fails.
+- **My checks:**
+  - the narrow-poly check run myself on every cell and on the whole layout: zero hits;
+  - the netlist against the circuit: 73 devices plus 4 dummies;
+  - my own LVS rerun;
+  - DRC on the copy in the macro;
+  - the macro's own `make klayout-lvs` against the sheet: passes.
+
+The new layout replaces the old one at `macros/bias_dist_pd/layout/klayout/bias_dist_pd.klay.gds` on `claude/c4-replica-bias`. The previous version is kept on the notes branch under `layout/agents_c4/D/out/v1/`. README, pictures and RUNLOG rows 92–93 are updated and pushed.
+
+## Turn 56 (2026-11-08 11:08 UTC)
+
+**User:**
+
+While I'm looking at the layout (and maybe associated schematics) at my human's snail pace compared to yours: Are you aware of some standard cell capacitor fill cells and endcap cells? So far, the well and substrate strips of the row of logic and transmission gates look quite good, but if we want something like closed guards around the stripes, it might make sense to look into them. Delegate to an agent to collect information? Would the agent need access to more repositories? sg13cmos5l_ocd_chipalooza and its dependent branches for the slot project may already contain useful logic, transmission gate, standard cell row filler/buffer capacitor and standard cell row endcap elements.
+Also, this doesn't require creativity, just diligence. Sonnet with medium or high effort might do.
+
+*[mcp__claude-code-remote__add_repo call.]*  
+*[mcp__claude-code-remote__add_repo call.]*  
+*[Bash: Check for existing clones and list the fork's branches.]*  
+*[Bash: Look at the PDK's standard cell libraries for fill, decap and tap cells.]*  
+*[Bash: Write the research agent's brief.]*  
+*[Agent started: Survey fill/endcap/tap and hv cells.]*  
+*[Bash: Save brief R and log RUNLOG row 94.]*  
+
+**Assistant:**
+
+Yes. I've started a research agent (R) on this: Sonnet, high effort, read-only, finding and citing cells, not designing.
+
+**What I already know from the PDK:**
+- **Its standard cells are 1.2 V parts:** decap_4 and decap_8, fill_1/2/4/8, an antenna diode, and tie-high/low. The LEF has no endcap or tap cell.
+- **They don't fit our switch row,** which is 3.3 V thick-oxide logic. So it would need 3.3 V equivalents, or a closed tie ring drawn by hand.
+- **Unchecked:** whether the PDK's documents or decks call for endcaps or taps at all. R will check.
+
+**Repositories:**
+- **No new access needed.** Both harness repositories are public, so the session can clone and fetch them anonymously:
+  - **upstream:** RTimothyEdwards/sg13cmos5l_ocd_chipalooza;
+  - **your fork:** tatzelbrumm/sg13cmos5l_ocd_chipalooza, with its slot-project branches `custom-pad-test`, `claude/slot7-stage-a`, `claude/c6-submodule-pads`, `claude/c5-testplatform-test`, `delivery-test`, `tatzelbranch` and others.
+- **Already cloned** from the earlier switch survey, under `/home/user/rtimothyedwards/` and `/home/user/tatzelbrumm/`. R may fetch branches into them and clone the harness's IP repositories read-only, such as the analog switches and the bias generator.
+- **Excluded:** I've told R to stay out of `tatzelbrumm/sg13cmos5l_cm_slot7`, per your earlier instruction. Say so if it should look there too.
+
+**What R delivers:**
+- **A table of candidate cells:** fill, decap, endcap, tap, tie, 3.3 V logic, transmission gates, switches and level shifters, each with:
+  - its source (repository, branch, commit, path);
+  - 1.2 V or 3.3 V;
+  - size and row height;
+  - how it ties the well and substrate;
+  - its stated DRC/LVS status.
+- **What the PDK says** about endcaps, taps and fill.
+- **Options for closing the guard** around our switch row, with pictures of the candidate cells rendered from their GDS.
+
+The rules for R: never run the external repositories' scripts, never push, change no design file.
+
+The brief is on the notes branch as `BRIEF_R.md`, logged as RUNLOG row 94. I'll show you R's findings when it reports.
+
+## Turn 57 (2026-11-08 11:12 UTC)
+
+**User:**
+
+Trying to access /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/bias_dist_pd/layout/klayout > lart
+total 220
+drwxrwxr-x 3 1000 1000   4096 Nov  8 11:26 ..
+-rw-rw-r-- 1 1000 1000  79754 Nov  8 11:26 bias_dist_pd.klay.gds
+The companion file for a hierarchical klayout is missing. Maybe elsewhere in your recently generated hierarchical klayout gds, too.
+Anyhow, I need something that allows me to open bias_dist_pd.klay.gds hierarchically asap.
+It's also ok if you walk me through building this companion file (what would be its extension anyhow) in klayout, interactive or batch.
+
+*[Bash: Find the companion files and the KLayout notes in the repo.]*  
+*[Bash: Read the KLayout launch notes and an existing .klib file.]*  
+*[Bash: Check whether the new layouts reference external libraries.]*  
+
+**User (mid-turn, 2026-11-08 11:12 UTC):**
+
+Is R searching or is it already done?
+
+*[Bash: See how the Makefile opens layouts and uses the .klib file.]*  
+*[Bash: Read how sak-open.py launches KLayout with the .klib.]*  
+*[Bash: Write the two .klay.klib companion files, log and push.]*  
+
+**Assistant:**
+
+R is still searching; it hasn't reported yet.
+
+I've added the missing companion files and pushed them to `claude/c4-replica-bias`: `bias_dist_pd.klay.klib` next to the bias_dist_pd layout, and `pad_ref_rb.klay.klib` for pad_ref_rb's layout, which was missing one too. To open:
+
+```bash
+cd /foss/designs/sg13cmos5l_cm_ip__single2diff2single && git pull origin claude/c4-replica-bias
+```
+
+```bash
+cd macros/bias_dist_pd/layout/klayout && klayout -e bias_dist_pd.klay.gds
+```
+
+`make -C macros/bias_dist_pd open` does the same through sak-open.py. Start KLayout from the file's own directory, because the `.klib` resolves library paths relative to it.
+
+**What the companion file is:** `<cell>.klay.klib`, a small JSON file that the KLayout Library Manager plugin reads to register the libraries a layout uses. You can write it by hand in a text editor; this is the whole content when no library is needed:
+
+```
+{
+    "technology": "",
+    "statements": []
+}
+```
+
+If a layout used cells from a GDS library, each library would be one statement, as in the D2S pad's `.klib`: `{"lib_name": "sg13cmos5l_io", "lib_path": "$PDKPATH/libs.ref/sg13cmos5l_io/gds/sg13cmos5l_io.gds"}`. The plugin can also generate the file, but I don't know its menu path well enough to walk you through that. Writing it by hand is quicker.
+
+**What I checked in the two layouts:**
+- **bias_dist_pd:** 23 cells with top cell `bias_dist_pd`, and no reference to any library. The hierarchy is all inside the GDS, so KLayout shows it on its own once the plugin finds the `.klib`.
+- **pad_ref_rb:** 12 of its transistor cells are parametric-cell variants of the PDK's `SG13_dev` library. The IHP technology registers that library itself, so the `.klib` lists nothing either.
+- **One caveat in pad_ref_rb:** I renamed those 12 cells to `prb_nmosHV…` to avoid name clashes with the pads. KLayout may show them under their library names when it rebuilds them from `SG13_dev`. That's cosmetic, not a defect.
+
+I can't run KLayout's GUI here, so I haven't seen either file open interactively. Tell me if it still doesn't open.
+
+## Turn 58 (2026-11-08 11:13 UTC)
+
+**User:**
+
+sak-open.py has an awkward file selection interface, or I don't know how to use it effectively.
+
+*[Bash: Read sak-open.py's usage and options.]*  
+*[Bash: Read the rest of sak-open.py's help and its options.]*  
+
+**Assistant:**
+
+You can skip sak-open.py for this: it only runs `klayout -e <file>` from the file's own directory. These two commands do the same:
+
+```bash
+cd /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/bias_dist_pd/layout/klayout && klayout -e bias_dist_pd.klay.gds
+```
+
+```bash
+cd /foss/designs/sg13cmos5l_cm_ip__single2diff2single/macros/bias_dist_pd/schematic/xschem && xschem bias_dist_pd.sch
+```
+
+To open any file from wherever you are, these two shell functions (put them in `~/.bashrc`) change into the file's directory first, as the tools expect:
+
+```bash
+kl() { (cd "$(dirname "$1")" && klayout -e "$(basename "$1")" &) ; }
+```
+
+```bash
+xs() { (cd "$(dirname "$1")" && xschem "$(basename "$1")" &) ; }
+```
+
+Then, for example, `kl macros/pad_ref_rb/layout/klayout/pad_ref_rb.klay.gds`.
+
+If you'd rather keep sak-open.py, its built-in help suggests three things; I haven't used its window myself.
+- **Point it at a small folder.** Without an argument it scans all of `$DESIGNS`, which makes a wall of buttons. `sak-open.py macros/bias_dist_pd` shows only that macro's files.
+- **Right-click a file and pick "Cell view".** That shows every view of one cell (the `.sch`, `.sym` and `.klay.gds` of bias_dist_pd) wherever they live, which is handy for opening layout and schematic side by side.
+- **Right-click and pick "Scope here"** to narrow the list to a directory, and untick file types you don't want. "Save view" remembers the setup.
+
+R is still searching.
+
+*[Hand-back report of agent "Survey fill/endcap/tap and hv cells" arrived (26 lines).]*  
+*[Bash: Read R's closing options and spot-check its claims.]*  
+*[Task notification: Agent "Survey fill/endcap/tap and hv cells" finished.]*  
+*[Bash: Save R's survey and previews to the notes branch; log RUNLOG row 96.]*  
+*[Sent to the user: `pdk_stdcell_fill_8.png`, `pdk_stdcell_decap_8.png`, `bidir_sg13g2_hv_inv_1.png`, `biasgen_xgate.png` (caption: "From agent R's survey: the PDK's 1.2 V fill_8 and decap_8, an hv (3.3 V) inverter from the upstream hv library (as copied in bidir-level-shifter), and the harness's xgate.").]*  
+
+**Assistant:**
+
+R has finished. The short answer: there are no endcap or tap cells anywhere in our PDK, and the fill and decap cells we have are 1.2 V parts that don't fit our 3.3 V switch row. I checked the key claim myself. Four of R's 25 cell pictures are above.
+
+**What R found:**
+- **The PDK has no endcap or tap cells, by design.** Its LibreLane config says so verbatim: "There are no endcap and welltie cells in ihp-sg13cmos5l". Each standard cell carries its own full-width p+ rail at the bottom and n+/NWell rail at the top, so a row is two tie strips with logic between, like our switch row. The harness's own logic rows start with `decap_8` and end with fill or decap.
+- **The PDK's fill and decap cells don't fit our row.** They are 1.2 V parts on a 3.78 µm row; our switch row is 3.3 V and 5.99 µm tall.
+- **A 3.3 V standard-cell library exists upstream, but not in our installed PDK.**
+  - **Where:** `sg13cmos5l_stdcell_hv` sits on the `dev` branch of IHP-Open-PDK, added 2026-11-04.
+  - **Contents:** 84 cells including hv fill, hv decap, inverters, nands and nors on 7.14 µm rows. Its commit messages report DRC and LVS clean.
+  - **What it lacks:** no endcap, no transmission gate and no level shifter.
+  - **Seen so far:** R saw only the cell names. Four of its cells appear in another public slot project (`rcyaon/bidir-level-shifter`); one is pictured above.
+- **No 3.3 V transmission-gate standard cell exists anywhere.** The harness's `xgate` (2u/0.5u, pictured) and the bidir project's `muxhv` are the nearest.
+- **Rules:** the PDK requires guard rings only at pad output buffers. The latch-up limits (20 µm, 6 µm) are already met by our two strips, and the latch-up deck run was clean. A `guard_ring` PCell exists in the PDK.
+- **Access:** no extra GitHub access was needed. Everything was public, and R ran nothing from the external repositories.
+
+**Options for closing the guard around the switch row:**
+- **B, simplest:** draw vertical p+ and n+ end bars that join the two existing strips into a closed ring, like the closed rings of the two mirror rows above it. Geometry only, and it fits your "taps as rings" rule.
+- **A:** the PDK's `guard_ring` PCell around the row.
+- **D:** 3.3 V fill or decap cells from the upstream library, either in the row's gaps (6.4 µm and 7.5 µm of plain filler today) or as row ends. This needs that library read first, and our row height still wouldn't match its 7.14 µm.
+- **E:** rebuild the switch row from that library. Its devices are sized differently from ours, so it means re-simulating.
+
+My recommendation is B now; D could come later if you want 3.3 V decoupling in the gaps.
+
+**Decision for you:** to look at the upstream 3.3 V library, I'd fetch just that library from IHP-Open-PDK's `dev` into the scratchpad, read-only, without touching the installed PDK. R stopped short of that because it was outside its brief. Shall I fetch it, and shall I have D close the row with end bars (option B)?
+
+R's survey, pictures and report are on the notes branch under `layout/agents_c4/R/`; RUNLOG row 96.
+
+## Turn 59 (2026-11-08 11:38 UTC)
+
+**User:**
+
+I see that in the layout of bias_dist_pd, you already built a hierarchy of something that could become the nucleus of standard high voltage cells. What is the horizontal grid of these? In any case, you could have decap cells made from some of your bdp_fill[0-6] cells.
+Don't run off doing it quite yet, just tell me how feasible this is and how much effort it would eat.
+
+*[Bash: Measure the switch-row cells' widths, origins and placement pitch.]*  
+
+**Assistant:**
+
+**The grid:** these cells have a common row height but no horizontal grid. I measured them in the layout now in the macro.
+
+**Vertically they already behave like standard cells:**
+- every cell is 5.99 µm tall;
+- the p+ tie rail sits at the bottom (y 0–0.30) and the n+ rail at the top;
+- the NWell starts at y 2.55;
+- neighbors abut and continue the rails.
+
+**Horizontally there is no site grid, only the 5 nm manufacturing grid:**
+
+| cell | width of its active area (µm) |
+|---|---|
+| inverter | 1.255 |
+| transmission gate | 1.36 |
+| nand | 2.065 |
+| slice | 4.38 |
+| fills | 0.87, 0.87, 0.90, 1.97, 2.79, 6.6, 7.5 |
+
+Inside a slice the three gates sit 1.66 µm and 1.38 µm apart. The input slices repeat every 4.38 µm. The output slices sit 5.25 µm apart in pairs, because each is placed under its PMOS output's drain above it. So the mirror rows set the placement, not a site.
+
+**Decap cells from the fills:** feasible and low-risk, but the capacitance is small.
+- **Construction:** like a standard-cell decap. A 3.3 V NMOS capacitor in the lower half (gate to vddh, source, drain and bulk to vssh) and a 3.3 V PMOS capacitor in the NWell half (gate to vssh, the rest to vddh). The tie rails stay as they are.
+- **Capacitance:** with about 1.2 µm of device width per half and the thick oxide's roughly 4.2 fF/µm² (the figure measured on our bypass capacitors), that is about 10 fF per µm of fill.
+  - Per fill: fill6 about 70 fF, fill1 about 60 fF, fill3 about 25 fF, fill4 about 17 fF. The three 0.9 µm fills are too narrow to matter.
+  - Total: about 0.15–0.2 pF. A slightly taller row (area isn't an issue) could add some.
+- **Benefit:** the switch row is static configuration logic, so it hardly needs decoupling. The modest real benefit is local vddh-to-vssh decoupling next to the PMOS mirror, whose outputs hang on vddh. Otherwise it's good practice and uses empty space.
+- **Effort:** one round for D, roughly 30–45 minutes. It already has the generator: a decap variant of the fill cell, DRC/LVS per cell and for the whole block. Then about 15–20 minutes for me:
+  - add the new capacitor devices to the netlist;
+  - add a capacitor group to the sheet (the schematic agent or I);
+  - rerun the macro's LVS.
+
+**A real 3.3 V cell library from this nucleus** is a different scale. It needs:
+- a horizontal site (for example 0.48 µm, like the upstream PDK's hv library), with cell widths padded to it;
+- cell boundaries and pin access;
+- LEF and timing views, which means characterization.
+
+That's several agent rounds plus characterization work, probably more than a day of wall-clock time. It's also partly redundant: the upstream PDK already has a 3.3 V library (7.14 µm rows, 0.48 µm site), just not installed here. That library lacks a transmission gate, which is where our tg_hv cell would add something.
+
+Snapping only this one row to a 0.48 µm site, without library views, would be one agent round, about 45–60 minutes, plus a few percent of area.
+
+Nothing has been started. Say which of these you want.
+
+## Turn 60 (2026-11-08 11:41 UTC)
+
+**User:**
+
+decap cells sound good, but let's postpone it for now. more important construction sites before the tapeout.
+
+*[Bash: Record the postponed decap cells and log RUNLOG row 97.]*  
+
+**Assistant:**
+
+The decap cells are postponed. I noted that, with the estimate (about 0.15–0.2 pF, one agent round), in bias_dist_pd's README and RUNLOG row 97, pushed.
+
+What's still open on the replica-bias side, in case it helps you pick the next construction site:
+- **Bias corner assembly:**
+  - route the two cores, bias_dist_pd and pad_ref_rb together;
+  - carry the shared bias chain into the slot schematic;
+  - draw the global routes to the pad pins.
+- **PEX:** neither pad_ref_rb nor bias_dist_pd has been extracted and re-simulated yet.
+- **bias_dist_pd characterization:** only its truth table has been simulated; there's no CACE suite yet.
+- **Closing the switch row's guard ring:** my suggestion is to join the two tie strips with end bars.
+- **The upstream 3.3 V cell library:** fetching it from IHP-Open-PDK's `dev` branch into the scratchpad for a look is still waiting for your yes or no.
+
+## Turn 61 (2026-11-08 11:57 UTC)
+
+**User:**
+
+the big open question is how to connect the core pointing differential I/O from the pads to something else than each other meaningfully. are the differential signals centered on the same vcm, and which reference voltage got its own replica bias generator?
+I think the task building the c7_testplatform has already created some useful if VERY quick and dirty intermediate results. In the end, an uncluttered sg13cmos5l_cm_slot7  repository with gds needs to be sent to Tim and eventually IHP.
+
+*[Bash: Look for the c7 test-platform work among this repo's branches.]*  
+*[Bash: Fetch the slot7 test-platform branches and list what they added.]*  
+
+**User (mid-turn, 2026-11-08 11:58 UTC):**
+
+before you get busy, check if other cloud tasks already own this problem.
+
+*[mcp__claude-code-remote__list_sessions call.]*  
+*[mcp__claude-code-remote__list_events call.]*  
+*[mcp__claude-code-remote__list_events call.]*  
+*[Bash: Pull the latest user messages and results from the two slot7 sessions.]*  
+*[Bash: Look at the raw format of the saved session events.]*  
+*[Bash: Extract the user messages and results from the two sessions.]*  
+
+**Assistant:**
+
+I checked the cloud sessions: none of the active ones owns the core-side connection question. Two related sessions exist, both idle since yesterday:
+- **"Meaningful slot7 setup that doesn't require pads"** (session C5): it built `slot7_testplatform`, the reduced fallback without pads.
+  - **What it has:** bias trees on the OA/BG/ibias0 references, a bias-voltage mux to `analog_bus2`, and `ibias1` to `analog_bus3`. Its layout is DRC/LVS-clean, and it has slot_7 views. It is on `claude/c5-slot7-testplatform`, merged into `toplevel`; its later sheets are on `claude/c5-slot7-schematics`.
+  - **Its last exchange with you:** you agreed to drop the slot-7 ibias1 measurement, which frees `analog_bus3`, `dig_in[12]` and the xgate. It made no changes after that.
+- **"Create sg13cmos5l_cm_slot7 hand-over repo":** it owns the uncluttered repo for Tim and IHP, which it started from an empty repository.
+  - **Its own split:** the fallback is `slot7_testplatform`; the regular hand-over is the full slot circuit built from this repo's cells.
+  - **Last state:** the `en_ctrl_stage_b` draft, on `claude/c5-slot7-schematics`.
+
+Neither covers what the pads' differential core side should connect to, so it's open. I haven't started on it. I also stayed out of `sg13cmos5l_cm_slot7`, as you told me earlier.
+
+**Your two technical questions:**
+- **Are the differential signals centered on the same vcm? Yes.** pad_ref_rb drives one node, vcm, into both the S2D's `vcm` and the D2S's `vref`. About 1.24–1.30 V at 3.3 V and 27 °C, 1.12–1.40 V over corners and temperature.
+  - **S2D:** its outputs sit symmetrically about vcm: outp − vcm = vcm − outn = pad − vref.
+  - **D2S:** it takes its input common mode from vcm and references its pad output to it: pad − vcm = (vinp − vinn)/2.
+- **Which reference has its own replica generator?** Both have one, inside the single cell pad_ref_rb, sharing one bias tree:
+  - **vcm comes from vcm_rb.** It is centered in the band where both pads stay linear.
+  - **The S2D's vref comes from vref_s2d_rb.** It is the single-ended zero point, about 0.5 V, and rises with temperature as the S2D's input edge does.
+  - **The D2S** has no reference of its own; its output is referenced to vcm.
+
+**Consequence for any core-side partner:** anything that takes the S2D's outputs, or drives the D2S's inputs, must handle a 3.3 V-domain differential pair centered at vcm. vcm is available from pad_ref_rb.
+
+**Ways to connect them to something other than each other:**
+- **The harness's analog bus lines** (`analog_bus0`–`3`, single-ended) through the slot's analog switches. External instruments could then observe the S2D pair and drive the D2S pair, with the S2D-to-D2S loopback kept as a selectable mode. The catch: a pair needs two of the four lines, and C5 already uses two of them.
+- **A small on-slot differential block between the two pads,** such as a gain stage or a filter. That is new design work.
+
+**Who should own it?**
+- **This session:** it's tied to vcm/vref from pad_ref_rb.
+- **C5:** its scope is the slot setup.
+- **A fresh session:** started for just this question.
+
+Either way, the hand-over session would package the result.
+
+## Turn 62 (2026-11-08 12:00 UTC)
+
+**User:**
+
+What you CAN get busy with is to backannotate the very meaningful logic/transmission gate hierarchy from the bias_dist_pd layout to the schematic. Keep the schematic file names, the old versions should be archived by git (doesn't hurt to check)
+
+*[Bash: Read D's cell netlists and check the sheets are committed.]*  
+
+**Assistant:**
+
+Both sheets (bias_dist_pd and hv_logic) are committed and clean, so git holds the old versions. Writing the hierarchical netlist first, matching the layout's cells:
+
+*[Bash: Restructure the netlist into slices and add tg_hv to hv_logic.]*  
+*[Bash: Flatten the new netlist and LVS it against the layout.]*  
+
+**Assistant:**
+
+The hierarchical netlist matches the layout by LVS (77 devices). Rerunning the truth table, then handing the sheets to the schematic agent:
+
+*[Bash: Rerun the truth table with the hierarchical netlist.]*  
+*[Bash: Keep the new truth table and check hv_logic's folders and paths.]*  
+*[SendMessage to an agent: Backannotate bias_dist_pd's slice/TG hierarchy into sheets.]*  
+*[Bash: Commit the hierarchical netlist, log RUNLOG row 98.]*  
+
+**Assistant:**
+
+I'm backannotating the layout's slice hierarchy. Git already holds the old sheets: bias_dist_pd.sch and the hv_logic folder were committed and clean, last changed in 956c6d34.
+
+**Done (netlists):** the source netlists now carry the same hierarchy as the layout.
+- **`tg_hv` (new):** the standard 3.3 V transmission gate, now a cell in `macros/hv_logic` next to the inverter and nand. Ports: vdd, vss, en, en_b, a, b.
+- **`bdp_slice` (new):** one switched leg, nand2_hv → inv_hv → tg_hv. Ports: vdd, vss, en_3v3, en, a, b.
+- **`bias_dist_pd`:** it now instantiates eight slices: four inputs (iin into ni) and four outputs (po into iout). TDN, SVPD, the two mirror rows and their dummies stay flat, as in the layout.
+- **Checks:**
+  - I flattened the new netlist and ran LVS against the layout in the macro: match, 77 devices.
+  - The truth table is unchanged, apart from off-state leakage in the fifth digit, at the picoampere level.
+
+**In progress (sheets):** the schematic agent is drawing:
+- `tg_hv.sch`/`.sym` in hv_logic;
+- `bdp_slice.sch`/`.sym` in bias_dist_pd;
+- `bias_dist_pd.sch`, rebuilt under the same file name from the eight slice instances.
+
+The symbol keeps its ports. When it's done I'll check each sheet against its netlist, run the macro's own LVS against the new sheet, and show you the renders.
+
+The netlist step is pushed (RUNLOG row 98).
+
+*[Hand-back report of agent "Redraw slot.sch human readable" arrived (15 lines).]*  
+*[Bash: Recheck the three sheets and run the macro's LVS on the new sheet.]*  
+*[Task notification: Agent "Redraw slot.sch human readable" finished.]*  
+*[Bash: Find the README lines to extend for tg_hv and bdp_slice.]*  
+*[Bash: Update READMEs, log RUNLOG row 99, commit the hierarchical sheets.]*  
+*[Sent to the user: `bias_dist_pd.png`, `bdp_slice.png`, `tg_hv.png` (caption: "bias_dist_pd with the layout's hierarchy: eight bdp_slice legs (nand2_hv → inv_hv → tg_hv), the new bdp_slice sheet, and tg_hv as a cell in hv_logic.").]*  
+
+**Assistant:**
+
+The schematics now follow the layout's hierarchy, with the same file names, and the macro's own LVS against the layout passes. The three renders are above.
+
+- **`tg_hv` (new cell in `macros/hv_logic`):** the standard 1u/0.45u transmission gate, next to the inverter and nand. Ports: vdd, vss, en, en_b, a, b.
+- **`bdp_slice` (new sheet in `macros/bias_dist_pd`):** one switched leg, nand2_hv → inv_hv → tg_hv, like the layout cell of the same name.
+- **`bias_dist_pd.sch` (same file):** the eight flat legs are now four input slices (iin into ni) and four output slices (po into iout). TDN, SVPD, the two mirror rows and their dummies stay flat. The symbol is unchanged.
+
+**Checks:**
+- **Each sheet against its netlist:** tg_hv 2 devices, bdp_slice 3 instances, bias_dist_pd 13 devices plus 8 slices; ports equal.
+- **Lint and log:** the short lint is clean and xschem logs no errors.
+- **`make klayout-lvs`** against the layout passes.
+- **Netlist:** before the sheets, I had already run LVS of the layout against the new hierarchical netlist (77 devices, match).
+- **Truth table:** unchanged.
+
+**Old versions:** git holds them. The flat bias_dist_pd sheet is in commit 956c6d34, and both folders were committed and clean before the change.
+
+READMEs for bias_dist_pd, hv_logic and the macro index are updated. Pushed to `claude/c4-replica-bias` (RUNLOG rows 98–99).
+
+## Turn 63 (2026-11-08 12:47 UTC)
+
+**User:**
+
+The subagent did an EXCELLENT job. I rearranged the geometry a little according to my idiosyncratic preferences. Sanity check that I didn't make a mistake, look at my changes, and update the xschem layout drawing skill that's somewhere in a repository, and ideally in the SKILL set of my Claude.
+
+*[Bash: Fetch and list Christoph's new commits.]*  
+*[Bash: Merge Christoph's edits and check the four sheets against their netlists.]*  
+*[Bash: Compare Christoph's sheets with the previous ones and rerun the macro LVS.]*  
+*[Bash: Render each sheet before and after Christoph's edits side by side.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/tg_hv_cmp.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/nand2_hv_cmp.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/bdp_slice_cmp.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/bias_dist_pd_cmp.png`.]*  
+*[Bash: Crop the left part of the bias_dist_pd sheet before and after.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/bdp_new_left.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/bdp_old_left.png`.]*  
+*[Bash: Compare the project's skill copy with the account's synced skill.]*  
+
+*[Context compacted (2026-11-08 12:51 UTC): the session continued from an automatic summary of the conversation so far; the summary is not reproduced here.]*
+
+*[Bash: Show working tree, branch, worktrees and the RUNLOG tail.]*  
+*[Bash: Show the latest RUNLOG rows and the uncommitted netlist diff.]*  
+*[Bash: Read RUNLOG row 99 and list the schematic netlists.]*  
+*[Bash: Drop the timestamp-only netlist change and remove the temporary worktree.]*  
+
+**Assistant:**
+
+Your hand edits check out (no mistakes found). I'm now writing your preferences into the xschem skill.
+
+*[Bash: Show the skill's section outline and the hand-drawn refinements section.]*  
+*[Bash: Show the hand-edit diff summary and the new tg_hv sheet.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/tg_hv_cmp.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/nand2_hv_cmp.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/bdp_slice_cmp.png`.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/bias_dist_pd_cmp.png`.]*  
+*[Bash: Count wires, labels and ports before and after the hand edits.]*  
+*[Bash: Crop the output-slice region of both renders.]*  
+
+**User (mid-turn, 2026-11-08 12:53 UTC):**
+
+`I've also edited bias_dist_pd.sym . What do you need to backannotate to accomodate my idosyncrasies?`
+
+**Assistant:**
+
+Checking your bias_dist_pd.sym edit now: fetching it and looking at what instantiates it.
+
+*[Bash: Fetch the design branch and list new commits.]*  
+
+**User (mid-turn, 2026-11-08 12:53 UTC):**
+
+I need to push my edits yet.
+
+**Assistant:**
+
+Not pushed yet, understood. Meanwhile I'll list everything that depends on bias_dist_pd.sym, so the follow-up work is known before your push arrives.
+
+*[Bash: Find users of bias_dist_pd.sym and show its pins and properties.]*  
+*[Bash: Check renders, the truth-table testbench and port-order users.]*  
+*[Bash: Check whether the committed sheet renders predate the hand edits.]*  
+*[Bash: Read the new nand2_hv and bdp_slice wiring.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/bdp_new_outcrop.png`.]*  
+*[Bash: Compare port positions and label use in bias_dist_pd before and after.]*  
+*[Bash: Count wire segments per net before and after in bias_dist_pd.]*  
+*[Bash: Read the skill's frontmatter and workflow section.]*  
+*[Bash: Check which slice pins in bias_dist_pd are reached by a wire.]*  
+*[Bash: Check whether slice supplies and enables reach their ports by wire, before and after.]*  
+*[Edit `/home/user/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/Claude/skills/xschem-analog-schematic/SKILL.md`.]*  
+*[Result: error (File has not been read yet. Read it first before writing to it.).]*  
+*[Edit `/home/user/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/Claude/skills/xschem-analog-schematic/SKILL.md`.]*  
+*[Result: error (File has not been read yet. Read it first before writing to it.).]*  
+*[Read `/home/user/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/Claude/skills/xschem-analog-schematic/SKILL.md`.]*  
+*[Read `/home/user/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/Claude/skills/xschem-analog-schematic/SKILL.md`.]*  
+*[Edit `/home/user/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/Claude/skills/xschem-analog-schematic/SKILL.md`.]*  
+*[Edit `/home/user/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/Claude/skills/xschem-analog-schematic/SKILL.md`.]*  
+*[Bash: Correct two details in the new skill section and check line lengths.]*  
+
+**User (mid-turn, 2026-11-08 12:56 UTC):**
+
+ok now the symbol edit is pushed back to where you see it.
+
+**Assistant:**
+
+Your push is in. Fetching it.
+
+*[Bash: Fetch and fast-forward to the pushed symbol edit, show its diff.]*  
+*[Bash: Read the skill's geometry rules, locate gen_sheet.py, check render sizes.]*  
+*[Bash: Compare symbol pins with the sheet and source netlist; netlist a one-instance test sheet.]*  
+
+**User (mid-turn, 2026-11-08 12:57 UTC):**
+
+where did the SKILL.md end up, and how can I make it visible to, say, the claude-code-config github repository?
+
+*[Bash: List symbols in the repo whose pins are not on the 20-unit grid.]*  
+
+**User (mid-turn, 2026-11-08 12:57 UTC):**
+
+or is it claude-cloud-config?
+
+*[ToolSearch: select:mcp__claude-code-remote__list_repos.]*  
+*[mcp__claude-code-remote__list_repos call.]*  
+
+**Assistant:**
+
+It's `tatzelbrumm/claude-cloud-config` (public, and you can push to it). Reading its layout to see how it would pick up a skill.
+
+*[Bash: Clone the cloud-config repo read-only and list its files.]*  
+*[Bash: Read the cloud-config README and how its setup script is fetched.]*  
+
+**Assistant:**
+
+Writing the symbol preferences into the skill too, then committing it.
+
+*[Bash: Read the skill's section on hand edits and symbols.]*  
+*[Bash: Add the symbol preferences to the new skill section.]*  
+*[Bash: Commit and push the skill update to the notes branch.]*  
+
+**Assistant:**
+
+Skill pushed to the notes branch. Now re-rendering the three committed sheet pictures that still showed the pre-edit sheets.
+
+*[Bash: Re-render the three hand-edited sheets into their committed pictures.]*  
+*[Bash: Regenerate the schematic CDL with the new symbol and check it is unchanged.]*  
+
+**Assistant:**
+
+The CDL comes out byte-identical with your symbol. Committing the renders and the run log rows.
+
+*[Bash: Commit renders and RUNLOG rows, push the design branch.]*  
+*[Bash: Package the skill folder as a zip for upload to claude.ai.]*  
+*[Sent to the user: `xschem-analog-schematic.zip` (caption: "Updated xschem-analog-schematic skill (SKILL.md + sch_lint.py), ready to upload in claude.ai Settings → Capabilities → Skills, replacing the Nov 6 version.").]*  
+*[Sent to the user: `nand2_hv_cmp.png`, `tg_hv_cmp.png`, `bdp_slice_cmp.png`, `bias_dist_pd_cmp.png` (caption: "Before (left, 81609ffb) / after (right, your a5340070): nand2_hv, tg_hv, bdp_slice, bias_dist_pd.").]*  
+
+**Assistant:**
+
+I found no mistakes in your hand edits. Your symbol edit needs no backannotation, and the skill is updated and pushed. Its only copy so far is in this repo; your claude.ai skill set doesn't have it yet (zip attached for that).
+
+**Your sheet edits (a5340070)**
+- Device, instance and port counts are equal, xschem logs 0 errors, and the short check is clean.
+- The topology matches the version before your edits on all 4 sheets (77 devices).
+- xschem's netlist of your sheets is byte-identical to the one before, and `make klayout-lvs` passes.
+- **Stale notes:** two sheet notes still describe the old drawing: nand2_hv says "nets by label", and bdp_slice says "supplies join vdd / vss by label". Want me to fix those two lines?
+- The committed sheet pictures (`bias_dist_pd.png`, `bdp_slice.png`, `tg_hv.png`) still showed the sheets before your edits; I've redone them. Before/after comparisons are attached.
+
+**Your bias_dist_pd.sym edit (d0831379)**
+- Pin order, names and directions are unchanged; only positions moved.
+- No sheet, testbench or CACE template places the symbol yet, so no wires can detach.
+- A test instance netlists every pin onto its own net, in the source netlist's order, and the schematic netlist is byte-identical.
+- Other symbols still have pins off the 20-unit grid: bdp_slice, tg_hv, nand2_hv, nor2_hv, pad_ref_rb, bias_tree_rb, bypass_rb and vref_s2d_rb. I'm leaving them alone. Moving pins on bdp_slice, tg_hv or nand2_hv would detach wires in your hand-edited sheets, so I'd only do it with your OK.
+
+**Where the skill is**
+- Branch `claude/c4-replica-bias-sudel`, file `Claude/skills/xschem-analog-schematic/SKILL.md` (commit 63082822). Locally: `/home/user/sg13cmos5l_cm_ip__single2diff2single_sudelbuecher/Claude/skills/xschem-analog-schematic/SKILL.md`.
+- It has a new section, "Logic cells and hierarchical sheets", covering:
+  - the fully wired textbook gate and the transmission gate drawn along its signal path;
+  - supply rails in cell sheets, but supply labels allowed on a busy top sheet;
+  - top-sheet ports at the height of their destination, wired straight across;
+  - your symbol rules: pins on the 20 grid, a free slot between groups, each output across from its input. You didn't say why vddh/vssh sit off center, so the skill says to ask before copying that.
+
+**Getting it into your Claude: it's `claude-cloud-config`**
+That's the right name; no `claude-code-config` exists. The copy your sessions see now comes from your claude.ai account and is the Nov 6 version, without the Nov 7 or today's rules. Three ways to update:
+
+1. **Your claude.ai account (recommended, one step):** upload the attached `xschem-analog-schematic.zip` in claude.ai under Settings → Capabilities → Skills, replacing the old one. It then reaches every session, cloud or not. You'd redo it by hand after each skill update.
+2. **claude-cloud-config:** add a `skills/xschem-analog-schematic/` folder, plus a few lines in `setup-cloud.sh` that copy `skills/*` into `/root/.claude/skills/`. The script already clones that repo. This keeps the skill versioned in git, but has drawbacks:
+   - it only reaches cloud sessions whose environment uses that setup script, and you'd have to paste the script into the environment again;
+   - I haven't tested whether cloud sessions load skills from that folder;
+   - if the account copy also exists, two skills share one name, so keep only one source.
+3. **`.claude/skills/` in the design repo:** this reaches only sessions working in that repo.
+
+Want me to do option 2? That needs push access to claude-cloud-config added to this session; it's read-only to me now.
+
+## Turn 64 (2026-11-08 13:40 UTC)
+
+**User:**
+
+let's put that on the back burner for now; I just made another schematic and symbol change. Did that get pushed without merge discepancies with simultaneous work from you? Did my edits break connectivity?
+
+*[Bash: Fetch the design branch and show the new commits and their parents.]*  
+
+**Assistant:**
+
+Your push merged cleanly with mine. Checking the merge contents and then connectivity.
+
+*[Bash: Confirm the merge took each side's files intact and show the symbol pin changes.]*  
+*[Bash: Read sheet_equiv usage and the earlier check logs.]*  
+*[Bash: Compare the merged sheets' topology against the pre-edit reference.]*  
+*[Bash: Run xschem error log, short lint, netlist and LVS on the merged head; check wired slice pins.]*  
+*[Bash: Restore the timestamp-only netlist; check how the slice supplies are wired.]*  
+*[Bash: Locate the skill lines that need correcting.]*  
+*[Bash: Correct the skill's supply-label rule and the off-center supply pin note; push.]*  
+*[Bash: Check where the output slices' vddh bus runs.]*  
+*[Bash: Remove the reference worktree, re-render the sheet, log and push.]*  
+
+**Assistant:**
+
+Your push went through cleanly, and your edits didn't break connectivity.
+
+**Merge:** you merged my render/RUNLOG commit (89cbfff6) with your own (4c6c190d) in a2e69ee7. No file was touched on both sides, and each side's files came through unchanged. `git pull` before you edit again picks up two small commits from me.
+
+**Connectivity on the merged head:**
+- **Topology:** the comparison against the version before all your edits (81609ffb) finds 0 of 4 sheets different (77 devices).
+- **Checks:** xschem reports 0 errors and the short check is clean.
+- **Netlist and LVS:** the schematic netlist is byte-identical and `make klayout-lvs` passes.
+- **bdp_slice.sym:** you moved only vdd (to x −20) and vss (to x +20). bias_dist_pd.sch is the only sheet that uses it, and you rewired it.
+- **Supplies:** every slice's vdd, vss and en_3v3 now reaches its port by wire.
+
+**Follow-ups I pushed:**
+- `bias_dist_pd.png` / `.svg` re-rendered (466f47f9), plus RUNLOG row 102.
+- The skill had said the slices' supplies stay on labels; I corrected that (cd68d1c9). It now describes each column of slices with a vddh line down its left side and a vssh line down its right.
+- I'm guessing that's why you put the supply pins off center: each pin then drops toward its own line, and no single vertical wire passes through both supply pins of a cell. The skill says that guess is mine, not your stated reason; correct me if it's something else.
+
+The attached zip doesn't include this correction yet. I'll rebuild it when you take the skill question off the back burner.
+
+## Turn 65 (2026-11-08 13:45 UTC)
+
+**User:**
+
+fix the two stale notes in nand2_hv and bdp_slice, and yes, I put the supply pins off center so I can draw non-intersecting vertical supply lines through the symbols.
+
+*[Bash: Fetch the branch and show the text notes of both sheets.]*  
+*[Bash: Rewrite the two stale notes and check the nand2_hv netlist they describe.]*  
+*[Bash: Render both sheets, regenerate the CDL, and join the renders for viewing.]*  
+*[Read `/tmp/claude-0/-home-user-sg13cmos5l-cm-ip--single2diff2single/f7165478-7787-531e-a1d8-6ec7206ebfcb/scratchpad/hand_chk/png/notes_fixed.png`.]*  
+
+**Assistant:**
+
+Both notes fit without overlapping anything, and the CDL is unchanged. Committing, then recording your stated reason in the skill.
+
+*[Bash: Commit the note fixes with RUNLOG row 103; record his reason in the skill; push both branches.]*  
+
+**Assistant:**
+
+I've fixed both notes and pushed them (c6c0e05a, on `claude/c4-replica-bias`). Run `git pull` before you edit again.
+
+- **nand2_hv:** "PA / PB in parallel from vdd to y, NA / NB in series from y to vss (NA at y, NB at vss). vdd / vss: 3.3 V rail of the circuit using the gate." I checked this against `hv_logic.spice`.
+- **bdp_slice:** "Source: netlist/source/bias_dist_pd.spice. vdd / vss: 3.3 V rail of bias_dist_pd (vddh / vssh), for the gates and the TG bulks."
+
+Only text changed, so connectivity can't change. The schematic netlist still comes out byte-identical, and in the renders both notes fit without overlapping anything. I re-rendered `bdp_slice.png` and added RUNLOG row 103.
+
+I put your reason for the off-center supply pins into the skill in your words (2dcf8b03): "so I can draw non-intersecting vertical supply lines through the symbols". The skill adds why: with both pins at x 0, a vertical line through a column of stacked symbols would short vdd to vss. It also notes that sheet notes should describe the circuit, not how it's drawn.
+
+The skill zip I sent earlier is out of date now. I'll rebuild it when you come back to the claude.ai or claude-cloud-config question.
+
+## Turn 66 (2026-11-08 13:50 UTC)
+
+**User:**
+
+rebuild it right now, lest I forget. Your raw information output is overwhelming. That's your job ...
+
+*[Bash: Rebuild the skill zip from the latest notes-branch copy.]*  
+*[Sent to the user: `xschem-analog-schematic.zip` (caption: "Current xschem-analog-schematic skill, including today's edits. Upload it in claude.ai under Settings → Capabilities → Skills, replacing the old one.").]*  
+
+**Assistant:**
+
+The rebuilt zip is attached. It has everything up to your reason for the off-center supply pins. To install it, upload it in claude.ai under Settings → Capabilities → Skills, replacing the old xschem-analog-schematic.
+
+Point taken on the volume; I'll keep my replies shorter.
+
+## Turn 67 (2026-11-08 13:52 UTC)
+
+**User:**
+
+the long comments should go to the logs and chatlogs, to the extent permitted.
+
+*[Bash: Locate the chat log and its build tools; show the log's end.]*  
+*[Bash: Read the chat log tools' usage and how earlier rebuilds were logged.]*  
+
+**Assistant:**
+
+Rebuilding the chat log from the session transcript with the existing build and verify scripts.
+
+*[Bash: Read the chat log header.]*  
+*[Bash: Update the log header, rebuild the chat log from a copy of the transcript, verify it.]*  
 
 ---
 
-*[End of the export: the last record on the live path is 231f0811-b95e-49ad-b789-9c9fbd2143ae (2026-11-07 21:25 UTC). Later turns are not included.]*
+*[End of the export: the last record on the live path is b4a62ebe-4903-4adf-8ede-e35bd4f7b312 (2026-11-08 13:53 UTC). Later turns are not included.]*
