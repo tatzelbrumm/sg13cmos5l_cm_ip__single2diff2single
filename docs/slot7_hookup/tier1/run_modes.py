@@ -50,7 +50,7 @@ def main():
 .include {T.MAC}/hv_logic/netlist/source/hv_logic.spice
 .include {T.MAC}/en_ctrl_3v3/netlist/source/en_ctrl_3v3.spice
 .include {bg}
-""" + "".join(f".include {i}\n" for i in incs) + f""".include {T.HERE}/slot7_tier1.spice
+""" + "".join(f".include {i}\n" for i in incs) + f""".include {T.MAC}/slot_7/netlist/source/slot_7.spice
 .temp {t}
 .option gmin=1e-12
 Vslot vdd_3v3 0 {v}
@@ -67,7 +67,7 @@ Rout padout 0 1G
 {ext2}
 .param vb0=1.45 vb1=1.05
 {busdrv}
-XS vdd_3v3 0 enable d0 d1 d2 d3 d4 d5 b0 b1 b2 b3 vref_s2d outp outn vcm_s2d en0 enb0 iref0 vinp vinn vref_d2s iref1 enb1 en1 slot7_tier1
+XS vdd_3v3 0 enable d0 d1 d2 d3 d4 d5 b0 b1 b2 b3 vref_s2d outp outn vcm_s2d en0 enb0 iref0 vinp vinn vref_d2s iref1 enb1 en1 slot_7
 X2S iovdd 0 iovdd 0 padin outp outn vcm_s2d vref_s2d iref0 en0 enb0 sg13cmos5l_IOPadSingle2Diff
 X2D iovdd 0 iovdd 0 padout vinp vinn vref_d2s iref1 en1 enb1 sg13cmos5l_IOPadDiff2Single
 .control

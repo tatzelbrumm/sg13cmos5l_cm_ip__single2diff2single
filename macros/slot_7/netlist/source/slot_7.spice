@@ -1,6 +1,6 @@
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
-* slot7_tier1: the minimal functional slot 7 with the custom pads (proposal, 2026-11-08; docs/slot7_hookup/CONCEPT.md).
+* slot_7: the slot-7 circuit (tier 1) with with the custom pads (proposal, 2026-11-08; docs/slot7_hookup/CONCEPT.md).
 *   Harness enable -> ls_up_fs (en_ctrl_3v3 v2's shifter) -> en_3v3 / en_3v3_b for everything; s7_ctrl (above): loop
 *   S2D -> D2S direct or crossed, S2D outputs to bus0/1, bus0/1 to the D2S inputs; bandgap core -> bias_dist_pd input 0 -> iout0 pad_ref_rb, iout1 S2D iref, iout2 D2S iref (iout3 spare,
 *   off); pad_ref_rb (on the slot's vdd_3v3: the pad ring is not reachable inside the slot) -> vcm to S2D vcm and D2S
@@ -67,7 +67,7 @@ XT9 vddh vss rc rc_b vcm_rb vcm_pad tg_hv
 XT10 vddh vss rc rc_b vref_rb vref_pad tg_hv
 .ends s7_ctrl
 
-.subckt slot7_tier1 vdd_3v3 vss_3v3 enable dig_in0 dig_in1 dig_in2 dig_in3 dig_in4 dig_in5 analog_bus0 analog_bus1 analog_bus2 analog_bus3
+.subckt slot_7 vdd_3v3 vss_3v3 enable dig_in0 dig_in1 dig_in2 dig_in3 dig_in4 dig_in5 analog_bus0 analog_bus1 analog_bus2 analog_bus3
 + s7_an_0_vref s7_an_0_outp s7_an_0_outn s7_an_0_vcm s7_an_0_en_3v3 s7_an_0_en_3v3_b s7_an_0_iref
 + s7_an_1_vinp s7_an_1_vinn s7_an_1_vref s7_an_1_iref s7_an_1_en_3v3_b s7_an_1_en_3v3
 * master enable, mode decode and the switch matrix S2D -> D2S / bus0/1
@@ -92,4 +92,4 @@ Vsr0 vref s7_an_0_vref 0
 * bus taps 2 / 3 on the pads' vcm / vref (monitor, or external feed with ext; the harness's per-slot switch is the off switch)
 Vsb2 vcm analog_bus2 0
 Vsb3 vref analog_bus3 0
-.ends slot7_tier1
+.ends slot_7

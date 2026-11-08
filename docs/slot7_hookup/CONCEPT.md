@@ -107,7 +107,7 @@ on-slot reference, on-slot replica bias monitored on the buses, single → diff 
 
 ## Tier 1 (proposal for a 4-hour hand-over, 2026-11-08)
 
-`tier1/slot7_tier1.spice`: the default mode only, no decoder (harness enable → `ls_up_fs` → all enables; BG core →
+`macros/slot_7/netlist/source/slot_7.spice` (first written as `tier1/slot7_tier1.spice`): now with the switch matrix and mode decode `s7_ctrl` (Christoph's spec, see macros/slot_7/README.md); originally the default mode only, no decoder (harness enable → `ls_up_fs` → all enables; BG core →
 bias_dist_pd → pad_ref_rb and both pads; loop S2D → D2S; bus0..3 = outp, outn, vcm, vref). `tier1/run_tier1.py`
 simulates it with the extracted pads, pad_ref_rb and bias_dist_pd (`tier1/results.txt`): round trip pad in → pad out
 error ≤ 1.3 mV (−40 / 27 °C), ≤ 6.5 mV (125 °C, pad in 0 … 1 V); vcm 1.12–1.37 V, vref 0.44–0.58 V; enabled: slot
