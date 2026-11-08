@@ -1,5 +1,5 @@
 {
- "scale_um_per_px": 0.0975,
+ "scale_um_per_px": 0.102,
  "grid_um": 0.05,
  "layers": {
   "Metal1": {
@@ -7,27 +7,22 @@
     8,
     0
    ],
-   "polygons": 17,
-   "vertices": 7832,
-   "area_um2": 360.005,
+   "polygons": 25,
+   "vertices": 15564,
+   "area_um2": 816.4699999999999,
    "repair_marker_counts": [
-    9,
-    4,
-    7,
+    23,
+    24,
+    20,
+    20,
+    15,
+    10,
     3,
-    9,
-    4,
-    1,
-    2,
-    2,
-    1,
-    1,
-    2,
-    1,
-    2,
+    3,
     0
    ],
    "colours": [
+    "red",
     "orange",
     "gold"
    ]
@@ -37,14 +32,18 @@
     10,
     0
    ],
-   "polygons": 13,
-   "vertices": 9646,
-   "area_um2": 442.7025,
+   "polygons": 2,
+   "vertices": 1504,
+   "area_um2": 74.375,
    "repair_marker_counts": [
+    2,
+    1,
+    1,
+    4,
     0
    ],
    "colours": [
-    "blue"
+    "purple"
    ]
   },
   "Metal3": {
@@ -53,13 +52,16 @@
     0
    ],
    "polygons": 12,
-   "vertices": 7186,
-   "area_um2": 387.72249999999997,
+   "vertices": 10086,
+   "area_um2": 484.0725,
    "repair_marker_counts": [
+    5,
+    1,
+    3,
     0
    ],
    "colours": [
-    "red"
+    "blue"
    ]
   },
   "Metal4": {
@@ -68,112 +70,96 @@
     0
    ],
    "polygons": 13,
-   "vertices": 6116,
-   "area_um2": 438.465,
+   "vertices": 6472,
+   "area_um2": 478.4025,
    "repair_marker_counts": [
-    36,
-    12,
-    2,
-    2,
-    1,
-    2,
-    2,
+    28,
+    25,
     3,
-    3,
-    3,
-    4,
-    4,
-    4,
-    1,
+    2,
     0
    ],
    "colours": [
     "green"
    ]
-  },
-  "TopMetal1": {
-   "gds": [
-    126,
-    0
-   ],
-   "polygons": 1,
-   "vertices": 578,
-   "area_um2": 137.6525,
-   "repair_marker_counts": [
-    0
-   ],
-   "colours": [
-    "purple"
-   ]
   }
  },
  "fidelity": {
-  "Metal3": {
+  "Metal1": {
    "colours": [
-    "red"
+    "red",
+    "orange",
+    "gold"
    ],
-   "iou": 0.9907911259941398,
-   "area_ratio_final_over_source": 1.0067380283152982,
+   "iou": 0.9869227675844264,
+   "area_ratio_final_over_source": 1.010886213592233,
    "source_area_covered": {
-    "red": 0.9987276940753387
+    "red": 0.9989606965115037,
+    "orange": 0.9973471423417305,
+    "gold": 0.9992667450058754
    }
   },
-  "Metal2": {
+  "Metal3": {
    "colours": [
     "blue"
    ],
-   "iou": 0.9884433776215108,
-   "area_ratio_final_over_source": 1.0071950220685262,
+   "iou": 0.9893936815835744,
+   "area_ratio_final_over_source": 1.0064119898489827,
    "source_area_covered": {
-    "blue": 0.9977647085589479
+    "blue": 0.9978574697341598
    }
   },
   "Metal4": {
    "colours": [
     "green"
    ],
-   "iou": 0.9651419738951225,
-   "area_ratio_final_over_source": 1.0340779805641147,
+   "iou": 0.9671556339391782,
+   "area_ratio_final_over_source": 1.0323431772224445,
    "source_area_covered": {
-    "green": 0.9989985778620526
+    "green": 0.9992052077813943
    }
   },
-  "Metal1": {
-   "colours": [
-    "orange",
-    "gold"
-   ],
-   "iou": 0.9782888466862839,
-   "area_ratio_final_over_source": 1.0184898642893645,
-   "source_area_covered": {
-    "orange": 0.9970905874685784,
-    "gold": 0.998641803847882
-   }
-  },
-  "TopMetal1": {
+  "Metal2": {
    "colours": [
     "purple"
    ],
-   "iou": 0.4833548246490256,
-   "area_ratio_final_over_source": 2.068873525212294,
+   "iou": 0.9795155149759105,
+   "area_ratio_final_over_source": 1.0170277043496172,
    "source_area_covered": {
-    "purple": 1.0
+    "purple": 0.9980775172508497
    }
   }
  },
+ "fused_components": {
+  "Metal1": [
+   {
+    "colours": [
+     "red",
+     "orange"
+    ],
+    "bbox_art_um": [
+     7.35,
+     22.25,
+     64.25,
+     35.45
+    ],
+    "area_um2": 107.9
+   }
+  ]
+ },
  "art_size_um": [
-  145.3,
-  85.55000000000001
+  152.05,
+  89.4
  ],
  "free_rect_um": [
   5.0,
-  143.0,
+  141.0,
   324.0,
-  229.0
+  231.0
  ],
  "origin_um": [
-  91.8,
-  143.2
+  88.5,
+  141.3
  ],
  "files": {
   "art": "tughra_art.gds",

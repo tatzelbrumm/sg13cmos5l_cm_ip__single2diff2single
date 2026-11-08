@@ -27,11 +27,10 @@ import segment as S
 import pdk_layers as pl
 
 G = 0.05                                   # raster grid (um); contour vertices land on multiples of G/2
-LAYER_OF = {"purple": "TopMetal1", "green": "Metal4", "red": "Metal3", "blue": "Metal2",
-            "orange": "Metal1", "gold": "Metal1"}
+LAYER_OF = {"red": "Metal1", "orange": "Metal1", "gold": "Metal1", "purple": "Metal2", "blue": "Metal3",
+            "green": "Metal4"}
 DESIGN = {                                 # (kernel cells n, chamfer cells c); flat = (n - 2c) * G, body = n * G
     "Metal1": (7, 1), "Metal2": (7, 1), "Metal3": (7, 1), "Metal4": (7, 1),    # 0.35 um body, 0.25 um flat
-    "TopMetal1": (39, 2),                                                      # 1.95 um body, 1.75 um flat
 }
 SLOT_DEFAULT = os.environ.get("SLOT7_GDS", "/home/user/sg13cmos5l_cm_slot7/final/gds/slot_7.gds")
 CELL = "tughra_art"
@@ -143,7 +142,7 @@ def repair(reg, w_um, s_um, margin_um=0.01, tries=20):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--slot", default=SLOT_DEFAULT)
-    ap.add_argument("--scale", type=float, default=0.0975, help="um per source pixel (0.098 just fits the 86 um tall free region with no slack)")
+    ap.add_argument("--scale", type=float, default=0.102, help="um per source pixel (largest that fits the 90 um tall region with slack)")
     ap.add_argument("--out", default=HERE)
     ap.add_argument("--region", default=None, help="x0,y0,x1,y1 (um) free rectangle to centre the art in; default: from free_space.json")
     a = ap.parse_args()
@@ -192,6 +191,28 @@ def main():
                   "source_area_covered": {c: float((r & np.pad(masks[c], PADC)[cy0:cy1, cx0:cx1]).sum() /
                                                    max(1, np.pad(masks[c], PADC)[cy0:cy1, cx0:cx1].sum())) for c in cols}}
     stats["fidelity"] = fid
+    # colours that share a layer: which source colours end up in one connected polygon, and a per-cell colour map
+    # (nearest source colour) so that previews can draw the shared layer in the artist's colours
+    fused, cmap = {}, {}
+    for L, r in proc.items():
+        cols = [c for c, v in LAYER_OF.items() if v == L]
+        if len(cols) < 2:
+            continue
+        raw = {c: np.pad(masks[c], PADC)[cy0:cy1, cx0:cx1] for c in cols}
+        n_, lab_, st_, _ = cv2.connectedComponentsWithStats(r.astype(np.uint8), connectivity=4)
+        fl = []
+        for i in range(1, n_):
+            comp = lab_ == i
+            present = [c for c in cols if (comp & raw[c]).any()]
+            if len(present) > 1:
+                x_, y_, w_, h_, _a = st_[i]
+                fl.append({"colours": present, "bbox_art_um": [round(x_ * G, 2), round((r.shape[0] - y_ - h_) * G, 2), round((x_ + w_) * G, 2), round((r.shape[0] - y_) * G, 2)],
+                           "area_um2": round(float(_a) * G * G, 1)})
+        fused[L] = fl
+        dts = np.stack([cv2.distanceTransform((~raw[c]).astype(np.uint8), cv2.DIST_L2, 5) for c in cols])
+        cmap[L] = (np.array([S.COLORS.index(c) for c in cols], np.uint8)[dts.argmin(0)])
+    stats["fused_components"] = fused
+    np.savez_compressed(os.path.join(a.out, "layer_colour_map.npz"), grid_um=G, **cmap)
     art_w, art_h = Wc * G, Hc * G
     # placement
     free_json = os.path.join(HERE, "free_space.json")
@@ -199,7 +220,7 @@ def main():
     if a.region:
         rect = [float(v) for v in a.region.split(",")]
     else:
-        cand = [r for r in j["common_rects_um"] if (r[2] - r[0]) >= art_w and (r[3] - r[1]) >= art_h]
+        cand = [r for r in j["m1_m4_visible_rects_um"] if (r[2] - r[0]) >= art_w and (r[3] - r[1]) >= art_h]
         if not cand:
             sys.exit(f"art {art_w:.2f} x {art_h:.2f} um does not fit any common free rectangle; lower --scale")
         rect = max(cand, key=lambda r: (r[2] - r[0]) * (r[3] - r[1]))

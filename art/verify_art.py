@@ -88,6 +88,8 @@ def clearance():
     slot = db.Region(otop.bbox())
     for L in pl.METALS:
         l, d = ln[L + ".drawing"]
+        if art.find_layer(l, d) is None:
+            continue            # layer not used by the art
         artR = db.Region(atop.begin_shapes_rec(art.find_layer(l, d))).transformed(db.Trans(dx, dy)) if art.find_layer(l, d) is not None else db.Region()
         # existing shapes on all five metals, all datatypes except text/label
         entry = {"art_polygons": artR.count(), "art_area_um2": artR.area() * 1e-6}

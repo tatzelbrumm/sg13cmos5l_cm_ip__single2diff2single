@@ -10,11 +10,10 @@
 
 | art layer | polygons | area (um2) | overlap with any existing metal (um2) | closest approach to existing metal on the same layer | to slot edge |
 |---|---|---|---|---|---|
-| Metal1 | 17 | 360.0 | 0.000 | > 60 | 90.9 |
-| Metal2 | 17 | 442.7 | 0.000 | > 60 | 73.2 |
-| Metal3 | 12 | 387.7 | 0.000 | 51.15 | 64.7 |
-| Metal4 | 15 | 438.5 | 0.000 | > 60 | 44.2 |
-| TopMetal1 | 1 | 137.7 | 0.000 | 20.30 | 93.2 |
+| Metal1 | 25 | 816.5 | 0.000 | > 60 | 63.6 |
+| Metal2 | 2 | 74.4 | 0.000 | > 60 | 93.6 |
+| Metal3 | 16 | 484.1 | 0.000 | 36.60 | 72.5 |
+| Metal4 | 15 | 478.4 | 0.000 | > 60 | 42.3 |
 
 (Closest approach is found by bisection: the art grown by d first touches existing shapes at d. The same figure for the other four metal layers is in verify_report.json.)
 
@@ -29,11 +28,11 @@
 |---|---|---|
 | AFil.g | 4.006 | 4.006 |
 | GFil.g | 3.591 | 3.591 |
-| M1.j | 1.641 | 1.886 |
-| M2.j | 0.757 | 1.059 |
-| M3.j | 2.14 | 2.404 |
-| M4.j | 0.652 | 0.951 |
-| TM1.c | 7.044 | 7.138 |
+| M1.j | 1.641 | 2.198 |
+| M2.j | 0.757 | 0.808 |
+| M3.j | 2.14 | 2.47 |
+| M4.j | 0.652 | 0.979 |
+| TM1.c | 7.044 | 7.044 |
 
 ## LVS (PDK run_lvs.py, deep, tap extraction off, against slot7 netlist/slot_7.cdl)
 

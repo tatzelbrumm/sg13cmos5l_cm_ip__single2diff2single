@@ -43,13 +43,13 @@
  },
  "clearance": {
   "origin_um": [
-   91.8,
-   143.20000000000002
+   88.5,
+   141.3
   ],
   "layers": {
    "Metal1": {
-    "art_polygons": 17,
-    "art_area_um2": 360.005,
+    "art_polygons": 25,
+    "art_area_um2": 816.4699999999999,
     "vs_Metal1": {
      "overlap_um2": 0.0,
      "touches_within_um": null,
@@ -62,24 +62,24 @@
     },
     "vs_Metal3": {
      "overlap_um2": 0.0,
-     "touches_within_um": 29.846,
+     "touches_within_um": 27.949,
      "separation_violations_lt_3um": 0
     },
     "vs_Metal4": {
      "overlap_um2": 0.0,
-     "touches_within_um": null,
+     "touches_within_um": 53.353,
      "separation_violations_lt_3um": 0
     },
     "vs_TopMetal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": 3.204,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": 1.304,
+     "separation_violations_lt_3um": 33
     },
-    "min_distance_to_slot_edge_um": 90.9
+    "min_distance_to_slot_edge_um": 63.65
    },
    "Metal2": {
-    "art_polygons": 17,
-    "art_area_um2": 442.7025,
+    "art_polygons": 2,
+    "art_area_um2": 74.375,
     "vs_Metal1": {
      "overlap_um2": 0.0,
      "touches_within_um": null,
@@ -92,24 +92,24 @@
     },
     "vs_Metal3": {
      "overlap_um2": 0.0,
-     "touches_within_um": 38.199,
+     "touches_within_um": 46.648,
      "separation_violations_lt_3um": 0
     },
     "vs_Metal4": {
      "overlap_um2": 0.0,
-     "touches_within_um": 54.001,
+     "touches_within_um": null,
      "separation_violations_lt_3um": 0
     },
     "vs_TopMetal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": 11.554,
+     "touches_within_um": 20.002,
      "separation_violations_lt_3um": 0
     },
-    "min_distance_to_slot_edge_um": 73.2
+    "min_distance_to_slot_edge_um": 93.60000000000001
    },
    "Metal3": {
-    "art_polygons": 12,
-    "art_area_um2": 387.72249999999997,
+    "art_polygons": 16,
+    "art_area_um2": 484.0725,
     "vs_Metal1": {
      "overlap_um2": 0.0,
      "touches_within_um": null,
@@ -122,24 +122,24 @@
     },
     "vs_Metal3": {
      "overlap_um2": 0.0,
-     "touches_within_um": 51.149,
+     "touches_within_um": 36.599,
      "separation_violations_lt_3um": 0
     },
     "vs_Metal4": {
      "overlap_um2": 0.0,
-     "touches_within_um": 56.503,
+     "touches_within_um": 50.702,
      "separation_violations_lt_3um": 0
     },
     "vs_TopMetal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": 23.701,
+     "touches_within_um": 9.954,
      "separation_violations_lt_3um": 0
     },
-    "min_distance_to_slot_edge_um": 64.7
+    "min_distance_to_slot_edge_um": 72.55
    },
    "Metal4": {
     "art_polygons": 15,
-    "art_area_um2": 438.465,
+    "art_area_um2": 478.4025,
     "vs_Metal1": {
      "overlap_um2": 0.0,
      "touches_within_um": null,
@@ -152,7 +152,7 @@
     },
     "vs_Metal3": {
      "overlap_um2": 0.0,
-     "touches_within_um": 40.898,
+     "touches_within_um": 39.349,
      "separation_violations_lt_3um": 0
     },
     "vs_Metal4": {
@@ -162,40 +162,10 @@
     },
     "vs_TopMetal1": {
      "overlap_um2": 0.0,
-     "touches_within_um": 3.252,
-     "separation_violations_lt_3um": 0
+     "touches_within_um": 1.304,
+     "separation_violations_lt_3um": 57
     },
-    "min_distance_to_slot_edge_um": 44.25
-   },
-   "TopMetal1": {
-    "art_polygons": 1,
-    "art_area_um2": 137.6525,
-    "vs_Metal1": {
-     "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
-    },
-    "vs_Metal2": {
-     "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
-    },
-    "vs_Metal3": {
-     "overlap_um2": 0.0,
-     "touches_within_um": 46.948,
-     "separation_violations_lt_3um": 0
-    },
-    "vs_Metal4": {
-     "overlap_um2": 0.0,
-     "touches_within_um": null,
-     "separation_violations_lt_3um": 0
-    },
-    "vs_TopMetal1": {
-     "overlap_um2": 0.0,
-     "touches_within_um": 20.303,
-     "separation_violations_lt_3um": 0
-    },
-    "min_distance_to_slot_edge_um": 93.25
+    "min_distance_to_slot_edge_um": 42.300000000000004
    }
   }
  },
@@ -236,11 +206,11 @@
    "density_ratio_percent": {
     "AFil.g": 4.006,
     "GFil.g": 3.591,
-    "M1.j": 1.886,
-    "M2.j": 1.059,
-    "M3.j": 2.404,
-    "M4.j": 0.951,
-    "TM1.c": 7.138
+    "M1.j": 2.198,
+    "M2.j": 0.808,
+    "M3.j": 2.47,
+    "M4.j": 0.979,
+    "TM1.c": 7.044
    },
    "rdb_files": [
     "slot7_with_art_slot_7_full.lyrdb"
