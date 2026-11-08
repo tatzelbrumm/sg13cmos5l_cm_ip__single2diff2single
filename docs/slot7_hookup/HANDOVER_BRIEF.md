@@ -56,6 +56,6 @@ fallback's stubs.
 
 - S2D enable kick with the new vcm / vref switches between pad_ref_rb's bypass capacitors and the pads (being checked;
   fix if needed: MOS capacitors on the pads' side in the empty slot area).
-- Mode simulations at ss / −40 °C: DC convergence (being rerun with a node shunt; tt and ff pass all 8 modes).
+- Mode simulations at ss / −40 °C: tt and ff pass all 8 modes; at ss −40 the default (DC), feed and ext (transient from
+  power-up) pass; swap and mon stall at the bandgap's start-up node in the solver (rerun with a slower enable edge).
 - Coupling of the long Metal3 bus / dig_in lines that cross pad_ref_rb and bias_dist_pd: not assessed.
-- slot_7 sheet without the dig_out pull-downs (being added).

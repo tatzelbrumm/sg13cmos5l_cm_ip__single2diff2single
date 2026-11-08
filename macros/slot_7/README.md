@@ -25,5 +25,5 @@ layout `layout/klayout/slot_7.klay.gds` (agent A's v2, 2026-11-08 17:42 UTC: bg_
 vertical, TopMetal1 straps for vdd_3v3 / vss_3v3; DRC clean incl. the maximal deck with latch-up rules; LVS
 `--run_mode=deep` match with 0 port mismatches, 497 devices; pins that share one net are one CDL port named with the
 comma list of their labels, as KLayout names such a net) and `layout/klayout/s7_ctrl.klay.gds` (DRC / LVS clean).
-dig_out[11:0] are held low by `s7_doutpd` (as the fallback did; back-annotated into the source netlist; the slot_7 sheet
-does not have it yet). Open: coupling of the long Metal3 bus / dig_in lines that cross pad_ref_rb and bias_dist_pd. Check summary: `layout/klayout/slot_7_checks.txt`.
+dig_out[11:0] are held low by `s7_doutpd` (as the fallback did; back-annotated into the source netlist and the sheets,
+`s7_doutpd.sch/.sym`). Open: coupling of the long Metal3 bus / dig_in lines that cross pad_ref_rb and bias_dist_pd. Check summary: `layout/klayout/slot_7_checks.txt`.
