@@ -19,4 +19,8 @@ disconnected). Concept and simulation: `docs/slot7_hookup/` (CONCEPT.md, tier1/)
 Default (enable = 1, any dig_in without the key): bandgap reference, replica bias on, loop direct, analog_bus0/1
 disconnected, vcm / vref on analog_bus2 / 3 (close the harness's bus switches, reg 0x51 bits 6 / 7, to read them).
 
-Files: `netlist/source/slot_7.spice` (s7_ctrl, slot_7; source of truth), sheets and layout to follow.
+Files: `netlist/source/slot_7.spice` (s7_ctrl, slot_7; source of truth); sheets `schematic/xschem/{s7_ctrl,slot_7}.sch`;
+layout `layout/klayout/slot_7.klay.gds` (INTERMEDIATE v1 of agent A, 17:34 UTC: all four blocks placed near the pad
+stubs, supplies on TopMetal1 straps from the harness pins; DRC clean incl. the maximal deck with latch-up rules; LVS
+deep match, 485 devices; flat LVS matches only with top-port checking off, open) and `layout/klayout/s7_ctrl.klay.gds`
+(DRC / LVS clean). Check summary: `layout/klayout/slot_7_checks.txt`.

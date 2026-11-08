@@ -1,0 +1,6 @@
+LVS deep (--run_mode=deep ): Netlists match | port mismatches: 0 | devices: 485
+LVS flat ( ): Netlists don't match | port mismatches: 20 | devices: 485
+LVS flat_ignore_ports (--ignore_top_ports_mismatch ): Netlists match | port mismatches: 0 | devices: 485
+LVS deep_negative (--run_mode=deep ): Netlists don't match | port mismatches: 2 | devices: 485
+run_drc.py: No DRC violations detected | 'exception' lines: 0 | maximal+LU: 0
+gds sha256 c8dd51f5fc354097, cdl a54711726fe56319
