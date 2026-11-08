@@ -1,0 +1,25 @@
+# s7_ctrl pins: name layer x1 y1 x2 y2 (um, cell origin at lower left; bbox 0 0 71.600 38.040)
+bus0      Metal2    42.405   37.640   42.695   38.040
+bus1      Metal2    43.765   37.640   44.055   38.040
+d0        Metal2     1.095    0.000    1.295    0.400
+d1        Metal2    11.175    0.000   11.375    0.400
+d2        Metal2    21.255    0.000   21.455    0.400
+d3        Metal2    31.335    0.000   31.535    0.400
+d4        Metal2    41.415    0.000   41.615    0.400
+d5        Metal2    51.495    0.000   51.695    0.400
+en        Metal2    53.700   37.640   53.900   38.040
+en_b      Metal2    54.300   37.640   54.500   38.040
+enable    Metal2    61.575    0.000   61.775    0.400
+outn      Metal2    38.025   37.640   38.315   38.040
+outp      Metal2    36.665   37.640   36.955   38.040
+vcm_pad   Metal2    48.975   37.640   49.265   38.040
+vcm_rb    Metal2    48.145   37.640   48.435   38.040
+vddh      Metal1    71.300    0.620   71.600   36.000
+vinn      Metal2    44.595   37.640   44.885   38.040
+vinp      Metal2    43.235   37.640   43.525   38.040
+vref_pad  Metal2    50.335   37.640   50.625   38.040
+vref_rb   Metal2    49.505   37.640   49.795   38.040
+vss       Metal1     0.000   26.720    0.300   31.400
+# supply metal beyond the pins (all Metal1): vddh rail y 0.620..0.920 x 1.420..71.600 (LS rails bridged), logic vdd strip
+#   y 35.700..36.000 x 0.895..71.600; vss LS strips y 26.720..27.020 x 0..70.660, logic vss strip y 31.100..31.400 x 0..52.800.
+# NWell touches the bottom edge (y 0..24.47, x 0.80..70.96); ThickGateOx covers the whole cell box.

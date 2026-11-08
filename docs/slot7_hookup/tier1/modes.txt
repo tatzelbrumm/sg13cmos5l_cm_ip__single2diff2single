@@ -1,0 +1,25 @@
+# mode       corner     | error max [mV] vs expected | v(bus0)-v(outp), v(bus1)-v(outn) [mV] (mon)
+default     tt   27 |     0.90 |        -        -
+swap        tt   27 |     0.99 |        -        -
+mon         tt   27 |     0.94 |     0.01     0.01
+feed        tt   27 |     0.05 |        -        -
+ext         tt   27 |     0.91 |        -        -
+all_high    tt   27 |     0.90 |        -        -
+swap+feed   tt   27 |     0.05 |        -        -
+no_key_swap tt   27 |     0.90 |        -        -
+default     ss  -40 |     1.31 |        -        -
+swap        ss  -40 | FAILED
+mon         ss  -40 | FAILED
+feed        ss  -40 | FAILED
+ext         ss  -40 | FAILED
+all_high    ss  -40 |     1.31 |        -        -
+swap+feed   ss  -40 | FAILED
+no_key_swap ss  -40 |     1.31 |        -        -
+default     ff  125 |     6.50 |        -        -
+swap        ff  125 |     2.88 |        -        -
+mon         ff  125 |     6.55 |     0.01     0.01
+feed        ff  125 |     2.22 |        -        -
+ext         ff  125 |     6.39 |        -        -
+all_high    ff  125 |     6.50 |        -        -
+swap+feed   ff  125 |     2.22 |        -        -
+no_key_swap ff  125 |     6.50 |        -        -

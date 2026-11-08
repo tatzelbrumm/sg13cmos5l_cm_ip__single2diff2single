@@ -90,7 +90,8 @@ Vio iovdd 0 {v}
 Ven enable 0 {ven}
 Vin padin 0 0.5
 Rout padout 0 1G
-XS vdd_3v3 0 enable 0 0 0 0 0 0 b0 b1 b2 b3 vref_s2d outp outn vcm_s2d en0 enb0 iref0 vinp vinn vref_d2s iref1 enb1 en1 slot_7
+XS vdd_3v3 0 enable 0 0 0 0 0 0 b0 b1 b2 b3 vref_s2d outp outn vcm_s2d en0 enb0 iref0 vinp vinn vref_d2s iref1 enb1 en1 do0 do1 do2 do3 do4 do5 do6 do7 do8 do9 do10 do11 v12 0 slot_7
+Vv12 v12 0 1.2
 X2S iovdd 0 iovdd 0 padin outp outn vcm_s2d vref_s2d iref0 en0 enb0 sg13cmos5l_IOPadSingle2Diff
 X2D iovdd 0 iovdd 0 padout vinp vinn vref_d2s iref1 en1 enb1 sg13cmos5l_IOPadDiff2Single
 .control

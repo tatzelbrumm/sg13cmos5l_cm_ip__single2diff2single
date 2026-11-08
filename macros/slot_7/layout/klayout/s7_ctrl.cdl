@@ -1,0 +1,101 @@
+* s7_ctrl LVS reference: s7_ctrl (macros/slot_7/netlist/source/slot_7.spice) + ls_up_fs (en_ctrl_3v3.spice) + hv_logic.spice
+* (X-device lines of sg13_hv_nmos / sg13_hv_pmos written as M devices for the KLayout CDL reader)
+.subckt s7_ctrl vddh vss enable d0 d1 d2 d3 d4 d5 en en_b outp outn vinp vinn bus0 bus1 vcm_rb vref_rb vcm_pad vref_pad
+XLE vddh vss enable en en_b ls_up_fs
+XL0 vddh vss d0 sw sw_b ls_up_fs
+XL1 vddh vss d1 mon mon_b ls_up_fs
+XL2 vddh vss d2 fd fd_b ls_up_fs
+XL3 vddh vss d3 k1 k1_b ls_up_fs
+XL4 vddh vss d4 k0 k0_b ls_up_fs
+XL5 vddh vss d5 ex ex_b ls_up_fs
+* key valid = k1 AND NOT k0
+XNV vddh vss k1 k0_b valid_b nand2_hv
+XIV vddh vss valid_b valid inv_hv
+* qualified bits
+XNS vddh vss sw valid s_b nand2_hv
+XIS vddh vss s_b s inv_hv
+XNF vddh vss fd valid f_b nand2_hv
+XIF vddh vss f_b f inv_hv
+XNM vddh vss mon valid m_b nand2_hv
+XIM vddh vss m_b m inv_hv
+* loop direct: en AND NOT f AND NOT s
+XN1 vddh vss f_b s_b x1_b nand2_hv
+XI1 vddh vss x1_b x1 inv_hv
+XNLD vddh vss en x1 ld_b nand2_hv
+XILD vddh vss ld_b ld inv_hv
+* loop crossed: en AND NOT f AND s
+XN2 vddh vss f_b s x2_b nand2_hv
+XI2 vddh vss x2_b x2 inv_hv
+XNLX vddh vss en x2 lx_b nand2_hv
+XILX vddh vss lx_b lx inv_hv
+* S2D outputs to bus0/1: en AND m AND NOT f
+XN3 vddh vss m f_b x3_b nand2_hv
+XI3 vddh vss x3_b x3 inv_hv
+XNSB vddh vss en x3 sb_b nand2_hv
+XISB vddh vss sb_b sb inv_hv
+* bus0/1 to D2S inputs: en AND f
+XNBD vddh vss en f bd_b nand2_hv
+XIBD vddh vss bd_b bd inv_hv
+* replica bias connected: en AND NOT (ext AND valid)
+XNE vddh vss ex valid e_b nand2_hv
+XNRC vddh vss en e_b rc_b nand2_hv
+XIRC vddh vss rc_b rc inv_hv
+* switch matrix (tg_hv: vdd vss en en_b a b)
+XT1 vddh vss ld ld_b outp vinp tg_hv
+XT2 vddh vss ld ld_b outn vinn tg_hv
+XT3 vddh vss lx lx_b outp vinn tg_hv
+XT4 vddh vss lx lx_b outn vinp tg_hv
+XT5 vddh vss sb sb_b outp bus0 tg_hv
+XT6 vddh vss sb sb_b outn bus1 tg_hv
+XT7 vddh vss bd bd_b bus0 vinp tg_hv
+XT8 vddh vss bd bd_b bus1 vinn tg_hv
+XT9 vddh vss rc rc_b vcm_rb vcm_pad tg_hv
+XT10 vddh vss rc rc_b vref_rb vref_pad tg_hv
+.ends s7_ctrl
+
+.subckt ls_up_fs vddh vss in out out_b
+MN1 x in vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+MPL10 l9 in vddh vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL9 l8 in l9 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL8 l7 in l8 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL7 l6 in l7 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL6 l5 in l6 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL5 l4 in l5 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL4 l3 in l4 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL3 l2 in l3 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL2 l1 in l2 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL1 x in l1 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPF x y vddh vddh sg13_hv_pmos w=0.3u l=5u ng=1
+XI1 vddh vss x y inv_hv
+XI2 vddh vss y out_b inv_hv
+XI3 vddh vss out_b out inv_hv
+.ends ls_up_fs
+
+.subckt inv_hv vdd vss a y
+MP y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+MN y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends inv_hv
+.subckt nand2_hv vdd vss a b y
+MPA y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+MPB y b vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+MNA y a n1 vss sg13_hv_nmos w=1u l=0.45u ng=1
+MNB n1 b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends nand2_hv
+.subckt nor2_hv vdd vss a b y
+MPA p1 a vdd vdd sg13_hv_pmos w=2u l=0.45u ng=1
+MPB y b p1 vdd sg13_hv_pmos w=2u l=0.45u ng=1
+MNA y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+MNB y b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends nor2_hv
+.subckt nor3_hv vdd vss a b c y
+MPA p1 a vdd vdd sg13_hv_pmos w=3u l=0.45u ng=1
+MPB p2 b p1 vdd sg13_hv_pmos w=3u l=0.45u ng=1
+MPC y c p2 vdd sg13_hv_pmos w=3u l=0.45u ng=1
+MNA y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+MNB y b vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+MNC y c vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends nor3_hv
+.subckt tg_hv vdd vss en en_b a b
+MN a en b vss sg13_hv_nmos w=1u l=0.45u ng=1
+MP a en_b b vdd sg13_hv_pmos w=1u l=0.45u ng=1
+.ends tg_hv

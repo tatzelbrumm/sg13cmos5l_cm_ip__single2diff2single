@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Modes of slot7_tier1 (s7_ctrl): default, swap, mon, feed, all bits high, swap+feed; with both extracted pads.
 
-usage (repo env, from this directory): python3 -I run_modes.py   -> modes.txt (decks and logs in runs/)
+usage (repo env, from this directory): python3 -I run_modes.py [--parse]   -> modes.txt (decks and logs in runs/)
 
 dig_in0 swap, dig_in1 mon, dig_in2 feed, dig_in5 ext, dig_in3 / dig_in4 key (1 / 0 = manual modes on). ext: bus2 / bus3\ndriven at 1.30 / 0.50 V through 10 kohm, pad_ref_rb disconnected; expected pad out vcm + (in - vref) with the external values. Buses: bus0 / bus1 through
 10 kohm (harness switch and instrument) to sources at vcm +- 0.2 V in the feed modes, else open (1 Gohm); bus2 / bus3
@@ -24,11 +24,14 @@ MODES = [  # name, d0..d5, kind
 POINTS = [("tt", 27, 3.3), ("ss", -40, 3.0), ("ff", 125, 3.6)]
 
 
+PARSE_ONLY = "--parse" in sys.argv  # re-tabulate from the logs in runs/ without simulating
+
+
 def main():
     T.RUNS.mkdir(exist_ok=True)
     incs = [T.wrapped(c) for c in T.SRC_PORTS]
     bg = T.MAC / "bg_core_pd" / "netlist" / "schematic" / "bg_core_pd_magic.spice"
-    out = ["# mode       corner     | error max [mV] vs expected | v(bus0)-v(outp), v(bus1)-v(outn) [mV] (mon) | I slot uA"]
+    out = ["# mode       corner     | error max [mV] vs expected | v(bus0)-v(outp), v(bus1)-v(outn) [mV] (mon)"]
     for c, t, v in POINTS:
         for name, bits, kind in MODES:
             d = [float(b) * 1.2 for b in bits.split()]
@@ -67,7 +70,8 @@ Rout padout 0 1G
 {ext2}
 .param vb0=1.45 vb1=1.05
 {busdrv}
-XS vdd_3v3 0 enable d0 d1 d2 d3 d4 d5 b0 b1 b2 b3 vref_s2d outp outn vcm_s2d en0 enb0 iref0 vinp vinn vref_d2s iref1 enb1 en1 slot_7
+XS vdd_3v3 0 enable d0 d1 d2 d3 d4 d5 b0 b1 b2 b3 vref_s2d outp outn vcm_s2d en0 enb0 iref0 vinp vinn vref_d2s iref1 enb1 en1 do0 do1 do2 do3 do4 do5 do6 do7 do8 do9 do10 do11 v12 0 slot_7
+Vv12 v12 0 1.2
 X2S iovdd 0 iovdd 0 padin outp outn vcm_s2d vref_s2d iref0 en0 enb0 sg13cmos5l_IOPadSingle2Diff
 X2D iovdd 0 iovdd 0 padout vinp vinn vref_d2s iref1 en1 enb1 sg13cmos5l_IOPadDiff2Single
 .control
@@ -75,8 +79,6 @@ X2D iovdd 0 iovdd 0 padout vinp vinn vref_d2s iref1 en1 enb1 sg13cmos5l_IOPadDif
 let err = abs(v(padout) - ({exp}))
 let m0 = abs(v(b0) - v(outp))
 let m1 = abs(v(b1) - v(outn))
-let isl = -i(Vslot)
-echo "RES $&err[0] $&m0[0] $&m1[0] $&isl[0]"
 let emax = maximum(err)
 let m0x = maximum(m0)
 let m1x = maximum(m1)
@@ -85,17 +87,19 @@ echo "MAX $&emax $&m0x $&m1x"
 .end
 """
             f = T.RUNS / f"mode_{name}_{c}_{t}.spice"
-            f.write_text(deck)
-            log = subprocess.run(["ngspice", "-b", f.name], cwd=T.RUNS, capture_output=True, text=True).stdout
-            f.with_suffix(".log").write_text(log)
-            r = re.search(r"^RES (\S+) (\S+) (\S+) (\S+)", log, re.M)
+            if PARSE_ONLY:
+                log = f.with_suffix(".log").read_text()
+            else:
+                f.write_text(deck)
+                log = subprocess.run(["ngspice", "-b", f.name], cwd=T.RUNS, capture_output=True, text=True).stdout
+                f.with_suffix(".log").write_text(log)
             mx = re.search(r"^MAX (\S+) (\S+) (\S+)", log, re.M)
-            if not (r and mx):
+            if not mx:
                 out.append(f"{name:11s} {c} {t:4d} | FAILED")
                 continue
             e, m0, m1 = (float(x) * 1e3 for x in mx.groups())
             mon = f"{m0:8.2f} {m1:8.2f}" if kind == "direct+mon" else "       -        -"
-            out.append(f"{name:11s} {c} {t:4d} | {e:8.2f} | {mon} | {float(r.group(4)) * 1e6:6.2f}")
+            out.append(f"{name:11s} {c} {t:4d} | {e:8.2f} | {mon}")
     (T.HERE / "modes.txt").write_text("\n".join(out) + "\n")
     print("\n".join(out))
 
