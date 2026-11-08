@@ -1,5 +1,5 @@
 circuit 73 cdl active 73 matched 73 dummies 4
-  dummy MDN0 vssh ni vssh vssh sg13_hv_nmos 2u 6u
-  dummy MDN3 vssh ni vssh vssh sg13_hv_nmos 2u 6u
-  dummy MDP0 vddh vpd vddh vddh sg13_hv_pmos 5u 6u
-  dummy MDP6 vddh vpd vddh vddh sg13_hv_pmos 5u 6u
+  dummy MMDN[1] vssh ni vssh vssh sg13_hv_nmos 2u 6u
+  dummy MMDN[0] vssh ni vssh vssh sg13_hv_nmos 2u 6u
+  dummy MMDP[1] vddh vpd vddh vddh sg13_hv_pmos 5u 6u
+  dummy MMDP[0] vddh vpd vddh vddh sg13_hv_pmos 5u 6u

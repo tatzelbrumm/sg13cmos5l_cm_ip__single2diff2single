@@ -17,10 +17,12 @@ strip (vdd) at the top, one NWell, en_3v3 Metal1 line under the vss strip (slice
 their boundary boxes (BND) and the strips merge into the row's periphery ties.
 
 Vertical stack (um): en_3v3 line -0.47..-0.18 (M1_b 0.18 to the strip); vss tie 0..0.30 (Cnt_a 0.16 + 2 Cnt_c);
-NMOS Activ 0.73..1.73 (pSD_j1 0.40 + pSD_c1 0.03 from the tie); NWell from 2.35 (NW_d1 0.62); PMOS Activ 2.97..3.97
-(NW_c1 0.62); vdd tie 4.40..4.70 (pSD_i1 0.40 + pSD_d1 0.03); NWell to 5.32 (NW_e1 0.62).
-Gap 1.73..2.97: L2 gate contacts 1.87..2.03 (Cnt_e 0.14 from the NMOS Activ), L1 contacts 2.57..2.73 (0.24 from the
-PMOS Activ), poly bar 1.80..2.12 and poly bridge 2.40..2.90 (Gat_d 0.07 from both Activ rows, Gat_b 0.18 apart).
+NMOS Activ 0.73..1.73 (pSD_j1 0.40 + pSD_c1 0.03 from the tie); NWell from 2.55; PMOS Activ 3.17..4.17 (NW_c1
+0.62); vdd tie 4.60..4.90 (pSD_i1 0.40 + pSD_d1 0.03); NWell to 5.52 (NW_e1 0.62).
+Gap 1.73..3.17 (round 2: 0.20 taller than the NW_c1 + NW_d1 minimum, Christoph: "we're not short of area, so move the
+pads away from the channels"): every contacted gate pad / bar / bridge reaches >= 0.30 beyond the 0.25 endcap zone
+around the Activ (sym_check's N check): TGN / TDN pads and the bar 1.80 (Gat_d)..2.30, L2 contacts 2.04..2.20;
+TGP / SVPD pads and the bridge 2.55..3.10 (Gat_d), L1 contacts 2.66..2.82; poly 0.25 apart (Gat_b 0.18).
 Rule values: sg13cmos5l_tech_default.json (keys in the comments).
 """
 import os
@@ -35,12 +37,14 @@ import pya                   # noqa: E402
 ly, box, fill, pin, note = P.ly, P.box, P.fill, P.pin, P.note
 CDL = {}                     # cell name -> (ports, device lines)
 
-YN, YP = 0.73, 2.97          # NMOS / PMOS Activ bottom (W = 1.0)
-TS, TD = (0.0, 0.30), (4.40, 4.70)     # vss / vdd tie strips
-NW = (2.35, 5.32)
+YN, YP = 0.73, 3.17          # NMOS / PMOS Activ bottom (W = 1.0)
+TS, TD = (0.0, 0.30), (4.60, 4.90)     # vss / vdd tie strips
+NW = (2.55, 5.52)
 EN = (-0.47, -0.18)          # en_3v3 Metal1 line
-L2, L1 = 1.87, 2.57          # contact bottom edges in the gap
-VP = (3.93, 4.22)            # Via1 pads on top of a stripe (0.18 = M1_b below the vdd strip)
+L2, L1 = 2.04, 2.66          # contact bottom edges in the gap
+PN, PP = 2.30, 2.55          # top of the lower pads (TGN, TDN, bar), bottom of the upper ones (TGP, SVPD, bridge)
+LINE = (L1 - 0.05, L1 + 0.21)          # the e_b Metal1 line at L1
+VP = (4.13, 4.42)            # Via1 pads on top of a stripe (0.18 = M1_b below the vdd strip)
 
 
 def nmos(w, l, ng=1):
@@ -133,16 +137,16 @@ def nand2_hv():
     for xg in (0.34, 1.17):                                   # gates a, b: one poly from NMOS to PMOS
         box(c, "GatPoly", xg, YN + 1.18, xg + 0.45, YP - 0.18)
         gate_pad(c, xg + 0.225, L2, viapad=True)
-    box(c, "M1", 0.07, YN + 1.0, 0.23, 2.78)                  # y: NMOS stripe 0 up to L1
-    box(c, "M1", 0.07, 2.52, 1.06, 2.78)                      # L1 line
-    box(c, "M1", 0.90, 2.52, 1.06, YP)                        # PMOS stripe 1 down to L1
+    box(c, "M1", 0.07, YN + 1.0, 0.23, LINE[1])              # y: NMOS stripe 0 up to L1
+    box(c, "M1", 0.07, LINE[0], 1.06, LINE[1])                # L1 line
+    box(c, "M1", 0.90, LINE[0], 1.06, YP)                     # PMOS stripe 1 down to L1
     for x in (0.07, 1.73):                                    # vdd stripes up into the vdd strip
         box(c, "M1", x, YP + 1.0, x + 0.16, TD[0])
     box(c, "M1", 1.73, TS[1], 1.89, YN)                       # vss stripe down into the vss strip
     frame(c, -0.105, 1.81)
-    pin(c, "M1", "a", 0.435, 1.80, 0.695, 2.09)
-    pin(c, "M1", "b", 1.265, 1.80, 1.525, 2.09)
-    pin(c, "M1", "y", 0.30, 2.52, 0.80, 2.78)
+    pin(c, "M1", "a", 0.435, L2 - 0.07, 0.695, L2 + 0.22)
+    pin(c, "M1", "b", 1.265, L2 - 0.07, 1.525, L2 + 0.22)
+    pin(c, "M1", "y", 0.30, LINE[0], 0.80, LINE[1])
     pin(c, "M1", "vdd", 0.20, TD[0], 0.70, TD[1])
     pin(c, "M1", "vss", 0.20, TS[0], 0.70, TS[1])
     CDL[c.name] = (["a", "b", "vdd", "vss", "y"], CDL[c.name])
@@ -161,7 +165,7 @@ def inv_hv():
     box(c, "M1", 0.07, YP + 1.0, 0.23, TD[0])
     box(c, "M1", 0.07, TS[1], 0.23, YN)
     frame(c, 0.15, 1.255)
-    pin(c, "M1", "a", 0.435, 2.52, 0.695, 2.78)
+    pin(c, "M1", "a", 0.435, LINE[0], 0.695, LINE[1])
     pin(c, "M1", "y", 0.90, 2.0, 1.06, 2.5)
     pin(c, "M1", "vdd", 0.40, TD[0], 0.90, TD[1])
     pin(c, "M1", "vss", 0.40, TS[0], 0.90, TS[1])
@@ -175,15 +179,15 @@ def tg_hv():
     P.place(c, nmos(1, 0.45), pya.DTrans(pya.DVector(0, YN)), "TGN")
     dev(c, "TGP", "io_a", "en_b", "io_b", "vdd", "pmos")
     dev(c, "TGN", "io_a", "en", "io_b", "vss", "nmos")
-    box(c, "GatPoly", 0.34, 2.45, 0.79, YP - 0.18)            # TGP gate down to L1 (Cnt_d 0.07 below the contact)
+    box(c, "GatPoly", 0.34, PP, 0.79, YP - 0.18)              # TGP gate down to its pad (0.37 beyond the zone)
     gate_pad(c, 0.565, L1)
-    box(c, "GatPoly", 0.34, YN + 1.18, 0.79, 2.12)            # TGN gate up to L2; poly 0.33 apart (Gat_b)
+    box(c, "GatPoly", 0.34, YN + 1.18, 0.79, PN)              # TGN gate up to its pad (0.32 beyond the zone)
     gate_pad(c, 0.565, L2)
     for x in (0.07, 0.90):                                    # io_a, io_b: both stripes through the gap
         box(c, "M1", x, YN + 1.0, x + 0.16, YP)
     frame(c, -0.125, 1.235)
-    pin(c, "M1", "en_b", 0.435, 2.52, 0.695, 2.78)
-    pin(c, "M1", "en", 0.435, 1.82, 0.695, 2.08)
+    pin(c, "M1", "en_b", 0.435, LINE[0], 0.695, LINE[1])
+    pin(c, "M1", "en", 0.435, L2 - 0.05, 0.695, L2 + 0.21)
     pin(c, "M1", "io_a", 0.07, 2.0, 0.23, 2.5)
     pin(c, "M1", "io_b", 0.90, 2.0, 1.06, 2.5)
     pin(c, "M1", "vdd", 0.30, TD[0], 0.80, TD[1])
@@ -220,13 +224,13 @@ def slice_(nd, iv, tg):
     c = ly.create_cell("bdp_slice")
     for cc, x in ((nd, 0.0), (iv, XI), (tg, XT)):
         c.insert(pya.DCellInstArray(cc.cell_index(), pya.DTrans(pya.DVector(x, 0))))
-    box(c, "M1", 1.06, 2.52, XI + 0.435, 2.78)                # e_b: the nand's L1 line on to the inverter's gate
-    box(c, "GatPoly", XI + 0.34, 2.40, XT + 0.79, 2.90)       # e_b: poly bridge inverter gate -> TGP gate
-    box(c, "GatPoly", 2.63, 1.80, XT + 0.79, 2.12)            # e: poly bar from TGN's gate (Gat_b 0.18 to the
+    box(c, "M1", 1.06, LINE[0], XI + 0.435, LINE[1])          # e_b: the nand's L1 line on to the inverter's gate
+    box(c, "GatPoly", XI + 0.34, PP, XT + 0.79, YP - 0.07)    # e_b: poly bridge inverter gate -> TGP gate
+    box(c, "GatPoly", 2.63, YN + 1.07, XT + 0.79, PN)         # e: poly bar from TGN's gate (Gat_b 0.18 to the
     cont(c, 2.70, L2)                                         #    inverter's gate), contacted beside the e stripe
-    box(c, "M1", XI + 0.90, 1.82, 2.91, 2.08)
-    drop(c, 0.565, 1.80, on_line=True)                        # a = en_3v3
-    drop(c, 1.395, 1.80, "en")                                # b = en
+    box(c, "M1", XI + 0.90, L2 - 0.05, 2.91, L2 + 0.21)
+    drop(c, 0.565, L2 - 0.07, on_line=True)                   # a = en_3v3
+    drop(c, 1.395, L2 - 0.07, "en")                           # b = en
     riser(c, XT + 0.07, "io_a")
     riser(c, XT + 0.90, "io_b")
     box(c, "M1", -0.105, EN[0], 4.275, EN[1])
@@ -253,9 +257,9 @@ def single(name, typ):
     if typ == "n":
         P.place(c, nmos(1, 0.45), pya.DTrans(pya.DVector(0, YN)), "TDN")
         dev(c, "TDN", "ni", "en_3v3_b", "vss", "vss", "nmos")
-        box(c, "GatPoly", 0.34, YN + 1.18, 0.79, 2.12)
+        box(c, "GatPoly", 0.34, YN + 1.18, 0.79, PN)
         gate_pad(c, 0.565, L2, viapad=True)
-        drop(c, 0.565, 1.80, "en_3v3_b")
+        drop(c, 0.565, L2 - 0.07, "en_3v3_b")
         box(c, "M1", 0.07, TS[1], 0.23, YN)                   # source down into the vss strip
         box(c, "M1", 0.90, YN + 1.0, 1.06, VP[0])             # drain up to its Via1 pad
         riser(c, 0.90, "ni")
@@ -263,7 +267,7 @@ def single(name, typ):
     else:
         P.place(c, P.mos(1, 0.45), pya.DTrans(pya.DVector(0, YP)), "SVPD")
         dev(c, "SVPD", "vpd", "en_3v3", "vdd", "vdd", "pmos")
-        box(c, "GatPoly", 0.34, 2.45, 0.79, YP - 0.18)
+        box(c, "GatPoly", 0.34, PP, 0.79, YP - 0.18)
         gate_pad(c, 0.565, L1, viapad=True)
         drop(c, 0.565, L1 - 0.07, on_line=True)
         box(c, "M1", 0.07, YP + 1.0, 0.23, TD[0])             # source up into the vdd strip

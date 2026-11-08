@@ -16,12 +16,20 @@ bdp_mirror_n: Activ bbox (-1.23,-0.51;17.98,8.12); axes x = 8.375, y = 3.805 um
 bdp_mirror_p: Activ bbox (0.62,0.62;39.32,8.54); axes x = 19.97, y = 4.58 um
   X Cont         XOR    0.0384 um2  in (17.9,1.2;22.04,7.74)
   summary: max mirror XOR 0.0384 um2, 0 narrow-poly hits
+== sym_check N check (narrow contacted poly beyond the endcap zone) on the switch cells and the flat top cell
+nand2_hv:   summary: max mirror XOR 1.6112 um2, 0 narrow-poly hits
+inv_hv:   summary: max mirror XOR 0.9424 um2, 0 narrow-poly hits
+tg_hv:   summary: max mirror XOR 0.1420 um2, 0 narrow-poly hits
+bdp_slice:   summary: max mirror XOR 5.8160 um2, 0 narrow-poly hits
+bdp_tdn:   summary: max mirror XOR 0.0700 um2, 0 narrow-poly hits
+bdp_svpd:   summary: max mirror XOR 0.0896 um2, 0 narrow-poly hits
+bias_dist_pd (flat):   summary: max mirror XOR 414.6990 um2, 0 narrow-poly hits
 == contacted gate poly outside Activ (no endcap-zone subtraction)
 nand2_hv: 2 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
 inv_hv: 1 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
-tg_hv: 2 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.390 um
-bdp_slice: 4 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.390 um
-bdp_tdn: 1 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.390 um
+tg_hv: 2 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+bdp_slice: 4 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+bdp_tdn: 1 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
 bdp_svpd: 1 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
 == supply connectivity through tie Activ / Cont / M1 / Via1 / M2 only
 bias_dist_pd: nets holding tie Activ (metal + tie Activ only): 2
@@ -57,11 +65,3 @@ bias_dist_pd: nets holding tie Activ (metal + tie Activ only): 2
   M1       XOR   2.5452 um2
   Via1     XOR   0.0722 um2
   M2       XOR   1.6503 um2
-== sym_check of the switch cells (one row; device layers of logic are not mirror-symmetric by nature, only the N check matters)
-nand2_hv:   summary: max mirror XOR 1.5264 um2, 0 narrow-poly hits
-inv_hv:   summary: max mirror XOR 0.8928 um2, 0 narrow-poly hits
-tg_hv:   N gate-contact poly narrower than 0.30 um at (0.34,2.12;0.79,2.12)
-tg_hv:   N gate-contact poly narrower than 0.30 um at (0.34,2.72;0.79,2.72)
-tg_hv:   summary: max mirror XOR 0.1308 um2, 2 narrow-poly hits
-bdp_slice:   N gate-contact poly narrower than 0.30 um at (2.63,2.12;3.83,2.12)
-bdp_slice:   summary: max mirror XOR 5.5444 um2, 1 narrow-poly hits

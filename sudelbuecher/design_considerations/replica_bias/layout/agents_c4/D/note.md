@@ -46,12 +46,34 @@ no well / substrate) gives exactly 2 nets, vddh and vssh; sym_check bdp_mirror_n
 PD (the middle 5/6 PCell's own 5 nm contact flooring, the residual P reported for rb_tree_p).
 
 ## Open points
-1. Output order: PO0 (S2D) / PO3 (spare) are the outer pair, PO1 (D2S) / PO2 (pad_ref_rb) the inner pair next to
-   PD. Which two loads should share the inner pair? Any permutation is a change of the drain lines only [R].
-2. sym_check's narrow-poly heuristic flags the split TG gates (tg_hv 2, slice 1): the 1.24 um gap (NW_c1 + NW_d1)
-   leaves 0.14 um of each 0.45-wide pad beyond its endcap zone. The contacted poly is >= 0.39 wide [M]; a 0.04 um
-   taller row would clear the heuristic.
+1. (settled in round 2) Output order: both pads on the inner pair PO1 / PO2.
+2. (resolved in round 2) sym_check N hits on the split TG gates.
 3. The switch row has tie strips at its top and bottom, not a closed ring (the mirrors keep their closed rings).
 4. Pins: iin / iout on Metal1 at the edges, en_3v3 on Metal1, the other enables on Metal2 (pin_map.md).
 5. N's band tracks keep their left pin stubs (about 1.5 um of M2 beyond the ring), unchanged generator code.
 6. No PEX; placement in slot7 is left to the assembly (inputs left, outputs right, enables bottom, supplies top).
+
+## Round 2 (2026-11-08): gate pads away from the channels (Christoph: "we're not short of area, so move the pads away from the channels so the check passes")
+- **Change:** the switch-row gap is 1.44 instead of 1.24 um (PMOS Activ 3.17..4.17, vdd strip 4.60..4.90,
+  NWell 2.55..5.52). TGN / TDN pads and the e bar now span 1.80..2.30 with contacts at 2.04; TGP / SVPD pads and the
+  e_b bridge span 2.55..3.10 with contacts at 2.66. Every contacted piece reaches 0.32 (lower) / 0.37 (upper) beyond
+  the 0.25 endcap zone. The full-width 0.45 gate pads are kept (no necks). The channel tracks, the mirrors and every
+  pin above the bottom edge moved up 0.20 um.
+- **Unchanged:** both mirrors (byte-identical to v1), the pin edges and the netlist. Round 1 is in out/v1/.
+- **Size [M]:** 60.49 x 16.44 um = 994.5 um2 (+12.1). The switch cells are 5.99 um tall (slice 4.38 pitch). The
+  device rows sum to 547.0 + 226.2 = 773.2 um2 (ratio 1.29), or 900.5 um2 with the fillers (ratio 1.10).
+- **N check [M]** (sym_check.py --no-y): 0 narrow-poly hits on nand2_hv, inv_hv, tg_hv, bdp_slice, bdp_tdn,
+  bdp_svpd, bdp_mirror_n, bdp_mirror_p and the flattened bias_dist_pd. Every contacted poly piece outside Activ is
+  >= 0.45 um wide.
+- **Other checks [M]** (logs/summary.txt):
+  - run_drc.py --no_density: 0 violations, no "exception".
+  - Maximal deck with latchUpRules: 0.
+  - Flat LVS: matches for bias_dist_pd and for each of the 8 cells.
+  - Negative LVS: does not match, as intended.
+  - Mirror sym_check: bdp_mirror_n 0; bdp_mirror_p Cont 0.0384, the same residual as round 1.
+  - Metal-only supply check: 2 nets, vddh and vssh.
+  - Rebuilds are byte-identical (gds c0b3d4af3145). Previews are redrawn.
+- **Netlist:** the source now carries the dummies (XMDN[0..1], XMDP[0..1], backannotated by the lead). The CDL takes
+  them from there instead of adding its own: 73 devices + 4 dummies, unchanged in substance (CDL 80211713f27c).
+  Output roles follow the source (iout0 = pad_ref_rb, iout1 = S2D, iout2 = D2S, iout3 = spare), so open point 1 is
+  settled: both pads sit on the inner pair. Open point 2 is resolved.

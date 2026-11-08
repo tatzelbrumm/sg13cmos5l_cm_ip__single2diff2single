@@ -1,10 +1,10 @@
-bias_dist_pd 60.490 x 16.240 um = 982.4 um2; CDL 73 devices + 4 dummies
-  nand2_hv        3.31 x  5.59 um    18.5 um2
-  inv_hv          2.50 x  5.59 um    13.9 um2
-  tg_hv           2.60 x  5.59 um    14.5 um2
-  bdp_slice       5.62 x  5.79 um    32.5 um2
-  bdp_tdn         2.60 x  5.79 um    15.1 um2
-  bdp_svpd        2.60 x  5.79 um    15.1 um2
+bias_dist_pd 60.490 x 16.440 um = 994.5 um2; CDL 73 devices + 4 dummies
+  nand2_hv        3.31 x  5.79 um    19.1 um2
+  inv_hv          2.50 x  5.79 um    14.4 um2
+  tg_hv           2.60 x  5.79 um    15.1 um2
+  bdp_slice       5.62 x  5.99 um    33.7 um2
+  bdp_tdn         2.60 x  5.99 um    15.6 um2
+  bdp_svpd        2.60 x  5.99 um    15.6 um2
   bdp_mirror_n   19.75 x  9.17 um   181.1 um2
   bdp_mirror_p   39.94 x  9.16 um   365.9 um2
-  geometry: {'cx': {'PO0': 29.67, 'PO1': 34.92, 'PD': 40.17, 'PO2': 45.42, 'PO3': 50.67}, 'xp': 20.2, 'yp': 6.25, 'nring': (0.27, 19.48), 'ni_y': 7.515, 'vpd_y': 8.015}
+  geometry: {'cx': {'PO0': 29.67, 'PO1': 34.92, 'PD': 40.17, 'PO2': 45.42, 'PO3': 50.67}, 'xp': 20.2, 'yp': 6.45, 'nring': (0.27, 19.48), 'ni_y': 7.715, 'vpd_y': 8.215}

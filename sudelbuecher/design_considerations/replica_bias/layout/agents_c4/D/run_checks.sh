@@ -18,6 +18,10 @@ python3 /foss/pdks/ihp-sg13cmos5l/libs.tech/klayout/tech/lvs/run_lvs.py --layout
 echo "negative LVS: $(grep -oE 'Netlists match|Netlists don.t match' $L/bias_dist_pd_lvs_negative.log | head -1)"
 echo "== sym_check (one row each: --no-y)"
 for c in bdp_mirror_n bdp_mirror_p; do python3 -I $I/sym_check.py cells/$c.gds $c --no-y; done
+echo "== sym_check N check (narrow contacted poly beyond the endcap zone) on the switch cells and the flat top cell"
+for c in nand2_hv inv_hv tg_hv bdp_slice bdp_tdn bdp_svpd; do
+  python3 -I $I/sym_check.py cells/$c.gds $c --no-y | grep -E "^ +N |summary" | sed "s/^/$c: /"; done
+python3 -I $I/sym_check.py bias_dist_pd.gds bias_dist_pd --no-y | grep -E "^ +N |summary" | sed "s/^/bias_dist_pd (flat): /"
 echo "== contacted gate poly outside Activ (no endcap-zone subtraction)"
 for c in nand2_hv inv_hv tg_hv bdp_slice bdp_tdn bdp_svpd; do python3 -I extra.py poly cells/$c.gds $c; done
 echo "== supply connectivity through tie Activ / Cont / M1 / Via1 / M2 only"

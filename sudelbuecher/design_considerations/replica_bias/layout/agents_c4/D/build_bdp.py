@@ -101,9 +101,9 @@ def mirror_p():
 
 
 # ---------------------------------------------------------------- top level
-T = {k: g5(4.985 + 0.39 * (4 - k)) for k in range(5)}    # track centers: T4 4.985 ... T1 6.155, T0 6.545
+T = {k: g5(B.TD[1] + 0.285 + 0.39 * (4 - k)) for k in range(5)}   # track centers: T4 (M1_b over the vdd strip) .. T0
 TW = 0.105                                                 # M1 track half width (Via1 + V1_c 0.01)
-YR = 6.87                                                  # ring Activ bottom of both mirrors (T0 top + M1_e 0.22)
+YR = g5(T[0] + 0.105 + 0.22)                               # ring Activ bottom of both mirrors (T0 top + M1_e 0.22)
 
 
 def track(c, x0, x1, k):
@@ -195,7 +195,7 @@ def top(cells):
     B.via(c, xs, YR + 0.15)
     xv = xp + 2.8                                              # vdd: P ring bottom leg -> row vdd strip
     box(c, "M2", xv - 0.145, B.TD[0] + 0.005, xv + 0.145, YR + 0.255)
-    B.via(c, xv, 4.55)
+    B.via(c, xv, (B.TD[0] + B.TD[1]) / 2)
     B.via(c, xv, YR + 0.15)
     # one NWell for the vdd rail (row strip + P mirror), one ThickGateOx over everything
     box(c, "NWell", xp, B.NW[1] - 0.10, xp + pw, yp + 0.10)
@@ -250,12 +250,16 @@ def compose_cdl():
                "MDN3 vssh ni vssh vssh sg13_hv_nmos w=2u l=6u ng=1 m=1",
                "MDP0 vddh vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1",
                "MDP6 vddh vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1"]
+    src_d = [ln for ln in out if ln.startswith("MMD")]          # round 2: the lead backannotated the dummies into
+    if src_d:                                                   # the source netlist (XMDN[k], XMDP[k]): use those
+        out = [ln for ln in out if not ln.startswith("MMD")]
+        dummies = src_d
     head = ["* SPDX-FileCopyrightText: 2026 Christoph Maier", "* SPDX-License-Identifier: Apache-2.0",
             "* bias_dist_pd.cdl: flat reference netlist of bias_dist_pd.gds, composed by build_bdp.py (Claude, "
             "agent D, C4 2026-11-07)",
             "* from macros/bias_dist_pd/netlist/source/bias_dist_pd.spice + macros/hv_logic/netlist/source/"
-            "hv_logic.spice", "* (gates expanded, vdd / vss -> vddh / vssh) plus the drawn dummies MDN0 / MDN3 "
-            "(bdp_mirror_n) and MDP0 / MDP6 (bdp_mirror_p).", ""]
+            "hv_logic.spice", "* (gates expanded, vdd / vss -> vddh / vssh); the dummies of bdp_mirror_n / bdp_mirror_p "
+            "as backannotated in the source (else drawn names MDN0 / MDN3, MDP0 / MDP6).", ""]
     txt = head + [".SUBCKT bias_dist_pd " + " ".join(ren.get(p, p) for p in ports)] + out + \
         ["* dummies (D = S = B on the rail, gate by abutment)"] + dummies + [".ENDS bias_dist_pd", ""]
     return "\n".join(txt), len(out), len(dummies)
@@ -355,12 +359,12 @@ def previews(t):
     g = t.geo
     cx, xp = g["cx"], g["xp"]
     notes = [((g["place"][0][1] + 14.0), T[0], "ni"), (xp + 5.0, T[0], "vpd lane"), (3.0, g["ni_y"], "ni (band)"),
-             (3.0, g["vpd_y"], "vpd (band)"), (cx["PD"], 5.8, "vpd")]
+             (3.0, g["vpd_y"], "vpd (band)"), (cx["PD"], T[2], "vpd")]
     for j, n in enumerate(["PO0", "PO1", "PO2", "PO3"]):
-        notes.append((cx[n] + 0.27, 6.85 - 0.0, "po%d" % j))
+        notes.append((cx[n] + 0.27, T[0] + 0.3, "po%d" % j))
     for cc, x, kind, k in g["place"]:
         if kind in ("in", "out"):
-            notes += [(x + 0.8, 2.30, "e_b"), (x + 2.64, 1.45, "e")]
+            notes += [(x + 0.8, B.LINE[0] - 0.15, "e_b"), (x + 2.64, 1.45, "e")]
     render(t, "bias_dist_pd.png", notes=notes)
     xs = g["place"][1][1]
     render(t, "closeup_input_slice.png", (xs - 0.9, -0.6, xs + 5.4, 7.6), notes)

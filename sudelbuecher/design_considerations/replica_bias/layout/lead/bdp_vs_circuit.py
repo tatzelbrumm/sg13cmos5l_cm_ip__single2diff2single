@@ -28,6 +28,7 @@ for ln in lines(MAC / "bias_dist_pd/netlist/source/bias_dist_pd.spice"):
     if t[0] == ".ends": cur = None; continue
     if cur != "bias_dist_pd" or not t[0].startswith("X"): continue
     if "sg13_hv" in ln:
+        if t[0].startswith("XMD"): continue          # layout dummies in the source (since 2026-11-07): listed from the CDL
         add(t, lambda x: ren.get(x, x))
     else:
         ports, devs = gates[t[-1]]
@@ -39,7 +40,7 @@ for ln in lines(sys.argv[1]):
     t = ln.split()
     if t and t[0][0] in "Mm":
         p = par(t[6:]); k = (t[5], tuple(sorted((t[1], t[3]))), t[2], t[4], v(p["w"]), v(p["l"]))
-        if t[0].upper().startswith("MD"): dum.append((t[0], *t[1:6], p["w"], p["l"]))
+        if "MD" in t[0].upper(): dum.append((t[0], *t[1:6], p["w"], p["l"]))
         else: lay[k] += int(p.get("m", 1))
 print("circuit", sum(circ.values()), "cdl active", sum(lay.values()), "matched", sum((circ & lay).values()), "dummies", len(dum))
 for k, n in (lay - circ).items(): print("  EXTRA  ", n, k)

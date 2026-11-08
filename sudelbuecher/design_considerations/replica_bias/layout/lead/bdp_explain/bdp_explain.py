@@ -70,11 +70,13 @@ for e in beyond.width_check(int(round(0.30 / u))).each():
 ax.text(1.35, 3.45, "TGP (PMOS, gate = ei_b)", fontsize=10); ax.text(1.35, 1.2, "TGN (NMOS, gate = ei)", fontsize=10)
 ax.text(1.35, 2.6, "TGP's gate poly + contact pad\n(0.45 µm wide)", fontsize=9)
 ax.text(1.35, 1.95, "TGN's gate poly + contact pad\n(0.45 µm wide)", fontsize=9)
-ax.annotate("", xy=(-0.35, 1.73), xytext=(-0.35, 2.97), arrowprops=dict(arrowstyle="<->"))
-ax.text(-0.95, 2.3, "1.24 µm\nActiv to Activ\n(NWell edge rules)", fontsize=8, ha="center")
+dev = sorted([p.bbox() for p in act.each() if p.bbox().height() * u > 0.5], key=lambda b: b.bottom)
+ya, yb = dev[0].top * u, dev[1].bottom * u
+ax.annotate("", xy=(-0.35, ya), xytext=(-0.35, yb), arrowprops=dict(arrowstyle="<->"))
+ax.text(-0.95, (ya + yb) / 2, f"{yb - ya:.2f} µm\nActiv to Activ\n(round 1: 1.24)", fontsize=8, ha="center")
 ax.text(1.35, 5.2, "dashed: 'endcap zone' = Activ grown by 0.25 µm\nhatched: poly beyond it that touches a contact"
-        "\nred: where the check measures < 0.30 µm\n(TGN: 0.14 µm, TGP: 0.27 µm, both the pad's LENGTH beyond the zone,\n"
-        "not a neck: the pad is 0.45 µm wide)", fontsize=9, va="top")
+        "\nred: where the check measures < 0.30 µm\n(round 2: both pads reach >= 0.32 µm beyond the zone: no flag;\n"
+        "round 1 had 0.14 / 0.27 µm. The pads are 0.45 µm wide)", fontsize=9, va="top")
 ax.set_xlim(-1.6, 4.6); ax.set_ylim(-0.3, 5.3); ax.set_aspect("equal"); ax.set_xlabel("µm (cell bdp_tg_hv)")
 ax.set_title("Split switch gates of the transmission gate tg_hv, and the narrow-poly check", fontsize=11)
 fig.tight_layout(); fig.savefig("3_split_gates_narrow_poly.png", dpi=130); plt.close(fig)
