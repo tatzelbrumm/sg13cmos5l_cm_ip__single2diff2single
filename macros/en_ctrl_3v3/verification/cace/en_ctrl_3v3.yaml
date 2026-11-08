@@ -4,8 +4,9 @@
 #--------------------------------------------------------------
 # CACE circuit characterization file: en_ctrl_3v3
 #
-# Fail-safe enable for the 3.3 V pad circuits: en_3v3 = en_1v2 AND vdd_1v2 present AND vdd_3v3 present,
-# sel*_3v3 = sel*_1v2 level-shifted.  Source netlist: netlist/source/en_ctrl_3v3.spice.
+# Fail-safe enable, v2 (2026-11-08): en_3v3 = en_1v2 at 3.3 V, sel*_3v3 = sel*_1v2 at 3.3 V, each shifted by
+# ls_up_fs without a 1.2 V supply; no supply sensing (vddl and the two sense inputs are not connected inside).
+# Source netlist: netlist/source/en_ctrl_3v3.spice.  Supply-state transients beyond CACE: testbenches/spice.
 # The LIMITS are PROPOSALS: the functional ones (output errors) are set by hand; the current and timing
 # limits are the worst case of the pre-layout runs (schematic netlist, no parasitics) plus ~30 %% margin.
 # Replace them by requirements when there are any.  "any" = characterized, not specified.
@@ -13,7 +14,7 @@
 #--------------------------------------------------------------
 
 name:           en_ctrl_3v3
-description:    Fail-safe 1.2 V -> 3.3 V enable and select bits (vdd_1v2 / vdd_3v3 presence detectors)
+description:    Fail-safe 1.2 V -> 3.3 V enable and select bits without a 1.2 V supply (v2)
 PDK:            ihp-sg13cmos5l
 
 cace_format:    5.2
@@ -38,7 +39,7 @@ pins:
     Vmin: 3.0
     Vmax: 3.6
   vddl:
-    description: 1.2 V supply of the ls_up input inverters (core ring vdd in the pad, vdd_1v2 in the fallback)
+    description: 1.2 V supply, not connected inside since v2 (kept for the symbol)
     type: power
     direction: inout
     Vmin: 0
@@ -103,7 +104,7 @@ default_conditions:
     display: Case
     typical: 0
   scenario:
-    description: Supply-loss scenario, 1 vdd_1v2 sense, 2 vdd_3v3 sense, 3 vdd_1v2 = vddl and sense
+    description: vddl in tran_vddl, 1 = 0 V (slot vdd_1v2 off), 2 = floating at 0.62 V
     display: Scenario
     typical: 1
   cload:
@@ -118,7 +119,7 @@ parameters:
     spec:
       Verr_en:
         display: en_3v3 error
-        description: abs(v(en_3v3) - expected), expected = vddh for cases 0 and 7, else 0
+        description: abs(v(en_3v3) - expected), expected = 0 for cases 1, 3, 5 (en_1v2 = 0), else vddh
         unit: V
         minimum:
           value: any
@@ -128,7 +129,7 @@ parameters:
           value: 0.1
       Verr_sel:
         display: sel_3v3 error
-        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (not checked with vddl = 0)
+        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (checked in every case)
         unit: V
         minimum:
           value: any
@@ -145,7 +146,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 2500
+          value: 240
       I_vddl:
         display: I vddl
         description: Current delivered by vddl
@@ -155,7 +156,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 50
+          value: 1
       I_s12:
         display: I vdd1v2_sense
         description: Current delivered by the vdd_1v2 sense source
@@ -165,7 +166,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 1900
+          value: 1
       I_s33:
         display: I vdd3v3_sense
         description: Current delivered by the vdd_3v3 sense source
@@ -175,7 +176,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 2300
+          value: 1
       I_en:
         display: I en_1v2
         description: Current delivered by the en_1v2 source
@@ -219,7 +220,7 @@ parameters:
     spec:
       Verr_en:
         display: en_3v3 error
-        description: abs(v(en_3v3) - expected), expected = vddh for cases 0 and 7, else 0
+        description: abs(v(en_3v3) - expected), expected = 0 for cases 1, 3, 5 (en_1v2 = 0), else vddh
         unit: V
         minimum:
           value: any
@@ -229,7 +230,7 @@ parameters:
           value: 0.1
       Verr_sel:
         display: sel_3v3 error
-        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (not checked with vddl = 0)
+        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (checked in every case)
         unit: V
         minimum:
           value: any
@@ -246,7 +247,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 2500
+          value: 240
       I_vddl:
         display: I vddl
         description: Current delivered by vddl
@@ -256,7 +257,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 50
+          value: 1
       I_s12:
         display: I vdd1v2_sense
         description: Current delivered by the vdd_1v2 sense source
@@ -266,7 +267,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 1900
+          value: 1
       I_s33:
         display: I vdd3v3_sense
         description: Current delivered by the vdd_3v3 sense source
@@ -276,7 +277,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 2300
+          value: 1
       I_en:
         display: I en_1v2
         description: Current delivered by the en_1v2 source
@@ -315,12 +316,12 @@ parameters:
         enumerate: [0, 1]
       cload:
         typical: 50
-  # vdd_1v2 gated off (case 4: vddl = sense = 0, en_1v2 still high) over 5 corners x -40 / 125 C x low / high supply = 20 runs
+  # Slot vdd_1v2 off (cases 2, 3: vddl = 0, en_1v2 high / low) over 5 corners x -40 / 125 C x low / high supply = 40 runs
   vddl_off_params:
     spec:
       Verr_en:
         display: en_3v3 error
-        description: abs(v(en_3v3) - expected), expected = vddh for cases 0 and 7, else 0
+        description: abs(v(en_3v3) - expected), expected = 0 for cases 1, 3, 5 (en_1v2 = 0), else vddh
         unit: V
         minimum:
           value: any
@@ -330,7 +331,7 @@ parameters:
           value: 0.1
       Verr_sel:
         display: sel_3v3 error
-        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (not checked with vddl = 0)
+        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (checked in every case)
         unit: V
         minimum:
           value: any
@@ -347,7 +348,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: any
+          value: 240
       I_vddl:
         display: I vddl
         description: Current delivered by vddl
@@ -357,7 +358,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: any
+          value: 1
       I_s12:
         display: I vdd1v2_sense
         description: Current delivered by the vdd_1v2 sense source
@@ -367,7 +368,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: any
+          value: 1
       I_s33:
         display: I vdd3v3_sense
         description: Current delivered by the vdd_3v3 sense source
@@ -377,7 +378,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: any
+          value: 1
       I_en:
         display: I en_1v2
         description: Current delivered by the en_1v2 source
@@ -387,7 +388,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: any
+          value: 0.3
     tool:
       ngspice:
         template: en_ctrl_3v3_tb_dc.sch
@@ -402,7 +403,7 @@ parameters:
         limits: auto
     conditions:
       case:
-        typical: 4
+        enumerate: [2, 3]
       corner_mos:
         enumerate: [ss, sf, tt, fs, ff]
       temp:
@@ -411,12 +412,12 @@ parameters:
         enumerate: [0, 1]
       cload:
         typical: 50
-  # Floating sense inputs (cases 5, 6) at ss / ff x -40 / 125 C, low supply = 8 runs
+  # Slot vdd_1v2 floating at 0.62 V (cases 4, 5: en_1v2 high / low) at 5 corners x -40 / 125 C, low supply = 20 runs
   float_params:
     spec:
       Verr_en:
         display: en_3v3 error
-        description: abs(v(en_3v3) - expected), expected = vddh for cases 0 and 7, else 0
+        description: abs(v(en_3v3) - expected), expected = 0 for cases 1, 3, 5 (en_1v2 = 0), else vddh
         unit: V
         minimum:
           value: any
@@ -426,7 +427,7 @@ parameters:
           value: 0.1
       Verr_sel:
         display: sel_3v3 error
-        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (not checked with vddl = 0)
+        description: Sum of abs errors of sel0_3v3 and sel1_3v3 (checked in every case)
         unit: V
         minimum:
           value: any
@@ -443,7 +444,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 2500
+          value: 240
       I_vddl:
         display: I vddl
         description: Current delivered by vddl
@@ -453,7 +454,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 50
+          value: 1
       I_s12:
         display: I vdd1v2_sense
         description: Current delivered by the vdd_1v2 sense source
@@ -463,7 +464,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 1900
+          value: 1
       I_s33:
         display: I vdd3v3_sense
         description: Current delivered by the vdd_3v3 sense source
@@ -473,7 +474,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 2300
+          value: 1
       I_en:
         display: I en_1v2
         description: Current delivered by the en_1v2 source
@@ -492,9 +493,9 @@ parameters:
         variables: [Verr_en, Verr_sel, I_vddh, I_vddl, I_s12, I_s33, I_en]
     conditions:
       case:
-        enumerate: [5, 6]
+        enumerate: [4, 5]
       corner_mos:
-        enumerate: [ss, ff]
+        enumerate: [ss, sf, tt, fs, ff]
       temp:
         enumerate: [-40, 125]
       sup:
@@ -513,7 +514,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 4.8
+          value: 40
       td_off:
         display: Disable delay
         description: 50 % en_1v2 fall to 50 % en_3v3 fall
@@ -523,7 +524,7 @@ parameters:
         typical:
           value: any
         maximum:
-          value: 7
+          value: 410
     tool:
       ngspice:
         template: en_ctrl_3v3_tb_tran_en.sch
@@ -550,22 +551,32 @@ parameters:
         enumerate: [0, 1]
       cload:
         typical: 50
-  # Supply loss with en_1v2 high: 3 scenarios x 5 corners x -40 / 125 C, low supply = 30 runs
-  tran_pg_params:
+  # Enable / disable with the slot vdd_1v2 off (scenario 1) or floating (scenario 2): 2 x 5 corners x -40 / 125 C, low supply = 20 runs
+  tran_vddl_params:
     spec:
-      t_pg:
-        display: Supply-loss response
-        description: Ramp start (supply 1 -> 0 V in 1 us) to 50 % en_3v3 fall, en_1v2 held high
-        unit: us
+      td_on:
+        display: Enable delay, vddl off
+        description: 50 % en_1v2 rise to 50 % en_3v3 rise
+        unit: ns
         minimum:
           value: any
         typical:
           value: any
         maximum:
-          value: 1.2
+          value: 40
+      td_off:
+        display: Disable delay, vddl off
+        description: 50 % en_1v2 fall to 50 % en_3v3 fall
+        unit: ns
+        minimum:
+          value: any
+        typical:
+          value: any
+        maximum:
+          value: 410
       Ven_end:
-        display: en_3v3 after the loss
-        description: en_3v3 at 9.9 us (supply gone since 2 us)
+        display: en_3v3 after disable
+        description: en_3v3 at 1.5 us (en_1v2 low since 0.52 us)
         unit: V
         minimum:
           value: any
@@ -575,19 +586,19 @@ parameters:
           value: 0.1
     tool:
       ngspice:
-        template: en_ctrl_3v3_tb_tran_pg.sch
+        template: en_ctrl_3v3_tb_tran_vddl.sch
         format: ascii
         suffix: .data
-        variables: [t_pg, Ven_end]
+        variables: [td_on, td_off, Ven_end]
     plot:
-      t_pg_vs_scenario:
+      td_off_vs_scenario:
         type: xyplot
         xaxis: scenario
-        yaxis: t_pg
+        yaxis: td_off
         limits: auto
     conditions:
       scenario:
-        enumerate: [1, 2, 3]
+        enumerate: [1, 2]
       corner_mos:
         enumerate: [ss, sf, tt, fs, ff]
       temp:
