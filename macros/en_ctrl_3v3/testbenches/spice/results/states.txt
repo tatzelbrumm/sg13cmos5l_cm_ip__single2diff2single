@@ -1,0 +1,16 @@
+# en_ctrl_3v3 v2: supply states (tb_states) and power-up with enable high (tb_powerup)
+# currents in nA (cell's vddh pin), delays in ns (50 fF on en_3v3 / en_3v3_b); logic: ok = within 5 % of vddh of the wanted level
+# states: off0 = powered, en 0 | en = enabled | ensel = enabled, sel0 1 | dis = disabled | en_l0 = enabled, sel0 1, vdd_1v2 off | dis_l0b = disabled, vdd_1v2 off | dis_lfl / en_lfl = vdd_1v2 floating at 0.62 V
+corner  T    vddh     off0       en    ensel      dis    en_l0  dis_l0b  dis_lfl   en_lfl  logic(8)  t_en t_dis  powerup  stalls
+tt     27  3.3       0.0     49.9     99.8      0.0     99.8      0.0      0.0     49.9  ok        20.3   164  ok       0/0
+ss    -40  3.0       0.0     42.3     84.6      0.0     84.6      0.0      0.0     42.3  ok        28.3   174  ok       0/0
+ss    -40  3.6       0.0     92.1    184.3      0.0    184.3      0.0      0.0     92.1  ok        30.9    94  ok       0/0
+ff    125  3.6       2.3     54.6    106.9      2.3    106.9      2.4      2.3     54.6  ok        12.3   160  ok       0/0
+ff    125  3.0       1.9     25.6     49.3      1.9     49.3      2.0      1.9     25.6  ok         9.5   315  ok       0/0
+fs    125  3.6       0.8     46.4     91.9      0.8     91.9      0.9      0.8     46.4  ok        10.8   180  ok       0/0
+sf    -40  3.0       0.0     50.9    101.8      0.0    101.8      0.0      0.0     50.9  ok        18.5   150  ok       0/0
+sf    125  3.6       0.8     50.8    100.8      0.8    100.8      0.8      0.8     50.8  ok        20.6   180  ok       0/0
+fs    -40  3.0       0.0     45.1     90.2      0.0     90.2      0.0      0.0     45.1  ok        11.7   150  ok       0/0
+tt    -40  3.3       0.0     62.4    124.7      0.0    124.7      0.0      0.0     62.4  ok        17.4   124  ok       0/0
+tt    125  3.3       0.6     39.3     78.1      0.6     78.1      0.7      0.6     39.3  ok        13.1   204  ok       0/0
+# all states correct

@@ -39,6 +39,7 @@ C {devices/code_shown.sym} 0 420 0 0 {name=NGSPICE only_toplevel=false value="
 .include CACE\{DUT_path\}
 .temp CACE\{temp\}
 .options gmin=1e-12 abstol=1e-12 reltol=1e-4
+.option method=gear cshunt=1e-15
 .option warn=1
 * sup: 0 = (vddl, vddh) = (1.08, 3.0) V, 1 = (1.32, 3.6) V, 0.5 = nominal (1.2, 3.3) V
 .param s=CACE\{sup\}
@@ -47,7 +48,7 @@ Vh vddh 0 \{vh\}
 Cl0 en_3v3 0 CACE\{cload\}
 Cl1 sel0_3v3 0 10f
 Cl2 sel1_3v3 0 10f
-* enable (rise at 20 ns) and disable (fall at 520 ns) of en_1v2, 100 ps edges; both senses on
+* enable (rise at 20 ns) and disable (fall at 520 ns) of en_1v2, 100 ps edges; vddl and both senses on
 Vl vddl 0 \{vl\}
 Ven en_1v2 0 PULSE(0 \{vl\} 20n 100p 100p 500n 2u)
 Vs0 sel0_1v2 0 0
@@ -55,7 +56,7 @@ Vs1 sel1_1v2 0 0
 V12 vdd1v2_sense 0 \{vl\}
 V33 vdd3v3_sense 0 \{vh\}
 .control
-tran 50p 1u
+tran 50p 1.6u
 let vmh = CACE\{sup\} * 0.6 + 3.0
 let vmh2 = vmh / 2
 let vml2 = (CACE\{sup\} * 0.24 + 1.08) / 2

@@ -1,0 +1,46 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* tb_powerup: en_ctrl_3v3 v2 powering up with enable already high (the default mode), slot vdd_1v2 still off, corner @C@ @T@ C, vddh @VH@ V, vddl @VL@ V
+.lib cornerMOShv.lib mos_@C@
+.lib cornerMOSlv.lib mos_@C@
+.temp @T@
+.include ../../../../hv_logic/netlist/source/hv_logic.spice
+.include ../../../netlist/source/en_ctrl_3v3.spice
+* slot vdd_3v3 as in the harness : hv PMOS 10u/0.4u m=700 from the always-on 3.3 V (power_stage2); gate low = on.
+* On 2..160 us; then off: the rail floats (100 pF decap; 10 Meg to 0.6 V stands for the leakage balance the fallback
+* measured, 0.5 ... 0.67 V).
+Vh3 h3 0 @VH@
+Vgh gh 0 pwl(0 @VH@ 1u @VH@ 2u 0 160u 0 160.5u @VH@)
+XSH vddh gh h3 h3 sg13_hv_pmos w=10u l=0.4u ng=1 m=700
+Ch vddh 0 100p
+Rhf vddh hfl 100k
+Vhf hfl 0 0.6
+* slot vdd_1v2: lv PMOS 5u/0.13u m=500 (power_stage1v2); on 3..100 us, off 100..130 us (rail pulled to 0 by 1 Meg as
+* a discharged rail), floating at 0.62 V 130..160 us (the fallback's antenna-charged case), on again after 160 us
+Vl1 l1 0 @VL@
+Vgl gl 0 pwl(0 @VL@ 3u @VL@ 4u 0 100u 0 100.5u @VL@ 160u @VL@ 160.5u 0)
+XSL vddl gl l1 l1 sg13_lv_pmos w=5u l=0.13u ng=1 m=500
+Cl vddl 0 50p
+Vlf lfl 0 pwl(0 0 130u 0 130.1u 0.62)
+Rlf vddl lfl 100k
+* harness enable and dig_in (valid 1.2 V levels throughout): en 1 at 20 us, 0 at 60 us, 1 at 80 us, 0 at 115 us, 1 at 140 us
+Ven en 0 @VL@
+Vs0 s0 0 pwl(0 0 40u 0 40.1u @VL@ 70u @VL@ 70.1u 0 102u 0 102.1u @VL@ 125u @VL@ 125.1u 0)
+Vs1 s1 0 0
+Vsen1 sen1 0 0
+Vsen3 sen3 0 0
+Cl1 en_3v3 0 50f
+Cl2 en_3v3_b 0 50f
+* ammeters on the cell's own supply pins
+Vah vddh ch 0
+Val vddl cl 0
+X1 ch cl 0 en s0 s1 sen1 sen3 en_3v3 sel0 sel1 en_3v3_b en_ctrl_3v3
+.option method=gear cshunt=1e-15
+.tran 10n 4u
+.control
+run
+meas tran pu_en find v(en_3v3) at=3u
+meas tran pu_enb find v(en_3v3_b) at=3u
+meas tran pu_ih avg i(Vah) from=2.5u to=2.9u
+.endc
+.end

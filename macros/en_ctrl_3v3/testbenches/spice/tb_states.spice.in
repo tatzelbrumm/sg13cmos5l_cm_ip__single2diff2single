@@ -1,0 +1,75 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* tb_states: en_ctrl_3v3 v2 through the harness supply states (template; run_states.py fills @C@ @T@ @VH@ @VL@ @VH2@), corner @C@ @T@ C, vddh @VH@ V, vddl @VL@ V
+.lib cornerMOShv.lib mos_@C@
+.lib cornerMOSlv.lib mos_@C@
+.temp @T@
+.include ../../../../hv_logic/netlist/source/hv_logic.spice
+.include ../../../netlist/source/en_ctrl_3v3.spice
+* slot vdd_3v3 as in the harness : hv PMOS 10u/0.4u m=700 from the always-on 3.3 V (power_stage2); gate low = on.
+* On 2..160 us; then off: the rail floats (100 pF decap; 10 Meg to 0.6 V stands for the leakage balance the fallback
+* measured, 0.5 ... 0.67 V).
+Vh3 h3 0 @VH@
+Vgh gh 0 pwl(0 @VH@ 1u @VH@ 2u 0 160u 0 160.5u @VH@)
+XSH vddh gh h3 h3 sg13_hv_pmos w=10u l=0.4u ng=1 m=700
+Ch vddh 0 100p
+Rhf vddh hfl 100k
+Vhf hfl 0 0.6
+* slot vdd_1v2: lv PMOS 5u/0.13u m=500 (power_stage1v2); on 3..100 us, off 100..130 us (rail pulled to 0 by 1 Meg as
+* a discharged rail), floating at 0.62 V 130..160 us (the fallback's antenna-charged case), on again after 160 us
+Vl1 l1 0 @VL@
+Vgl gl 0 pwl(0 @VL@ 3u @VL@ 4u 0 100u 0 100.5u @VL@ 160u @VL@ 160.5u 0)
+XSL vddl gl l1 l1 sg13_lv_pmos w=5u l=0.13u ng=1 m=500
+Cl vddl 0 50p
+Vlf lfl 0 pwl(0 0 130u 0 130.1u 0.62)
+Rlf vddl lfl 100k
+* harness enable and dig_in (valid 1.2 V levels throughout): en 1 at 20 us, 0 at 60 us, 1 at 80 us, 0 at 115 us, 1 at 140 us
+Ven en 0 pwl(0 0 20u 0 20.1u @VL@ 60u @VL@ 60.1u 0 80u 0 80.1u @VL@ 115u @VL@ 115.1u 0 140u 0 140.1u @VL@)
+Vs0 s0 0 pwl(0 0 40u 0 40.1u @VL@ 70u @VL@ 70.1u 0 102u 0 102.1u @VL@ 125u @VL@ 125.1u 0)
+Vs1 s1 0 0
+Vsen1 sen1 0 0
+Vsen3 sen3 0 0
+Cl1 en_3v3 0 50f
+Cl2 en_3v3_b 0 50f
+* ammeters on the cell's own supply pins
+Vah vddh ch 0
+Val vddl cl 0
+X1 ch cl 0 en s0 s1 sen1 sen3 en_3v3 sel0 sel1 en_3v3_b en_ctrl_3v3
+.option method=gear cshunt=1e-15
+.tran 20n 220u
+.control
+run
+* static currents and states at quiet points (each window 2 us at the end of a state)
+let ih = i(Vah)
+meas tran ih_off0  avg ih from=16u to=18u
+meas tran ih_en    avg ih from=36u to=38u
+meas tran ih_ensel avg ih from=56u to=58u
+meas tran ih_dis   avg ih from=76u to=78u
+meas tran ih_en_l0 avg ih from=110u to=112u
+meas tran ih_dis_l0 avg ih from=126u to=128u
+meas tran ih_dis_l0b avg ih from=128.5u to=129.9u
+meas tran ih_dis_lfl avg ih from=137u to=139.9u
+meas tran ih_en_lfl avg ih from=152u to=154u
+meas tran il_en avg i(Val) from=36u to=38u
+meas tran ien_en avg i(Ven) from=36u to=38u
+meas tran ih_hfl avg i(Vah) from=208u to=210u
+meas tran il_hfl avg i(Val) from=208u to=210u
+meas tran v_off0 find v(en_3v3) at=18u
+meas tran v_en find v(en_3v3) at=38u
+meas tran vb_en find v(en_3v3_b) at=38u
+meas tran v_dis find v(en_3v3) at=78u
+meas tran v_en_l0 find v(en_3v3) at=112u
+meas tran v_dis_l0 find v(en_3v3) at=128u
+meas tran v_en_lfl find v(en_3v3) at=154u
+meas tran v_hfl find v(en_3v3) at=210u
+meas tran vb_hfl find v(en_3v3_b) at=210u
+meas tran vddh_fl find v(vddh) at=210u
+meas tran vddl_fl find v(vddl) at=154u
+meas tran vddl_off find v(vddl) at=112u
+meas tran s0_on find v(sel0) at=58u
+meas tran s0_off find v(sel0) at=78u
+meas tran s0_l0 find v(sel0) at=112u
+meas tran t_en trig v(en) val=0.6 rise=1 td=19u targ v(en_3v3) val=@VH2@ rise=1 td=19u
+meas tran t_dis trig v(en) val=0.6 fall=1 td=59u targ v(en_3v3) val=@VH2@ fall=1 td=59u
+.endc
+.end

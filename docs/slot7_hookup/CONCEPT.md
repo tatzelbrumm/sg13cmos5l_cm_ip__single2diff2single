@@ -77,20 +77,19 @@ on-slot reference, on-slot replica bias monitored on the buses, single → diff 
 - Decode in one place; each block gets one enable (pads, pad_ref_rb, cores, bias_dist_pd inputs / outputs, ten TGs).
   O: decode in the 1.2 V domain and shift only the decoded enables, or shift 11 bits and decode in hv_logic.
 
-## Supplies and fail-safe (F, then P)
+## Supplies and fail-safe (done 2026-11-08, `macros/en_ctrl_3v3` v2, netlist + simulation)
 
-- What exists: `en_ctrl_3v3` (this repo, earlier session; schematic + CACE, no layout): en = en_1v2 AND vdd_1v2
-  present AND vdd_3v3 present. Disabled: pA. **Enabled: ≈ 2 µA from vddh plus 1.4 / 1.7 µA into the two sense
-  inputs** (ratioed pg_det). The fallback's `tp_en_ctrl*`: 1.2 … 1.75 µA per enabled channel. Neither draws current when
-  off; both do when on.
-- P, **fail-safe by starvation, no detector:** everything on the ring (both pads, pad_ref_rb) takes its bias only from
-  `iref` (inferred from the port lists: iref is their only bias input; the testbench below checks it), which bias_dist_pd sources from the slot's gated vdd_3v3. Slot off → iref = 0 → no ring current, whatever
-  the enable lines float to. Then the enables crossing from slot to ring carry state, not safety, and no quiescent
-  detector is needed. To verify (later, one testbench): ring current with iref = 0, en_3v3 / en_3v3_b swept
-  0 … 3.3 V independently, vcm / vref / vinp / vinn floating, slot vdd_3v3 at 0 V and floating 0.6 V, all corners;
-  target ≤ 10 nA.
-- Only if that fails somewhere: a static CMOS gate in the ring domain per pad (input: the slot's vdd_3v3 itself),
-  long channels for the floating 0.5 … 0.67 V level; no ratioed pull-up, so no current when on.
+- **Enable cell `en_ctrl_3v3` v2** (replaces v1's ratioed supply detectors, which drew 2–5 µA while enabled and up to
+  152 µA with the slot's 1.2 V off): each bit is shifted without a 1.2 V supply (`ls_up_fs`: input NMOS, a leaker of
+  10 hv PMOS 0.3/20 µm gated by the input, a latching PMOS). The cell sits on the slot's switched vdd_3v3. Enabled
+  26–92 nA, disabled ≤ 2.4 nA; correct with the slot's vdd_1v2 on, off or floating, and powering up into the default
+  mode with `enable` already high. Slot 7 needs only its 3.3 V switched on. The fallback's `tp_en_ctrl*` (1.2 … 1.75 µA
+  per enabled channel) could use the same cell; its owner decides.
+- **Fail-safe by starvation, verified:** both pads take their bias only from `iref`, which the slot sources from its
+  switched vdd_3v3. With iref open and en_3v3 / en_3v3_b each anywhere in 0 … 3.6 V (169 pairs), pad pin at
+  0 / 1.8 / 3.6 V, extracted layout netlists, 5 corners: S2D ≤ 0.4 nA, D2S ≤ 4.3 nA at −40 / 27 °C; ≤ 25 / 67 nA at
+  125 °C, leakage nearly independent of the enable levels. No ring-side detector or pull-down needed; pads unchanged.
+- pad_ref_rb on the ring is starved the same way (its tree hangs on iref): ≤ 1.0 nA at −40 / 27 °C, ≤ 10.6 nA at 125 °C, same sweep.
 - pad_ref_rb on the ring keeps the replica referenced to the pads' own iovdd (its vcm tracks the pads' top edge);
   on the slot's vdd_3v3 it would track a different rail. bias_dist_pd and the cores stay on the gated slot supply.
 - Harness side (F, fallback PLAN): open the bus / ibias / vbias switches and set the SMUs to 0 V before gating the
@@ -105,6 +104,16 @@ on-slot reference, on-slot replica bias monitored on the buses, single → diff 
 3. **Ten TGs and the decode** at slot level; `ocd_analog_switches` copies are not DRC / LVS checked here (F).
 4. **Stale docs:** `macros/slot/README.md` lists 19 pad wires (en_1v2, sel, sense, ibias); the delivered pads have 13.
    `TOP_LEVEL_MODULE.md` still names `analog_pin[2:0]` and `select & clk`.
+
+## Tier 1 (proposal for a 4-hour hand-over, 2026-11-08)
+
+`tier1/slot7_tier1.spice`: the default mode only, no decoder (harness enable → `ls_up_fs` → all enables; BG core →
+bias_dist_pd → pad_ref_rb and both pads; loop S2D → D2S; bus0..3 = outp, outn, vcm, vref). `tier1/run_tier1.py`
+simulates it with the extracted pads, pad_ref_rb and bias_dist_pd (`tier1/results.txt`): round trip pad in → pad out
+error ≤ 1.3 mV (−40 / 27 °C), ≤ 6.5 mV (125 °C, pad in 0 … 1 V); vcm 1.12–1.37 V, vref 0.44–0.58 V; enabled: slot
+vdd_3v3 48–50 µA, pad ring 365–396 µA; disabled (transient): ≤ 56 nA slot, ≤ 58 nA ring. Bus taps on outp / outn are
+stable but slow the loop while the bus switch is closed (RUNLOG row 112). Layout: `ls_up_fs` (agent), then the slot
+assembly.
 
 ## Path to the hand-over
 

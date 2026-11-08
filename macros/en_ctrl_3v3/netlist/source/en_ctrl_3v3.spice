@@ -1,29 +1,45 @@
 * SPDX-FileCopyrightText: 2026 Christoph Maier
 * SPDX-License-Identifier: Apache-2.0
-* en_ctrl_3v3: fail-safe enable and select bits for the 3.3 V pad circuits.
-*   en_3v3   = en_1v2 AND (vdd1v2_sense present) AND (vdd3v3_sense present)
-*   sel*_3v3 = level-shifted sel*_1v2 (gated by en_3v3 in bias_sel_pd)
-*   en_3v3_b = NOT en_3v3 (XIB), for the NMOS enable switches of d2s_mpdda_pd and the bias tree
-*              of bias_sel_pd (both had their own inverter before)
-* Ports: vddh (3.3 V: iovdd in the pad, vdd_3v3 in the slot fallback), vddl (1.2 V for the input
-* inverters of ls_up: the core ring vdd in the pad, vdd_1v2 in the fallback), vss.
-* pg_det needs no vddl: an hv NMOS with its gate on the sensed supply against a weak hv PMOS pull-up.
-* With vddl = 0 the ls_up latches are undefined; pg_det of vdd_1v2 forces en_3v3 low then.
-* RD pulls a floating (gated-off) sense input low. PU and RD conduct only while the enable is
-* requested (ena = level-shifted en_1v2): with en_1v2 = 0 the cell draws leakage only. If ena is
-* undefined (vddl = 0), either en_ls_b is high and the NOR is low anyway, or PU is on and pg_b is high.
-.subckt pg_det vddh vss sense pg_b ena ena_b
-XPU pg_b ena_b vddh vddh sg13_hv_pmos w=0.3u l=50u ng=1
-XND pg_b sense vss vss sg13_hv_nmos w=2u l=0.45u ng=1
-XRD sense ena vss vss sg13_hv_nmos w=0.3u l=100u ng=1
-.ends pg_det
+* en_ctrl_3v3 (v2, 2026-11-08): fail-safe enable and select bits for the 3.3 V circuits of slot 7 and its pads.
+* v1 (pg_det supply detectors, ls_up_1v2_3v3 shifters; in git history up to 2026-11-08) drew 2-5 uA while enabled
+* from its ratioed detectors, and up to 152 uA when the slot's 1.2 V was off with en_1v2 high.
+* v2 principle: the inputs are valid 1.2 V levels from the harness's always-on rail (enable, dig_in), also while the
+* slot's own vdd_1v2 is off. Each bit is shifted without a 1.2 V supply (ls_up_fs); the cell sits on the slot's switched
+* vdd_3v3 and is unpowered with it. No supply sensing: with the slot's 3.3 V off, nothing in the slot is powered and the
+* pads on the ring get no iref, so they draw leakage only whatever the enable lines float to (testbenches/spice).
+* Ports unchanged from v1 so that the sheets placing the symbol stay valid; vddl and the two sense inputs are no longer
+* connected inside.
+
+* ls_up_fs: fail-safe 1.2 V -> 3.3 V level shifter that needs no 1.2 V supply (for inputs that are valid 1.2 V levels
+* from the harness's always-on rail: enable, dig_in).
+*   x = NOT in: XN1 (gate in) pulls x low; the leaker chain XPL1..10 (10 x hv PMOS 0.3u/20u in series, gates on in)
+*       pulls x high when in = 0 (full gate drive) and is 2 ... 5 x weaker while in = 1 (gate at 1.2 V).
+*   XPF (gate y) latches x high once y is low: hysteresis, and it holds x against XN1's leakage.
+*   y = in at 3.3 V; out = y buffered; out_b = NOT out.
+*   Static current: in = 1: the chain, 28 ... 92 nA over corners and 3.0 ... 3.6 V; in = 0: leakage.
+.subckt ls_up_fs vddh vss in out out_b
+XN1 x in vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+XPL10 l9 in vddh vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPL9 l8 in l9 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPL8 l7 in l8 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPL7 l6 in l7 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPL6 l5 in l6 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPL5 l4 in l5 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPL4 l3 in l4 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPL3 l2 in l3 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPL2 l1 in l2 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPL1 x in l1 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+XPF x y vddh vddh sg13_hv_pmos w=0.3u l=5u ng=1
+XI1 vddh vss x y inv_hv
+XI2 vddh vss y out_b inv_hv
+XI3 vddh vss out_b out inv_hv
+.ends ls_up_fs
+
+* en_ctrl_3v3 v2: fail-safe enable and select bits, three ls_up_fs. No supply detector, no 1.2 V supply needed.
+*   en_3v3 = en_1v2 at 3.3 V, en_3v3_b = NOT en_3v3; sel*_3v3 = sel*_1v2 at 3.3 V (gated by en_3v3 downstream).
+*   vddl, vdd1v2_sense, vdd3v3_sense: kept as ports so the sheets that place the symbol stay valid; not connected.
 .subckt en_ctrl_3v3 vddh vddl vss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b
-XLE vss vddl vddh en_ls en_1v2 ls_up_1v2_3v3
-XL0 vss vddl vddh sel0_3v3 sel0_1v2 ls_up_1v2_3v3
-XL1 vss vddl vddh sel1_3v3 sel1_1v2 ls_up_1v2_3v3
-XIE vddh vss en_ls en_ls_b inv_hv
-XG1 vddh vss vdd1v2_sense pg1_b en_ls en_ls_b pg_det
-XG3 vddh vss vdd3v3_sense pg3_b en_ls en_ls_b pg_det
-XNO vddh vss en_ls_b pg1_b pg3_b en_3v3 nor3_hv
-XIB vddh vss en_3v3 en_3v3_b inv_hv
+XE vddh vss en_1v2 en_3v3 en_3v3_b ls_up_fs
+XS0 vddh vss sel0_1v2 sel0_3v3 sel0_b ls_up_fs
+XS1 vddh vss sel1_1v2 sel1_3v3 sel1_b ls_up_fs
 .ends en_ctrl_3v3

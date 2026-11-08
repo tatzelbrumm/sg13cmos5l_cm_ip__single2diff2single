@@ -5,7 +5,7 @@ V {}
 S {}
 F {}
 E {}
-T {CACE template, DC truth table: en_ctrl_3v3. Conditions: case, corner_mos, temp, sup, cload} 0 0 0 0 0.4 0.4 {}
+T {CACE template, DC truth table: en_ctrl_3v3 v2 (en_3v3 = en_1v2 whatever vddl does). Conditions: case, corner_mos, temp, sup, cload} 0 0 0 0 0.4 0.4 {}
 N 340 40 340 80 {lab=vddh}
 N 360 40 360 80 {lab=vddl}
 N 340 240 340 280 {lab=GND}
@@ -47,23 +47,26 @@ Vh vddh 0 \{vh\}
 Cl0 en_3v3 0 CACE\{cload\}
 Cl1 sel0_3v3 0 10f
 Cl2 sel1_3v3 0 10f
-* case: 0 all on, en = 1 | 1 en = 0 | 2 vdd_1v2 sense off | 3 vdd_3v3 sense off | 4 vdd_1v2 gated off (vddl = sense = 0, en input still high)
-*       5 vdd_1v2 sense floating (1e12 ohm to 0.6 V) | 6 vdd_3v3 sense floating (1e12 ohm to 1.65 V) | 7 all on, sel bits swapped
+* case (v2: en_3v3 follows en_1v2 whatever vddl and the sense inputs do; the sense inputs are held at their supplies):
+*       0 all on, en = 1, sel0 = 1 | 1 en = 0 | 2 vddl = 0 (slot vdd_1v2 off), en = 1 | 3 vddl = 0, en = 0
+*       4 vddl floating (1e12 ohm to 0.62 V), en = 1 | 5 vddl floating, en = 0 | 6 en, sel0, sel1 all 1 | 7 sel swapped
 .param c=CACE\{case\}
-.param vlv='(c==4) ? 0 : vl'
-.param ven='(c==1) ? 0 : vl'
-.param v12='(c==2 || c==4) ? 0 : ((c==5) ? 0.6 : vl)'
-.param r12='(c==5) ? 1e12 : 1'
-.param v33='(c==3) ? 0 : ((c==6) ? 1.65 : vh)'
-.param r33='(c==6) ? 1e12 : 1'
+.param vlv='(c==2 || c==3) ? 0 : ((c==4 || c==5) ? 0.62 : vl)'
+.param rl='(c==4 || c==5) ? 1e12 : 1'
+.param ven='(c==1 || c==3 || c==5) ? 0 : vl'
+.param v12=vl
+.param r12=1
+.param v33=vh
+.param r33=1
 .param vs0='(c==7) ? 0 : vl'
-.param vs1='(c==7) ? vl : 0'
-* expected outputs (in units of vddh); sel is undefined (and not checked) with vddl = 0
-.param xen='(c==0 || c==7) ? 1 : 0'
+.param vs1='(c==6 || c==7) ? vl : 0'
+* expected outputs (in units of vddh)
+.param xen='(c==1 || c==3 || c==5) ? 0 : 1'
 .param xs0='(c==7) ? 0 : 1'
-.param xs1='(c==7) ? 1 : 0'
-.param chk='(c==4) ? 0 : 1'
-Vl vddl 0 \{vlv\}
+.param xs1='(c==6 || c==7) ? 1 : 0'
+.param chk=1
+Vl vlsrc 0 \{vlv\}
+Rl vlsrc vddl \{rl\}
 Ven en_1v2 0 \{ven\}
 Vs0 sel0_1v2 0 \{vs0\}
 Vs1 sel1_1v2 0 \{vs1\}

@@ -1,0 +1,41 @@
+** sch_path: /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/en_ctrl_3v3.sch
+.subckt en_ctrl_3v3 vddh vddl vss en_1v2 sel0_1v2 sel1_1v2 vdd1v2_sense vdd3v3_sense en_3v3 sel0_3v3 sel1_3v3 en_3v3_b
+*.PININFO vddh:B vddl:B vss:B en_1v2:I sel0_1v2:I sel1_1v2:I vdd1v2_sense:I vdd3v3_sense:I en_3v3:O sel0_3v3:O sel1_3v3:O
+*+ en_3v3_b:O
+XE vddh vss en_1v2 en_3v3 en_3v3_b ls_up_fs
+XS0 vddh vss sel0_1v2 sel0_3v3 sel0_b ls_up_fs
+XS1 vddh vss sel1_1v2 sel1_3v3 sel1_b ls_up_fs
+.ends
+
+* expanding   symbol:  ls_up_fs.sym # of pins=5
+** sym_path: /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/ls_up_fs.sym
+** sch_path: /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/en_ctrl_3v3/schematic/xschem/ls_up_fs.sch
+.subckt ls_up_fs vddh vss in out out_b
+*.PININFO vddh:B vss:B in:I out:O out_b:O
+MN1 x in vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+MPL10 l9 in vddh vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL9 l8 in l9 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL8 l7 in l8 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL7 l6 in l7 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL6 l5 in l6 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL5 l4 in l5 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL4 l3 in l4 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL3 l2 in l3 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL2 l1 in l2 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPL1 x in l1 vddh sg13_hv_pmos w=0.3u l=20u ng=1
+MPF x y vddh vddh sg13_hv_pmos w=0.3u l=5u ng=1
+XI1 vddh vss x y inv_hv
+XI2 vddh vss y out_b inv_hv
+XI3 vddh vss out_b out inv_hv
+.ends
+
+
+* expanding   symbol:  inv_hv.sym # of pins=4
+** sym_path: /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/inv_hv.sym
+** sch_path: /home/user/sg13cmos5l_cm_ip__single2diff2single/macros/hv_logic/schematic/xschem/inv_hv.sch
+.subckt inv_hv vdd vss a y
+*.PININFO vdd:B vss:B a:I y:O
+MP y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1
+MN y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1
+.ends
+

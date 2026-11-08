@@ -1,0 +1,40 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 08/11/2026 16:14
+
+.SUBCKT ls_up_fs in out out_b vddh vss
+M$1 \$I2 \$I1 vddh vddh sg13_hv_pmos L=5u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$2 \$I2 in \$I11 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$3 \$I5 in \$I11 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$4 \$I5 in \$I10 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$5 \$I6 in \$I10 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$6 \$I6 in \$I9 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$7 \$I3 in \$I9 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$8 \$I3 in \$I8 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$9 \$I4 in \$I8 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$10 \$I4 in \$I7 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$11 vddh in \$I7 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$12 vss in \$I2 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$13 vss out_b out vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$14 vss \$I1 out_b vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$15 vss \$I2 \$I1 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$16 vddh out_b out vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$17 vddh \$I1 out_b vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$18 vddh \$I2 \$I1 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+.ENDS ls_up_fs
