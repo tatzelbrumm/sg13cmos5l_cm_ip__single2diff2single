@@ -2,7 +2,7 @@
 * SPDX-License-Identifier: Apache-2.0
 * bias_dist_pd.cdl: flat reference netlist of bias_dist_pd.gds, composed by build_bdp.py (Claude, agent D, C4 2026-11-07)
 * from macros/bias_dist_pd/netlist/source/bias_dist_pd.spice + macros/hv_logic/netlist/source/hv_logic.spice
-* (gates expanded, vdd / vss -> vddh / vssh) plus the drawn dummies MDN0 / MDN3 (bdp_mirror_n) and MDP0 / MDP6 (bdp_mirror_p).
+* (gates expanded, vdd / vss -> vddh / vssh); the dummies of bdp_mirror_n / bdp_mirror_p as backannotated in the source (else drawn names MDN0 / MDN3, MDP0 / MDP6).
 
 .SUBCKT bias_dist_pd vddh vssh en_3v3 en_3v3_b iin0 iin1 iin2 iin3 en_in0 en_in1 en_in2 en_in3 iout0 iout1 iout2 iout3 en_out0 en_out1 en_out2 en_out3
 MIA0_PA ei0_b en_3v3 vddh vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
@@ -79,8 +79,8 @@ MPO3 po3 vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
 MTON3 po3 eo3 iout3 vssh sg13_hv_nmos w=1u l=0.45u ng=1 m=1
 MTOP3 po3 eo3_b iout3 vddh sg13_hv_pmos w=1u l=0.45u ng=1 m=1
 * dummies (D = S = B on the rail, gate by abutment)
-MDN0 vssh ni vssh vssh sg13_hv_nmos w=2u l=6u ng=1 m=1
-MDN3 vssh ni vssh vssh sg13_hv_nmos w=2u l=6u ng=1 m=1
-MDP0 vddh vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
-MDP6 vddh vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
+MMDN[1] vssh ni vssh vssh sg13_hv_nmos w=2u l=6u ng=1 m=1
+MMDN[0] vssh ni vssh vssh sg13_hv_nmos w=2u l=6u ng=1 m=1
+MMDP[1] vddh vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
+MMDP[0] vddh vpd vddh vddh sg13_hv_pmos w=5u l=6u ng=1 m=1
 .ENDS bias_dist_pd

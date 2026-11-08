@@ -69,7 +69,7 @@ schematic/bias_dist_pd.png / .svg        render of the sheet
 schematic/xschem/xschemrc                adds hv_logic
 netlist/source/bias_dist_pd.spice        source netlist (with hv_logic.spice)
 testbenches/spice/tb_truth.spice / .out  truth table, DC (ngspice -b in this folder, repo environment)
-layout/klayout/bias_dist_pd.klay.gds     the layout (agent D, 2026-11-07): 60.49 × 16.24 µm, M1 / M2; .cdl its flat LVS
+layout/klayout/bias_dist_pd.klay.gds     the layout (agent D, round 2, 2026-11-08): 60.49 × 16.44 µm, M1 / M2; .cdl its flat LVS
                                          reference; .png the cell
 netlist/schematic, netlist/layout        make klayout-lvs-netlist / klayout-lvs (LVS OK)
 ```
@@ -87,7 +87,7 @@ would cross them (88 crossings against 45).
 
 ## Layout (agent D, 2026-11-07)
 
-`layout/klayout/bias_dist_pd.klay.gds`, 60.49 × 16.24 µm = 982 µm², Metal1 / Metal2 only (as the pads).
+`layout/klayout/bias_dist_pd.klay.gds`, 60.49 × 16.44 µm = 994.5 µm² (round 2), Metal1 / Metal2 only (as the pads).
 - **Structure:** option B below, one slice per leg (nand2_hv | inv_hv | tg_hv), all eight slices plus TDN and SVPD in one
   row under the two matched rows: NMOS `D NI NM D` (rb_mirror's code, XOR 0 against it) and PMOS
   `D PO0 PO1 PD PO2 PO3 D` (rb_tails' code, the diode PD in the middle). Inputs iin0..3 on the left edge, outputs
@@ -97,8 +97,11 @@ would cross them (88 crossings against 45).
   not run.
 - **Inner pair** (decided 2026-11-08): PO1 = S2D and PO2 = D2S beside PD, PO0 = pad_ref_rb and PO3 = spare outside;
   an assignment of the outputs, no layout change.
-- **Open (agent D):** the switch row has tie strips, not a closed ring; the split TG gates trip sym_check's narrow-poly
-  flag (contacted poly ≥ 0.39 µm; a 0.04 µm taller row would clear it).
+- **Round 2** (Christoph, 2026-11-08: "we're not short of area, so move the pads away from the channels so the check
+  passes"): the switch row 0.20 µm taller; every contacted gate pad now reaches 0.32 … 0.37 µm beyond the 0.25 µm
+  endcap zone, so sym_check's narrow-poly check finds 0 hits on every cell and on the whole cell (before: tg_hv's pads
+  0.14 / 0.27 µm, a false alarm on 0.45 µm wide poly). Mirrors byte-identical to round 1.
+- **Open (agent D):** the switch row has tie strips, not a closed ring.
 - Proposed place in slot7: above the stacked cores, left of pad_ref_rb (`../pad_ref_rb/layout/klayout/pad_ref_rb_in_slot7.png`).
 
 ## Layout note: a later split into analog and digital cells (not done)
