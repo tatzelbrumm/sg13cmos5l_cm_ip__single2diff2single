@@ -463,6 +463,11 @@ vref_s2d_rb became bias_tree_rb):
 
 ## Verification
 
+- **The lint and the comparison catch different things; run both.** `sch_lint.py` finds geometric shorts (a group
+  that carries two names), but not a label name reused on a second, separate net: xschem joins the two by name and
+  the sheet still lints clean. Only the device-by-device comparison against the source catches that (found while
+  testing the checkers on en_ctrl_3v3 v2, 2026-11-08: renaming label l5 to l6 failed the comparison on PL5 / PL6,
+  lint stayed clean).
 - Netlist each schematic with xschem in batch mode:
   `xschem --rcfile <dir>/xschemrc -n -s -q -x --no_x -o <dir>/net <dir>/<cell>.sch`
   - Use **absolute paths and set `PWD`** in the subprocess environment. xschem resolves relative
