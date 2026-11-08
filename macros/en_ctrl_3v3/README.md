@@ -4,8 +4,8 @@ SPDX-License-Identifier: Apache-2.0
 -->
 # en_ctrl_3v3: fail-safe enable and select bits for the 3.3 V circuits of slot 7
 
-**v2 (2026-11-08)**: netlist, sheets (`ls_up_fs.sch/.sym` new, `en_ctrl_3v3.sch` redrawn, `pg_det` removed), simulation
-and CACE suite. v1 is in git history (last commit before 2026-11-08 15:00 UTC).
+**v2 (2026-11-08)**: netlist, sheets (`ls_up_fs.sch/.sym` new, `en_ctrl_3v3.sch` redrawn, `pg_det` removed), simulation,
+CACE suite and layout (DRC / LVS clean). v1 is in git history (last commit before 2026-11-08 15:00 UTC).
 
 ```
 en_3v3   = en_1v2 at 3.3 V     en_3v3_b = NOT en_3v3     sel*_3v3 = sel*_1v2 at 3.3 V (gated by en_3v3 downstream)
@@ -63,8 +63,19 @@ Output errors ≤ 1.3 µV; vddh ≤ 172 nA (enabled, one select bit high; limit 
 (limit 1 / 1 / 0.3 nA); enable / disable delay ≤ 2.4 / 81 ns with 100 ps input edges (limits 40 / 410). The vddl-off
 and floating groups equal the vddl-on ones, as they must: vddl is not connected inside.
 
-Not done: Monte Carlo (the margins are ratios of 10× and more: XN1 vs XPF, the leaker vs XN1's leakage), layout,
-the sheets and the CACE suite for v2.
+## Layout (2026-11-08, agent E; `layout/klayout/`)
+
+- `ls_up_fs.klay.gds` 9.68 × 27.29 µm; `en_ctrl_3v3.klay.gds` 9.68 × 79.49 µm (XE, XS0 mirrored, XS1 stacked: rails vss |
+  vddh | vss | vddh, joined by an M2 vddh strap left and an M2 vss strap right). Cells prefixed `efs_`; inv_hv is D's
+  (XOR 0 against `bdp_inv_hv`). M1 / M2 only.
+- Leaker: 10 separate hv PMOS 0.3/20 µm side by side under one gate plate (contacted by a poly tab on the left),
+  serpentine by M1 jumpers, in one NWell with an N+ tie ring; XPF beside it; the logic row below (D's row stack).
+- Pins: in left, out / out_b right, vddh top, vss bottom; vddl and the two sense ports are isolated labelled M2 stubs.
+- Checks: `make klayout-lvs` and `make klayout-drc` for both cells: LVS match, DRC clean (agent: also the maximal deck
+  with latchUpRules 0, negative LVS fails as it must, sym_check N 0). Notes and build scripts: notes branch
+  `design_considerations/replica_bias/layout/agents_c4/E/`.
+
+Not done: Monte Carlo (the margins are ratios of 10× and more: XN1 vs XPF, the leaker vs XN1's leakage), PEX.
 
 ## Files
 

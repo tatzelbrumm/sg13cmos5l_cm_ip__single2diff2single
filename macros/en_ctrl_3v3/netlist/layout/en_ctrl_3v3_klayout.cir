@@ -1,0 +1,113 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 08/11/2026 16:14
+
+.SUBCKT en_ctrl_3v3 en_1v2 en_3v3 en_3v3_b sel0_1v2 sel0_3v3 sel1_1v2 sel1_3v3
++ vddh vss
+M$1 \$I12 \$I11 vddh vddh sg13_hv_pmos L=5u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$2 \$I23 \$I22 vddh vddh sg13_hv_pmos L=5u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$3 \$I34 \$I33 vddh vddh sg13_hv_pmos L=5u W=0.3u AS=0.102p AD=0.102p PS=1.28u
++ PD=1.28u rfmode=0
+M$4 \$I12 sel0_1v2 \$I21 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$5 \$I15 sel0_1v2 \$I21 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$6 \$I15 sel0_1v2 \$I20 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$7 \$I16 sel0_1v2 \$I20 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$8 \$I16 sel0_1v2 \$I19 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$9 \$I13 sel0_1v2 \$I19 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$10 \$I13 sel0_1v2 \$I18 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$11 \$I14 sel0_1v2 \$I18 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$12 \$I14 sel0_1v2 \$I17 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$13 vddh sel0_1v2 \$I17 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$14 \$I23 en_1v2 \$I32 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$15 \$I26 en_1v2 \$I32 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$16 \$I26 en_1v2 \$I31 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$17 \$I27 en_1v2 \$I31 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$18 \$I27 en_1v2 \$I30 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$19 \$I24 en_1v2 \$I30 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$20 \$I24 en_1v2 \$I29 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$21 \$I25 en_1v2 \$I29 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$22 \$I25 en_1v2 \$I28 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$23 vddh en_1v2 \$I28 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$24 \$I34 sel1_1v2 \$I43 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$25 \$I37 sel1_1v2 \$I43 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$26 \$I37 sel1_1v2 \$I42 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$27 \$I38 sel1_1v2 \$I42 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$28 \$I38 sel1_1v2 \$I41 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$29 \$I35 sel1_1v2 \$I41 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$30 \$I35 sel1_1v2 \$I40 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$31 \$I36 sel1_1v2 \$I40 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$32 \$I36 sel1_1v2 \$I39 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$33 vddh sel1_1v2 \$I39 vddh sg13_hv_pmos L=20u W=0.3u AS=0.102p AD=0.102p
++ PS=1.28u PD=1.28u rfmode=0
+M$34 vss sel0_1v2 \$I12 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$35 vss en_1v2 \$I23 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$36 vss sel1_1v2 \$I34 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$37 vss \$I10 sel0_3v3 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$38 vss \$I11 \$I10 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$39 vss \$I12 \$I11 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$40 vss en_3v3_b en_3v3 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$41 vss \$I22 en_3v3_b vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$42 vss \$I23 \$I22 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$43 vss \$I9 sel1_3v3 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$44 vss \$I33 \$I9 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$45 vss \$I34 \$I33 vss sg13_hv_nmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$46 vddh \$I10 sel0_3v3 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$47 vddh \$I11 \$I10 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$48 vddh \$I12 \$I11 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$49 vddh en_3v3_b en_3v3 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$50 vddh \$I22 en_3v3_b vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$51 vddh \$I23 \$I22 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$52 vddh \$I9 sel1_3v3 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p
++ PS=2.68u PD=2.68u rfmode=0
+M$53 vddh \$I33 \$I9 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+M$54 vddh \$I34 \$I33 vddh sg13_hv_pmos L=0.45u W=1u AS=0.34p AD=0.34p PS=2.68u
++ PD=2.68u rfmode=0
+.ENDS en_ctrl_3v3
