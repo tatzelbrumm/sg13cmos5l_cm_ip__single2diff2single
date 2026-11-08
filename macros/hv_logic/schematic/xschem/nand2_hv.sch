@@ -6,7 +6,7 @@ S {}
 F {}
 E {}
 T {nand2_hv: 3.3 V static CMOS gate (sg13_hv), y = not (a and b). Source: netlist/source/hv_logic.spice} 0 -600 0 0 0.4 0.4 {}
-T {PMOS above, NMOS below; nets by label. vdd / vss: 3.3 V rail of the circuit using the gate.} 40 -100 0 0 0.25 0.25 {}
+T {PA / PB in parallel from vdd to y, NA / NB in series from y to vss (NA at y, NB at vss). vdd / vss: 3.3 V rail of the circuit using the gate.} 40 -100 0 0 0.25 0.25 {}
 N 420 -400 420 -350 {lab=y}
 N 360 -480 380 -480 {lab=a}
 N 420 -480 440 -480 {lab=vdd}
