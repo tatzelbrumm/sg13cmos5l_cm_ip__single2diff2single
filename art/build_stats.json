@@ -1,0 +1,182 @@
+{
+ "scale_um_per_px": 0.0975,
+ "grid_um": 0.05,
+ "layers": {
+  "Metal1": {
+   "gds": [
+    8,
+    0
+   ],
+   "polygons": 17,
+   "vertices": 7832,
+   "area_um2": 360.005,
+   "repair_marker_counts": [
+    9,
+    4,
+    7,
+    3,
+    9,
+    4,
+    1,
+    2,
+    2,
+    1,
+    1,
+    2,
+    1,
+    2,
+    0
+   ],
+   "colours": [
+    "orange",
+    "gold"
+   ]
+  },
+  "Metal2": {
+   "gds": [
+    10,
+    0
+   ],
+   "polygons": 13,
+   "vertices": 9646,
+   "area_um2": 442.7025,
+   "repair_marker_counts": [
+    0
+   ],
+   "colours": [
+    "blue"
+   ]
+  },
+  "Metal3": {
+   "gds": [
+    30,
+    0
+   ],
+   "polygons": 12,
+   "vertices": 7186,
+   "area_um2": 387.72249999999997,
+   "repair_marker_counts": [
+    0
+   ],
+   "colours": [
+    "red"
+   ]
+  },
+  "Metal4": {
+   "gds": [
+    50,
+    0
+   ],
+   "polygons": 13,
+   "vertices": 6116,
+   "area_um2": 438.465,
+   "repair_marker_counts": [
+    36,
+    12,
+    2,
+    2,
+    1,
+    2,
+    2,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    1,
+    0
+   ],
+   "colours": [
+    "green"
+   ]
+  },
+  "TopMetal1": {
+   "gds": [
+    126,
+    0
+   ],
+   "polygons": 1,
+   "vertices": 578,
+   "area_um2": 137.6525,
+   "repair_marker_counts": [
+    0
+   ],
+   "colours": [
+    "purple"
+   ]
+  }
+ },
+ "fidelity": {
+  "Metal3": {
+   "colours": [
+    "red"
+   ],
+   "iou": 0.9907911259941398,
+   "area_ratio_final_over_source": 1.0067380283152982,
+   "source_area_covered": {
+    "red": 0.9987276940753387
+   }
+  },
+  "Metal2": {
+   "colours": [
+    "blue"
+   ],
+   "iou": 0.9884433776215108,
+   "area_ratio_final_over_source": 1.0071950220685262,
+   "source_area_covered": {
+    "blue": 0.9977647085589479
+   }
+  },
+  "Metal4": {
+   "colours": [
+    "green"
+   ],
+   "iou": 0.9651419738951225,
+   "area_ratio_final_over_source": 1.0340779805641147,
+   "source_area_covered": {
+    "green": 0.9989985778620526
+   }
+  },
+  "Metal1": {
+   "colours": [
+    "orange",
+    "gold"
+   ],
+   "iou": 0.9782888466862839,
+   "area_ratio_final_over_source": 1.0184898642893645,
+   "source_area_covered": {
+    "orange": 0.9970905874685784,
+    "gold": 0.998641803847882
+   }
+  },
+  "TopMetal1": {
+   "colours": [
+    "purple"
+   ],
+   "iou": 0.4833548246490256,
+   "area_ratio_final_over_source": 2.068873525212294,
+   "source_area_covered": {
+    "purple": 1.0
+   }
+  }
+ },
+ "art_size_um": [
+  145.3,
+  85.55000000000001
+ ],
+ "free_rect_um": [
+  5.0,
+  143.0,
+  324.0,
+  229.0
+ ],
+ "origin_um": [
+  91.8,
+  143.2
+ ],
+ "files": {
+  "art": "tughra_art.gds",
+  "merged": "slot7_with_art.gds"
+ }
+}

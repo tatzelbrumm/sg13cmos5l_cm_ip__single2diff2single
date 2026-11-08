@@ -1,0 +1,273 @@
+{
+ "xor": {
+  "instances_of_art_cell": 1,
+  "layers": {
+   "1/0": 0,
+   "5/0": 0,
+   "5/2": 0,
+   "6/0": 0,
+   "7/0": 0,
+   "8/0": 0,
+   "8/2": 0,
+   "8/23": 0,
+   "8/25": 0,
+   "10/0": 0,
+   "10/2": 0,
+   "10/23": 0,
+   "10/25": 0,
+   "14/0": 0,
+   "19/0": 0,
+   "28/0": 0,
+   "29/0": 0,
+   "30/0": 0,
+   "30/2": 0,
+   "30/25": 0,
+   "31/0": 0,
+   "44/0": 0,
+   "49/0": 0,
+   "50/0": 0,
+   "51/0": 0,
+   "52/0": 0,
+   "63/0": 0,
+   "111/0": 0,
+   "125/0": 0,
+   "126/0": 0,
+   "126/2": 0,
+   "126/25": 0,
+   "128/0": 0,
+   "189/4": 0
+  },
+  "total_xor_polygons": 0,
+  "labels_equal": true,
+  "cells_after_removal_equal": true
+ },
+ "clearance": {
+  "origin_um": [
+   91.8,
+   143.20000000000002
+  ],
+  "layers": {
+   "Metal1": {
+    "art_polygons": 17,
+    "art_area_um2": 360.005,
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 29.846,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 3.204,
+     "separation_violations_lt_3um": 0
+    },
+    "min_distance_to_slot_edge_um": 90.9
+   },
+   "Metal2": {
+    "art_polygons": 17,
+    "art_area_um2": 442.7025,
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 38.199,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 54.001,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 11.554,
+     "separation_violations_lt_3um": 0
+    },
+    "min_distance_to_slot_edge_um": 73.2
+   },
+   "Metal3": {
+    "art_polygons": 12,
+    "art_area_um2": 387.72249999999997,
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 51.149,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 56.503,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 23.701,
+     "separation_violations_lt_3um": 0
+    },
+    "min_distance_to_slot_edge_um": 64.7
+   },
+   "Metal4": {
+    "art_polygons": 15,
+    "art_area_um2": 438.465,
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 40.898,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 3.252,
+     "separation_violations_lt_3um": 0
+    },
+    "min_distance_to_slot_edge_um": 44.25
+   },
+   "TopMetal1": {
+    "art_polygons": 1,
+    "art_area_um2": 137.6525,
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 46.948,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null,
+     "separation_violations_lt_3um": 0
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 20.303,
+     "separation_violations_lt_3um": 0
+    },
+    "min_distance_to_slot_edge_um": 93.25
+   }
+  }
+ },
+ "drc": {
+  "original": {
+   "markers": {
+    "AFil.g": 1,
+    "GFil.g": 1,
+    "M1.j": 1,
+    "M2.j": 1,
+    "M3.j": 1,
+    "M4.j": 1,
+    "TM1.c": 1
+   },
+   "density_ratio_percent": {
+    "AFil.g": 4.006,
+    "GFil.g": 3.591,
+    "M1.j": 1.641,
+    "M2.j": 0.757,
+    "M3.j": 2.14,
+    "M4.j": 0.652,
+    "TM1.c": 7.044
+   },
+   "rdb_files": [
+    "slot_7_slot_7_full.lyrdb"
+   ]
+  },
+  "merged": {
+   "markers": {
+    "AFil.g": 1,
+    "GFil.g": 1,
+    "M1.j": 1,
+    "M2.j": 1,
+    "M3.j": 1,
+    "M4.j": 1,
+    "TM1.c": 1
+   },
+   "density_ratio_percent": {
+    "AFil.g": 4.006,
+    "GFil.g": 3.591,
+    "M1.j": 1.886,
+    "M2.j": 1.059,
+    "M3.j": 2.404,
+    "M4.j": 0.951,
+    "TM1.c": 7.138
+   },
+   "rdb_files": [
+    "slot7_with_art_slot_7_full.lyrdb"
+   ]
+  },
+  "new_rules_violated_by_art": [],
+  "marker_count_changes": {}
+ },
+ "lvs": {
+  "original": {
+   "status": "PASS",
+   "outcome": "Comparison mode: PASS (netlists match).",
+   "warnings": "0",
+   "errors": "0",
+   "netlists": [
+    "slot_7_extracted.cir"
+   ]
+  },
+  "merged": {
+   "status": "PASS",
+   "outcome": "Comparison mode: PASS (netlists match).",
+   "warnings": "0",
+   "errors": "0",
+   "netlists": [
+    "slot7_with_art_extracted.cir"
+   ]
+  },
+  "extracted_netlists_identical": true
+ }
+}
