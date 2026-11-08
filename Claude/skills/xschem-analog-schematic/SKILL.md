@@ -41,9 +41,9 @@ round-trip comparison caught them.
    "Testbench style").
 5. **Write the `.sch`**, with real orthogonal wires for every signal net, also one that runs
    across the whole sheet and crosses many others without a dot (see "Hand-drawn refinements" and
-   "Logic cells and hierarchical sheets"). Supplies are wired as rails in a cell sheet; on a top
-   sheet full of subcells, the subcells' supply pins may stay on labels. A `lab_pin` next to a
-   wired pin stays as annotation. Use the
+   "Logic cells and hierarchical sheets"). Supplies are wired too: rails in a cell sheet,
+   vertical buses beside each column of subcells on a top sheet. A `lab_pin` next to a wired pin
+   stays as annotation. Use the
    property names from the PDK's own `template` (`w`/`l`/`ng`/`m` for IHP, `W`/`L`/`nf`/`mult`
    for sky130).
 6. **Write the `.sym`.** Its pin order must equal the `.subckt` port order, and its pin names must
@@ -250,8 +250,11 @@ no reason.
   slices moved down to make room; the sheet's height stayed the same.
 - en_3v3 became one trunk (x 220) with a horizontal to each of the eight slices; the draft had
   wired it to the input slices and labeled it at the output slices.
-- The slices' vddh / vssh stayed on labels here: on a top sheet with eight subcells, supply
-  labels at the subcells are accepted, signal labels are not.
+- The supplies followed in a second pass (commit 4c6c190d): each column of slices has a vddh
+  bus as a vertical on its left (input slices at x 500: vddh at x 400) and a vssh bus on its
+  right (x 600; output slices at x 2540: vssh at x 2640). Every slice's vdd pin steps left to the
+  vddh bus, its vss pin right to the vssh bus. No supply hangs on a label alone any more; the
+  labels stay at the pins.
 
 **His symbol** (bias_dist_pd.sym, commit d0831379, same day). Pin order, names, directions,
 box and text sizes unchanged; only the pin positions moved, and each pin's name text with it:
@@ -263,16 +266,21 @@ box and text sizes unchanged; only the pin positions moved, and each pin's name 
 - **Each output across from its input:** iout<k> on the right at the height of iin<k> on the
   left (y −100 ... −40), not centered on the right edge.
 - **Supply pins off center:** vddh on top at x −20, vssh at the bottom at x +20 (were both at
-  x 0). He gave no reason; ask before generalizing it.
+  x 0). He did the same to bdp_slice.sym (vdd x −20, vss x +20, commit 4c6c190d) and wired its
+  eight instances to a vddh bus left of each column and a vssh bus right of it. His reason: "so I
+  can draw non-intersecting vertical supply lines through the symbols". With vdd and vss at
+  x 0, a vertical through a column of stacked symbols would hit both supply pins of every cell
+  and short vdd to vss.
 
 Draw new symbols that way. A symbol already placed in a sheet is a different matter: moving its
 pins detaches the wires in every sheet that places it (see "Hand edits and symbol changes"), so
 propose the change and list the affected sheets first.
 
-**Keep the sheet's notes in step with the drawing.** After his rewiring, two notes still describe
+**Keep the sheet's notes in step with the drawing.** After his rewiring, two notes still described
 the draft: nand2_hv "nets by label", bdp_slice "Gate and TG supplies join vdd / vss by label
-(wired, the a line would cross them)". When you rewire, rewrite the note; better, don't describe
-the drawing method in a note at all, describe the circuit.
+(wired, the a line would cross them)". He had them rewritten to describe the circuit ("PA / PB
+in parallel from vdd to y, NA / NB in series from y to vss"; what vdd / vss feed). When you
+rewire, rewrite the note; better, don't describe the drawing method in a note at all.
 
 ## Testbench style (from his hand-drawn tb_pd_enable, 2026-10-25)
 
