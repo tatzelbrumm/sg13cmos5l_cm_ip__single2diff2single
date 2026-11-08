@@ -1,0 +1,17 @@
+bd         1 label(s) on 1 metal cluster(s) ok
+bt         1 label(s) on 1 metal cluster(s) ok
+en_3v3     1 label(s) on 1 metal cluster(s) ok
+en_3v3_b   1 label(s) on 1 metal cluster(s) ok
+gh         1 label(s) on 1 metal cluster(s) ok
+iref       1 label(s) on 1 metal cluster(s) ok
+m          1 label(s) on 1 metal cluster(s) ok
+ni         1 label(s) on 1 metal cluster(s) ok
+ts         1 label(s) on 1 metal cluster(s) ok
+vbnc       1 label(s) on 1 metal cluster(s) ok
+vbp        1 label(s) on 1 metal cluster(s) ok
+vcm        1 label(s) on 1 metal cluster(s) ok
+vddh       1 label(s) on 1 metal cluster(s) ok
+vref       1 label(s) on 1 metal cluster(s) ok
+vssh       1 label(s) on 1 metal cluster(s) ok
+xp         1 label(s) on 1 metal cluster(s) ok
+split nets: 0

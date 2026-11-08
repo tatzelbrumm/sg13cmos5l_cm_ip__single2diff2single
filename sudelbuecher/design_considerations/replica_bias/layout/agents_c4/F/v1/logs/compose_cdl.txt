@@ -1,0 +1,14 @@
+devices: 63 (43 with names not starting MD after the path)
+  sg13_hv_nmos   w=12u    l=12u     14
+  sg13_hv_nmos   w=15u    l=3u       8
+  sg13_hv_nmos   w=1u     l=0.45u    4
+  sg13_hv_nmos   w=1u     l=8u       1
+  sg13_hv_nmos   w=2.4u   l=6u       4
+  sg13_hv_nmos   w=2u     l=3u       4
+  sg13_hv_nmos   w=2u     l=6u       4
+  sg13_hv_nmos   w=6u     l=6u       4
+  sg13_hv_pmos   w=1u     l=0.45u    1
+  sg13_hv_pmos   w=1u     l=4u       7
+  sg13_hv_pmos   w=20u    l=1u       5
+  sg13_hv_pmos   w=2u     l=6u       2
+  sg13_hv_pmos   w=5u     l=6u       5

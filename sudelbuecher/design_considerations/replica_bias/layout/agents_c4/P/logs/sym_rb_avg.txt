@@ -1,0 +1,2 @@
+rb_avg: Activ bbox (0.62,0.62;36.18,2.35); axes x = 18.4, y = 1.485 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

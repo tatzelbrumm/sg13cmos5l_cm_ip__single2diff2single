@@ -1,0 +1,24 @@
+Check rounds (agent N, C4, 2026-11-07, Europe/Berlin), IHP run_drc.py --no_density --mp=4, run_lvs.py --disable_tap_extraction
+round 1 (21:00): rb_tree_n, rb_casc, rb_cload, bypass_rb: DRC 0, LVS match, sym 0.
+                 rb_mirror: DRC 1 x M1.e (ring top leg 0.18 above BD's 1.11 um drain tab; M1.e 0.22 applies, the tab
+                 is wider than 0.30 with a parallel run > 1.0). LVS match, sym 0.
+fix:             sink_block, one-row case: ring top leg M1_e 0.22 (not RS 0.18) from the top tabs (+0.04 um height).
+round 2 (21:04): rb_mirror DRC 0, LVS match, sym 0; the other four cells XOR-identical to round 1, CDL identical.
+change:          dummies named for backannotation (CDL only, MD<row><position>); layout XOR-identical to round 2.
+round 3 (21:08): all five cells (gds 0420481bbeb5): DRC 0, no exception, LVS match (logs/checks_summary.txt).
+generator test (21:11): bypass_rb 2x6, 3x4 (6+6), 4x3, 3x3 (7 of 9 places): DRC 0 / LVS match; first run of 4x3 and 3x3 had
+                 1 x Pin.f_M2 (vcm pin box wider than a single-column bus), fixed (pin clipped to the bus), rerun clean
+                 (logs/bypass_variants.txt). The default bypass_rb is unaffected by that fix (XOR 0).
+change (21:15, after the lead's binding-rules section; Christoph's C2 review "vsso shouldn't be metal2 for the
+                 primitive"): rb_casc spare 15/3 dummies' inner stripes now M1-strapped across their own channel into
+                 the plated outer stripe (the pad sinks' BN twin T), the M2 vss band track and its Via1 are gone;
+                 rb_cload's shared vss stripe runs up in M1 into the ring between a split gate bar (two 0.25 x 0.425
+                 pads, the poly cap still joins both gates) instead of an M2 strap. Device layers unchanged (XOR 0).
+round 4 (21:18): all five cells on the delivered rb_n_cells.gds (sha256 1389784e8727): DRC 0, no exception, LVS match,
+                 sym_check 0, LU <= 19.44 um; regression XOR 0 (logs/checks_summary.txt, sym_lu.txt, compare_pad.txt).
+round 5 (21:33, Christoph: "reproduce the paths as dummies"): rb_casc only. The band's three empty track places (the
+                 pad's vcmfb, voutp, voutn) carry dummy M2 tracks with the band tracks' extents, no tabs, tied to vdd
+                 by an M1 vertical with Via1s at the free R0 place inside the ring's right leg (vdd: no vss on M2,
+                 Christoph's pd_n review). A band-height reduction tried first was reverted on the lead's correction.
+                 rb_casc DRC 0, LVS match, sym 0, LU 5.62; other cells XOR 0 against round 4; --pad regression XOR 0;
+                 CDL unchanged, 32 / 0 against the netlists (logs/round5.txt). gds sha256 26571adaa801.

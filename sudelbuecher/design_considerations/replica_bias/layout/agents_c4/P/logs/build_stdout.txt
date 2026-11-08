@@ -1,0 +1,41 @@
+Could not import tkinter. No callback support.
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+Warning: Python package 'psutil' not found!
+rb_tree_p   12.940 x  10.370 um
+    vbnc      M2  (2.165, 10.070; 3.275, 10.370)
+    vbp       M2  (0.000, 5.750; 0.500, 6.050)
+    vdd       M1  (0.620, 3.060; 0.920, 5.060)
+    en_3v3_b  M1  (6.340, 0.000; 6.600, 0.300)
+    iref      M1  (5.875, 0.000; 6.135, 0.300)
+    ni        M1  (6.805, 0.000; 7.065, 0.300)
+rb_tails    24.190 x   9.160 um
+    ts        M2  (8.915, 0.000; 10.025, 0.300)
+    bt        M2  (14.165, 0.000; 15.275, 0.300)
+    vbp       M2  (23.690, 4.320; 24.190, 4.620)
+    vdd       M1  (0.620, 1.630; 0.920, 3.630)
+rb_tubs     28.700 x  11.970 um
+    gh        M1  (8.540, 11.670; 9.240, 11.970)
+    ts        M1  (6.790, 0.000; 7.460, 0.300)
+    bd        M1  (13.795, 0.000; 14.905, 0.300)
+    m         M1  (14.640, 11.670; 15.340, 11.970)
+    bt        M1  (12.890, 0.000; 13.560, 0.300)
+    vcm       M1  (20.740, 11.670; 21.440, 11.970)
+    bt        M1  (18.990, 0.000; 19.660, 0.300)
+    vdd       M2  (0.000, 11.520; 0.500, 11.780)
+rb_avg      36.800 x   3.230 um
+    m         M1  (14.410, 0.000; 14.670, 0.300)
+    m         M1  (22.130, 0.000; 22.390, 0.300)
+    xp        M1  (17.900, 2.970; 18.900, 3.230)
+    gh        M1  (16.130, 0.000; 16.800, 0.300)
+    vdd       M2  (0.000, 2.520; 0.500, 2.780)

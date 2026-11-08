@@ -1,0 +1,5 @@
+rb_avg_u left row end (gate column + end dummy) vs pad s2d_loads_f lower row left end: XOR 5/0 0.1190 um2
+rb_avg_u right row end (gate column + end dummy) vs pad s2d_loads_f lower row right end: XOR 5/0 0.1190 um2
+rb_avg_l left row end (gate column + end dummy) vs pad s2d_loads_f lower row left end: XOR 5/0 0.1190 um2
+rb_avg_l right row end (gate column + end dummy) vs pad s2d_loads_f lower row right end: XOR 5/0 0.1190 um2
+finger rb_pmosHV_w1_l4 vs pad pmosHV_w1_l4$1, all layers: XOR 0

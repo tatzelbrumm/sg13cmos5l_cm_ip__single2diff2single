@@ -1,0 +1,5 @@
++-1 pitch: SL1 window vs SU window, device layers: XOR 0.0000 um2 
++-1 pitch: SL2 window vs SU window, device layers: XOR 0.0000 um2 
++-2 pitch: SL1 window vs SU window, device layers: XOR 11.1226 um2 Activ 3.3840 GatPoly 2.6000 Cont 0.8546 pSD 4.2840
++-2 pitch: SL2 window vs SU window, device layers: XOR 11.1226 um2 Activ 3.3840 GatPoly 2.6000 Cont 0.8546 pSD 4.2840
+finger Activ boxes: {'DU0': '(2.345,8.85;3.345,13.53)', 'SU': '(3.595,8.85;4.595,13.53)', 'DU1': '(4.845,8.85;5.845,13.53)', 'DL0': '(1.72,0.62;2.72,5.3)', 'SL1': '(2.97,0.62;3.97,5.3)', 'SL2': '(4.22,0.62;5.22,5.3)', 'DL1': '(5.47,0.62;6.47,5.3)'}

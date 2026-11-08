@@ -1,0 +1,25 @@
+== rb_tree_p --no-y
+rb_tree_p: Activ bbox (0.62,0.62;12.32,9.75); axes x = 6.47, y = 5.185 um
+  X Cont         XOR    0.0384 um2  in (4.4,2.63;8.54,9.17)
+  summary: max mirror XOR 0.0384 um2, 0 narrow-poly hits
+== rb_tails --no-y
+rb_tails: Activ bbox (0.62,0.62;23.57,8.54); axes x = 12.095, y = 4.58 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== rb_tubs --no-y
+rb_tubs: Activ bbox (0.62,0.62;28.08,11.35); axes x = 14.35, y = 5.985 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== rb_avg --no-y
+rb_avg: Activ bbox (0.62,0.62;7.57,14.04); axes x = 4.095, y = 7.33 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== rb_tree_n --no-y
+rb_tree_n: Activ bbox (-3.06,-0.51;30.41,8.665); axes x = 13.675, y = 4.077 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== rb_mirror --no-y
+rb_mirror: Activ bbox (-1.23,-0.51;17.98,8.12); axes x = 8.375, y = 3.805 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== rb_cload --no-y
+rb_cload: Activ bbox (-0.73,-0.51;28.29,13.19); axes x = 13.78, y = 6.34 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== rb_casc 
+rb_casc: Activ bbox (-1.74,-0.94;69.44,10.89); axes x = 33.85, y = 4.975 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

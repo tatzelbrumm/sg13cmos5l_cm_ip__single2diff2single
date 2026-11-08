@@ -1,0 +1,15 @@
+== capr
+capr: Activ bbox (-0.73,-0.51;70.31,18.09); axes x = 34.79, y = 8.79 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== capm
+capm: Activ bbox (-0.73,-0.51;18.47,4.44); axes x = 8.87, y = 1.965 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+== capt
+capt: Activ bbox (-0.73,-0.51;4.23,13.59); axes x = 1.75, y = 6.54 um
+  X Activ        XOR   15.6960 um2  in (0,0;3.5,13.08)
+  X GatPoly      XOR    4.4640 um2  in (-0.18,0.34;3.68,12.74)
+  X Cont         XOR    2.5792 um2  in (0.07,0.07;3.43,13.01)
+  summary: max mirror XOR 15.6960 um2, 0 narrow-poly hits
+== capv
+capv: Activ bbox (-0.73,-0.51;40.59,13.85); axes x = 19.93, y = 6.67 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC

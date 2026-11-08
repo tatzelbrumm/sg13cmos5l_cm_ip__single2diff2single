@@ -1,0 +1,14 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* rb_avg_v3.cdl: reference netlist of rb_avg_v3.gds, written by build_rb_avg_v3.py (C4, agent P3, 2026-11-07, Claude).
+* SU, SL1, SL2 as vcm_rb.spice; dummies D = S = B on the well's net, gate by abutment.
+
+.SUBCKT rb_avg gh m xp
+MDU0 gh m gh gh sg13_hv_pmos w=1u l=4u ng=1 m=1
+MSU m m gh gh sg13_hv_pmos w=1u l=4u ng=1 m=1
+MDU1 gh m gh gh sg13_hv_pmos w=1u l=4u ng=1 m=1
+MDL0 m xp m m sg13_hv_pmos w=1u l=4u ng=1 m=1
+MSL1 xp xp m m sg13_hv_pmos w=1u l=4u ng=1 m=1
+MSL2 xp xp m m sg13_hv_pmos w=1u l=4u ng=1 m=1
+MDL1 m xp m m sg13_hv_pmos w=1u l=4u ng=1 m=1
+.ENDS rb_avg

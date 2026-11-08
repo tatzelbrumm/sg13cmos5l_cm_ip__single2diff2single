@@ -1,0 +1,10 @@
+round 1 (all cells; clean, no fixes needed). GDS sha256 3811e8adfc9d
+== rb_tree_p: DRC exc 0; No DRC violations detected; LVS PASS (netlists match). ; summary: max mirror XOR 0.0384 um2, 0 narrow-poly hits; farthest P+Activ to an N+ tie: 3.55 um (LU.a 20)
+== rb_tails: DRC exc 0; No DRC violations detected; LVS PASS (netlists match). ; summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC; farthest P+Activ to an N+ tie: 3.67 um (LU.a 20)
+== rb_tubs: DRC exc 0; No DRC violations detected; LVS PASS (netlists match). ; summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC; farthest P+Activ to an N+ tie: 10.45 um (LU.a 20)
+== rb_avg: DRC exc 0; No DRC violations detected; LVS PASS (netlists match). ; summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC; farthest P+Activ to an N+ tie: 1.45 um (LU.a 20)
+
+round 2 (rb_avg with the dummy small tubs; rb_tree_p / rb_tails / rb_tubs unchanged: all-layer XOR 0 against round 1, CDL identical). GDS sha256 bf7c0f57ab8f
+== rb_avg: DRC exc 0; No DRC violations detected; LVS PASS (netlists match). ; summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC; farthest P+Activ to an N+ tie: 1.45 um (LU.a 20)
+SL1 window (+-1 pitch) vs SU window, device layers: XOR 0.0000 um2
+SL2 window (+-1 pitch) vs SU window, device layers: XOR 0.0000 um2

@@ -1,0 +1,67 @@
+== DRC (run_drc.py --no_density, exception count), maximal + latchUpRules, LVS --disable_tap_extraction
+bias_dist_pd run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+nand2_hv run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+inv_hv run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+tg_hv run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+bdp_slice run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+bdp_tdn run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+bdp_svpd run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+bdp_mirror_n run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+bdp_mirror_p run_drc.py: No DRC violations detected | exception: 0 | maximal+LU: 0 | LVS: Netlists match
+== negative LVS: TIP0's gate ei0_b -> ei0 in the reference
+negative LVS: Netlists don't match
+== sym_check (one row each: --no-y)
+bdp_mirror_n: Activ bbox (-1.23,-0.51;17.98,8.12); axes x = 8.375, y = 3.805 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+bdp_mirror_p: Activ bbox (0.62,0.62;39.32,8.54); axes x = 19.97, y = 4.58 um
+  X Cont         XOR    0.0384 um2  in (17.9,1.2;22.04,7.74)
+  summary: max mirror XOR 0.0384 um2, 0 narrow-poly hits
+== sym_check N check (narrow contacted poly beyond the endcap zone) on the switch cells and the flat top cell
+nand2_hv:   summary: max mirror XOR 1.6112 um2, 0 narrow-poly hits
+inv_hv:   summary: max mirror XOR 0.9424 um2, 0 narrow-poly hits
+tg_hv:   summary: max mirror XOR 0.1420 um2, 0 narrow-poly hits
+bdp_slice:   summary: max mirror XOR 5.8160 um2, 0 narrow-poly hits
+bdp_tdn:   summary: max mirror XOR 0.0700 um2, 0 narrow-poly hits
+bdp_svpd:   summary: max mirror XOR 0.0896 um2, 0 narrow-poly hits
+bias_dist_pd (flat):   summary: max mirror XOR 414.6990 um2, 0 narrow-poly hits
+== contacted gate poly outside Activ (no endcap-zone subtraction)
+nand2_hv: 2 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+inv_hv: 1 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+tg_hv: 2 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+bdp_slice: 4 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+bdp_tdn: 1 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+bdp_svpd: 1 contacted poly pieces outside Activ; width check 0.30 um: 0 hits; narrowest piece 0.450 um
+== supply connectivity through tie Activ / Cont / M1 / Via1 / M2 only
+bias_dist_pd: nets holding tie Activ (metal + tie Activ only): 2
+   vddh         tie area    45.39 um2
+   vssh         tie area    34.12 um2
+== bdp_mirror_n vs N's rb_mirror (all layers)
+  Activ    XOR   0.0000 um2
+  GatPoly  XOR   0.0000 um2
+  Cont     XOR   0.0000 um2
+  pSD      XOR   0.0000 um2
+  NWell    XOR   0.0000 um2
+  TGO      XOR   0.0000 um2
+  M1       XOR   0.0000 um2
+  Via1     XOR   0.0000 um2
+  M2       XOR   0.0000 um2
+== bdp_mirror_p vs P's rb_tails, left row end (D + PO0 slot), rows only (ring strips excluded)
+  Activ    XOR   0.0000 um2
+  GatPoly  XOR   0.0000 um2
+  Cont     XOR   0.0000 um2
+  pSD      XOR   0.0000 um2
+  NWell    XOR   0.0000 um2
+  TGO      XOR   0.0000 um2
+  M1       XOR   0.0000 um2
+  Via1     XOR   0.0361 um2
+  M2       XOR   1.4125 um2
+== same window with the ring strips
+  Activ    XOR   0.0000 um2
+  GatPoly  XOR   0.0000 um2
+  Cont     XOR   1.1792 um2
+  pSD      XOR   0.0000 um2
+  NWell    XOR   0.0000 um2
+  TGO      XOR   0.0000 um2
+  M1       XOR   2.5452 um2
+  Via1     XOR   0.0722 um2
+  M2       XOR   1.6503 um2

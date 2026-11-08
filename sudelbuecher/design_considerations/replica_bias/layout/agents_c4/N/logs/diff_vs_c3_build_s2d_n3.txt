@@ -1,0 +1,542 @@
+3,4c3,4
+< """s2d_n3_cells: the NMOS layout primitives and the R block of the IOPadSingle2Diff pad buffer s2d_mpdda_pd and
+< its bias tree (agent N, C3 2026-11-03). Built on build_d2s_n2.py (agent N2, C2) and F2's fixes of its cells.
+---
+> """rb_n_cells: the NMOS rows and the capacitors of the replica bias pad_ref_rb (agent N, session C4, 2026-11-07),
+> built with the code that built the S2D pad's rows: session C3's build_s2d_n3.py (agent N, 2026-11-03).
+6,9c6,18
+<     cd out && python3 build_s2d_n3.py        ->  s2d_n3_cells.gds, s2d_n3_cells.cdl
+< 
+< Cells: sinks_6x6_s2d_c3, s2d_sinks_cmfb_c3, s2d_casc_n_c3, s2d_pd_n_c3, s2d_cload_c3, s2d_rhigh_c3,
+< bias_tree_noab_n_c3 (the two sink blocks also as their unturned cores *_core).
+---
+>     cd out && python3 build_rb_n.py                    ->  rb_n_cells.gds / .cdl (rb_tree_n, rb_casc, rb_mirror,
+>                                                            rb_cload, bypass_rb, top cell rb_n_cells)
+>     python3 build_rb_n.py --pad                        ->  pad_regress.gds / .cdl: the pad's rows bias_tree_noab_n_c3,
+>                                                            s2d_casc_n_c3, sinks_6x6_s2d_c3_core, s2d_cload_c3 rebuilt
+>                                                            by this script (XOR against the pad GDS = regression test)
+>     python3 build_rb_n.py --bypass NCM NCR ROWS COLS   ->  bypass_rb_<NCM>_<NCR>_<ROWS>x<COLS>.gds / .cdl only
+> 
+> Provenance: everything from 'import os' to end_cols(), drains() and ring_x() is C3's text unchanged. two_rows,
+> sink_block, casc_n, pd_pair, cload and bias_tree are C3's functions with the device list and the nets turned into
+> arguments (C3's values are the defaults or the PAD_* calls at the end); their geometry statements are C3's. The
+> additions, each marked 'C4:', are: two_rows / sink_block with one row (the mirror row), casc_n with spare 15/3 slots as
+> dummies and fewer source levels, bias_tree with two drains on one net, cload with the shared stripe on vss. bypass() is
+> new: the pad cload's capacitor with its gate column, arrayed.
+10a20
+> C3's notes on the rows (unchanged):
+27,28c37,38
+< Rule values (sg13cmos5l_tech_default.json): Act_b 0.21, Gat_b 0.18, Gat_b1 0.25, Gat_d 0.07, Cnt_a 0.16, Cnt_b
+< 0.18, Cnt_c 0.07, Cnt_d 0.07, Cnt_e 0.14, Cnt_f 0.11, M1_b 0.18, M1_c1 0.05, M1_d 0.09, M1_e 0.22, V1_a 0.19,
+---
+> Rule values (sg13cmos5l_tech_default.json): Act_b 0.21, Gat_b 0.18, Gat_b1 0.25, Gat_c 0.18, Gat_d 0.07, Cnt_a 0.16,
+> Cnt_b 0.18, Cnt_c 0.07, Cnt_d 0.07, Cnt_e 0.14, Cnt_f 0.11, M1_b 0.18, M1_c1 0.05, M1_d 0.09, M1_e 0.22, V1_a 0.19,
+213c223,224
+<     """places both rows, end (and mid) gate columns, band tracks; returns geometry."""
+---
+>     """places both rows, end (and mid) gate columns, band tracks; returns geometry.
+>     C4: r2 None places row 1 and the band only (the columns end on the top track)."""
+215c226
+<     assert X == row_len(r2)
+---
+>     assert r2 is None or X == row_len(r2)
+222,224c233,235
+<     d2, gp2 = place_row(cell, r2, B, ax)
+<     top = B + H
+<     gr = [d1[0]["gate"], d2[0]["gate"]]
+---
+>     d2, gp2 = place_row(cell, r2, B, ax) if r2 else ([], [])
+>     top = B + H if r2 else g5(tr[band[-1]] + 0.145 + 0.07)
+>     gr = [d1[0]["gate"], d2[0]["gate"]] if r2 else [d1[0]["gate"]]
+249c260
+< def sink_block(name, m1, m2, f, band):
+---
+> def sink_block(name, m1, m2, f, band, gn="vbn"):
+252c263,265
+<     sources plated into the closed p+ ring. f: map key -> (label, w, l, d, g, s); 'T' (BN's twin) is strapped."""
+---
+>     sources plated into the closed p+ ring. f: map key -> (label, w, l, d, g, s); 'T' (BN's twin) is strapped.
+>     C4: gn is the gate net (C3: vbn); m2 None gives row 1 alone, the ring closing over the band (as bias_tree's,
+>     but M1_e 0.22 from the 1.11 tabs: wider than 0.30, parallel run > 1.0)."""
+254c267
+<     dn = ("dummy", 2, 6, "vss", "vbn", "vss")
+---
+>     dn = ("dummy", 2, 6, "vss", gn, "vss")
+256c269
+<     g = two_rows(c, seq(m1), seq(m2), band)
+---
+>     g = two_rows(c, seq(m1), seq(m2) if m2 else None, band)
+259,260c272,275
+<     c.ring(xa, -0.21 - TIEW, xd, top + 0.21 + TIEW)
+<     for row, devs in ((1, g["d1"]), (2, g["d2"])):
+---
+>     c.ring(xa, -0.21 - TIEW, xd, top + 0.21 + TIEW if m2 else g5(top - 0.07 + 0.22 - 0.02 + TIEW))
+>     for row, devs, m in ((1, g["d1"], m1), (2, g["d2"], m2)):
+>         if not devs:
+>             continue
+262,263c277,278
+<         for k, (dv, it) in enumerate(zip(devs, seq(m1 if row == 1 else m2))):
+<             lab, w, l, d, gn, s = it
+---
+>         for k, (dv, it) in enumerate(zip(devs, seq(m))):
+>             lab, w, l, d, _, s = it
+265c280
+<             if d in band and d != "vbn" or lab == "BN":
+---
+>             if d in band:                                 # C3: 'd in band and d != "vbn" or lab == "BN"' (same set)
+276c291
+<         c.via(xc, tr["vbn"])
+---
+>         c.via(xc, tr[gn])
+279c294
+<     c.info = "rows: D | %s | D  /  D | %s | D; ring" % (" ".join(m1), " ".join(m2))
+---
+>     c.info = "rows: D | %s | D%s; ring" % (" ".join(m1), "  /  D | %s | D" % " ".join(m2) if m2 else "")
+283,291d297
+< def turned(core, name):
+<     """the core block turned R90 (pins on the bottom edge), as N2's sinks_6x6_s2d_c2."""
+<     v = Cell(name)
+<     v.c.insert(pya.DCellInstArray(core.c.cell_index(), pya.DTrans(pya.DTrans.R90, pya.DVector(0, 0))))
+<     v.cdl, v.info = core.cdl, core.name + " turned R90"
+<     v.pins = [(n, m, -y, x) for n, m, x, y in core.pins]
+<     return v
+< 
+< 
+302,308c308,309
+< def sinks_cmfb(name):
+<     """SXC / SYC 4 + 4 fingers 6/6 on vbn, cross-coupled rows X Y Y X / Y X X Y; no diode."""
+<     f = {"X": ("SXC", 6, 6, "xc", "vbn", "vss"), "Y": ("SYC", 6, 6, "yc", "vbn", "vss")}
+<     return sink_block(name, list("XYYX"), list("YXXY"), f, ["xc", "vbn", "yc"])
+< 
+< 
+< def casc_n(name):
+---
+> def casc_n(name, dev=None, m1=("CXC", "CX", "CY", "CYC"), m2=("CYC", "CY", "CX", "CXC"),
+>            band=("vcmfb", "voutp", "vbnc", "voutn", "vdd"), lev=None, side=None):
+313c314,318
+<     right) inside the ring."""
+---
+>     right) inside the ring.
+>     C4: the device map, slot keys, band, source levels and vertical sides are arguments (defaults: C3's). A band
+>     entry None leaves its track's place empty, so the row pitch stays; a 'dummy' in a 15/3 slot has its outer
+>     stripe plated into the ring and its inner stripe on a vss band track (Via1 onto the ring's left leg); a source
+>     net without a level above row 2 has no vertical; the ring sits outside the levels and verticals in use."""
+315,316c320,323
+<     dev = {"CX": ("CX", 15, 3, "voutp", "vbnc", "x"), "CY": ("CY", 15, 3, "voutn", "vbnc", "y"),
+<            "CXC": ("CXC", 15, 3, "vcmfb", "vbnc", "xc"), "CYC": ("CYC", 15, 3, "vdd", "vbnc", "yc")}
+---
+>     dev = dev or {"CX": ("CX", 15, 3, "voutp", "vbnc", "x"), "CY": ("CY", 15, 3, "voutn", "vbnc", "y"),
+>                   "CXC": ("CXC", 15, 3, "vcmfb", "vbnc", "xc"), "CYC": ("CYC", 15, 3, "vdd", "vbnc", "yc")}
+>     lev = lev or {"x": (0, 1), "yc": (0, 2), "y": (1, 0), "xc": (2, 0)}
+>     side = side or {"x": "L0", "y": "L1", "xc": "R0", "yc": "R1"}
+319,321c326,328
+<     r1 = [dn, dev["CXC"], dev["CX"], "C", slot, "C", dev["CY"], dev["CYC"], dn]
+<     r2 = [dn, dev["CYC"], dev["CY"], "C", slot, "C", dev["CX"], dev["CXC"], dn]
+<     band = ["vcmfb", "voutp", "vbnc", "voutn", "vdd"]
+---
+>     r1 = [dn, dev[m1[0]], dev[m1[1]], "C", slot, "C", dev[m1[2]], dev[m1[3]], dn]
+>     r2 = [dn, dev[m2[0]], dev[m2[1]], "C", slot, "C", dev[m2[2]], dev[m2[3]], dn]
+>     band = [b or "_%d" % k for k, b in enumerate(band)]
+330,332c337,338
+<     lev = {"x": (0, 1), "yc": (0, 2), "y": (1, 0), "xc": (2, 0)}
+<     vx = {"x": -COL - 0.13 - 0.22 - 0.29, "y": -COL - 0.13 - 2 * 0.22 - 2 * 0.29}
+<     vx["xc"], vx["yc"] = X - vx["x"] - 0.29, X - vx["y"] - 0.29
+---
+>     v0 = {"L0": -COL - 0.13 - 0.22 - 0.29, "L1": -COL - 0.13 - 2 * 0.22 - 2 * 0.29}
+>     vx = {n: v0[s] if s[0] == "L" else X - v0["L" + s[1]] - 0.29 for n, s in side.items()}
+335c341
+<     ends = {}
+---
+>     ends, spare = {}, []
+341a348,350
+>                 if 0 < k < len(devs) - 1:                # C4: a spare 15/3 slot (plated after the ring)
+>                     drains(c, g, dv, row, "vss")
+>                     spare.append((dv, outer, dv["xc"] + (-VOFF if row == 1 else VOFF)))
+354,355c363,367
+<     xa, xb, xc_, xd = ring_x(X, -vx["y"])
+<     ya = g5(ylo(2) - 0.145 - 0.22 + 0.02 - TIEW)
+---
+>     both = [n for n, (k1, k2) in lev.items() if k2 is not None]
+>     om = max([-vx[n] if vx[n] < 0 else vx[n] + 0.29 - X for n in both] + [COL + 0.13])
+>     xa, xb, xc_, xd = ring_x(X, om)
+>     nl = max(k for kk in lev.values() for k in kk if k is not None)
+>     ya = g5(ylo(nl) - 0.145 - 0.22 + 0.02 - TIEW)
+363a376,377
+>     for dv, outer, _ in spare:
+>         c.plate(dv, outer)
+369,372c383,389
+<         y1, y2 = ylo(k1), yhi(k2)
+<         c.box("M1", xv, y1 - 0.145, xv + 0.29, y2 + 0.145)
+<         c.via(xv + 0.145, y1)
+<         c.via(xv + 0.145, y2)
+---
+>         y1, y2 = ylo(k1), (yhi(k2) if k2 is not None else None)
+>         vl, vr = [], []
+>         if y2 is not None:
+>             c.box("M1", xv, y1 - 0.145, xv + 0.29, y2 + 0.145)
+>             c.via(xv + 0.145, y1)
+>             c.via(xv + 0.145, y2)
+>             vl, vr = [xv + 0.41], [xv - 0.12]
+373a391,392
+>             if y is None:
+>                 continue
+375c394
+<             a, b = min(xs + [xv + 0.41]) - 0.555, max(xs + [xv - 0.12]) + 0.555
+---
+>             a, b = min(xs + vl) - 0.555, max(xs + vr) + 0.555
+383a403,408
+>         if n.startswith("_"):                            # C4: an empty place in the band
+>             continue
+>         if n == "vss":                                   # C4: the spare dummies' track: Via1 onto the ring's left leg
+>             c.track(xa + 0.005, max(x for _, _, x in spare) + 0.555, t)
+>             c.via(xa + 0.15, t)
+>             continue
+390c415,416
+<     c.info = "rows: D | CXC CX [BNC] CY CYC | D  /  D | CYC CY [BNC] CX CXC | D; ring"
+---
+>     nm = lambda m: " ".join(dev[k][0] for k in m[:2]) + " [BNC] " + " ".join(dev[k][0] for k in m[2:])
+>     c.info = "rows: D | %s | D  /  D | %s | D; ring" % (nm(m1), nm(m2))
+397c423
+< def pd_pair(c, x0, ys):
+---
+> def pd_pair(c, x0, ys, devs=(("TPN", "voutp"), ("TNN", "voutn")), mid="vcm"):
+402c428,429
+<     M1 bar 0.21 (Via1-ready, V1_c 0.01); vcm pad 0.21 x 0.29 on the middle stripe (Via1-ready)."""
+---
+>     M1 bar 0.21 (Via1-ready, V1_c 0.01); vcm pad 0.21 x 0.29 on the middle stripe (Via1-ready).
+>     C4: devs (label, outer stripe net) and the shared stripe's net mid are arguments (defaults: C3's)."""
+404c431
+<     for k, (lab, d) in enumerate((("TPN", "voutp"), ("TNN", "voutn"))):
+---
+>     for k, (lab, d) in enumerate(devs):
+406c433
+<         c.cdl.append("M%s_%d %s en_3v3_b vcm vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1" % (lab, len(c.cdl), d))
+---
+>         c.cdl.append("M%s_%d %s en_3v3_b %s vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1" % (lab, len(c.cdl), d, mid))
+417,431c444
+< def pd_n(name):
+<     """the output ties alone (no tap: they live inside s2d_cload_c3, whose ring is their tap); pins on the
+<     stripes, the vcm pad and the gate bar, no stubs."""
+<     c = Cell(name)
+<     p = pd_pair(c, 0, 0)
+<     c.pin("M1", "voutp", p["p"][0], 0.25, p["p"][1], 0.75)
+<     c.pin("M1", "voutn", p["n"][0], 0.25, p["n"][1], 0.75)
+<     c.pin("M1", "vcm", p["m"] - 0.105, 0.355, p["m"] + 0.105, 0.645)
+<     c.pin("M1", "en_3v3_b", 0.27, 1.18, 0.75, 1.39)
+<     c.box("TGO", -0.27, -0.52, 2.23, 1.82)
+<     c.info = "TPN | vcm | TNN (shared vcm stripe), no tap"
+<     return c
+< 
+< 
+< def cload(name):
+---
+> def cload(name, nets=("voutp", "voutn"), labs=("CLP", "CLN"), pd=(("TPN", "voutp"), ("TNN", "voutn")), mid="vcm"):
+435c448,450
+<     vcm, voutn on M2 at the top edge."""
+---
+>     vcm, voutn on M2 at the top edge.
+>     C4: the capacitors' gate nets, labels, the pair and its shared stripe's net are arguments (defaults: C3's).
+>     A shared stripe on vss ends with a Via1 on the ring's top leg instead of a pin."""
+437c452
+<     a = c.mos("CLP", 12, 12, 0, 0, "vss", "voutp", "vss")
+---
+>     a = c.mos(labs[0], 12, 12, 0, 0, "vss", nets[0], "vss")
+440c455
+<     b = c.mos("CLN", 12, 12, X - 12, 0, "vss", "voutn", "vss", mx=True)
+---
+>     b = c.mos(labs[1], 12, 12, X - 12, 0, "vss", nets[1], "vss", mx=True)
+447c462
+<     p = pd_pair(c, xs, ys)
+---
+>     p = pd_pair(c, xs, ys, pd, mid)
+449,450c464,465
+<     for xc, fill, pn, sx in ((12.33, (12.10, 12.60), "voutp", p["p"][1]), (X - 12.33, (X - 12.60, X - 12.10),
+<                                                                            "voutn", p["n"][0])):
+---
+>     for xc, fill, pn, sx in ((12.33, (12.10, 12.60), nets[0], p["p"][1]), (X - 12.33, (X - 12.60, X - 12.10),
+>                                                                            nets[1], p["n"][0])):
+456c471
+<     for xc, yv, pn in ((p["m"], ys + 0.5, "vcm"), (p["en"], p["bar"], "en_3v3_b")):
+---
+>     for xc, yv, pn in ((p["m"], ys + 0.5, mid), (p["en"], p["bar"], "en_3v3_b")):
+457a473,477
+>         if pn == "vss":                                  # C4: shared source on the rail: M2 up onto the ring
+>             yr = H + 0.51 - TIEW / 2
+>             c.via(xc, yr)
+>             c.box("M2", xc - 0.145, yv - 0.145, xc + 0.145, yr + 0.145)
+>             continue
+462c482
+<     c.info = "CLP [voutp | TPN vcm TNN | voutn] CLN; ring"
+---
+>     c.info = "%s [%s | %s %s %s | %s] %s; ring" % (labs[0], nets[0], pd[0][0], mid, pd[1][0], nets[1], labs[1])
+469c489,493
+< def bias_tree(name):
+---
+> PAD_TREE = [("NBPC", 2.4, 6, "vbpc", "ni", "vss"), ("NBP", 6, 6, "vbp", "ni", "vss"), ("NI", 6, 6, "ni", "ni", "vss"),
+>             ("dummy", 2.4, 6, "vss", "ni", "vss")]
+> 
+> 
+> def bias_tree(name, seq=PAD_TREE):
+473c497,501
+<     (M2) above the row joins NI's drain and both columns; closed p+ ring."""
+---
+>     (M2) above the row joins NI's drain and both columns; closed p+ ring.
+>     C4: the row's device list is an argument (default: C3's). Per device by its drain: ni -> NI's 3-via tab onto
+>     the ni track; vss -> the dummy's tab into the top leg; a net drained by two devices -> 0.29 M1 risers joined by
+>     an M1 bar one track pitch above the Via1 landing, one Via1 + M2 to the top edge; any other net -> C3's riser
+>     and M2 to the top edge."""
+475,476d502
+<     seq = [("NBPC", 2.4, 6, "vbpc", "ni", "vss"), ("NBP", 6, 6, "vbp", "ni", "vss"), ("NI", 6, 6, "ni", "ni", "vss"),
+<            ("dummy", 2.4, 6, "vss", "ni", "vss")]
+481a508,510
+>     drs = [it[3] for it in seq]
+>     two = sorted({d for d in drs if d not in ("ni", "vss") and drs.count(d) > 1})       # C4
+>     yj = g5(yl + TP) if two else yl                      # C4: join bar of the nets in 'two'
+486c515
+<     yt = g5(yl + 0.145 + RS - 0.02 + TIEW)
+---
+>     yt = g5(yj + 0.145 + RS - 0.02 + TIEW)
+497,500c526,543
+<     c.tab(devs[2]["xc"], devs[2]["top"][0], tn + 0.145, tn)                  # NI: diode
+<     xd = devs[3]["xc"]                                                       # D: drain into the top leg
+<     c.box("M1", xd - TAB / 2, devs[3]["top"][0], xd + TAB / 2, c.rg[3])
+<     for dv, n in ((devs[0], "vbpc"), (devs[1], "vbp"), (tg, "iref")):
+---
+>     rise = []
+>     for dv, it in zip(devs, seq):
+>         d = it[3]
+>         if d == "ni":                                                        # NI: diode
+>             c.tab(dv["xc"], dv["top"][0], tn + 0.145, tn)
+>         elif d == "vss":                                                     # D: drain into the top leg
+>             c.box("M1", dv["xc"] - TAB / 2, dv["top"][0], dv["xc"] + TAB / 2, c.rg[3])
+>         elif d in two:                                                       # C4: riser to the join bar
+>             c.box("M1", dv["xc"] - 0.145, dv["top"][0], dv["xc"] + 0.145, yj + 0.145)
+>         else:
+>             rise.append((dv, d))
+>     for n in two:                                                            # C4: join bar, one Via1 + M2 pin
+>         xj = [dv["xc"] for dv, it in zip(devs, seq) if it[3] == n]
+>         c.box("M1", min(xj) - 0.145, yj - 0.145, max(xj) + 0.145, yj + 0.145)
+>         c.via(xj[-1], yj)
+>         c.box("M2", xj[-1] - 0.145, yj - 0.145, xj[-1] + 0.145, top)
+>         c.pin("M2", n, xj[-1] - 0.145, top - 0.4, xj[-1] + 0.145, top)
+>     for dv, n in rise + [(tg, "iref")]:
+518c561
+<     c.info = "row: [TGN] | NBPC NBP NI D | [TDN]; ring"
+---
+>     c.info = "row: [TGN] | %s | [TDN]; ring" % " ".join(it[0] if it[0] != "dummy" else "D" for it in seq)
+523,524c566
+< # s2d_rhigh: 6 x unit_r2 resistor as 4 x rhigh 0.5 / 12.65 in series, mirror-symmetric sequence, a dummy strip at
+< # both ends; wired as N2's d2s_rhigh_c2 (Via1 on each head, M2 stub to a link level, M1 link), closed p+ ring.
+---
+> # C4, new: bypass_rb, the pad cload's capacitor arrayed
+526c568,581
+< def rhigh(name):
+---
+> def bypass(name, ncm=4, ncr=8, rows=3, cols=4):
+>     """ncm capacitors on vcm and ncr on vref, each the pad's load capacitor (s2d_cload_c3's CLP: hv NMOS 12 x 12
+>     turned as there, S / D / B on vss, gate contacted over its full height by a column on one side), in rows x
+>     cols, filled column by column from the top left, vcm first (a column holding both nets has vcm on top; places
+>     beyond ncm + ncr stay empty). Columns in mirrored pairs facing their gate columns, as CLP | col .. col | CLN in
+>     the pad, without the tie pair between them: the fills Gat.b 0.18 apart; pairs 0.54 apart (endcaps Gat.c 0.18
+>     + Gat.b 0.18); rows Act.b 0.21 apart. S / D: top and bottom stripes plated into the ring as in the pad; the
+>     stripes of facing rows on one M1 vss bus into the ring's side legs (no tie between rows), M1.b 0.18 from the
+>     columns' ends. Gates: one Via1 per capacitor on its column as in the pad, M2 over the column; vcm runs up to an
+>     M2 bus on the top edge, vref down to one on the bottom edge (the fill order keeps them from crossing). Closed
+>     p+ ring 0.73 / 0.51 outside the Activ, as the pad's cload (pSD.j1 0.40 from the gates). LU.b (20 um, no tie
+>     inside) limits the shorter side to 3 capacitors (measured: 3 rows 19.44 um, 4 x 3 19.70 um, 4 x 4 25.78 um); an
+>     even cols keeps the array mirror-symmetric."""
+>     assert ncm >= 0 and ncr >= 0 and 0 < ncm + ncr <= rows * cols
+528,589c583,629
+<     U = ["A1", "A2", "F1", "F2", "M1", "M2"]
+<     half = U + U[::-1]
+<     MAP = ["dummy"] + half + half + ["dummy"]
+<     P, SEG = 0.68, 12.65                                # pitch: rhigh 0.5 + Gat_b 0.18 (library, DRC clean)
+<     n = len(MAP)
+<     seg = pya.Layout.create_cell(ly, "rhigh", "SG13_dev", {"w": "0.5u", "l": "%gu" % SEG, "b": "0"})
+<     HB, HT = (-0.41, -0.15), (12.80, 13.06)             # head M1 of the PCell (measured)
+<     xh = lambda i: g5(i * P + 0.25)
+<     for i, u in enumerate(MAP):
+<         c.c.insert(pya.DCellInstArray(seg.cell_index(), pya.DTrans(pya.DVector(g5(i * P), 0))))
+<         c.note(u, xh(i), SEG / 2)
+<     links = {"b": [], "t": []}
+<     term = []
+<     for u in U:
+<         ps = [i for i, m in enumerate(MAP) if m == u]
+<         nodes = ["sa_" + u, u + "_1", u + "_2", u + "_3", "sb_" + u]
+<         for k in range(4):
+<             c.cdl.append("R%s_%d %s %s vss rhigh w=0.5u l=%gu m=1 b=0" % (u, k, nodes[k], nodes[k + 1], SEG))
+<         links["b"] += [(ps[0], ps[1]), (ps[2], ps[3])]
+<         links["t"] += [(ps[1], ps[2])]
+<         term += [(nodes[0], ps[0]), (nodes[4], ps[3])]
+<     c.cdl += ["Rdummy_%d vss vss vss rhigh w=0.5u l=%gu m=1 b=0" % (k, SEG) for k in range(2)]
+<     W, S1 = 0.29, 0.18
+<     lev = {}
+<     for side in ("b", "t"):                              # interval coloring: nested links on separate levels
+<         out = []
+<         for a, b in sorted(links[side], key=lambda t: t[1] - t[0]):
+<             for L in out:
+<                 if all(xh(a) - W / 2 >= xh(o[1]) + W / 2 + S1 or xh(o[0]) - W / 2 >= xh(b) + W / 2 + S1 for o in L):
+<                     L.append((a, b))
+<                     break
+<             else:
+<                 out.append([(a, b)])
+<         lev[side] = out
+<     yl = {"b": [g5(HB[0] - S1 - W / 2 - k * (W + S1)) for k in range(len(lev["b"]))],
+<           "t": [g5(HT[1] + S1 + W / 2 + k * (W + S1)) for k in range(len(lev["t"]))]}
+<     yh = {"b": (HB[0] + HB[1]) / 2, "t": (HT[0] + HT[1]) / 2}
+<     for side in ("b", "t"):
+<         for k, L in enumerate(lev[side]):
+<             y = yl[side][k]
+<             for a, b in L:
+<                 c.box("M1", xh(a) - W / 2, y - W / 2, xh(b) + W / 2, y + W / 2)
+<                 for i in (a, b):
+<                     c.via(xh(i), y)
+<                     c.via(xh(i), yh[side])
+<                     c.box("M2", xh(i) - W / 2, min(y, yh[side]) - W / 2, xh(i) + W / 2, max(y, yh[side]) + W / 2)
+<     # ring: side legs 0.54 from the strips (EXTB_c 0.31 from the EXTBlock at -0.2, as the library), top / bottom
+<     # legs M1_b from the outermost link levels; symmetric in y about the strip center
+<     ym = SEG / 2
+<     y1 = g5(yl["t"][-1] + W / 2 + S1 - 0.02 + TIEW)
+<     xr = g5((n - 1) * P + 0.5)
+<     c.ring(-0.54 - TIEW, g5(2 * ym - y1), xr + 0.54 + TIEW, y1)
+<     ytop = y1 + 0.03
+<     for nm, i in term:                                  # terminals: M2 from the top head to the top edge
+<         c.via(xh(i), yh["t"])
+<         c.box("M2", xh(i) - W / 2, yh["t"] - W / 2, xh(i) + W / 2, ytop)
+<         c.pin("M2", nm, xh(i) - W / 2, ytop - 0.4, xh(i) + W / 2, ytop)
+<     for (x0, x1) in ((c.rg[0], 0.48), ((n - 1) * P + 0.02, c.rg[2])):    # dummy heads strapped into the ring
+<         for hy in (HB, HT):
+<             c.box("M1", x0, hy[0], x1, hy[1])
+<     c.pin("M1", "vss", -0.82, ym - 0.5, -0.56, ym + 0.5)
+<     c.info = "strips: %s; ring" % " ".join(MAP)
+---
+>     H = 12.68
+>     PY = g5(H + 0.21)
+>     xs, x = [], 0.0
+>     for j in range(cols):                                # (Activ x0, mirrored, column center, fill)
+>         if j % 2 == 0:
+>             xs.append((x, False, x + 12.33, (x + 12.10, x + 12.60)))
+>         else:
+>             xs.append((x + 13.38, True, x + 13.05, (x + 12.78, x + 13.28)))
+>             x = g5(x + 25.38 + 0.54)
+>     xr = max(xs[-1][0] + 12, xs[-1][3][1]) + 0.73
+>     yr = (rows - 1) * PY + H + 0.51
+>     c.ring(-0.73, -0.51, xr, yr)
+>     yt, yb0 = yr + 0.03, -0.54                           # top / bottom edge (ring pSD)
+>     seg = {}
+>     for j, (x0, mx, xc, fill) in enumerate(xs):
+>         for i in range(rows):
+>             k = j * rows + i
+>             if k >= ncm + ncr:
+>                 continue
+>             net, lab = ("vcm", "CBM") if k < ncm else ("vref", "CBR")
+>             yb = g5((rows - 1 - i) * PY)
+>             dv = c.mos(lab, 12, 12, x0, yb, "vss", net, "vss", mx=mx)
+>             c.gate_col(xc, [dv["gate"]], yb + 0.36, yb + 12.32, fill)
+>             yv = yb + 12.1 if net == "vcm" else yb + H - 12.1
+>             c.via(xc, yv)
+>             seg.setdefault((xc, net), []).append(yv)
+>             if i == 0:
+>                 c.plate(dv, "top")
+>             if i == rows - 1:
+>                 c.plate(dv, "bot")
+>     for r in range(rows - 1):                            # vss bus between row r and row r + 1 (from the bottom)
+>         c.box("M1", -0.71, r * PY + 12.50, xr - 0.02, r * PY + PY + 0.36 - 0.18)
+>     for net, yedge in (("vcm", yt), ("vref", yb0)):
+>         xn = sorted(xc for xc, n in seg if n == net)
+>         if not xn:
+>             continue
+>         for xc in xn:
+>             yv = seg[(xc, net)]
+>             c.box("M2", xc - 0.145, min(yv) - 0.145 if net == "vcm" else yedge,
+>                   xc + 0.145, yedge if net == "vcm" else max(yv) + 0.145)
+>         y0 = yedge - 0.29 if net == "vcm" else yedge
+>         c.box("M2", xn[0] - 0.145, y0, xn[-1] + 0.145, y0 + 0.29)
+>         c.pin("M2", net, xn[0] - 0.145, y0, min(xn[0] + 0.355, xn[-1] + 0.145), y0 + 0.29)
+>     c.pin("M1", "vss", -0.71, -0.49, -0.21, -0.23)
+>     c.tgo()
+>     c.info = "%d x CBM (vcm) + %d x CBR (vref), %d rows x %d columns, columns in facing pairs; ring" % (
+>         ncm, ncr, rows, cols)
+594,606c634,667
+< core_s = sinks("sinks_6x6_s2d_c3_core")
+< core_c = sinks_cmfb("s2d_sinks_cmfb_c3_core")
+< cells = [turned(core_s, "sinks_6x6_s2d_c3"), turned(core_c, "s2d_sinks_cmfb_c3"), casc_n("s2d_casc_n_c3"),
+<          pd_n("s2d_pd_n_c3"), cload("s2d_cload_c3"), rhigh("s2d_rhigh_c3"), bias_tree("bias_tree_noab_n_c3")]
+< cells += [core_s, core_c]
+< 
+< opt = pya.SaveLayoutOptions()
+< opt.gds2_write_timestamps = False
+< ly.write("s2d_n3_cells.gds", opt)
+< with open("s2d_n3_cells.cdl", "w") as f:
+<     f.write("* SPDX-FileCopyrightText: 2026 Christoph Maier\n* SPDX-License-Identifier: Apache-2.0\n"
+<             "* s2d_n3_cells.cdl: reference netlists of s2d_n3_cells.gds (build_s2d_n3.py, agent N, C3 2026-11-03).\n"
+<             "* One line per finger / segment as drawn, every dummy a device; bulk = vss (substrate).\n")
+---
+> # The cells
+> # ======================================================================================================
+> RB_TREE = [("SH2", 2.4, 6, "gh", "ni", "vss"), ("SF", 2, 6, "vref", "ni", "vss"), ("NBP", 2.4, 6, "vbp", "ni", "vss"),
+>            ("SY", 6, 6, "xp", "ni", "vss"), ("NI", 6, 6, "ni", "ni", "vss"), ("SH1", 2.4, 6, "gh", "ni", "vss"),
+>            ("dummy", 2, 6, "vss", "ni", "vss"), ("dummy", 2.4, 6, "vss", "ni", "vss")]
+> RB_CASC = dict(dev={"CY": ("CY", 15, 3, "vdd", "vbnc", "xp"), "F1": ("F1", 15, 3, "vdd", "vbnc", "vref"),
+>                     "F2": ("F2", 15, 3, "vdd", "vbnc", "vref"), "F3": ("F3", 15, 3, "vdd", "vbnc", "vref"),
+>                     "F4": ("F4", 15, 3, "vdd", "vbnc", "vref"), "X": ("dummy", 15, 3, "vss", "vbnc", "vss")},
+>                m1=("F1", "F2", "CY", "X"), m2=("X", "X", "F3", "F4"), band=("vss", None, "vbnc", None, "vdd"),
+>                lev={"vref": (0, 0), "xp": (0, None)}, side={"vref": "L0", "xp": "R0"})
+> RB_MIRROR = dict(m1=["BD", "BM"], m2=None, band=["vcm", "bd"], gn="bd",
+>                  f={"BD": ("BD", 6, 6, "bd", "bd", "vss"), "BM": ("BM", 6, 6, "vcm", "bd", "vss")})
+> RB_CLOAD = dict(nets=("vcm", "vref"), labs=("CB", "CBR"), pd=(("SPDC", "vcm"), ("SPDR", "vref")), mid="vss")
+> 
+> 
+> def name_dummies(cell, names):
+>     """C4: the dummies' CDL names for backannotation, MD + row + position, in drawing order."""
+>     it = iter(names)
+>     cell.cdl = ["M%s %s" % (next(it), ln.split(" ", 1)[1]) if ln.startswith("Mdummy_") else ln for ln in cell.cdl]
+>     assert next(it, None) is None
+>     return cell
+> 
+> 
+> def write(cells, stem, title):
+>     opt = pya.SaveLayoutOptions()
+>     opt.gds2_write_timestamps = False
+>     ly.write(stem + ".gds", opt)
+>     with open(stem + ".cdl", "w") as f:
+>         f.write("* SPDX-FileCopyrightText: 2026 Christoph Maier\n* SPDX-License-Identifier: Apache-2.0\n"
+>                 "* %s.cdl: reference netlists of %s.gds (%s).\n"
+>                 "* One line per finger as drawn, every dummy a device; bulk = vss (substrate).\n" % (stem, stem, title))
+>         for k in cells:
+>             nets = sorted({p[0] for p in k.pins})
+>             f.write("\n.SUBCKT %s %s\n%s\n.ENDS %s\n" % (k.name, " ".join(nets), "\n".join(k.cdl), k.name))
+608,614c669,693
+<         nets = sorted({p[0] for p in k.pins})
+<         f.write("\n.SUBCKT %s %s\n%s\n.ENDS %s\n" % (k.name, " ".join(nets), "\n".join(k.cdl), k.name))
+< for k in cells:
+<     b = k.c.dbbox()
+<     print("%-24s %6.2f x %6.2f um  %7.1f um2  %s" % (k.name, b.width(), b.height(), b.width() * b.height(), k.info))
+<     for n, m, x, y in sorted(k.pins):
+<         print("    pin %-9s %s (%.3f, %.3f)" % (n, m, x, y))
+---
+>         b = k.c.dbbox()
+>         print("%-24s %6.2f x %6.2f um  %7.1f um2  %s" % (k.name, b.width(), b.height(), b.width() * b.height(), k.info))
+>         for n, m, x, y in sorted(k.pins):
+>             print("    pin %-9s %s (%.3f, %.3f)" % (n, m, x, y))
+> 
+> 
+> if "--pad" in sys.argv:                                  # regression: the pad's rows, C3's names and device lists
+>     write([bias_tree("bias_tree_noab_n_c3"), casc_n("s2d_casc_n_c3"), sinks("sinks_6x6_s2d_c3_core"),
+>            cload("s2d_cload_c3")], "pad_regress", "the S2D pad's rows rebuilt by build_rb_n.py --pad")
+> elif "--bypass" in sys.argv:
+>     p = [int(v) for v in sys.argv[sys.argv.index("--bypass") + 1:][:4]]
+>     stem = "bypass_rb_%d_%d_%dx%d" % tuple(p)
+>     write([bypass(stem, *p)], stem, "build_rb_n.py --bypass %d %d %d %d" % tuple(p))
+> else:
+>     cells = [name_dummies(bias_tree("rb_tree_n", RB_TREE), ["DTN6", "DTN7"]),
+>              name_dummies(casc_n("rb_casc", **RB_CASC), ["DC10", "DC14", "DC15", "DC20", "DC21", "DC22", "DC25"]),
+>              name_dummies(sink_block("rb_mirror", **RB_MIRROR), ["DM0", "DM3"]),
+>              cload("rb_cload", **RB_CLOAD), bypass("bypass_rb")]
+>     topc, x = ly.create_cell("rb_n_cells"), 0.0
+>     for k in cells:                                      # side by side, 5 um apart, bottom edges aligned
+>         b = k.c.dbbox()
+>         topc.insert(pya.DCellInstArray(k.c.cell_index(), pya.DTrans(pya.DVector(g5(x - b.left), g5(-b.bottom)))))
+>         topc.shapes(LI["TEXT"]).insert(pya.DText(k.name, g5(x), -2.0))
+>         x += b.width() + 5.0
+>     write(cells, "rb_n_cells", "build_rb_n.py, agent N, C4 2026-11-07")

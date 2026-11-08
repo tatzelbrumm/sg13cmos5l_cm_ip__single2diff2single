@@ -1,0 +1,13 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bdp_mirror_p (Claude, agent D, C4 2026-11-07). hv devices 1u/0.45u; every device as drawn.
+
+.SUBCKT bdp_mirror_p po0 po1 po2 po3 vdd vpd
+MDP0 vdd vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPO0 po0 vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPO1 po1 vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPD vpd vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPO2 po2 vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MPO3 po3 vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+MDP6 vdd vpd vdd vdd sg13_hv_pmos w=5u l=6u ng=1 m=1
+.ENDS bdp_mirror_p

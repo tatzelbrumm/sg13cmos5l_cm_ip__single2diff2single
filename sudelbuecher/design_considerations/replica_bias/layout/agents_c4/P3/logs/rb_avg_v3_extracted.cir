@@ -1,0 +1,11 @@
+* Extracted by KLayout with SG13CMOS5L LVS runset on : 07/11/2026 20:23
+
+.SUBCKT rb_avg gh m xp
+M$1 m xp m m sg13_hv_pmos L=4u W=2u AS=0.68p AD=0.68p PS=5.36u PD=5.36u rfmode=0
+M$2 xp xp m m sg13_hv_pmos L=4u W=2u AS=0.68p AD=0.68p PS=5.36u PD=5.36u
++ rfmode=0
+M$5 gh m gh gh sg13_hv_pmos L=4u W=2u AS=0.68p AD=0.68p PS=5.36u PD=5.36u
++ rfmode=0
+M$6 m m gh gh sg13_hv_pmos L=4u W=1u AS=0.34p AD=0.34p PS=2.68u PD=2.68u
++ rfmode=0
+.ENDS rb_avg

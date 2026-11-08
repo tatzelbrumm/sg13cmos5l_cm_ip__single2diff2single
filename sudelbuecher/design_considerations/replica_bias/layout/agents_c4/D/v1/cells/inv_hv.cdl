@@ -1,0 +1,8 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* inv_hv (Claude, agent D, C4 2026-11-07). hv devices 1u/0.45u; every device as drawn.
+
+.SUBCKT inv_hv a vdd vss y
+MP y a vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MN y a vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS inv_hv

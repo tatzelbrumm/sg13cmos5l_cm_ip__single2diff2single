@@ -1,0 +1,14 @@
+* SPDX-FileCopyrightText: 2026 Christoph Maier
+* SPDX-License-Identifier: Apache-2.0
+* bdp_slice (Claude, agent D, C4 2026-11-07). hv devices 1u/0.45u; every device as drawn.
+
+.SUBCKT bdp_slice en en_3v3 io_a io_b vdd vss
+MPA e_b en_3v3 vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MPB e_b en vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MNA e_b en_3v3 n1 vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MNB n1 en vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MP e e_b vdd vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MN e e_b vss vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+MTGP io_a e_b io_b vdd sg13_hv_pmos w=1u l=0.45u ng=1 m=1
+MTGN io_a e io_b vss sg13_hv_nmos w=1u l=0.45u ng=1 m=1
+.ENDS bdp_slice

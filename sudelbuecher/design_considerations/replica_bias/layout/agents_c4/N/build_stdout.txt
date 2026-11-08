@@ -1,0 +1,29 @@
+rb_tree_n                 34.01 x   9.71 um    330.4 um2  row: [TGN] | SH2 SF NBP SY NI SH1 D D | [TDN]; ring
+    pin en_3v3    M2 (-3.080, 3.340)
+    pin en_3v3_b  M2 (30.430, 3.340)
+    pin gh        M2 (21.250, 8.735)
+    pin iref      M2 (-1.460, 8.735)
+    pin ni        M2 (30.430, 7.060)
+    pin vbp       M2 (6.100, 8.735)
+    pin vref      M2 (3.650, 8.735)
+    pin vss       M1 (-2.790, -0.360)
+    pin xp        M2 (10.550, 8.735)
+rb_casc                   71.72 x  12.37 um    887.2 um2  rows: D | F1 F2 [BNC] CY dummy | D  /  D | dummy dummy [BNC] F3 F4 | D; ring
+    pin vbnc      M2 (-1.760, 4.975)
+    pin vdd       M2 (-1.760, 5.975)
+    pin vref      M2 (-1.760, -0.295)
+    pin vss       M1 (-1.470, -0.790)
+    pin xp        M2 (69.460, -0.295)
+rb_mirror                 19.75 x   9.17 um    181.1 um2  rows: D | BD BM | D; ring
+    pin bd        M2 (-1.250, 7.475)
+    pin vcm       M2 (-1.250, 6.975)
+    pin vss       M1 (-0.960, -0.360)
+rb_cload                  29.56 x  14.24 um    420.9 um2  CB [vcm | SPDC vss SPDR | vref] CBR; ring
+    pin en_3v3_b  M2 (13.220, 13.020)
+    pin vcm       M2 (12.330, 13.020)
+    pin vref      M2 (15.230, 13.020)
+    pin vss       M1 (-0.460, -0.360)
+bypass_rb                 53.30 x  40.02 um   2133.1 um2  4 x CBM (vcm) + 8 x CBR (vref), 3 rows x 4 columns, columns in facing pairs; ring
+    pin vcm       M2 (12.435, 38.855)
+    pin vref      M2 (13.155, -0.395)
+    pin vss       M1 (-0.460, -0.360)

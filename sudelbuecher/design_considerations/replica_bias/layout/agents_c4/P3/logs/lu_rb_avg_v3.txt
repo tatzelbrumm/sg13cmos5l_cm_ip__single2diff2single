@@ -1,0 +1,1 @@
+rb_avg           farthest P+Activ to an N+ tie: 3.07 um (LU.a 20)

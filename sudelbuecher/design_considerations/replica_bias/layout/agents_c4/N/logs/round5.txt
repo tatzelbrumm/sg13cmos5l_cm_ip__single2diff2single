@@ -1,0 +1,34 @@
+Round 5 (rb_casc: dummy M2 tracks in the band's three empty places, tied to vdd), Sat Nov  7 21:33:33 CET 2026
+== rb_casc DRC: violations 0, files mentioning exception 0  
+== rb_casc LVS: Netlists match 
+rb_casc: Activ bbox (-1.74,-0.94;69.44,10.89); axes x = 33.85, y = 4.975 um
+  summary: max mirror XOR 0.0000 um2, 0 narrow-poly hits -> SYMMETRIC
+rb_casc      farthest N+ to tie   5.62 um (LU.b 20)
+== other cells against round 4 (all layers)
+rb_n_cells.gds:rb_tree_n vs round4_rb_n_cells.gds:rb_tree_n  total XOR 0.0000 um2  IDENTICAL
+rb_n_cells.gds:rb_mirror vs round4_rb_n_cells.gds:rb_mirror  total XOR 0.0000 um2  IDENTICAL
+rb_n_cells.gds:rb_cload vs round4_rb_n_cells.gds:rb_cload  total XOR 0.0000 um2  IDENTICAL
+rb_n_cells.gds:bypass_rb vs round4_rb_n_cells.gds:bypass_rb  total XOR 0.0000 um2  IDENTICAL
+== rb_casc against round 4 (all layers)
+    8/0  XOR     0.6641 um2  in (68.69,3.83;68.98,6.12)  (A 17, B 16 polygons)
+   10/0  XOR    61.9049 um2  in (-2.01,3.83;68.98,6.12)  (A 8, B 5 polygons)
+   19/0  XOR     0.1444 um2  in (68.74,3.88;68.93,6.07)  (A 40, B 36 polygons)
+rb_n_cells.gds:rb_casc vs round4_rb_n_cells.gds:rb_casc  total XOR 62.7133 um2
+== --pad regression
+pad_regress.gds:bias_tree_noab_n_c3 vs sg13cmos5l_IOPadSingle2Diff.klay.gds:bias_tree_noab_n_c3  total XOR 0.0000 um2  IDENTICAL
+pad_regress.gds:sinks_6x6_s2d_c3_core vs sg13cmos5l_IOPadSingle2Diff.klay.gds:sinks_6x6_s2d_c3_core  total XOR 0.0000 um2  IDENTICAL
+pad_regress.gds:s2d_cload_c3 vs sg13cmos5l_IOPadSingle2Diff.klay.gds:s2d_cload_c3  total XOR 0.0000 um2  IDENTICAL
+pad_regress.gds:s2d_casc_n_c3 vs s2d_n3_cells.gds:s2d_casc_n_c3  total XOR 0.0000 um2  IDENTICAL
+== rb_casc rows / BNC device layers vs the pad (inside the ring)
+rb_n_cells.gds:rb_casc vs sg13cmos5l_IOPadSingle2Diff.klay.gds:s2d_casc_n_f in -1.0,-0.3,68.7,10.25  total XOR 0.0000 um2  IDENTICAL
+== rb_casc band (x -1.0..68.7, y 3.68..6.27) vs the pad, M1 / Via1 / M2: round 5, then round 4
+    8/0  XOR    12.5682 um2  in (8.445,3.68;68.7,6.27)  (A 11, B 14 polygons)
+   10/0  XOR     0.2494 um2  in (68.485,3.83;68.7,6.12)  (A 5, B 5 polygons)
+   19/0  XOR     1.4079 um2  in (8.495,3.88;59.205,6.07)  (A 19, B 28 polygons)
+rb_n_cells.gds:rb_casc vs sg13cmos5l_IOPadSingle2Diff.klay.gds:s2d_casc_n_f in -1.0,3.68,68.7,6.27  total XOR 14.2255 um2
+    8/0  XOR    12.5911 um2  in (8.445,3.68;68.7,6.27)  (A 10, B 14 polygons)
+   10/0  XOR    60.4520 um2  in (-1,3.83;68.485,5.62)  (A 2, B 5 polygons)
+   19/0  XOR     1.4079 um2  in (8.495,3.88;59.205,6.07)  (A 19, B 28 polygons)
+round4_rb_n_cells.gds:rb_casc vs sg13cmos5l_IOPadSingle2Diff.klay.gds:s2d_casc_n_f in -1.0,3.68,68.7,6.27  total XOR 74.4510 um2
+== CDL vs netlists
+32 devices, 0 mismatches

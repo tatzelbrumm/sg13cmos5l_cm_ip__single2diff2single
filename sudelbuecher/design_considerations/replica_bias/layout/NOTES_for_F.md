@@ -24,3 +24,46 @@ To be folded into F's brief, after the rule sections copied verbatim from C3's F
    out unnecessarily to match the slot-to-custom-pads boundaries." / "Pin names vddh and vssh, to they can be
    connected without conflict either way." / "Pad structures are only routed M1/M2. Let's keep it that way for
    consistency." Folded into BRIEF_F.md rules 5, 6, 9.
+6. **Stage A is a throwaway** (Christoph, 2026-11-07, while F ran stage A): "Expect to COMPLETELY throw away stage A
+   placement and do routing driven placement." F was told to keep stage A light (no row compaction, a quick placement
+   and the context picture) and to deliver what a routing-driven placement needs: a pin map per cell, the net list
+   with fan-out and sensitive lines, the facing edges per net, and a routing-order / layer-direction / channel
+   proposal for stage B.
+7. **No distinct stages** (Christoph, 2026-11-07, right after 6): "THERE ARE NO DISTINCT STAGES." Supersedes the
+   stage A / B split of BRIEF_F.md and note 6. F was told to place and route as one process, routing driving the
+   placement, to a routed pad_ref_rb (M1 / M2, DRC and flat LVS clean against the circuit with every dummy, vddh /
+   vssh), with progress lines in `reports/F_progress.md`.
+8. **Freedom to rework the rows** (Christoph, 2026-11-07): "F has the freedom to tweak the inputs from the specialist
+   agents as compact placement and routing requires, within good circuit layout judgment as has been demonstrated
+   with the oa and bg cores, and the custom diff2single and single2diff pads." Passed to F with the four layouts as
+   precedent (oa_core_pd, bg_core_pd, both pad cells). The lead kept one standing decision: rb_casc's 8-slot
+   structure ("keep A for matching"); its ring, pins, straps and band may change. Every device added, removed or
+   re-tied goes into F's CDL and note for backannotation.
+9. **"The inputs" = layout primitives** (Christoph, 2026-11-07): "where 'the inputs' means layout primitives. Could be
+   confused with input pins. They can be moved within reason, too, but the overall connectivity and I/O and power
+   pins of the entire macro must be preserved." Passed to F: the macro keeps exactly vddh, vssh, vref, vcm, en_3v3,
+   en_3v3_b, iref (names, directions, boundary order); pins may move within reason; connectivity checked by flat LVS.
+10. **Review of F's first routed cell** (Christoph, 2026-11-07, verbatim): "There's ABSOLUTELY NO GOOD REASON to bring
+    the terminal lines close together and not route them straight out, given that the distance of the pad
+    connections is further apart. There's also ABSOLUTELY NO GOOD REASON to place the replica bias generator next to
+    the VSS1V2 pin at the bottom right. This building block should be near the top right, where we need to sort out
+    how to place it relative to the bias sources and the (to be laid out) bias_dist_pd network that connects these
+    blocks together. And yes, the layout should be MUCH more compact." Both the bunched pins (1.08 µm pitch) and the
+    bottom-right position came from the lead's brief (rule 5), not from F. Next: position decided with Christoph
+    (`lead/slot_right_options.png`), then F reworks the cell.
+11. **Position and capacitors** (Christoph, 2026-11-07, verbatim): "Option 2 or even higher up, reference cores are
+    probably best stacked vertically instead of horizontally. The bypass mos capacitors don't have to be a contiguous
+    array, and they don't even have to be square. For a compact layout, they might be shaped and places where there is
+    extra space between blocks with a more rigid geometry. The capacitor placement is pretty much ad lib (maintaining
+    overall capacitance to the nodes and avoiding long interconnects)". Passed to F (rework): right edge at y ≳ 165
+    (between or above the pad pin groups); vcm straight out to the D2S vref (223.3) and down the edge to the S2D vcm /
+    vref (136.0 / 112.3), outputs spaced by their destinations; en_3v3, en_3v3_b, iref on the left edge; capacitors as
+    filler, split / reshaped, gate area per node ≥ vcm 720 µm² (CB beside the buffer) and vref 1296 µm²; area ceiling
+    5700 µm²; every capacitor's W / L / count / node reported for backannotation.
+12. **Own enables** (Christoph, 2026-11-07, verbatim): "Give pad_ref_rb its own enables for now. We can connect them
+    together a level up later." en_3v3 / en_3v3_b stay pad_ref_rb's own pins (left edge with iref), not aligned with
+    the S2D's enable pins; no netlist change.
+13. **vref straight out** (Christoph, 2026-11-07, on pad_ref_rb v2's context picture): "the vref connection in the
+    preview picture can go straight out. No good reason to jog the line downwards. This can be taken care of by global
+    routing if necessary." The cell's vref pin (right edge, slot y 179.06) exits straight to the edge like vcm (223.34);
+    the run to the S2D's vref pin (112.26) belongs to global routing. Shown so in `lead/slot_frame_view.png`.
