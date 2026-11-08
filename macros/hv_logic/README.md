@@ -15,8 +15,12 @@ All devices are 1u / 0.45u sg13_hv (NOR stacks: 2u resp. 3u PMOS), the size of t
 | `nand2_hv` | y = not (a and b) | `vdd vss a b y` | 4 |
 | `nor2_hv` | y = not (a or b) | `vdd vss a b y` | 4 |
 | `nor3_hv` | y = not (a or b or c) | `vdd vss a b c y` | 6 |
+| `tg_hv` | transmission gate: a ↔ b while en = 1 / en_b = 0 (bulks on vss / vdd) | `vdd vss en en_b a b` | 2 |
 
-Used by `macros/en_ctrl_3v3` (inv_hv, nor3_hv) and `macros/bias_sel_pd` (decoder: nand2_hv, nor2_hv, inv_hv).
+Used by `macros/en_ctrl_3v3` (inv_hv, nor3_hv), `macros/bias_sel_pd` (decoder: nand2_hv, nor2_hv, inv_hv) and
+`macros/bias_dist_pd` (bdp_slice: nand2_hv, inv_hv, tg_hv). tg_hv (2026-11-08) is the project's standard 1u / 0.45u
+transmission gate made a cell after agent D's layout cell of the same name in bias_dist_pd; its layout lives there
+(`../bias_dist_pd/layout/klayout/bias_dist_pd.klay.gds`, cell `bdp_tg_hv`, next to `bdp_inv_hv` and `bdp_nand2_hv`).
 
 - `netlist/source/hv_logic.spice`: the source netlist.
 - `schematic/xschem/*.sch / *.sym`: one sheet per gate, PMOS above, NMOS below, nets by label; box symbols with the

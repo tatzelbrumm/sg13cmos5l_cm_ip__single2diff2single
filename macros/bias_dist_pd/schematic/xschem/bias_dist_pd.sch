@@ -5,84 +5,15 @@ V {}
 S {}
 F {}
 E {}
-P 10 5 160 -1550 610 -1550 610 -140 160 -140 160 -1550 {dash=6}
-P 10 5 620 -1550 1000 -1550 1000 -140 620 -140 620 -1550 {dash=6}
 P 10 5 1010 -1600 1530 -1600 1530 220 1010 220 1010 -1600 {dash=6}
 P 10 5 1550 -1600 2170 -1600 2170 -1400 1550 -1400 1550 -1600 {dash=6}
-P 10 5 2190 -1490 2630 -1490 2630 -140 2190 -140 2190 -1490 {dash=6}
-P 10 5 2640 -1490 3080 -1490 3080 -140 2640 -140 2640 -1490 {dash=6}
 T {bias_dist_pd: switchable distribution mirror, 4 sourced inputs -> 4 sourced outputs (1 : 1), digital enable en_3v3} 100 -1850 0 0 0.4 0.4 {}
 T {Enabled inputs (en_in<k> = 1) add up in NI; NM copies the sum into the PMOS diode PD; each enabled output PO<j> sources it through its TG.} 100 -1796 0 0 0.25 0.25 {}
 T {iout<j> feeds a bias_tree_pd (NMOS input diode NI behind its own TG), e.g. one per pad; a disabled output's TG is open and PO<j> carries no current.} 100 -1772 0 0 0.25 0.25 {}
 T {en_3v3 = 0: all TGs open, TDN pulls ni to vssh, SVPD pulls vpd to vddh. Devices as in bias_tree_pd (NI 6u/6u, BP 5u/6u, switches 1u/0.45u). Source: netlist/source/bias_dist_pd.spice} 100 -1748 0 0 0.25 0.25 {}
-T {[D] digital: one nand2_hv / inv_hv per input and output (en_out<j> and en_3v3 join the output decode by name). [S] [M] [O] analog: transmission gates, mirror, PMOS outputs.} 100 -1724 0 0 0.25 0.25 {}
-T {[D] enable decode} 165 -1573.5 0 0 0.35 0.35 {layer=10}
-T {[S] input switches} 745 -1573.5 0 0 0.35 0.35 {layer=10}
+T {Legs: one bdp_slice per input and output (nand2_hv | inv_hv | tg_hv, as the layout cell); en_out<j> and en_3v3 join the output slices by name. [M] [O] analog: mirror, PMOS outputs.} 100 -1724 0 0 0.25 0.25 {}
 T {[M] mirror} 1015 -1623.5 0 0 0.35 0.35 {layer=10}
 T {[O] PMOS outputs} 2146 -1623.5 0 0 0.35 0.35 {layer=10}
-T {[D] enable decode} 2210 -1513.5 0 0 0.35 0.35 {layer=10}
-T {[S] output switches} 2765 -1513.5 0 0 0.35 0.35 {layer=10}
-N 100 -1440 280 -1440 {lab=en_in0}
-N 220 -1480 280 -1480 {lab=en_3v3}
-N 400 -1460 660 -1460 {lab=ei0_b}
-N 660 -1460 660 -1400 {lab=ei0_b}
-N 660 -1400 680 -1400 {lab=ei0_b}
-N 440 -1460 440 -1220 {lab=ei0_b}
-N 440 -1220 500 -1220 {lab=ei0_b}
-N 580 -1220 800 -1220 {lab=ei0}
-N 800 -1220 800 -1300 {lab=ei0}
-N 800 -1300 820 -1300 {lab=ei0}
-N 100 -1350 860 -1350 {lab=iin0}
-N 860 -1330 860 -1350 {lab=iin0}
-N 720 -1370 720 -1350 {lab=iin0}
-N 720 -1430 720 -1450 {lab=ni}
-N 720 -1450 980 -1450 {lab=ni}
-N 860 -1270 860 -1250 {lab=ni}
-N 860 -1250 980 -1250 {lab=ni}
-N 860 -1300 880 -1300 {lab=vssh}
-N 720 -1400 740 -1400 {lab=vddh}
-N 100 -1100 280 -1100 {lab=en_in1}
-N 220 -1140 280 -1140 {lab=en_3v3}
-N 400 -1120 660 -1120 {lab=ei1_b}
-N 660 -1120 660 -1060 {lab=ei1_b}
-N 660 -1060 680 -1060 {lab=ei1_b}
-N 440 -1120 440 -880 {lab=ei1_b}
-N 440 -880 500 -880 {lab=ei1_b}
-N 580 -880 800 -880 {lab=ei1}
-N 800 -880 800 -960 {lab=ei1}
-N 800 -960 820 -960 {lab=ei1}
-N 100 -1010 860 -1010 {lab=iin1}
-N 860 -990 860 -1010 {lab=iin1}
-N 720 -1030 720 -1010 {lab=iin1}
-N 720 -1090 720 -1110 {lab=ni}
-N 720 -1110 980 -1110 {lab=ni}
-N 860 -930 860 -910 {lab=ni}
-N 860 -910 980 -910 {lab=ni}
-N 860 -960 880 -960 {lab=vssh}
-N 720 -1060 740 -1060 {lab=vddh}
-N 100 -760 280 -760 {lab=en_in2}
-N 220 -800 280 -800 {lab=en_3v3}
-N 400 -780 660 -780 {lab=ei2_b}
-N 660 -780 660 -720 {lab=ei2_b}
-N 660 -720 680 -720 {lab=ei2_b}
-N 440 -780 440 -540 {lab=ei2_b}
-N 440 -540 500 -540 {lab=ei2_b}
-N 580 -540 800 -540 {lab=ei2}
-N 800 -540 800 -620 {lab=ei2}
-N 800 -620 820 -620 {lab=ei2}
-N 100 -670 860 -670 {lab=iin2}
-N 860 -650 860 -670 {lab=iin2}
-N 720 -690 720 -670 {lab=iin2}
-N 720 -750 720 -770 {lab=ni}
-N 720 -770 980 -770 {lab=ni}
-N 860 -590 860 -570 {lab=ni}
-N 860 -570 980 -570 {lab=ni}
-N 860 -620 880 -620 {lab=vssh}
-N 720 -720 740 -720 {lab=vddh}
-N 220 -1480 220 -800 {lab=en_3v3}
-N 740 -720 740 -1640 {lab=vddh}
-N 880 -1300 880 260 {lab=vssh}
-N 980 -1450 980 0 {lab=ni}
 N 980 0 1350 0 {lab=ni}
 N 1060 90 1060 0 {lab=ni}
 N 1260 90 1260 0 {lab=ni}
@@ -109,7 +40,6 @@ N 1400 -1540 1380 -1540 {lab=vpd}
 N 1380 -1540 1380 -1440 {lab=vpd}
 N 1280 -1510 1280 -1440 {lab=vpd}
 N 100 -1540 1240 -1540 {lab=en_3v3}
-N 220 -1540 220 -1480 {lab=en_3v3}
 N 1280 -1440 1440 -1440 {lab=vpd}
 N 1440 -1440 2060 -1440 {lab=vpd}
 N 2120 -1570 2120 -1640 {lab=vddh}
@@ -117,219 +47,49 @@ N 2120 -1540 2140 -1540 {lab=vddh}
 N 2140 -1540 2140 -1640 {lab=vddh}
 N 2080 -1540 2060 -1540 {lab=vpd}
 N 2060 -1540 2060 -1440 {lab=vpd}
-N 2420 -1400 2680 -1400 {lab=eo0_b}
-N 2680 -1400 2680 -1340 {lab=eo0_b}
-N 2680 -1340 2700 -1340 {lab=eo0_b}
-N 2460 -1400 2460 -1160 {lab=eo0_b}
-N 2460 -1160 2520 -1160 {lab=eo0_b}
-N 2600 -1160 2820 -1160 {lab=eo0}
-N 2820 -1160 2820 -1240 {lab=eo0}
-N 2820 -1240 2840 -1240 {lab=eo0}
 N 2120 -1510 2120 -1290 {lab=po0}
-N 2120 -1290 2880 -1290 {lab=po0}
-N 2880 -1270 2880 -1290 {lab=po0}
-N 2740 -1310 2740 -1290 {lab=po0}
-N 2740 -1370 2740 -1390 {lab=iout0}
-N 2740 -1390 3060 -1390 {lab=iout0}
-N 2880 -1210 2880 -1190 {lab=iout0}
-N 2880 -1190 3060 -1190 {lab=iout0}
-N 3060 -1390 3060 -1290 {lab=iout0}
-N 3060 -1290 3100 -1290 {lab=iout0}
-N 3060 -1290 3060 -1190 {lab=iout0}
-N 2300 -1380 2270 -1380 {lab=en_out0}
-N 2300 -1420 2270 -1420 {lab=en_3v3}
-N 2880 -1240 2900 -1240 {lab=vssh}
-N 2740 -1340 2760 -1340 {lab=vddh}
+N 2120 -1290 2480 -1290 {lab=po0}
 N 1960 -1570 1960 -1640 {lab=vddh}
 N 1960 -1540 1980 -1540 {lab=vddh}
 N 1980 -1540 1980 -1640 {lab=vddh}
 N 1920 -1540 1900 -1540 {lab=vpd}
 N 1900 -1540 1900 -1440 {lab=vpd}
-N 2420 -1080 2680 -1080 {lab=eo1_b}
-N 2680 -1080 2680 -1020 {lab=eo1_b}
-N 2680 -1020 2700 -1020 {lab=eo1_b}
-N 2460 -1080 2460 -840 {lab=eo1_b}
-N 2460 -840 2520 -840 {lab=eo1_b}
-N 2600 -840 2820 -840 {lab=eo1}
-N 2820 -840 2820 -920 {lab=eo1}
-N 2820 -920 2840 -920 {lab=eo1}
 N 1960 -1510 1960 -970 {lab=po1}
-N 1960 -970 2880 -970 {lab=po1}
-N 2880 -950 2880 -970 {lab=po1}
-N 2740 -990 2740 -970 {lab=po1}
-N 2740 -1050 2740 -1070 {lab=iout1}
-N 2740 -1070 3060 -1070 {lab=iout1}
-N 2880 -890 2880 -870 {lab=iout1}
-N 2880 -870 3060 -870 {lab=iout1}
-N 3060 -1070 3060 -970 {lab=iout1}
-N 3060 -970 3100 -970 {lab=iout1}
-N 3060 -970 3060 -870 {lab=iout1}
-N 2300 -1060 2270 -1060 {lab=en_out1}
-N 2300 -1100 2270 -1100 {lab=en_3v3}
-N 2880 -920 2900 -920 {lab=vssh}
-N 2740 -1020 2760 -1020 {lab=vddh}
+N 1960 -970 2480 -970 {lab=po1}
 N 1800 -1570 1800 -1640 {lab=vddh}
 N 1800 -1540 1820 -1540 {lab=vddh}
 N 1820 -1540 1820 -1640 {lab=vddh}
 N 1760 -1540 1740 -1540 {lab=vpd}
 N 1740 -1540 1740 -1440 {lab=vpd}
-N 2420 -760 2680 -760 {lab=eo2_b}
-N 2680 -760 2680 -700 {lab=eo2_b}
-N 2680 -700 2700 -700 {lab=eo2_b}
-N 2460 -760 2460 -520 {lab=eo2_b}
-N 2460 -520 2520 -520 {lab=eo2_b}
-N 2600 -520 2820 -520 {lab=eo2}
-N 2820 -520 2820 -600 {lab=eo2}
-N 2820 -600 2840 -600 {lab=eo2}
 N 1800 -1510 1800 -650 {lab=po2}
-N 1800 -650 2880 -650 {lab=po2}
-N 2880 -630 2880 -650 {lab=po2}
-N 2740 -670 2740 -650 {lab=po2}
-N 2740 -730 2740 -750 {lab=iout2}
-N 2740 -750 3060 -750 {lab=iout2}
-N 2880 -570 2880 -550 {lab=iout2}
-N 2880 -550 3060 -550 {lab=iout2}
-N 3060 -750 3060 -650 {lab=iout2}
-N 3060 -650 3100 -650 {lab=iout2}
-N 3060 -650 3060 -550 {lab=iout2}
-N 2300 -740 2270 -740 {lab=en_out2}
-N 2300 -780 2270 -780 {lab=en_3v3}
-N 2880 -600 2900 -600 {lab=vssh}
-N 2740 -700 2760 -700 {lab=vddh}
+N 1800 -650 2480 -650 {lab=po2}
 N 1640 -1570 1640 -1640 {lab=vddh}
 N 1640 -1540 1660 -1540 {lab=vddh}
 N 1660 -1540 1660 -1640 {lab=vddh}
 N 1600 -1540 1580 -1540 {lab=vpd}
 N 1580 -1540 1580 -1440 {lab=vpd}
-N 2420 -440 2680 -440 {lab=eo3_b}
-N 2680 -440 2680 -380 {lab=eo3_b}
-N 2680 -380 2700 -380 {lab=eo3_b}
-N 2460 -440 2460 -200 {lab=eo3_b}
-N 2460 -200 2520 -200 {lab=eo3_b}
-N 2600 -200 2820 -200 {lab=eo3}
-N 2820 -200 2820 -280 {lab=eo3}
-N 2820 -280 2840 -280 {lab=eo3}
 N 1640 -1510 1640 -330 {lab=po3}
-N 1640 -330 2880 -330 {lab=po3}
-N 2880 -310 2880 -330 {lab=po3}
-N 2740 -350 2740 -330 {lab=po3}
-N 2740 -410 2740 -430 {lab=iout3}
-N 2740 -430 3060 -430 {lab=iout3}
-N 2880 -250 2880 -230 {lab=iout3}
-N 2880 -230 3060 -230 {lab=iout3}
-N 3060 -430 3060 -330 {lab=iout3}
-N 3060 -330 3100 -330 {lab=iout3}
-N 3060 -330 3060 -230 {lab=iout3}
-N 2300 -420 2270 -420 {lab=en_out3}
-N 2300 -460 2270 -460 {lab=en_3v3}
-N 2880 -280 2900 -280 {lab=vssh}
-N 2740 -380 2760 -380 {lab=vddh}
-N 2760 -380 2760 -1640 {lab=vddh}
-N 2900 -1240 2900 260 {lab=vssh}
-N 360 -1490 360 -1510 {lab=vddh}
-N 560 -1240 560 -1260 {lab=vddh}
-N 360 -1150 360 -1170 {lab=vddh}
-N 560 -900 560 -920 {lab=vddh}
-N 360 -810 360 -830 {lab=vddh}
-N 560 -560 560 -580 {lab=vddh}
-N 2380 -1430 2380 -1450 {lab=vddh}
-N 2580 -1180 2580 -1200 {lab=vddh}
-N 2380 -1110 2380 -1130 {lab=vddh}
-N 2580 -860 2580 -880 {lab=vddh}
-N 2380 -790 2380 -810 {lab=vddh}
-N 2580 -540 2580 -560 {lab=vddh}
-N 2380 -470 2380 -490 {lab=vddh}
-N 2580 -220 2580 -240 {lab=vddh}
-N 340 -1430 340 -1410 {lab=vssh}
-N 540 -1200 540 -1180 {lab=vssh}
-N 340 -1090 340 -1070 {lab=vssh}
-N 540 -860 540 -840 {lab=vssh}
-N 340 -750 340 -730 {lab=vssh}
-N 540 -520 540 -500 {lab=vssh}
-N 2360 -1370 2360 -1350 {lab=vssh}
-N 2560 -1140 2560 -1120 {lab=vssh}
-N 2360 -1050 2360 -1030 {lab=vssh}
-N 2560 -820 2560 -800 {lab=vssh}
-N 2360 -730 2360 -710 {lab=vssh}
-N 2560 -500 2560 -480 {lab=vssh}
-N 2360 -410 2360 -390 {lab=vssh}
-N 2560 -180 2560 -160 {lab=vssh}
-N 100 -1640 2760 -1640 {lab=vddh}
-N 100 260 2900 260 {lab=vssh}
+N 1640 -330 2480 -330 {lab=po3}
 C {devices/iopin.sym} 100 -1640 0 1 {name=p0 lab=vddh}
 C {devices/iopin.sym} 100 260 0 1 {name=p1 lab=vssh}
 C {devices/ipin.sym} 100 -1540 0 0 {name=p2 lab=en_3v3}
 C {devices/ipin.sym} 100 120 0 0 {name=p3 lab=en_3v3_b}
-C {devices/iopin.sym} 100 -1350 0 1 {name=p4 lab=iin0}
-C {devices/iopin.sym} 100 -1010 0 1 {name=p5 lab=iin1}
-C {devices/iopin.sym} 100 -670 0 1 {name=p6 lab=iin2}
-C {devices/iopin.sym} 100 -330 0 1 {name=p18 lab=iin3}
-C {devices/ipin.sym} 100 -1440 0 0 {name=p7 lab=en_in0}
-C {devices/ipin.sym} 100 -1100 0 0 {name=p8 lab=en_in1}
-C {devices/ipin.sym} 100 -760 0 0 {name=p9 lab=en_in2}
-C {devices/ipin.sym} 100 -420 0 0 {name=p19 lab=en_in3}
-C {devices/opin.sym} 3100 -1290 0 0 {name=p10 lab=iout0}
-C {devices/opin.sym} 3100 -970 0 0 {name=p11 lab=iout1}
-C {devices/opin.sym} 3100 -650 0 0 {name=p12 lab=iout2}
-C {devices/opin.sym} 3100 -330 0 0 {name=p13 lab=iout3}
+C {devices/iopin.sym} 100 -1380 0 1 {name=piin0 lab=iin0}
+C {devices/iopin.sym} 100 -1040 0 1 {name=piin1 lab=iin1}
+C {devices/iopin.sym} 100 -700 0 1 {name=piin2 lab=iin2}
+C {devices/iopin.sym} 100 -360 0 1 {name=piin3 lab=iin3}
+C {devices/ipin.sym} 100 -1420 0 0 {name=pen_in0 lab=en_in0}
+C {devices/ipin.sym} 100 -1080 0 0 {name=pen_in1 lab=en_in1}
+C {devices/ipin.sym} 100 -740 0 0 {name=pen_in2 lab=en_in2}
+C {devices/ipin.sym} 100 -400 0 0 {name=pen_in3 lab=en_in3}
+C {devices/opin.sym} 2760 -1290 0 0 {name=piout0 lab=iout0}
+C {devices/opin.sym} 2760 -970 0 0 {name=piout1 lab=iout1}
+C {devices/opin.sym} 2760 -650 0 0 {name=piout2 lab=iout2}
+C {devices/opin.sym} 2760 -330 0 0 {name=piout3 lab=iout3}
 C {devices/ipin.sym} 100 -80 0 0 {name=p14 lab=en_out0}
 C {devices/ipin.sym} 100 -40 0 0 {name=p15 lab=en_out1}
 C {devices/ipin.sym} 100 0 0 0 {name=p16 lab=en_out2}
 C {devices/ipin.sym} 100 40 0 0 {name=p17 lab=en_out3}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 840 -1300 0 0 {name=TIN0
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 700 -1400 0 0 {name=TIP0
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 840 -960 0 0 {name=TIN1
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 700 -1060 0 0 {name=TIP1
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 840 -620 0 0 {name=TIN2
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 700 -720 0 0 {name=TIP2
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X
-}
 C {sg13cmos5l_pr/sg13_hv_nmos.sym} 1040 120 0 0 {name=TDN
 l=0.45u
 w=1u
@@ -384,45 +144,9 @@ mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2860 -1240 0 0 {name=TON0
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2720 -1340 0 0 {name=TOP0
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X
-}
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1940 -1540 0 0 {name=PO1
 l=6u
 w=5u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2860 -920 0 0 {name=TON1
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2720 -1020 0 0 {name=TOP1
-l=0.45u
-w=1u
 ng=1
 m=1
 mm_ok=1
@@ -438,24 +162,6 @@ mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2860 -600 0 0 {name=TON2
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2720 -700 0 0 {name=TOP2
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X
-}
 C {sg13cmos5l_pr/sg13_hv_pmos.sym} 1620 -1540 0 0 {name=PO3
 l=6u
 w=5u
@@ -465,146 +171,8 @@ mm_ok=1
 model=sg13_hv_pmos
 spiceprefix=X
 }
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 2860 -280 0 0 {name=TON3
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 2720 -380 0 0 {name=TOP3
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X
-}
-C {devices/lab_wire.sym} 590 -1460 0 0 {name=l1 sig_type=std_logic lab=ei0_b}
-C {devices/lab_wire.sym} 780 -1220 0 0 {name=l2 sig_type=std_logic lab=ei0}
-C {devices/lab_wire.sym} 590 -1120 0 0 {name=l3 sig_type=std_logic lab=ei1_b}
-C {devices/lab_wire.sym} 780 -880 0 0 {name=l4 sig_type=std_logic lab=ei1}
-C {devices/lab_wire.sym} 590 -780 0 0 {name=l5 sig_type=std_logic lab=ei2_b}
-C {devices/lab_wire.sym} 780 -540 0 0 {name=l6 sig_type=std_logic lab=ei2}
-C {devices/lab_wire.sym} 980 -1450 0 1 {name=l7 sig_type=std_logic lab=ni}
 C {devices/lab_wire.sym} 1360 -1440 0 0 {name=l8 sig_type=std_logic lab=vpd}
-C {devices/lab_wire.sym} 2610 -1400 0 0 {name=l9 sig_type=std_logic lab=eo0_b}
-C {devices/lab_wire.sym} 2800 -1160 0 0 {name=l10 sig_type=std_logic lab=eo0}
-C {devices/lab_wire.sym} 2700 -1290 0 0 {name=l11 sig_type=std_logic lab=po0}
-C {devices/lab_pin.sym} 2270 -1380 0 0 {name=l12 sig_type=std_logic lab=en_out0}
-C {devices/lab_pin.sym} 2270 -1420 0 0 {name=l13 sig_type=std_logic lab=en_3v3}
-C {devices/lab_wire.sym} 2610 -1080 0 0 {name=l14 sig_type=std_logic lab=eo1_b}
-C {devices/lab_wire.sym} 2800 -840 0 0 {name=l15 sig_type=std_logic lab=eo1}
-C {devices/lab_wire.sym} 2700 -970 0 0 {name=l16 sig_type=std_logic lab=po1}
-C {devices/lab_pin.sym} 2270 -1060 0 0 {name=l17 sig_type=std_logic lab=en_out1}
-C {devices/lab_pin.sym} 2270 -1100 0 0 {name=l18 sig_type=std_logic lab=en_3v3}
-C {devices/lab_wire.sym} 2610 -760 0 0 {name=l19 sig_type=std_logic lab=eo2_b}
-C {devices/lab_wire.sym} 2800 -520 0 0 {name=l20 sig_type=std_logic lab=eo2}
-C {devices/lab_wire.sym} 2700 -650 0 0 {name=l21 sig_type=std_logic lab=po2}
-C {devices/lab_pin.sym} 2270 -740 0 0 {name=l22 sig_type=std_logic lab=en_out2}
-C {devices/lab_pin.sym} 2270 -780 0 0 {name=l23 sig_type=std_logic lab=en_3v3}
-C {devices/lab_wire.sym} 2610 -440 0 0 {name=l24 sig_type=std_logic lab=eo3_b}
-C {devices/lab_wire.sym} 2800 -200 0 0 {name=l25 sig_type=std_logic lab=eo3}
-C {devices/lab_wire.sym} 2700 -330 0 0 {name=l26 sig_type=std_logic lab=po3}
-C {devices/lab_pin.sym} 2270 -420 0 0 {name=l27 sig_type=std_logic lab=en_out3}
-C {devices/lab_pin.sym} 2270 -460 0 0 {name=l28 sig_type=std_logic lab=en_3v3}
-C {devices/lab_pin.sym} 360 -1510 0 1 {name=l29 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 560 -1260 0 1 {name=l30 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 360 -1170 0 1 {name=l31 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 560 -920 0 1 {name=l32 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 360 -830 0 1 {name=l33 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 560 -580 0 1 {name=l34 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 2380 -1450 0 1 {name=l35 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 2580 -1200 0 1 {name=l36 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 2380 -1130 0 1 {name=l37 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 2580 -880 0 1 {name=l38 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 2380 -810 0 1 {name=l39 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 2580 -560 0 1 {name=l40 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 2380 -490 0 1 {name=l41 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 2580 -240 0 1 {name=l42 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 340 -1410 0 1 {name=l43 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 540 -1180 0 1 {name=l44 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 340 -1070 0 1 {name=l45 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 540 -840 0 1 {name=l46 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 340 -730 0 1 {name=l47 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 540 -500 0 1 {name=l48 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 2360 -1350 0 1 {name=l49 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 2560 -1120 0 1 {name=l50 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 2360 -1030 0 1 {name=l51 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 2560 -800 0 1 {name=l52 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 2360 -710 0 1 {name=l53 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 2560 -480 0 1 {name=l54 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 2360 -390 0 1 {name=l55 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 2560 -160 0 1 {name=l56 sig_type=std_logic lab=vssh}
-C {nand2_hv.sym} 340 -1460 0 0 {name=XIA0}
-C {inv_hv.sym} 540 -1220 0 0 {name=XIB0}
-C {nand2_hv.sym} 340 -1120 0 0 {name=XIA1}
-C {inv_hv.sym} 540 -880 0 0 {name=XIB1}
-C {nand2_hv.sym} 340 -780 0 0 {name=XIA2}
-C {inv_hv.sym} 540 -540 0 0 {name=XIB2}
-C {nand2_hv.sym} 2360 -1400 0 0 {name=XOA0}
-C {inv_hv.sym} 2560 -1160 0 0 {name=XOB0}
-C {nand2_hv.sym} 2360 -1080 0 0 {name=XOA1}
-C {inv_hv.sym} 2560 -840 0 0 {name=XOB1}
-C {nand2_hv.sym} 2360 -760 0 0 {name=XOA2}
-C {inv_hv.sym} 2560 -520 0 0 {name=XOB2}
-C {nand2_hv.sym} 2360 -440 0 0 {name=XOA3}
-C {inv_hv.sym} 2560 -200 0 0 {name=XOB3}
 C {devices/title.sym} 160 340 0 0 {name=l0 author="Christoph Maier"}
-N 100 -420 280 -420 {lab=en_in3}
-N 220 -460 280 -460 {lab=en_3v3}
-N 400 -440 660 -440 {lab=ei3_b}
-N 660 -440 660 -380 {lab=ei3_b}
-N 660 -380 680 -380 {lab=ei3_b}
-N 440 -440 440 -200 {lab=ei3_b}
-N 440 -200 500 -200 {lab=ei3_b}
-N 580 -200 800 -200 {lab=ei3}
-N 800 -200 800 -280 {lab=ei3}
-N 800 -280 820 -280 {lab=ei3}
-N 100 -330 860 -330 {lab=iin3}
-N 860 -310 860 -330 {lab=iin3}
-N 720 -350 720 -330 {lab=iin3}
-N 720 -410 720 -430 {lab=ni}
-N 720 -430 980 -430 {lab=ni}
-N 860 -250 860 -230 {lab=ni}
-N 860 -230 980 -230 {lab=ni}
-N 860 -280 880 -280 {lab=vssh}
-N 720 -380 740 -380 {lab=vddh}
-N 360 -470 360 -490 {lab=vddh}
-N 560 -220 560 -240 {lab=vddh}
-N 340 -410 340 -390 {lab=vssh}
-N 540 -180 540 -160 {lab=vssh}
-C {sg13cmos5l_pr/sg13_hv_nmos.sym} 840 -280 0 0 {name=TIN3
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_nmos
-spiceprefix=X
-}
-C {sg13cmos5l_pr/sg13_hv_pmos.sym} 700 -380 0 0 {name=TIP3
-l=0.45u
-w=1u
-ng=1
-m=1
-mm_ok=1
-model=sg13_hv_pmos
-spiceprefix=X
-}
-C {devices/lab_wire.sym} 590 -440 0 0 {name=l57 sig_type=std_logic lab=ei3_b}
-C {devices/lab_wire.sym} 780 -200 0 0 {name=l58 sig_type=std_logic lab=ei3}
-C {devices/lab_pin.sym} 360 -490 0 1 {name=l59 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 560 -240 0 1 {name=l60 sig_type=std_logic lab=vddh}
-C {devices/lab_pin.sym} 340 -390 0 1 {name=l61 sig_type=std_logic lab=vssh}
-C {devices/lab_pin.sym} 540 -160 0 1 {name=l62 sig_type=std_logic lab=vssh}
-C {nand2_hv.sym} 340 -440 0 0 {name=XIA3}
-C {inv_hv.sym} 540 -200 0 0 {name=XIB3}
-N 220 -800 220 -460 {lab=en_3v3}
-N 740 -380 740 -720 {lab=vddh}
 P 10 5 1580 -110 1880 -110 1880 235 1580 235 1580 -110 {dash=6}
 T {[DM] layout dummies} 1585 -133.5 0 0 0.35 0.35 {layer=10}
 T {as drawn in the rows (pad convention):} 1590 -95 0 0 0.2 0.2 {layer=10}
@@ -642,3 +210,92 @@ N 1720 210 1740 210 {lab=vssh}
 N 1740 150 1740 260 {lab=vssh}
 N 1680 180 1640 180 {lab=ni}
 C {devices/lab_pin.sym} 1640 180 0 0 {name=ldm1_g sig_type=std_logic lab=ni}
+N 100 -1640 2140 -1640 {lab=vddh}
+N 100 260 1740 260 {lab=vssh}
+N 220 -1540 220 -420 {lab=en_3v3}
+C {bdp_slice.sym} 500 -1410 0 0 {name=Xsi0}
+N 220 -1440 420 -1440 {lab=en_3v3}
+N 100 -1420 420 -1420 {lab=en_in0}
+N 100 -1380 420 -1380 {lab=iin0}
+N 580 -1380 980 -1380 {lab=ni}
+N 500 -1480 500 -1500 {lab=vddh}
+C {devices/lab_pin.sym} 500 -1500 0 1 {name=lsi0_vdd sig_type=std_logic lab=vddh}
+N 500 -1340 500 -1320 {lab=vssh}
+C {devices/lab_pin.sym} 500 -1320 0 1 {name=lsi0_vss sig_type=std_logic lab=vssh}
+C {bdp_slice.sym} 500 -1070 0 0 {name=Xsi1}
+N 220 -1100 420 -1100 {lab=en_3v3}
+N 100 -1080 420 -1080 {lab=en_in1}
+N 100 -1040 420 -1040 {lab=iin1}
+N 580 -1040 980 -1040 {lab=ni}
+N 500 -1140 500 -1160 {lab=vddh}
+C {devices/lab_pin.sym} 500 -1160 0 1 {name=lsi1_vdd sig_type=std_logic lab=vddh}
+N 500 -1000 500 -980 {lab=vssh}
+C {devices/lab_pin.sym} 500 -980 0 1 {name=lsi1_vss sig_type=std_logic lab=vssh}
+C {bdp_slice.sym} 500 -730 0 0 {name=Xsi2}
+N 220 -760 420 -760 {lab=en_3v3}
+N 100 -740 420 -740 {lab=en_in2}
+N 100 -700 420 -700 {lab=iin2}
+N 580 -700 980 -700 {lab=ni}
+N 500 -800 500 -820 {lab=vddh}
+C {devices/lab_pin.sym} 500 -820 0 1 {name=lsi2_vdd sig_type=std_logic lab=vddh}
+N 500 -660 500 -640 {lab=vssh}
+C {devices/lab_pin.sym} 500 -640 0 1 {name=lsi2_vss sig_type=std_logic lab=vssh}
+C {bdp_slice.sym} 500 -390 0 0 {name=Xsi3}
+N 220 -420 420 -420 {lab=en_3v3}
+N 100 -400 420 -400 {lab=en_in3}
+N 100 -360 420 -360 {lab=iin3}
+N 580 -360 980 -360 {lab=ni}
+N 500 -460 500 -480 {lab=vddh}
+C {devices/lab_pin.sym} 500 -480 0 1 {name=lsi3_vdd sig_type=std_logic lab=vddh}
+N 500 -320 500 -300 {lab=vssh}
+C {devices/lab_pin.sym} 500 -300 0 1 {name=lsi3_vss sig_type=std_logic lab=vssh}
+N 980 -1380 980 0 {lab=ni}
+C {devices/lab_wire.sym} 980 -1380 0 1 {name=l7 sig_type=std_logic lab=ni}
+C {bdp_slice.sym} 2560 -1320 0 0 {name=Xso0}
+N 2480 -1350 2460 -1350 {lab=en_3v3}
+C {devices/lab_pin.sym} 2460 -1350 0 0 {name=lso0_en3 sig_type=std_logic lab=en_3v3}
+N 2480 -1330 2460 -1330 {lab=en_out0}
+C {devices/lab_pin.sym} 2460 -1330 0 0 {name=lso0_en sig_type=std_logic lab=en_out0}
+N 2640 -1290 2760 -1290 {lab=iout0}
+N 2560 -1390 2560 -1410 {lab=vddh}
+C {devices/lab_pin.sym} 2560 -1410 0 1 {name=lso0_vdd sig_type=std_logic lab=vddh}
+N 2560 -1250 2560 -1230 {lab=vssh}
+C {devices/lab_pin.sym} 2560 -1230 0 1 {name=lso0_vss sig_type=std_logic lab=vssh}
+C {devices/lab_wire.sym} 2440 -1290 0 0 {name=lpo0 sig_type=std_logic lab=po0}
+C {bdp_slice.sym} 2560 -1000 0 0 {name=Xso1}
+N 2480 -1030 2460 -1030 {lab=en_3v3}
+C {devices/lab_pin.sym} 2460 -1030 0 0 {name=lso1_en3 sig_type=std_logic lab=en_3v3}
+N 2480 -1010 2460 -1010 {lab=en_out1}
+C {devices/lab_pin.sym} 2460 -1010 0 0 {name=lso1_en sig_type=std_logic lab=en_out1}
+N 2640 -970 2760 -970 {lab=iout1}
+N 2560 -1070 2560 -1090 {lab=vddh}
+C {devices/lab_pin.sym} 2560 -1090 0 1 {name=lso1_vdd sig_type=std_logic lab=vddh}
+N 2560 -930 2560 -910 {lab=vssh}
+C {devices/lab_pin.sym} 2560 -910 0 1 {name=lso1_vss sig_type=std_logic lab=vssh}
+C {devices/lab_wire.sym} 2440 -970 0 0 {name=lpo1 sig_type=std_logic lab=po1}
+C {bdp_slice.sym} 2560 -680 0 0 {name=Xso2}
+N 2480 -710 2460 -710 {lab=en_3v3}
+C {devices/lab_pin.sym} 2460 -710 0 0 {name=lso2_en3 sig_type=std_logic lab=en_3v3}
+N 2480 -690 2460 -690 {lab=en_out2}
+C {devices/lab_pin.sym} 2460 -690 0 0 {name=lso2_en sig_type=std_logic lab=en_out2}
+N 2640 -650 2760 -650 {lab=iout2}
+N 2560 -750 2560 -770 {lab=vddh}
+C {devices/lab_pin.sym} 2560 -770 0 1 {name=lso2_vdd sig_type=std_logic lab=vddh}
+N 2560 -610 2560 -590 {lab=vssh}
+C {devices/lab_pin.sym} 2560 -590 0 1 {name=lso2_vss sig_type=std_logic lab=vssh}
+C {devices/lab_wire.sym} 2440 -650 0 0 {name=lpo2 sig_type=std_logic lab=po2}
+C {bdp_slice.sym} 2560 -360 0 0 {name=Xso3}
+N 2480 -390 2460 -390 {lab=en_3v3}
+C {devices/lab_pin.sym} 2460 -390 0 0 {name=lso3_en3 sig_type=std_logic lab=en_3v3}
+N 2480 -370 2460 -370 {lab=en_out3}
+C {devices/lab_pin.sym} 2460 -370 0 0 {name=lso3_en sig_type=std_logic lab=en_out3}
+N 2640 -330 2760 -330 {lab=iout3}
+N 2560 -430 2560 -450 {lab=vddh}
+C {devices/lab_pin.sym} 2560 -450 0 1 {name=lso3_vdd sig_type=std_logic lab=vddh}
+N 2560 -290 2560 -270 {lab=vssh}
+C {devices/lab_pin.sym} 2560 -270 0 1 {name=lso3_vss sig_type=std_logic lab=vssh}
+C {devices/lab_wire.sym} 2440 -330 0 0 {name=lpo3 sig_type=std_logic lab=po3}
+P 10 5 250 -1525 660 -1525 660 -270 250 -270 250 -1525 {dash=6}
+T {[S] input slices (bdp_slice)} 255 -1518 0 0 0.35 0.35 {layer=10}
+P 10 5 2280 -1440 2700 -1440 2700 -250 2280 -250 2280 -1440 {dash=6}
+T {[S] output slices (bdp_slice)} 2285 -1463.5 0 0 0.35 0.35 {layer=10}

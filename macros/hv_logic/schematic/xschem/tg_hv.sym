@@ -1,0 +1,36 @@
+v {xschem version=3.4.8RC file_version=1.3}
+G {}
+K {type=subcircuit
+format="@name @pinlist @symname"
+template="name=x1"
+description="tg_hv: transmission gate a <-> b while en = 1, 3.3 V (sg13_hv)"
+}
+V {}
+S {}
+F {}
+E {}
+L 4 -20 -20 -20 20 {}
+L 4 -20 -20 20 20 {}
+L 4 -20 20 20 -20 {}
+L 4 20 -20 20 20 {}
+L 4 -40 0 -20 0 {}
+L 4 20 0 40 0 {}
+L 4 0 -40 0 -15 {}
+L 4 0 25 0 40 {}
+L 4 30 -40 30 -30 {}
+L 4 30 30 30 40 {}
+B 5 27.5 -42.5 32.5 -37.5 {name=vdd dir=inout}
+B 5 27.5 37.5 32.5 42.5 {name=vss dir=inout}
+B 5 -2.5 -42.5 2.5 -37.5 {name=en dir=in}
+B 5 -2.5 37.5 2.5 42.5 {name=en_b dir=in}
+B 5 -42.5 -2.5 -37.5 2.5 {name=a dir=inout}
+B 5 37.5 -2.5 42.5 2.5 {name=b dir=inout}
+A 4 0 20 5 0 360 {}
+T {vdd} 34 -36 0 0 0.2 0.2 {}
+T {vss} 34 24 0 0 0.2 0.2 {}
+T {en} -4 -36 0 1 0.2 0.2 {}
+T {en_b} -4 24 0 1 0.2 0.2 {}
+T {a} -35 -14 0 0 0.2 0.2 {}
+T {b} 35 -14 0 1 0.2 0.2 {}
+T {@name} -40 32 0 1 0.2 0.2 {}
+T {@symname} -40 -52 0 0 0.2 0.2 {}

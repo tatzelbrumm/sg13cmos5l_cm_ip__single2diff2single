@@ -45,7 +45,7 @@ slot  (slot7_wrapper-compatible; fallback wiring of both pads)
 | `ls_up_1v2_3v3`, `ls_dn_3v3_1v2` | level shifters (from `ls_pair`) | sheets + CACE |
 | `ocd_ls_up_1v2_3v3`, `ocd_ls_dn_3v3_1v2` | level shifters taken from the chipalooza harness, port-compatible with the two above: up = harness `sw_lvl_shift` behind its two-inverter input stage, down = harness `hv_inv_1` on the 1.2 V rail (the harness has no dedicated down-shifter). Sizes differ from `ls_up_1v2_3v3` / `ls_dn_3v3_1v2` | 2026-11-03: sheets + source, text-checked; CACE suite and testbenches derived from the `ls_*` ones, **not run**; no layout |
 | `ocd_analog_switches` | the harness's analog switches / transmission gates `analog_switch_small`, `analog_switch_med`, `analog_pswitch_small`, `xgate` (+ `sw_lvl_shift`, `gate_drive_med`): byte-identical copies of the harness sheets, for gating internal analog nodes and the `analog_bus` pins of slot 7 | 2026-11-03: copies + source netlist, text-checked against the harness; **KLayout layouts** (`layout/klayout/*.klay.gds`, from the harness's Magic layouts, device-checked); not simulated, no CACE, no KLayout DRC/LVS yet |
-| `hv_logic` | 3.3 V gates inv / nand2 / nor2 / nor3 | sheets |
+| `hv_logic` | 3.3 V gates inv / nand2 / nor2 / nor3 and the transmission gate tg_hv (since 2026-11-08) | sheets; layouts of inv / nand2 / tg as bdp_* cells inside bias_dist_pd's layout |
 | `IOPad` | IHP IO GDS copies, Christoph's clamp / diode sheets, and symbols of IHP IO sub-cells | unchanged + 5 new symbols |
 | `OgueyAebischerBias` | the unsized sky130 port (2026-09) | superseded by `bias_oa_pd` |
 | `inverter`, `counter` | template examples | still to be torn out (CLAUDE.md §7) |

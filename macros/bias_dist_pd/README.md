@@ -62,6 +62,7 @@ nothing is damaged; with both high an enabled input's current is wasted in TDN. 
 ## Files
 
 ```
+schematic/xschem/bdp_slice.sch/.sym      one switched leg as the layout's cell bdp_slice: nand2_hv | inv_hv | tg_hv (2026-11-08)
 schematic/xschem/bias_dist_pd.sch/.sym   sheet drawn by hand in readable analog style (2026-11-07, xschem-analog-schematic
                                          skill): wires, devices upright, groups [D] enable decode, [S] switches,
                                          [M] mirror, [O] PMOS outputs; symbol unchanged
@@ -84,6 +85,16 @@ good start"): xschem's netlist against the source subckt 23 = 23 devices, 14 = 1
 topology-equivalent to the label-style sheet (`scripts/xschem/sheet_equiv.py`); no short (`sch_lint.py`); xschem exit 0,
 no `Error:` in its log. The supply pins of the hv_logic gates join vdd / vss by label: wired, every `iin` / `po` line
 would cross them (88 crossings against 45).
+
+## Hierarchy (2026-11-08, backannotated from the layout)
+
+Christoph: "backannotate the very meaningful logic/transmission gate hierarchy from the bias_dist_pd layout to the
+schematic". The netlist and the sheet now follow the layout's cells: eight legs `bdp_slice` (Xsi0..3: iin<k> → ni,
+Xso0..3: po<j> → iout<j>), each nand2_hv → inv_hv → tg_hv (`../hv_logic`); TDN, SVPD, the mirrors NI / NM / PD / PO0..3
+and the dummies flat. Checks: gen_sheet.py --check tg_hv 2 = 2 devices, bdp_slice 3 = 3 instances, bias_dist_pd 13 = 13
+devices and 8 = 8 instances, ports equal; `make klayout-lvs` OK against the layout; LVS of the layout against the
+flattened netlist (`flat_cdl.py`, notes branch) 77 devices, match; truth table unchanged. The flat version is in git
+history (commit 956c6d34).
 
 ## Layout (agent D, 2026-11-07)
 
