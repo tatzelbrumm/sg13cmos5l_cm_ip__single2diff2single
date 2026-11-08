@@ -267,19 +267,20 @@ box and text sizes unchanged; only the pin positions moved, and each pin's name 
   left (y −100 ... −40), not centered on the right edge.
 - **Supply pins off center:** vddh on top at x −20, vssh at the bottom at x +20 (were both at
   x 0). He did the same to bdp_slice.sym (vdd x −20, vss x +20, commit 4c6c190d) and wired its
-  eight instances to a vddh bus left of each column and a vssh bus right of it. That is the use
-  this serves (our reading, he gave no reason): in a stacked column the vdd drop lands on the
-  side of the vdd bus and the vss drop on the side of the vss bus, and no single vertical runs
-  through both supply pins of one cell.
+  eight instances to a vddh bus left of each column and a vssh bus right of it. His reason: "so I
+  can draw non-intersecting vertical supply lines through the symbols". With vdd and vss at
+  x 0, a vertical through a column of stacked symbols would hit both supply pins of every cell
+  and short vdd to vss.
 
 Draw new symbols that way. A symbol already placed in a sheet is a different matter: moving its
 pins detaches the wires in every sheet that places it (see "Hand edits and symbol changes"), so
 propose the change and list the affected sheets first.
 
-**Keep the sheet's notes in step with the drawing.** After his rewiring, two notes still describe
+**Keep the sheet's notes in step with the drawing.** After his rewiring, two notes still described
 the draft: nand2_hv "nets by label", bdp_slice "Gate and TG supplies join vdd / vss by label
-(wired, the a line would cross them)". When you rewire, rewrite the note; better, don't describe
-the drawing method in a note at all, describe the circuit.
+(wired, the a line would cross them)". He had them rewritten to describe the circuit ("PA / PB
+in parallel from vdd to y, NA / NB in series from y to vss"; what vdd / vss feed). When you
+rewire, rewrite the note; better, don't describe the drawing method in a note at all.
 
 ## Testbench style (from his hand-drawn tb_pd_enable, 2026-10-25)
 
