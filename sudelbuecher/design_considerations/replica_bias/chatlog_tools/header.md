@@ -2,7 +2,7 @@
 SPDX-FileCopyrightText: 2026 Christoph Maier
 SPDX-License-Identifier: Apache-2.0
 -->
-# Cloud session C4: replica bias for the reference and common-mode inputs of the custom pads (2026-11-06 / 08)
+# Cloud session C4: replica bias for the reference and common-mode inputs of the custom pads (2026-11-06 / 09)
 
 - **Session:** Claude Code cloud session (https://claude.ai/code/session_01XU3KH9LkJUXwr5yuksqCZG), claude. Launch
   prompt: the task file `docs/launch/replica_bias_TASK.md` on branch `harness-test`.
@@ -45,3 +45,10 @@ SPDX-License-Identifier: Apache-2.0
   layout by agents), the pads' starvation check, the reference cores' start-up current, the tier-1 slot netlist and its
   switch matrix (`macros/slot_7`), and the parallel layout agents for the slot assembly. Check results in
   `docs/replica_bias/RUNLOG.md` rows 104-116.
+- **Day 3, evening, to day 4 (2026-11-08 / 09):** the slot_7 macro built in parallel by agents (sheets, the s7_ctrl
+  layout, the slot assembly), released as v1 / v2, the S2D enable-kick and bus-crossing checks, the hand-over briefs
+  and the page for Tim, the fork synced with Tim's main, C6's harness test of v2, v3 at C6's request, the roadmap for
+  the next run, and Christoph's note on omitting the Oguey–Aebischer core. RUNLOG rows 117-132 (times of rows 105-122
+  corrected to commit times).
+- **Transcript files:** since 2026-11-08 19:40 UTC the session writes its transcript to a second file (its working
+  directory changed); the two files are joined in order before the build, and the live path runs across both.
