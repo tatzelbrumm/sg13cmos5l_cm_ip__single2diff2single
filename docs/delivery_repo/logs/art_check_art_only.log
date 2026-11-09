@@ -1,0 +1,17 @@
+OK   dbu 0.001
+OK   top cells ['slot_7']
+OK   no $$$CONTEXT_INFO$$$ cell
+OK   cells: before 87, after 88 = before + tughra_art
+OK   all 86 sub-cells of slot_7 identical in shapes and instances
+OK   slot_7 own shapes and texts identical
+OK   slot_7 instances: before 5, after 6; added [('tughra_art', 'r0 *1 88500,141300', 0, 0, '0,0', '0,0')]; missing []
+OK   tughra_art cell identical to art/tughra_art.gds
+OK   slot_7 bbox (0,0;537.15,273)
+OK   flat XOR (after) vs (before + art at 88.5, 141.3), all 39 layers: 0
+OK   art on 5/0: no existing shape within 1 um (2 art polygons)
+OK   art on 8/0: no existing shape within 1 um (18 art polygons)
+OK   art on 10/0: no existing shape within 1 um (7 art polygons)
+OK   art on 30/0: no existing shape within 1 um (16 art polygons)
+OK   art on 50/0: no existing shape within 1 um (15 art polygons)
+OK   flat XOR vs reference slot7_with_art.gds (design repo, v2 + art): 0
+RESULT PASS

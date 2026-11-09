@@ -57,3 +57,11 @@ Delivery `main` now `40ba9b030d0c3e321438600fea5ae0a13439799a`: `macros/bg_core_
 0 / 0; magic + netgen LVS (`sak-lvs.sh`) match uniquely for both. Not placed in `slot_7.gds` yet; the harness does not read
 `macros/`. Harness `delivery-test` f327570 follows 40ba9b0: projects-update / projects-gds exit 0, placement unchanged,
 submodule git dir 1.2M. Tim's requirement (pads on the slot repo's default branch, used as a submodule) is met by `final/pads/`.
+
+## State 2026-11-09 (tape-out done)
+
+Delivery `main` = `158afc5`: slot_7 v3 (design `claude/c4-replica-bias` 9052bd35) + tughra art (design `toplevel` a45cbb55),
+nothing else changed (`art/check_art_only.py`); DRC / LVS clean as listed in RUNLOG; harness due diligence by the
+"Custom pad harness test task" session: no slot-7 problem (fork `claude/slot7-v3-harness-test` ce6d705). The v2 Tim read in:
+branch `slot7-v2-tapeout` (454da6a). The OA core is not in v2/v3 (only the bandgap feeds `bias_dist_pd`); its layout stays in
+`macros/oa_core_pd/`, and `bias_dist_pd`'s three tied-off inputs are the place for it in a next run.

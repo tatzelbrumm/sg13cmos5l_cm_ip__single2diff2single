@@ -1,0 +1,6 @@
+[INFO] DEBUG is enabled!
+[INFO] flag -w is set to </home/user/work/lvs_sak/bg_core_pd>.
+[INFO] flag -s is set to </home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/netlist/schematic/bg_core_pd_magic.spice>.
+[INFO] flag -l is set to </home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/layout/gds/bg_core_pd.gds>.
+[INFO] flag -c is set to <bg_core_pd>.
+[ERROR] Variable STD_CELL_LIBRARY not set!

@@ -1,0 +1,9 @@
+OK a7fd04ca6fa87a80afd79015999a48e6e5db4966926af0a69182cb8c2d836d9f LICENSE <= 91a7da8:LICENSE
+OK 5624ae45efb7761fd0b405ecc785a3f2f3c3a93d93203d0aaca9feb15bedc11c final/gds/slot_7.gds <= 4611357:final/gds/slot_7.gds
+OK 9fd8d5b1c57d7a2d26ad8e4883d8634f5dec4bfc36a9026ad9becc5401c9d8a8 final/lef/slot_7.lef <= 4611357:final/lef/slot_7.lef
+OK 6137d6230046318850c9f1fba2d8e79322ce28d9e18f0e2e64385099c419bd56 final/lib/slot_7.lib <= 4611357:final/lib/slot_7.lib
+OK 1ba0f560eb7b9e23258d2f371b1e8ab0936b4103aeb7ccaece69990c75086976 final/vh/slot_7.vh <= 4611357:final/vh/slot_7.vh
+OK 13e176ab106d0cb307a6ebc42acf647ce38b6abc52183a9f1d9ffead2f6c2b17 final/pads/sg13cmos5l_IOPadDiff2Single.gds <= 91a7da8:macros/sg13cmos5l_IOPadDiff2Single/layout/klayout/sg13cmos5l_IOPadDiff2Single.klay.gds
+OK b8d9103230bd7ced5c75a0fb38d56f078ec3cbf48d0f82a3772b85ff1edc2c1c final/pads/sg13cmos5l_IOPadDiff2Single.spice <= 91a7da8:macros/sg13cmos5l_IOPadDiff2Single/netlist/schematic/sg13cmos5l_IOPadDiff2Single_magic.spice (after stripping the 4-line header)
+OK f4b0e07320821248872780b344d71845d08bc250a4bfc9bcf8633a39bdef0182 final/pads/sg13cmos5l_IOPadSingle2Diff.gds <= 91a7da8:macros/sg13cmos5l_IOPadSingle2Diff/layout/klayout/sg13cmos5l_IOPadSingle2Diff.klay.gds
+OK 5a4e67f9b12f5f9017978ad0da4305fb331c9aa3abf4657ec48f5c77a8d32810 final/pads/sg13cmos5l_IOPadSingle2Diff.spice <= 91a7da8:macros/sg13cmos5l_IOPadSingle2Diff/netlist/schematic/sg13cmos5l_IOPadSingle2Diff_magic.spice (after stripping the 4-line header)

@@ -1,0 +1,5 @@
+fatal: expected 'acknowledgments', received 'packfile'
+warning: push negotiation failed; proceeding anyway with push
+To https://github.com/tatzelbrumm/sg13cmos5l_cm_slot7
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.

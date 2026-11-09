@@ -1,0 +1,7 @@
+./scripts/get_projects.sh --update 7
+slot_7: moving to 40ba9b030d0c3e321438600fea5ae0a13439799a
+    at 40ba9b030d0c3e321438600fea5ae0a13439799a (frozen)
+
+1 slot(s) changed.  Review and commit:
+    git status
+    git commit config.txt .gitmodules dependencies

@@ -1,0 +1,16 @@
+Netgen 1.5.324 compiled on Fri Oct 30 17:15:29 UTC 2026
+Warning: netgen command 'format' use fully-qualified name '::netgen::format'
+Warning: netgen command 'global' use fully-qualified name '::netgen::global'
+Reading netlist file /home/user/work/lvs/bg_core_pd_extracted.spice for /home/user/work/lvs/bg_core_pd_extracted.spice bg_core_pd
+Fatal: Class "pnpMPA" is instanced inside of itself!
+line number 4 = 'X0 a_n750_n602# w_n540_n392# a_n200_n200# pnpMPA a=4p p=8u'
+Reading netlist file /home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/netlist/schematic/bg_core_pd_magic.spice for /home/user/sg13cmos5l_cm_slot7/macros/bg_core_pd/netlist/schematic/bg_core_pd_magic.spice bg_core_pd
+Call to undefined subcircuit sg13_hv_nmos
+Creating placeholder cell definition.
+Call to undefined subcircuit sg13_hv_pmos
+Creating placeholder cell definition.
+Call to undefined subcircuit pnpMPA
+Creating placeholder cell definition.
+Call to undefined subcircuit rhigh
+Creating placeholder cell definition.
+Cannot find cell bg_core_pd in file /home/user/work/lvs/bg_core_pd_extracted.spice

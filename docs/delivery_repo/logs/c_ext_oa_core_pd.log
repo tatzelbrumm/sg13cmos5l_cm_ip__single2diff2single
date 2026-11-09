@@ -1,0 +1,81 @@
+
+Magic 8.3 revision 685 - Compiled on Fri Oct 30 17:15:33 UTC 2026.
+Starting magic under Tcl interpreter
+Using the terminal as the console.
+WARNING: RLIMIT_NOFILE is above 1024 and Tcl_Version<9 this may cause runtime issues [rlim_cur=20000]
+Using NULL graphics device.
+Processing system .magicrc file
+Switching to WIRING tool.
+Switching to NETLIST tool.
+Switching to PICK tool.
+Switching to BOX tool.
+Sourcing design .magicrc for technology ihp-sg13cmos5l ...
+2 Magic internal units = 1 Lambda
+Input style sg13cmos5l(): scaleFactor=2, multiplier=2
+The following types are not handled by extraction and will be treated as non-electrical types:
+    pblock pbase sealcont difffill sealvia1 sealvia2 sealvia3 sealvia4 seal glass thruvia inductor 
+Scaled tech values by 2 / 1 to match internal grid scaling
+Loading ihp-sg13cmos5l Device Generator Menu ...
+Using technology "ihp-sg13cmos5l", version 1.0.0
+Warning: Calma reading is not undoable!  I hope that's OK.
+Library written using GDS-II Release 6.0
+Library name: LIB
+Reading "$$$CONTEXT_INFO$$$".
+Reading "pmosHV$10".
+Reading "pmosHV$11".
+Reading "pmosHV$12".
+Reading "nmosHV$7".
+Reading "nmosHV_w2_l1".
+Reading "nmosHV$9".
+Reading "nmosHV$5".
+Reading "nmosHV$8".
+Reading "pmosHV$9".
+Reading "pmosHV_w0p3_l8".
+Reading "pmosHV$13".
+Reading "pmosHV$7".
+Reading "oa_pcas_c".
+Reading "oa_n10".
+Reading "oa_mcs_c".
+Reading "oa_pmir_c".
+Reading "oa_ms1".
+Reading "oa_svpg".
+Reading "oa_core_pd".
+Extracting nmosHV$8 into /home/user/work/lvs/nmosHV$8.ext:
+Processing nmosHV$8
+Extracting oa_mcs_c into /home/user/work/lvs/oa_mcs_c.ext:
+Processing oa_mcs_c
+Extracting nmosHV$5 into /home/user/work/lvs/nmosHV$5.ext:
+Processing nmosHV$5
+Extracting nmosHV$9 into /home/user/work/lvs/nmosHV$9.ext:
+Processing nmosHV$9
+Extracting nmosHV_w2_l1 into /home/user/work/lvs/nmosHV_w2_l1.ext:
+Processing nmosHV_w2_l1
+Extracting nmosHV$7 into /home/user/work/lvs/nmosHV$7.ext:
+Processing nmosHV$7
+Extracting oa_n10 into /home/user/work/lvs/oa_n10.ext:
+Processing oa_n10
+Extracting pmosHV$7 into /home/user/work/lvs/pmosHV$7.ext:
+Processing pmosHV$7
+Extracting oa_svpg into /home/user/work/lvs/oa_svpg.ext:
+Processing oa_svpg
+Extracting pmosHV$13 into /home/user/work/lvs/pmosHV$13.ext:
+Processing pmosHV$13
+Extracting oa_ms1 into /home/user/work/lvs/oa_ms1.ext:
+Processing oa_ms1
+Extracting pmosHV$10 into /home/user/work/lvs/pmosHV$10.ext:
+Processing pmosHV$10
+Extracting pmosHV$12 into /home/user/work/lvs/pmosHV$12.ext:
+Processing pmosHV$12
+Extracting pmosHV$11 into /home/user/work/lvs/pmosHV$11.ext:
+Processing pmosHV$11
+Extracting oa_pcas_c into /home/user/work/lvs/oa_pcas_c.ext:
+Processing oa_pcas_c
+Extracting pmosHV_w0p3_l8 into /home/user/work/lvs/pmosHV_w0p3_l8.ext:
+Processing pmosHV_w0p3_l8
+Extracting pmosHV$9 into /home/user/work/lvs/pmosHV$9.ext:
+Processing pmosHV$9
+Extracting oa_pmir_c into /home/user/work/lvs/oa_pmir_c.ext:
+Processing oa_pmir_c
+Extracting oa_core_pd into /home/user/work/lvs/oa_core_pd.ext:
+Processing oa_core_pd
+exttospice finished.
