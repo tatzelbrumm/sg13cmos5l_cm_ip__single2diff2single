@@ -31,6 +31,7 @@ no no-fill markers) is `4d8833a` (hashes after the rebase onto `toplevel`); both
 | `art/preview_side_by_side.png`, `preview_art.png`, `preview_layers.png`, `preview_slot_context.png`, `art/layer_colour_map.npz` | previews (the npz tells the preview which colour to draw each Metal1 cell in) |
 | `art/free_space.md/.json`, `art/build_stats.json` | analysis numbers |
 | `ART_LAYERS.md` | layer proposal (own commit, then revised three times) |
+| `art/skill/layout-art-from-image/`, `art/skill/layout-art-from-image-v1.zip` | the lessons and scripts packaged as a skill, with `START_NEXT_ART_PROJECT.md` (prompt for the next art project) and a per-PDK checklist |
 
 Re-run: `export PDK_ROOT=/foss/pdks; python3 art/find_free_space.py; python3 art/build_art.py; python3 art/preview.py; python3 art/verify_art.py; python3 art/fill_test.py`
 (the slot7 GDS and CDL are read from `/home/user/sg13cmos5l_cm_slot7`, override with `SLOT7_GDS` / `SLOT7_CDL`;
