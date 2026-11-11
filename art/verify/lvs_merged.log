@@ -1,0 +1,120 @@
+2026-11-08 23:25:58 +0000: Memory Usage (460012K) : Starting NPN-BJT DERIVATIONS
+2026-11-08 23:25:58 +0000: Memory Usage (460012K) : Starting PNP-BJT DERIVATIONS
+2026-11-08 23:25:58 +0000: Memory Usage (460012K) : Starting DIODE DERIVATIONS
+2026-11-08 23:25:58 +0000: Memory Usage (460012K) : Starting RESISTOR DERIVATIONS
+2026-11-08 23:25:59 +0000: Memory Usage (460352K) : Starting CAP DERIVATIONS
+2026-11-08 23:25:59 +0000: Memory Usage (460352K) : Starting CMOS5L SVaricap derivations override
+2026-11-08 23:25:59 +0000: Memory Usage (460352K) : Starting CAP_CMOM DERIVATIONS
+2026-11-08 23:25:59 +0000: Memory Usage (460352K) : Starting CAP_CMOMF DERIVATIONS
+2026-11-08 23:25:59 +0000: Memory Usage (460352K) : Starting ESD DERIVATIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460352K) : Starting Inductor DERIVATIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460352K) : Starting Taps DERIVATIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460352K) : Starting SG13G2 LVS connectivity setup
+2026-11-08 23:26:00 +0000: Memory Usage (460352K) : Starting SG13CMOS5L LVS connectivity setup (Inter-layer)
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting SG13CMOS5L LVS connectivity setup (Global)
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting LVS MOSFET CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting LVS RF-MOSFET CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting LVS BJT CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting LVS DIODE CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting RESISTOR CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting LVS CAP CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting CAP_CMOM CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting CAP_CMOMF CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting ESD CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting Inductor CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting LVS Taps CONNECTIONS
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting SG13CMOS5L LVS DEVICES EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting MOSFET EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting NMOS EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of NMOS-LV transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of NMOS-HV transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting PMOS EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of PMOS-LV transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of PMOS-HV transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting RF-MOSFET EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of RF-NMOS-LV transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of RF-NMOS-HV transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of RF-PMOS-LV transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of RF-PMOS-HV transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting BJT EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting NPN-BJT EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of npn13G2 BJT transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of npn13G2L BJT transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extraction of npn13G2V BJT transistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting PNP-BJT EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extracting pnpMPA BJT
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting DIODE EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extracting dantenna diode
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extracting dpantenna diode
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extracting schottky_nbl1 diode
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extracting isolbox diode
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Starting RESISTOR EXTRACTION
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extracting rsil resistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extracting rppd resistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extracting rhigh resistor
+2026-11-08 23:26:00 +0000: Memory Usage (460480K) : Extracting res_metal1 resistor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting res_metal2 resistor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting res_metal3 resistor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting res_metal4 resistor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting res_metal5 resistor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting res_topmetal1 resistor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting res_topmetal2 resistor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Starting CAP EXTRACTION
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting cap_cmim device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting rfcmim device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting sg13_hv_svaricap varactor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting cap_cmomi device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting cap_cmomf device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting sg13_moscap_n capacitor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting sg13_moscap_p capacitor
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Starting ESD EXTRACTION
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting diodevdd_2kv ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting diodevdd_4kv ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting diodevss_2kv ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting diodevss_4kv ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting idiodevdd_2kv ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting idiodevdd_4kv ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting idiodevss_2kv ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting idiodevss_4kv ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting nmoscl_2 ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting nmoscl_4 ESD device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Starting Inductor EXTRACTION
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting Inductor2 device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Extracting Inductor3 device
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Starting Taps EXTRACTION
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : DISABLE_TAP_EXTRACTION is enabled: skipping ntap1/ptap1 device extraction.
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Starting SG13CMOS5L LVS Options Preparations
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : SG13CMOS5L LVS flow: extraction -> alignment -> option preparation -> comparison.
+2026-11-08 23:26:01 +0000: Memory Usage (460640K) : Starting SG13CMOS5L LVS Alignment
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : Devices to compare: layout=497 schematic=234 (schematic counted before alignment, both per circuit definition)
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : Starting SG13CMOS5L LVS Simplification
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [layout_netlist] simplify: ENABLED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [layout_netlist] make_top_level_pins: SKIPPED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [layout_netlist] combine_devices: SKIPPED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [layout_netlist] purge: SKIPPED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [layout_netlist] purge_nets: SKIPPED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [schematic_netlist] simplify: ENABLED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [schematic_netlist] make_top_level_pins: SKIPPED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [schematic_netlist] combine_devices: SKIPPED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [schematic_netlist] purge: SKIPPED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : [schematic_netlist] purge_nets: SKIPPED
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : Starting SG13CMOS5L LVS Comparison in strict port mode.
+2026-11-08 23:26:01 +0000: Memory Usage (460768K) : flag_missing_ports enabled: missing/mislabeled top-level ports are treated as errors.
+2026-11-08 23:26:01 +0000: Memory Usage (460896K) : ==========================================
+2026-11-08 23:26:01 +0000: Memory Usage (460896K) : INFO : Congratulations! Netlists match.
+2026-11-08 23:26:01 +0000: Memory Usage (460896K) : ==========================================
+2026-11-08 23:26:01 +0000: Memory Usage (460896K) : LVS Total Run time 4.200444 seconds
+08-Nov-2026 23:26:01 | INFO    | ==============================================================================
+08-Nov-2026 23:26:01 | INFO    | Important Summary
+08-Nov-2026 23:26:01 | INFO    | +------------------+--------------------------------------------------------------+
+08-Nov-2026 23:26:01 | INFO    | | Status           | PASS                                                         |
+08-Nov-2026 23:26:01 | INFO    | | Mode             | COMPARE                                                      |
+08-Nov-2026 23:26:01 | INFO    | | Outcome          | Comparison mode: PASS (netlists match).                      |
+08-Nov-2026 23:26:01 | INFO    | | Layout           | slot7_with_art.gds                                           |
+08-Nov-2026 23:26:01 | INFO    | | Top Cell         | slot_7                                                       |
+08-Nov-2026 23:26:01 | INFO    | | Results Dir      | /tmp/tughra_verify/lvs_merged                                |
+08-Nov-2026 23:26:01 | INFO    | | Warnings         | 0                                                            |
+08-Nov-2026 23:26:01 | INFO    | | Errors           | 0                                                            |
+08-Nov-2026 23:26:01 | INFO    | | Run Time (s)     | 6.22                                                         |
+08-Nov-2026 23:26:01 | INFO    | +------------------+--------------------------------------------------------------+
+08-Nov-2026 23:26:01 | INFO    | ==============================================================================
