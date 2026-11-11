@@ -1,0 +1,368 @@
+{
+ "xor": {
+  "instances_of_art_cell": 1,
+  "layers": {
+   "1/0": 0,
+   "1/23": 0,
+   "5/0": 0,
+   "5/2": 0,
+   "5/23": 0,
+   "6/0": 0,
+   "7/0": 0,
+   "8/0": 0,
+   "8/2": 0,
+   "8/23": 0,
+   "8/25": 0,
+   "10/0": 0,
+   "10/2": 0,
+   "10/23": 0,
+   "10/25": 0,
+   "14/0": 0,
+   "19/0": 0,
+   "28/0": 0,
+   "29/0": 0,
+   "30/0": 0,
+   "30/2": 0,
+   "30/23": 0,
+   "30/25": 0,
+   "31/0": 0,
+   "44/0": 0,
+   "49/0": 0,
+   "50/0": 0,
+   "50/23": 0,
+   "51/0": 0,
+   "52/0": 0,
+   "63/0": 0,
+   "111/0": 0,
+   "125/0": 0,
+   "126/0": 0,
+   "126/2": 0,
+   "126/23": 0,
+   "126/25": 0,
+   "128/0": 0,
+   "189/4": 0
+  },
+  "total_xor_polygons": 0,
+  "labels_equal": true,
+  "cells_after_removal_equal": true
+ },
+ "clearance": {
+  "origin_um": [
+   88.5,
+   141.3
+  ],
+  "layers": {
+   "GatPoly": {
+    "art_polygons": 2,
+    "art_area_um2": 74.195,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 46.648
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 20.002
+    },
+    "min_distance_to_slot_edge_um": 93.60000000000001
+   },
+   "Metal1": {
+    "art_polygons": 18,
+    "art_area_um2": 544.4525,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 50.197
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 53.353
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 22.654
+    },
+    "min_distance_to_slot_edge_um": 63.65
+   },
+   "Metal2": {
+    "art_polygons": 7,
+    "art_area_um2": 272.09999999999997,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 27.949
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 1.304
+    },
+    "min_distance_to_slot_edge_um": 105.9
+   },
+   "Metal3": {
+    "art_polygons": 12,
+    "art_area_um2": 484.0725,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 36.599
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 50.702
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 9.954
+    },
+    "min_distance_to_slot_edge_um": 72.55
+   },
+   "Metal4": {
+    "art_polygons": 13,
+    "art_area_um2": 478.4025,
+    "vs_FEOL": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal2": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_Metal3": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 39.349
+    },
+    "vs_Metal4": {
+     "overlap_um2": 0.0,
+     "touches_within_um": null
+    },
+    "vs_TopMetal1": {
+     "overlap_um2": 0.0,
+     "touches_within_um": 1.304
+    },
+    "min_distance_to_slot_edge_um": 42.300000000000004
+   }
+  },
+  "nofill": {
+   "Activ.nofill": {
+    "gds": [
+     1,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "GatPoly.nofill": {
+    "gds": [
+     5,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "Metal1.nofill": {
+    "gds": [
+     8,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "Metal2.nofill": {
+    "gds": [
+     10,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "Metal3.nofill": {
+    "gds": [
+     30,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "Metal4.nofill": {
+    "gds": [
+     50,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "TopMetal1.nofill": {
+    "gds": [
+     126,
+     23
+    ],
+    "boxes": 1,
+    "box_um": [
+     85.5,
+     141.0,
+     243.55,
+     231.0
+    ]
+   },
+   "art_inside_nofill_box": true,
+   "all_markers_identical": true
+  }
+ },
+ "drc": {
+  "original": {
+   "markers": {
+    "AFil.g": 1,
+    "GFil.g": 1,
+    "M1.j": 1,
+    "M2.j": 1,
+    "M3.j": 1,
+    "M4.j": 1,
+    "TM1.c": 1
+   },
+   "density_ratio_percent": {
+    "AFil.g": 4.006,
+    "GFil.g": 3.591,
+    "M1.j": 1.641,
+    "M2.j": 0.757,
+    "M3.j": 2.14,
+    "M4.j": 0.652,
+    "TM1.c": 7.044
+   },
+   "rdb_files": [
+    "slot_7_slot_7_full.lyrdb"
+   ]
+  },
+  "merged": {
+   "markers": {
+    "AFil.g": 1,
+    "GFil.g": 1,
+    "M1.j": 1,
+    "M2.j": 1,
+    "M3.j": 1,
+    "M4.j": 1,
+    "TM1.c": 1
+   },
+   "density_ratio_percent": {
+    "AFil.g": 4.006,
+    "GFil.g": 3.642,
+    "M1.j": 2.012,
+    "M2.j": 0.942,
+    "M3.j": 2.47,
+    "M4.j": 0.979,
+    "TM1.c": 7.044
+   },
+   "rdb_files": [
+    "slot7_with_art_slot_7_full.lyrdb"
+   ]
+  },
+  "new_rules_violated_by_art": [],
+  "marker_count_changes": {}
+ },
+ "lvs": {
+  "original": {
+   "status": "PASS",
+   "outcome": "Comparison mode: PASS (netlists match).",
+   "warnings": "0",
+   "errors": "0",
+   "netlists": [
+    "slot_7_extracted.cir"
+   ]
+  },
+  "merged": {
+   "status": "PASS",
+   "outcome": "Comparison mode: PASS (netlists match).",
+   "warnings": "0",
+   "errors": "0",
+   "netlists": [
+    "slot7_with_art_extracted.cir"
+   ]
+  },
+  "extracted_netlists_identical": true
+ }
+}

@@ -1,0 +1,234 @@
+{
+ "scale_um_per_px": 0.102,
+ "grid_um": 0.05,
+ "layers": {
+  "GatPoly": {
+   "gds": [
+    5,
+    0
+   ],
+   "polygons": 2,
+   "vertices": 1518,
+   "area_um2": 74.195,
+   "repair_marker_counts": [
+    2,
+    0
+   ],
+   "colours": [
+    "purple"
+   ]
+  },
+  "Metal1": {
+   "gds": [
+    8,
+    0
+   ],
+   "polygons": 18,
+   "vertices": 10874,
+   "area_um2": 544.4525,
+   "repair_marker_counts": [
+    12,
+    5,
+    7,
+    9,
+    5,
+    5,
+    3,
+    3,
+    0
+   ],
+   "colours": [
+    "red",
+    "orange"
+   ]
+  },
+  "Metal2": {
+   "gds": [
+    10,
+    0
+   ],
+   "polygons": 7,
+   "vertices": 4688,
+   "area_um2": 272.09999999999997,
+   "repair_marker_counts": [
+    11,
+    27,
+    16,
+    14,
+    2,
+    0
+   ],
+   "colours": [
+    "gold"
+   ]
+  },
+  "Metal3": {
+   "gds": [
+    30,
+    0
+   ],
+   "polygons": 12,
+   "vertices": 10086,
+   "area_um2": 484.0725,
+   "repair_marker_counts": [
+    5,
+    1,
+    3,
+    0
+   ],
+   "colours": [
+    "blue"
+   ]
+  },
+  "Metal4": {
+   "gds": [
+    50,
+    0
+   ],
+   "polygons": 13,
+   "vertices": 6472,
+   "area_um2": 478.4025,
+   "repair_marker_counts": [
+    28,
+    25,
+    3,
+    2,
+    0
+   ],
+   "colours": [
+    "green"
+   ]
+  }
+ },
+ "fidelity": {
+  "Metal1": {
+   "colours": [
+    "red",
+    "orange"
+   ],
+   "iou": 0.98961183487462,
+   "area_ratio_final_over_source": 1.0076983758700695,
+   "source_area_covered": {
+    "red": 0.9989606965115037,
+    "orange": 0.9973471423417305
+   }
+  },
+  "Metal3": {
+   "colours": [
+    "blue"
+   ],
+   "iou": 0.9893936815835744,
+   "area_ratio_final_over_source": 1.0064119898489827,
+   "source_area_covered": {
+    "blue": 0.9978574697341598
+   }
+  },
+  "Metal4": {
+   "colours": [
+    "green"
+   ],
+   "iou": 0.9671556339391782,
+   "area_ratio_final_over_source": 1.0323431772224445,
+   "source_area_covered": {
+    "green": 0.9992052077813943
+   }
+  },
+  "GatPoly": {
+   "colours": [
+    "purple"
+   ],
+   "iou": 0.9795155149759105,
+   "area_ratio_final_over_source": 1.0170277043496172,
+   "source_area_covered": {
+    "purple": 0.9980775172508497
+   }
+  },
+  "Metal2": {
+   "colours": [
+    "gold"
+   ],
+   "iou": 0.981523204491311,
+   "area_ratio_final_over_source": 1.0173443008225618,
+   "source_area_covered": {
+    "gold": 0.9992667450058754
+   }
+  }
+ },
+ "fused_components": {
+  "Metal1": [
+   {
+    "colours": [
+     "red",
+     "orange"
+    ],
+    "bbox_art_um": [
+     7.35,
+     22.25,
+     64.25,
+     35.45
+    ],
+    "area_um2": 107.9
+   }
+  ]
+ },
+ "art_size_um": [
+  152.05,
+  89.4
+ ],
+ "free_rect_um": [
+  5.0,
+  141.0,
+  324.0,
+  231.0
+ ],
+ "origin_um": [
+  88.5,
+  141.3
+ ],
+ "nofill_box_um_cell_frame": [
+  -3.0,
+  -0.3,
+  155.05,
+  89.7
+ ],
+ "nofill_box_um_slot_frame": [
+  85.5,
+  141.0,
+  243.55,
+  231.0
+ ],
+ "nofill_layers": {
+  "Activ.nofill": [
+   1,
+   23
+  ],
+  "GatPoly.nofill": [
+   5,
+   23
+  ],
+  "Metal1.nofill": [
+   8,
+   23
+  ],
+  "Metal2.nofill": [
+   10,
+   23
+  ],
+  "Metal3.nofill": [
+   30,
+   23
+  ],
+  "Metal4.nofill": [
+   50,
+   23
+  ],
+  "TopMetal1.nofill": [
+   126,
+   23
+  ]
+ },
+ "files": {
+  "art": "tughra_art.gds",
+  "merged": "slot7_with_art.gds"
+ }
+}

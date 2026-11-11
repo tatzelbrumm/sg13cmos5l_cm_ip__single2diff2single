@@ -48,3 +48,4 @@ Run logs live one level up in [`../logs/`](../logs/) and are committed to the
 branch that produced them, so their contents differ per branch. The chat log,
 this directory and `../pix/` are deliberately untracked pending a decision on
 how to version them.
+- [`2026-11-08_sonnet_references.md`](2026-11-08_sonnet_references.md) — the tughra-art session: slot7 handover repo files, the IHP sg13cmos5l DRC / LVS / filler / layer files used, and the work-repo branches
